@@ -10,6 +10,17 @@ With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other en
 
 Before creating a list, make note of the [limitations](#limitations).
 
+## List types
+
+Lists can contain a single type of data each. Supported data types include:
+
+- URLs
+- Hostnames
+- Serial numbers
+- User email addresses
+- IP addresses
+- Device ID numbers
+
 {{<render file="gateway/_lists.md">}}
 
 ## Edit a list

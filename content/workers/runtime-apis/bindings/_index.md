@@ -41,3 +41,37 @@ export default {
 ```
 
 You can think of a binding as a permission and an API in one piece. With bindings, you never have to add secret keys or tokens to your Worker in order to access resources on your Cloudflare account — the permission is embedded within the API itself. The underlying secret is never exposed to your Worker's code, and therefore can't be accidentally leaked.
+
+## Making changes to bindings
+
+When you deploy a change to your Worker, and only change its bindings (i.e. you don't change the Worker's code), Cloudflare may reuse existing isolates that are already running your Worker. This improves performance — you can change an environment variable or other binding without unnecessarily reloading your code.
+
+As a result, you must be careful when "polluting" global scope with derivatives of your bindings. Anything you create there might continue to exist despite making changes to any underlying bindings. Consider an external client instance which uses a secret API key accessed from `env`: if you put this client instance in global scope and then make changes to the secret, a client instance using the original value might continue to exist. The correct approach would be to create a new client instance for each request.
+
+The following is a good approach:
+
+```ts
+export default {
+  fetch(request, env) {
+    let client = new Client(env.MY_SECRET); // `client` is guaranteed to be up-to-date with the latest value of `env.MY_SECRET` since a new instance is constructed with every incoming request
+
+    // ... do things with `client`
+  }
+}
+```
+
+Compared to this alternative, which might have surprising and unwanted behavior:
+
+```ts
+let client = undefined;
+
+export default {
+  fetch(request, env) {
+    client ??= new Client(env.MY_SECRET); // `client` here might not be updated when `env.MY_SECRET` changes, since it may already exist in global scope
+
+    // ... do things with `client`
+  }
+}
+```
+
+If you have more advanced needs, explore the [AsyncLocalStorage API](/workers/runtime-apis/nodejs/asynclocalstorage/), which provides a mechanism for exposing values down to child execution handlers.

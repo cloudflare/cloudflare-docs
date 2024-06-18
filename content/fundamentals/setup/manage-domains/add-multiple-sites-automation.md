@@ -30,7 +30,7 @@ To add multiple sites to Cloudflare via automation, you need:
   - Zone-level `Zone: Edit` and `DNS: Edit`
   - Account-level `Domain Administrator`
 - To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name). 
-  - Follow this [tuorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
+  - Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
   
 {{<render file="_dnssec-providers.md" productFolder="dns">}}
 
@@ -63,12 +63,7 @@ ___
   done
 ```
 
-3. Add executable commands to the script:
-```js
-  chmod +x add-multiple-zones.sh
-```
-
-4. Open the command line and run:
+3. Open the command line and run:
 ```js
   bash add-multiple-zones.sh
 ```

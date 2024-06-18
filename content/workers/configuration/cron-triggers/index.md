@@ -117,7 +117,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers
 
-The recommended way of testing Cron Triggers is using Wrangler. 
+The recommended way of testing Cron Triggers is using Wrangler.
 
 {{<Aside type="note" header="Cron Trigger changes take time to propagate.">}}
 
@@ -155,9 +155,11 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 2. Go to **Workers & Pages**, and select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
-### Via `wrangler.toml`
+{{<Aside type="note">}}
 
-To disable a Cron Trigger on a deployed Worker, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
+You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+
+{{</Aside>}}
 
 ## Limits
 
@@ -168,6 +170,14 @@ Refer to [Limits](/workers/platform/limits/) to track the maximum number of Cron
 With Green Compute enabled, your Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered purely by renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use.
 
 Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
+
+Green Compute can be configured at the account level:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In the **Account details** section, find **Compute Setting**.
+4. Select **Change**.
+5. Select **Green Compute**.
+6. Select **Confirm**.
 
 ## Related resources
 

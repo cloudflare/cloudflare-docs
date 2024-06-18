@@ -5,19 +5,29 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
 weight: 2
+tags:
+  - AI
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
 
-This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers. At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
+{{<tutorial-date-info>}}
+
+This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
+
+At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
+
+{{<render file="_prereqs.md" productFolder="/workers/" >}}
+
+You will also need access to [Vectorize](/vectorize/platform/pricing/).
 
 ## 1. Create a new Worker project
 
-C3 (create-cloudflare-cli) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn">}}
+{{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
 
 ```sh
@@ -29,6 +39,13 @@ $ npm create cloudflare@latest
 
 ```sh
 $ yarn create cloudflare@latest
+```
+
+{{</tab>}}
+{{<tab label="pnpm">}}
+
+```sh
+$ pnpm create cloudflare@latest
 ```
 
 {{</tab>}}
@@ -77,7 +94,9 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform:
+To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
+
+This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
 ```toml
 ---
@@ -97,7 +116,7 @@ filename: src/index.js
 export default {
 	async fetch(request, env, ctx) {
     const answer = await env.AI.run(
-      '@cf/meta/llama-2-7b-chat-int8',
+      '@cf/meta/llama-3-8b-instruct',
       {
         messages: [
           { role: 'user', content: `What is the square root of 9?` }
@@ -197,7 +216,7 @@ const app = new Hono()
 
 app.get('/', async (c) => {
   const answer = await c.env.AI.run(
-    '@cf/meta/llama-2-7b-chat-int8',
+    '@cf/meta/llama-3-8b-instruct',
     {
       messages: [
         { role: 'user', content: `What is the square root of 9?` }
@@ -211,7 +230,9 @@ app.get('/', async (c) => {
 export default app
 ```
 
-This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database:
+This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database.
+
+This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which can be used to create an embedding. Embeddings are stored and retrieved from our vector database [Vectorize](/vectorize/). The user's query is also turned into an embedding so that it can be used for searching within Vectorize.
 
 ```js
 ---
@@ -310,7 +331,7 @@ app.get('/', async (c) => {
   const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
   const { response: answer } = await c.env.AI.run(
-    '@cf/meta/llama-2-7b-chat-int8',
+    '@cf/meta/llama-3-8b-instruct',
     {
       messages: [
         ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
@@ -351,6 +372,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 To do more:
 
+- Explore the reference diagram for a [Retrieval Augmented Generation (RAG) Architecture](/reference-architecture/diagrams/ai/ai-rag/).
 - Review Cloudflare's [AI documentation](/workers-ai).
 - Review [Tutorials](/workers/tutorials/) to build projects on Workers.
 - Explore [Examples](/workers/examples/) to experiment with copy and paste Worker code.

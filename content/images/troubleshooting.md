@@ -37,6 +37,7 @@ When resizing fails, the response body contains an error message explaining the 
 -  9420 — The origin server redirected to an invalid URL. Confirm settings at your origin and try again.
 -  9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
 -  9504, 9505, & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
+-  9523 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image has invalid format. Use correctly formatted image and try again.
 -  9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. As an alternative you can [resize within the Worker](/images/transform-images/transform-via-workers/). This can also happen when using a `pages.dev` URL of a [Cloudflare Pages](/pages/) project. In that case, you can use a [Custom Domain](/pages/configuration/custom-domains/) instead.
 -  9511 — The image format is not supported. Refer to [Supported formats and limitations](/images/transform-images/) to learn about supported input and output formats.
 -  9522 — The image exceeded the processing limit. This may happen briefly after purging an entire zone or when files with very large dimensions are requested. If the problem persists, contact support.
@@ -46,7 +47,7 @@ ___
 
 ## Limits
 
-- Maximum image size is 100 megapixels (meaning 10.000×10.000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+- Maximum image size is 100 megapixels (meaning 10.000×10.000 pixels large). Maximum file size is 100 MB. GIF/WebP animations are limited to 50 megapixels total (sum of sizes of all frames).
 - Image Resizing is not compatible with [Bringing Your Own IPs (BYOIP)](/byoip/).
 
 ___

@@ -50,7 +50,29 @@ There is a default (top-level) environment and named environments that provide e
 
 These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
-The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/configuration/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
+The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/runtime-apis/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
+
+Further, there are a few keys that can *only* appear at the top-level.
+
+## Top-level only keys
+
+Top-level keys apply to the Worker as a whole (and therefore all environments). They cannot be defined within named environments.
+
+{{<definitions>}}
+
+- `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
+
+- `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Whether Wrangler should send usage metrics to Cloudflare for this project.
+
+- `site` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - See the [Workers Sites](#workers-sites) section below for more information. Cloudflare Pages is preferred over this approach.
+
+{{</definitions>}}
 
 ## Inheritable keys
 
@@ -127,14 +149,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
   - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
     The default is to prepend filenames with a content hash.
     For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
-
-- `send_metrics` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether Wrangler should send usage metrics to Cloudflare for this project.
-
-- `keep_vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
 
 - `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -374,7 +388,8 @@ watch_dir = "build_watch_dir"
 
 You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
 
-Limits have some built-in flexibility to allow for cases where your Worker infrequently runs over the configured limit. If your Worker starts hitting the limit consistently, its execution will be terminated according to the limit configured.
+{{<render file="_isolate-cpu-flexibility">}}
+<br/>
 
 
 {{<definitions>}}
@@ -401,7 +416,7 @@ cpu_ms = 100
 
 The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
 
-A [browser binding](/workers/configuration/bindings/#browser-bindings) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
+A [browser binding](/workers/runtime-apis/bindings/) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
 
 {{<definitions>}}
 
@@ -421,13 +436,13 @@ browser = { binding = "<BINDING_NAME>" }
 
 # or
 
-[[browser]]
+[browser]
 binding = "<BINDING_NAME>"
 ```
 
 ### D1 databases
 
-[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/configuration/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
+[D1](/d1/) is Cloudflare's serverless SQL database. A Worker can query a D1 database (or databases) by creating a [binding](/workers/runtime-apis/bindings/) to each database for D1's [client API](/d1/build-with-d1/d1-client-api/).
 
 To bind D1 databases to your Worker, assign an array of the below object to the `[[d1_databases]]` key.
 
@@ -485,11 +500,17 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
 - `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamspace"` would both be valid names for the binding.
+  - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamespace"` would both be valid names for the binding.
 
 - `namespace` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+
+- `outbound` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - `service` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}} The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
+  - `parameters` {{<type>}}array{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+
 
 {{</definitions>}}
 
@@ -500,6 +521,8 @@ header: wrangler.toml
 [[dispatch_namespaces]]
 binding = "<BINDING_NAME>"
 namespace = "<NAMESPACE_NAME>"
+outbound = {service = "<WORKER_NAME>", parameters = ["params_object"]}
+
 ```
 
 ### Durable Objects
@@ -700,7 +723,7 @@ id = "<NAMESPACE_ID2>"
 
 ### Queues
 
-[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/reference/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
+[Queues](/queues/) is Cloudflare's global message queueing service, providing [guaranteed delivery](/queues/reference/delivery-guarantees/) and [message batching](/queues/configuration/batching-retries/). To interact with a queue with Workers, you need a producer Worker to send messages to the queue and a consumer Worker to pull batches of messages out of the Queue. A single Worker can produce to and consume from multiple Queues.
 
 To bind Queues to your producer Worker, assign an array of the below object to the `[[queues.producers]]` key.
 
@@ -716,7 +739,7 @@ To bind Queues to your producer Worker, assign an array of the below object to t
 
 - `delivery_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The number of seconds to [delay messages sent to a queue](/queues/reference/batching-retries/#delay-messages) for by default. This can be overridden on a per-message or per-batch basis.
+  - The number of seconds to [delay messages sent to a queue](/queues/configuration/batching-retries/#delay-messages) for by default. This can be overridden on a per-message or per-batch basis.
 
 {{</definitions>}}
 
@@ -750,7 +773,7 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `max_retries` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/reference/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/configuration/javascript-apis/#messagebatch) is invoked.
 
 - `dead_letter_queue` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -761,11 +784,11 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 - `max_concurrency` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
-  - Refer to [Consumer concurrency](/queues/reference/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
+  - Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
 
 - `retry_delay` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The number of seconds to [delay retried messages](/queues/reference/batching-retries/#delay-messages) for by default, before they are re-delivered to the consumer. This can be overridden on a per-message or per-batch basis [when retrying messages](/queues/reference/batching-retries/#explicit-acknowledgement-and-retries).
+  - The number of seconds to [delay retried messages](/queues/configuration/batching-retries/#delay-messages) for by default, before they are re-delivered to the consumer. This can be overridden on a per-message or per-batch basis [when retrying messages](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries).
 
 {{</definitions>}}
 
@@ -937,7 +960,7 @@ Example:
 ---
 filename: wrangler.toml
 ---
-analytics_engine_datasets = { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+analytics_engine_datasets = [{ binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }]
 
 # or
 
@@ -950,7 +973,7 @@ dataset = "<DATASET_NAME>"
 
 To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
 
-To create a [binding](/workers/configuration/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
 
 {{<definitions>}}
 

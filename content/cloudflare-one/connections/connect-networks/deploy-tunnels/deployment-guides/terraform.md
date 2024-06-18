@@ -13,7 +13,7 @@ meta:
 
 In this guide, you will use Terraform to deploy:
 
-- A Google Cloud Project (GCP) virtual machine that runs a simple HTTP test server
+- A Google Cloud Project (GCP) virtual machine that runs an HTTP test server
 - A Cloudflare Tunnel that makes the server available over the Internet
 - A Cloudflare Access policy that defines who can connect to the server
 

@@ -4,7 +4,7 @@ summary: Build a counter using Durable Objects and Workers with RPC methods.
 tags:
   - Durable Objects
 pcx_content_type: configuration
-title: Build a counter 
+title: Build a counter
 weight: 3
 layout: example
 ---
@@ -38,22 +38,22 @@ export default {
     // ID for two different strings (or for different classes).
     let id = env.COUNTERS.idFromName(name);
 
-    // Construct the stub for the Durable Object using the ID. 
+    // Construct the stub for the Durable Object using the ID.
     // A stub is a client Object used to send messages to the Durable Object.
     let stub = env.COUNTERS.get(id);
 
     // Send a request to the Durable Object using RPC methods, then await its response.
     let count = null;
-		switch (url.pathname) {
+    switch (url.pathname) {
       case "/increment":
-				count = await stub.increment();
+        count = await stub.increment();
         break;
-			case "/decrement":
-				count = await stub.decrement();
-				break;
+      case "/decrement":
+        count = await stub.decrement();
+        break;
       case "/":
         // Serves the current value.
-				count = await stub.getCounterValue();
+        count = await stub.getCounterValue();
         break;
       default:
         return new Response("Not found", { status: 404 });
@@ -66,22 +66,22 @@ export default {
 // Durable Object
 export class Counter extends DurableObject {
 
-	async getCounterValue() {
+  async getCounterValue() {
     let value = (await this.ctx.storage.get("value")) || 0;
     return value;
   }
 
-	async increment(amount = 1) {
+  async increment(amount = 1) {
     let value = (await this.ctx.storage.get("value")) || 0;
     value += amount;
-		// You do not have to worry about a concurrent request having modified the value in storage. 
-    // "input gates" will automatically protect against unwanted concurrency. 
-    // Read-modify-write is safe. 
+    // You do not have to worry about a concurrent request having modified the value in storage.
+    // "input gates" will automatically protect against unwanted concurrency.
+    // Read-modify-write is safe.
     await this.ctx.storage.put("value", value);
     return value;
   }
 
-	async decrement(amount = 1) {
+  async decrement(amount = 1) {
     let value = (await this.ctx.storage.get("value")) || 0;
     value -= amount;
     await this.ctx.storage.put("value", value);
@@ -100,12 +100,12 @@ filename: index.ts
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
-	COUNTERS: DurableObjectNamespace<Counter>;
+  COUNTERS: DurableObjectNamespace<Counter>;
 }
 
 // Worker
 export default {
-  async fetch(request: Request, env: Env) {
+  async fetch(request, env) {
     let url = new URL(request.url);
     let name = url.searchParams.get("name");
     if (!name) {
@@ -121,21 +121,21 @@ export default {
     // ID for two different strings (or for different classes).
     let id = env.COUNTERS.idFromName(name);
 
-    // Construct the stub for the Durable Object using the ID. 
+    // Construct the stub for the Durable Object using the ID.
     // A stub is a client Object used to send messages to the Durable Object.
     let stub = env.COUNTERS.get(id);
 
-		let count = null;
-		switch (url.pathname) {
+    let count = null;
+    switch (url.pathname) {
       case "/increment":
-				count = await stub.increment();
+        count = await stub.increment();
         break;
-			case "/decrement":
-				count = await stub.decrement();
-				break;
+      case "/decrement":
+        count = await stub.decrement();
+        break;
       case "/":
         // Serves the current value.
-				count = await stub.getCounterValue();
+        count = await stub.getCounterValue();
         break;
       default:
         return new Response("Not found", { status: 404 });
@@ -143,27 +143,27 @@ export default {
 
     return new Response(`Durable Object '${name}' count: ${count}`);
   }
-};
+} satisfies ExportedHandler<Env>;
 
 // Durable Object
 export class Counter extends DurableObject {
 
-	async getCounterValue() {
+  async getCounterValue() {
     let value = (await this.ctx.storage.get("value")) || 0;
     return value;
   }
 
-	async increment(amount = 1) {
+  async increment(amount = 1) {
     let value: number = (await this.ctx.storage.get("value")) || 0;
     value += amount;
-		// You do not have to worry about a concurrent request having modified the value in storage. 
-    // "input gates" will automatically protect against unwanted concurrency. 
-    // Read-modify-write is safe. 
+    // You do not have to worry about a concurrent request having modified the value in storage.
+    // "input gates" will automatically protect against unwanted concurrency.
+    // Read-modify-write is safe.
     await this.ctx.storage.put("value", value);
     return value;
   }
 
-	async decrement(amount = 1) {
+  async decrement(amount = 1) {
     let value: number = (await this.ctx.storage.get("value")) || 0;
     value -= amount;
     await this.ctx.storage.put("value", value);

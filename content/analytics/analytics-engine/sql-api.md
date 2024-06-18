@@ -9,7 +9,7 @@ meta:
 
 # Workers Analytics Engine SQL API
 
-The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Anaytics Engine datasets.
+The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL queries against your Workers Analytics Engine datasets.
 
 The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`.
 

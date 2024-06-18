@@ -58,7 +58,7 @@ To enable Logpush to Azure:
         1. Navigate to `Shared access signature` under storage account.
         2. Generate SAS token:
           - Select only `Blob` for `Allowed service`.
-          - Select only `Object` for `Allowed resporce types`.
+          - Select only `Object` for `Allowed response types`.
           - Select only `Write` for `Allowed permissions`.
           - Uncheck `Enables deletion of versions`.
           - Provide expiry time at least five years into the future (from now).

@@ -37,7 +37,7 @@ As an exception to Structured Clone, application-defined classes (or objects wit
 The RPC system also supports a number of types that are not Structured Cloneable, including:
 
 - Functions, which are replaced by stubs that call back to the sender.
-- Application-define classes that extend `RpcTarget`, which are similarly replaced by stubs.
+- Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
 - [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
 - [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
 - RPC stubs themselves, even if the stub was received from a third Worker.
@@ -248,4 +248,4 @@ Currently, this proxying only lasts until the end of the Workers' execution cont
 
 ## Limitations
 
-- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, any RPC calls to Worker A will run locally.
+- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.

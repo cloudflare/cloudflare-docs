@@ -2,8 +2,6 @@
 pcx_content_type: configuration
 weight: 1
 title: Workers Bindings
-meta:
-    description:
 ---
 
 # Bindings
@@ -12,7 +10,7 @@ meta:
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones.
 
-To use Workers AI with Workers, you must create a [Workers AI binding](/workers/configuration/bindings/#workers-ai-bindings). Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform. You create bindings on the Cloudflare dashboard or by updating your [`wrangler.toml` file](/workers/wrangler/configuration/).
+To use Workers AI with Workers, you must create a Workers AI [binding](/workers/runtime-apis/bindings/). Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform. You create bindings on the Cloudflare dashboard or by updating your [`wrangler.toml` file](/workers/wrangler/configuration/).
 
 To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
@@ -40,7 +38,7 @@ To configure a Workers AI binding in your Pages Function, you must use the Cloud
 `async env.AI.run()` runs a model. Takes a model as the first parameter, and an object as the second parameter.
 
 ```javascript
-const answer = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+const answer = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
     prompt: "What is the origin of the phrase 'Hello, World'"
 });
 ```
@@ -61,7 +59,7 @@ const answer = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
 
 
 ```javascript
-const answer = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+const answer = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
     prompt: "What is the origin of the phrase 'Hello, World'",
     stream: true
 });

@@ -4,15 +4,21 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Workers AI Models Using a Jupyter Notebook
+meta:
+  description: This notebook explores the Workers AI REST API using Python and the requests library.
+tags:
+  - AI
 ---
 
 # Explore Workers AI Models Using a Jupyter Notebook
+
+{{<tutorial-date-info>}}
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
 You can [download the Workers AI notebook](/workers-ai/static/documentation/notebooks/cloudflare-workers-ai.ipynb) or view the embedded notebook below.
 
-{{<youtube id="uv1Cz_BDFmo">}}
+{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45" video_title="Explore Workers AI Models Using a Jupyter Notebook">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai the <audio> tag is hard coded)
 
@@ -82,7 +88,7 @@ else:
 Explore all [Text Generation Models](/workers-ai/models/#text-generation)
 
 ```python
-model = "@cf/meta/llama-2-7b-chat-int8"
+model = "@cf/meta/llama-3-8b-instruct"
 
 response = requests.post(
     f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}",

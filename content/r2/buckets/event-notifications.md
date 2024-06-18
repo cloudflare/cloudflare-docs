@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Event notifications
 
-Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/reference/pull-consumers/) from outside of Cloudflare Workers. 
+Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers. 
 
 
 {{<Aside type="note" header="Open Beta">}}
@@ -21,7 +21,7 @@ The event notifications feature is currently in open beta. To report bugs or req
 Before getting started, you will need:
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
 - An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
-- A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/reference/pull-consumers/) enabled on your Queue.
+- A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/configuration/pull-consumers/) enabled on your Queue.
 
 ### Set up Wrangler
 
@@ -84,17 +84,22 @@ For a more complete step-by-step example, refer to the [Log and store upload eve
 
 ## Message format
 
-Queue consumers receive notifications as [Messages](/queues/reference/javascript-apis/#message). The following is an example of the body of a message that a consumer Worker will receive:
+Queue consumers receive notifications as [Messages](/queues/configuration/javascript-apis/#message). The following is an example of the body of a message that a consumer Worker will receive:
 
 ```json
 {
   "account": "3f4b7e3dcab231cbfdaa90a6a28bd548",
-  "action": "PutObject",
+  "action": "CopyObject",
   "bucket": "my-bucket",
   "object": {
     "key": "my-new-object",
     "size": 65536,
     "eTag": "c846ff7a18f28c2e262116d6e8719ef0"
+  },
+  "eventTime": "2024-05-24T19:36:44.379Z",
+  "copySource": {
+    "bucket": "my-bucket",
+    "object": "my-original-object"
   }
 }
 ```
@@ -187,6 +192,50 @@ Queue consumers receive notifications as [Messages](/queues/reference/javascript
       </td>
       <td>
         The entity tag (eTag) of the object. Note: not present for object-delete events.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>eventTime</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The time when the action that triggered the event occurred.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource</code>
+      </td>
+      <td>
+        Object
+      </td>
+      <td>
+        A nested object containing details about the source of a copied object. Note: only present for events triggered by <code>CopyObject</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource.bucket</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The bucket that contained the source object.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource.object</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The name of the source object.
       </td>
     </tr>
   </tbody>

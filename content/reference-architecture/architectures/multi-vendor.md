@@ -21,7 +21,7 @@ This reference architecture is designed for IT, security or network professional
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
-- What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (5 minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (2 minutes)
+{{<render file="_what-is-cloudflare-link.md">}}
 
 Those who read this reference architecture will learn:
 
@@ -30,7 +30,7 @@ Those who read this reference architecture will learn:
 
 ## Cloud based security and performance providers
 
-Before discussing multi-vendor security and performance solutions, it’s important to note how cloud-based solutions providing these services work in general and how traffic is routed through them. 
+Before discussing multi-vendor security and performance solutions, it’s important to note how cloud-based solutions providing these services work in general and how traffic is routed through them.
 
 Cloud-based security and performance providers like Cloudflare work as a reverse proxy. A reverse proxy is a server that sits in front of web servers and forwards client requests to those web servers. Reverse proxies are typically implemented to help increase security, performance, and reliability.
 
@@ -126,7 +126,7 @@ One note on a stacked approach is that in certain cases for particular point sol
 
 While Cloudflare and many providers maintain a high degree of availability and a robust fault tolerant architecture, some customers have a further desire to reduce dependency and respectively single vendor point of failures. It’s important to plan for a worst case scenario where some or all of a vendor's services are down and how to work around that in a short timeframe. Customers must consider how to have redundancy across DNS providers, networks, and origin connectivity to eliminate the risk of  a single vendor/component failure cascading into a widespread outage.
 
-While the specifics may vary widely depending on the vendor and business case, the technical considerations for a multi-vendor deployment can be bucketed into three areas: routing logic, configuration management and origin connectivity. 
+While the specifics may vary widely depending on the vendor and business case, the technical considerations for a multi-vendor deployment can be bucketed into three areas: routing logic, configuration management and origin connectivity.
 
 ### Routing
 
@@ -205,7 +205,7 @@ Once traffic is routed to the security and performance service provider via DNS,
 
 ### Multi-vendor active-active security with multi-vendor DNS from same providers
 
-The below example describes a setup where the DNS providers are also the security proxy vendors, and DNS records are kept in sync via zone transfers. A multi-vendor DNS solution is recommended as the preferred and most resilient solution. 
+The below example describes a setup where the DNS providers are also the security proxy vendors, and DNS records are kept in sync via zone transfers. A multi-vendor DNS solution is recommended as the preferred and most resilient solution.
 
 here are different setups possible between the different DNS vendors and these are discussed in more detail in the ‘Multi-vendor DNS setup’ section of this document with advantages/disadvantages of each.
 
@@ -280,7 +280,7 @@ In a hidden primary setup, users establish an unlisted primary server to store a
 
 Although the secondary servers essentially fulfill the function of a primary server, the hidden setup allows users to hide their origin IP and shield it from attacks. Additionally, the primary can be taken offline for maintenance without causing DNS service to be disrupted.
 
-This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact. 
+This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact.
 
 Pros:
 * Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
@@ -310,7 +310,7 @@ The below diagram describes the default connectivity to origins as requests flow
 
 ![Figure 12: Connectivity from Cloudflare to origin server(s) via Internet](/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png "Figure 12")
 
-Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend whitelisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
+Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
 
 Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is configured, the Cloudflare global network will announce a customer’s own IP prefixes and the prefixes can be used with the respective Cloudflare Layer 7 services.
 
@@ -330,7 +330,7 @@ The firewall and security posture is hardened by locking down all origin server 
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. Note, this option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
 
-### Direct connection 
+### Direct connection
 
 Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet Exchanges (IXs) where Internet Service Providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.
 

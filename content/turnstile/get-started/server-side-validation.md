@@ -22,6 +22,10 @@ The siteverify endpoint needs to be passed a {{<glossary-tooltip term_id="secret
 
 A response may only be validated once. If the same response is presented twice, the second and each subsequent request will generate an error stating that the response has already been consumed. If an application requires to retry failed requests, it must utilize the idempotency functionality. You can do so by providing a UUID as the `idempotency_key` parameter of your `POST` request when initially validating the response and the same UUID with any subsequent request for that response.
 
+{{<Aside type="note">}}
+Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/index.mjs).
+{{</Aside>}}
+
 <div>
 
 ```sh
@@ -127,15 +131,13 @@ async function handlePost(request) {
 ```
 </div>
 
-Refer to the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/index.mjs).
-
 ## Accepted parameters
 
 | POST Parameter | Required/Optional | Description |
 | --- | --- | --- |
-| `secret` | Required | The site's secret key. |
+| `secret` | Required | The widget's secret key. The secret key can be found under widget settings in the Cloudflare dashboard under Turnstile. |
 | `response` | Required | The response provided by the Turnstile client-side render on your site. |
-| `remoteip` | Optional | The user's IP address. |
+| `remoteip` | Optional | The visitor's IP address. |
 | `idempotency_key` | Optional | The UUID to be associated with the response. |
 
 {{<Aside type="note">}}

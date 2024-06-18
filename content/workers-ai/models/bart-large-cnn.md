@@ -8,8 +8,7 @@ model:
     id: "6f4e65d8-da0f-40d2-9aa4-db582a5a04fd"
     name: "Summarization"
     description: "Summarization is the task of producing a shorter version of a document while preserving its important information. Some models can extract text from the original input, while other models can generate entirely new text."
-  tags:
-    - "summarization"
+  tags: []
   properties:
     - property_id: "beta"
       value: "true"
@@ -19,7 +18,7 @@ layout: "model"
 weight: 0
 title: "bart-large-cnn"
 json_schema:
-  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"input_text\": {\n      \"type\": \"string\"\n    },\n    \"max_length\": {\n      \"type\": \"integer\",\n      \"default\": 1024\n    }\n  },\n  \"required\": [\n    \"input_text\"\n  ]\n}"
+  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"input_text\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"max_length\": {\n      \"type\": \"integer\",\n      \"default\": 1024\n    }\n  },\n  \"required\": [\n    \"input_text\"\n  ]\n}"
   output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"summary\": {\n      \"type\": \"string\"\n    }\n  }\n}"
 
 ---

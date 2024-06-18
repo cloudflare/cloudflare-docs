@@ -78,7 +78,7 @@ Generated column definitions cannot be directly modified. To change how a genera
 
 Generated columns are not just limited to JSON functions like `json_extract`: you can use almost any available function to define how a generated column is generated.
 
-For example, you could generate a `date` column based on a `timestamp` column, automatically converting a Unix timestamp into a `YYYY-MM-dd` format within your database:
+For example, you could generate a `date` column based on the `timestamp` column from the previous `sensor_reading` table, automatically converting a Unix timestamp into a `YYYY-MM-dd` format within your database:
 
 ```sql
 ALTER TABLE your_table
@@ -92,8 +92,8 @@ Alternatively, you could define an `expires_at` column that calculates a future 
 -- Filter out "expired" results based on your generated column:
 -- SELECT * FROM your_table WHERE current_date() > expires_at
 ALTER TABLE your_table
--- calculates a date (YYYY-MM-dd) 30 days from the current date.
-ADD COLUMN expires_at AS (date('now', '+30 days');
+-- calculates a date (YYYY-MM-dd) 30 days from the timestamp.
+ADD COLUMN expires_at AS (date(timestamp, '+30 days'));
 ```
 
 ## Additional considerations

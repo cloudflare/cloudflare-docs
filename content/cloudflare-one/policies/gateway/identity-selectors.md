@@ -39,9 +39,9 @@ This page shows the information reported by the IdP when the user registered the
 
 Specify a value from the SAML Attribute Assertion.
 
-| UI name         | API example                                 |
-| --------------- | ------------------------------------------- |
-| SAML Attributes | `identity.saml_attributes == "\"finance\""` |
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| SAML Attributes | `identity.saml_attributes == "\"group=finance\""` |
 
 ### User Email
 
@@ -73,7 +73,7 @@ Use this selector to create identity-based Gateway rules based on an IdP group n
 
 | UI name          | API example                             |
 | ---------------- | --------------------------------------- |
-| User Group Email | `identity.groups.name == "\"finance\""` |
+| User Group Names | `identity.groups.name == "\"finance\""` |
 
 ### User Name
 

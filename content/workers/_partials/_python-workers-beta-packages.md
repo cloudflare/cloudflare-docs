@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="note" header="Python Workers are in open beta.">}}
-You can currently only use [built-in packages](/workers/languages/python/packages) in local development. Support for deploying packages with a `requirements.txt` file is coming soon.
+You can currently only use [built-in packages](/workers/languages/python/packages/#supported-packages) in local development. Support for deploying packages with a `requirements.txt` file is coming soon.
 {{</Aside>}}

@@ -21,7 +21,7 @@
 
         <workers-playground-link></workers-playground-link>
         <div class="DocsMarkdown--content-column">
-          {{- .Params.Summary -}}
+          {{- .Params.Summary | .Page.RenderString -}}
         </div>
 
         {{- .Content -}}

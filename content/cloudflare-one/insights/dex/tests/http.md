@@ -34,10 +34,10 @@ To set up an HTTP test for an application:
 3. Fill in the following fields:
     - **Name**: Enter any name for the test.
     - **Target**: Enter the URL of the website or application that you want to test (for example, `https://jira.site.com`). Both public and private hostnames are supported. If testing a private hostname, ensure that the domain is on your [local domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) list.
+    - **Source device profiles**: (Optional) Select the [WARP device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) that you want to run the test on. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
     - **Test type**: Select _HTTP Get_.
     - **Test frequency**: Specify how often the test will run. Input a minute value between 5 and 60.
-
-The test will now run on all devices connected to your Zero Trust organization via the WARP client.
+4. Select **Add test**.
 
 Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of your test.
 
@@ -47,7 +47,7 @@ An HTTP test measures the following data:
 
 | Data | Description |
 | ----------- | ----------- |
-| Resource fetch time | Difference between the start and end time of the test. Calculated by adding the server response time + DNS response time. |
+| Resource fetch time | Total time of all steps of the request, measured from [`startTime` to `responseEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API/Resource_timing). |
 | Server response time | Round-trip time for the device to receive a response from the target. |
 | DNS response time | Round-trip time for the DNS query to resolve. |
 | HTTP status codes | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) returned by the target. |

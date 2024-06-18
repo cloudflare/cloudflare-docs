@@ -8,9 +8,11 @@ weight: 9
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
+{{<render file="gateway/_domain-categories.md">}}
+
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
-To request changes to a domain's categorization, refer to [Change categorization](/security-center/investigate/change-categorization/).
+To request changes to a domain's categorization, refer to [Change categorization](/security-center/investigate/change-categorization/). For more information on investigating potentially risky domains, refer to [Investigate threats](/security-center/investigate/investigate-threats/#domain).
 
 {{<Aside type="note" header="Subdomain category">}}
 Subdomains that have not been assigned a category will inherit the category of their parent domain. When Gateway categorizes a subdomain, the subdomain will carry only its own category. Categorized subdomains will not inherit their parent domain's categories.
@@ -38,12 +40,10 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 ## Content categories
 
-{{<table-wrap>}}
-
 | Category               | Definition                                                                                                                                                                        |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes.                                                                                 |
-| Business & Economy     | Sites that are related to business, economy, finance, education, science and technology.                                                                                          |
+| Adult Themes           | Sites that are hosting content related to pornography, nudity, sexuality, and other adult themes. |
+| Business & Economy     | Sites that are related to business, economy, finance, education, science and technology. |
 | Child Abuse            | Sites hosting child abuse content.                                                                                                                                                |
 | CIPA                   | Sites related to aiding schools and organizations in abiding by CIPA requirements.                                                                                                |
 | Education              | Sites hosting educational content that are not included in other categories like Science, Technology or Educational institutions.                                                 |
@@ -68,8 +68,6 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Vehicles               | Sites related vehicles, automobiles, including news, reviews, and other hobbyist information.                                                                                     |
 | Violence               | Sites hosting and/or promoting violent content.                                                                                                                                   |
 | Weather                | Sites related to weather.                                                                                                                                                         |
-
-{{</table-wrap>}}
 
 ### Miscellaneous subcategories
 
@@ -196,6 +194,7 @@ Subdomains that have not been assigned a category will inherit the category of t
 | 24          | Society & Lifestyle    | 158            | Tobacco                                    |
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
+| 24          | Society & Lifestyle    | 181            | Alcohol                                    |
 | 25          | Sports                 | 152            | Sports                                     |
 | 26          | Technology             | 69             | APIs                                       |
 | 26          | Technology             | 81             | Content Servers                            |
@@ -227,13 +226,13 @@ When creating a DNS block policy for security or content categories, you can opt
 
 Our domain categorization process consists of a robust data-driven approach that combines Cloudflare's proprietary data and third-party intelligence (encompassing both open-source and commercial feeds), with machine learning models and insights from our community feedback. This multifaceted strategy ensures the most accurate, timely, and comprehensive domain categorization available.
 
-First, the categorization engine begins with a vast array of data sources. This includes: 
+First, the categorization engine begins with a vast array of data sources. This includes:
 
 1. Cloudflare’s proprietary data leveraging Cloudflare’s extensive network data.
 
 2. Third-party intelligence feeds. We incorporate data from over 30 open-source intelligence feeds and premium commercial feeds, including industry leaders like Avira, Zvelo and others. This aggregation enriches our categorization with diverse insights and global threat intelligence.
 
-Then, the initial categorization is refined and continuously improved through: 
+Then, the initial categorization is refined and continuously improved through:
 
 3. Machine learning models. Our advanced algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
 

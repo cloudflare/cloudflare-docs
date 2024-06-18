@@ -23,13 +23,13 @@ Additionally, surrogates will not honor `Cache-Control` headers in the response 
 
 ## Interaction with other Cloudflare features
 
-### Edge Cache TTL page rule
+### Edge Cache TTL cache rule
 
-The Edge Cache TTL page rule overrides the amount of time an asset is cached on the edge (Cloudflare data centers). This page rule overrides directives in `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` which manage how long an asset is cached on the edge. You can set this page rule from the rules section of the dashboard.
+The [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the amount of time an asset is cached on the edge (Cloudflare data centers). This cache rule overrides directives in `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` which manage how long an asset is cached on the edge. You can create this rule in the dashboard in **Cache** > **Cache Rules**.
 
-### Browser Cache TTL page rule
+### Browser Cache TTL cache rule
 
-The Browser Cache TTL page rule overrides the amount of time an asset is cached by browsers/servers downstream of Cloudflare. Browser Cache TTL only modifies the `Cache-Control` response header. This page rule does not modify `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` response headers.
+The [Browser Cache TTL cache rule](/cache/how-to/cache-rules/settings/#browser-ttl) overrides the amount of time an asset is cached by browsers/servers downstream of Cloudflare. Browser Cache TTL only modifies the `Cache-Control` response header. This cache rule does not modify `Cloudflare-CDN-Cache-Control/CDN-Cache-Control` response headers.
 
 ### Other Origin Response Headers
 
@@ -43,7 +43,7 @@ In situations where Cloudflare does not receive `Cloudflare-CDN-Cache-Control`, 
 
 ### Manage cached assets TTLs
 
-Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately for origin caches, CDN caches, and browser caches. Previously, this scenario required creating page rules, but `CDN-Cache-Control` accomplishes the desired behavior through origin-set response headers. The example below shows how you could manage your cached asset’s TTLs.
+Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately for origin caches, CDN caches, and browser caches. The example below shows how you can manage your cached asset’s TTLs using origin-set response headers.
 
 Headers:
 

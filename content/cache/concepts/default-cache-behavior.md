@@ -9,7 +9,9 @@ meta:
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
-{{<Aside type="warning">}}Page Rules will be deprecated, and you should instead use [Cache Rules](/cache/how-to/cache-rules/).{{</Aside>}}
+{{<Aside type="warning">}}
+Page Rules are a legacy product. Consider using [Cache Rules](/cache/how-to/cache-rules/) instead.
+{{</Aside>}}
 
 - Cloudflare **does not** cache the resource when:
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.

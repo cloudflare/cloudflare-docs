@@ -21,11 +21,11 @@ Cloudflare Calls simplifies the management of peer connections and media tracks 
 - **Retrieve Session Information**: Fetches detailed information about a specific session.
   - `GET /apps/{appId}/sessions/{sessionId}`
 
-[View full API and schema (OpenAPI format)](https://gist.githubusercontent.com/renandincer/dd6e913a8c824d718e9eeb2e2ed0b783/raw/11e24edac2b0d8e1783f340793673cd576ac417c/Calls%2520API%2520v1)
+[View full API and schema (OpenAPI format)](/calls/static/calls-api-2024-05-21.yaml)
 
 ## Handling Secrets
 
-It is vital to manage App ID and it's secret securely. While track and session IDs can be public, they should be protected to prevent misuse. An attacker could exploit these IDs to disrupt service if your backend server does not authenticate request origins properly, for example by sending requests to close tracks on sessions other than their own. Ensuring the security and authenticity of requests to your backend server is crucial for maintaining the integrity of your application.
+It is vital to manage App ID and its secret securely. While track and session IDs can be public, they should be protected to prevent misuse. An attacker could exploit these IDs to disrupt service if your backend server does not authenticate request origins properly, for example by sending requests to close tracks on sessions other than their own. Ensuring the security and authenticity of requests to your backend server is crucial for maintaining the integrity of your application.
 
 ## Using STUN and TURN Servers
 

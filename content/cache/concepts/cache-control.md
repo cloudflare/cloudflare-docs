@@ -292,10 +292,10 @@ Review the examples below to learn which directives to use with the `Cache-Contr
 
 {{</details>}}
 
-{{<details header="Ensure a secret asset is never cache.">}}
+{{<details header="Ensure a secret asset is never cached.">}}
 
 `Cache-Control: no-store`
-  
+
 {{</details>}}
 
 {{<details header="Cache assets on browsers but not on proxy cache.">}}
@@ -312,7 +312,7 @@ Review the examples below to learn which directives to use with the `Cache-Contr
 
 {{<details header="Cache assets in proxy caches but REQUIRE revalidation by the proxy when serve.">}}
 
-`Cache-Control: public, no-cache, proxy-revalidate` or `Cache-Control: public, s-maxage=0`  
+`Cache-Control: public, no-cache, proxy-revalidate` or `Cache-Control: public, s-maxage=0`
 
 {{</details>}}
 
@@ -362,7 +362,7 @@ In this section, we provide details regarding how other Cloudflare features inte
 
 ### Browser Cache TTL
 
-[Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
+[Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/#browser-cache-ttl) Cache Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
 ### Polish
 

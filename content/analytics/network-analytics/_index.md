@@ -16,7 +16,9 @@ For a technical deep-dive into Network Analytics, refer to our [blog post](https
 
 ## Remarks
 
-The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/setup/accounts-and-zones/#zones) in your Cloudflare account.
+* The Network Analytics logs refer to IP traffic of Magic Transit customer prefixes/leased IP addresses or Spectrum applications. These logs are not directly associated with the [zones](/fundamentals/setup/accounts-and-zones/#zones) in your Cloudflare account.
+
+* The data retention for Network Analytics is 16 weeks. Additionally, data older than eight weeks might have lower resolution when using narrow time frames.
 
 ## Related resources
 

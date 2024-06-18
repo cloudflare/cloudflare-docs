@@ -10,29 +10,29 @@ meta:
 
 # Cloudflare API Shield
 
-Cloudflare offers a range of products to help identify and address API vulnerabilities.
+{{<description>}} 
+Identify and address your API vulnerabilities.
+{{</description>}}
+
+{{<plan type="ent-add-on">}}
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Why care about API security?
 
-APIs have become the [backbone of popular web services](https://blog.postman.com/intro-to-apis-history-of-apis/), helping the Internet become more accessible and useful.
-
-As APIs have become more prevalent, however, so have their problems:
-
-*   Many companies have [thousands of APIs](/api-shield/security/api-discovery/), including ones they do not even know about.
-*   To support a large base of users, many APIs are protected by a negative security model that makes them vulnerable to credential-stuffing attacks and automated scanning tools.
-*   With so many endpoints and users, it’s difficult to recognize brute-force attacks against [specific endpoints](/api-shield/security/volumetric-abuse-detection/).
-*   Sophisticated attacks are even harder to recognize, often because even development teams are unaware of common and uncommon [usage patterns](/api-shield/security/sequence-analytics/).
+{{<render file="_why-care.md" productFolder="api-shield" >}}
 
 Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 
 ## Features
 
-Cloudflare offers the following features to help secure your APIs:
+{{<feature header="Security features" href="/api-shield/security/">}}
+Secure your APIs using API Shield's security features.
+{{</feature>}}
 
-- [Security](/api-shield/security/)
-- [Management, Monitoring, and more](/api-shield/api-gateway/)
+{{<feature header="Management, monitoring, and more" href="/api-shield/api-gateway/">}}
+A package of features that will do everything for your APIs.
+{{</feature>}}
 
 ## Availability
 

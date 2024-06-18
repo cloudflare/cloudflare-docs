@@ -6,14 +6,20 @@ meta:
   description: Workers plans and pricing information.
 ---
 
+<style>
+  .DocsMarkdown--table-wrap tr > :first-child {
+    word-break: normal;
+  }
+</style>
+
 # Pricing
 
 {{<Aside type="warning">}}
 
-All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024. 
+All users on the Workers Paid plan have been **automatically migrated** from the Bundled and Unbound usage models to the [Standard usage model](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) on March 1, 2024.
 
-- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/). 
-- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/). 
+- To learn what this migration means for Workers pricing, refer to [Pricing](/workers/platform/pricing/).
+- To learn about how this migration impacts Worker limits, refer to [Limits](/workers/platform/limits/).
 
 
 {{</Aside>}}
@@ -25,32 +31,67 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 All included usage is on a monthly basis.
 
 {{<Aside type="note" header="Pages Functions billing">}}
-  
+
 All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
 ## Workers
 
-Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation. 
+Usage models are settings on your Workers that specify how you are billed for usage, as well as the upper [limits](/workers/platform/limits/#worker-limits) for how many milliseconds of {{<glossary-tooltip term_id="CPU time" link="/workers/glossary/?term=cpu+time">}}CPU time{{</glossary-tooltip>}} your Worker can use per invocation.
 
-Users on the Workers Paid plan only have access to the Standard usage model. 
+Users on the Workers Paid plan only have access to the Standard usage model.
 
-Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models. 
+Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models.
 
 
 {{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
-| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation                    |
+| **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation                    |
 
 {{</table-wrap>}}
 <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
 ### Example pricing: Standard Usage Model
 
-A Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+#### Example 1
+
+A Worker that serves 15 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $1.50             | (15,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
+| **CPU time**       |  $1.50             | ((7 ms of CPU time per request * 15,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $8.00             |                                                                                                          |
+
+{{</table-wrap>}}
+
+#### Example 2
+
+A Worker that runs on a [Cron Trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report.
+- 720 requests/month
+- 3 minutes (180,000ms) of CPU time per request
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+{{<table-wrap>}}
+
+|                    |  Monthly Costs      |  Formula                                                                                                 |
+| ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription**   |  $5.00              |                                                                                                          |
+| **Requests**       |  $0.00             | -                                |
+| **CPU time**       |  $1.99             | ((180,000 ms of CPU time per request * 720 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $6.99            |                                                                                                          |
+{{</table-wrap>}}
+
+#### Example 3
+
+A high traffic Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
 
 {{<table-wrap>}}
 
@@ -58,8 +99,8 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $5.00              |                                                                                                          |
 | **Requests**       |  $27.00             | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 * $0.30                                |
-| **CPU time**       |  $13.40             | (7 ms of CPU time per request * 100,000,000 requests - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
-| **Total**          |  $45.40             |                                                                                                          |
+| **CPU time**       |  $13.40             | ((7 ms of CPU time per request * 100,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 * $0.02  |
+| **Total**          |  $45.40
 
 {{</table-wrap>}}
 
@@ -67,7 +108,7 @@ A Worker that serves 100 million requests per month, and uses an average of 7 mi
 
 To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
 
-If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker. 
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker.
 
 {{</Aside>}}
 
@@ -78,7 +119,7 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 |             |  Requests<sup>1</sup>                                               | Duration                                                                                  | CPU time |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | **Bundled** |  10 million included per month <br /> +$0.50 per additional million | No charge for duration                                                                    | 50 milliseconds CPU time per invocation                    |
-| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/reference/javascript-apis/#consumer) invocation        |
+| **Unbound** |  1 million included per month <br /> +$0.15 per additional million  | 400,000 GB-s included per month <br /> +$12.50 per additional million GB-s<sup>2, 3</sup>  | 30 seconds of CPU time per invocation <br /> 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation        |
 
 {{</table-wrap>}}
 
@@ -123,9 +164,13 @@ Resulting in the following estimated costs:
 
 {{</table-wrap>}}
 
-### How to switch the usage model
+### How to switch usage models
 
-Usage models can be changed at the individual Worker level: 
+{{<Aside type="note">}}
+Only some Workers Enterprise customers maintain the ability to change usage models.
+{{</Aside>}}
+
+Usage models can be changed at the individual Worker level:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
@@ -133,14 +178,13 @@ Usage models can be changed at the individual Worker level:
 To change your default account-wide usage model:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Change**. 
+3. Find **Usage Model** on the right-side menu > **Change**.
 
 Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 
-
 ## Workers Trace Events Logpush
 
-Workers Logpush is only available on the Workers Paid plan. 
+Workers Logpush is only available on the Workers Paid plan.
 
 {{<table-wrap>}}
 
@@ -150,7 +194,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling.
 
 ## Workers KV
 
@@ -173,7 +217,7 @@ To learn more about Queues pricing and review billing examples, refer to [Queues
 
 ## D1
 
-D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans. 
+D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans.
 
 {{<render file="_d1-pricing.md">}}
 

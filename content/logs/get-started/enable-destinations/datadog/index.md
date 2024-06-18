@@ -16,20 +16,7 @@ Enable Logpush to Datadog via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-
-2. Select the Enterprise account or domain you want to use with Logpush.
-
-3. Go to **Analytics & Logs** > **Logs**.
-
-4. Select **Add Logpush job**.
-
-5. In **Select data set**, choose the dataset to push to a storage service, and select **Next**.
-
-6. In **Select data fields**:
-    - Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**. 
-    - In **Advanced Settings**, you need to select the timestamp format `RFC3339`(default). You can change the [sampling rate](/logs/get-started/api-configuration/#sampling-rate) and enable redaction for `CVE-2021-44228`.
-    - Under **Filters** you can select the events to include and/or remove from your logs. For more information, refer to [Filters](/logs/reference/filters/). Not all datasets have this option available.
+{{<render file="_enable-logpush-job.md">}}
 
 7. In **Select a destination**, choose **Datadog**.
 
@@ -51,6 +38,8 @@ To enable the Cloudflare Logpush service:
     {{</tabs>}}
 
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
+
+    - **Service**, **Hostname**, **Datadog ddsource field**, and **ddtags** fields can be set as URL parameters. For more information, refer to the [Logs section](https://docs.datadoghq.com/api/latest/logs/) in Datadog's documentation. While these parameters are optional, they can be useful for indexing or processing logs. Note that the values of these parameters may contain special characters, which should be URL encoded.
 
 9. Select **Validate access**.
 

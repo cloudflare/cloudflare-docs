@@ -1,16 +1,34 @@
 ---
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
+productLink: "/ai-gateway/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-05-22'
+  title: AI Gateway is now GA
+  description: |-
+    AI Gateway is moving from beta to GA.
+
+- publish_date: '2024-05-16'
+  title:
+  description: |-
+    * **Providers**: Added [Cohere](/ai-gateway/providers/cohere/) and [Groq](/ai-gateway/providers/groq/) as new providers.
+
+- publish_date: '2024-05-09'
+  title:
+  description: |-
+    * Added new endpoints to the [REST API](/api/operations/aig-config-create-gateway).
+
 - publish_date: '2024-03-26'
-  title: 
+  title:
   description: |-
     * [LLM Side Channel vulnerability fixed](https://blog.cloudflare.com/ai-side-channel-attack-mitigated)
     * **Providers**: Added Anthropic, Google Vertex, Perplexity as providers.
 
 - publish_date: '2023-10-26'
-  title: 
+  title:
   description: |-
     * **Real-time Logs**: Logs are now real-time, showing logs for the last hour. If you have a need for persistent logs, please let the team know on Discord. We are building out a persistent logs feature for those who want to store their logs for longer.
     * **Providers**: Azure OpenAI is now supported as a provider!
@@ -18,7 +36,7 @@ entries:
     * **Bug Fixes**: Errors with costs and tokens should be fixed.
 
 - publish_date: '2023-10-09'
-  title: 
+  title:
   description: |-
     * **Logs**: Logs will now be limited to the last 24h. If you have a use case that requires more logging, please reach out to the team on Discord.
     * **Dashboard**: Logs now refresh automatically.

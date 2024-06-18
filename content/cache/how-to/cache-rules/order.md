@@ -8,7 +8,7 @@ meta:
 
 # Order and priority
 
-Cache rules affect requests differently from Page Rules. This is how they are applied:
+Cache rules affect requests differently from Page Rules (legacy). This is how they are applied:
 
 1. Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request. For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. If several matching rules set a value for the same setting, the value in the last matching rule wins. For an example of a similar scenario where multiple rules match, refer to the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
 

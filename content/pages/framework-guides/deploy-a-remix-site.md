@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Remix site
+title: Remix
 ---
 
-# Deploy a Remix site
+# Remix
 
 [Remix](https://remix.run/) is a framework that is focused on fully utilizing the power of the web. Like Cloudflare Workers, it uses modern JavaScript APIs, and it places emphasis on web fundamentals such as meaningful HTTP status codes, caching and optimizing for both usability and performance.
 
@@ -142,7 +142,7 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = ({ context, params }: LoaderFunctionArgs) => {
+export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   let { results } = await env.DB.prepare(
     "SELECT * FROM products where id = ?1"

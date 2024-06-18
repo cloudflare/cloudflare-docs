@@ -55,6 +55,50 @@ Prism.languages.sh = {
       },
     },
   },
+
+  output: {
+    pattern: /.(?:.*(?:[\r\n]|.$))*/,
+    alias: "unselectable"
+  }
+};
+
+const originalGrammar = Prism.languages.powershell;
+
+// Custom `powershell` grammar
+Prism.languages.powershell = {
+  comment: {
+    pattern: /(^|[^'{\\$])#.*/,
+    alias: "unselectable",
+    lookbehind: true,
+  },
+
+  directory: {
+    pattern: /^PS (?=\w:[\w\\-]+> )/m,
+    alias: "unselectable",
+  },
+
+  command: {
+    pattern: /\w:[\w\\-]+> [^\r\n]+/,
+    inside: {
+      'prompt': {
+        pattern: /^\w:[\w\\-]+> /,
+        alias: "unselectable",
+      },
+      'comment': originalGrammar.comment,
+      'string': originalGrammar.string,
+      'boolean': originalGrammar.boolean,
+      'variable': /\$\w+\b/,
+      'function': originalGrammar.function,
+      'keyword': originalGrammar.keyword,
+      'operator': [
+        {
+          pattern: /(^|\W)(?:!|-(?:b?(?:and|x?or)|as|(?:Not)?(?:Contains|In|Like|Match)|eq|ge|gt|is(?:Not)?|Join|le|lt|ne|not|Replace|sh[lr])\b|[*%]=?)/i,
+          lookbehind: true
+        }
+      ],
+      'punctuation': originalGrammar.punctuation,
+    },
+  },
 };
 
 // Prism language aliases
@@ -304,7 +348,9 @@ export async function highlight(
     '<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally';
 
   if (theme === "light") output += " CodeBlock-is-light-in-light-theme";
-  output += ` CodeBlock--language-${lang}" language="${lang}">`;
+  output += ` CodeBlock--language-${lang}" language="${lang}"`;
+  if (frontmatter.header) output += ` title="${frontmatter.header}">`;
+  else output += ">"
 
   if (frontmatter.header)
     output += `<span class="CodeBlock--header">${frontmatter.header}</span>`;

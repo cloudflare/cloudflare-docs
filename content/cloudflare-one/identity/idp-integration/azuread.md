@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure AD®
-weight: 4
+weight: 6
 ---
 
 # Microsoft Azure AD®
@@ -107,13 +107,15 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 
-The Azure AD integration supports the [System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc7642.txt) protocol. With SCIM, Cloudflare Access can automatically deprovision users after they are deactivated in the identity provider and display synchronized group names in the Access policy builder.
+The Azure AD integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
 
-To synchronize users and groups between Access and Azure:
+### Prerequisites
+
+- Microsoft Entra ID P1 or P2 license
 
 ### 1. Enable SCIM in Zero Trust
 
@@ -151,13 +153,28 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 To check which users and groups were synchronized, select **View provisioning logs**.
 
+### Provisioning attributes
+
+Provisioning attributes define the user properties that Azure AD will synchronize with Cloudflare Access. To modify your provisioning attributes, go to the **Provisioning** page in Azure AD and select **Edit attribute mappings**.
+
+We recommend enabling the following user attribute mappings:
+
+| customappsso Attribute | Azure AD Attribute | Recommendation |
+| -------------------------|--------------------|--------- |
+| `emails[type eq "work"].value` | `mail` | Required |
+| `name.givenName` | `givenName` | Recommended |
+| `name.familyName` | `surname` | Recommended |
+
 ## Azure groups in Zero Trust policies
 
 ### Automatic entry
 
-When [SCIM synchronization is enabled](#synchronize-users-and-groups), the Azure group names will appear in the **Values** dropdown when you choose the _Azure Groups_ selector.
+When [SCIM synchronization is enabled](#synchronize-users-and-groups), your Azure group names will automatically appear in the Access and Gateway policy builders.
 
+If building an Access policy, choose the _Azure Groups_ selector.
 ![Azure group names displayed in the Access policy builder](/images/cloudflare-one/identity/azure/azure-scim-groups.png)
+
+If building a Gateway policy, choose the [_User Group Names_](/cloudflare-one/policies/gateway/identity-selectors/#user-group-names) selector.
 
 ### Manual entry
 

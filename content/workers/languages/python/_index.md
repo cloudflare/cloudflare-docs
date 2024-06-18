@@ -123,9 +123,9 @@ $ curl --header "Content-Type: application/json" \
 
 In addition to the `request` parameter, the `env` parameter is also passed to
 the Python `fetch` handler and can be used to access
-[environment variables](/workers/configuration/environment-variables),
-[secrets](/workers/configuration/secrets),and
-[bindings](/workers/configuration/bindings).
+[environment variables](/workers/configuration/environment-variables/),
+[secrets](/workers/configuration/secrets/),and
+[bindings](/workers/runtime-apis/bindings/).
 
 For example, let's try setting and using an environment variable in a Python
 Worker. First, add the environment variable to your Worker's `wrangler.toml`:

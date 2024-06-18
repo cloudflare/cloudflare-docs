@@ -21,7 +21,7 @@ Using gradual deployments, you can:
 
 Gradual deployments are in **beta and under active development**. Review [Limits](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) associated with rollbacks before using this feature.
 
-Provide your feeback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
+Provide your feedback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
 
@@ -176,7 +176,7 @@ This is only an example, so the versions assigned to your Durable Objects may be
 
 - For a given deployment, requests to each Durable Object will always use the same Worker version.
 - When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In this example, Durable Object "foo" would never revert from version "B" to version "A".
-- The Durable Object will only be [reset](/durable-objects/reference/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
+- The Durable Object will only be [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
 
 {{<Aside type="note">}}
 
@@ -232,7 +232,5 @@ You can only create a new deployment with the last 10 uploaded versions of your 
 These Workers features will be supported in the near future.
 
 - Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding. 
-- Creating a gradual deployment with two different configurations for [Smart Placement](/workers/configuration/smart-placement/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with Smart Placement enabled. 
+- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding.
 - Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
-

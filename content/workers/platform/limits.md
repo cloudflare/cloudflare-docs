@@ -24,7 +24,7 @@ meta:
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
 {{</table-wrap>}}
-<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). 
+<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 {{<render file="_limits_increase.md">}}
 
@@ -67,7 +67,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ------------------------------------------ | ------------------------------------------- | ------------------------------------------- | --- |
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
-| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/reference/javascript-apis/#consumer) |     |
+| [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |     |
 | [Duration](#duration)       |   None                                         |  none                                           | none                                  |
 
 {{</table-wrap>}}
@@ -81,7 +81,11 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 {{</Aside>}}
 
 ### CPU time
+
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
+
+{{<render file="_isolate-cpu-flexibility">}}
+<br/>
 
 {{<Aside type="note">}}
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
@@ -114,7 +118,9 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 Workers automatically scale onto thousands of Cloudflare global network servers around the world. There is no general limit to the number of requests per second Workers can handle.
 
-Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
+Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, [contact Cloudflare support](/support/contacting-cloudflare-support/) to increase your limit. Cloudflare's anti-abuse Workers Rate Limiting does not apply to Enterprise customers.
+
+You can also confirm if you have been rate limited by anti-abuse Worker Rate Limiting by logging into the Cloudflare dashboard, selecting your account and zone, and going to **Security** > **Events**. Find the event and expand it. If the **Rule ID** is `worker`, this confirms that it is the anti-abuse Worker Rate Limiting.
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
@@ -178,7 +184,7 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker. 
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker.
 
 ### How long can a subrequest take?
 
@@ -190,7 +196,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-While handling a request, each Worker is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
+You can open up to six connections simultaneously, for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
@@ -199,7 +205,7 @@ While handling a request, each Worker is allowed to have up to six connections o
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
-Once a Worker has six connections open, it can still attempt to open additional connections.
+Once an invocation has six connections open, it can still attempt to open additional connections.
 
 * These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
 * Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
@@ -256,7 +262,7 @@ $ wrangler deploy --outdir bundled/ --dry-run
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code. 
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
 {{<render file="_limits_increase.md">}}
 
@@ -272,13 +278,9 @@ A Worker must be able to be parsed and execute its global scope (top-level code 
 
 ## Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
+You can have up to 500 Workers on your account on the Workers Paid plan, and up to 100 Workers on the Workers Free plan.
 
-{{<Aside type="note">}}
-
-App Workers do not count towards this limit.
-
-{{</Aside>}}
+If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 

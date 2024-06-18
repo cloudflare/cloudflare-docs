@@ -2,14 +2,21 @@
 type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
-  - Originless
-pcx_content_type: configuration
+  - Redirects
+  - Geolocation
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
 title: Country code redirect
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -48,7 +55,7 @@ export default {
 
 ```ts
 export default {
-  async fetch(request) {
+  async fetch(request): Promise<Response> {
     /**
      * A map of the URLs to redirect to
      * @param {Object} countryMap
@@ -70,6 +77,29 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch
+
+async def on_fetch(request):
+    countries = {
+        "US": "https://example.com/us",
+        "EU": "https://example.com/eu",
+    }
+
+    # Use the cf object to obtain the country of the request
+    # more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
+    country = request.cf.country
+
+    if country and country in countries:
+        url = countries[country]
+        return Response.redirect(url)
+
+    return fetch("https://example.com", request)
 ```
 
 {{</tab>}}

@@ -42,17 +42,17 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 {{<Aside type="note">}}
 
-The following global flags work on every command.
+The following global flags work on every command, with some exceptions for `pages` commands.
 
 {{<definitions>}}
 
-- `--config` {{<type>}}string{{</type>}}
-  - Path to `.toml` configuration file.
 - `--help` {{<type>}}boolean{{</type>}}
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
-- `--experimental-json-config` {{<type>}}boolean{{</type>}}
+- `--config` {{<type>}}string{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
   - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
@@ -767,6 +767,10 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -802,6 +806,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
 - `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify Wrangler's logging level.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Show the interactive dev session.
 
 {{</definitions>}}
 
@@ -826,7 +832,7 @@ None of the options for this command are required. Also, many can be set in your
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -908,7 +914,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 {{<definitions>}}
 
 - `SCRIPT` {{<type>}}string{{</type>}}
-  - The path to an entry point for your Worker. The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Name of the Worker.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1401,6 +1407,10 @@ wrangler r2 bucket create <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new R2 bucket.
+- `--storage-class` {{<type>}}"Standard"|"InfrequentAccess"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The default storage class for objects uploaded to the bucket.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 {{</definitions>}}
 
@@ -1510,7 +1520,7 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 - `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Your R2 Secret Access Key. Requires read and write access.
 - `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - **AWS S3 provider-specific options:**
 - `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
@@ -1817,6 +1827,8 @@ wrangler tail <WORKER> [OPTIONS]
   - Filter by a text match in `console.log` messages.
 - `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+- `--version-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by Worker version.
 
 {{</definitions>}}
 
@@ -1868,6 +1880,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}}
+  - Show the interactive dev session.
 
 {{</definitions>}}
 
@@ -1978,7 +1992,7 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 {{<definitions>}}
 
 - `BUILD_OUTPUT_DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information. 
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
 - `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the project you want to deploy to.
 - `--branch` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2574,7 +2588,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/configuration/bindings/) in your `wrangler.toml`:
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
 
 ```toml
 mtls_certificates = [

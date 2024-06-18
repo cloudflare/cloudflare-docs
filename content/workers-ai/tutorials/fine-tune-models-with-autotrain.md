@@ -4,9 +4,13 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Fine Tune Models With AutoTrain from HuggingFace
+tags:
+  - AI
 ---
 
 # Fine Tune Models With AutoTrain from HuggingFace
+
+{{<tutorial-date-info>}}
 
 Fine tuning an AI model gives you the opportunity to add additional training data to the model. Workers AI allows for [Low-Rank Adaptation, LoRA, adapters](/workers-ai/fine-tunes/loras/) that will allow you to finetune our models.
 
@@ -60,15 +64,15 @@ Modify the following fields
   - `google/gemma-7b-it`
   - `meta-llama/llama-2-7b-chat-hf`
 
-### Optional: Push to Hub?
+### Optional Section: Push to Hub
 
-Although not required to use AutoTrain, creating a HuggingFace account will help you keep your finetune artifacts in a handy repository for you to refer to later.
+Although not required to use AutoTrain, creating a [HuggingFace account](https://huggingface.co/join) will help you keep your finetune artifacts in a handy repository for you to refer to later.
 
 If you do not perform the HuggingFace setup you can still download your files from the Notebook.
 
-Follow the instructions to create an account and token if necessary.
+Follow the instructions [in the notebook](https://colab.research.google.com/github/huggingface/autotrain-advanced/blob/main/colabs/AutoTrain_LLM.ipynb) to create an account and token if necessary.
 
-### Hyperparameters
+### Section: Hyperparameters
 
 We only need to change a few of these fields to ensure things work on Cloudflare Workers AI.
 
@@ -83,7 +87,7 @@ Change the line that says `quantization = none` to `quantization = "none"`.
 
 ## 3. Upload your CSV file to the Notebook
 
-Notebooks have a folder structure which you can access by clicking the folder icon on the left hand nav bar.
+Notebooks have a folder structure which you can access by clicking the folder icon on the left hand navigation bar.
 
 Create a folder named data.
 

@@ -88,7 +88,7 @@ ___
 
 ## Approved payment methods
 
-Cloudflare only accepts VISA, MasterCard, American Express, Discover, Paypal, and UnionPay. No other payment methods (for example, Maestro) are possible at this time.
+Cloudflare only accepts Visa, Mastercard, American Express, Discover, PayPal, and UnionPay. No other payment methods (for example, Maestro) are possible at this time.
 
 {{<Aside type="note">}}
 Enterprise customers can use ACH payments for Cloudflare plans and subscriptions.
@@ -100,6 +100,12 @@ Please ensure that you're using a valid payment method before changing your plan
 Gift cards and pre-payment cards may not be accepted for payment as they
 are not associated with a billing address.
 {{</Aside>}}
+
+___
+
+## Account Payment Method Preauthorization
+
+For Services subject to usage-based billing, Cloudflare may initiate a preauthorization on your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. Failure to pass preauthorization may result in suspension or termination of your account and/or access to the Services until your payment method can be validated.
 
 ___
 

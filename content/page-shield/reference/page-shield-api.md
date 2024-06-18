@@ -6,7 +6,7 @@ weight: 6
 
 # Page Shield API
 
-You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/operations/page-shield-get-page-shield-settings).
+You can enable and disable Page Shield, configure its settings, and fetch information about detected scripts and connections using the [Page Shield API](/api/operations/page-shield-get-settings).
 
 To authenticate API requests you need an [API token](/fundamentals/api/get-started/create-token/). For more information on the required API token permissions, refer to [Roles and permissions](/page-shield/reference/roles-and-permissions/).
 
@@ -16,7 +16,7 @@ Refer to [API deprecations](/fundamentals/api/reference/deprecations/#page-shiel
 
 ## Endpoints
 
-You can obtain the complete endpoint by appending the [Page Shield API](/api/operations/page-shield-get-page-shield-settings) endpoints to the Cloudflare API base URL:
+You can obtain the complete endpoint by appending the [Page Shield API](/api/operations/page-shield-get-settings) endpoints to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4
@@ -24,7 +24,7 @@ https://api.cloudflare.com/client/v4
 
 The `{zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](/fundamentals/setup/find-account-and-zone-ids/).
 
-The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-page-shield-scripts) operation for every detected script.
+The `{script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Page Shield scripts](/api/operations/page-shield-list-scripts) operation for every detected script.
 
 The `{connection_id}` argument is the connection ID (a hexadecimal string). This value is included in the response of the List Page Shield connections API operation for every detected connection.
 
@@ -44,17 +44,17 @@ The following table summarizes the available operations:
 | [Update a Page Shield policy][10] | `PUT zones/{zone_id}/page_shield/policies/{policy_id}` | Updates an existing CSP policy.                       |
 | [Delete a Page Shield policy][11] | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}` | Deletes an existing CSP policy.                    |
 
-[1]: /api/operations/page-shield-get-page-shield-settings
-[2]: /api/operations/page-shield-update-page-shield-settings
-[3]: /api/operations/page-shield-list-page-shield-scripts
-[4]: /api/operations/page-shield-get-a-page-shield-script
-[5]: /api/operations/page-shield-list-page-shield-connections
-[6]: /api/operations/page-shield-get-a-page-shield-connection
-[7]: /api/operations/page-shield-list-page-shield-policies
-[8]: /api/operations/page-shield-get-a-page-shield-policy
-[9]: /api/operations/page-shield-create-a-page-shield-policy
-[10]: /api/operations/page-shield-update-a-page-shield-policy
-[11]: /api/operations/page-shield-delete-a-page-shield-policy
+[1]: /api/operations/page-shield-get-settings
+[2]: /api/operations/page-shield-update-settings
+[3]: /api/operations/page-shield-list-scripts
+[4]: /api/operations/page-shield-get-script
+[5]: /api/operations/page-shield-list-connections
+[6]: /api/operations/page-shield-get-connection
+[7]: /api/operations/page-shield-list-policies
+[8]: /api/operations/page-shield-get-policy
+[9]: /api/operations/page-shield-create-policy
+[10]: /api/operations/page-shield-update-policy
+[11]: /api/operations/page-shield-delete-policy
 
 ## API notes
 
@@ -179,7 +179,7 @@ header: Response
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-page-shield-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
 
 ### Fetch list of infrequently reported scripts
 
@@ -234,7 +234,7 @@ header: Response
 
 Some fields displayed in the example response may not be available, depending on your Cloudflare plan.
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-page-shield-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
 
 ### Get details of a detected script
 
@@ -342,7 +342,7 @@ header: Response
 }
 ```
 
-For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-page-shield-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](/api/operations/page-shield-list-scripts).
 
 ### Get details of a detected connection
 

@@ -8,14 +8,14 @@ weight: 2
 
 ## Get Started
 
-Before you begin, you should understand two basic page rule behaviors:
+Before you begin, you should understand two basic behaviors of Page Rules (legacy):
 
 - Only the highest priority matching page rule takes effect on a request.
 - Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 Cloudflare recommends ordering your rules from most specific to least specific.
 
-## Page Rules Explained
+## Page Rules explained
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
 
@@ -97,7 +97,7 @@ We do not support non-ASCII characters (for example, punycode/unicode domain) in
 
 Enterprise domains can cache content by device type to target visitors with content appropriate to their device. Cloudflare evaluates the User-Agent header in the HTTP request to identify the device type and identifies each device type with a case insensitive match to the regex below:
 
-- Mobile: `(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\ mini|avantgo|mobilesafari|docomo|KAIOS)`
+- Mobile: `(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera mini|avantgo|mobilesafari|docomo|kaios)`
 - Tablet: `(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))`
 - Desktop: Everything else not matched above.
 
