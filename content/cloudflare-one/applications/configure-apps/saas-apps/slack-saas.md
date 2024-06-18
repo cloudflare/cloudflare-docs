@@ -63,7 +63,7 @@ This guide covers how to configure Slack as a SAML application in Cloudflare Zer
 3. Fill in the following fields:
     - **SAML 2.0 Endpoint URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
     - **Identity Provider Issuer URL**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-   - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
+    - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
     - **x.509 Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
 4. For **AuthnContextClassRef**, ensure _urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport_ is selected.
 5. Ensure **Sign the AuthnRequest** is turned off.

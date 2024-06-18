@@ -38,7 +38,7 @@ This guide covers how to configure Jamf Pro as a SAML application in Cloudflare 
 ## 3. Edit Access SAML Metadata
 1. Paste the **SAML Metdata endpoint** from application configuration in Cloudflare Zero Trust into a browser.
 2. Copy the file and paste it into a text editor.
-3. Change `WantAuthnRequestsSigned="true"` to `WantAuthnRequestsSigned="false"`
+3. Change `WantAuthnRequestsSigned="true"` to `WantAuthnRequestsSigned="false"`.
 4. Set the file extension as `.xml` and save.
 
 ## 4. Add a SAML SSO provider to Jamf Pro
