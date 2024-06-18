@@ -1263,6 +1263,7 @@
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
+/workers/tutorials/serverless-api-with-drizzle-hono-and-neon/ https://neon.tech/blog/api-cf-drizzle-neon 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
