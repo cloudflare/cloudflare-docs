@@ -18,7 +18,7 @@ If a domain is flagged by the CA, you need to contact Support before validation 
 
 ## Certificate Authority Authorization (CAA) records
 
-`CAA` is a new DNS resource record type defined in [RFC 6844](https://datatracker.ietf.org/doc/html/rfc6844) that allows a domain owner to indicate which CAs are allowed to issue certificates for them.
+`CAA` is a DNS resource record type defined in [RFC 6844](https://datatracker.ietf.org/doc/html/rfc6844) that allows a domain owner to indicate which CAs are allowed to issue certificates for them.
 
 ### For SaaS providers
 
@@ -30,7 +30,7 @@ example.com. IN CAA 0 issue "letsencrypt.org"
 example.com. IN CAA 0 issue "pki.goog"
 ```
 
-While it is possible for `CAA` records to be set on the subdomain your customer wish to use with your service, it is not advisable. You would also have to remove this `CAA` record.
+While it is possible for `CAA` records to be set on the subdomain your customer wishes to use with your service, it will usually be set on the domain apex. If they have `CAA` records on the subdomain, those will also have to be removed.
 
 ### For SaaS customers
 
