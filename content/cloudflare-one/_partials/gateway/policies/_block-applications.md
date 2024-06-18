@@ -11,7 +11,7 @@ To minimize the risk of {{<glossary-tooltip term_id="shadow IT" link="https://ww
 
 | Selector    | Operator | Value                                           | Action |
 | ----------- | -------- | ----------------------------------------------- | ------ |
-| Application | in       | `Microsoft Copilot`, `ChatGPT`, `Google Gemini` | Block  |
+| Application | in       | _Microsoft Copilot_, _ChatGPT_, _Google Gemini_ | Block  |
 
 {{<Aside type="note">}}
 After seven days, view your [shadow IT analytics](/cloudflare-one/insights/analytics/access/) and block additional applications based on what your users are accessing.

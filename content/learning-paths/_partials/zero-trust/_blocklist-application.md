@@ -9,4 +9,4 @@ Block unauthorized applications to limit your users' access to certain web-based
 
 | Selector    | Operator | Value                                           | Action |
 | ----------- | -------- | ----------------------------------------------- | ------ |
-| Application | in       | `Microsoft Copilot`, `ChatGPT`, `Google Gemini` | Block  |
+| Application | in       | _Microsoft Copilot_, _ChatGPT_, _Google Gemini_ | Block  |
