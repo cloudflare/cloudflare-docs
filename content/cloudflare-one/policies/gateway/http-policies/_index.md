@@ -320,6 +320,10 @@ The country of the user making the request.
 
 {{<render file="gateway/selectors/_users.md">}}
 
+### Virtual Network
+
+{{<render file="gateway/selectors/_virtual-network.md" withParameters="http.conn.vnet_id">}}
+
 ## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}
