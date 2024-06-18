@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-# Magic Tunnels background information
+# Magic Tunnel alerts background information
 
 Cloudflare combines different metrics to determine when to send you Magic Tunnel health alerts. Review key concepts below to better understand this process.
 
