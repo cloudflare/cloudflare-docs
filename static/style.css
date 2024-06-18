@@ -3595,7 +3595,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsToolbar--tools-spacer {
   display: inline-flex;
   height: 1em;
-  width: 1em;
+  width: .5em;
 }
 
 .DocsToolbar--tools-icon-item {
