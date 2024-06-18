@@ -51,7 +51,7 @@ Once you run the command, set up a basic Worker by selecting the following optio
 
 ```js
 ---
-filename: src/testJavaScriptFile.js
+filename: src/index.js
 ---
 export default {
   async fetch(request, env, ctx) {
