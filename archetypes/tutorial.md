@@ -6,7 +6,7 @@ updated: '{{ time.Now.Format "2006-01-02" }}'
 title: '{{ replace .File.ContentBaseName `-` ` ` | title }}'
 ---
 
-# Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done
+# # Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done. For example, 'Create a Worker' or 'Build a Pages application'.
 
 {{<tutorial-date-info>}}
 
