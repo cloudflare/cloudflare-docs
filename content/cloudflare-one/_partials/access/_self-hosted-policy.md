@@ -20,4 +20,3 @@ You can now configure an [Access policy](/cloudflare-one/policies/access/) to co
 
 5. Select **Next**.
 
-{{<render file="access/_secure-tunnel-with-access.md">}}
