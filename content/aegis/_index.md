@@ -9,20 +9,12 @@ meta:
 # Cloudflare Aegis
 
 {{<description>}}
-Enhance your Zero Trust approach and secure your origin server with dedicated IP addresses
+Leverage dedicated IP addresses to improve your origin security and implement Zero Trust.
 {{</description>}}
 
 {{<plan type="enterprise">}}
 
 Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) for your layer 7 [WAF](/waf/) and {{<glossary-tooltip term_id="content delivery network (CDN)">}}CDN{{</glossary-tooltip>}} services. The egress IPs are reserved exclusively for your account so that you can increase your origin security by only allowing traffic from a small list of IP addresses.
-
----
-
-## Features
-
-{{<feature header="Name of feature" href="/link/to/feature/" cta="Optional message that's different from the name of the feature">}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
-{{</feature>}}
 
 ---
 
