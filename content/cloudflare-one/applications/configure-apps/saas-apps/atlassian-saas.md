@@ -6,10 +6,11 @@ weight: 3
 
 # Connect to Atlassian Cloud through Access
 
-This guide covers how to configure Atlassian Cloud as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Atlassian Cloud](https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- a SAML identity provider configured in Cloudflare Zero Trust
 - Admin access to an Atlassian Cloud account
 - Atlassian Guard Standard subscription
 - A domain verified in Atlassian Cloud
