@@ -39,11 +39,14 @@ You can use the dashboard or the API to enable the datasets you want to query wi
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and domain.
-3. Go to **Analytics & Logs** > **Log Explorer**.
-4. Select **Enable a dataset** to select the datasets you want to query. You can enable more datasets later. Note that it may take a few minutes for the logs to become available for querying.
- 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Analytics & Logs** > **Log Explorer**.
+3. Select **Enable a dataset** to select the datasets you want to query. You can enable more datasets later. 
+
+{{<Aside type="note">}}
+It may take a few minutes for the logs to become available for querying.
+{{</Aside>}}
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
@@ -84,21 +87,14 @@ Filtering and viewing your logs is available via the Cloudflare Dashboard or via
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and domain.
-3. Go to **Analytics & Logs** > **Log Explorer**.
-4. From the dropdown, select the **Dataset** you want to use.
-5. Select a **Limit**. That is the maximum number of results to return, for example, 50.
-6. Select the **Time period** from which you want to query, for example, the previous 12 hours.
-
-![Log Explorer dashboard](/images/logs/log-explorer-dash.png)
-
-7. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**.
-
-![Log Explorer filters](/images/logs/log-explorer-filters.png)
-
-8. A query preview is displayed. Select **Use custom SQL**, if you would like to change it.
-9. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Analytics & Logs** > **Log Explorer**.
+3. From the dropdown, select the **Dataset** you want to use.
+4. Select a **Limit**. That is the maximum number of results to return, for example, 50.
+5. Select the **Time period** from which you want to query, for example, the previous 12 hours.
+6. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**.
+7. A query preview is displayed. Select **Use custom SQL**, if you would like to change it.
+8. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
 
 {{<Aside type="note">}}
 
