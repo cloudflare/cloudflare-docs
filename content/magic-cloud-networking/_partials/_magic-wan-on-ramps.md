@@ -8,7 +8,7 @@ inputParameters: mwanAccount
 
 # Cloud on-ramps
 
-Magic Cloud Networking allows you to create on-ramps from your cloud networks to Magic WAN. Cloudflare will create virtual private network (VPN) tunnels between Magic WAN and your virtual private cloud (VPC), configuring both sides of the connection on your behalf. Cloudflare orchestrates the cloud provider's native VPN functionality, without requiring deployment of any additional compute virtual machines (VMs).
+Magic Cloud Networking {{<inline-pill style="beta">}} allows you to create on-ramps from your cloud networks to Magic WAN. Cloudflare will create virtual private network (VPN) tunnels between Magic WAN and your virtual private cloud (VPC), configuring both sides of the connection on your behalf. Cloudflare orchestrates the cloud provider's native VPN functionality, without requiring deployment of any additional compute virtual machines (VMs).
 
 $1
 
