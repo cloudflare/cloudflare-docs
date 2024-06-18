@@ -57,7 +57,14 @@ This guide covers how to configure Salesforce as an OpenID Connect (OIDC) applic
 
 To test the integration, open an incognito browser window and go to the **Test-Only Initialization URL** (   `https://<your-domain>.my.salesforce.com/services/auth/test/<URL Suffix>`)
 
-## 3. Enable Single Sign-On in Salesforce
+## 3. Display application on user's App Launcher page
+Cloudflare needs to know the target URL to send the user to. Without this, the application will not appear on the Cloudflare Access App Launcher.
+
+1. Back in the Application Overview section, scroll down to **Application Appearence** and ensure "Enable App in App Launcher" is enabled.
+2. Copy the Salesforce URL (`https://<your-domain>.my.salesforce.com`) into the **App Launcher URL** field.
+3. Click on **Save application**
+
+## 4. Enable Single Sign-On in Salesforce
 
 1. {{<render file="access/saas-apps/_salesforce-sso.md">}}
 2. (Optional) To require users to login with Cloudflare Access:
@@ -65,3 +72,4 @@ To test the integration, open an incognito browser window and go to the **Test-O
     2. Turn on **Disable login with Salesforce credentials**.
 
 To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).
+
