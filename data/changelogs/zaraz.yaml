@@ -5,6 +5,13 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-18'
+  title:
+  description: |-
+    * **Amplitude Managed Component**: Allow users to choose data center
+    * **Bing Managed Component**: Bugfix for Ecommerce events handling
+    * **GA4 Managed Component**: Mark ecommerce events as conversions
+    * **Bugfix**: Fix IAB consent mode tools not showing with purposes
 - publish_date: '2024-05-03'
   title:
   description: |-
