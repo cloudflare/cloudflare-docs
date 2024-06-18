@@ -9,7 +9,7 @@ meta:
 # Cloudflare Aegis
 
 {{<description>}}
-Leverage dedicated IP addresses to improve your origin security and implement Zero Trust.
+Leverage dedicated IPs to improve your origin security and implement Zero Trust.
 {{</description>}}
 
 {{<plan type="enterprise">}}
@@ -20,8 +20,12 @@ Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) 
 
 ## Related products
 
-{{<related header="<Name of product>" href="</link/to/product>" product="<slugified-product-name>">}}
-Description of product used together or connected configuration with current product.
+{{<related header="Cloudflare Access" href="/cloudflare-one/policies/access/" product="cloudflare-one">}}
+Cloudflare Access determines who can reach your application by applying the Access policies you configure.
+{{</related>}}
+
+{{<related header="Cloudflare Tunnel" href="/cloudflare-one/connections/connect-networks/" product="cloudflare-one">}}
+Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 {{</related>}}
 
 ---
