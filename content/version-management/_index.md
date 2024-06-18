@@ -7,7 +7,11 @@ weight: 1
 
 # Cloudflare Version Management
 
-Cloudflare Version Management allows you to safely test, deploy, and roll back changes to your zone configurations.
+{{<description>}} 
+Safely test, deploy, and roll back changes to your zone configurations using Version Management.
+{{</description>}}
+
+{{<plan type="enterprise">}}
 
 ## Benefits
 

@@ -4,9 +4,15 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Explore Workers AI Models Using a Jupyter Notebook
+meta:
+  description: This notebook explores the Workers AI REST API using Python and the requests library.
+tags:
+  - AI
 ---
 
 # Explore Workers AI Models Using a Jupyter Notebook
+
+{{<tutorial-date-info>}}
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 

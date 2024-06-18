@@ -6,9 +6,7 @@ weight: 3
 
 # Threat Intelligence APIs
 
-Cloudflare provides a series of endpoints covering various areas of internet security and insights. Based on your Cloudflare plan type, the [limit](/security-center/intel-apis/limits/) of API calls will vary per month. 
-
-
+Cloudflare provides a series of endpoints covering various areas of internet security and insights. Based on your Cloudflare plan type, the [limit](/security-center/intel-apis/limits/) of API calls will vary per month.
 
 | Intelligence Endpoint | Definition |
 | --- | --- |
@@ -22,6 +20,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new) | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories. |
 | [Request for Information](/api/operations/cloudforce-one-request-new) | Creates a targeted inquiry for specific intelligence insights to help organizations understand and respond to imminent security threats and vulnerabilities. |
 | [WHOIS](/api/operations/whois-record-get-whois-record) | Provides the WHOIS registration information for a specific domain. |
+| [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br>(early access) | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. |
 
 ## API Examples
 
@@ -36,7 +35,7 @@ Below you can find examples of Threat Intelligence API calls. Make sure you are 
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": {
@@ -62,7 +61,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain?domain=cloudflare.com" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": {
@@ -118,7 +117,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": [
@@ -168,7 +167,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/ip?ipv4=1.1.1.1" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": [
@@ -208,7 +207,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/dns?ipv4=1.1.1.1&start=2023-07-15&end=2023-07-18&per_page=5" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": {
@@ -260,7 +259,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protection/url-info?url=http://worcester-realistic-ellen-portland.trycloudflare.com/login.html \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "errors": [],
@@ -304,7 +303,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/bra
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
     --data '{
             "content_adds": [
                 82
@@ -343,7 +342,7 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/whois?domain=cloudflare.com" \
     --header "Content-Type: application/json" \
     --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq . 
+    --header "Content-Type: application/json" | jq .
 
 {
     "result": {

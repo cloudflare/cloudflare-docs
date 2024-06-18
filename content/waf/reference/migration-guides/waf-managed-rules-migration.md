@@ -13,7 +13,7 @@ You can start the update process for a zone in the Cloudflare dashboard or via A
 Once the migration finishes, the **Managed rules** tab in the Cloudflare dashboard (available in **Security** > **WAF** > **Managed rules**) will display a new interface, and the WAF managed rules APIs will stop working.
 
 {{<Aside type="warning" header="Deprecation notice">}}
-**The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2024-07-01. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
+**The previous version of WAF managed rules is now deprecated.** The [APIs for managing the previous version of WAF managed rules](#api-changes) will stop working on 2025-01-15. The same applies to [Terraform resources](#terraform-changes) related to the previous version of WAF managed rules. You must migrate before this date to avoid any issues.
 
 Refer to [Possible migration errors](#possible-migration-errors) if you are having issues migrating.
 {{</Aside>}}
@@ -49,7 +49,7 @@ For API users, the APIs for managing the previous version of WAF managed rules w
 The update process will create an equivalent configuration for the following settings of WAF managed rules:
 
 - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
-- Page Rules (deprecated) configured with _Disable Security_.
+- Page Rules (legacy) configured with _Disable Security_.
 - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On_.
 
 The OWASP ruleset configuration will be partially migrated. Refer to the next section for details.
@@ -150,7 +150,7 @@ In phase 1 the migration became available to a subset of eligible zones, which h
 - The zone has no [firewall rules](/firewall/cf-dashboard/) or [Page Rules](/rules/page-rules/) (deprecated) bypassing, enabling, or disabling WAF managed rules:
 
     - Firewall rules configured with _Bypass_ > _WAF Managed Rules_.
-    - Page Rules (deprecated) configured with _Disable Security_.
+    - Page Rules (legacy) configured with _Disable Security_.
     - Page Rules configured with _Web Application Firewall: Off_ or _Web Application Firewall: On._
 
 - The zone has no [URI-based WAF overrides](/api/operations/waf-overrides-list-waf-overrides) (only available via API).

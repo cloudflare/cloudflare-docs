@@ -4,10 +4,16 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Choose the Right Text Generation Model
+meta:
+  description: There's a wide range of text generation models available through Workers AI. In an effort to aid you in your journey of finding the right model, this notebook will help you get to know your options in a speed dating type of scenario.
 weight: 1
+tags:
+  - AI
 ---
 
 # Choose the Right Text Generation Model
+
+{{<tutorial-date-info>}}
 
 A great way to explore the models that are available to you on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 

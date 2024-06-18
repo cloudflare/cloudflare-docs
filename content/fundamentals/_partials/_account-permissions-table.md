@@ -104,15 +104,15 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | Magic Firewall Packet Captures - Read PCAPs API              | Grants read access to [Packet Captures](/magic-firewall/packet-captures/collect-pcaps/).                                                                          |
 | Magic Firewall Packet Captures - $1 PCAPs API              | Grants write access to [Packet Captures](/magic-firewall/packet-captures/collect-pcaps/).                                                                         |
 | Magic Network Monitoring Read                                | Grants read access to [Magic Network Monitoring](/magic-network-monitoring/).                                                                            |
-| Magic Network Monitoring $1                                | Grants read access to [Magic Network Monitoring](/magic-network-monitoring/).                                                                            |
+| Magic Network Monitoring $1                                | Grants write access to [Magic Network Monitoring](/magic-network-monitoring/).                                                                            |
 | Magic Transit Read                                           | Grants read access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                               |
 | Magic Transit $1                                           | Grants write access to manage a user's [Magic Transit prefixes](/magic-transit/how-to/advertise-prefixes/).                                              |
 | Notifications Read                                           | Grants read access to [Notifications](/notifications/).                                                                                     |
 | Notifications $1                                           | Grants write access to [Notifications](/notifications/).                                                                                     |
 | Page Shield Read                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
-| Page Shield $1                                             | Grants read access to [Page Shield](/page-shield/).                                                                                                      |
+| Page Shield $1                                             | Grants write access to [Page Shield](/page-shield/).                                                                                                      |
 | Pub/Sub Read                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
-| Pub/Sub $1                                                 | Grants read access to [Pub/Sub](/pub-sub/).                                                                                                              |
+| Pub/Sub $1                                                 | Grants write access to [Pub/Sub](/pub-sub/).                                                                                                              |
 | Queues Read                                           | Grants read access to [Queues](/queues/).                                                                                                                     |
 | Queues $1                                           | Grants write access to [Queues](/queues/).                                                                                                                     |
 | Rule Policies Read                                           | Grants read access to Rule Policies.                                                                                                                     |
@@ -122,9 +122,9 @@ inputParameters: editWord;;editProduct;;cloudflareName
 | Transform Rules Read                                         | Grants read access to [Transform Rules](/rules/transform/).                                                                                              |
 | Transform Rules $1                                         | Grants write access to [Transform Rules](/rules/transform/).                                                                                            |
 | Turnstile Read                                               | Grants read access to [Turnstile](/turnstile/).                                                                                                          |
-| Turnstile $1                                               | Grants read access to [Turnstile](/turnstile/).                                                                                                          |
+| Turnstile $1                                               | Grants write access to [Turnstile](/turnstile/).                                                                                                          |
 | URL Scanner Read                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
-| URL Scanner $1                                             | Grants read access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
+| URL Scanner $1                                             | Grants write access to [URL Scanner](/radar/investigate/url-scanner/).                                                                                    |
 | Vectorize Read | Grants read access to [Vectorize](/vectorize/). |
 | Vectorize $1 | Grants write access to [Vectorize](/vectorize/). |
 | Workers AI Read | Grants read access to [Workers AI](/workers-ai/). |

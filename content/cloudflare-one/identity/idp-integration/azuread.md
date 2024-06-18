@@ -153,6 +153,18 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 To check which users and groups were synchronized, select **View provisioning logs**.
 
+### Provisioning attributes
+
+Provisioning attributes define the user properties that Azure AD will synchronize with Cloudflare Access. To modify your provisioning attributes, go to the **Provisioning** page in Azure AD and select **Edit attribute mappings**.
+
+We recommend enabling the following user attribute mappings:
+
+| customappsso Attribute | Azure AD Attribute | Recommendation |
+| -------------------------|--------------------|--------- |
+| `emails[type eq "work"].value` | `mail` | Required |
+| `name.givenName` | `givenName` | Recommended |
+| `name.familyName` | `surname` | Recommended |
+
 ## Azure groups in Zero Trust policies
 
 ### Automatic entry

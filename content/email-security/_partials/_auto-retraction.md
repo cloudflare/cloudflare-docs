@@ -10,7 +10,7 @@ You can set up auto-retraction to automatically move messages matching certain {
 
 To set up automatic retraction:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
 4. Select **Edit**. 
@@ -26,9 +26,9 @@ To set up automatic retraction:
 
 ### Post delivery retractions for new threats
 
-Area 1 is continuously gathering new information about {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaigns. Users might have email messages in their inboxes that were scanned by Area 1 but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Area 1 offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
+Cloud Email Security is continuously gathering new information about {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaigns. Users might have email messages in their inboxes that were scanned by Cloud Email Security but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Cloud Email Security offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
 
 You can enable two options: 
 
-- **Post Delivery Response**:  Area 1 will continue to re-evaluate emails already delivered to your users’ inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Area 1 retracts them.
-- **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Area 1. Retraction will occur according to your configuration.
+- **Post Delivery Response**:  Cloud Email Security will continue to re-evaluate emails already delivered to your users’ inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Cloud Email Security retracts them.
+- **Phish Submission Response**: Cloud Email Security will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Cloud Email Security. Retraction will occur according to your configuration.

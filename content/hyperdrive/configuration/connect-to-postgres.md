@@ -63,10 +63,10 @@ Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.
 | `none`        | No                              | Hyperdrive does not support insecure plain text connections.                                                                              |
 | `prefer`      | No (use `require`)              | Hyperdrive will always use TLS.                                                                                                           |
 | `require`     | Yes (default)                   | TLS is required, but server certificates are not validated.                                                                               |
-| `verify-ca`   | Not currently supported in beta | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
-| `verify-full` | Not currently supported in beta | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
+| `verify-ca`   | Not currently supported | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
+| `verify-full` | Not currently supported | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
 
-{{<Aside type="warning" header="Beta limitation">}}
+{{<Aside type="warning">}}
 
 Hyperdrive does not currently support uploading client CA certificates. In the future, you will be able to provide the client CA to Hyperdrive as part of your database configuration.
 

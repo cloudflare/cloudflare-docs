@@ -8,13 +8,15 @@ weight: 17
 
 Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare Zero Trust and build rules based on user identity and group membership. Cloudflare Zero Trust supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/identity/idp-integration/okta-saml/) protocol.
 
+Additionally, you can configure Okta to use risk information from Zero Trust [user risk scores](/cloudflare-one/insights/risk-score/) to create SSO-level policies. For more information, refer to [Send risk score to Okta](/cloudflare-one/insights/risk-score/#send-risk-score-to-okta).
+
 ## Set up Okta as an OIDC provider
 
 1. On your Okta admin dashboard, go to **Applications** > **Applications**.
 2. Select **Create App Integration**.
 3. For the **Sign-in method**, select **OIDC - OpenID Connect**.
 
-![Creating an OIDC application in Okta](/images/cloudflare-one/identity/okta/okta-1.png)
+    ![Creating an OIDC application in Okta](/images/cloudflare-one/identity/okta/okta-1.png)
 
 4. For the **Application type**, select **Web Application**. Select **Next**.
 

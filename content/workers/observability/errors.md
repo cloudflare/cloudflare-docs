@@ -45,7 +45,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10007`     | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                    |
 | `10015`     | Account is not entitled to use Workers.                                                                                      |
 | `10016`     | Invalid Worker name.                                                                                                         |
-| `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors) for details. |
+| `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details. |
 | `10026`     | Could not parse request body.                                                                                                |
 | `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
