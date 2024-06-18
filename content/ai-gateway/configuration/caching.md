@@ -47,7 +47,7 @@ To set the default caching configuration using the API:
 
 This caching behavior will be uniformly applied to all requests that support caching. If you need to modify the cache settings for specific requests, you have the flexibility to override this setting on a per-request basis.
 
-To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as HIT or MISS. 
+To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`. 
 
 ## Per-request caching
 
