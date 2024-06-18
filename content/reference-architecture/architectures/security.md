@@ -19,7 +19,7 @@ Since 2010, Cloudflare has been building a unique, large-scale network on which 
 - How to protect your business infrastructure and assets using Cloudflare services built on the network.
 
 ### Who is this document for and what will you learn?
-This document is designed for IT and security professionals who are looking at using Cloudflare to secure aspects of their businesses. It is aimed primarily at Chief Information Security Officers (CSO/CISO) and their direct teams who are responsible for the overall security program at their organizations. The document covers the security of the entire Cloudflare platform and does not go into deep details about any particular service. Instead, please visit our [Architecture Center](https://www.cloudflare.com/architecture/) to find specific information for a service or product.
+This document is designed for IT and security professionals who are looking at using Cloudflare to secure aspects of their businesses. It is aimed primarily at Chief Information Security Officers (CSO/CISO) and their direct teams who are responsible for the overall security program at their organizations. Because the document covers the security of the entire Cloudflare platform it does not go into deep details about any particular service. Instead, please visit our [Architecture Center](https://www.cloudflare.com/architecture/) to find specific information for a service or product.
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
@@ -39,7 +39,7 @@ The Cloudflare network is not like a traditional enterprise network. It has been
 
 A unique aspect of the network's security architecture is how we use anycast networking. In every data center we broadcast the entire Cloudflare network range (IPv6 and IPv4) for both UDP and TCP. [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) ensures routers all around the Internet provide the shortest possible path for any user to the nearest Cloudflare server where traffic is inspected. From a security perspective, this is very important. During distributed denial-of-service (DDoS) attacks to customers behind our network, a combination of high bandwidth capacity and distribution of requests across thousands of local servers helps ensure our network stays performant and available, even during some of the largest attacks in [Internet history](https://blog.cloudflare.com/cloudflare-mitigates-record-breaking-71-million-request-per-second-ddos-attack).
 
-Server updates, such as access policies, rate limiting, and firewall rules, are performed by our [Quicksilver service](https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale). Customer changes are reflected across the entire network in seconds, allowing customers to respond to changing policy requirements and ensuring policies are quickly implemented globally. 
+Server updates, such as access policies, rate limiting, and firewall rules, are performed by our [Quicksilver service](https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale). Customer changes are reflected across the entire network in seconds, allowing customers to respond to changing business requirements and ensuring policies are quickly implemented globally. 
 
 Every level of the network conforms to strict hardened security controls. Processes running on the edge are designed with a need-to-know basis and run with least privilege. We make heavy use of hardware security modules (HSMs) and the keys maintained within them ensure only the right access is given at the right time. To ensure tight control over and detailed visibility of changes to the network, all infrastructure is managed via code ([IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code)). 
 
@@ -64,11 +64,11 @@ Not only must the design of the network be secure, but so should how we run and 
 
 Customers send sensitive information to our products and services. The mission for the Cloudflare compliance team is to ensure the underlying infrastructure that supports these services meets [industry compliance standards](https://www.cloudflare.com/trust-hub/compliance-resources/) such as FedRAMP, SOC II, ISO, PCI certifications, C5, privacy, and regulatory frameworks. The compliance team works with all engineering organizations to help integrate these requirements as part of the way we work. From a compliance perspective, our areas of focus include:
 
-Privacy and security of customer data
-Maintaining compliance validations
-Helping customers with their own compliance
-Monitoring the changes to the regulatory landscape
-Providing feedback to regulatory bodies on upcoming changes
+- Privacy and security of customer data
+- Maintaining compliance validations
+- Helping customers with their own compliance
+- Monitoring the changes to the regulatory landscape
+- Providing feedback to regulatory bodies on upcoming changes
 
 We also run a [bug bounty program](https://hackerone.com/cloudflare), giving incentives for the community to find and report vulnerabilities to us for financial reward. 
 
@@ -151,9 +151,11 @@ Cloudflare can protect at multiple layers of the OSI model, and in this document
 - Layer 3, referred to as the “network layer,” is responsible for facilitating data transfer between two different networks. The network layer breaks up segments from the transport layer into smaller units, called packets, on the sender’s device and reassembles these packets on the receiving device. The network layer is where routing takes place — finding the best physical path for the data to reach its destination.
 - Layer 4, referred to as the “transport layer,” is responsible for end-to-end communication between the two devices. This includes taking data from the session layer and breaking it up into chunks called “segments” before sending it to layer 3.
 
-Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including Magic Transit, Magic Firewall, Magic WAN, Magic Network Monitoring, and Spectrum.
+Cloudflare security products that can be used for L3 and L4 security include Cloudflare’s network services offerings, including [Magic Transit](/magic-transit/), [Magic Firewall](/magic-firewall/), [Magic WAN](/magic-wan/), [Magic Network Monitoring](/magic-network-monitoring/), and [Spectrum](/spectrum/).
 
-- Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events. Cloudflare has a suite of application security products that includes Web Application Firewall (WAF), Rate Limiting, L7 DDoS, API Gateway, Bot Management, and Page Shield.
+- Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
+
+Cloudflare has a suite of application security products that includes [Web Application Firewall](/waf/) (WAF), [Rate Limiting](/waf/rate-limiting-rules/), [L7 DDoS](/ddos-protection/managed-rulesets/http/), [API Gateway](/api-shield/api-gateway/), [Bot Management](/bots/), and [Page Shield](/page-shield/).
 
 Note that SaaS applications could be considered both public and private. For example, Salesforce has direct Internet-facing access but contains very private information and is usually only accessible by employee accounts that are provisioned by IT. For the purpose of this document, we will consider SaaS applications as private resources.
 
@@ -168,12 +170,13 @@ The diagram below shows a typical request for a public asset going through the C
 
 ![Every request through Cloudflare passes once for inspection across all security products.](/images/reference-architecture/security/security-ref-arch-4.svg)
 
-- The world's fastest DNS service provides fast resolution of public hostnames
-- Ensure data compliance by choosing geographic locations for the inspection and storage of data
+The diagram highlights the following:
+- The [world's fastest DNS service](https://www.dnsperf.com/) provides fast resolution of public hostnames
+- Ensure data compliance by [choosing geographic locations](https://www.cloudflare.com/data-localization/) for the inspection and storage of data
 - Spectrum extends Cloudflare security capabilities to all UDP/TCP applications
 - Security services inspect a request in one pass
 - Application performance services also act on the request in the same pass
-- Smart routing finds the lowest latency path between Cloudflare and the public destination
+- [Smart routing](/argo-smart-routing/) finds the lowest latency path between Cloudflare and the public destination
 
 #### Common attacks and protection
 Cloudflare's broad product portfolio protects against a wide variety of attacks. Several common attacks are described in more detail below and include a reference to the Cloudflare products that are used to mitigate the specific attack.
@@ -190,7 +193,7 @@ Products: [L7 DDoS](/ddos-protection/managed-rulesets/http/), [Spectrum](/spectr
 ##### Zero-day attacks
 A zero-day exploit (also called a zero-day threat) is an attack that takes advantage of a security vulnerability that does not have a fix in place. It is referred to as a "zero-day" threat because once the flaw is discovered, the developer or organization has "zero days" to then come up with a solution.
 
-Web Application Firewall (WAF) Managed Rules allow you to deploy pre-configured managed rulesets that provide immediate protection against the following:
+Web Application Firewall (WAF) [Managed Rules](/waf/managed-rules/) allow you to deploy pre-configured managed rulesets that provide immediate protection against the following:
 
 - Zero-day vulnerabilities
 - Top 10 attack techniques
@@ -199,14 +202,14 @@ Web Application Firewall (WAF) Managed Rules allow you to deploy pre-configured 
 
 WAF checks incoming web requests and filters undesired traffic based on sets of rules (rulesets) deployed at the edge. These managed rulesets are maintained and regularly updated by Cloudflare. From the extensive threat intelligence obtained from across our global network, Cloudflare is able to quickly detect and classify threats. As new attacks/threats are identified, Cloudflare will automatically push WAF rules to customers to ensure they are protected against the latest zero-day attacks.
 
-Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-score/), which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques that are trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious.
+Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-score/), which complements Cloudflare managed rules by detecting attack variations. These variations are typically achieved by malicious actors via fuzzing techniques that are trying to identify ways to bypass existing security policies. WAF classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Rules can then be written which use these scores to determine what traffic is permitted to the application.
 
 ![Machine learning maintains lists of managed rules to determine if the request should be let through the WAF or not.](/images/reference-architecture/security/security-ref-arch-6.svg)
 
 Products: [WAF - Cloudflare Managed Rules](/waf/managed-rules/)
 
 ##### Unauthorized access 
-Unauthorized access can result from broken authentication or broken access control due to vulnerabilities in authentication, weak passwords, or easily bypassed authorization. Cloudflare mTLS (mutual TLS) and JWT (JSON Web Tokens) validation can be used to bolster authentication. Clients or API requests that don’t have a valid certificate or JWT can be denied access via security policy. Customers can create and manage mTLS certificates from the Cloudflare dashboard or an API. Cloudflare’s WAF and Exposed Credentials Check managed ruleset can be used to detect compromised credentials being used in authentication requests. WAF policies can also be used to restrict access to applications/paths based on different request criteria.
+Unauthorized access can result from broken authentication or broken access control due to vulnerabilities in authentication, weak passwords, or easily bypassed authorization. Cloudflare mTLS (mutual TLS) and JWT (JSON Web Tokens) validation can be used to bolster authentication. Clients or API requests that don’t have a valid certificate or JWT can be denied access via security policy. Customers can create and manage mTLS certificates from the Cloudflare dashboard or an API. Cloudflare’s WAF and [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) managed ruleset can be used to detect compromised credentials being used in authentication requests. WAF policies can also be used to restrict access to applications/paths based on different request criteria.
 
 Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Gateway (JWT Validation)](/api-shield/security/jwt-validation/), [WAF](/waf/)
 
@@ -219,7 +222,7 @@ Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-mageca
 
 Page Shield uses threat-feed detections of malicious JavaScript domains and URLs. In addition, it can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious. Page Shield can also detect changes to JavaScript files. Alerts using emails, webhooks, and PagerDuty can be set based on different criteria such as new resources identified, code changes, and malicious code/domains/URLs.
 
-Page Shield Content Security policies can be created and applied to add an additional level of security that helps detect and mitigate certain types of attacks, including:
+Page Shield [Content Security policies](/page-shield/policies/) can be created and applied to add an additional level of security that helps detect and mitigate certain types of attacks, including:
 
 - Content/code injection
 - Cross-site scripting (XSS)
@@ -236,7 +239,7 @@ Products: [WAF - Sensitive Data Detection](/waf/managed-rules/)
 ##### Credential stuffing 
 Credential stuffing is a cyberattack in which credentials obtained from a data breach on one service are used to attempt to log in to another unrelated service. Usually, automation tools or scripting are used to loop through a vast number of stolen credentials, sometimes augmented with additional data in the hopes of achieving account takeover.
 
-Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and thwart automated attempts to gain access. WAF policies can be used with specific request criteria to prevent attacks. Additionally, Cloudflare’s WAF and Exposed Credentials Check managed ruleset can be used to detect compromised credentials being used in auth requests. Rate limiting can also throttle requests and effectiveness of malicious credential stuffing techniques.
+Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and stop automated attempts to gain access. WAF policies can be used with specific request criteria to prevent attacks. Additionally, Cloudflare’s WAF and Exposed Credentials Check managed ruleset can be used to detect compromised credentials being used in auth requests. Rate limiting can also throttle requests and effectiveness of malicious credential stuffing techniques.
 
 Products: [Bot Management](/bots/), [WAF](/waf/), [Rate Limiting](/waf/rate-limiting-rules/)
 
@@ -253,12 +256,12 @@ Credit card skimming is a fraudulent method to skim payment information from web
 Products: [Page Shield](/page-shield/)
 
 ##### Inventory hoarding
-Inventory hoarding is when malicious bots are used to buy large quantities of products online, preventing legitimate consumers from purchasing them. This can cause many issues for businesses, including creating artificial scarcity, causing inflated prices, and disrupting access for legitimate customers. Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and thwart automated processes. WAF policies can be used with specific request criteria to prevent attacks.
+Inventory hoarding is when malicious bots are used to buy large quantities of products online, preventing legitimate consumers from purchasing them. This can cause many issues for businesses, including creating artificial scarcity, causing inflated prices, and disrupting access for legitimate customers. Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and stop automated processes. WAF policies can be used with specific request criteria to prevent attacks.
 
 Products: [Bot management](/bots/), [WAF](/waf/)
 
 ##### Fuzzing (vulnerability scanning)
-Fuzzing is an automated testing method used by malicious actors that uses various combinations of data and patterns to inject invalid, malformed, or unexpected inputs into a system. The malicious user hopes to find defects and vulnerabilities that can then be exploited. Cloudflare WAF leverages machine learning to detect attempts to bypass security policies. The WAF attack score complements managed rules and highlights the likeliness of an attack.
+[Fuzzing](https://owasp.org/www-community/Fuzzing) is an automated testing method used by malicious actors that uses various combinations of data and patterns to inject invalid, malformed, or unexpected inputs into a system. The malicious user hopes to find defects and vulnerabilities that can then be exploited. Cloudflare WAF leverages machine learning to detect fuzzing based attempts to bypass security policies. The WAF attack score complements managed rules and highlights the likeliness of an attack.
 
 Bot Management can detect potentially malicious bots by automating vulnerability scanning. With API Gateway, customers can employ schema validation and sequence mitigation to prevent the automated scanning and fuzzing techniques with APIs.
 
@@ -288,7 +291,7 @@ Products: [WAF](/waf/)
 ##### Malware
 Malware can refer to viruses, worms, trojans, ransomware, spyware, adware, and other types of harmful software. A key distinction of malware is that it needs to be intentionally malicious; any software that unintentionally causes harm is not considered to be malware.
 
-When Uploaded Content Scanning is enabled, content scanning attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF custom rules, allowing customers to implement fine-grained mitigation rules.
+When Uploaded Content Scanning is enabled, content scanning attempts to detect items such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF custom rules, allowing customers to implement fine-grained mitigation rules.
 
 Products: [WAF - Uploaded Content Scanning](/waf/about/content-scanning/)
 
@@ -319,7 +322,7 @@ Customers can also configure which request criteria is used as a counter for det
 
 ![All actions are blocked once the rate limit is reached.](/images/reference-architecture/security/security-ref-arch-8.svg)
 
-2. **Throttle requests over the maximum configured rate**. The WAF will block any requests exceeding the configured rate, and the remaining requests will be allowed.The analogy for this behavior is a sliding window effect.
+2. **Throttle requests over the maximum configured rate**. The WAF will block any requests exceeding the configured rate, and the remaining requests will be allowed. The analogy for this behavior is a sliding window effect.
 
 ![All security detection can be seen from a single dashboard.](/images/reference-architecture/security/security-ref-arch-9.svg)
 
@@ -366,7 +369,7 @@ Cloudflare’s global network is at the core of several products and services th
 
 ![SSL/TLS can be used for both Cloudflare to user, and origin server to Cloudflare security.](/images/reference-architecture/security/security-ref-arch-14.svg)
 
-Edge certificates are the ones that Cloudflare presents to clients visiting the customer’s website or application. Origin certificates guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of the customer's website or application. [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control whether and how Cloudflare will use both these certificates, and you can choose between different modes.
+Edge certificates are presented to clients visiting the customer’s website or application. Origin certificates guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of the customer's website or application. [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control whether and how Cloudflare will use both these certificates, and you can choose between different modes.
 
 Customers can also enable [mutual Transport Layer Security (mTLS)](/ssl/client-certificates/enable-mtls/) for hostnames and API endpoints to bolster security for authentication, enforcing that only devices with valid certificates can gain access. Additional security features like [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) can be configured to help ensure requests to the origin server come from the Cloudflare network. [Keyless SSL](/ssl/keyless-ssl/) allows security-conscious clients to upload their own custom certificates and benefit from Cloudflare, but without exposing their TLS private keys. With [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/), customers can also issue and validate certificates for their own customers.
 
@@ -376,8 +379,8 @@ Customers can also enable [mutual Transport Layer Security (mTLS)](/ssl/client-c
 Key capabilities offered:
 
 - Inventory and review IT infrastructure assets like domains, ASNs, and IPs.
-- Manage an always up-to-date list of misconfigurations and risks in Cloudflare IT assets. Mitigate in a few clicks.
-- Query threat data gathered from the Cloudflare network to better investigate and respond to security risks.
+- Manage an always up-to-date list of misconfigurations and risks in Cloudflare IT assets.
+- Query threat data gathered from the Cloudflare network to investigate and respond to security risks.
 - Gain full control over who sends email on your organization's behalf with DMARC Management.
 
 ##### Cloudflare for SaaS
@@ -406,16 +409,16 @@ With [Magic WAN](/magic-wan/), customers can securely connect any traffic source
 [Spectrum](/spectrum/) is a reverse proxy product that extends the benefits of Cloudflare to all TCP/UDP applications providing L4 DDoS protection. Spectrum also provides an IP firewall allowing customers to deny IPs or IP ranges to granularly control traffic to application servers. Customers can also configure rules to block visitors from a specified country or even an Autonomous System Number (ASN).
 
 ### Protecting private resources
-Private resources typically contain highly sensitive, company confidential information and either by way of laws and regulations, or by the nature of the confidentiality of the data, access to them is much more restricted. Traditionally, private applications were only accessible on private networks in company buildings that users had to have physical access to. But as we all know today, access to private resources needs to take place from a wide range of locations, and paradoxically, private applications can live in very public locations. Most of SaaS is exposed to the public Internet.
+Private resources typically contain highly sensitive, company confidential information and either by way of laws and regulations, or by the nature of the confidentiality of the data, access to them is much more restricted. Traditionally, private applications were only accessible on private networks in company buildings that users had to have physical access to. But as we all know today, access to private resources needs to take place from a wide range of locations, and paradoxically, private applications can live in very public locations. Most SaaS applications are exposed to the public Internet.
 
 The following are typical attributes of private resources:
 - Users have been pre-authorized and provisioned. They can't just sign up. They need to be given specific access to the resource either directly or via access control mechanisms such as certificates, group membership, or role assignment.
-- Network access to a self-hosted resource typically over-managed, private network routes and not accessible via the general Internet.
+- Network access to a self-hosted resource is typically over-managed, private network routes and not accessible via the general Internet.
 - Private resources that live in data centers (physical or virtual) and are connected to networks that are hosted and managed by the business, which are either on-premises or virtual private networks running in public cloud infrastructure.
 
 As mentioned, traditional access to private resources required physical access to the network by being in the office connected via Ethernet. As remote access needs increased, companies installed on-premises VPN servers that allowed users and devices to "dial in" to these private networks. Many applications have left these private networks and instead migrated to SaaS applications or are hosted in public cloud infrastructure. This traditional approach has become unmanageable and costly, with a variety of technologies providing network connectivity and access control.
 
-Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Magic WAN and Magic Firewall, which are mentioned below. But also customers use our WAF in front of privately hosted applications that are only accessible through private networks. The idea here is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
+Another important thing to note is that many of the services used for securing and providing connectivity for public resources can also be used for private resources. The most obvious here is Magic WAN and Magic Firewall. Customers also use our WAF in front of privately hosted applications that are only accessible through private networks. The idea is that even if access to an application is only from trusted private connections, it is still possible for an attacker to compromise what seems to be a trusted device; therefore, application injection attacks and other vulnerabilities can be exploited by devices with existing trusted network access. This is exactly in line with the idea of a Zero Trust security program. Read more about the approaches to Zero Trust using a SASE platform in our [SASE reference architecture](/reference-architecture/architectures/sase/).
 
 As we describe the following Cloudflare services, you will learn how the Cloudflare network and our methods of connecting it to your own private networks provides greater security, flexibility, and a more centralized control plane for access to private resources. The following diagram illustrates the sort of environment that represents a typical customer's private infrastructure.
 
@@ -423,12 +426,12 @@ As we describe the following Cloudflare services, you will learn how the Cloudfl
 
 Protecting internal resources can be broken down into the following areas.
 
-- Securing connectivity between the user and the application/network
-- Identity systems providing authentication and maintaining user identities and group membership
-- Policies controlling user access to applications/data
-- Data protection controls to identify and protect sensitive and confidential data
-- Protecting users and devices from attacks (malware, phishing, etc.) that originate from access to the Internet
-- Operational visibility to IT and security teams
+- Securing connectivity between the user and the application/network.
+- Identity systems providing authentication and maintaining user identities and group membership.
+- Policies controlling user access to applications/data.
+- Data protection controls to identify and protect sensitive and confidential data.
+- Protecting users and devices from attacks (malware, phishing, etc.) that originate from access to the Internet.
+- Operational visibility to IT and security teams.
 
 #### Securing connectivity to private resources
 Many privately hosted applications and networks do not have direct connectivity to the Internet. As mentioned previously, access traditionally has been enabled by one of two methods. One is when users connect physically to the same networks the private resources reside on, i.e. walking into the office and connecting to the office WiFi. The other is creating a virtual private network (VPN) connection over the Internet and "dialing in" to the private company network.
@@ -437,7 +440,7 @@ However, the need today is still the same. You have private networks with privat
 
 ![Cloudflare's SASE platform can also connect a wide variety of networks together into one larger, new corporate network.](/images/reference-architecture/security/security-ref-arch-19.svg)
 
-In the above diagram you can see a variety of private networks connected to Cloudflare, which then facilitates the routing and access controls between those networks, and therefore the applications and other resources. This is often regarded as East to West traffic. Because traffic originates from, and is destined for, a privately managed network.
+In the above diagram you can see a variety of private networks and end user devices connected to Cloudflare, which then facilitates the routing and access controls between those networks, and therefore the applications and other resources. This is often regarded as East to West traffic. Because traffic originates from, and is destined for, a privately managed network.
 
 Because all network traffic routes through Cloudflare, security controls are defined and apply to all traffic as it flows between networks. As long as a network, device, or user is connected to Cloudflare, you can identify it and apply policy. It also means things like data protection can be simplified — one single rule can be implemented to detect the transfer of and access to sensitive data and can be applied across the entire network with ease.
 
@@ -455,7 +458,7 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).
 
 #### User connectivity
-All the above methods are for connecting networks and applications to Cloudflare, and some users will be on devices connected directly to those networks. They might be in the corporate headquarters or working from a branch or retail location. However, many users are working from home, sitting in a coffee shop, or working on a plane. Cloudflare provides the following methods for connecting users to Cloudflare.
+All the above methods are for connecting networks and applications to Cloudflare, and some users will be on devices connected directly to those networks. They might be in the corporate headquarters or working from a branch or retail location. However, many users are working from home, sitting in a coffee shop, or working on a plane. Cloudflare provides the following methods for connecting users to Cloudflare. This is the same concept of installing a VPN client on a user device, with the difference that the connection is made to our global network and not to your own VPN applicances.
 
 ##### Device agent
 For the best user experience and the greatest degree of access control, we recommend deploying our [device agent](/cloudflare-one/connections/connect-devices/warp/) to devices. Supported on Windows, macOS, Linux, iOS, and Android, the agent performs two main roles. First, it routes all traffic from the device to Cloudflare, allowing for access to all your existing connected private networks and applications. Second, the agent provides device posture information such as operating system version, encrypted storage status, and other details. This information is then associated with the authenticated user and can be used as part of access control policy. The agent can be installed manually, but most enterprises deploy it using their device management (MDM) software.
@@ -467,7 +470,7 @@ There may be instances where you cannot install software on end user devices. In
 In some situations, you have no ability to modify the end device in any way. In those instances we provide the ability for a user to access a browser that runs directly on our edge network. This [browser isolation service](/cloudflare-one/policies/browser-isolation/) requires users to point their browser at a Cloudflare URL, which in turn runs a headless, secure browser on one of our edge servers. Secure vectors are then used over HTTPS and WebRTC connections. For more information, refer to [this architecture](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
 
 #### Integrating identity systems
-Users cannot just sign up and access your private resources; their identity and associated credentials are typically created and managed in an enterprise identity provider (IdP). Cloudflare integrates with both [enterprise and consumer-based identity services](/cloudflare-one/identity/), and provides a simple one-time password (OTP) via email service for when you have a need to authenticate a user with no existing account, only an email address.
+Users cannot just sign up and access your private resources; their identity and associated credentials are typically created and managed in an enterprise identity provider (IdP). Cloudflare integrates with both [enterprise and consumer-based identity services](/cloudflare-one/identity/), as well as providing a simple one-time password (OTP) via email service for when you have a need to authenticate a user with only an email address.
 
 Cloudflare supports integrations with multiple identity providers, including of the same type. So if you manage an Okta instance for your employees, but may have acquired another company with its own Okta instance, both can be integrated with Cloudflare. Cloudflare then acts as a proxy for the SSO process. Applications are configured using SAML and OIDC to use Cloudflare for authentication and then Cloudflare in turn redirects users through the authentication flow of an integrated IdP. Group information can also be synchronized via SCIM into Cloudflare to be used in access control policies.
 
@@ -478,12 +481,12 @@ This centralization of identity into a common access control layer allows you to
 #### Access control
 The focus on this document is about security, and now that applications, devices, identities, and networks are all connected, every request to and from any resource on the network, and also to the Internet, is now subject to Cloudflare's access control and firewall services. There are two services that apply policy-based controls to traffic.
 
-- **Zero Trust Network Access**: Our Access service manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
-- **Secure Web Gateway**: Our Gateway service is used to analyze traffic and apply policies, no matter the destination. It is most commonly used to allow, block, or isolate traffic that is destined for the Internet. This can therefore be used to apply access controls to SaaS applications, but any traffic flowing through Cloudflare can be inspected and acted upon by Gateway. Therefore it can also be used to add additional access controls to non-Internet, private tunneled applications.
+- **Zero Trust Network Access**: Our [Access](/cloudflare-one/policies/access/) product manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
+- **Secure Web Gateway**: Our [Gateway](/cloudflare-one/policies/gateway/) product is used to analyze traffic and apply policies, no matter the destination. It is most commonly used to allow, block, or isolate traffic that is destined for the Internet. This can be used to apply access controls to SaaS applications, but any traffic flowing through Cloudflare can be inspected and acted upon by Gateway. Therefore it can also be used to add additional access controls to non-Internet, private tunneled applications.
 
 ![Cloudflare's ZTNA and SWG services can be combined to secure both private and Internet access.](/images/reference-architecture/security/security-ref-arch-21.svg)
 
-Both of these technologies can be combined to ensure appropriate access to private applications. For users with our WARP agent installed, the policies can also include device-level requirements. When combined with identity data, policies such as the following can be written to control access to, for example, an internal database administration tool.
+Both of these technologies can be combined to ensure appropriate access to private applications. For users with our [device agent](/cloudflare-one/connections/connect-devices/warp/) installed, the policies can also include device-level requirements. When combined with identity data, policies such as the following can be written to control access to, for example, an internal database administration tool.
 
 - User must have authenticated via the company IdP, and used MFA as part of the authentication
 - User must be in the "Database Administrators" group in the IdP
@@ -495,7 +498,7 @@ It is possible to define access groups of users that can be applied across multi
 ![Policies can easily be written which define tight access groups to private resources.](/images/reference-architecture/security/security-ref-arch-22.svg)
 
 #### Protecting data
-All traffic is flowing through Cloudflare, so therefore all data is flowing through Cloudflare. This allows you to apply data controls on that traffic. Typically, employees are allowed access to sensitive applications and data only on managed devices. This means the device agent installs Cloudflare certificates that allow Cloudflare to terminate SSL connections on our network. This in turn allows for inspection of the contents of HTTPS web traffic and policy can be written to manage and secure that data.
+All traffic is flowing through Cloudflare, so therefore all data is flowing through Cloudflare. This allows you to apply data controls on that traffic. Typically, employees are allowed access to sensitive applications and data only on managed devices where the device agent installs Cloudflare certificates that allow Cloudflare to terminate SSL connections on our network. This in turn allows for inspection of the contents of HTTPS web traffic and policy can be written to manage and secure that data.
 
 Cloudflare has a [data loss prevention](/cloudflare-one/policies/data-loss-prevention/) (DLP) service that defines profiles that can be used to identify sensitive data. These profiles are then used in Gateway policies to match specific traffic and either allow, block, or isolate it.
 
