@@ -928,6 +928,10 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 Manage Workers KV namespaces.
 
+{{<Aside type="note">}}
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
 ### `create`
 
 Create a new namespace.
