@@ -9,9 +9,9 @@ entries:
   title:
   description: |-
     * **Amplitude Managed Component**: Allow users to choose data center
-    * **Bing Managed Component**: Bugfix for Ecommerce events handling
-    * **GA4 Managed Component**: Mark ecommerce events as conversions
-    * **Bugfix**: Fix IAB consent mode tools not showing with purposes
+    * **Bing Managed Component**: Fix e-commerce events handling
+    * **Google Analytics 4 Managed Component**: Mark e-commerce events as conversions
+    * **Consent Management**: Fix IAB Consent Mode tools not showing with purposes
 - publish_date: '2024-05-03'
   title:
   description: |-
