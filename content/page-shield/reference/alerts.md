@@ -15,7 +15,6 @@ You can configure alerts for resources detected in your domain. Refer to [Config
 {{<available-notifications product="Page Shield" notificationName="Page Shield New Resources Alert">}}
 {{<available-notifications product="Page Shield" notificationName="Page Shield New Domain Alert">}}
 {{<available-notifications product="Page Shield" notificationName="Page Shield New Resource Exceeds Max URL Length Alert">}}
-{{<available-notifications product="Page Shield" notificationName="Page Shield New Cookie Alert">}}
 
 ## Code change alert
 

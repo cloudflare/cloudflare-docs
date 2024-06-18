@@ -299,14 +299,6 @@ entries:
   nextSteps: Manually check the resource.
   otherFilters: None.
 
-- name: Page Shield New Cookie Alert
-  audience: "[Page Shield](/page-shield/) customers who want to receive a notification when new first-party cookies are detected in HTTP traffic."
-  availability: Business plans or higher.
-  associatedProducts: Page Shield
-  nextSteps: Investigate to confirm that it is an expected change.
-  otherFilters: None.
-  additional_information: Triggered daily.
-
 - name: Radar Alerts
   audience: Customers who want to receive a notification when traffic anomalies, outages, route hijacks, or route leaks are impacting one or more countries, regions, or autonomous systems (ASNs) of interest.
   availability: All Cloudflare plans.
