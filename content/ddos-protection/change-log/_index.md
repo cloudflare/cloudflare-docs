@@ -5,7 +5,7 @@ weight: 20
 meta:
   title: Changelog for managed rulesets
 layout: changelog
-changelog_file_name: [ddos-network, ddos-http]
+changelog_file_name: [ddos-network, ddos-http, ddos]
 changelog_name: DDoS Protection
 outputs:
     - html
