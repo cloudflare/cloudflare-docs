@@ -1,13 +1,16 @@
-{{- $text := .Get "labels" -}} {{- $labels := split $text " | " -}}
-{{ $unique_id := substr (md5 .Inner) 0 16 }}
+{{- $text := .Get "labels" -}}
+{{- $labels := split $text " | " -}}
+{{- $unique_id := lower (substr (md5 .Inner) 0 16) -}}
 
 <div class="tabs-wrapper" tab-wrapper-id="{{$unique_id}}">
 <nav role="navigation" class="tabs">
 <ul class="tab-active" block-id="{{$unique_id}}">
-{{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
+{{ range $idx, $txt := $labels }}
+{{- $link := replace $txt "/" "-" -}}
+{{- $dataLink := printf "tab-%s" (lower $link) }}
 <li class="tab-label-wrapper">
 {{ if (eq $link "js") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
     xmlns="http://www.w3.org/2000/svg">
 <path
@@ -19,7 +22,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "js-sw") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
         xmlns="http://www.w3.org/2000/svg">
     <title>JavaScript</title>
@@ -32,7 +35,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +48,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts-sw") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +62,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "py") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" height="1em" width="1em" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
     <path d="M253.806,1.783c-20.678,0.098-40.426,1.859-57.803,4.935c-51.187,9.044-60.48,27.97-60.48,62.877v46.103
           h120.963v15.366H135.522H90.126c-35.155,0-65.937,21.13-75.563,61.325c-11.107,46.075-11.603,74.83,0,122.939
@@ -79,7 +82,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "js-esm") }}
-<a class="tab-label " href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label " href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
         xmlns="http://www.w3.org/2000/svg">
     <title>JavaScript</title>
@@ -92,7 +95,7 @@ JavaScript
 </a>
 
 {{ else if (eq $link "ts-esm") }}
-<a class="tab-label" href="#" data-link="tab-{{$link}}" data-id="{{$unique_id}}">
+<a class="tab-label" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +109,7 @@ JavaScript
 </a>
 
 {{ else }}
-<a class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}" href="#" data-link="tab-{{lower $link}}" data-id="{{lower $unique_id}}">
+<a class="tab-label noCodeLabel" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
 {{$link}}
 </a>
 {{ end }}
