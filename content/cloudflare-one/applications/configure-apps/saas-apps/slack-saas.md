@@ -10,7 +10,7 @@ This guide covers how to configure Slack as a SAML application in Cloudflare Zer
 
 ## Prerequisites
 
-- Admin access to a Slack Business+ or Enterprise Grid plan
+- Admin access to a Slack Business+ or Enterprise Grid plan.
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
