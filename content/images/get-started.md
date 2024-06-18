@@ -28,7 +28,7 @@ curl --request POST \
 
 Transformations let you optimize images that are stored outside of Cloudflare Images. Cloudflare will automatically cache every transformed image on our global network so that you store only the original image at your origin.
 
-To use transformations, you’ll need to enable this feature on each zone:
+Before you can enable transformations, you must purchase Cloudflare Images. To use transformations, you will need to enable the feature on each zone:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Images** > **Transformations**.
