@@ -33,7 +33,7 @@ For this configuration to be possible, a few conditions apply:
 3. For **Account custom nameservers**, select **Configure custom nameservers**.
 4. Insert a fully qualified domain name for **Nameserver name** and choose a **Nameserver set**. Follow the [configuration conditions](#configuration-conditions).
 
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these nameservers will be listed as options that you can [enable on existing zones](#2-use-acns-on-existing-zones).
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -42,7 +42,7 @@ Use the [Add account custom nameserver endpoint](/api/operations/account-level-c
 
 {{<render file="_ns-set-omission-callout.md">}}
 
-Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these nameservers will be listed as options that you can [enable on existing zones](#2-enable-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
+Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name and these nameservers will be listed as options that you can [enable on existing zones](#2-use-acns-on-existing-zones).
 
 {{</tab>}}
 {{</tabs>}}
@@ -95,25 +95,7 @@ Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-
 
 ### 3. (Optional) Make ACNS default for new zones
 
-To make an ACNS set the default nameservers for all new zones added to your account from now on:
-
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. For **DNS zone defaults**, select **Configure defaults**.
-4. Change the **Nameserver assignment method** to **Account custom nameservers** and specify the set that should be used.
-
-Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for more details.
-
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
-
-Use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.account`.
-
-{{</tab>}}
-{{</tabs>}}
+To make an ACNS set the default nameservers for all new zones added to your account from now on, use the [Update Account endpoint](/api/operations/accounts-update-account) and set the value of `default_nameservers` to `custom.account`.
 
 ## Disable account custom nameservers
 
