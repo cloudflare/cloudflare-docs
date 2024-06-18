@@ -28,11 +28,9 @@ For domains using Cloudflare authoritative DNS, we typically respond to DNS quer
 
 ### Create address maps
 
-{{<Aside type="note">}}
 To avoid any errors if you have a static IP, Cloudflare has already created an address map where you can instead add or edit your domains. You do not need to create a new address map if you have a static IP. 
 
 Refer to [Static IPs](#static-ips) for more information.
-{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **IP Addresses** > **Address Maps**.
