@@ -409,20 +409,22 @@ header: Response
   "result": [
     {
       "id": "beee03ada7e047e79f076785d8cd8b8e",
-      "status": "active",
-      "request_host": "example.net",
-      "type": "unknown",
+      "type": "first_party",
       "name": "PHPSESSID",
-      "lifetime": 3600,
-      "http_only": true,
-      "path": "api/v2/login",
-      "same_site": "lax",
-      "secure": true,
-      "cookie_domain": "api.example.net",
-      "first_page_url": "example.net/api/v2/products",
-      "page_urls": ["example.net/api/v2/products/1"],
-      "first_seen_at": "2024-01-06T10:51:08Z",
-      "last_seen_at": "2024-01-07T11:56:01Z"
+      "host": "example.net",
+      "domain_attribute": "example.net",
+      "expires_attribute": "2024-10-21T12:28:20Z",
+      "http_only_attribute": true,
+      "max_age_attribute": null,
+      "path_attribute": "/store",
+      "same_site_attribute": "strict",
+      "secure_attribute": true,
+      "first_seen_at": "2024-05-06T10:51:08Z",
+      "last_seen_at": "2024-05-07T11:56:01Z",
+      "first_page_url": "example.net/store/products",
+      "page_urls": [
+        "example.net/store/products/1"
+      ]
     },
     // (...)
   ],
@@ -460,20 +462,22 @@ header: Response
 {
   "result": {
     "id": "beee03ada7e047e79f076785d8cd8b8e",
-    "status": "active",
-    "request_host": "example.net",
-    "type": "unknown",
+    "type": "first_party",
     "name": "PHPSESSID",
-    "lifetime": 3600,
-    "http_only": true,
-    "path": "api/v2/login",
-    "same_site": "lax",
-    "secure": true,
-    "cookie_domain": "api.example.net",
-    "first_page_url": "example.net/api/v2/products",
-    "page_urls": ["example.net/api/v2/products/1"],
-    "first_seen_at": "2024-01-06T10:51:08Z",
-    "last_seen_at": "2024-01-07T11:56:01Z"
+    "host": "example.net",
+    "domain_attribute": "example.net",
+    "expires_attribute": "2024-10-21T12:28:20Z",
+    "http_only_attribute": true,
+    "max_age_attribute": null,
+    "path_attribute": "/store",
+    "same_site_attribute": "strict",
+    "secure_attribute": true,
+    "first_seen_at": "2024-05-06T10:51:08Z",
+    "last_seen_at": "2024-05-07T11:56:01Z",
+    "first_page_url": "example.net/store/products",
+    "page_urls": [
+      "example.net/store/products/1"
+    ]
   },
   "success": true,
   "errors": [],
