@@ -5,13 +5,13 @@ weight: 1
 layout: overview
 meta:
   title: Cloudflare Page Shield
-  description: Page Shield is a comprehensive client-side security and privacy solution that allows you to ensure the safety of your website visitors' browser environment.
+  description: Page Shield is a comprehensive client-side security and privacy solution that allows you to ensure the safety of your website visitors' browsing environment.
 ---
 
 # Cloudflare Page Shield
 
 {{<description>}}
-Ensures the safety and privacy of your website visitors' browser environment.
+Ensures the safety and privacy of your website visitors' browsing environment.
 {{</description>}}
 
 {{<plan type="paid">}}
