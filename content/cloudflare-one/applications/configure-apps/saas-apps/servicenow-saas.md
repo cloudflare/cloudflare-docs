@@ -6,11 +6,12 @@ weight: 10
 
 # Connect to ServiceNow through Access (SAML)
 
-This guide covers how to configure ServiceNow as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/integrate/single-sign-on/task/t_CreateASAML2Upd1SSOConfigMultiSSO.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
 - Admin access to a ServiceNow account.
+- a SAML identity provider configured in Cloudflare Zero Trust
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
