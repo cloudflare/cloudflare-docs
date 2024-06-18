@@ -20,9 +20,9 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete-3) - Delete your Worker from Cloudflare.
-- [`kv namespace`](#kvnamespace) - Manage Workers KV namespaces.
-- [`kv key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
-- [`kv bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
+- [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
+- [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
@@ -932,6 +932,10 @@ Manage Workers KV namespaces.
 The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+{{</Aside>}}
+
 ### `create`
 
 Create a new namespace.
@@ -1050,6 +1054,10 @@ Manage key-value pairs within a Workers KV namespace.
 
 {{<Aside type="note">}}
 The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 {{</Aside>}}
 
 ### `put`
@@ -1252,6 +1260,10 @@ Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 {{<Aside type="note">}}
 The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 {{</Aside>}}
 
 ### `put`

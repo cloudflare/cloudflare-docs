@@ -8,6 +8,12 @@ weight: 2
 
 The `wrangler kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network.
 
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler KV commands support the `kv ...` syntax. If you are using versions of Wrangler below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [`kv:...` syntax deprecation](#kv-syntax-deprecation) section.
+
+To update your Wrangler installation, follow the [Wrangler Install and Update guide](/workers/wrangler/install-and-update/). 
+{{</Aside>}}
+
 ## `kv namespace`
 
 Manage KV namespaces.
@@ -433,4 +439,30 @@ Here is an example of the JSON input:
 $ wrangler kv bulk delete --binding=MY_KV allthethingsdelete.json
 ? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
 Success!
+```
+
+# Deprecations
+
+Below are deprecations to Wrangler commands for Workers KV. 
+
+## `kv:...` syntax deprecation
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. 
+
+The `kv:...` syntax is deprecated in versions 3.60.0 and beyond and will be removed in a future major version. 
+
+For example, commands using the `kv ...` syntax look as such:
+
+```sh
+$ wrangler kv namespace list
+$ wrangler kv key get <KEY> 
+$ wrangler kv bulk put <FILENAME> 
+```
+
+The same commands using the `kv:...` syntax look as such:
+
+```sh
+$ wrangler kv:namespace list
+$ wrangler kv:key get <KEY> 
+$ wrangler kv:bulk put <FILENAME> 
 ```
