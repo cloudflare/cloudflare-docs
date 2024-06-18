@@ -50,6 +50,9 @@ Once you run the command, set up a basic Worker by selecting the following optio
 (JavaScript example)
 
 ```js
+---
+filename: src/testJavaScriptFile.js
+---
 export default {
   async fetch(request, env, ctx) {
     return new Response("Hello World!");
