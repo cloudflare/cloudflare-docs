@@ -10,16 +10,13 @@ Generate new API tokens on the fly via the API. Before you can do this, you must
 
 ## Generating the initial token
 
-Before you can create tokens via the API, you need to generate the initial token via the Cloudflare dashboard.
+Before you can create tokens via the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard.
 
-1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select **Create Token**.
-2. Select the `Create Additional Tokens` template. This template contains the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the dashboard from the API.
+{{<render file="_new-token-warning.md">}}
 
-{{<Aside type="note">}}
+### Recommendations
 
 Cloudflare highly recommends that you do not grant other permissions to the token when using this template. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
-
-{{</Aside>}}
 
 Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 

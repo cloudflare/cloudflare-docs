@@ -18,7 +18,12 @@ Setup instructions and requirements vary depending on the device posture attribu
 
 ## 2. Verify device posture checks
 
-Before integrating a device posture check in a Gateway or Access policy, go to **Logs** > **Posture** and verify that the Pass/Fail results match your expectations.
+Before integrating a device posture check in a Gateway or Access policy, verify that the Pass/Fail results match your expectations. To view the latest test results for a specific device:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
+2. Select the device.
+3. Select **View details**.
+4. Select the **Posture checks** tab.
 
 ## 3. Build a device posture policy
 

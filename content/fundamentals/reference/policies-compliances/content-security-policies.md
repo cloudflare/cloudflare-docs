@@ -22,10 +22,14 @@ Cloudflare’s [CDN](/cache/) is compatible with CSP.
 
 Cloudflare does not:
 
-* Modify CSP headers from the origin web server.
+* Modify CSP headers from the origin web server (except when using Zaraz, to ensure the [Zaraz script is always running](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).
 * Require changes to acceptable sources for first or third-party content.
 * Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/) and [Cloudflare Fonts](/speed/optimization/content/fonts/#cloudflare-fonts) that rewrites Google Fonts urls).
 * Interfere with locations specified in your CSP.
+
+If you require the CSP headers to be changed or added, you can change them using some Cloudflare products:
+* If your website is [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare, you can use a [Response Header Modification rule](/rules/transform/response-header-modification/) to modify or add CSP headers.
+* If your website is hosted using [Cloudflare Pages](/pages/), you can set a [`_headers file`](/pages/configuration/headers/) to modify or add CSP headers.
 
 ### Product requirements
 

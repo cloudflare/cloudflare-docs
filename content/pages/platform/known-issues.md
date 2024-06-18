@@ -12,8 +12,6 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct Upload](/pages/get-started/direct-upload/) allows you to integrate your own build platform or upload from your local computer.
 
-- Monorepos or repositories with multiple codebases/applications currently cannot use the automatic GitHub/GitLab integration to build multiple sites from the same repository. However, [Direct Upload](/pages/get-started/direct-upload/) can be used to upload a monorepo as separate Pages projects from your own computer.
-
 - Incremental builds are currently not supported in Cloudflare Pages.
 
 - Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
@@ -86,7 +84,7 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 {{</Aside>}}
 
-If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
+If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.cloudflare.com](https://discord.cloudflare.com), and share your bug report in the #pages-general channel.
 
 ## Delete a project with a high number of deployments
 
@@ -115,3 +113,13 @@ $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_N
 To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
 
 To find your Account ID, refer to [Find your zone and account ID](/fundamentals/setup/find-account-and-zone-ids/).
+
+## Use Pages as Origin in Cloudflare Load Balancer
+
+[Cloudflare Load Balancing](/load-balancing/) will not work without the host header set.
+To create a new [Pool](/load-balancing/pools/) with a Pages project as target do the following:
+
+1. Follow the instructions [Create a Pool](/load-balancing/pools/create-pool/#create-a-pool) and set the origin server address to your `pages.dev` domain.
+2. Select **Add host header**.
+3. Set the host header value to your `pages.dev` domain, same as the origin server address.
+4. Select **Save**.

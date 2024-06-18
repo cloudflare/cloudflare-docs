@@ -1,63 +1,62 @@
 ---
-title: Bindings, databases and storage
+title: Cloudflare Developer Platform
 pcx_content_type: learning-unit
 weight: 1
 layout: learning-unit
 ---
 
-## Cloudflare Developer Platform
 
-The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) consists of compute, storage and application development products that allow you to build fullstack applications on Cloudflare's global network.
+The [Cloudflare Developer Platform](https://www.cloudflare.com/developer-platform/products/) offers various services to empower developers to build full-stack applications, including: [compute](https://www.cloudflare.com/developer-platform/products/#compute), [storage](https://www.cloudflare.com/developer-platform/products/#storage), [web development, image optimization, video streaming](https://www.cloudflare.com/developer-platform/products/#webdev) and [AI](https://ai.cloudflare.com/).
 
 It is important to note that the developer platform product offering is growing with new releases and features updates. To review a list of product documentation related to Cloudflare Developer Platform:
 
 1. Go to [Cloudflare Docs](https://developers.cloudflare.com).
 2. Select **Product directory** in the top menu.
-3. Select the **Developer platform** filter to view [product documentation for Cloudflare Developer Platform products](https://developers.cloudflare.com/products/?product-group=Developer+platform).
+3. Select the **Developer platform** filter to view [product documentation for Cloudflare Developer Platform products](/products/?product-group=Developer+platform).
 
-### Bindings
+## Web development
 
-Workers interact with other products on the Cloudflare Developer Platform through [bindings](/workers/configuration/bindings/). 
+[Cloudflare Pages](/pages/) allows you to build full-stack applications at scale.
 
-You can configure bindings through the Cloudflare dashboard or `wrangler.toml`. After you configure your bindings, access them through the `env` parameter that is provided at the entry point to your Worker. Refer to [Bindings in ES modules format](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) to learn more.
+With Pages, you can deploy front-end applications using [C3, Git integration or Direct Upload](/pages/get-started/). Pages supports a large set of frameworks including [Astro](/pages/framework-guides/deploy-an-astro-site/), [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/), [Hugo](/pages/framework-guides/deploy-a-hugo-site/), [Next.js](/pages/framework-guides/nextjs/), [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/), [React](/pages/framework-guides/deploy-a-react-site/), [Remix](/pages/framework-guides/deploy-a-remix-site/), and [more](/pages/framework-guides/).
 
-### Application development
+## Compute
 
-Some application development products include:
+**Cloudflare Workers**
 
-* [Pages](/pages/): Build front-end applications.
-* [Stream](/stream/): Live and on-demand video streaming.
-* [Images](/images/): Image optimization.
+As you have learned in previous sections, [Cloudflare Workers](/workers/) allow you to build and deploy serverless applications instantly across the globe. To explore what you can build with Workers, refer to [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/).
 
-#### Pages
+**Email Routing**
 
-Pages allows developers to deploy front-end applications by connecting to a Git provider, using Wrangler or directly uploading assets. Pages supports popular frameworks such as React, Hugo and others, though you do not need a framework to build with Pages. Pages is the only Cloudflare developer product that does not require a binding to interact with Workers. Instead, [Pages Functions](/pages/functions/) allows you to use Workers directly within your Pages project.
+[Cloudflare Email Routing](/email-routing/) allows you to create custom email addresses for your domain and route incoming emails to your preferred mailbox. If you already have a website, refer to [Enable Email Routing](/email-routing/get-started/enable-email-routing/) to set up a custom email address for your site.
 
-Workers and Pages are converging into a unified product, but for now, remain a separate experience. Read the [announcement blog post](https://blog.cloudflare.com/pages-and-workers-are-converging-into-one-experience) for more details.
+## Storage
 
-### Storage
+Cloudflare storage offerings differ per use case.
 
-Some Cloudflare Developer storage products include:
+{{<render file="/_storage-products-table.md" productFolder="/workers/">}}
 
-* [R2](/r2/): Object storage for all your data.
-* [KV](/kv/): Global, low-latency, key-value data storage.
-* [Durable Objects](/durable-objects/): Globally distributed coordination API with strongly consistent storage.
-* [D1](/d1/): Cloudflare’s native serverless database.
+For a detailed guide to choosing the correct storage option, refer to [Choose a data or storage product](/workers/platform/storage-options/).
 
-To understand which storage option is right for you, refer to the [Storage options guide](/workers/platform/storage-options/).
+## Image optimization and video streaming
 
-To explore possible database integrations, refer to [Databases](/workers/databases/) in the Workers documentation.
+[Cloudflare Stream](/stream/) and [Cloudflare Images](/images/) deliver videos and pictures to your end-users without configuring or maintaining infrastructure.
 
-To configure a database integration through the Cloudflare dashboard with a supported third-party (such as Turso, Neon and more), refer to [Database Integrations](/workers/databases/native-integrations/).
+## AI
 
-### Related resources
+[Workers AI](/workers-ai/) allow you to build and deploy AI applications that run machine learning models powered by serverless GPUs.
 
-Review projects you can build with Workers in [Tutorials](/workers/tutorials/).
+## Summary
 
-### Feedback
+You have learned:
 
-If your learning journey was hindered by inaccurate or missing documentation, [file an issue on GitHub](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) so we can update the documentation with accurate and helpful instructions.
+- More about what the Cloudflare Developer Platform offers.
+- The difference between compute, storage, application development, and AI products.
 
-### Community
+## Feedback
 
-Connect with the [Cloudflare Developer Platform community on Discord](https://discord.gg/cloudflaredev) to ask questions, share what you are building, and discuss the platform with other developers.
+To improve this learning path, [file an issue on GitHub](https://github.com/cloudflare/cloudflare-docs/issues/new/choose).
+
+## Community
+
+Connect with the [Cloudflare Developer Platform community on Discord](https://discord.cloudflare.com) to ask questions, share what you are building, and discuss the platform with other developers.

@@ -96,5 +96,5 @@ The following limits apply to Functions logs:
 
 * Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 * Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
-* Logs from any [Durable Objects](/pages/functions/bindings/#durable-object-namespaces) your Functions bind to will show up in the Cloudflare dashboard.
+* Logs from any [Durable Objects](/pages/functions/bindings/#durable-objects) your Functions bind to will show up in the Cloudflare dashboard.
 * A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.

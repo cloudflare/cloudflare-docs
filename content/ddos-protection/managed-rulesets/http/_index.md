@@ -27,14 +27,14 @@ You can adjust the behavior of the rules in the managed ruleset by modifying the
 
 {{<Aside type="note" header="Notes">}}
 * Certain actions or sensitivity levels may not be available to all Cloudflare plans.
-* Configuration changes to rules with the `gatebot` tag can take up to five minutes.
-* Currently, you can only define account-level configurations (or overrides) via API.
+* Currently, you can only define account-level configurations (or overrides) for the HTTP DDoS Attack Protection managed ruleset via API.
 {{</Aside>}}
 
 To adjust rule behavior, do one of the following:
 
-* [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
-* [Configure HTTP DDoS Attack Protection via API](/ddos-protection/managed-rulesets/http/configure-api/).
+* [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
+* [Configure the managed ruleset via API](/ddos-protection/managed-rulesets/http/configure-api/).
+* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-http).
 
 For more information on the available configuration parameters, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 

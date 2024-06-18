@@ -16,7 +16,7 @@ When a user logs in to an application protected by Access, Access validates thei
 | Token  | Description  | Expiration | Storage   |
 | --------| ---------- | ----------- |---------  |
 | Global session token | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#set-global-session-duration) | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
-| Application token   | Allows the user to access a specific Access application.  | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application     |
+| [Application token](/cloudflare-one/identity/authorization-cookie/application-token/)   | Allows the user to access a specific Access application.  | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application     |
 {{</table-wrap>}}
 
 The user can access the application for the entire duration of the application token’s lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
@@ -35,13 +35,17 @@ The user will be required to re-authenticate with the IdP after this period of t
 
 ### Set application session duration
 
-You can set an application session duration ranging from immediate timeout to 1 month. The default is 24 hours.
+You can set an application session duration for self-hosted and private Access applications. Available session durations range from immediate timeout to 1 month. The default is 24 hours.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
 
 The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
+
+#### SaaS application sessions
+
+Access session durations only control the front door to a SaaS app; Access does not control how long the user can stay in the SaaS app itself. For example, if the user logs out of the SaaS app and then comes back to it, a valid Access application token allows them to re-authenticate without another login. The SaaS app issues its own authorization cookie that manages the user's session within the app.
 
 ### Set policy session duration
 

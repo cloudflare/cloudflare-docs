@@ -57,7 +57,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP with NAT support</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -67,7 +66,6 @@ Use one or more of the following characteristics:
       <td>
         <ul>
           <li><a href="#incompatible-characteristics">Incompatible with <strong>IP</strong></a></li>
-          <li><a href="#ipv6-address-handling">IPv6 address handling</strong></a></li>
         </ul>
       </td>
     </tr>
@@ -132,6 +130,11 @@ Use one or more of the following characteristics:
       <td></td>
     </tr>
     <tr>
+      <td><strong>JA4</strong></td>
+      <td><code>cf.bot_management.ja4</code></td>
+      <td></td>
+    </tr>
+    <tr>
       <td>
         <strong>JSON string value of</strong><br />
         (enter key)
@@ -147,7 +150,9 @@ Use one or more of the following characteristics:
       </td>
     </tr>
     <tr>
-      <td>N/A<br />(API only)</td>
+      <td><strong>JSON integer value of</strong><br />
+        (enter key)
+      </td>
       <td>
         <code>lookup_json_integer(http.request.body.raw, &quot;&lt;key&gt;&quot;)</code>
       </td>
@@ -155,6 +160,28 @@ Use one or more of the following characteristics:
         <ul>
           <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
           <li><a href="/ruleset-engine/rules-language/functions/#function-lookup_json_integer"><code>lookup_json_integer()</code> function reference</a></li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Form input value of</strong><br />(enter field name)</td>
+      <td>
+        <code>http.request.body.form[&quot;&lt;input_field_name&gt;&quot;]</code>
+      </td>
+      <td><ul><li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li></ul></td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JWT claim of</strong><br />
+        (enter token configuration ID, claim name)
+      </td>
+      <td>
+        <code>lookup_json_string(http.request.jwt.claims[&quot;&lt;token_configuration_id&gt;&quot;][0], &quot;&lt;claim_name&gt;&quot;)</code>
+      </td>
+      <td>
+        <ul>
+          <li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li>
+          <li><a href="/api-shield/security/jwt-validation/transform-rules/">JWT Validation reference</a></li>
         </ul>
       </td>
     </tr>
@@ -169,20 +196,15 @@ Use one or more of the following characteristics:
       <td></td>
     </tr>
     <tr>
-      <td><strong>Form input value of</strong><br />(enter field name)</td>
-      <td>
-        <code>http.request.body.form[&quot;&lt;input_field_name&gt;&quot;]</code>
+      <td><strong>Custom</strong><br />
+        (enter expression)
       </td>
-      <td><ul><li><a href="#missing-field-versus-empty-value">Missing field versus empty value</a></li></ul></td>
-    </tr>
-    <tr>
-      <td>N/A<br />(API only)</td>
       <td>
-        <code>substring(&lt;field&gt;, &lt;start&gt;[, &lt;end&gt;])</code>
+        Enter a custom expression. You can use a function such as <code>substring()</code> or <code>lower()</code>, or enter a more complex expression.
       </td>
       <td>
         <ul>
-          <li><a href="/ruleset-engine/rules-language/functions/#function-substring"><code>substring()</code> function reference</a></li>
+          <li><a href="/ruleset-engine/rules-language/functions/">Functions</a></li>
         </ul>
       </td>
     </tr>
@@ -218,14 +240,14 @@ For example, you might want to perform rate limiting for clients sending more th
 
 ### When rate exceeds > Requests
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `requests_per_period`.
 
 The number of requests over the period of time that will trigger the rule.
 
 ### When rate exceeds > Period
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `period`.
 
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
@@ -239,23 +261,57 @@ The available API values are: `10`, `60` (one minute), `120` (two minutes), `300
 
 Action to perform when the rate specified in the rule is reached.
 
-Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+
+If you select the _Block_ action, you can define a custom response using the following parameters:
+
+- [**With response type**](#with-response-type)
+- [**With response code**](#with-response-code)
+- [**Response body**](#response-body)
+
+#### With response type (for _Block_ action) { #with-response-type }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content_type` (optional).
+
+Defines the content type of a custom response when blocking a request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
+
+#### With response code (for _Block_ action)  { #with-response-code }
+
+- Data type: `Integer`.
+- Field name in the API: `response` > `status_code` (optional).
+
+Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
+
+#### Response body (for _Block_ action) { #response-body }
+
+- Data type: `String`.
+- Field name in the API: `response` > `content` (optional).
+
+Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when you set the [rule action](#then-take-action) to _Block_.
+
+The maximum field size is 30 KB.
 
 ### For duration
 
-- Data type: `Number`.
+- Data type: `Integer`.
 - Field name in the API: `mitigation_timeout`.
 
 Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
 
-In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
+In the dashboard, select one of the available values, which [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability). The available API values are: `0`, `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), `3600` (one hour), or `86400` (one day).
 
-Configuring the rule in the Cloudflare dashboard with one of the challenge actions will enable request throttling. With this behavior, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
+Customers on Free, Pro, and Business plans cannot select a duration when using a [challenge action](/waf/reference/cloudflare-challenges/#available-challenges) — their rate limiting rule will always perform request throttling for these actions. With request throttling, you do not define a duration. When visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
 
-When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`. This will enable request throttling.
+Enterprise customers can always configure a duration (or mitigation timeout), even when using one of the challenge actions.
 
-{{<Aside type="note">}}
-Enterprise customers with a paid add-on can also [throttle requests](#with-the-following-behavior) with the _Block_ action.
+{{<Aside type="note" header="Notes for API users">}}
+* If you are on a Free, Pro, or Business plan and are using the API, you must enable request throttling by setting the `mitigation_timeout` value to `0` (zero) when using the actions `managed_challenge`, `js_challenge`, or `challenge`.
+* Enterprise customers can use a `mitigation_timeout` value greater than or equal to `0` (zero), regardless of the rate limiting action they select.
 {{</Aside>}}
 
 ### With the following behavior
@@ -266,7 +322,7 @@ Enterprise customers with a paid add-on can also [throttle requests](#with-the-f
 Defines the exact behavior of the selected action.
 
 {{<Aside type="note">}}
-Only Enterprise customers with a paid add-on can throttle requests using the _Block_ action.
+Only Enterprise customers can throttle requests using the _Block_ action.
 
 Other users can throttle requests using a challenge action, or perform the action during a period of time. Refer to [For duration](#for-duration) for details.
 {{</Aside>}}
@@ -281,38 +337,7 @@ The action behavior can be one of the following:
 
     ![Chart displaying the behavior of a rate limiting configured to throttle requests above the configured limit](/images/waf/rate-limiting-rules/behavior-throttle.png)
 
-### With response type
-
-- Data type: `String`.
-- Field name in the API: `response` > `content_type` (optional).
-
-Defines the content type of a custom response when blocking a request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
-
-### With response code
-
-- Data type: `Integer`.
-- Field name in the API: `response` > `status_code` (optional).
-
-Defines the HTTP status code returned to the visitor when blocking the request due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
-
-### Response body
-
-- Data type: `String`.
-- Field name in the API: `response` > `content` (optional).
-
-Defines the body of the returned HTTP response when the request is blocked due to rate limiting. Only available when the [rule action](#then-take-action) is _Block_.
-
-The maximum field size is 30 KB.
-
 ## Notes about rate limiting characteristics
-
-### IPv6 address handling
-
-Cloudflare will consider entire `/64` prefixes as the same IPv6 source address for the purpose of tracking the request rate.
 
 ### Use cases of IP with NAT support
 
@@ -353,6 +378,6 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
 * The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

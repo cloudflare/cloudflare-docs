@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="note">}}
 
-To enable this feature on specific hostnames - instead of across your entire zone - use a [configuration rule](/rules/configuration-rules/).
+To use this feature on specific hostnames - instead of across your entire zone - use a [configuration rule](/rules/configuration-rules/).
 
 {{</Aside>}}

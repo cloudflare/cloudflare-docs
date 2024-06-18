@@ -14,7 +14,7 @@ meta:
 
 ### GRE and IPsec tunnels
 
-{{<render file="tunnel-endpoints/_gre-ipsec.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/tunnels/">}}
+{{<render file="tunnel-endpoints/_gre-ipsec.md" productFolder="magic-transit" withParameters="Magic WAN;;/magic-wan/reference/tunnels/;;/magic-wan/reference/tunnels/#supported-configuration-parameters">}}
 
 #### Anti-replay protection
 
@@ -26,7 +26,7 @@ meta:
 
 ## Add tunnels
 
-{{<render file="tunnel-endpoints/_add-tunnels.md" productFolder="magic-transit" withParameters="Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/configuration/manually/how-to/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional">}}
+{{<render file="tunnel-endpoints/_add-tunnels.md" productFolder="magic-transit" withParameters="Magic WAN;;**Magic WAN** > **Configuration**;;/magic-wan/configuration/manually/how-to/tunnel-health-checks/;;/magic-wan/reference/tunnel-health-checks/;;/magic-wan/reference/anti-replay-protection/;;bidirectional;;/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/">}}
 
 ## Bidirectional vs unidirectional health checks
 

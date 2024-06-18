@@ -169,7 +169,7 @@ export function dropdowns() {
   let attr = "data-expanded";
 
   document.querySelectorAll(".Dropdown").forEach((div) => {
-    
+
     let btn = div.querySelector("button");
     let links = div.querySelectorAll<HTMLAnchorElement>("li>a");
     let focused = 0; // index
@@ -286,15 +286,18 @@ export function zarazTrackDocEvents() {
   const dropdowns = document.getElementsByTagName("details")
   const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
   const playgroundLinks = document.getElementsByClassName("playground-link")
+  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
-        if (link.hostname !== "developers.cloudflare.com") {
-          if (link.href.includes("workers.cloudflare.com/playground")) {
+        const linkURL = new URL(link)
+        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
+        if (linkURL.hostname !== "developers.cloudflare.com") {
+          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('playground link click', link);
             });
-          } else if (link.hostname.includes("cloudflare.com")) {
+          } else if (cfSubdomainRegex.test(linkURL.hostname)) {
             link.addEventListener("click", () => {
               $zarazLinkEvent('Cross Domain Click', link);
             });
@@ -307,14 +310,14 @@ export function zarazTrackDocEvents() {
       }
     }
     if (dropdowns.length > 0) {
-      for (const dropdown of dropdowns as any) { 
+      for (const dropdown of dropdowns as any) {
         dropdown.addEventListener("click", () => {
           $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
         });
     }
   }
   if (glossaryTooltips.length > 0) {
-    for (const tooltip of glossaryTooltips as any) { 
+    for (const tooltip of glossaryTooltips as any) {
       tooltip.addEventListener("pointerleave", () => {
         $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
       });
@@ -324,11 +327,21 @@ export function zarazTrackDocEvents() {
   }
 }
   if (playgroundLinks.length > 0) {
-    for (const playgroundLink of playgroundLinks as any) { 
+    for (const playgroundLink of playgroundLinks as any) {
       playgroundLink.addEventListener("click", () => {
         $zarazLinkEvent('playground link click', playgroundLink);
       });
   }
+  }
+  if (copyCodeBlockButtons.length > 0) {
+    for (const copyButton of copyCodeBlockButtons as any) {
+      copyButton.addEventListener("click", () => {
+        const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
+        zaraz.track('copy button link click', {
+          title: codeBlockElement.getAttribute('title') ?? 'title not set',
+          language: codeBlockElement.getAttribute('language') ?? 'language not set',});
+      });
+    }
   }
   });
 }
@@ -348,20 +361,31 @@ function $zarazGlossaryTooltipEvent(term: string) {
 export function zarazTrackHomepageLinks() {
   const links = document.getElementsByClassName("DocsMarkdown--link");
   const playgroundLinks = document.getElementsByClassName("playground-link")
+  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
       for (const link of links as any) {  // Type cast to any for iteration
         link.addEventListener("click", () => {
           zaraz.track('homepage link click', {href: link.href})
         });
-      } 
+      }
     }
     if (playgroundLinks.length > 0) {
-      for (const playgroundLink of playgroundLinks as any) { 
+      for (const playgroundLink of playgroundLinks as any) {
         playgroundLink.addEventListener("click", () => {
           $zarazLinkEvent('playground link click', playgroundLink);
         });
     }
+    }
+    if (copyCodeBlockButtons.length > 0) {
+      for (const copyButton of copyCodeBlockButtons as any) {
+        copyButton.addEventListener("click", () => {
+          const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
+          zaraz.track('copy button link click', {
+            title: codeBlockElement.getAttribute('title') ?? 'title not set',
+            language: codeBlockElement.getAttribute('language') ?? 'language not set',});
+        });
+      }
     }
   });
 }

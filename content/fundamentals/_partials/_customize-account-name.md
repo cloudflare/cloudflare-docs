@@ -7,7 +7,7 @@ _build:
 
 Your account name defaults to `<<YOUR_EMAIL_ADDRESS>>'s Account`.
 
-You may want to customize the name of this account, either to help specify its purpose or to help associated with multiple accounts.
+You may want to customize the name of this account, either to help specify its purpose or to help associate it with multiple accounts.
 
 To change your account name:
 

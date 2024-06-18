@@ -12,4 +12,4 @@ Learn how to secure your applications, and how to configure one dashboard for yo
 
 {{<directory-listing>}}
 
-Refer to our [reference architecture](/reference-architecture/sase-reference-architecture/) for an understanding on how to architect a Zero Trust and SASE solution.
+Refer to our [reference architecture](/reference-architecture/architectures/sase/) for an understanding on how to architect a Zero Trust and SASE solution.

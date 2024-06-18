@@ -75,12 +75,12 @@ You will not be billed at this step. Cloudflare will only bill your card when yo
 
 Sites can be unavailable for a few reasons, including:
 
-- You did not [add your domain](/fundamentals/setup/account-setup/add-site/) to your Cloudflare.
+- You did not [add your domain](/fundamentals/setup/manage-domains/add-site/) to your Cloudflare.
 - The site was registered in the last 60 days.
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
 - The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/setup/account-setup/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
+- You failed to follow the steps highlighted above in [creating an account with your domain](/fundamentals/setup/account/create-account/) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
 {{</Aside>}}
 

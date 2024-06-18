@@ -50,17 +50,6 @@ No. Cloudflare will stop tracking performance data when you delete an endpoint a
 ___
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Why do I still see my endpoint in Discovery after I’ve added it to Endpoint Management?" >}}
-
-{{<faq-answer>}}
-
-Your endpoints will continue to appear in Discovery after being added to Endpoint Management for the immediate future. In a future release, we plan to differentiate between endpoints that are in Discovery that have not yet been added to Endpoint Management.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-___
-
-{{<faq-item>}}
 {{<faq-question level=2 text="Why do I not receive threshold recommendations for my discovered API endpoints?" >}}
 
 {{<faq-answer>}}
@@ -69,7 +58,7 @@ Thresholds can only be recommended for endpoints that receive sufficient levels 
 
 * Only requests with the same criteria as API Discovery are considered. 
 * If traffic has been erratic or intermittent to this endpoint, the threshold might not show up. Cloudflare needs endpoints to receive sufficient valid traffic in any 24-hour period in the last 7 days or since the initial discovery of the endpoint to make statistically safe threshold suggestions.
-* Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint.
+* Cloudflare also requires at least 50 distinct sessions to have accessed the endpoint in any 24-hour period in the last 7 days or since the initial discovery of the endpoint. To detect sessions, you must set up [session identifiers](/api-shield/get-started/#session-identifiers).
 
 If you do not receive threshold recommendations for a discovered endpoint, you will see one of the following error codes: 
 
@@ -97,7 +86,7 @@ ___
 
 {{<faq-answer>}}
 
-The importing [(Schema Validation)](/api-shield/security/schema-validation/) and exporting [(API Discovery)](/api-shield/security/api-discovery/) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
+The importing ([Schema Validation](/api-shield/security/schema-validation/)) and exporting ([Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning)) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
 
 {{</faq-answer>}}
 {{</faq-item>}}

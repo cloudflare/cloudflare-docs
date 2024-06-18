@@ -78,6 +78,7 @@ You can filter by the following parameters:
 * Mitigation action taken by Cloudflare
 * Mitigation system that performed the action
 * Source IP, port, ASN, tunnel
+* [Direction](#traffic-direction)
 * Destination IP, port, IP range (description or CIDR of provisioned prefixes), tunnel
 * Source Cloudflare data center and data center country of where the traffic was observed
 * Packet size
@@ -86,9 +87,13 @@ You can filter by the following parameters:
 
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
-{{<Aside type="warning">}}
-Currently, the Network Analytics dashboard does not fully support [leased IPs/prefixes](/magic-transit/cloudflare-ips/) for Magic Transit customers.
-{{</Aside>}}
+### Traffic direction
+
+The available values in the **Direction** filter have the following meaning, from the point of view of a specific customer's network:
+
+- **Ingress**: Incoming traffic from the public Internet (ingress) to the customer's network via Cloudflare's network (for example, through [Magic Transit](/magic-transit/));
+- **Egress**: Outgoing traffic leaving the customer's network through Cloudflare's network to the public Internet (for example, through [Magic Transit deployed with the egress option](/magic-transit/reference/egress/));
+- **Lateral**: Traffic that stayed within the customer's network, routed through Cloudflare's network (for example, traffic between customer office branches or data centers routed through [Magic WAN](/magic-wan/)).
 
 ## Packets summary or Bits summary
 

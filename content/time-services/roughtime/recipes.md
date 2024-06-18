@@ -21,13 +21,13 @@ formatted as a JSON object. For example:
 {
   "servers": [
     {
-      "name": "Cloudflare-Roughtime",
+      "name": "Cloudflare-Roughtime-2",
       "publicKeyType": "ed25519",
-      "publicKey": "gD63hSj3ScS+wuOeGrubXlq35N1c5Lby/S+T7MNTjxo=",
+      "publicKey": "0GD7c3yP8xEc4Zl2zeuN2SlLvDVVocjsPSL8/Rl/7zg=",
       "addresses": [
         {
           "protocol": "udp",
-          "address": "roughtime.cloudflare.com:2002"
+          "address": "roughtime.cloudflare.com:2003"
         }
       ]
     }
@@ -122,11 +122,11 @@ res := roughtime.Do(servers, attempts, timeout, nil)
 
 The first parameter is a sequence of servers and the remaining parameters are the same as in `roughtime.Get()`. This queries each server in the sequence `servers` in order. The output `res` is a slice the same length as `servers`.
 
-Each element represents the result of the query to the server. If the query was successful, then the result contains the server's time. If unsuccessful, then the result contains the error that occurred. To compute the average difference between your clock and the valid responses:
+Each element represents the result of the query to the server. If the query was successful, then the result contains the server's time. If unsuccessful, then the result contains the error that occurred. To compute the median difference between your clock and the valid responses:
 
 ```go
 thresh := 10 * time.Second
-delta, err := roughtime.AvgDeltaWithRadiusThresh(res, t0, thresh)
+delta, err := roughtime.MedianDeltaWithRadiusThresh(res, t0, thresh)
 ```
 
 This rejects responses whose uncertainty radii exceed 10 seconds. An error will be returned if there were no valid responses.

@@ -3,49 +3,90 @@ type: example
 summary: Protect against timing attacks by safely comparing values using `timingSafeEqual`.
 tags:
   - Security
-pcx_content_type: configuration
+  - WebCrypto
+languages:
+  - TypeScript
+  - Python
+pcx_content_type: example
 title: Using timingSafeEqual
 weight: 1001
 layout: example
 ---
 
-To avoid timing attacks in your code, you can replace equality checks with the [`crypto.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function in your Workers application.
+The [`crypto.subtle.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function compares two values using a constant-time algorithm. The time taken is independent of the contents of the values.
 
-To use this function, create a new [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) and encode the string values to instances of `ArrayBuffer` using [`encoder.encode`](/workers/runtime-apis/encoding/#methods). This is needed because `crypto.subtle.timingSafeEqual` compares `ArrayBuffer` instances, not strings. With the encoded values, replace the standard JavaScript equality check (`===`) with `crypto.subtle.timingSafeEqual`. Note that the strings must be the same length in order to compare to `timingSafeEqual`. The below code shows how to implement string equality checks with `crypto.subtle.timingSafeEqual`. Note that the example shown would apply to TypeScript and JavaScript:
+When strings are compared using the equality operator (`==` or `===`), the comparison will end at the first mismatched character. By using `timingSafeEqual`, an attacker would not be able to use timing to find where at which point in the two strings there is a difference.
 
+The `timingSafeEqual` function takes two `ArrayBuffer` or `TypedArray` values to compare. These buffers must be of equal length, otherwise an exception is thrown.
 
+In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API. Since the time taken to encode the values may reveal the length of our secret value, you should check the length of the strings before encoding.
+
+{{<tabs labels="ts | py">}}
+{{<tab label="ts" default="true">}}
 
 ```ts
-const encoder = new TextEncoder();
-
-const username = "foo";
-const password = "bar";
-
-if (username.length !== password.length) {
-  // Minimise the possibility of a timing attack via how long encoding takes on the strings
+interface Environment {
+  MY_SECRET_VALUE?: string;
 }
 
-const a = encoder.encode(username)
-const b = encoder.encode(password)
+export default {
+  async fetch(req: Request, env: Environment) {
+    if (!env.MY_SECRET_VALUE) {
+      return new Response("Missing secret binding", { status: 500 });
+    }
 
-if (a.byteLength !== b.byteLength) {
-  // Strings must be the same length in order to compare
-  // with crypto.subtle.timingSafeEqual
-  return false
-}
+    const authToken = req.headers.get("Authorization") || "";
 
-// The below code is vulnerable to timing attacks
-// if (string1 === string2) { ... }
+    if (authToken.length !== env.MY_SECRET_VALUE.length) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
-// You can replace it with `crypto.subtle.timingSafeEqual` by encoding the values
-// you need to compare
+    const encoder = new TextEncoder();
 
-let isEqual = crypto.subtle.timingSafeEqual(a,b)
+    const a = encoder.encode(authToken);
+    const b = encoder.encode(env.MY_SECRET_VALUE);
 
-if (isEqual) {
-  // The values are equal
-} else {
-  // The values are not equal
-}
+    if (a.byteLength !== b.byteLength) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    if (!crypto.subtle.timingSafeEqual(a, b)) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    return new Response("Welcome!");
+  },
+};
 ```
 
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, TextEncoder, crypto
+
+async def on_fetch(request, env):
+    auth_token = request.headers["Authorization"] or ""
+    secret = env.MY_SECRET_VALUE
+
+    if secret is None:
+        return Response.new("Missing secret binding", status=500)
+
+    if len(auth_token) != len(secret):
+        return Response.new("Unauthorized", status=401)
+
+    if a.byteLength != b.byteLength:
+        return Response.new("Unauthorized", status=401)
+
+    encoder = TextEncoder.new()
+    a = encoder.encode(auth_token)
+    b = encoder.encode(secret)
+
+    if not crypto.subtle.timingSafeEqual(a, b):
+        return Response.new("Unauthorized", status=401)
+
+    return Response.new("Welcome!")
+```
+
+{{</tab>}}
+{{</tabs>}}

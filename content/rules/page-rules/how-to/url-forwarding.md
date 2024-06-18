@@ -3,15 +3,15 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
 title: URL forwarding
 meta:
-    title: URL forwarding | Page Rules
+    title: URL forwarding | Page Rules (legacy)
 weight: 1
 ---
 
 # URL forwarding or redirects
 
-Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/concepts/redirects/).
+Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/reference/redirects/).
 
-{{<render file="_page-rule-proxied-dns-warning.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ---
 
@@ -27,6 +27,8 @@ To configure URL forwarding or redirects using Page Rules:
 6. For **Select status code**, choose _301 - Permanent Redirect_ or _302 - Temporary Redirect_.
 7. Enter the destination URL.
 8. Select **Save and Deploy Page Rule**.
+
+{{<render file="_page-rule-proxied-dns-warning.md">}}
 
 ___
 

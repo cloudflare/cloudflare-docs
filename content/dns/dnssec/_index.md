@@ -1,20 +1,20 @@
 ---
 pcx_content_type: how-to
 title: DNSSEC
-weight: 5
+weight: 6
 ---
 
 # DNSSEC
 
-{{<render file="_dnssec-definition.md">}}
+{{<render file="_dnssec-definition.md" productFolder="dns">}}
 
 ---
 
 ## Disable DNSSEC
 
-{{<render file="_disable_dnssec.md">}}
+{{<render file="_disable_dnssec.md" productFolder="dns">}}
 
-{{<render file="_dnssec-enabled-migration.md">}}
+{{<render file="_dnssec-enabled-migration.md" productFolder="dns">}}
 
 ---
 
@@ -24,17 +24,13 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 ### Step 1 - Activate DNSSEC in Cloudflare
 
-{{<render file="_dnssec-cloudflare-steps.md">}}
+{{<render file="_dnssec-cloudflare-steps.md" productFolder="dns">}}
 
 ### Step 2 - Add DS record to your registrar
 
-{{<render file="_dnssec-registrar-steps.md">}}
+{{<render file="_dnssec-registrar-steps.md" productFolder="dns">}}
 
-{{<Aside type="note" header="Note:">}}
-
-Cloudflare automatically adds **DS** records for domains using Cloudflare Registrar or those using `.ch` and `.cz` top-level domains.
-
-{{</Aside>}}
+{{<render file="_dnssec-auto-add.md" productFolder="dns">}}
 
 ---
 
@@ -52,6 +48,6 @@ If your registrar does not support DNSSEC with Cloudflare's preferred cipher cho
 
 - Contact your registrar to ask for DNSSEC with modern encryption.
 - Transfer your domain to a different registrar that supports DNSSEC with Algorithm 13
-- File a [complaint with ICANN](https://forms.icann.org/en/resources/compliance/complaints/registrars/standards-complaint-form), citing your registrar's lack of compliance.
+- File a [complaint with ICANN](https://www.icann.org/compliance/complaint), citing your registrar's lack of compliance.
 
 If your top-level domain does not support DNSSEC with Algorithm 13 (also known as *ECDSA Curve P-256 with SHA-256*), [contact that top-level domain](https://www.iana.org/domains/root/db).

@@ -13,7 +13,7 @@ The key value always starts with `v1.0-`.
 
 ## Limitations
 
-- Changing the Origin CA key is not recorded by [Audit Logs](/fundamentals/account-and-billing/account-security/review-audit-logs/).
+- Changing the Origin CA key is not recorded by [Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/).
 - Each time you view the Origin CA key, it will be presented as a different value. All these different values are **simultaneously valid** until you click the `Change` button, which immediately invalidates all previously generated values.
 - Origin CA keys have access to every account the user has access to.
 

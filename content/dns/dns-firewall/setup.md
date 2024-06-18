@@ -21,7 +21,8 @@ Prior to setting up DNS Firewall, you need:
 
 ### Create a DNS Firewall cluster
 
-#### Using the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1.  Log in to the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
 2.  On the account homepage, click **DNS Firewall**.
@@ -40,9 +41,13 @@ If you forget to save your new IP addresses, find your cluster and click **IP Ad
 
 {{</Aside>}}
 
-#### Using the API
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 You can also create a DNS Firewall cluster by sending a [POST request](/api/operations/dns-firewall-create-dns-firewall-cluster) to the API.
+
+{{</tab>}}
+{{</tabs>}}
 
 ### Update registrar settings
 
@@ -62,6 +67,6 @@ Configure security policy in your DNS servers and Firewall to allow only [Cloudf
 
 ## Additional options
 
-When you [use the API](#using-the-api), you can also specify other parameters, such as rate limit (in queries per second per data center). You can find the parameters descriptions and examples in the [API documentation](/api/operations/dns-firewall-create-dns-firewall-cluster).
+When you use the API, you can also specify other parameters, such as rate limit (in queries per second per data center). You can find the parameters descriptions and examples in the [API documentation](/api/operations/dns-firewall-create-dns-firewall-cluster).
 
 To configure rate limiting and other options for already existing clusters, use the [Update DNS Firewall Cluster](/api/operations/dns-firewall-update-dns-firewall-cluster) endpoint.

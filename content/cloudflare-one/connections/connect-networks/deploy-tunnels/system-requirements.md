@@ -6,7 +6,8 @@ weight: 3
 
 # System requirements
 
-Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center. Unlike legacy VPNs where throughput is determined by the server's memory, CPU and other hardware specifications, Cloudflare Tunnel throughput is primarily limited by the number of ports configured in system software. Therefore, when sizing your `cloudflared` servers, the most important element is sizing the available ports on the machine to reflect the expected throughput of TCP and UDP traffic.
+Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center.
+{{<render file="tunnel/_tunnel-capacity-intro.md" productFolder="cloudflare-one">}}
 
 ## Recommendations
 
@@ -24,21 +25,39 @@ When `cloudflared` receives a request from a WARP device, it uses the ports on t
 - `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
 - The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.
 
+{{<tabs labels="Linux | Windows">}}
+{{<tab label="linux" no-code="true">}}
+
 To increase the number of ports available to `cloudflared` on Linux:
 
 If your machine has a `/etc/sysctl.d/` directory:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 12000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
+$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
 $ sudo sysctl -p /etc/sysctl.d/99-cloudflared.conf
 ```
 
 Otherwise:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 12000 60999' | sudo tee -a /etc/sysctl.conf
+$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.conf
 $ sudo sysctl -p /etc/sysctl.conf
 ```
+
+{{</tab>}}
+{{<tab label="windows" no-code="true">}}
+
+To increase the number of ports available to `cloudflared` on  Windows, set the [dynamic port range](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting) for TCP and UDP:
+
+```txt
+netsh int ipv4 set dynamicport tcp start=11000 num=50000
+netsh int ipv4 set dynamicport udp start=11000 num=50000
+netsh int ipv6 set dynamicport tcp start=11000 num=50000
+netsh int ipv6 set dynamicport udp start=11000 num=50000
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ### ulimits
 

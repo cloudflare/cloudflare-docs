@@ -4,7 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m13.5
 product:
   title: Magic Firewall
   url: /magic-firewall/
-  group: Network security
+  group: Cloudflare One
+  additional_groups: [Network security]
 
 meta:
   title: Cloudflare Magic Firewall docs
@@ -26,5 +27,5 @@ externals:
 
 algolia:
   index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: magic-firewall

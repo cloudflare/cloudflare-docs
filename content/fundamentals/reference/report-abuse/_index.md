@@ -1,13 +1,13 @@
 ---
 pcx_content_type: navigation
-title: Report abuse
+title: Abuse
 weight: 2
 meta:
     title: Report abuse to Cloudflare
     description: Learn how to report DMCA issues, phishing, trademark infringement, malware sites, child exploitation material, and more to Cloudflare’s Trust and Safety team.
 ---
 
-# Report abuse
+# Abuse
 
 Cloudflare offers security and reliability services to millions of websites, helping prevent online abuse and make the Internet more secure. 
 

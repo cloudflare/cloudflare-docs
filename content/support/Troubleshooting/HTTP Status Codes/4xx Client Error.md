@@ -10,7 +10,7 @@ title: 4xx Client Error
 
 -   4xx codes can be used as a response to any request method.
 -   Origin server should include an explanation which should be displayed by User-Agent, with the exception of a `HEAD` request
--   [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for more details.
+-   [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for more details.
 
 The following are common 4xx codes and their definitions:
 
@@ -126,7 +126,7 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 {{<feature-table id="network.max_upload_size">}}
 
-If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), or [upgrade your plan](/fundamentals/account-and-billing/account-billing/change-plan/).
+If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), or [upgrade your plan](/fundamentals/subscriptions-and-billing/change-plan/).
 
 ## **414 URI Too Long ([RFC7231](https://tools.ietf.org/html/rfc7231))**
 

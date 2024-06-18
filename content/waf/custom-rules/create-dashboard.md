@@ -1,11 +1,13 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create custom rules in the dashboard
+title: Create in the dashboard
 weight: 2
+meta:
+  title: Create a custom rule in the dashboard
 ---
 
-# Create custom rules in the dashboard
+# Create a custom rule in the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -21,24 +23,10 @@ weight: 2
 
 6. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-7. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+7. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-## Configuring a custom response for blocked requests
+## Configure a custom response for blocked requests
 
-When you select the _Block_ action in a custom rule you can optionally define a custom response.
-
-The custom response has three settings:
-
-* **With response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
-
-    | Dashboard value | API value |
-    |---|---|
-    | Custom HTML | `"text/html"` |
-    | Custom Text | `"text/plain"` |
-    | Custom JSON | `"application/json"` |
-    | Custom XML | `"text/xml"` |
-
-* **With response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+{{<render file="_custom-response-blocked-requests.md" withParameters="WAF block;;403">}}

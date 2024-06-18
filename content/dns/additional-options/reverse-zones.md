@@ -25,7 +25,7 @@ The following Cloudflare customers can create reverse zones.
 - Customers with an IPv4 or IPv6 address space can add the IPv4 or IPv6 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
 - DNS Firewall customers need to contact their account team to add PTR records for the IPs used for their DNS Firewall clusters.
 
-If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://whois.icann.org/en).
+If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://lookup.icann.org/).
 
 ## Set up a reverse zone
 
@@ -79,6 +79,12 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 The subdomain for the PTR record would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
 
+{{<example>}}
+| Type | Name | Domain name | TTL |
+| --- | --- | --- | --- |
+| `PTR` | `123` | `example.com` | `Auto` |
+{{</example>}}
+
     {{</details>}}
 
     {{<details header="IPv6 example">}}
@@ -89,6 +95,12 @@ The subdomain for the PTR record would be `123`, making the full domain for forw
 - **IP address**: `2001:DB8::5`
 
 The subdomain for the PTR record would be `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0`, making the full domain for forward lookup `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa`.
+
+{{<example>}}
+| Type | Name | Domain name | TTL |
+| --- | --- | --- | --- |
+| `PTR` | `5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0` | `example.com` | `Auto` |
+{{</example>}}
 
     {{</details>}}
 

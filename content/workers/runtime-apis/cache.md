@@ -19,7 +19,9 @@ The `cache.put` method is not compatible with tiered caching. Refer to [Cache AP
 
 {{</Aside>}}
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
+Workers deployed to custom domains have access to functional `cache` operations. So do [Pages functions](/pages/functions/), whether attached to custom domains or `*.pages.dev` domains.
+
+However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available.
 
 {{<Aside type="note">}}
 
@@ -228,7 +230,6 @@ The `cache.delete` method only purges content of the cache in the data center th
 ## Related resources
 
 - [How the cache works](/workers/reference/how-the-cache-works/)
-- [Configure your CDN](/workers/tutorials/configure-your-cdn/)
 - [Example: Cache using `fetch()`](/workers/examples/cache-using-fetch/)
 - [Example: using the Cache API](/workers/examples/cache-api/)
 - [Example: caching POST requests](/workers/examples/cache-post-request/)

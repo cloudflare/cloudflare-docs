@@ -24,7 +24,7 @@ Using a custom certificate is possible with both [zone-level](/ssl/origin-config
 
 ## Limitations
 
-Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) (deprecated) and does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
+Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 
 ## Related topics
 

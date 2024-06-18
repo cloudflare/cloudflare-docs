@@ -56,10 +56,13 @@ To upload a custom SSL certificate in the dashboard:
 
 7. Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
-8. Select a value for **Legacy Client Support**, which toggles {{<glossary-tooltip term_id="Server Name Indication (SNI)">}}Server Name Indication (SNI){{</glossary-tooltip>}} support:
+8. Select a value for **Legacy Client Support**, which specifies {{<glossary-tooltip term_id="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">}}Server Name Indication (SNI){{</glossary-tooltip>}} support:
 
     - **Modern (recommended)**: SNI only
     - **Legacy**: Supports non-SNI
+    {{<Aside type="warning">}}
+Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](/byoip/).
+{{</Aside>}}
 
 9. Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
@@ -120,6 +123,10 @@ EOF
 
 `sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.
 
+  {{<Aside type="warning">}}
+Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](/byoip/).
+{{</Aside>}}
+
 2. Upload your certificate and key
 
 Use the [POST](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
@@ -146,6 +153,8 @@ For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-rec
 Before you update an existing custom certificate, you might want to consider having active [universal](/ssl/edge-certificates/universal-ssl/) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) certificates as fallback options. Go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) to check a list of hostnames and status of the edge certificates in your zone.
 
 If you are on an Enterprise plan and want to update a custom (modern) certificate, also consider requesting access to [Staging environment (Beta)](/ssl/edge-certificates/staging-environment/).
+
+Replacing a custom certificate following these steps does not lead to any downtime. No connections will be terminated and new connections will use the new certificate. The old certificate will only actually be deleted when the new certificate is uploaded and active.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}

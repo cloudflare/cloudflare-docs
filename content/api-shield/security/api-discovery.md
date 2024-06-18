@@ -37,7 +37,7 @@ API Discovery runs this process across all your traffic, generating a simple map
 
 API Shield first catalogs your discovered API endpoints in an email inbox-style view. From API Discovery, you can save endpoints to [Endpoint Management](/api-shield/management-and-monitoring/) or ignore endpoints to remove them from view.
 
-You should save all discovered API endpoints to Endpoint Management while ignoring any potential false positives in the API Discovery results by selecting **Save** or **Ignore** on each line. Alternatively, you can bulk-select endpoints to save or ignore.
+You should save all discovered API endpoints to Endpoint Management while ignoring any potential false positives in the API Discovery results by selecting **Save** or **Ignore** on each line. Alternatively, you can bulk-select endpoints to save or ignore. You can get started with saving endpoints by saving all endpoints with a variable. Search for `var1` in the search box and add all the resulting endpoints. You can examine endpoints without path variables for accuracy later on.
 
 By adding endpoints to Endpoint Management, you will unlock further [security](/api-shield/security/), [visibility](/api-shield/management-and-monitoring/#endpoint-performance-analysis), and [management](/api-shield/management-and-monitoring/) features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics.
 
@@ -57,7 +57,7 @@ To access Machine Learning-based Discovery, log in to the [Cloudflare dashboard]
 
 If all of your zone’s API traffic contains the {{<glossary-tooltip term_id="session identifier">}}session identifier{{</glossary-tooltip>}} that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier.
 
-If you feel that there is an error, direct the feedback to your account team.
+You can direct any feedback about your API Discovery results to your account team.
 
 ## Availability
 

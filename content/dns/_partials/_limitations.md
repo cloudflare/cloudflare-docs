@@ -5,17 +5,32 @@ _build:
   list: never
 ---
 
-#### Record types
+#### Proxy eligibility
 
-By default, Cloudflare only supports proxied `A`, `AAAA`, and `CNAME` records. You cannot proxy other record types.
+By default, `A`, `AAAA`, and `CNAME` DNS records that serve `HTTP/HTTPS` traffic can be proxied.
 
 If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
+The following types of DNS records may be in your DNS configuration, but cannot be proxied:
+
+- `CAA`
+- `DKIM`
+- `DMARC`
+- `DNSKEY`
+- `DS`
+- `HTTPS`
+- `MX`
+- `NS`
+- `PTR`
+- `SOA`
+- `SPF`
+- `SRV`
+- `SVCB`
+- `TXT`
+
 #### Ports and protocols
 
-By default, Cloudflare only proxies HTTP and HTTPS traffic.
-
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](/fundamentals/reference/network-ports/) at the origin, either leave your records [unproxied (DNS-only)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) or use [Cloudflare Spectrum](/spectrum/).
+To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
 
 #### Pending domains
 

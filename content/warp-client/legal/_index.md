@@ -2,6 +2,7 @@
 pcx_content_type: navigation
 title: Legal
 weight: 6
+hideChildren: true
 ---
 
 # Legal

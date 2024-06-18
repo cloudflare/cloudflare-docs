@@ -2,14 +2,14 @@
 title: HTTP Traffic Alerts
 pcx_content_type: reference
 type: overview
-title: HTTP Traffic Alerts
+weight: 1
 ---
 
 # HTTP Traffic Alerts
 
 ## Error Rate
 
-**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5XX error responses. You can select which zones to be alerted on and the sensitivity of the alerts.
+**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5XX error responses. You can select which zones to be alerted on and the sensitivity of the alerts. Edge status codes of `521`, `522`, and `523` also count as origin errors as they indicate issues reaching your origin.
 
 **Advanced Error Rate** alerts allow you to monitor either your origin or edge status code. You can select which zones and specific status codes to be alerted on and the sensitivity of the alert. Optionally, you can also filter out certain IP addresses and choose whether to group your alerts by status code.
 
@@ -29,6 +29,14 @@ SLOs determine the sensitivity of an alert.  For example, if you want to be aler
 
 Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5XX error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
 
+### Alert Grouping recommendations
+
+[Advanced Error Rate Alerts](/notifications/notification-available/#traffic-monitoring) support grouping by status code. When status code grouping is enabled, a notification policy will calculate SLO violations and send alerts for each status code matched by the notification separately.
+
+For example, if an Advanced Error Rate policy is filtered to status codes between `500` and `599`, and your domain received spikes to `503` and `504`, you would receive a separate alert for each status code. To receive a single alert, alert grouping should be disabled.
+
+Since service-level indicators (SLI) are calculated separately for each status code when grouping is enabled, a notification policy with status code grouping may not be in violation, but the same policy without status code grouping is in violation. This can happen if there are spikes in the rates of multiple status codes, but no individual spike is large enough.
+
 ___
 
 ## Traffic Anomalies
@@ -36,3 +44,11 @@ ___
 Traffic Anomalies alerts must have a z-score of more than 3.5 or less than -3.5, and a total of more than 200 requests. A z-score is the number of standard deviations the current value is to the mean. The mean and standard deviation is calculated by comparing the current five minutes to the past four hours. This is measured every five minutes.
 
 You can filter the alerts by domain, whether or not to include traffic already mitigated by the WAF and DoS, and specific status codes. You can also choose if you want to be alerted on drops and/or spikes in your traffic.
+
+___
+
+## Limitations 
+
+Notifications are configured per zone. At the moment, it is not possible to configure alerts for a specific path or hostname.
+
+The conditions in which the alerts are triggered cannot be configured. However, it is possible to define a specific threshold of 10,000 requests on HTTP `500` errors or an alert on 10TB of traffic.

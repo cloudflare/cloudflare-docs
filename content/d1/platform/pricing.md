@@ -6,16 +6,6 @@ weight: 1
 
 # Pricing
 
-{{<Aside type="note" header="D1 public beta">}}
-
-D1 is currently free to use during the public beta. Billing is expected to be enabled in February 2024 for developers using D1 on the Workers paid plan.
-
-Developers using the Workers Free plan and D1's Free plan will not be charged.
-
-Read the [announcement blog](https://blog.cloudflare.com/d1-open-beta-is-here/) for more details about what is new in the beta and what is coming in the future.
-
-{{</Aside>}}
-
 D1 bills based on:
 
 - **Usage**: Queries you issue against D1 will count as rows read, rows written, or both (for transactions or batches).
@@ -39,12 +29,6 @@ Yes, the [Workers Free plan](/workers/platform/pricing/#workers) will always inc
 When your account hits the daily read and/or write limits, you will not be able to issue queries against D1. D1 API will return errors to your client indicating that your daily limits have been exceeded. Once you have reached your included storage limit, you will need to delete unused databases or clean up stale data before you can insert new data, create or alter tables or create indexes and triggers.
 
 Upgrading to the Workers Paid plan will remove these limits, typically within minutes.
-
-{{<Aside type="note">}}
-
-These free limits are not currently enforced during the public beta.
-
-{{</Aside>}}
 
 - What happens if I exceed the monthly included reads, writes and/or storage on the paid tier?
 
@@ -83,7 +67,7 @@ Yes, any queries you issue against your database, including inserting (`INSERT`)
 
 - Can I use an index to reduce the number of rows read by a query?
 
-Yes, you can use an index to reduce the number of rows read by a query. [Creating indexes](/d1/how-to/using-indexes/) for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
+Yes, you can use an index to reduce the number of rows read by a query. [Creating indexes](/d1/build-with-d1/use-indexes/) for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
 - Does a freshly created database, and/or an empty table with no rows, contribute to my storage?
 

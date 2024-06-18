@@ -21,16 +21,16 @@ To create a new version:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
 3. Go to **Version Management**.
-4. On an existing version, select **Clone**. This will copy over all configuration settings from that version.
+4. On an existing version, select **Clone**. This will copy over all configurations from that version.
 5. If needed, you can also **Edit Description** to provide more detail about the purpose of this version.
 
 ---
 
-## Change settings in a version
+## Change configurations in a version
 
-Your zone settings are split up into two areas: **Global Settings** and different versions.
--   Global settings control the non-versionable settings of a zone and - when changed - automatically apply to all versions of your zone.
-- Version settings update the versionable settings of your zone and are:
+Your zone configurations are split up into two areas: **Global Configuration** and different versions.
+-   Global Configuration controls the configurations of a zone that is not available for versioning and, when changed, automatically apply to all versions of your zone.
+- Version configurations update configurations of a zone that is available for versioning and are:
     - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
     - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
 
@@ -40,7 +40,7 @@ Your zone settings are split up into two areas: **Global Settings** and differen
 
 {{<Aside type="note">}}
 
-To change the version associated with an environment, you need to update settings on the [Environment](/version-management/how-to/environments/#change-environment-version) itself.
+To change the version associated with an environment, you need to update configurations on the [Environment](/version-management/how-to/environments/#change-environment-version) itself.
 
 {{</Aside>}}
 
@@ -49,10 +49,10 @@ To change the version associated with an environment, you need to update setting
 {{<render file="_production-read-only-default.md">}}
 <br/>
 
-In order to change settings in a version associated with a [read-only environment](/version-management/reference/read-only-environments/), either:
+In order to change configurations in a version associated with a [read-only environment](/version-management/reference/read-only-environments/), either:
 
 - [Change the environment version](/version-management/how-to/environments/#change-environment-version) to another version and then make changes to your version.
-- [Edit](/version-management/how-to/environments/#edit-environment) the environment's settings to remove the **Read-only environment** setting. Then, promote a new version to this environment.
+- [Edit](/version-management/how-to/environments/#edit-environment) the environment's configurations to remove the **Read-only environment** configuration. Then, promote a new version to this environment.
 
 ---
 

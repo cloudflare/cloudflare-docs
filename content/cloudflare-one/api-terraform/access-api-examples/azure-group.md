@@ -6,7 +6,7 @@ tags:
 title: Azure® Group
 weight: 4
 layout: example
-pcx_content_type: configuration
+pcx_content_type: example
 ---
 
 Allow members of an Azure Group. The ID is the group UUID (_`id`_) in Azure:

@@ -9,7 +9,7 @@ meta:
   title: Hyperdrive
 ---
 
-{{<heading-pill style="beta" heading="h1">}}Hyperdrive{{</heading-pill>}}
+# Hyperdrive
 
 {{<description>}}
 
@@ -17,7 +17,7 @@ Turn your existing regional database into a globally distributed database.
 
 {{</description>}}
 
-{{<plan type="workers_paid">}}
+{{<plan type="workers-paid">}}
 
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
 
@@ -33,13 +33,13 @@ Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) th
 
 {{</feature>}}
 
-{{<feature header="PostgreSQL support" href="/hyperdrive/learning/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
+{{<feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">}}
 
 Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
 
 {{</feature>}}
 
-{{<feature header="Query Caching" href="/hyperdrive/learning/query-caching/" cta="Learn about Query Caching">}}
+{{<feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">}}
 
 Use Hyperdrive to cache the most popular queries executed against your database.
 
@@ -75,6 +75,6 @@ Deploy dynamic front-end applications in record time.
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
  
 {{</resource-group>}}

@@ -110,6 +110,10 @@ The `like` operator is available for string comparisons and supports the `%` cha
 
 ## Examples
 
+{{<Aside type="note">}}
+Filtering times are based on event start timestamps, which means requests that end after the filter may be included in queries (as long as they start within the given time).
+{{</Aside>}}
+
 ### General example
 
 ```graphql

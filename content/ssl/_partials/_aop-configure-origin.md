@@ -3,6 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: param1;;param2
 ---
 
 With the certificate installed, set up your origin web server to accept client certificates.
@@ -11,23 +12,27 @@ Check the examples below for Apache and NGINX or refer to your origin web server
 
 {{<details header="Apache example">}}
 
-For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
-
 ```txt
 SSLVerifyDepth 1
 SSLCACertificateFile /path/to/origin-pull-ca.pem
 ```
 
+For this example, you would have saved your certificate to `/path/to/origin-pull-ca.pem`.
+
+$1
+
 {{</details>}}
 
 {{<details header="NGINX example">}}
-
-For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
 
 ```txt
 ssl_verify_client optional;
 ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
 ```
+
+For this example, you would have saved your certificate to `/etc/nginx/certs/cloudflare.crt`.
+
+$2
 
 {{</details>}}
 

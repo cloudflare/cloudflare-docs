@@ -28,12 +28,17 @@ Additionally, you also need to configure the necessary route table entries for t
 
 ### Configure the VPN connection
 
-1. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
-2. From the **VPN tunnel outside IP address** drop-down menu, choose one of tunnels.
-3. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
-4. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare’s side.
-5. In **Inside IPv4 CIDR**, there should be a size `/30` IP block. This IP address will be assigned as the internal IPsec tunnel interface. For this example, we will use `169.254.240.0/30` as the CIDR block for the IPsec tunnel: `169.254.240.1` will be the IP address for the AWS side of the tunnel, and `169.254.240.2` will be the IP for the Cloudflare side of the tunnel.
-6. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
+1. Select the VPN connection you created > **Download configuration**.
+2. This action downloads a text file. Search for the IP range that the AWS Transit Gateway assigned your tunnel. The first IP range should be the one used by the AWS Transit Gateway. Use the second IP range to configure your [Interface address](#ipsec-tunnels) in Magic WAN.
+3. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
+4. From the **VPN tunnel outside IP address** drop-down menu, choose one of tunnels.
+5. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
+6. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare's side.
+7. In **Inside IPv4 CIDR**, AWS enforces that only a `/30` block within the `169.254.0.0/16` range can be used. To accommodate this, Cloudflare supports a subset of this IP block. Namely, Cloudflare supports `169.254.240.0/20` to be assigned as the IPsec tunnel's (internal) interface IPs. This example will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` for the AWS side of the tunnel, and `169.254.244.2` for the Cloudflare side of the tunnel.
+
+    {{<Aside type="warning">}}Make sure you input an IP address supported by Cloudflare. If you do not input a value here, AWS will randomly generate an IP address that might not be supported by Cloudflare.{{</Aside>}}
+
+8. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
     - **Phase 1 encryption algorithms**: `AES256-GCM-16`
     - **Phase 2 encryption algorithms**: `AES256-GCM-16`
     - **Phase 1 integrity algorithms**: `SHA2-256`
@@ -42,8 +47,9 @@ Additionally, you also need to configure the necessary route table entries for t
     - **Phase 2 DH group numbers**: `14`
     - **IKE Version**: `ikev2`
     - **Startup action**: **Start**
-7. Select **Save changes**.
-8. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
+    - **DPD timeout action**: `Restart`
+9. Select **Save changes**.
+10. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
 
 {{<Aside type="note">}}ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information.
 {{</Aside>}}
@@ -56,10 +62,12 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
     - **Tunnel name**: `tunnel01`
-    - **Interface address**: The `/30`CIDR block enforced by AWS. For example, `169.xx.xx.xx/30`.
-    - **Customer endpoint**: The IP address from AWS’s VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
+    - **Interface address**: The `/30`CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
+    - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
     - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
+    - **Health check type**: Choose **Request**
+    - **Health check direction**: Choose **Bidirectional**
     - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.

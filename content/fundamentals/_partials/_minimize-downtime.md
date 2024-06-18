@@ -51,7 +51,7 @@ For more details about timing and certificate recommendations, refer to [Certifi
 
 You may want to test your configuration using your local machine or proxying traffic from a development domain or subdomain.
 
-If you experience issues, you should make sure that you have [allowed Cloudflare IP addresses](/fundamentals/setup/allow-cloudflare-ip-addresses/) at your origin server.
+If you experience issues, you should make sure that you have [allowed Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin server.
 
 {{</tutorial-step>}}
 

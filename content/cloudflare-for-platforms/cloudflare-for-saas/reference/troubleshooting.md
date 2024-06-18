@@ -30,7 +30,7 @@ There are three main causes of error 1016:
 
 1.  Custom Hostname ownership validation is not complete. To check validation status, run an API call to [search for a certificate by hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
 2.  Fallback Origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
-3.  A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. In this case, the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname.
+3.  A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. In this case, the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-cloudflare-for-saas) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname.
 
 In this scenario each hostname that needs to be served by the Cloudflare for SaaS parent zone needs to be added as an individual Custom Hostname.
 
@@ -73,6 +73,6 @@ More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubl
 
 ## Custom hostname fails to verify because the zone is held
 
-The [zone hold feature](/fundamentals/account-and-billing/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
-When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/account-and-billing/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
+The [zone hold feature](/fundamentals/setup/account/account-security/zone-holds/) is a toggle that will prevent their zone from being activated on other Cloudflare account.
+When the option `Also prevent subdomains` is enabled, this prevents the verification of custom hostnames for this domain. The custom hostname will remain in the `Blocked` status, with the following error message: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.` In this case, the owner of the zone needs to [release the hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before the custom hostname can become activated.
 

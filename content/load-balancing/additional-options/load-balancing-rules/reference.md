@@ -120,7 +120,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-headers">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers"><code>http.request.headers</code></a><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers"><code>http.request.headers</code></a><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td><code>Header</code></td>
       <td>
         <p>Represents HTTP request headers as a Map (or associative array).</p>
@@ -172,7 +172,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args"><code>http.request.uri.args</code></a><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args"><code>http.request.uri.args</code></a><br />{{<type>}}Map&lt;Array&lt;String&gt;&gt;{{</type>}}</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).

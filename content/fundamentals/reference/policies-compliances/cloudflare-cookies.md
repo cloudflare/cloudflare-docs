@@ -41,6 +41,12 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 {{</Aside>}}
 
+{{<render file="_disable-cf-bm-cookie.md" productFolder="bots" >}}
+
+### \_\_cfseq cookie for Cloudflare bot products
+
+{{<render file="_sequence-rules.md" productFolder="bots" withParameters="[Sequence rules](/bots/concepts/sequence-rules/)">}}
+
 ### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:
@@ -71,10 +77,9 @@ The `_cfuvid` cookie is only set when a site uses this option in a Rate Limiting
 
 The table below shows additional cookies used by the Challenge Platform.
 
-| Cookie Name (XXX represents dynamic part)                     | Description                                                                                                                                                                                   |
+| Cookie Name                                                   | Description                                                                                                                                                                                   |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cf_clearance`                                                | Clearance Cookie stores the proof of challenge passed. It is used to no longer issue a challenge if present. It is required to reach an origin server.                    |
-| `cf_chl_XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
 | `cf_chl_rc_i`; `cf_chl_rc_ni`; `cf_chl_rc_m`                  | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
 
 {{<Aside type="warning">}}
