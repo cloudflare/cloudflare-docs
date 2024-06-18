@@ -191,7 +191,13 @@
 
   {{ end }}
   <link rel="icon" href="/favicon-32x32.png" />
+
+  {{- with $.Context.Params.canonical }}
+  <link rel="canonical" href="{{ . }}" />
+  {{- else -}}
   <link rel="canonical" href="{{ .Context.Permalink }}" />
+  {{- end -}}
+
   <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
   <link rel="manifest" href="/manifest.webmanifest" />
 

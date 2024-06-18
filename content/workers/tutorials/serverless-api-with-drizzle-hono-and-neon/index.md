@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a serverless API using Drizzle ORM, Hono and Neon
+canonical: https://neon.tech/blog/api-cf-drizzle-neon
 spotlight:
   author: Chandan Kumar Mandal
   author_bio_link: https://github.com/chankruze
