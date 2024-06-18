@@ -36,15 +36,17 @@ Alternatively, API tokens with Account and Zone level Logs Edit permissions can 
 
 You can use the dashboard or the API to enable the datasets you want to query with Log Explorer.
 
-### Enable Log Explorer from the dashboard
-
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and domain.
 3. Go to **Analytics & Logs** > **Log Explorer**.
 4. Select **Enable a dataset** to select the datasets you want to query. You can enable more datasets later. Note that it may take a few minutes for the logs to become available for querying.
-
-### Enable Log Explorer via API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take up to 30 minutes after a logstream is enabled before you can view the logs.
 
 The following curl command is an example for enabling `http_requests`, as well as the expected response when the command succeeds.
@@ -71,11 +73,17 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
   "messages": []
 }
 ```
+ 
+{{</tab>}}
+{{</tabs>}}
 
-## Use Log Explorer from the dashboard
+## Use Log Explorer
 
-Filtering and viewing your logs is available via the Cloudflare Dashboard.
+Filtering and viewing your logs is available via the Cloudflare Dashboard or via query API.
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and domain.
 3. Go to **Analytics & Logs** > **Log Explorer**.
@@ -97,9 +105,10 @@ Filtering and viewing your logs is available via the Cloudflare Dashboard.
 You can also access the Log Explorer dashboard directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.
 
 {{</Aside>}}
-
-## Use Log Explorer from the Query API
-
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
 Log Explorer exposes a query endpoint that uses a familiar SQL syntax for querying your logs generated with Cloudflare's network.
 
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), you can perform the following SQL query.
@@ -128,6 +137,9 @@ Which returns the following HTTP request details:
   "messages": []
 }
 ```
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Output formats
 
