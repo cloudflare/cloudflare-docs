@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Zendesk
-weight: 11
+weight: 12
 ---
 
 # Connect to Zendesk through Access
