@@ -34,6 +34,17 @@ Alternatively, API tokens with Account and Zone level Logs Edit permissions can 
 
 ## Enable Log Explorer
 
+You can use the dashboard or the API to enable the datasets you want to query with Log Explorer.
+
+### Enable Log Explorer from the dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Select your account and domain.
+3. Go to **Analytics & Logs** > **Log Explorer**.
+4. Select **Enable a dataset** to select the datasets you want to query. You can enable more datasets later. Note that it may take a few minutes for the logs to become available for querying.
+
+### Enable Log Explorer via API
+
 Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take up to 30 minutes after a logstream is enabled before you can view the logs.
 
 The following curl command is an example for enabling `http_requests`, as well as the expected response when the command succeeds.
