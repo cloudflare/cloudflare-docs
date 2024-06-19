@@ -182,4 +182,4 @@ You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
 ## 6. Review your AI Gateway
 
-When you go to AI Gateway in your Cloudflare dashboard, you should see your recent request being logged. You can also [tweak your settings](/ai-gateway/get-started/configuring-settings/) to manage your logs, caching, and rate limiting.
+When you go to AI Gateway in your Cloudflare dashboard, you should see your recent request being logged. You can also [tweak your settings](/ai-gateway/configuration/) to manage your logs, caching, and rate limiting.
