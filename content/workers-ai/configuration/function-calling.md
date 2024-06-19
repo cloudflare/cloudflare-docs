@@ -13,7 +13,7 @@ In essence, you define a tool's API schema, the LLM then generates a JSON object
 There are open-source models which have been fine-tuned to do function calling. When browsing our [model catalog](/workers-ai/models/), look for models with the function calling property beside it. For example, [@hf/nousresearch/hermes-2-pro-mistral-7b](/workers-ai/models/hermes-2-pro-mistral-7b/) is a fine-tuned variant of Mistral 7B that you can use for function calling.
 
 ## Basic function calling: input schema
-With function calling, you define an array of tools with the name, description, parameters, properties, and the required parameters. The example below shows how you would pass a tool called `getWeather` in an inference request to a model.
+With function calling, you define an array of tools with the name, description, and tool arguments. The example below shows how you would pass a tool called `getWeather` in an inference request to a model.
 
 ```js
 const response = await env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
@@ -43,7 +43,7 @@ const response = await env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
 return new Response(JSON.stringify(response.tool_calls));
 ````
 
-The LLM will then return a JSON object with the required properties and the name of the tool that was called. You can then pass this JSON object to make an API call.
+The LLM will then return a JSON object with the required arguments and the name of the tool that was called. You can then pass this JSON object to make an API call.
 
 ```json
 [{"arguments":{"latitude":"51.5074","longitude":"-0.1278"},"name":"getWeather"}]
