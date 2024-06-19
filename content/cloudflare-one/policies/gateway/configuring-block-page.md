@@ -16,17 +16,17 @@ In order to display the block page as the URL of the blocked domain, your device
 
 ## Enable the block page for HTTP policies
 
-Gateway automatically enables a block page for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed.
+Gateway automatically enables a generic block page for all HTTP Block policies.
 
 To specify a policy-specific block message:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Firewall Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 2. Find the policy you want to customize and select **Edit**. You can only edit the block page for policies with a Block action.
-3. Scroll down to the **Configure policy settings** step.
-4. In the **Block page customised text** field, enter a custom block message.
+3. Under **Configure policy settings**, go to **Display block page**. Choose _Show a custom message_.
+4. In **Custom message**, enter a block message to show users.
 5. Select **Save policy**.
 
-Users will now see a custom message when they are blocked by this HTTP policy.
+Gateway will display a custom message when your users are blocked by this HTTP policy.
 
 ## Enable the block page for DNS policies
 
@@ -35,8 +35,6 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 ## Troubleshoot the block page
 
 If your users see a "Warning: Potential Security Risk Ahead" message in their browser when visiting a blocked page, check that you have correctly installed the Cloudflare certificate on their device.
-
-![Error message when visiting a blocked page](/images/cloudflare-one/policies/https-browser-error.png)
 
 ## Customize the block page
 
