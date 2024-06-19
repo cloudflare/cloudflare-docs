@@ -47,7 +47,7 @@ to generate closed captions for your videos.
 A video must be uploaded and in a ready state before captions can be generated.
 In the following example URLs, the video’s UID is referenced as <VIDEO_UID>.
 To receive webhooks when a video transitions to ready after upload, follow the
-instructions provided [here](https://developers.cloudflare.com/stream/manage-video-library/using-webhooks/).
+instructions provided [here](/stream/manage-video-library/using-webhooks/).
 
 Only English language caption generation is currently supported.
 
