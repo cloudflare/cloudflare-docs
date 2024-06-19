@@ -19,7 +19,7 @@ Before you get started, you need a Cloudflare account.
 
 ## Create gateway
 
-Then, create a new API Gateway.
+Then, create a new AI Gateway.
 
 {{<render file="_create-gateway.md">}}
 
@@ -29,7 +29,7 @@ Next, connect your AI provider to your gateway.
 
 AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
 
-{{<details header="Supported endpoints">}}
+{{<details header="Supported providers">}}
 
 {{<directory-listing folderDirectory="/ai-gateway/providers/">}}
 
@@ -39,7 +39,7 @@ If you do not have a provider preference, start with one of our dedicated tutori
 
 {{<details header="Onboarding tutorials">}}
 
-- [Open AI](/ai-gateway/tutorials/deploy-aig-worker/)
+- [OpenAI](/ai-gateway/tutorials/deploy-aig-worker/)
 
 {{</details>}}
 
@@ -57,6 +57,6 @@ Now that your provider is connected to the AI Gateway, you can view analytics fo
 
 ## Next steps
 
-- Learn more about [caching](/ai-gateway/configuration/caching/) and [rate limiting](/ai-gateway/configuration/rate-limiting/).
-- Explore how to specify model or provider [fallbacks](/ai-gateway/configuration/fallbacks/).
-- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/providers/workersai/).
+- Learn more about [caching](/ai-gateway/configuration/caching/) for faster requests and cost savings and [rate limiting](/ai-gateway/configuration/rate-limiting/) to control how your application scales.
+- Explore how to specify model or provider [fallbacks](/ai-gateway/configuration/fallbacks/) for resiliency.
+- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/providers/workersai/) - our AI inference service.
