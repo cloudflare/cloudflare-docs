@@ -66,7 +66,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request skipping the cache
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --header 'cf-skip-cache: true' \
@@ -95,7 +95,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request to be cached for an hour
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --header 'cf-cache-ttl: 3600000' \

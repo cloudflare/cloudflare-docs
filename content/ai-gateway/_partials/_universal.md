@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}`
 
 AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint. The Universal Endpoint requires some adjusting to your schema, but supports additional features. Some of these features are, for example, retrying a request if it fails the first time, or configuring a [fallback model/provider](/ai-gateway/configuration/fallbacks/).
 

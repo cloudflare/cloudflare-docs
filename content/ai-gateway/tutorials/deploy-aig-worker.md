@@ -106,7 +106,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai" // paste your AI Gateway endpoint here
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai" // paste your AI Gateway endpoint here
 		});
 	},
 };
@@ -147,7 +147,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai"
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
 		});
 
 		try {

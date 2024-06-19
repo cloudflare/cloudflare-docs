@@ -12,12 +12,12 @@ Use AI Gateway for analytics, caching, and security on requests to [Workers AI](
 To interact with a REST API, update the URL used for your request:
 
 - **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
-- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/{model_id}`
+- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
 
 For these parameters:
 
 - `{account_id}` is your Cloudflare [account ID](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
-- `{gateway_slug}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/creating-gateway/).
+- `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/creating-gateway/).
 - `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
 
 ### Examples
@@ -29,7 +29,7 @@ First, generate an [API token](/fundamentals/api/get-started/create-token/) with
 header: Request to Workers AI llama model
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/meta/llama-3-8b-instruct \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3-8b-instruct \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{"prompt": "What is Cloudflare?"}'
@@ -40,7 +40,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai
 header: Request to Workers AI text classification model
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/huggingface/distilbert-sst-2-int8 \
   --header 'Authorization: Bearer {cf_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{ "text": "Cloudflare docs are amazing!" }'
@@ -55,7 +55,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai
 ---
 header: Request to OpenAI compatible endpoint
 ---
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/workers-ai/v1/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v1/chat/completions \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{
@@ -88,7 +88,7 @@ export default {
       },
       {
         gateway: {
-          id: "{gateway_slug}",
+          id: "{gateway_id}",
           skipCache: false,
           cacheTtl: 3360
         }
