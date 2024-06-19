@@ -28,7 +28,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 
 {{<Aside type="note">}}
 
-Some regions may not appear on the dropdown because newly announced regions mentioned in the [blog post](https://blog.cloudflare.com/expanding-regional-services-configuration-flexibility-for-customers) are subject to approval by Cloudflare's internal team. For more information reach out to your account team.
+Some regions may not appear on the dropdown because newly announced regions mentioned in the [blog post](https://blog.cloudflare.com/expanding-regional-services-configuration-flexibility-for-customers) are subject to approval by Cloudflare's internal team. For more information and entitlement reach out to your account team.
 
 {{</Aside>}}
 
