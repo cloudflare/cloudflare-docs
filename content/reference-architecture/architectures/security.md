@@ -29,7 +29,7 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 ## Secure global network
 Any cloud security solution needs to be fast and always available. Our network protects over 20% of Internet web properties, operates in over 320 cities, and is 50 ms away from 95% of the Internet-connected population. Each server in each data center runs every service, so that traffic is inspected in one pass and acted upon close to the end user. These servers are connected together by over 13,000 network peering relationships with a total network capacity of 280 Tbps. Cloudflare’s network is also connected to [every Internet exchange](https://bgp.he.net/report/exchanges#_participants) (more than Microsoft, AWS, and Google) to ensure that we are able to peer traffic from any part of the Internet. 
 
-With millions of customers using Cloudflare, the network serves over [57 million HTTP requests](https://radar.cloudflare.com/traffic) per second on average, with more than 77 million HTTP requests per second at peak. As we analyze all this traffic, we detect and block an average of [209 billion cyber threats each day](https://radar.cloudflare.com/security-and-attacks). This network runs at this massive scale to ensure that customers using our security products experience low latency, access to high bandwidth, and a level of reliability that ensures the ongoing security of their business.
+With millions of customers using Cloudflare, the network serves over [57 million HTTP requests](https://radar.cloudflare.com/traffic) per second on average, with more than 77 million HTTP requests per second at peak. As we analyze all this traffic, we detect and block an average of [209 billion cyber threats each day](https://radar.cloudflare.com/security-and-attacks). This network runs at this massive scale to ensure that customers using our security products experience low latency, access to high bandwidth, and a level of reliability that ensures the ongoing security of their business. (Note metrics are correct as of June 2024.)
 
 ### Architecture
 #### Network
@@ -334,11 +334,12 @@ The Cloudflare [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/h
 
 ![All security detection can be seen from a single dashboard.](/images/reference-architecture/security/security-ref-arch-10.svg)
 
+
 API Gateway’s API Discovery is used to learn all API endpoints in a customer’s environment using machine learning. After this step, customers can save endpoints to Endpoint Management so additional API performance and error information can be collected and security policies can be applied.
 
 Customers can enable a positive security model using mTLS, JWT validation, and schema validation and protect against additional API abuse with rate limiting and volumetric abuse protection as well as sequence mitigation and GraphQL protections.
 
-![The API gateway has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](/images/reference-architecture/security/security-ref-arch-11.svg)
+![The API gateway has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](/images/reference-architecture/security/security-ref-arch-11.svg "Common user workflow for API Gateway")
 
 ##### Bot Management
 [Bot Management](/bots/) is used to mitigate various malicious activities, including web scraping, price scraping, inventory hoarding, and credential stuffing. Cloudflare has multi-layered bot mitigation capabilities that include heuristics, machine learning, anomaly detection, and JS fingerprinting. Bot management also assigns a bot score to every request. WAF rules can be created around bot scores to create very granular security policies.
