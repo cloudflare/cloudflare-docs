@@ -7,8 +7,8 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 
 - publish_date: '2024-06-19'
-title: Added support for basic function calling
-description: |-
+  title: Added support for basic function calling
+  description: |-
     - [Function calling](/workers-ai/configuration/function-calling/) is now supported on enabled models
     - Properties added on [models](/workers-ai/model) page to show which models support function calling
 
