@@ -3996,8 +3996,8 @@ td>code,
 
 .DocsMarkdown--pill-alpha {
   width: 47px;
-  background: var(--orange-8);
-  color: var(--orange-1);
+  background: var(--green-8);
+  color: var(--green-1);
 }
 
 .DocsMarkdown--pill-beta {
@@ -4024,7 +4024,7 @@ td>code,
     background: var(--red-8);
     color: var(--red-0);
   }
-  
+
   [theme="dark"] .DocsMarkdown--pill-legacy {
     background: var(--red-6);
     color: var(--red-0);

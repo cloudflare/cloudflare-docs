@@ -16,8 +16,8 @@
     {{- partial "breadcrumbs" . -}}
     <div class="DocsContent" id="main" page-type="document">
       <article class="DocsMarkdown">
-        <div class="DocsMarkdown-beta">
           <h1>{{ .Title }}</h1>
+          <div class="DocsMarkdown-beta">
           {{ range .Params.model.properties }}
             {{ if and (eq .property_id "beta") (eq .value "true") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}
@@ -26,6 +26,10 @@
             {{ if and (eq .property_id "lora") (eq .value "true") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}
               <div class="DocsMarkdown--pill DocsMarkdown--pill-early-access">LoRA</div>
+            {{ end }}
+            {{ if and (eq .property_id "function_calling") (eq .value "true") }}
+              {{/* Cannot use heading-pill shortcode outside of content dir */}}
+              <div class="DocsMarkdown--pill DocsMarkdown--pill-alpha" style="width: max-content">Function Calling</div>
             {{ end }}
             {{ if (eq .property_id "planned_deprecation_date") }}
               {{/* Cannot use heading-pill shortcode outside of content dir */}}

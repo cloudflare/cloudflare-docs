@@ -4861,8 +4861,8 @@ pre {
 
 .DocsMarkdown--pill-alpha {
   width: 47px;
-  background: var(--orange-8);
-  color: var(--orange-1);
+  background: var(--green-8);
+  color: var(--green-1);
 }
 
 .DocsMarkdown--pill-beta {
