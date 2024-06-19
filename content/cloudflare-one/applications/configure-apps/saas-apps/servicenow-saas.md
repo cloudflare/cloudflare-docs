@@ -10,8 +10,8 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 
 ## Prerequisites
 
-- Admin access to a ServiceNow account.
-- a SAML identity provider configured in Cloudflare Zero Trust
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- Admin access to a ServiceNow account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 

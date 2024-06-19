@@ -6,10 +6,11 @@ weight: 8
 
 # Connect to Jamf Pro through Access
 
-This guide covers how to configure Jamf Pro as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Single_Sign-On.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to a Jamf Pro account
 
 ## 1. Collect Jamf Pro information
