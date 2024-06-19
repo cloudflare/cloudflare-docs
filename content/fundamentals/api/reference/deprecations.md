@@ -81,7 +81,9 @@ Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-lis
 - Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.
 
 Deprecated APIs:
+- GET /zones/:zone_id/dns_settings/use_apex_ns
 - PATCH /zones/:zone_id/dns_settings/use_apex_ns
+- GET /zones/:zone_id/dns_settings/secondary_overrides
 - PATCH /zones/:zone_id/dns_settings/secondary_overrides
 
 ## Brotli
