@@ -59,4 +59,4 @@ Now that your provider is connected to the AI Gateway, you can view analytics fo
 
 - Learn more about [caching](/ai-gateway/configuration/caching/) and [rate limiting](/ai-gateway/configuration/rate-limiting/).
 - Explore how to specify model or provider [fallbacks](/ai-gateway/configuration/fallbacks/).
-- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/providers/workers-ai/).
+- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/providers/workersai/).
