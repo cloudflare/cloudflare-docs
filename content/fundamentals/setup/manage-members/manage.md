@@ -10,7 +10,7 @@ meta:
 Granting access to others on your account is done with several sets of data principles:
 
 1. Accounts have Account Members.
-2. Account Members have policies
+2. Account Members have policies.
 3. Policies are constructed out of actors, roles, and scopes.
 
 When assigning a new user, you can assign a policy to them directly. If multiple policies are needed, they can be added or revoked at a later time.
