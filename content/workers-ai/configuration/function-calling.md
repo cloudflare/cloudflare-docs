@@ -2,6 +2,7 @@
 pcx_content_type: configuration
 weight: 4
 title: Function Calling
+layout: wide
 ---
 
 # Function Calling
@@ -39,7 +40,7 @@ const response = await env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
         },
       ],
     });
-	
+
 return new Response(JSON.stringify(response.tool_calls));
 ````
 
