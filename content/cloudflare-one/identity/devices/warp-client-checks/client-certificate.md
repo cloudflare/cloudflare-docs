@@ -51,9 +51,9 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
    2. **Operating system**: Select your operating system.
    3. **OS locations**: On Windows and Linux, select the location(s) where the client certificate is installed.
    4. **Certificate ID**: Enter the UUID of the root CA.
-   5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables. WARP will search for an exact match. If this field is blank, WARP will ignore the common name.
+   5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-sensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for extended key use**: (Optional) Check whether the client certificate is scoped to the **Client authentication** and/or **Email** use cases.
-   7. **Check for private key**: (Recommended) When enabled, WARP verifies that the client certificate was properly installed on the device using a private key.
+   7. **Check for private key**: (Recommended) When enabled, WARP checks that the device has a private key associated with the client certificate.
 
 6. Select **Save**.
 
