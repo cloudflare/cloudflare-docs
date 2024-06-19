@@ -1,6 +1,7 @@
 ---
 title: Workers AI
 pcx_content_type: configuration
+weight: 2
 ---
 
 # Workers AI
