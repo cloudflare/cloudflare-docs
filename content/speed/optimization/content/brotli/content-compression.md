@@ -117,7 +117,7 @@ B((Cloudflare))
 C[(Origin server)]
 
 A -.-> B == "Request<br>Accept-Encoding: gzip, br" ==> C
-C == "Response<br>Accept-Encoding: (Gzip / Brotli / No compression)" ==> B -.-> A
+C == "Response<br>(Gzip / Brotli / No compression)" ==> B -.-> A
 
 style A stroke-dasharray: 5 5
 style B stroke: orange,fill: orange,color: black
