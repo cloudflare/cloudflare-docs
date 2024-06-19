@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Area 1
-weight: 3
+weight: 2
 ---
 
 # Connect to Cloudflare Area 1 through Access

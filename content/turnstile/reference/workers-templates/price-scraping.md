@@ -12,7 +12,7 @@ layout: example
 demo: https://pricing.httpmachine.com/
 ---
 
-# Worker scripts
+## Worker scripts
 
 The script below is applied on the root path `<YOUR-HOSTNAME-HERE>/ }}` and serves a page where the Turnstile widget will be embedded.
 

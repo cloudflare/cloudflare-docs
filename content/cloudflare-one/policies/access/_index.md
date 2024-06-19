@@ -69,7 +69,7 @@ As part of implementing a Zero Trust security model, we do not recommend using B
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules (deprecated). If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured Page Rules (legacy). If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 
@@ -127,7 +127,7 @@ Identity-based attributes are only checked when a user authenticates to Access, 
 | Emails   | `you@company.com`  | ✅ | ❌ |
 | Emails ending in | `@company.com`| ✅ | ❌ |
 | External Evaluation | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API. | ✅ | ❌ |
-| IP ranges | `192.168.100.14` (supports IPv4 and IPv6). | ✅ | ✅ |
+| IP ranges | `192.168.100.1/24` (supports IPv4/IPv6 addresses and CIDR ranges) | ✅ | ✅ |
 | Country | Uses the IP address to determine country. | ✅ | ✅ |
 | Everyone | Allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
 | Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |

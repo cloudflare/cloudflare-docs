@@ -1,7 +1,6 @@
 ---
 title: Perplexity
 pcx_content_type: get-started
-weight: 9
 ---
 
 # Perplexity

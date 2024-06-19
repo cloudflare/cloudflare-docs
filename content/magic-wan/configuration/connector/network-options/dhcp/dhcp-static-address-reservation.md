@@ -21,7 +21,7 @@ If you configure your Connector to be a DHCP server, you can also assign IP addr
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a [`PUT` request](/api/operations/magic-wan-connectors-lans-update-lan) to update the LAN where you want to reserve addresses:
+Create a [`PUT` request](/api/operations/magic-site-lans-update-lan) to update the LAN where you want to reserve addresses:
 
 Example:
 

@@ -28,3 +28,4 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+</details>

@@ -77,12 +77,12 @@ filename: "src/index.ts"
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
   // replace "AI" with the variable name you defined.
-  AI: any;
+  AI: Ai;
 }
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );

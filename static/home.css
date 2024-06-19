@@ -3931,7 +3931,8 @@ td>code,
 .DocsMarkdown-alpha,
 .DocsMarkdown-beta,
 .DocsMarkdown-deprecated,
-.DocsMarkdown-early-access {
+.DocsMarkdown-early-access,
+.DocsMarkdown-legacy {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
@@ -4018,3 +4019,13 @@ td>code,
   background-color: var(--blue-8);
   color: var(--blue-0);
 }
+
+.DocsMarkdown--pill-legacy {
+    background: var(--red-8);
+    color: var(--red-0);
+  }
+  
+  [theme="dark"] .DocsMarkdown--pill-legacy {
+    background: var(--red-6);
+    color: var(--red-0);
+  }

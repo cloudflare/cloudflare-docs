@@ -1,12 +1,12 @@
 ---
 title: Concepts
 pcx_content_type: concept
-weight: 2
+weight: 3
 ---
 
 # Concepts
 
-The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax using the [Rules language](/ruleset-engine/rules-language/).
+{{<render file="_waf-intro.md">}}
 
 {{<Aside type="note" header="What is a Web Application Firewall?">}}
 

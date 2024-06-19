@@ -8,6 +8,8 @@ weight: 2
 
 {{<render file="_partial-setup-definition.md">}}
 
+Once you are on a partial setup, the actual resolution of your records to Cloudflare depends on `CNAME` records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
+
 ## How to
 
 *   [Set up a partial domain](/dns/zone-setups/partial-setup/setup/)

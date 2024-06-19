@@ -23,7 +23,7 @@ To set up an AI Gateway in the dashboard:
 2. Go to **AI** > **AI Gateway**.
 3. Select **Create Gateway**.
   ![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
-4. Enter your **Gateway name** and **URL slug**.
+4. Enter your **Gateway name** and **URL slug**. Note: Gateway name has a 64 character limit. 
 5. Select **Create**.
 
 {{</tab>}}
@@ -41,12 +41,10 @@ To set up an AI Gateway using the API:
 {{</tab>}}
 {{</tabs>}}
 
-
-
 ## Next Steps
 
 {{<resource-group>}}
 
-{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
+{{<resource header="Connecting your application" href="/ai-gateway/get-started/connecting-applications/" icon="learning-center-book">}} Connect your AI Gateway to your application{{</resource>}}
 
 {{</resource-group>}}

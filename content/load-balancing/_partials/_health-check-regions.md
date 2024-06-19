@@ -9,4 +9,4 @@ For each option selected in a pool's **Health Monitor Regions**, Cloudflare send
 
 ![Health monitor requests come from three data centers within each selected region.](/images/load-balancing/health-check-component.png)
 
-If the majority of data centers for that region pass the health monitor requests, that region is considered healthy. If the majority of regions is healthy, then the origin itself will be considered healthy.
+If the majority of data centers for that region pass the health monitor requests, that region is considered healthy. If the majority of regions is healthy, then the endpoint itself will be considered healthy.

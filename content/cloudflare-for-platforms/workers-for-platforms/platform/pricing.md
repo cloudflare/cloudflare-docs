@@ -7,11 +7,9 @@ layout: wide
 
 # Pricing
 
-{{<Aside type="note">}}
-Workers for Platforms will be available as new pay-as-you-go offering on April 16th.
-{{</Aside>}}
+The Workers for Platforms Paid plan is **$25 monthly**. Workers for Platforms can be purchased through the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms).
 
-The Workers for Platforms Paid plan is **$25** monthly and comes with the following usage allotments and overage pricing:
+Workers for Platforms comes with the following usage allotments and overage pricing. 
 
 
 {{<table-wrap>}}

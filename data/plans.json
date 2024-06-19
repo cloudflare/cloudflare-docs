@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules (deprecated)",
+      "title": "Page Rules (legacy)",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
@@ -1531,7 +1531,7 @@
         "managed_ruleset_1": {
           "title": "Cloudflare Managed Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/cloudflare-managed-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1540,7 +1540,7 @@
         "managed_ruleset_2": {
           "title": "Cloudflare OWASP Core Ruleset",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/owasp-core-ruleset/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1549,7 +1549,7 @@
         "managed_ruleset_3": {
           "title": "Cloudflare Exposed Credentials Check",
           "summary": "Available on paid plans",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/exposed-credentials-check/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1558,7 +1558,7 @@
         "managed_rulesets_response": {
           "title": "Cloudflare Sensitive Data Detection",
           "summary": "Enterprise-only",
-          "link": "/waf/managed-rules/",
+          "link": "/waf/managed-rules/reference/sensitive-data-detection/",
           "free": "No",
           "pro": "No",
           "biz": "No",

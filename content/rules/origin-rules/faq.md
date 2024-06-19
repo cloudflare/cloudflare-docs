@@ -30,9 +30,7 @@ Consider the following example scenarios:
 
 {{<faq-answer>}}
 
-No. This is currently a manual process, since your Page Rules (deprecated) may include additional settings that origin rules do not currently support.
-
-Refer to the [Page Rules migration guide](/rules/reference/page-rules-migration/) for any updates on the migration process.
+Yes. Refer to the [Page Rules migration guide](/rules/reference/page-rules-migration/) for any updates on the migration process.
 
 {{</faq-answer>}}
 {{</faq-item>}}

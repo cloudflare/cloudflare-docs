@@ -21,7 +21,7 @@ By default, Cloudflare [caches static content](/cache/concepts/default-cache-be
 
 5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update your configuration according to our [Cache performance guide](/cache/performance-review/cache-performance/).
 
-Customers with Business and Enterprise domains have additional Page Rules (deprecated) settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
+Customers with Business and Enterprise domains have additional Page Rules (legacy) settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
 
 ### Advanced cache optimizations
 
@@ -83,9 +83,3 @@ You can also use the [Security Events](/waf/analytics/security-events/) to revie
 
 You can use [Cache Analytics](/cache/performance-review/cache-analytics/) to improve site performance or reduce origin web server traffic.
 Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching.
-
-## Best Practices working with Cloudflare Support
-
-Before the high traffic event occurs, you must [open a Support ticket](/support/contacting-cloudflare-support/) and provide the information below.
-
-{{<render file="_support-ticket-information" withParameters="Traffic">}}

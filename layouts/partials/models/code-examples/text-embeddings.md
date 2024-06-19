@@ -52,7 +52,7 @@ stories = [
 
 response = requests.post(
   f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Page.Params.model.name }}",
-  headers={"Authorization": "Bearer {AUTH_TOKEN}"},
+  headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
   json={"text": stories}
 )
 
@@ -72,3 +72,11 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ```
 
 </details>
+
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+
+<div class="DocsMarkdown--aside-header">OpenAI compatible endpoints</div>
+
+Workers AI also supports OpenAI compatible API endpoints for `/v1/chat/completions` and `/v1/embeddings`. For more details, refer to [Configurations](/workers-ai/configuration/open-ai-compatibility/).
+
+</aside>

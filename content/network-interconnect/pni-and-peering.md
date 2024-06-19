@@ -5,7 +5,7 @@ updated: 2023-04-04
 weight: 5
 ---
 
-# Public Peering an Private Network Interconnection (PNI)
+# Public Peering and Private Network Interconnection (PNI)
 
 Cloudflare has an [open peering policy](https://www.cloudflare.com/peering-policy/). There is no requirement to be a Cloudflare customer for public peering, or a Private Network Interconnect (PNI).
 

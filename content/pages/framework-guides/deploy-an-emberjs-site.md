@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Ember site
+title: Ember
 ---
 
-# Deploy an Ember site
+# Ember
 
 [Ember.js](https://emberjs.com) is a productive, battle-tested JavaScript framework for building modern web applications. It includes everything you need to build rich UIs that work on any device.
 
