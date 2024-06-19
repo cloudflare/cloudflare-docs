@@ -70,6 +70,22 @@ Deprecated API:
 
 Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
+## Legacy DNS Settings Endpoints
+**End of life date: September 13th, 2024**
+
+The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
+
+Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage these settings.
+
+- Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
+- Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.
+
+Deprecated APIs:
+- GET /zones/:zone_id/dns_settings/use_apex_ns
+- PATCH /zones/:zone_id/dns_settings/use_apex_ns
+- GET /zones/:zone_id/dns_settings/secondary_overrides
+- PATCH /zones/:zone_id/dns_settings/secondary_overrides
+
 ## Brotli
 **End of life date: August 15th, 2024**
 
