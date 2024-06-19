@@ -106,6 +106,38 @@ Since captive portal implementations vary, WARP may not detect all captive porta
 
 When `Enabled`, users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh). This feature does not support switching between any other modes.
 
+### Device tunnel protocol
+
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | ?      |
+| macOS    | ✅           | ?      |
+| Linux    | ✅           | ?      |
+| iOS      | ❌           |       |
+| Android  | ❌           |      |
+| ChromeOS | ❌           |      |
+
+{{</details>}}
+
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. It may take up to 24 hours for all devices to switch to the new protocol. To check the active protocol on a device, open a terminal and run `warp-cli settings | grep protocol`.
+
+**Value**:
+
+- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `ChaCha20-Poly1305`.
+- **MASQUE** {{<inline-pill style="beta">}}: Establishes an [HTTP/3](https://www.cloudflare.com/learning/performance/what-is-http3/) connection to Cloudflare. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `AES_256_GCM_SHA384`. Since AES-256 is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
+
+{{<Aside type="note">}}
+The user may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for the new protocol to function. This is more likely to happen when switching from MASQUE to Wireguard; WireGuard relies on non-standard corporate UDP ports while MASQUE uses the standard port for HTTPS traffic.
+{{</Aside>}}
+
+For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
+
 ### Lock WARP switch
 
 {{<details header="Feature availability">}}
