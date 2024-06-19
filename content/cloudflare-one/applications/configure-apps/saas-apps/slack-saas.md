@@ -6,11 +6,12 @@ weight: 11
 
 # Connect to Slack through Access
 
-This guide covers how to configure Slack as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Slack](https://slack.com/help/articles/203772216-SAML-single-sign-on) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- Admin access to a Slack Business+ or Enterprise Grid plan.
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- Admin access to a Slack Business+ or Enterprise Grid plan account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
