@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
 title: Role scopes
-weight: 4
+weight: 5
 ---
 
 # Role scopes
 
 Scopes are one of three constituent parts of a policy that allows granting of access to users.
 
-To allow for flexible combinations of access to users, Cloudflare currently has two types of scopes (Account and Domain), with different sets of roles for each.
+To allow for flexible combinations of access to users, Cloudflare currently has two types of scopes (Account and Domain), with different sets of roles for each scope.
 
 ---
 
