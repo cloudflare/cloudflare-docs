@@ -5,7 +5,7 @@ title: Function Calling
 ---
 
 # Function Calling
-Function calling enables people to take Large Language Models (LLMs) and use the model response to interact with external APIs. The developer usually defines a set of functions and the required input schema for each function, which we call `tools`. The model then intelligently understands when it needs to do a tool call, and it returns a JSON output which can be fed an the external API.
+Function calling enables people to take Large Language Models (LLMs) and use the model response to interact with external APIs. The developer usually defines a set of functions and the required input schema for each function, which we call `tools`. The model then intelligently understands when it needs to do a tool call, and it returns a JSON output which can be fed to another API.
 
 In essence, you define a tool's API schema, the LLM then generates a JSON object based on the schema, then you use the JSON object as an input to make an API call.
 
