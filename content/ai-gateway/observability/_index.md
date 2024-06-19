@@ -1,9 +1,9 @@
 ---
+title: Observability
 pcx_content_type: navigation
-title: Get started
-weight: 2
+weight: 6
 ---
 
-# Get started
+# Observability
 
 {{<directory-listing>}}
