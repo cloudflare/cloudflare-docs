@@ -85,7 +85,7 @@ export default {
       "@cf/meta/llama-3-8b-instruct",
       {
         prompt: "Why should you use Cloudflare for your AI inference?"
-      }
+      },
       {
         gateway: {
           id: "{gateway_slug}",
