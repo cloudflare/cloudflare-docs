@@ -23,7 +23,7 @@ entries:
 
 - term: JA3 fingerprint
   general_definition: |-
-    JA3 fingerprints profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
+    JA3 and JA4 fingerprints profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 
 - term: verified bot
   general_definition: |-

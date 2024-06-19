@@ -6,6 +6,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-06-18'
+  title: Access an AI Gateway through a Worker
+  description: |-
+    Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+
 - publish_date: '2024-05-22'
   title: AI Gateway is now GA
   description: |-

@@ -6,11 +6,16 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
-- publish_date: '2024-06-18'
+- publish_date: '2024-06-19'
 title: Added support for basic function calling
 description: |-
     - [Function calling](/workers-ai/configuration/function-calling/) is now supported on enabled models
     - Properties added on [models](/workers-ai/model) page to show which models support function calling
+
+- publish_date: '2024-06-18'
+  title: Native support for AI Gateways
+  description: |-
+    Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
 
 - publish_date: '2024-06-11'
   title: Deprecation announcement for `@cf/meta/llama-2-7b-chat-int8`

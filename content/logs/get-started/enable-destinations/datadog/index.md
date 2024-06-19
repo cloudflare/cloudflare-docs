@@ -39,6 +39,8 @@ To enable the Cloudflare Logpush service:
 
     - **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
 
+    - **Service**, **Hostname**, **Datadog ddsource field**, and **ddtags** fields can be set as URL parameters. For more information, refer to the [Logs section](https://docs.datadoghq.com/api/latest/logs/) in Datadog's documentation. While these parameters are optional, they can be useful for indexing or processing logs. Note that the values of these parameters may contain special characters, which should be URL encoded.
+
 9. Select **Validate access**.
 
 10. Select **Save and Start Pushing** to finish enabling Logpush.

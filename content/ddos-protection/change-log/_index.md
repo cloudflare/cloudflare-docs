@@ -3,9 +3,9 @@ title: Changelog
 pcx_content_type: concept
 weight: 20
 meta:
-  title: Changelog for managed rulesets
+  title: Changelog for global changes to DDoS protection
 layout: changelog
-changelog_file_name: [ddos-network, ddos-http]
+changelog_file_name: [ddos-network, ddos-http, ddos]
 changelog_name: DDoS Protection
 outputs:
     - html
