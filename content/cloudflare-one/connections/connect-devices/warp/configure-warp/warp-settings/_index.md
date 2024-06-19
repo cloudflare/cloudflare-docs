@@ -129,8 +129,8 @@ Configures the protocol used to route IP traffic from the device to Cloudflare G
 
 **Value**:
 
-- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `ChaCha20-Poly1305`.
-- **MASQUE** {{<inline-pill style="beta">}}: Establishes an [HTTP/3](https://www.cloudflare.com/learning/performance/what-is-http3/) connection to Cloudflare. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `AES_256_GCM_SHA384`. Since AES-256 is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
+- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`.
+- **MASQUE** {{<inline-pill style="beta">}}: Establishes an [HTTP/3](https://www.cloudflare.com/learning/performance/what-is-http3/) connection to Cloudflare. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`. Since AES-GCM is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
 
 {{<Aside type="note">}}
 The user may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for the new protocol to function. This is more likely to happen when switching from MASQUE to Wireguard; WireGuard relies on non-standard corporate UDP ports while MASQUE uses the standard port for HTTPS traffic.
