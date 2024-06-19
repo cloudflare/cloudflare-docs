@@ -8,7 +8,7 @@ weight: 4
 {{<heading-pill style="deprecated">}} Mobile Redirect {{</heading-pill>}}
 
 {{<Aside type="warning" header="Deprecation notice">}}
-Mobile Redirect is deprecated and will be removed on 2024-06-30. After this date, Mobile Redirect will no longer be available via the Cloudflare dashboard, API, or Terraform.
+Mobile Redirect is deprecated and will be removed on 2024-06-15. After this date, Mobile Redirect will no longer be available via the Cloudflare dashboard, API, or Terraform.
 
 You should configure [Single Redirects](/rules/url-forwarding/single-redirects/) instead of using Mobile Redirect. Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) for examples of performing mobile redirects with Single Redirects.
 {{</Aside>}}
