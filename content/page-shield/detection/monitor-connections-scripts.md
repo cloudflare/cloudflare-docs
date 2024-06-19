@@ -34,7 +34,7 @@ To review the resources and cookies detected by Page Shield:
 
 5. Depending on your plan, you may be able to [view the details of each item](#view-details).
 
-## View all reported scripts, connections, and cookies
+## View all reported scripts or connections
 
 The All Reported Connections and All Reported Scripts dashboards show all the detected resources including infrequent or inactive ones, reported in the last 30 days. After 30 days without any report, Page Shield will delete information about a previously reported resource, and it will no longer appear in any of the dashboards.
 
