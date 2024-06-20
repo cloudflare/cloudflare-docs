@@ -60,6 +60,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
+import { fetch } from '@cloudflare/workers-types';
+
 export default {
   async fetch(request): Promise<Response> {
     const OLD_URL = "developer.mozilla.org";
