@@ -53,7 +53,7 @@ This convention ensures that [Hugo](https://gohugo.io/) - our static site genera
 Add regular content files to the `/content/{product_folder}/` directory.
 
 ```txt
-/fundamentals/concepts/what-is-cloudflare/
+/content/fundamentals/concepts/what-is-cloudflare.md
 ```
 
 ## Image files
