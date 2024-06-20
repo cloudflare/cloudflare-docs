@@ -3,13 +3,13 @@ updated: 2024-06-15
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Creating a recommendation system for an e-commerce site using Cloudflare's AI services
+title: Recommend products on e-commerce sites using Workers AI and Stripe
 weight: 2
 tags:
   - AI
 ---
 
-# Creating a recommendation system for an e-commerce site using Cloudflare's AI services
+# Recommend products on e-commerce sites using Workers AI and Stripe
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -24,17 +24,16 @@ By developing these APIs, you will learn about the resources needed to build cro
 
 You will also learn how to use the following Cloudflare products:
 
-- **Cloudflare Workers**: Execution environment for API applications
-- **Cloudflare Vectorize**: Vector DB used for related product searches
-- **Cloudflare Workers AI**: Used for vectorizing data and generating recommendation texts
-
+- [**Cloudflare Workers**](/workers/): Execution environment for API applications
+- [**Cloudflare Vectorize**](/vectorize/): Vector DB used for related product searches
+- [**Cloudflare Workers AI**](/workers-ai/): Used for vectorizing data and generating recommendation texts
 
 {{<render file="_tutorials-before-you-start.md" productFolder="/workers/" >}}
 
 
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
 
-### Billing notification
+### Prerequisites
 
 This tutorial involves the use of several Cloudflare products. Some of these products have free tiers, while others may incur minimal charges. Please review the following billing information carefully.
 
@@ -46,15 +45,14 @@ You will also need access to [Vectorize](/vectorize/platform/pricing/).
 {{<render file="_vectorize-pricing.md" productFolder="/workers/" >}}
 {{</Aside>}}
 
-## Create a new Worker project
+## 1. Create a new Worker project
 
 First, let's create a Cloudflare Workers project.
 
 {{<render file="_c3-definition.md" productFolder="/workers/">}}
 
-To efficiently create and manage multiple APIs, let's use [`Hono`](https://hono.dev). [`Hono`](https://hono.dev) is an open-source application framework released by a Cloudflare Developer Advocate. It is lightweight and allows for the creation of multiple API paths, as well as efficient request and response handling.
-
-Open your terminal and run the following command:
+To efficiently create and manage multiple APIs, let's use [`Hono`](https://hono.dev). Hono is an open-source application framework released by a Cloudflare Developer Advocate. It is lightweight and allows for the creation of multiple API paths, as well as efficient request and response handling.
+Open your command line interface (CLI) and run the following command:
 
 {{<tabs labels="npm | yarn | pnpm">}}
 {{<tab label="npm" default="true">}}
@@ -84,7 +82,7 @@ If this is your first time running the `C3` command, you will be asked whether y
 
 ```sh
 Need to install the following packages:
-create-cloudflare@2.21.6
+create-cloudflare@latest
 Ok to proceed? (y)
 ```
 
@@ -118,12 +116,9 @@ If you see a message like the one below, the project setup is complete. You can 
 ╰ See you again soon!
 ```
 
-Cloudflare Workers applications can be developed and tested in a local environment. Run `npm run dev` to start the application. Using `Wrangler`, the application will start, and you'll see a URL beginning with `localhost`.
+Cloudflare Workers applications can be developed and tested in a local environment. On your CLI, change directory into your newly created Workers and run `npx wrangler dev` to start the application. Using `Wrangler`, the application will start, and you'll see a URL beginning with `localhost`.
 
 ```sh
-> dev
-> wrangler dev
-
  ⛅️ wrangler 3.60.1
 -------------------
 
@@ -142,8 +137,9 @@ $ curl http://localhost:8787
 Hello Hono!
 ```
 
-So far, we've covered how to create a Cloudflare Workers project and introduced tools and open-source projects like the `C3` command and the `Hono` framework that streamline development with Cloudflare. Leveraging these features will help you develop applications on Cloudflare Workers more smoothly.
-## Create an API to Import Product Information
+So far, we've covered how to create a Cloudflare Worker project and introduced tools and open-source projects like the `C3` command and the `Hono` framework that streamline development with Cloudflare. Leveraging these features will help you develop applications on Cloudflare Workers more smoothly.
+
+## 2. Create an API to import product information
 
 Now, we will start developing the three APIs that will be used in our cross-sell system. First, let's create an API to synchronize product information with an existing e-commerce application. In this example, we will set up a system where product registrations in [Stripe](https://stripe.com) are synchronized with the cross-sell system.
 
@@ -169,15 +165,15 @@ sequenceDiagram
 
 Let's start implementing step-by-step.
 
-### Bind Workers AI and Vectorize to Workers
+### Bind Workers AI and Vectorize to your Worker
 
-This API requires the use of Workers AI and Vectorize. To use these resources from Workers, you need to create and bind the resources. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
+This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
 
 ```sh
 $ npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
-When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml`. Copy the three lines starting with `[[vectorize]]`.
+When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml` to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
 
 ```sh
 ✅ Successfully created a new Vectorize index: 'stripe-products'
@@ -188,7 +184,7 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-To use the created Vectorize index from Workers, let's perform the binding. Open `wrangler.toml` and add the copied lines.
+To use the created Vectorize index from your Worker, let's add the binding. Open `wrangler.toml` and add the copied lines.
 
 ```toml
 ---
@@ -242,7 +238,7 @@ interface CloudflareBindings {
 
 Once you save these changes, the respective resources and APIs will be available for use in the Workers application. You can access these properties from `env`. In this example, you can use them as follows:
 
-```js
+```ts
 ---
 filename: src/index.ts
 ---
@@ -253,15 +249,15 @@ app.get('/', (c) => {
 })
 ```
 
-Finally, rerun the `npm run dev` command. This is necessary because Vectorize indexes are not supported in local mode, so you need to add the `--remote` option. If you see the message, `Vectorize bindings are not currently supported in local mode. Please use --remote if you are working with them.`, rerun the command with the `--remote` option added.
+Finally, rerun the `npx wrangler dev` command with the `--remote` option. This is necessary because Vectorize indexes are not supported in local mode. If you see the message, `Vectorize bindings are not currently supported in local mode. Please use --remote if you are working with them.`, rerun the command with the `--remote` option added.
 
 ```sh
-$ npm run dev -- --remote
+$ npx wrangler dev --remote
 ```
 
-### Create a Webhook API to Handle Product Registration Events
+### Create a webhook API to handle product registration events
 
-You can receive notifications about product registration and information via POST requests using Webhooks. Let's create an API that accepts POST requests. Open your `src/index.ts` file and add the following code:
+You can receive notifications about product registration and information via POST requests using webhooks. Let's create an API that accepts POST requests. Open your `src/index.ts` file and add the following code:
 
 ```ts
 ---
@@ -279,9 +275,9 @@ app.post('/webhook', async (c) => {
 
 This code implements an API that processes POST requests to the `/webhook` endpoint. The data sent by Stripe's Webhook events is included in the request body in JSON format. Therefore, we use `c.req.json()` to extract the data. There are multiple types of Webhook events that Stripe can send, so we added a conditional to only process events when a product is newly added, as indicated by the `type`.
 
-### Adding Stripe's API Key to the Project
+### Add Stripe's API Key to the project
 
-When developing a Webhook API, you need to ensure that requests from unauthorized sources are rejected. To prevent unauthorized API requests from causing unintended behavior or operational confusion, you need a mechanism to verify the source of API requests. When integrating with Stripe, you can protect the API by generating a signing secret used for Webhook verification.
+When developing a webhook API, you need to ensure that requests from unauthorized sources are rejected. To prevent unauthorized API requests from causing unintended behavior or operational confusion, you need a mechanism to verify the source of API requests. When integrating with Stripe, you can protect the API by generating a signing secret used for webhook verification.
 
 1. Refer to the [Stripe documentation](https://docs.stripe.com/keys) to get a [secret API key for the test environment](https://docs.stripe.com/keys#reveal-an-api-secret-key-for-test-mode).
 2. Save the obtained API key in a `.dev.vars` file.
@@ -306,7 +302,7 @@ STRIPE_WEBHOOK_SECRET=whsec_xxxxxx
 8. Run `npm install stripe` to add the Stripe SDK to your application.
 9. Restart the `npm run dev -- --remote` command to import the API key into your application.
 
-Finally, modify the source code of `src/index.ts` as follows to ensure that the Webhook API cannot be used from sources other than your Stripe account.
+Finally, modify the source code of `src/index.ts` as follows to ensure that the webhook API cannot be used from sources other than your Stripe account.
 
 ```ts
 ---
@@ -417,7 +413,8 @@ The product information added on the Stripe side is recorded as a log on the ter
 }
 [wrangler:inf] POST /webhook 201 Created (14ms)
 ```
-### Implementation of Data Embedding Processing Using Workers AI
+
+## 3. Convert text into vector data using Workers AI
 
 We've prepared to ingest product information, so let's start implementing the preprocessing needed to create an index for search. In vector search using Cloudflare Vectorize, text data must be converted to numerical data before indexing. By storing data as numerical sequences, we can search based on the similarity of these vectors, allowing us to retrieve highly similar data.
 
@@ -473,7 +470,7 @@ console.log(JSON.stringify(embeddings, null, 2))
 
 When using Workers AI, execute the `c.env.AI.run()` function. Specify the model you want to use as the first argument. In the second argument, input text data about the text you want to convert using the Text Embedding model or the instructions for the generated images or text. If you want to save the converted vector data using Vectorize, make sure to select a model that matches the number of `dimensions` specified in the `npx wrangler vectorize create` command. If the numbers do not match, there is a possibility that the converted vector data cannot be saved.
 
-### Saving Vector Data to Vectorize
+### Save vector data to Vectorize
 
 Finally, let's save the created data to Vectorize. Edit `src/index.ts` to implement the indexing process using the `VECTORIZE_INDEX` binding. Since the data to be saved will be vector data, save the pre-conversion text data as metadata.
 
@@ -563,7 +560,7 @@ If the save is successful, you will see logs like `[200] POST` in the screen whe
 
 If you confirm one log entry for each piece of registered data, the save process is complete. Next, we will implement the API for related product searches.
 
-## Creating a Related Products Search API using Vectorize
+## 4. Create a related products search API using Vectorize
 
 Now that we have prepared the index for searching, the next step is to implement an API to search for related products. By utilizing a vector index, we can perform searches based on how similar the data is. Let's implement an API that searches for product data similar to the specified product ID using this method.
 
@@ -736,7 +733,7 @@ After adding this process, if you run the API, you will see that there is no dat
 
 In this way, you can implement a system to search for related product information using Vectorize.
 
-## Create a recommendation API that answers user questions.
+## 5. Create a recommendation API that answers user questions.
 
 Recommendations can be more than just displaying related products; they can also address user questions and concerns. The final API will implement a process to answer user questions using Vectorize and Workers AI.
 
@@ -831,11 +828,11 @@ When the question is sent, a recommendation text will be generated as introduced
 }
 ```
 
-The Text Generation Model generates new text each time based on the input prompt (questions or product search results). Therefore, even if you send the same request to this API, the response text may differ slightly. When developing for production, use features like logging or caching in the [AI Gateway](/ai-gateway/) to set up proper control and debugging.
+The text generation model generates new text each time based on the input prompt (questions or product search results). Therefore, even if you send the same request to this API, the response text may differ slightly. When developing for production, use features like logging or caching in the [AI Gateway](/ai-gateway/) to set up proper control and debugging.
 
-## Deploying the Application
+## 6. Deploy the application
 
-To deploy the created application, run `npx wrangler deploy`. However, since the API keys of external services are defined in `.dev.vars`, this information also needs to be set in your Cloudflare Workers project. To save API keys and secrets, run the `npx wrangler secret put <KEY>` command. In this tutorial, you'll execute the command twice, referring to the values set in `.dev.vars`.
+Before deploying the application, we need to make sure your Worker project has access to the Stripe API keys we created earlier. Since the API keys of external services are defined in `.dev.vars`, this information also needs to be set in your Worker project. To save API keys and secrets, run the `npx wrangler secret put <KEY>` command. In this tutorial, you'll execute the command twice, referring to the values set in `.dev.vars`.
 
 ```sh
 npx wrangler secret put STRIPE_SECRET_API_KEY
@@ -846,6 +843,6 @@ Then, run `npx wrangler deploy`. This will deploy the application on Cloudflare,
 
 ## Conclusion
 
-As you can see, using Cloudflare Workers, Workers AI, and Vectorize allows you to easily implement related product or product recommendation APIs. Even if product data is managed on external services like Stripe, you can incorporate them by adding a webhook API. Additionally, though not introduced this time, you can save information such as user preferences and interested categories in Workers KV or D1. By using this stored information as text generation prompts, you can provide more accurate recommendation functions.
+As you can see, using Cloudflare Workers, Workers AI, and Vectorize allows you to easily implement related product or product recommendation APIs. Even if product data is managed on external services like Stripe, you can incorporate them by adding a webhook API. Additionally, though not introduced in this tutorial, you can save information such as user preferences and interested categories in Workers KV or D1. By using this stored information as text generation prompts, you can provide more accurate recommendation functions.
 
 Use the experience from this tutorial to enhance your e-commerce site with new ideas.
