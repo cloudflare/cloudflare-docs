@@ -89,6 +89,12 @@
 # ai
 /ai/ /use-cases/ai/ 301
 
+# AI Gateway
+
+/ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
