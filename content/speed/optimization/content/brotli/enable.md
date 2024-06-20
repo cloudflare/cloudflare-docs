@@ -16,7 +16,7 @@ Enterprise customers can override Cloudflare's default compression behavior usin
 
 {{</Aside>}}
 
-By default, Brotli compression is enabled for domains on Free and Pro plans and disabled for domains on Business and Enterprise plans.
+By default, Brotli compression is enabled for all domains. It is only editable for domains on Enterprise plans.
 
 To enable Brotli compression:
 
