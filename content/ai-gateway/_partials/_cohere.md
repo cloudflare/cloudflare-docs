@@ -5,16 +5,16 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/cohere`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`
 
-When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/cohere`.
+When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`.
 
 ```bash
 ---
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/cohere/v1/chat \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere/v1/chat \
   --header 'Authorization: Token {cohere_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -38,7 +38,7 @@ import os
 
 co = cohere.Client(
   api_key= os.getenv('API_KEY'),
-  base_url="https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/cohere/v1",
+  base_url="https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere/v1",
 )
 
 chat = co.chat(

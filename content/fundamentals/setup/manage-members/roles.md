@@ -1,18 +1,18 @@
 ---
 pcx_content_type: reference
 title: Roles
-weight: 3
+weight: 4
 meta:
     title: Account roles
 ---
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign specific roles to these users.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign policies to those users and make use of the available roles. Roles can only ever be assigned to their given scope and multiple roles can be assigned to a given policy.
 
-## Account-scoped Roles
+## Account-scoped roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
+Account-scoped roles apply across an entire Cloudflare account, and through all domains in that account.
 
 | Role | Description |
 | --- | --- |
@@ -67,9 +67,9 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Zone Versioning (Account-Wide) | Can view and edit [Zone Versioning](/version-management/) for all domains in account. |
 | Zone Versioning Read (Account-Wide) | Can view [Zone Versioning](/version-management/) for all domains in account. |
 
-## Domain-scoped Roles
+## Domain-scoped roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
+Domain-scoped roles apply for a given domain within an account.
 
 | Role | Description |
 | --- | --- |
