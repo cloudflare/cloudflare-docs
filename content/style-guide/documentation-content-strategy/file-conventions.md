@@ -14,7 +14,7 @@ When creating new files, follow specific conventions for your naming.
 Filenames should:
 - Semantically communicate the purpose of the file
 - Be lowercased
-- Use dashes dashes between words
+- Use dashes between words
 
 ```txt
 ---
