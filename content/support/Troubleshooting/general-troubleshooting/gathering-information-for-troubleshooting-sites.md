@@ -423,13 +423,13 @@ For Windows users, see [WinMTR](https://github.com/White-Tiger/WinMTR/releases).
 Generally, we'd use MTR as the following:
 
 ```sh
-mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one
+$ mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one
 ```
 
 or with destination IP:
 
 ```sh
-mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1
+$ mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1
 ```
 
 Please refer to this documentation, which explains more about analysing MTR: [How to read MTR](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/).[](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)

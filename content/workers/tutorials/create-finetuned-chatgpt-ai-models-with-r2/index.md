@@ -47,7 +47,7 @@ Replace `<PROJECT_NAME>` with your desired project name.
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options:
 
-```sh
+```txt
 What type of application do you want to create? … "Hello World" Worker
 Do you want to use TypeScript? … Yes
 Do you want to use git for version control? … Yes

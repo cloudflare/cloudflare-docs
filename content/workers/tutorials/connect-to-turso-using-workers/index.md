@@ -100,7 +100,7 @@ $ npx wrangler init worker-turso-ts
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 
-```sh
+```txt
 ✔ Would you like to use git to manage this Worker? … no
 ✔ No package.json found. Would you like to create one? … yes
 ✔ Would you like to use TypeScript? … yes
@@ -308,7 +308,7 @@ $ npx wrangler dev
 
 You should be able to review output similar to the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"
@@ -363,7 +363,7 @@ The first time you run this command, it will launch a browser, ask you to sign i
 
 The `deploy` command will output the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"
