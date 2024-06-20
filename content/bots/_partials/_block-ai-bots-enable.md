@@ -4,7 +4,6 @@ _build:
   render: never
   list: never
 inputParameters: param1
-
 ---
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
