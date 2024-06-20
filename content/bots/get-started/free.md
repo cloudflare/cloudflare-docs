@@ -24,6 +24,16 @@ To disable Bot Fight Mode:
 2. Go to **Security** > **Bots**.
 3. For **Bot Fight Mode**, select **Off**.
 
+## Block AI bots
+
+{{<render file="_ai-bots-definition.md" >}}
+<br>
+{{<render file="_block-ai-bots-enable.md" withParameters="Bot Fight Mode">}}
+
+{{<Aside type="note">}}
+You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
+{{</Aside>}}
+
 ## Visibility
 
 You can see bot-related actions by going to **Security** > **Events**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
