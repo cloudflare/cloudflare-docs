@@ -19,7 +19,7 @@ Cloudflare also collects sales tax as governed by local laws. Sales taxes are co
 
 {{<Aside type="note">}}
 If you are a US-based customer, you can [file for sales tax
-exemption](https://developers.cloudflare.com/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/#filing-for-us-sales-tax-exemption).
+exemption](/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/#filing-for-us-sales-tax-exemption).
 {{</Aside>}}
 
 Cloudflare issues a separate invoice for plans and subscriptions (or add-on services) for every domain added to a Cloudflare account.
@@ -30,7 +30,7 @@ Subdomains do not count as billable domains.
 
 For example, if test1.com and test2.com are added to the same Cloudflare account and upgraded to the Pro plan, you will receive an invoice with two $20 charges. Subdomains such as blog.test1.com or blog.test2.com will not be included as billable domains.
 
-The date you initiate a paid plan or add-on service will be both the start of your billing period and your [invoice date](https://developers.cloudflare.com/fundamentals/subscriptions-and-billing/understand-invoices/). For example, If you upgrade your plan on January 10, all future plan charges will be billed on the 10th of every month. Both dates are initialized using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
+The date you initiate a paid plan or add-on service will be both the start of your billing period and your [invoice date](/fundamentals/subscriptions-and-billing/understand-invoices/). For example, If you upgrade your plan on January 10, all future plan charges will be billed on the 10th of every month. Both dates are initialized using the UTC (Coordinated Universal Time) time zone, and not your local time zone.
 
 When ordering a paid plan, subscription, or add-on service, you must agree to the following:
 
@@ -112,5 +112,5 @@ ___
 ## Related resources
 
 -   [Cloudflare Self-Serve Subscription Agreement](https://www.cloudflare.com/terms/)
--   [Understanding Cloudflare Invoices](https://developers.cloudflare.com/fundamentals/subscriptions-and-billing/understand-invoices/)
--   [Understanding Cloudflare sales tax](https://developers.cloudflare.com/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/)
+-   [Understanding Cloudflare Invoices](/fundamentals/subscriptions-and-billing/understand-invoices/)
+-   [Understanding Cloudflare sales tax](/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/)
