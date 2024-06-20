@@ -20,23 +20,34 @@ Filenames should:
 ---
 header: Acceptable file names
 ---
-/fundamentals/concepts/what-is-cloudflare/
+/fundamentals/concepts/what-is-cloudflare.md
 /assets/images/api-shield/api-shield-call-sequence.png
+
 ```
 
 ```txt
 ---
 header: Unacceptable file names
 ---
-/fundamentals/concepts/What is Cloudflare/
+/fundamentals/concepts/What is Cloudflare.md
+/fundamentals/concepts/What-is-Cloudflare.md
+/fundamentals/concepts/what-is-cloudflare/index.md
 /assets/images/api-shield/API_Image_1.png
 ```
 
 These conventions are important for user readibility, SEO conventions, and making sure our GitHub actions do not break.
 
-## Locations
+## Folders
 
-### Content files
+Each folder should have a file named `_index.md`.
+
+```txt
+/fundamentals/concepts/_index.md
+```
+
+This convention ensures that [Hugo](https://gohugo.io/) - our static site generator - treats the content as a [section](https://gohugo.io/content-management/sections/).
+
+## Content files
 
 Add regular content files to the `/content/{product_folder}/` directory.
 
@@ -44,7 +55,7 @@ Add regular content files to the `/content/{product_folder}/` directory.
 /fundamentals/concepts/what-is-cloudflare/
 ```
 
-### Image files
+## Image files
 
 Add image files to the `/assets/images/{product_folder}/` directory.
 
