@@ -75,13 +75,13 @@ If you are an Enterprise customer, do the following:
 
 If you are on a Business plan, create a custom rule as mentioned above but use the [WAF Attack Score Class](/waf/about/waf-attack-score/#available-scores) field instead. For example, you could use the following rule expression: `WAF Attack Score Class equals Attack`.
 
-## 3. Create custom rules based on bot score
+## 3. Create custom rule based on bot score
 
 {{<Aside type="note">}}
 Bot score is only available to Enterprise customers with Bot Management. Customers on Pro and Business plans may enable [Super Bot Fight mode](/bots/get-started/pro/) instead.
 {{</Aside>}}
 
-Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using custom rules with bot score, preventing this traffic from hitting your application.
+Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using a custom rule with bot score, preventing this traffic from hitting your application.
 
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
 2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
