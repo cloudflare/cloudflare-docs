@@ -4833,6 +4833,11 @@ pre {
   /* identical to box height, or 18px */
 }
 
+.DocsMarkdown--pill a {
+  color: inherit !important;
+  text-decoration: underline;
+}
+
 /* Pills on levels lower than H1 */
 
 /* '-lower' unused? */
@@ -4861,8 +4866,8 @@ pre {
 
 .DocsMarkdown--pill-alpha {
   width: 47px;
-  background: var(--orange-8);
-  color: var(--orange-1);
+  background: var(--green-8);
+  color: var(--green-1);
 }
 
 .DocsMarkdown--pill-beta {
