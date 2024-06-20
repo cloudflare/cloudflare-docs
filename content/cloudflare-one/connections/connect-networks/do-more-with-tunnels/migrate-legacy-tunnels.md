@@ -36,7 +36,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
 3. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#3-create-a-tunnel-and-give-it-a-name).
 
     ```sh
-    $ loudflared tunnel create <TUNNEL-NAME>
+    $ cloudflared tunnel create <TUNNEL-NAME>
     ```
 
 4. [Route traffic](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your tunnel to create routes that your tunnel will serve.
