@@ -11,6 +11,7 @@ For example, if Worker B implements the public method `add(a, b)`:
 ---
 filename: wrangler.toml
 ---
+compatibility_date = "2024-03-20"
 name = "worker_b"
 main = "./src/workerB.js"
 ```
@@ -34,6 +35,7 @@ Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 ---
 filename: wrangler.toml
 ---
+compatibility_date = "2024-03-20"
 name = "worker_a"
 main = "./src/workerA.js"
 services = [
