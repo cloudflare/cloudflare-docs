@@ -46,7 +46,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
     - **Tunnel name**: `PF_TUNNEL_01`
     - **Interface address**: `10.252.2.26/31`
     - **Customer endpoint**: `203.0.113.254`
-    - **Cloudflare endpoint**: Enter your Anycast IP address given by Cloudflare.
+    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
     - **Health check rate**: _Medium_
     - **Health check type**: _Request_
     - **Health check direction**: _Bidirectional_
@@ -114,7 +114,7 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
     - **Key exchange version**: _IKE_v2_
     - **Internet Protocol**: _IPv4_
     - **Interface**: _WAN_
-    - **Remote gateway**: Enter your Cloudflare anycast IP address.
+    - **Remote gateway**: Enter your Cloudflare Anycast IP address.
 - **Phase 1 Proposal (Authentication)**
     - **Authentication method**: _Mutual PSK_
     - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br> (You can get this identifier from your Cloudflare IPsec tunnel configuration > **User ID**)
@@ -127,13 +127,13 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
     - **DH key group**: _14_
     - **Lifetime**: `28800`
 
-<div class="medium-img">
+<div class="full-img">
 
 ![pfSense IPsec phase 1 settings](images/magic-wan/third-party/pfsense/ipsec-phase1.png)
 
 </div>
 
-<div class="medium-img">
+<div class="full-img">
 
 ![pfSense IPsec phase 1 settings](images/magic-wan/third-party/pfsense/ipsec-phase1b.png)
 
@@ -147,7 +147,7 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
     - **Description**: `CF1_IPsec_P2`
     - **Mode**: _Routed (VTI)_
 - **Networks**
-    - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in CF tunnel. For example `10.252.2.27`for tunnel 1 and `10.252.2.29` for tunnel 2
+    - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in CF tunnel. For example `10.252.2.27`for tunnel 1 and `10.252.2.29` for tunnel 2.
     - **Remote Network**: _Address_ > Lower IP address in the `/31` for Cloudflare side. For example, `10.252.2.26` for tunnel 1, and `10.252.2.28` for tunnel 2.
 - **Phase 2 Proposal (SA/Key Exchange)**
     - **Protocol**: _ESP_
@@ -156,7 +156,7 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
     - **DH key group**: _14_
     - **Lifetime**: `3600`
 
-<div class="medium-img">
+<div class="full-img">
 
 ![pfSense IPsec phase 2 settings](images/magic-wan/third-party/pfsense/ipsec-phase2.png)
 
@@ -164,7 +164,7 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
 
 When you are finished, apply your changes. If you go to **Status** > **IPsec**, you should be able to check that both Phase 1 and Phase 2 are connected.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![pfSense IPsec overview](images/magic-wan/third-party/pfsense/ipsec-overview.png)
 
@@ -184,13 +184,13 @@ In **Interfaces** > **Assignments** > **Add**, create a new new interface to ass
 
 Select **Save** when you are finished.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![assing a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
 
 </div>
 
-<div class="medium-img">
+<div class="full-img">
 
 ![configuring interface assignments](images/magic-wan/third-party/pfsense/interface-assignments.png)
 
@@ -200,7 +200,7 @@ Select **Save** when you are finished.
 
 In **System** > **Routing** > **Gateways** there should already be a gateway. For this example, it is named  `CF1_IPSEC_1_VTIV4`.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![There should already be a gateway configured in the interface](images/magic-wan/third-party/pfsense/gateways.png)
 
@@ -210,7 +210,7 @@ In **System** > **Routing** > **Gateways** there should already be a gateway. Fo
 
 1. In **Firewall Rules** > **IPsec interface**, allow any type of traffic.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![Allow all trafic for IPsec](images/magic-wan/third-party/pfsense/firewall-ipsec.png)
 
@@ -218,7 +218,7 @@ In **System** > **Routing** > **Gateways** there should already be a gateway. Fo
 
 2. Navigate to **Status** > **Gateways**. `CF1_IPSEC_1_VTIV4` should now be online.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![The gateway should now be online](images/magic-wan/third-party/pfsense/status-gateways.png)
 
@@ -230,7 +230,7 @@ In **System** > **Routing** > **Gateways** there should already be a gateway. Fo
 2. Expand the **Advanced** section.
 3. Change the Gateway to `CF1_IPSEC_1_VTIV4`.
 
-<div class="medium-img">
+<div class="full-img">
 
 ![Change the gateway in the firewal rules for LAN traffic](images/magic-wan/third-party/pfsense/firewall-lan.png)
 
