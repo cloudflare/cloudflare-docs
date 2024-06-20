@@ -35,7 +35,7 @@ Cloudflare Tunnel provides you with a secure way to connect your resources to Cl
 {{<resource-group>}}
 
 {{<resource header="Introductory blog post" href="https://blog.cloudflare.com/cloudflare-aegis/" icon="learning-center-book">}}
-Deeper dive into use cases where Aegis can help secure Enterprise origins.
+Deep dive into use cases where Aegis can help secure enterprise origins.
 {{</resource>}}
 
 {{<resource header="Multi-Vendor Architecture" href="/reference-architecture/architectures/multi-vendor/#connectivity-options" icon="documentation-clipboard">}}
