@@ -74,7 +74,7 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
 
-This setting is primarily used to enable site-to-site connectivity with [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+This setting is primarily used in conjunction with the [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) and for [MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). You can also use it when the default IP conflicts with other local services on your network.
 
 **Value:**
 
@@ -129,12 +129,8 @@ Configures the protocol used to route IP traffic from the device to Cloudflare G
 
 **Value**:
 
-- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`.
-- **MASQUE** {{<inline-pill style="beta">}}: Establishes an [HTTP/3](https://www.cloudflare.com/learning/performance/what-is-http3/) connection to Cloudflare. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`. Since AES-GCM is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
-
-{{<Aside type="note">}}
-The user may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for the new protocol to function. This is more likely to happen when switching from MASQUE to Wireguard; WireGuard relies on non-standard corporate UDP ports while MASQUE uses the standard port for HTTPS traffic.
-{{</Aside>}}
+- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`. When switching from MASQUE to WireGuard, users may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for WireGuard to function.
+- **MASQUE** {{<inline-pill style="beta">}}: Establishes an [HTTP/3](https://www.cloudflare.com/learning/performance/what-is-http3/) connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`. Since AES-GCM is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
 
 For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
