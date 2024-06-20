@@ -6,7 +6,7 @@ _build:
 inputParameters: param1
 ---
 
-The [Tunnel Virtual Network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) that the device is connected to via the WARP client.
+Use this selector to match all traffic routed through a specific [Tunnel Virtual Network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) via the WARP client.
 
 | UI name         | API example                                    |
 | --------------- | ---------------------------------------------- |
