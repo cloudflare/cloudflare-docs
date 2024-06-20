@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Files
+title: File conventions
 ---
 
-# Files
+# File conventions
 
 Our docs have a few conventions around files.
 
