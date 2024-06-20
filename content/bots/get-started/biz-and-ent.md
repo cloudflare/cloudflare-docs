@@ -36,9 +36,7 @@ If you have an Enterprise subscription without Bot Management, your application 
 ## Block AI bots
 
 {{<render file="_ai-bots-definition.md" >}}
-<br><br>
-Refer to [AI bots](/bots/concepts/bot/#ai-bots) for more information.
-
+<br>
 {{<render file="_block-ai-bots-enable.md" withParameters="Super Bot Fight Mode">}}
 
 {{<Aside type="note">}}
