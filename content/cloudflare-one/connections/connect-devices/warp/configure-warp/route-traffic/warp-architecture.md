@@ -18,7 +18,7 @@ The WARP client allows organizations to have granular control over the applicati
 | -----------|----------|---------|
 | Device orchestration | HTTPS | Perform user registration, check device posture, apply WARP profile settings. |
 | [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/) | HTTPS | Send DNS requests to Gateway for DNS policy enforcement. |
-| Wireguard | UDP | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access. |
+| [WireGuard or MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) | UDP | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access. |
 
 ```mermaid
 flowchart LR
@@ -36,11 +36,11 @@ end
 end
 W<--Device orchestration-->A
 D<--DoH-->G
-V<--Wireguard-->N
+V<--WireGuard </br> or MASQUE-->N
 N --> O[(Application)]
 ```
 
-Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what traffic is sent down the Wireguard tunnel. Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [DoH endpoint](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) and [device orchestration API](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) endpoint do not obey Split Tunnel rules, since those connections always operate outside of the Wireguard tunnel.
+Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what traffic is sent down the WireGuard/MASQUE tunnel. Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [DoH endpoint](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) and [device orchestration API](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) endpoint do not obey Split Tunnel rules, since those connections always operate outside of the WireGuard/MASQUE tunnel.
 
 Next, you will learn how WARP configures your operating system to apply your Local Domain Fallback and Split Tunnel routing rules. Implementation details differ between desktop and mobile clients.
 
@@ -64,7 +64,7 @@ Browsers with DoH configured will bypass the local DNS proxy. You may need to di
 {{</Aside>}}
 
 Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
-- Requests to Gateway are sent over our [DoH connection](#overview) (outside of the Wireguard tunnel).
+- Requests to Gateway are sent over our [DoH connection](#overview) (outside of the WireGuard/MASQUE tunnel).
 - Requests to your private DNS resolver are sent either inside or outside of the tunnel depending on your Split Tunnel configuration. For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ```mermaid
@@ -160,7 +160,7 @@ options trust-ad
 
 ### IP traffic
 
-When you turn on WARP, WARP makes three changes on the device to control if traffic is sent inside or outside of the Wireguard tunnel:
+When you turn on WARP, WARP makes three changes on the device to control if traffic is sent inside or outside of the WireGuard/MASQUE tunnel:
 
 - Creates a [virtual network interface](#virtual-interface).
 - Modifies the operating system [routing table](#routing-table) according to your Split Tunnel rules.
@@ -175,7 +175,7 @@ S -- No --> U["Virtual interface<br> (172.16.0.2)"] --> G[Cloudflare Gateway]
 
 #### Virtual interface
 
-Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP’s virtual interface is what maintains the Wireguard connection between the device and Cloudflare. By default, its IP address is hardcoded as `172.16.0.2`. You can optionally use [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) to assign unique IPs per device.
+Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP’s virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IP address is hardcoded as `172.16.0.2`. You can optionally use [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) to assign unique IPs per device.
 
 To view a list of all network interfaces on the operating system:
 
@@ -255,7 +255,7 @@ $ ip addr
 
 #### Routing table
 
-WARP edits the system routing table to control what traffic goes down the Wireguard tunnel to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through WARP's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
+WARP edits the system routing table to control what traffic goes down the WireGuard/MASQUE tunnel to Gateway. The routing table indicates which network interface should handle packets to a particular IP address. By default, all traffic routes through WARP's virtual interface except for the IPs and domains on your Split Tunnel exclude list (which use the default interface on your device).
 
 You can verify that the routing table matches your Split Tunnel rules:
 
