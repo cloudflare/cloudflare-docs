@@ -58,4 +58,6 @@ The method for allowing or blocking verified bots depends on [your plan](/bots/g
   </tbody>
 </table>
 
-Refer to the [Get started guide](/bots/get-started/) based on your plan to enable the feature.
+{{<Aside type="note">}}
+The method for blocking AI bots depends on [your plan](/bots/get-started/).
+{{</Aside>}}
