@@ -88,7 +88,7 @@ Customers with access to [Bot Management](/bots/get-started/bm-subscription/) ca
     - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
     - **Action**: _Managed Challenge_
 
-For a more comprehensive example of a baseline protection against malicious bots, refer to the [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection) use case in the WAF documentation.
+For a more comprehensive example of a baseline protection against malicious bots, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection).
 
 For more information about the bot-related fields you can use in expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
