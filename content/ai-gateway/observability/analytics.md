@@ -24,8 +24,7 @@ You can use GraphQL to query your usage data outside of the AI Gateway dashboard
 ---
 header: Request
 ---
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/graphql \
+curl https://api.cloudflare.com/client/v4/graphql \
   --header 'Authorization: Bearer TOKEN \
   --header 'Content-Type: application/json' \
   --data '{
