@@ -41,10 +41,16 @@
 /content/browser-rendering/ @tanushree-sharma @mchenco @kodster28 @cloudflare/pcx-technical-writing @celso @meddulla
 
 # Cloudflare One
-/content/cloudflare-one/ @kennyj42 @abelinkinbio @kkrum @janani-cr @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/ @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
+/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
+/cloudflare-one/connections/connect-devices/ @kkrum @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/connections/connect-networks/ @janani-cr @ranbel @cloudflare/pcx-technical-writing
+/content/cloudflare-one/insights/ @abelinkinbio @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
-/content/cloudflare-one/policies/browser-isolation/ @maxvp @cloudflare/pcx-technical-writing
+/content/cloudflare-one/policies/browser-isolation/ @maxvp @abelinkinbio @cloudflare/pcx-technical-writing
 /content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /content/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
@@ -105,6 +111,7 @@
 /content/workers/wrangler/ @penalosa @petebacondarwin @dario-piotrowicz @irvinebroque @GregBrimble @cloudflare/pcx-technical-writing
 /content/pages/framework-guides/ @igorminar @dario-piotrowicz @jculvey @kodster28 @cloudflare/pcx-technical-writing
 /content/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
+/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @tanushree-sharma @angelampcosta @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 /content/ddos-protection/ @patriciasantaana @cloudflare/pcx-technical-writing
@@ -118,7 +125,7 @@
 
 # Magic products
 /content/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
-/content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-firewall/ @arges @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing

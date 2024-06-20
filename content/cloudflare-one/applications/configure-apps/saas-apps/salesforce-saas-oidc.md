@@ -1,15 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (OIDC)
-weight: 8
+weight: 9
 ---
 
 # Connect to Salesforce through Access (OIDC)
 
-This guide covers how to configure Salesforce as an OpenID Connect (OIDC) application in Cloudflare Zero Trust.
+This guide covers how to configure [Salesforce](https://help.salesforce.com/s/articleView?id=sf.sso_provider_openid_connect.htm&type=5) as an OpenID Connect (OIDC) application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- An [OIDC identity provider](/cloudflare-one/identity/idp-integration/generic-oidc/) configured in Cloudflare Zero Trust
 - Admin access to a Salesforce account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

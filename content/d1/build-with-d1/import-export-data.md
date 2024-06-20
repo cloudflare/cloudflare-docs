@@ -1,12 +1,14 @@
 ---
-title: Import data
+title: Import and export data
 weight: 1
 pcx_content_type: concept
 ---
 
-# Import data
+# Import and export data
 
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
+
+D1 also allows you to export a database. This can be useful for [local development](/d1/build-with-d1/local-development/) or testing.
 
 ## Import an existing database
 
@@ -43,30 +45,27 @@ With your `users_export.sql` file in the current working directory, you can pass
 $ wrangler d1 execute example-db --remote --file=users_export.sql
 ```
 
-To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
+To confirm your table was imported correctly and is queryable, execute a `SELECT` statement to fetch all the tables from your D1 database:
 
 ```sh
-$ wrangler d1 execute example-db --remote --command "SELECT * FROM users LIMIT 100;"
+$ wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;"
 
 ...
 🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
 🚣 Executed 1 commands in 0.3165ms
-┌────────────────────────────┬──────────────────┬─────────────────────┐
-│ id                         │ full_name        │ created_on          │
-├────────────────────────────┼──────────────────┼─────────────────────┤
-│ 01GREFXCN9519NRVXWTPG0V0BF │ Catlaina Harbar  │ 2022-08-20 05:39:52 │
-├────────────────────────────┼──────────────────┼─────────────────────┤
-│ 01GREFXCNBYBGX2GC6ZGY9FMP4 │ Hube Bilverstone │ 2022-12-15 21:56:13 │
-├────────────────────────────┼──────────────────┼─────────────────────┤
-│ 01GREFXCNCWAJWRQWC2863MYW4 │ Christin Moss    │ 2022-07-28 04:13:37 │
-├────────────────────────────┼──────────────────┼─────────────────────┤
-│ 01GREFXCNDGQNBQAJG1AP0TYXZ │ Vlad Koche       │ 2022-11-29 17:40:57 │
-├────────────────────────────┼──────────────────┼─────────────────────┤
-│ 01GREFXCNF67KV7FPPSEJVJMEW │ Riane Zamora     │ 2022-12-24 06:49:04 │
-└────────────────────────────┴──────────────────┴─────────────────────┘
+┌────────┐
+│ name   │
+├────────┤
+│ _cf_KV │
+├────────┤
+│ users  │
+└────────┘
 ```
 
-Note that we apply a `LIMIT 100` clause here as a precaution: if you were importing a larger database with hundreds or thousands of rows, you may not want to output every row to the terminal.
+{{<Aside type="note">}}
+The `_cf_KV` table is a reserved table used by D1's underlying storage system. It cannot be queried and does not incur read/write operations charges against your account.
+
+{{</Aside>}}
 
 From here, you can now query our new table from our Worker [using the D1 client API](/d1/build-with-d1/d1-client-api/).
 

@@ -7,7 +7,7 @@ weight: 3
 
 # Brotli compression
 
-Cloudflare applies Brotli compression to help speed up page load times for your visitors. Cloudflare will select Brotli compression as the preferred content encoding method if multiple compression methods are supported by the client. If the client does not indicate that Brotli compression is supported, then gzip compression will be applied.
+Cloudflare supports Brotli compression to help speed up page load times for your visitors.
 
 ## Availability
 

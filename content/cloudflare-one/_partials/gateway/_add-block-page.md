@@ -3,14 +3,13 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: firewallPolicyPath
 ---
 
-For DNS policies, you will need to enable the block page on a per-policy basis.
-
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **DNS**.
-2. Find the policy for which you would like to display a block page and select **Configure**. You can only enable the block page for policies with a Block action.
-3. Scroll down to **Configure policy settings**.
-4. Enable **Display block page**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to $1.
+2. Find the policy you want to customize and select **Edit**. You can only edit the block page for policies with a Block action.
+3. Under **Configure policy settings**, go to **Display block page**. Choose _Show a custom message_.
+4. In **Custom message**, enter a block message to show users.
 5. Select **Save policy**.
 
-End users will now get a block page when they are blocked by this DNS policy.
+Gateway will display a custom message in your users' browsers when they are blocked by this policy.
