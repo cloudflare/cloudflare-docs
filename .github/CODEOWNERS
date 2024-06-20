@@ -91,7 +91,7 @@
 /content/kv/ @elithrar @thomasgauvin @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @Maddy-Cloudflare @dcpena @cloudflare/pcx-technical-writing
 /content/queues/ @elithrar @toddmantell @maheshwarip @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/data/changelogs/queues.yaml @elithrar @toddmantell @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/queues.yaml @elithrar @toddmantell @maheshwarip @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/r2/ @dcpena @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /data/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
