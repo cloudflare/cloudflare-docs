@@ -86,7 +86,7 @@ Customers with access to [Bot Management](/bots/get-started/bm-subscription/) ca
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
 2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
     - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
-    - **Action**: _Block_
+    - **Action**: _Managed Challenge_
 
 For a more comprehensive example of a baseline protection against malicious bots, refer to the [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection) use case in the WAF documentation.
 
