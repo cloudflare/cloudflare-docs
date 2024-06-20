@@ -15,6 +15,7 @@ Filenames should:
 - Semantically communicate the purpose of the file
 - Be lowercased
 - Use dashes between words
+- Only use `_index.md` for a single file under [folders](#folders)
 
 ```txt
 ---
@@ -45,7 +46,7 @@ Each folder should have a file named `_index.md`.
 /fundamentals/concepts/_index.md
 ```
 
-This convention ensures that [Hugo](https://gohugo.io/) - our static site generator - treats the content as a [section](https://gohugo.io/content-management/sections/).
+This convention ensures that [Hugo](https://gohugo.io/) - our static site generator - treats the content as a [section](https://gohugo.io/content-management/sections/). The content at `/fundamentals/concepts/_index.md` will also be rendered at `https://developers.cloudflare.com/fundamentals/concepts/`.
 
 ## Content files
 
