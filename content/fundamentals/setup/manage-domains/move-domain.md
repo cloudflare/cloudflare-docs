@@ -11,13 +11,15 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 * Receive a `Cloudflare is already hosting under a different account` error.
 
-* Lose access to your email address or Cloudflare account.
+* Lose access to your email address or Cloudflare account (though you can also use the [backup codes](/fundamentals/setup/account/account-security/2fa/#use-a-backup-code) if you have two-factor authentication enabled).
 
 * Registered a Cloudflare account with a typo in your email.
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-If you have [two-factor authentication (2FA)](/fundamentals/setup/account/account-security/2fa/) enabled and access to backup codes, you can use those codes to access your Cloudflare account.
+If you are using Cloudflare Registrar, you must first move your domain to a third-party registrar.
+
+Refer to [Requirements](/fundamentals/setup/manage-domains/move-domain/#Requirements) for more details and [Transfer domain out from Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/) for instructions on performing a domain transfer to a 3rd party registrar.
 
 {{</Aside>}}
 
