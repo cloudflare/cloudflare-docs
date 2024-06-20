@@ -124,7 +124,7 @@ $ npx wrangler secret put OPENAI_API_KEY
 To make this work in local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 
 
-```sh
+```txt
 ---
 header: Save your API key locally
 ---

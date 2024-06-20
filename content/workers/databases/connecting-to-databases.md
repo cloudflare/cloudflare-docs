@@ -53,7 +53,7 @@ There are four ways to connect to a database from a Worker:
 If your database requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
 
 ```sh
-wrangler secret put <SECRET_NAME>
+$ wrangler secret put <SECRET_NAME>
 ```
 
 Then, retrieve the secret value in your code using the following code snippet:
