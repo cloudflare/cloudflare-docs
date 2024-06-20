@@ -28,6 +28,18 @@ To enable a [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/sec
 If you are not seeing Bot Management enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, contact your account team for the proper entitlements.
 {{</Aside>}}
 
+## Block AI bots
+
+{{<render file="_ai-bots-definition.md" >}}
+<br><br>
+Refer to [AI bots](/bots/concepts/bot/#ai-bots) for more information.
+
+{{<render file="_block-ai-bots-enable.md" withParameters="Bot Management">}}
+
+{{<Aside type="note">}}
+You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
+{{</Aside>}}
+
 ## Setup
 
 For more guidance on setup, refer to your Customer Success Manager.
