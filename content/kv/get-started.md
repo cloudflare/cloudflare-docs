@@ -130,7 +130,7 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
 {{</Aside>}}
 
-## 3. Interact with your KV namespace
+## 3. Interact with your KV namespace with Wrangler
 
 You can interact with your KV namespace via [Wrangler](/workers/wrangler/install-and-update/) or directly from your [Workers](/workers/) application.
 
@@ -186,9 +186,17 @@ Exactly one of `--binding` or `--namespace-id` is required.
 
 Refer to the [`kv:bulk` documentation](/kv/reference/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
 
-### Interact with your KV namespace via a Worker
+## 4. Access your KV namespace from a Worker
 
 You can access the binding from within your Worker.
+
+{{<Aside type="note">}}
+
+When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return null.
+
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead.
+
+{{</Aside>}}
 
 In your Worker script, add your KV namespace in the `Env` interface:
 
@@ -246,23 +254,14 @@ The code above:
 2. Reads the same key using KV's `get()` method, and returns an error if the key is null (or in case the key is not set, or does not exist).
 3. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
-## 4. Develop locally with Wrangler
-
-{{<Aside type="note">}}
-
-When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return null.
-
-To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead.
-
-{{</Aside>}}
-
-While in your project directory, test your KV locally by running:
+To run your project locally, enter the following command within your project directory:
 
 ```sh
 $ npx wrangler dev
 ```
 
 When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
+
 
 ## 5. Deploy your KV
 
