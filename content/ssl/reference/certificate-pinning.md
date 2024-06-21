@@ -14,4 +14,6 @@ This is because Cloudflare regularly changes the edge certificates provisioned f
 
 For a better solution to the problem that HPKP is trying to solve - preventing certificate misissuance - use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/).
 
+To avoid downtime when pinning your certificates, use [custom certificates](/ssl/edge-certificates/custom-certificates/) and select [**user-defined** bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined). This way you can control which CA, intermediate, and certificate will be used after renewal.
+
 [^1]: Key pinning allows a host to instruct a browser to only accept certain public keys when communicating with it for a given period of time.
