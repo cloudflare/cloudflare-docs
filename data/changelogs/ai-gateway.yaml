@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
-- publish_date: '2024-06-20'
+- publish_date: '2024-06-24'
   title: Custom cache key headers
   description: |-
     AI Gateway now supports [custom cache key headers](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key).
