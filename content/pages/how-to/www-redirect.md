@@ -27,9 +27,15 @@ To redirect your `www` subdomain to your domain apex:
 
 4. [Create a bulk redirect rule](/rules/url-forwarding/bulk-redirects/create-dashboard/#2-create-a-bulk-redirect-rule) using the list you just created.
 5. Go to **DNS**.
-6. Create a DNS record for the `www` subdomain. It must either be an `A` record with the `192.0.2.1` value or an `AAAA` record with the `100::` value. The new DNS record must also have Cloudflare's proxy enabled (orange-clouded) so that it can enact the Page Rule behavior that you will create next.
+6. [Create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) for the `www` subdomain using the following values:
 
-![Add a www record in the Cloudflare DNS dashboard](/images/pages/how-to/www_subdomain.png)
+  {{<example>}}
+
+  | Type | Name  | IPv4 address | Proxy status |
+  | ---- | ----- | ------------ | ------------ |
+  | `A`    | `www` | `192.0.2.1`  | Proxied      |
+
+  {{</example>}}
 
 To test that your redirect worked, visit your `www` subdomain. If the URL does not display `www`, your change has successfully propagated.
 
