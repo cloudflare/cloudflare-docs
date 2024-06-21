@@ -125,7 +125,7 @@ header: Request with custom cache key
 ---
 
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header 'Authorization: Bearer {openai_token}' \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-cache-key: responseA' \
   --data ' {
