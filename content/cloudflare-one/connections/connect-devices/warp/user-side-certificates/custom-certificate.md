@@ -12,7 +12,7 @@ meta:
 Only available on Enterprise plans.
 {{</Aside>}}
 
-Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/configuring-block-page/).
+Enterprise customers who do not wish to install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/configuring-block-page/).
 
 {{<Aside type="warning">}}
 Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use the Cloudflare certificate.
@@ -115,8 +115,12 @@ $ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate.
 
-{{<Aside type="note" header="Troubleshooting">}}
+{{<Aside type="warning" header="Private key visibility">}}
 
-If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, you can [troubleshoot errors with our FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
+When you upload a private key to Zero Trust, Cloudflare encrypts the key and stores it at rest. Only your delegated apps have the necessary decryption keys to decrypt the private key. You will not be able to retrieve the private key after upload.
 
 {{</Aside>}}
+
+## Troubleshoot HTTP errors
+
+If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, you can [troubleshoot errors with our FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website).
