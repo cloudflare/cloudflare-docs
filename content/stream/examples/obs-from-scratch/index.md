@@ -65,7 +65,7 @@ OBS offers many different audio, video, still, and generated sources to set up y
 
 Click the "Start Streaming" button on the bottom right panel under "Controls" to start a stream with default settings.
 
-Return to the Live Input page on Stream Dash. Under "Input Status," you should see "🟢 Conntected" and some connection metrics. Further down the page, you will see a test player and an embed code. For more ways to watch and embed your Live Stream, see [Watch a live stream](/stream/stream-live/watch-live-stream/).
+Return to the Live Input page on Stream Dash. Under "Input Status," you should see "🟢 Connected" and some connection metrics. Further down the page, you will see a test player and an embed code. For more ways to watch and embed your Live Stream, see [Watch a live stream](/stream/stream-live/watch-live-stream/).
 
 ## 6. (Optional) Optimize Settings
 
