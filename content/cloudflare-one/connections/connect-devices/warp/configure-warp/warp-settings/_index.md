@@ -210,7 +210,7 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.1.159.0         |
 | macOS    | ✅           | 2024.1.160.0         |
-| Linux    | ❌           |       |
+| Linux    | ✅           | 2024.2.62.0       |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |
