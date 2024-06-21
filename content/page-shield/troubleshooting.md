@@ -41,7 +41,7 @@ Some third-party services you may want to cover in your Page Shield allow polici
 
 For example, if you add the `adservice.google.com` domain to an allow policy, you could get policy violation reports for this domain due to redirects to a different domain (not present in your allow policy). In this case, the violation report would still mention the original domain, and not the domain of the redirected destination, which can cause some confusion.
 
-To try to solve this issue, add the domain of the redirected destination to your allow policy to stop receiving policy violation reports for these situations. You may need to add several domains to your policy due to redirects.
+To try to solve this issue, add the domain of the redirected destination to your allow policy. You may need to add several domains to your policy due to redirects.
 
 ## Do I have access to Page Shield?
 
