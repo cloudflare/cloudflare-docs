@@ -55,7 +55,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
     - **Tunnel name**: `PF_TUNNEL_02`
     - **Interface address**: `10.252.2.28/31`
     - **Customer endpoint**: `203.0.113.254`
-    - **Cloudflare endpoint**: `172.64.242.164`
+    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
     - **Health check rate**: _Medium_
     - **Health check type**: _Request_
     - **Health check direction**: _Bidirectional_
