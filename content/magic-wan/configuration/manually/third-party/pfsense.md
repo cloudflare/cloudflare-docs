@@ -69,7 +69,7 @@ When you create IPsec tunnels with the option **Add pre-shared key later**, the 
 2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
 3. Copy the pre-shared key value for each of your IPsec tunnels, and save these values somewhere safe. Then, select **Done**.
 
-{{<Aside type="note">}} Take note of your pre-shared key, and keep it in a safe place.{{</Aside>}}
+{{<Aside type="note">}} Take note of your pre-shared keys, and keep them in a safe place to use later in pfSense.{{</Aside>}}
 
 ### IPsec identifier - User ID
 
