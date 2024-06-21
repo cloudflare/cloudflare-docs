@@ -186,13 +186,13 @@ Select **Save** when you are finished.
 
 <div class="full-img">
 
-![assign a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
+![Assign a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
 
 </div>
 
 <div class="full-img">
 
-![configuring interface assignments](images/magic-wan/third-party/pfsense/interface-assignments.png)
+![Configuring interface assignments](images/magic-wan/third-party/pfsense/interface-assignments.png)
 
 </div>
 
