@@ -10,7 +10,7 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Software tested
 
-Manufacturer | Firmware Revision
+Manufacturer | Firmware revision
 ---          | ---
 pfSense      | 24.03
 
@@ -22,9 +22,9 @@ For this tutorial, you will need to know the following information:
 - Internal IP address ranges
 - Inside tunnel `/31` ranges
 
-## Example Scenario
+## Example scenario
 
-The following IP addresses are used throughout this tutorial. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation ([RFC5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
+The following IP addresses are used throughout this tutorial. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation ([RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
 
 Tunnel name                        | `PF_TUNNEL_01`                | `PF_TUNNEL_02`
 ---                                | ---                           | ---
@@ -42,7 +42,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
 
 ### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
     - **Tunnel name**: `PF_TUNNEL_01`
     - **Interface address**: `10.252.2.26/31`
     - **Customer endpoint**: `203.0.113.254`
@@ -61,7 +61,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
     - **Health check direction**: _Bidirectional_
 4. Select **Add pre-shared key later** > **Add tunnels**.
 
-### Generate Pre-shared keys
+### Generate pre-shared keys
 
 When you create IPsec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator.
 
@@ -80,11 +80,11 @@ After creating your IPsec tunnels, the Cloudflare dashboard will list them under
 3. Select the IPsec tunnel.
 4. Scroll to **User ID** and copy the string. For example, `ipsec@long_string_of_letters_and_numbers`.
 
-The User ID will be required when configuring IKE Phase 1 on the pfSense Firewall.
+The User ID will be required when configuring IKE Phase 1 on the pfSense firewall.
 
 ## 2. Create Magic WAN static routes
 
-Create a [static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
+Create a [static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default values):
 
 ### Tunnel 01
 
@@ -98,9 +98,9 @@ Create a [static route](/magic-wan/configuration/manually/how-to/configure-stati
 - **Prefix**: `10.1.100.0/24`
 - **Tunnel/Next hop**: `PF_TUNNEL_02`
 
-## 3. Configure the PFsense firewall
+## 3. Configure the pfSense firewall
 
-Install PFsense and boot up. Then, assign and set LAN and WAN interfaces, as well as IP addresses. For example:
+Install pfSense and boot up. Then, assign and set LAN and WAN interfaces, as well as IP addresses. For example:
 - **LAN**: `203.0.113.254`
 - **WAN**: `<YOUR_WAN_ADDRESS>`
 
@@ -147,7 +147,7 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
     - **Description**: `CF1_IPsec_P2`
     - **Mode**: _Routed (VTI)_
 - **Networks**
-    - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in CF tunnel. For example `10.252.2.27`for tunnel 1 and `10.252.2.29` for tunnel 2.
+    - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in Cloudflare tunnel. For example, `10.252.2.27` for tunnel 1 and `10.252.2.29` for tunnel 2.
     - **Remote Network**: _Address_ > Lower IP address in the `/31` for Cloudflare side. For example, `10.252.2.26` for tunnel 1, and `10.252.2.28` for tunnel 2.
 - **Phase 2 Proposal (SA/Key Exchange)**
     - **Protocol**: _ESP_
@@ -186,7 +186,7 @@ Select **Save** when you are finished.
 
 <div class="full-img">
 
-![assing a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
+![assign a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
 
 </div>
 
@@ -198,7 +198,7 @@ Select **Save** when you are finished.
 
 ### Gateway
 
-In **System** > **Routing** > **Gateways** there should already be a gateway. For this example, it is named  `CF1_IPSEC_1_VTIV4`.
+In **System** > **Routing** > **Gateways** there should already be a gateway. For this example, it is named `CF1_IPSEC_1_VTIV4`.
 
 <div class="full-img">
 
@@ -212,7 +212,7 @@ In **System** > **Routing** > **Gateways** there should already be a gateway. Fo
 
 <div class="full-img">
 
-![Allow all trafic for IPsec](images/magic-wan/third-party/pfsense/firewall-ipsec.png)
+![Allow all traffic for IPsec](images/magic-wan/third-party/pfsense/firewall-ipsec.png)
 
 </div>
 
@@ -232,6 +232,6 @@ In **System** > **Routing** > **Gateways** there should already be a gateway. Fo
 
 <div class="full-img">
 
-![Change the gateway in the firewal rules for LAN traffic](images/magic-wan/third-party/pfsense/firewall-lan.png)
+![Change the gateway in the firewall rules for LAN traffic](images/magic-wan/third-party/pfsense/firewall-lan.png)
 
 </div>
