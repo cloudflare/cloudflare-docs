@@ -50,4 +50,29 @@ basicConstraints=CA:FALSE
 
 ## 2. Configure AWS Application Load Balancer
 
+1. Upload the `rootca.cert` to an [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html)
+2. [Create a trust store](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html#create-trust-store) at your EC2 console, indicating the **S3 URI** where yiou uploaded the certificate.
+3. Create an EC2 instance and install an HTTPD daemon. Suggested: [T2 instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html) and [Amazon Linux 2023](https://docs.aws.amazon.com/linux/al2023/ug/what-is-amazon-linux.html).
+
+```bash
+sudo yum install -y httpd
+sudo systemctl start httpd
+```
+
+4. Create a [target group](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html#configure-target-group) for your Application Load Balancer.
+    * Choose **Instances** as target type.
+    * Specify port HTTP/80.
+5. After you finish configuring the target group, confirm that the target group is [healthy](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html).
+6. [Configure a load balancer and a listener](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html#configure-load-balancer).
+    * Choose **Internet-facing** scheme.
+    * Switch the listener to port `443` so that the **mTLS** option is available, and select the target group created in previous steps.
+    * For **Default SSL/TLS server certificate**, choose **Import certificate** > **Import to ACM**, and add the certificate private key and body.
+    * Under **Client certificate handling**, select **Verify with trust store**.
+7. Save your settings.
+8. (Optional) Run the following command to confirm that the Application Load Balancing is asking for the client certificate.
+
+```bash
+openssl s_client -verify 5 -connect <your-application-load-balancer>:443 -quiet -state
+```
+
 ## 3. Configure Cloudflare
