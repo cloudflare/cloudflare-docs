@@ -172,7 +172,7 @@ When you are finished, apply your changes. If you go to **Status** > **IPsec**, 
 
 ### Interface assignments
 
-In **Interfaces** > **Assignments** > **Add**, create a new new interface to assign to the first IPsec tunnel, with the following settings:
+In **Interfaces** > **Assignments** > **Add**, create a new interface to assign to the first IPsec tunnel, with the following settings:
 
 - **General configuration**
     - **Description**: `CF1_IPsec_1`
