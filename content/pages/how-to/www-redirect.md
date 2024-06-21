@@ -37,7 +37,13 @@ To redirect your `www` subdomain to your domain apex:
 
   {{</example>}}
 
-To test that your redirect worked, visit your `www` subdomain. If the URL does not display `www`, your change has successfully propagated.
+It may take a moment for this DNS change to propagate, but once complete, you can run the following command in your terminal.
+
+```sh
+$ curl --head -i https://www.example.com/
+```
+
+Then, inspect the output to verify that the `location` header and status code are being set as configured.
 
 ## Related resources
 
