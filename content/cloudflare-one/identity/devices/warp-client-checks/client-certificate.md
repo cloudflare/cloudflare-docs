@@ -78,6 +78,11 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
 
 1. Open a PowerShell window.
 2. To search the local machine trust store for a certificate with a specific common name, run the following command:
+
+  ```powershell
+  PS C:\Users\JohnDoe> Get-ChildItem Cert:\LocalMachine\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
+  ```
+
 3. To search the user trust store for a certificate with a specific common name, run the following command:
 
   ```powershell
