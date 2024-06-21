@@ -35,7 +35,7 @@ The following tables are related to bucket-level operations.
 
 Below is a list of implemented bucket-level operations. Refer to the Feature column to review which features have been implemented (✅) and have not been implemented (❌).
 
-{{<table-wrap style="width:100%">}}
+{{<table-wrap>}}
 
 | API Name                                | Feature                           |
 | --------------------------------------- |---------------------------------- |
@@ -57,7 +57,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 {{<details header="Unimplemented bucket-level operations">}}
 
-{{<table-wrap style="width:110%">}}
+{{<table-wrap>}}
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
@@ -117,7 +117,7 @@ The following tables are related to object-level operations.
 
 Below is a list of implemented object-level operations. Refer to the Feature column to review which features have been implemented (✅) and have not been implemented (❌).
 
-{{<table-wrap style="width:110%">}}
+{{<table-wrap>}}
 
 | API Name                | Feature                   |
 | ------------------------| ------------------------- |
@@ -149,7 +149,7 @@ Even though `ListObjects` is a supported operation, it is recommended that you u
 
 {{<details header="Unimplemented object-level operations">}}
 
-{{<table-wrap style="width:110%">}}
+{{<table-wrap>}}
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
