@@ -3251,7 +3251,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     padding: .25em 0;
     border-radius: .3125em;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch
 }
 
 .DocsMarkdown--table-wrap:not(:last-child) {
