@@ -8,7 +8,7 @@ entries:
 - publish_date: '2024-06-21'
   title:
   description: |-
-    * **Dashboard**: Add an option to disable automatic the automatic `Pageview` event
+    * **Dashboard**: Add an option to disable the automatic `Pageview` event
 - publish_date: '2024-06-18'
   title:
   description: |-
