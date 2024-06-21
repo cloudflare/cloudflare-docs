@@ -228,3 +228,9 @@ Enabling this setting comes with two major consequences:
 - **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
 
 {{</Aside>}}
+
+#### Limitations
+
+- WARP will only exclude local networks in the [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space. Other IP addresses such as CGNAT are not supported.
+- The maximum excluded subnet size is `/24`.
+- If a Windows device has multiple network interfaces with distinct local IP ranges, WARP will only exclude one of those networks. To access a specific local network, disable the other interfaces and disconnect/reconnect WARP.
