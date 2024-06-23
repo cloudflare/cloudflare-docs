@@ -1,7 +1,9 @@
-import { learning_paths as paths } from "./json-collector";
+import { learning_paths as paths, type LearningPath } from "./json-collector";
 
-function buildHtml(destination, array) {
+function buildHtml(destination: HTMLElement, array: LearningPath[]) {
   const numTrails = document.getElementById("numTrails");
+  if(!numTrails) return;
+
   destination.innerHTML = "";
   if (array.length === 0) {
     numTrails.innerText = "0 results";
@@ -24,13 +26,17 @@ function buildHtml(destination, array) {
   }
 }
 
+type Filterable = 'product_group' | 'products';
+type FilterableObj = {
+  [key in Filterable]?: string;
+}
 function getSelectValues(selectElementCollection: HTMLCollectionOf<Element>) {
-  let selectedValues: Record<string, string> = {};
+  let selectedValues: FilterableObj = {};
   for (const htmlElement of selectElementCollection) {
     let selectElement = htmlElement as HTMLSelectElement;
     let selectedValue =
       selectElement.options[selectElement.selectedIndex].value;
-    selectedValues[selectElement.id] = selectedValue;
+    selectedValues[selectElement.id as Filterable] = selectedValue;
   }
   return selectedValues;
 }
@@ -51,6 +57,10 @@ function filterResults() {
           passed = paths;
         } else {
           passed = paths.filter((currentPath) => {
+            console.log('do filter', {
+              currentPath,
+              selectedOptions,
+            })
             let keepItem = true;
             for (const [filterName, filterValue] of Object.entries(
               selectedOptions
@@ -60,7 +70,7 @@ function filterResults() {
               } else if (currentPath["additional_groups"] && filterName === "product_group" && currentPath["additional_groups"].includes(filterValue)) {
                 continue;
               }
-              else if (!currentPath[filterName].includes(filterValue) ) {
+              else if (!currentPath[filterName as Filterable]?.includes(filterValue) ) {
                 keepItem = false;
                 break;
               }

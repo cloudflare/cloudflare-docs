@@ -68,7 +68,8 @@
     let button = $('#MobileSearch')
     if (button) {
       button.addEventListener('click', () => {
-        document.querySelector(".DocSearch.DocSearch-Button").click()
+        const docsSearchButton = document.querySelector<HTMLButtonElement>('.DocSearch.DocSearch-Button')
+        docsSearchButton?.click()
       });
     }
   }

@@ -7,6 +7,7 @@ declare global {
   interface Window {
     docsearch: any;
     Coveo?: any;
+    zaraz: any;
   }
 }
 
