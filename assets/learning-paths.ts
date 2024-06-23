@@ -57,10 +57,6 @@ function filterResults() {
           passed = paths;
         } else {
           passed = paths.filter((currentPath) => {
-            console.log('do filter', {
-              currentPath,
-              selectedOptions,
-            })
             let keepItem = true;
             for (const [filterName, filterValue] of Object.entries(
               selectedOptions
