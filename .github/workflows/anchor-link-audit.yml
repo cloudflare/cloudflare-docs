@@ -25,10 +25,7 @@ jobs:
           hugo-version: '0.125.6'
           extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-
-      - run: pnpm install
+      - run: npm ci
 
       - run: make build
         env:

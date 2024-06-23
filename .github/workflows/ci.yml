@@ -25,17 +25,14 @@ jobs:
           hugo-version: '0.125.6'
           extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-
-      - run: pnpm install
+      - run: npm ci
 
       - run: make build
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Check - Broken Links
-        run: pnpm run crawl
+        run: npm run crawl
         if: success()
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
@@ -49,7 +46,5 @@ jobs:
   #     - uses: actions/setup-node@v3
   #       with:
   #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
+  #     - run: npm ci
+  #     - run: npm run lint
