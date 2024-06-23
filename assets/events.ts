@@ -35,7 +35,7 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash.toLowerCase());
+  let item = hash && document.querySelector(`#${hash.toLowerCase()}`);
   let timer =
     item &&
     setInterval(() => {
@@ -94,20 +94,20 @@ function $tab(ev: MouseEvent) {
     .closest("[data-id]")
     ?.getAttribute("data-id");
 
-  let tabs = document.querySelectorAll(
+  let tabs = document.querySelectorAll<HTMLElement>(
     `div[tab-wrapper-id="${tabBlockId}"] > .tab`
   );
 
   for (let i = 0; i < tabs.length; i++) {
-    (tabs[i] as HTMLElement).style.display = "none";
+    tabs[i].style.display = "none";
   }
 
   let link = (ev.target as HTMLElement)
     .closest("[data-link]")
     ?.getAttribute("data-link");
 
-  document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
-  zaraz.track("tab click", {selected_option: ev.target.innerText})
+  document.querySelector<HTMLElement>(`#${link}-${tabBlockId}`).style.display = "block";
+  zaraz.track("tab click", {selected_option: (ev.target as HTMLElement).innerText})
 }
 
 export function tabs() {
@@ -116,9 +116,9 @@ export function tabs() {
 
   addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
-      const labels = wrappers[i].querySelectorAll(".tab-label");
-      const tabs = wrappers[i].querySelectorAll(".tab");
-      const defaultTab = wrappers[i].querySelector(".tab.tab-default");
+      const labels = wrappers[i].querySelectorAll<HTMLElement>(".tab-label");
+      const tabs = wrappers[i].querySelectorAll<HTMLElement>(".tab");
+      const defaultTab = wrappers[i].querySelector<HTMLElement>(".tab.tab-default");
 
       if (tabs.length > 0) {
         // if a tab has been specified as default, set that
@@ -133,11 +133,11 @@ export function tabs() {
             `a[data-link="${tabId}"]`
           );
 
-          (defaultTab as HTMLElement).style.display = "block";
-          (defaultTabLabel as HTMLElement).classList.add("active");
+          defaultTab.style.display = "block";
+          defaultTabLabel.classList.add("active");
         } else {
-          (tabs[0] as HTMLElement).style.display = "block";
-          (labels[0] as HTMLElement).classList.add("active");
+          tabs[0].style.display = "block";
+          labels[0].classList.add("active");
         }
 
         for (let i = 0; i < labels.length; i++)
@@ -148,14 +148,14 @@ export function tabs() {
 }
 
 export function activeTab() {
-  const blocks = document.getElementsByClassName("tab-active");
+  const blocks = document.querySelectorAll(".tab-active");
   if (blocks) {
     for (const block of blocks) {
       const blockId = block.getAttribute("block-id");
 
-      var tabs = block.querySelectorAll(`.tab-label`);
+      var tabs = block.querySelectorAll<HTMLElement>(`.tab-label`);
       for (var i = 0; i < tabs.length; i++) {
-        (tabs[i] as HTMLElement).addEventListener("click", function name() {
+        tabs[i].addEventListener("click", function name() {
           let current = block.querySelector(`.active`);
           current.classList.remove("active");
           this.classList.add("active");
@@ -236,7 +236,7 @@ export function dropdowns() {
 }
 
 export function toggleSidebar() {
-  const toggleButton = document.getElementsByClassName("toggleSidebar");
+  const toggleButton = document.querySelectorAll(".toggleSidebar");
   if (toggleButton.length > 0) {
     let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
@@ -270,7 +270,7 @@ export function toggleSidebar() {
         item.toggleAttribute(attr, !isHidden);
       });
 
-      let moduleCounters = document.getElementsByClassName("moduleCounter")
+      let moduleCounters = document.querySelectorAll(".moduleCounter")
       if (moduleCounters) {
         for (const counter of moduleCounters) {
           let isHidden2 = counter.hasAttribute(attr);
@@ -282,15 +282,15 @@ export function toggleSidebar() {
 }
 
 export function zarazTrackDocEvents() {
-  const links = document.getElementsByClassName("DocsMarkdown--link");
-  const dropdowns = document.getElementsByTagName("details")
-  const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
-  const playgroundLinks = document.getElementsByClassName("playground-link")
-  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
+  const links = document.querySelectorAll<HTMLAnchorElement>(".DocsMarkdown--link");
+  const dropdowns = document.querySelectorAll("details")
+  const glossaryTooltips = document.querySelectorAll(".glossary-tooltip")
+  const playgroundLinks = document.querySelectorAll<HTMLAnchorElement>(".playground-link")
+  const copyCodeBlockButtons = document.querySelectorAll(".copyCode-button")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
-      for (const link of links as any) {  // Type cast to any for iteration
-        const linkURL = new URL(link)
+      for (const link of links) {
+        const linkURL = new URL(link.href)
         const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
         if (linkURL.hostname !== "developers.cloudflare.com") {
           if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
@@ -310,14 +310,14 @@ export function zarazTrackDocEvents() {
       }
     }
     if (dropdowns.length > 0) {
-      for (const dropdown of dropdowns as any) {
+      for (const dropdown of dropdowns) {
         dropdown.addEventListener("click", () => {
-          $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
+          $zarazDropdownEvent(dropdown.querySelectorAll("summary")[0]);
         });
     }
   }
   if (glossaryTooltips.length > 0) {
-    for (const tooltip of glossaryTooltips as any) {
+    for (const tooltip of glossaryTooltips) {
       tooltip.addEventListener("pointerleave", () => {
         $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
       });
@@ -327,14 +327,14 @@ export function zarazTrackDocEvents() {
   }
 }
   if (playgroundLinks.length > 0) {
-    for (const playgroundLink of playgroundLinks as any) {
+    for (const playgroundLink of playgroundLinks) {
       playgroundLink.addEventListener("click", () => {
         $zarazLinkEvent('playground link click', playgroundLink);
       });
   }
   }
   if (copyCodeBlockButtons.length > 0) {
-    for (const copyButton of copyCodeBlockButtons as any) {
+    for (const copyButton of copyCodeBlockButtons) {
       copyButton.addEventListener("click", () => {
         const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
         zaraz.track('copy button link click', {
@@ -346,11 +346,11 @@ export function zarazTrackDocEvents() {
   });
 }
 
-function $zarazLinkEvent(type: string, link: Element) {
+function $zarazLinkEvent(type: string, link: HTMLAnchorElement) {
   zaraz.track(type, {href: link.href, hostname: link.hostname})
 }
 
-function $zarazDropdownEvent(summary: string) {
+function $zarazDropdownEvent(summary: HTMLElement) {
   zaraz.track('dropdown click', {text: summary.innerText})
 }
 
@@ -359,26 +359,26 @@ function $zarazGlossaryTooltipEvent(term: string) {
 }
 
 export function zarazTrackHomepageLinks() {
-  const links = document.getElementsByClassName("DocsMarkdown--link");
-  const playgroundLinks = document.getElementsByClassName("playground-link")
-  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
+  const links = document.querySelectorAll<HTMLAnchorElement>(".DocsMarkdown--link");
+  const playgroundLinks = document.querySelectorAll<HTMLAnchorElement>(".playground-link")
+  const copyCodeBlockButtons = document.querySelectorAll<HTMLButtonElement>(".copyCode-button")
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
-      for (const link of links as any) {  // Type cast to any for iteration
+      for (const link of links) {
         link.addEventListener("click", () => {
           zaraz.track('homepage link click', {href: link.href})
         });
       }
     }
     if (playgroundLinks.length > 0) {
-      for (const playgroundLink of playgroundLinks as any) {
+      for (const playgroundLink of playgroundLinks) {
         playgroundLink.addEventListener("click", () => {
           $zarazLinkEvent('playground link click', playgroundLink);
         });
     }
     }
     if (copyCodeBlockButtons.length > 0) {
-      for (const copyButton of copyCodeBlockButtons as any) {
+      for (const copyButton of copyCodeBlockButtons) {
         copyButton.addEventListener("click", () => {
           const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
           zaraz.track('copy button link click', {
