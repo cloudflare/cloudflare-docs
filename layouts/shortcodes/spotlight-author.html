@@ -7,7 +7,7 @@
 <div class="author-container">
   <div class="author-details">{{- $details -}}</div>
   <div>
-      <span class="author-details">Written by: {{- $author -}}</span>
+      <span class="author-details">Written by: </span>{{- $author -}}
   </div>
   <p><span class="author-details">Profile: </span>{{ (printf "[%s](%s)" $source $link ) | .Page.RenderString }}</p>
 </div>
