@@ -30,7 +30,7 @@
         }
       }
       },
-      getMissingResultsUrl({ query }) {
+      getMissingResultsUrl({ query }: {query: string}) {
         return `/search/?q=${query}`;
       },
       searchParameters: {

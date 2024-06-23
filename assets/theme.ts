@@ -26,7 +26,7 @@
       // security error
     }
     // set tooltip text
-    const themeToggleTooltip = document.getElementById("ThemeToggle--tooltip");
+    const themeToggleTooltip = document.querySelector<HTMLElement>("#ThemeToggle--tooltip");
     if(!themeToggleTooltip) return;
     if (isDark) {
       themeToggleTooltip.textContent =
