@@ -7,6 +7,7 @@
 *.ts text eol=lf
 *.txt text eol=lf
 *.vue text eol=lf
+*.xml text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
 .gitattributes text eol=lf
