@@ -32,7 +32,7 @@ The following Page Rules may not work as expected when an incoming request is ma
 
 *   Always Online
 *   [Always Use HTTPS](/workers/configuration/workers-with-page-rules/#always-use-https)
-*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify-deprecated) (deprecated)
+*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify) (deprecated)
 *   [Automatic HTTPS Rewrites](/workers/configuration/workers-with-page-rules/#automatic-https-rewrites)
 *   [Browser Cache TTL](/workers/configuration/workers-with-page-rules/#browser-cache-ttl)
 *   [Browser Integrity Check](/workers/configuration/workers-with-page-rules/#browser-integrity-check)
@@ -48,8 +48,8 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   Mirage
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
-*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level)
-*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes-deprecated) (deprecated)
+*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level) (deprecated)
+*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
@@ -80,7 +80,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-### Auto Minify (deprecated)
+{{<heading-pill style="deprecated" heading="h3">}}Auto Minify{{</heading-pill>}}
 
 {{<table-wrap>}}
 
@@ -236,7 +236,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-### Security Level
+{{<heading-pill style="deprecated" heading="h3">}}Security Level{{</heading-pill>}}
 
 {{<table-wrap>}}
 
@@ -248,7 +248,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-### Server Side Excludes (deprecated)
+{{<heading-pill style="deprecated" heading="h3">}}Server Side Excludes{{</heading-pill>}}
 
 {{<table-wrap>}}
 

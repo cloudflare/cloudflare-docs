@@ -3242,11 +3242,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown table {
-  word-break: break-word;
   border-collapse: collapse;
   border-spacing: 0;
   border: 0;
   --border-color: rgba(var(--color-rgb), 0.1);
+  display: block;
+  overflow-x: auto;
 }
 
 .DocsMarkdown table.Small {

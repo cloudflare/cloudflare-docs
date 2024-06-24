@@ -27,7 +27,7 @@ To disable Bot Fight Mode:
 ## Block AI bots
 
 {{<render file="_ai-bots-definition.md" >}}
-<br>
+
 {{<render file="_block-ai-bots-enable.md" withParameters="Bot Fight Mode">}}
 
 {{<Aside type="note">}}

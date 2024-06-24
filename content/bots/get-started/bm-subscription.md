@@ -31,7 +31,7 @@ If you are not seeing Bot Management enabled on your zone or if you still see **
 ## Block AI bots
 
 {{<render file="_ai-bots-definition.md" >}}
-<br>
+
 {{<render file="_block-ai-bots-enable.md" withParameters="Bot Management">}}
 
 {{<Aside type="note">}}
