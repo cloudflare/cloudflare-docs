@@ -39,7 +39,7 @@ To turn on or off I’m Under Attack mode for your entire zone:
 To set the security level more selectively, do one of the following:
 
 - Configure it via a [configuration rule](/rules/configuration-rules/).
-- Use the **Threat Score** field (deprecated) criteria within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
+- Use the **Threat Score** field (deprecated) within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
 
 ---
 
