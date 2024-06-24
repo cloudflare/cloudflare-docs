@@ -46,7 +46,7 @@ To switch back from the Expression Editor to the Expression Builder, select **Us
 
 In expressions using the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax), all backslash (`\`) and double quote (`"`) characters in string literals must be escaped. The visual Expression Builder will automatically escape these special characters by prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
-Expressions built using the Expression Builder currently use the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax). When entering regular expressions following this syntax, you may need to perform additional escaping — refer to [Quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) in the Ruleset Engine documentation for details.
+Expressions built using the Expression Builder currently use the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax). When entering regular expressions following this syntax, you may need to perform additional escaping — refer to [Quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) for details.
 
 To specify complex regular expressions, Cloudflare recommends that you use the Expression Editor and enter your expression using the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax), which needs less escaping.
 

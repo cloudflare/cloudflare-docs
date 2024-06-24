@@ -51,7 +51,7 @@ Log in to your Cloudflare Threat Control panel and allow IP addresses you want t
 
 Why do this?
 
-If Cloudflare has an IP address with a high threat score going to your site, or if you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Allowing traffic according to the above criteria will help prevent future surprises on your site.
 
 {{<Aside type="note">}}
 We allow all known search engine and social media crawlers in our macro
@@ -65,7 +65,7 @@ ___
 
 ## Review your basic security settings
 
-If your site is  frequently the target of spam attacks or botnet attacks, changing your security level to a higher setting will help further reduce the amount of spam you get on your site. We default all users to a medium setting when they first add the domain to Cloudflare.
+If your site is  frequently the target of spam attacks or botnet attacks, changing your security level (deprecated) to a higher setting will help further reduce the amount of spam you get on your site. We default all users to a medium setting when they first add the domain to Cloudflare.
 
 Why do this?
 
