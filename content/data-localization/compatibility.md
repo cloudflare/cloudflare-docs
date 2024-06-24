@@ -76,10 +76,10 @@ The table below provides a summary of the Data Localization Suite product's beha
 | --- | --- | --- | --- |
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
 | Static IP/BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
-| Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Magic Firewall | ⚫️ | ⚫️ | ✅ |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Magic WAN | ⚫️ | ⚫️ | ✅ |
+| Spectrum | ✅ | ✅ | ✅ |
 
 ---
 
