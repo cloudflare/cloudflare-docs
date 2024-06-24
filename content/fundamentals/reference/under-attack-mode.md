@@ -18,10 +18,7 @@ I'm Under Attack mode is disabled by default for your zone.
 
 To put your entire zone in I'm Under Attack mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Security** > **Settings**.
-4. For **I'm under attack mode**, switch the toggle to **On**.
+{{<render file="_under-attack-mode-dash-instructions.md" withParameters="**On**">}}
 
 ### Selectively
 
