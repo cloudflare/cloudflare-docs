@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: ServiceNow
+title: ServiceNow (SAML)
 weight: 10
 ---
 
@@ -10,8 +10,8 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 
 ## Prerequisites
 
-- Admin access to a ServiceNow account.
-- a SAML identity provider configured in Cloudflare Zero Trust
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- Admin access to a ServiceNow account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -32,7 +32,7 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 ## 2. Add the Multiple Provider Single Sign-On Installer Plugin to ServiceNow
 
 1. In ServiceNow, select **All**.
-2. In the search bar, enter `System Applications`, and under **All Available Applications** select **All**.
+2. In the search bar, enter `System Applications`, and under **All Available Applications**, select **All**.
 3. In the search bar, enter `Integration - Multiple Provider Single Sign-On Installer`.
 4. Select **Install**.
 5. Ensure that **Install now** is selected, and select **Install**.

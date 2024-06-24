@@ -23,16 +23,10 @@ ___
 To view metrics for your website:
 
 1. Log in to the Cloudflare dashboard.
-2. Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
-3. Next, select the **Analytics** app icon.
+2. Select the appropriate Cloudflare **account** for your site, then pick the **domain**.
+3. Next, select **Analytics & Logs**.
 
-Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
-
-![Analytics app UI in the Cloudflare dashboard displaying web traffic data](/images/support/hc-dash-analytics-dashboard_overview.png)
-
-Pro, Business, and Enterprise plans, refer to the latest Web Analytics under the Traffic tab.
-
-![Cloudflare Analytics dashboard for Pro, Business, and Enterprise customers showing the Traffic tab](/images/support/hc-dash-analytics-web_traffic.png)
+Once it loads, you can find tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
 ___
 
@@ -64,10 +58,11 @@ and Enterprise plans.
 
 Analytics are based on Cloudflare’s edge logs, with no need for third party scripts or trackers. The Traffic tab features the following metrics:
 
--   **Visits** - A visit is defined as a page view that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views. 
--   **Page views** - A page view is defined as a successful HTTP response with a content-type of HTML. 
--   **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
--   **Data Transfer** - Total HTTP data transferred in requests.
+-  **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
+-  **Data Transfer** - Total HTTP data transferred in requests.
+-  **Page views** - A page view is defined as a successful HTTP response with a content-type of HTML. 
+-  **Visits** - A visit is defined as a page view that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views. 
+- **API Requests** - An HTTP request for API data.
 
 To receive more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 
 

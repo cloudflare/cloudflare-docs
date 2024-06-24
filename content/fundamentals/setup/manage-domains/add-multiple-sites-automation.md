@@ -85,7 +85,7 @@ After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-s
 This tool is a requirement to complete any `Additional options` steps in this tutorial.
 
 ```sh
-  echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
+$ echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 ```
 
 Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.

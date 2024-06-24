@@ -10,10 +10,10 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 
 ## Prerequisites
 
-- a SAML identity provider configured in Cloudflare Zero Trust
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to an Atlassian Cloud account
 - Atlassian Guard Standard subscription
-- A domain verified in Atlassian Cloud
+- A [domain](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/) verified in Atlassian Cloud
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 

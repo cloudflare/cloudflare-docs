@@ -18,12 +18,12 @@
 /content/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
-/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @kodster28 @cloudflare/pcx-technical-writing
-/content/workers-ai/ @rita3ko @pdwittig @kodster28 @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
-/content/workers-ai/tutorials @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
+/content/ai-gateway/ @kathayl @G4brym @mchenco @pdwittig @kodster28 @daisyfaithauma @cloudflare/pcx-technical-writing
+/content/workers-ai/ @rita3ko @pdwittig @kodster28 @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /content/workers-ai/static @mchenco @craigsdennis @kodster28 @cloudflare/pcx-technical-writing
 /content/vectorize/ @elithrar @vy-ton @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/data/changelogs/ai-gateway.yaml @kathayl @G4brym @mchenco @pdwittig @cloudflare/pcx-technical-writing
+/data/changelogs/workers-ai.yaml @kathayl @G4brym @mchenco @pdwittig @kodster28 @daisyfaithauma @cloudflare/pcx-technical-writing
+/data/changelogs/ai-gateway.yaml @kathayl @G4brym @mchenco @pdwittig @kodster28 @daisyfaithauma @cloudflare/pcx-technical-writing
 /data/changelogs/vectorize.yaml @elithrar @pdwittig @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
@@ -60,12 +60,11 @@
 /content/warp-client/ @ranbel @cloudflare/pcx-technical-writing
 
 # Core platform
-/content/byoip/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/byoip/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/china-network/ @pedrosousa @cloudflare/pcx-technical-writing
-/content/cloudflare-for-platforms/ @jason-cf @cloudflare/pcx-technical-writing
 /content/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /content/dns/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
-/content/fundamentals/ @jason-cf @cloudflare/pcx-technical-writing
+/content/fundamentals/ @kodster28 @cloudflare/pcx-technical-writing
 /content/fundamentals/account-and-billing/ @patriciasantaana @cloudflare/pcx-technical-writing
 /content/learning-paths/ @kodster28 @cloudflare/pcx-technical-writing
 /content/network-error-logging/ @dcpena @cloudflare/pcx-technical-writing
@@ -75,7 +74,7 @@
 /content/rules/ @pedrosousa @cloudflare/pcx-technical-writing
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
-# Developer platform
+# Developer Platform
 /content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @Maddy-Cloudflare @cloudflare/pcx-technical-writing
@@ -90,8 +89,8 @@
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @thomasgauvin @rts-rob @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @Maddy-Cloudflare @dcpena @cloudflare/pcx-technical-writing
-/content/queues/ @elithrar @toddmantell @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/data/changelogs/queues.yaml @elithrar @toddmantell @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/content/queues/ @elithrar @toddmantell @maheshwarip @Maddy-Cloudflare @cloudflare/pcx-technical-writing
+/data/changelogs/queues.yaml @elithrar @toddmantell @maheshwarip @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/r2/ @dcpena @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /data/changelogs/r2.yaml @dcpena @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /content/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
@@ -125,7 +124,7 @@
 
 # Magic products
 /content/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
-/content/magic-firewall/ @arges @marciocloudflare @cloudflare/pcx-technical-writing
+/content/magic-firewall/ @arges @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /content/magic-network-monitoring/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-wan/ @marciocloudflare @cloudflare/pcx-technical-writing
 /content/magic-cloud-networking/ @marciocloudflare @cloudflare/pcx-technical-writing
@@ -139,7 +138,7 @@
 /content/automatic-platform-optimization/ @kodster28 @cloudflare/pcx-technical-writing
 /content/cache/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/health-checks/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
-/content/load-balancing/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/load-balancing/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/speed/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/web3/ @kodster28 @cloudflare/pcx-technical-writing

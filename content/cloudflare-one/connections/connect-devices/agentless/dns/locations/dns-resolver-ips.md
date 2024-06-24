@@ -31,12 +31,6 @@ This IPv6 address is how Gateway will match DNS queries to locations and apply t
 
 ## IPv4 address
 
-### DNS resolver IP
-
-For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Zero Trust account.
-
-If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
-
 ### Source IP
 
 Gateway uses the public source IPv4 address of your network to identify your DNS location, apply policies and log DNS requests. Unless you have purchased a [dedicated IPv4 resolver IP](#dns-resolver-ip), you must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
@@ -44,6 +38,14 @@ Gateway uses the public source IPv4 address of your network to identify your DNS
 When creating a DNS location, Zero Trust automatically identifies the source IP address of the network you are on.
 
 If you are on the Enterprise plan, you have the option of manually entering one or more source IP addresses of your choice. This enables you to create Gateway DNS locations even if you are not connecting from any of those networks' IP addresses.
+
+### DNS resolver IP
+
+For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Zero Trust account.
+
+If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
+
+Resolver IP addresses you will only be assigned to the Zero Trust account you request. For more information on requesting dedicated DNS resolver IPv4 addresses, contact your account team.
 
 ## DNS over TLS
 

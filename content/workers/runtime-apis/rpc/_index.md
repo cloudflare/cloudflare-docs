@@ -201,7 +201,7 @@ filename: client.js
 ---
 export default {
   async fetch(request, env) {
-    using foo = await env.MY_SERVICE.foo();
+    using foo = env.MY_SERVICE.foo();
     let baz = await foo.bar.baz();
     return new Response(baz);
   }

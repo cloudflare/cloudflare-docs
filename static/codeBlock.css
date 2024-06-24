@@ -85,7 +85,6 @@
 .CodeBlock-scrolls-horizontally > code {
   word-break: normal;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .CodeBlock-scrolls-horizontally > code {

@@ -85,13 +85,14 @@ Customers with access to [Bot Management](/bots/get-started/bm-subscription/) ca
 
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
 2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
-
     - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
     - **Action**: _Managed Challenge_
 
+For a more comprehensive example of a baseline protection against malicious bots, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection).
+
 For more information about the bot-related fields you can use in expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
-Once you have deployed the Cloudflare Managed Ruleset and a rule based on the attack score you will have achieved substantial protection, limiting the chance of false positives.
+Once you have deployed the Cloudflare Managed Ruleset and rules based on attack score and bot score you will have achieved substantial protection, limiting the chance of false positives.
 
 ## 4. (Optional) Deploy the Cloudflare OWASP Core Ruleset
 

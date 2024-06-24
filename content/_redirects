@@ -89,6 +89,12 @@
 # ai
 /ai/ /use-cases/ai/ 301
 
+# AI Gateway
+
+/ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
@@ -270,6 +276,7 @@
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 /support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
 /support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
+/ddos-protection/change-log/global-changes/ /ddos-protection/change-log/general-updates/ 301
 # Redirect the following pages temporarily (using HTTP 307 Temporary redirect)
 /ddos-protection/dns-protection/rule-settings/ /ddos-protection/dns-protection/ 307
 /ddos-protection/dns-protection/api/ /ddos-protection/dns-protection/ 307

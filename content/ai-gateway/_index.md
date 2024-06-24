@@ -21,13 +21,13 @@ Check out the [Get started guide](/ai-gateway/get-started/) to learn how to conf
 
 ## Features
 
-{{<feature header="Analytics" href="/ai-gateway/get-started/configuring-settings/#analytics" cta="View Analytics">}}
+{{<feature header="Analytics" href="/ai-gateway/observability/analytics/" cta="View Analytics">}}
 
 View metrics such as the number of requests, tokens, and the cost it takes to run your application.
 
 {{</feature>}}
 
-{{<feature header="Real-time logs" href="/ai-gateway/get-started/configuring-settings/#logging" cta="View Real-time logs">}}
+{{<feature header="Real-time logs" href="/ai-gateway/observability/analytics/#logging" cta="View Real-time logs">}}
 
 Gain insight on requests and errors.
 
@@ -39,7 +39,7 @@ Serve requests directly from Cloudflare's cache instead of the original model pr
 
 {{</feature>}}
 
-{{<feature header="Rate limiting" href="/ai-gateway/get-started/configuring-settings/#rate-limiting">}}
+{{<feature header="Rate limiting" href="/ai-gateway/configuration/rate-limiting">}}
 
 Control how your application scales by limiting the number of requests your application receives.
 
