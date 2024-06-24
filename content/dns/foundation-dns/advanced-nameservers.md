@@ -18,13 +18,11 @@ The two groups consist of data centers that are geographically equally distribut
 
 {{<details header="United Kingdom example">}}
 
-{{<table-wrap>}}
 | IPs      | Group   | Data centers |
 |--------- |---------|------------------------------------|
 | `108.162.198.1` | A | London and Edinburgh |
 | `172.64.40.1` | B | Manchester           |
 | `162.159.60.1` | A | London and Edinburgh |
-{{</table-wrap>}}
 
 {{</details>}}
 
