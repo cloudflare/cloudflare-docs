@@ -21,7 +21,7 @@ If you cannot or do not want to install the certificate, you can create [Do Not 
 
 By default, the following traffic routed through Magic WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
 
-- TCP, UDP and ICMP traffic sourced from [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
+- TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
 - TCP and UDP traffic sourced from [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
 Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
