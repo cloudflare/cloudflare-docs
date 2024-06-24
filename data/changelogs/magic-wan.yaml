@@ -6,7 +6,7 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
 - publish_date: '2024-06-23'
-  title: Application based prioritization
+  title: ICMP support for traffic sourced from private IPs
   description: |-
     Magic WAN will now support ICMP traffic sourced from private IPs going to the Internet via Gateway.
 - publish_date: '2024-06-05'
