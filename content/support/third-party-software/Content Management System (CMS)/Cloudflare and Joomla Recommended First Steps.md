@@ -51,7 +51,7 @@ Log in to your Cloudflare Threat Control panel and allow IP addresses you want t
 
 Why do this?
 
-If you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Allowing traffic according to the above criteria will help prevent future surprises on your site.
 
 {{<Aside type="note">}}
 We allow all known search engine and social media crawlers in our macro

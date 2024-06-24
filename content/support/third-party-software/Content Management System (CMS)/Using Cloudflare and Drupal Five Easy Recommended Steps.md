@@ -41,7 +41,7 @@ Allow IP addresses you expect traffic from in the Cloudflare **Firewall** App.
 
 Why do this?
 
-If you have [Cloudflare's Web Application Firewall](https://www.cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have [Cloudflare's Web Application Firewall](https://www.cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Allowing traffic according to the above criteria will help prevent future surprises on your site.
 
 **Note:** We allow all known search engine and social media crawlers in our macro list. If you decide to block countries in Threat Control, please use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that a good crawler gets challenged).
 
