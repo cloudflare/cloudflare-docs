@@ -6,6 +6,12 @@ meta:
   description: Workers plans and pricing information.
 ---
 
+<style>
+  .DocsMarkdown--table-wrap tr > :first-child {
+    word-break: normal;
+  }
+</style>
+
 # Pricing
 
 {{<Aside type="warning">}}
@@ -38,12 +44,13 @@ Users on the Workers Paid plan only have access to the Standard usage model.
 
 Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models.
 
-
+{{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |
 | **Free**    |  100,000 per day                                                    | No charge for duration                                                                    | 10 milliseconds of CPU time per invocation                 |
 | **Standard** |  10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration  | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation                    |
 
+{{</table-wrap>}}
 <sup>1</sup>  Inbound requests to your Worker. Cloudflare does not bill for [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
 ### Example pricing: Standard Usage Model
