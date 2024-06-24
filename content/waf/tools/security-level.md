@@ -7,7 +7,7 @@ title: Security Level
 {{<heading-pill style="deprecated">}}Security Level{{</heading-pill>}}
 
 {{<Aside type="warning" header="Deprecation notice">}}
-Security Level and threat score are deprecated. Cloudflare has implemented several automated mechanisms replacing the existing Security Level logic, which was solely based on IP reputation. These improvements are already live and they are being applied to customer traffic on all plans including Free.
+Security Level and threat score are deprecated. Cloudflare has implemented several automated mechanisms replacing the existing Security Level logic, which was based on IP reputation. These improvements are already live and they are being applied to customer traffic on all plans including Free.
 
 Cloudflare replaced the **Security Level** setting in the dashboard with a toggle for [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/).
 
