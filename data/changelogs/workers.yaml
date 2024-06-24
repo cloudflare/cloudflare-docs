@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-25'
+  description: |-
+    - When you use timers (`Date.now()`, `performance.now()`) in your Worker, the timing information returned now more accurately reflects the time that your Worker's [handler](/workers/runtime-apis/handlers/) is invoked. Refer to the [Performance and timers docs](/workers/runtime-apis/performance/) for more details.
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
