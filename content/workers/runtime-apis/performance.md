@@ -116,7 +116,7 @@ export default {
 
 ### When does time "start" in a Worker?
 
-Consider the following Worker:
+In Workers, the timestamp returned by a timer (ex: `performance.now()`) is "frozen" to the time that the [handler](/workers/runtime-apis/handlers/) of your Worker — in this case `fetch()` — is invoked. For example:
 
 ```js
 import expensiveTopLevelScope from "foo" // Assume this takes 50 milliseconds
@@ -124,17 +124,14 @@ import expensiveTopLevelScope from "foo" // Assume this takes 50 milliseconds
 export default {
   async fetch(request) {
     const start = Date.now();
-    await env.MY_KV.get('bar'); // Assume this takes 20 milliseconds
+    await env.MY_KV.get('bar'); // Assume this takes 2 milliseconds
     const end = Date.now();
     return new Response(`${end - start} milliseconds`);
   },
 };
 ```
 
-In Workers, time "starts" when the top-level (global) scope of the Worker is entered — not when the handler (`fetch()` in this example) is entered.
-
-This means that the first time this Worker is called, it will returns "70 milliseconds" — the timing includes time spent evaluating top-level scope. But on subsequent requests, the top-level scope has already been evaluated, and the Worker returns "20 milliseconds".
-
+The value of `start` reflects the time that the `fetch()` handler was invoked.
 
 ### `performance.now()`
 
