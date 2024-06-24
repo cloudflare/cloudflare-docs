@@ -20,7 +20,7 @@ Cloudflare allows the use of all special characters in claims, except when they 
 
 ```txt
 ---
-header: Claim example
+header: Example
 ---
 Claim: ["&@!#$%^&()-{*}_'+={};:<>?/|.,[]"].user_name["`~'"]
 ```
