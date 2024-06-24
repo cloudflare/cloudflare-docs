@@ -34,8 +34,6 @@ Some regions may not appear on the dropdown because newly announced regions ment
 
 Refer to the table below for the complete list of available regions and their definitions.
 
-{{<table-wrap style="font-size: 87%">}}
-
 | Region | Definition |
 | --- | --- |
 | Australia | Cloudflare will only use data centers that are physically located within Australia to decrypt and service HTTPS traffic. |
@@ -50,7 +48,7 @@ Refer to the table below for the complete list of available regions and their de
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
 | South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
 | Austria | Cloudflare will only use data centers that are physically located within Austria to decrypt and service HTTPS traffic. |
-| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |   
+| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |
 | Cloudflare Green Energy | Cloudflare will only use data centers that are committed to powering their operations with renewable energy. |
 | Exclusive of Hong Kong and Macau | Cloudflare will only use data centers that are NOT physically located within Hong Kong and Macau to decrypt and service HTTPS traffic. |
 | Exclusive of Russia and Belarus | Cloudflare will only use data centers that are NOT physically located within Russia and Belarus to decrypt and service HTTPS traffic. |
@@ -68,8 +66,6 @@ Refer to the table below for the complete list of available regions and their de
 | US State of California | Cloudflare will only use data centers that are physically located within the US State of California to decrypt and service HTTPS traffic. |
 | US State of Florida | Cloudflare will only use data centers that are physically located within the US State of Florida to decrypt and service HTTPS traffic. |
 | US State of Texas | Cloudflare will only use data centers that are physically located within the US State of Texas to decrypt and service HTTPS traffic. |
-
-{{</table-wrap>}}
 
 ## Configure Regional Services via API
 

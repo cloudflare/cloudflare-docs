@@ -19,8 +19,6 @@ This is not an exhaustive list of Cloudflare products and features.
 
 {{</Aside>}}
 
-{{<table-wrap>}}
-
 | Product | Customer zone | SaaS provider zone | Notes |
 | --- | --- | --- | --- |
 | [Access](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/) | Yes | Yes |
@@ -50,5 +48,3 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Websockets](/network/websockets/) | No | No |
 | [Workers](/workers/) | Yes* | Yes | Similar to Page Rules, Workers that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
 | [Zaraz](/zaraz/) | Yes | No |
-
-{{</table-wrap>}}

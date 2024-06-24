@@ -11,16 +11,12 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 
 ## Supported parameters
 
-{{<table-wrap>}}
-
 | Field | Required? | Description | Default |
 | --- | --- | --- | --- |
 | `name` | Yes | Query name. | - |
 | `type` | No | Query type (either a [numeric value or text](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4)). | `A` |
 | `do` | No | `DO` bit - whether the client wants DNSSEC data (either empty or one of `0`, `false`, `1`, or `true`).| `false` |
 | `cd` | No | `CD` bit - disable validation (either empty or one of `0`, `false`, `1`, or `true`). | `false` |
-
-{{</table-wrap>}}
 
 ## Examples
 
@@ -72,8 +68,6 @@ The following tables have more information on each response field.
 
 ### Successful response
 
-{{<table-wrap>}}
-
 | Field | Description |
 | --- | --- |
 | `Status` | The Response Code of the DNS Query. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6. |
@@ -98,14 +92,8 @@ The following tables have more information on each response field.
 | `Additional: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
 | `Comment` | List of EDE messages. Refer to [Extended DNS error codes](/1.1.1.1/infrastructure/extended-dns-error-codes/) for more information.
 
-{{</table-wrap>}}
-
 ### Error response
-
-{{<table-wrap>}}
 
 | Field | Description |
 | --- | --- |
 | `error` | An explanation of the error that occurred. |
-
-{{</table-wrap>}}
