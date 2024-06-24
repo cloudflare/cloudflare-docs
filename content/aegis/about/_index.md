@@ -3,7 +3,7 @@ title: How it works
 pcx_content_type: concept
 weight: 1
 meta:
-  title: About Cloudflare Aegis
+  title: How Aegis works
 ---
 
 # How Cloudflare Aegis works

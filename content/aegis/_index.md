@@ -2,8 +2,6 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-meta:
-  title: Aegis - dedicated egress IPs
 ---
 
 # Cloudflare Aegis
