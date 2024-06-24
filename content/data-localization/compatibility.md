@@ -40,7 +40,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
-| Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} |
+| Advanced DDoS Protection | ✅ | ✅ | ✅ |
 | API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} |
 | Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} |
 | DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
@@ -107,7 +107,6 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnsection>}}
 {{<fnentry num="1">}}Logs / Analytics not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="2">}}Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.{{</fnentry>}}
-{{<fnentry num="3">}}Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.{{</fnentry>}}
 {{<fnentry num="4">}}API shield will not yet work with Customer Metadata Boundary enabled outside of US region.{{</fnentry>}}
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
 {{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
