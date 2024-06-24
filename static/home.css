@@ -3092,6 +3092,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     overflow-x: auto;
 }
 
+/* Stop display: block applying to table-wrap shortcode */
+.DocsMarkdown--table-wrap table {
+    display: table;
+}
+
 .DocsMarkdown th {
     word-break: normal;
     vertical-align: bottom;
