@@ -16,6 +16,15 @@ Enabling API Shield features will have no impact on your traffic until you choos
 
 {{<render file="_session-identifiers.md">}}
 
+Cloudflare allows the use of all special characters in claims, except when they are not enclosed within `["..."]`. The backslash (`/`) should be doubled to prevent an error message indicating incorrect formatting, otherwise the client can add any format.
+
+```txt
+---
+header: Claim example
+---
+Claim: ["&@!#$%^&()-{*}_'+={};:<>?/|.,[]"].user_name["`~'"]
+```
+
 ### To set up session identifiers
 
 {{<render file="_set-up-session-identifiers.md">}}
