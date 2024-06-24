@@ -64,7 +64,7 @@ interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 		let reqUrl = url.searchParams.get("url") || 'https://example.com';
 		reqUrl = new URL(reqUrl).toString(); // normalize

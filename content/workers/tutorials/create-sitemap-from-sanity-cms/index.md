@@ -156,7 +156,7 @@ import { Sitemap } from './Sitemap';
 export default {
 	// The fetch handler is invoked when this worker receives an HTTPS request
 	// and should return a Response (optionally wrapped in a Promise).
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request, env, ctx): Promise<Response> {
 		const url = new URL(request.url);
 
 		// You can get pretty far with simple logic like if/switch-statements.
@@ -171,7 +171,7 @@ export default {
 			{ headers: { 'Content-Type': 'text/html' } }
 		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 You do not need to modify anything in this file after pasting the above code.

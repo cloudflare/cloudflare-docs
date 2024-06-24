@@ -44,9 +44,9 @@ async function makeRequest(env: Env, id: DurableObjectId) {
 
 export default {
   async fetch(
-    req: Request,
-    env: Env,
-    ctx: ExecutionContext
+    req,
+    env,
+    ctx
   ): Promise<Response> {
     let userId = new URL(req.url).searchParams.get("userId") || "";
     const id = env.ErrorThrowingObject.idFromName(userId);
@@ -65,7 +65,7 @@ export default {
       }
     }
   },
-};
+} satisfies ExportedHandler<Env>;
 
 export class ErrorThrowingObject implements DurableObject {
   constructor(state: DurableObjectState, env: Env) {
