@@ -70,4 +70,26 @@ If your information does not fit within the [guidelines](#guidelines), consider 
 
 As stated in the [guidelines](#guidelines), we generally avoid large tables in our documentations.
 
-However, if you have a unique use case, wrap your table in the `{{<table-wrap>}}` shortcode to make it responsive and scrollable.
+However, if you have a unique use case, use the `{{</*table-wrap*/>}}` shortcode to make your table responsive and scrollable.
+
+{{<table-wrap>}}
+
+| Header 1 | Header 2 | Header 3 | Header 4 |
+| --- | --- | --- | --- |
+| test | test | test | test |
+
+{{</table-wrap>}}
+
+```txt
+---
+header: table-wrap example
+---
+
+{{</*table-wrap*/>}}
+
+| Header 1 | Header 2 | Header 3 | Header 4 |
+| --- | --- | --- | --- |
+| test | test | test | test |
+
+{{</*/table-wrap*/>}}
+```
