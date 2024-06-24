@@ -3,13 +3,13 @@ pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
 title: General
 meta:
-    title: General troubleshooting | Page Rules (deprecated)
+    title: General troubleshooting | Page Rules (legacy)
 weight: 6
 ---
 
 # General troubleshooting
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ## Why is a page rule not working?
 

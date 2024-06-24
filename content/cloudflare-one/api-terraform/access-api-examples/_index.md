@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx_content_type: configuration
+pcx_content_type: example
 title: Access API examples
 weight: 1
 layout: wide

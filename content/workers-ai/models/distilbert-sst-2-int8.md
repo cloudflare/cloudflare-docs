@@ -8,9 +8,7 @@ model:
     id: "19606750-23ed-4371-aab2-c20349b53a60"
     name: "Text Classification"
     description: "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
-  tags:
-    - "huggingface"
-    - "text-classification"
+  tags: []
   properties:
     - property_id: "beta"
       value: "false"
@@ -22,7 +20,7 @@ layout: "model"
 weight: 100
 title: "distilbert-sst-2-int8"
 json_schema:
-  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
+  input: "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
   output: "{\n  \"type\": \"array\",\n  \"contentType\": \"application/json\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"score\": {\n        \"type\": \"number\"\n      },\n      \"label\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
 
 ---

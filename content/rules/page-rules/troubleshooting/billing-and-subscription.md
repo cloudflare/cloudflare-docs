@@ -3,16 +3,16 @@ pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
 title: Billing and subscription
 meta:
-    title: Billing and subscription FAQ | Page Rules (deprecated)
+    title: Billing and subscription FAQ | Page Rules (legacy)
 ---
 
 # Billing and subscription FAQ
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ## If I run out of Page Rules, can I buy more?
 
-No, you cannot buy additional Page Rules since they are deprecated. You will need to [migrate to modern Rules features](/rules/reference/page-rules-migration/) to benefit from increased quotas.
+No, you cannot buy additional Page Rules since they are a legacy product. You will need to [migrate to modern Rules features](/rules/reference/page-rules-migration/) to benefit from increased quotas.
 
 ## How do I cancel my Page Rules purchase?
 

@@ -1,5 +1,5 @@
 ---
-title: Origin steering policies
+title: Endpoint steering policies
 pcx_content_type: learning-unit
 weight: 3
 layout: learning-unit

@@ -29,7 +29,9 @@ Therefore, if you add caching to your [custom domain](/pages/configuration/custo
 
 In addition, adding caching to your custom domain may cause issues with [Pages redirects](/pages/configuration/redirects/) or [Pages functions](/pages/functions/). These issues can occur because the cached response might get served to your end user before Pages can act on the request.
 
-However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their file names. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or Functions.
+However, there are some situations where [Cache Rules](/cache/how-to/cache-rules/) on your custom domain does make sense. For example, you may have easily cacheable locations for immutable assets, such as CSS or JS files with content hashes in their file names. Custom caching can help in this case, speeding up the user experience until the file (and associated filename) changes. Just make sure that your caching does not interfere with any redirects or Functions. 
+
+Please note that tiered caching is not supported for custom domains on Pages. 
 
 {{<Aside type="note" header="Purging the cache">}}
 

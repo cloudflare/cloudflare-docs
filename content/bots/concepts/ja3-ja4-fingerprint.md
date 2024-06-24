@@ -19,30 +19,54 @@ JA3 and JA4 fingerprints are only available to Enterprise customers who have pur
 ---
 header: Sample output
 ---
- "botManagement": {
-    "jsDetection": {
-      "passed": false
-    },
-    "ja4Signals": {
-      "h2h3_ratio_1h": 0.98670762777328,
-      "heuristic_ratio_1h": 0,
-      "reqs_quantile_1h": 0.99785631895065,
-      "uas_rank_1h": 1030,
-      "browser_ratio_1h": 0.95027899742126,
-      "paths_rank_1h": 699,
-      "reqs_rank_1h": 1156,
-      "cache_ratio_1h": 0.38930341601372,
-      "ips_rank_1h": 730,
-      "ips_quantile_1h": 0.99864625930786
-    },
-    "staticResource": false,
-    "corporateProxy": false,
-    "ja4": "t13d1512h2_8daaf6152771_ef7df7f74e48",
-    "verifiedBot": false,
-    "ja3Hash": "25b4882c2bcb50cd6b469ff28c596742",
-    "score": 99,
-    "detectionIds": {}
+{
+  "ja4Signals": {
+    "h2h3_ratio_1h": 0.98826485872269,
+    "heuristic_ratio_1h": 7.288895722013e-05,
+    "reqs_quantile_1h": 0.99905741214752,
+    "uas_rank_1h": 901,
+    "browser_ratio_1h": 0.93640440702438,
+    "paths_rank_1h": 655,
+    "reqs_rank_1h": 850,
+    "cache_ratio_1h": 0.18918327987194,
+    "ips_rank_1h": 662,
+    "ips_quantile_1h": 0.99926590919495
   },
+  "jaSignalsParsed": {
+    "ratios": {
+      "h2h3_ratio_1h": 0.98826485872269,
+      "heuristic_ratio_1h": 7.288895722013e-05,
+      "browser_ratio_1h": 0.93640440702438,
+      "cache_ratio_1h": 0.18918327987194
+    },
+    "ranks": {
+      "uas_rank_1h": 901,
+      "paths_rank_1h": 655,
+      "reqs_rank_1h": 850,
+      "ips_rank_1h": 662
+    },
+    "quantiles": {
+      "reqs_quantile_1h": 0.99905741214752,
+      "ips_quantile_1h": 0.99926590919495
+    }
+  }
+}
+```
+
+When JA4 Signals are missing, the output appears as follows:
+
+```json
+---
+header: Missing JA4 signals output
+---
+{
+  "ja4Signals": {},
+  "jaSignalsParsed": {
+    "ratios": {},
+    "ranks": {},
+    "quantiles": {}
+  }
+}
 ```
 
 {{<Aside type="note">}}

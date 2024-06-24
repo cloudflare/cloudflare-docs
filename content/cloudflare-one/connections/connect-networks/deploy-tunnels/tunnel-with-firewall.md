@@ -20,7 +20,7 @@ The parameters below can be configured for egress traffic inside of a firewall.
 | Domain | IPv4 | IPv6 | Port    | Protocols |
 | ----------- | -----| -----|-------- | --------- |
 | `region1.v2.argotunnel.com` | `198.41.192.167`<br> `198.41.192.67`<br> `198.41.192.57`<br> `198.41.192.107`<br> `198.41.192.27`<br> `198.41.192.7`<br> `198.41.192.227`<br> `198.41.192.47`<br> `198.41.192.37`<br> `198.41.192.77` |`2606:4700:a0::1`<br> `2606:4700:a0::2`<br> `2606:4700:a0::3`<br> `2606:4700:a0::4`<br> `2606:4700:a0::5`<br> `2606:4700:a0::6`<br> `2606:4700:a0::7`<br> `2606:4700:a0::8`<br> `2606:4700:a0::9`<br> `2606:4700:a0::10` | 7844 | TCP/UDP (`http2`/`quic`) |
-| `region2.v2.argotunnel.com` | `198.41.200.13`<br> `198.41.200.193`<br> `198.41.200.3`<br> `198.41.200.233`<br> `198.41.200.53`<br> `198.41.200.63`<br> `198.41.200.113`<br> `198.41.200.73`<br> `198.41.200.43`<br> `198.41.200.23`|`2606:4700:a8::1`<br> `2606:4700:a8::2`<br> `2606:4700:a8::3`<br> `2606:4700:a8::4`<br> `2606:4700:a8::5`<br> `2606:4700:a8::6`<br> `2606:4700:a8::7`<br> `2606:4700:a8::8`<br> `2606:4700:a8::9`<br> `2606:4700:a8::10`| 7844 | TCP/UDP (`http2`/`quic`) |
+| `region2.v2.argotunnel.com` | `198.41.200.13`<br> `198.41.200.193`<br> `198.41.200.33`<br> `198.41.200.233`<br> `198.41.200.53`<br> `198.41.200.63`<br> `198.41.200.113`<br> `198.41.200.73`<br> `198.41.200.43`<br> `198.41.200.23`|`2606:4700:a8::1`<br> `2606:4700:a8::2`<br> `2606:4700:a8::3`<br> `2606:4700:a8::4`<br> `2606:4700:a8::5`<br> `2606:4700:a8::6`<br> `2606:4700:a8::7`<br> `2606:4700:a8::8`<br> `2606:4700:a8::9`<br> `2606:4700:a8::10`| 7844 | TCP/UDP (`http2`/`quic`) |
 | `cftunnel.com`<sup>1</sup> | Not applicable | Not applicable  | 7844 | TCP/UDP (`http2`/`quic`) |
 | `h2.cftunnel.com`<sup>1</sup> | Not applicable  | Not applicable | 7844 | TCP (`http2`) |
 | `quic.cftunnel.com`<sup>1</sup> | Not applicable |Not applicable |7844 | UDP (`quic`) |
@@ -49,11 +49,11 @@ Opening port 443 enables some optional features. Failure to allow these connecti
 
 ### Cloud VM firewall
 
-If you host your services on a Virtual Machine (VM) instance by a Cloud provider such as Google Cloud Platform (GCP), you may set up instance-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, on GCP, you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall defaults to “Block” unless a rule explicitly allows certain traffic.
+If you host your services on a virtual machine (VM) instance in a cloud provider, you may set up instance-level firewall rules to block all ingress traffic and allow only egress traffic. For example, on Google Cloud Platform (GCP), you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall denies ingress traffic unless it matches an explicit rule.
 
 ### OS firewall
 
-Alternatively, you may also use operating system (OS)-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, if your server runs on Linux, you may use `iptables` to set up firewall rules. Most Linux distributions are pre-installed with `iptables`. Note that in the example below, not all ingress traffic is blocked, just in case that the server is hosted on the Cloud and there would be no way to SSH back into the system again if the settings were configured wrongly.
+Alternatively, you may use operating system (OS)-level firewall rules to block all ingress traffic and allow only egress traffic. For example, if your server runs on Linux, you may use `iptables` to set up firewall rules:
 
 1. Check your current firewall rules.
 
@@ -61,35 +61,36 @@ Alternatively, you may also use operating system (OS)-level firewall rules to di
     $ sudo iptables -L
     ```
 
-1. Allow `localhost` to communicate with itself.
+2. Allow `localhost` to communicate with itself.
 
     ```sh
     $ sudo iptables -A INPUT -i lo -j ACCEPT
     ```
 
-1. Allow already established connection and related traffic.
+3. Allow already established connection and related traffic.
 
     ```sh
     $ sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
     ```
 
-1. Allow new SSH connections.
+4. Allow new SSH connections.
 
     ```sh
     $ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
     ```
 
-1. Drop all other ingress traffic.
 
-    {{<Aside type="warning" header="Warning">}}
+
+5. Drop all other ingress traffic.
+{{<Aside type="warning" header="Warning">}}
 Be very careful with the following command. If you did not preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
-    {{</Aside>}}
+{{</Aside>}}
 
     ```sh
     $ sudo iptables -A INPUT -j DROP
     ```
 
-1. After setting the firewall rules, use this command to check the current `iptables` settings:
+6. After setting the firewall rules, use this command to check the current `iptables` settings:
 
     ```sh
     $ sudo iptables -L
@@ -97,9 +98,7 @@ Be very careful with the following command. If you did not preserve the current 
 
 Run your tunnel and check that all configured services are still accessible to the outside world via the tunnel, but not via the external IP address of the server.
 
-You can also:
-
-- [Secure your application with Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/)
+You can also [secure your application with Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/).
 
 ## Test connectivity
 

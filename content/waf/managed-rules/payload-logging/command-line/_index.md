@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Command-line operations
-weight: 5
+weight: 6
 ---
 
 # Command-line operations

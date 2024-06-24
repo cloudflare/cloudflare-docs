@@ -1,17 +1,17 @@
 ---
 pcx_content_type: concept
-title: Origin pools
+title: Pools
 weight: 4
 ---
 
-# Origin pools
+# Pools
 
-{{<glossary-definition term_id="origin pool">}}
+{{<glossary-definition term_id="pool">}}
 
-{{<Aside type="note">}}
+For more details about how endpoints and pools become unhealthy, refer to [Endpoint and pool health](/load-balancing/understand-basics/health-details/).
 
-For an overview of how the Cloudflare Load Balancing solution works, refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
-
+{{<Aside type="warning">}}
+{{<render file="_endpoints-introduction-callout.md">}}
 {{</Aside>}}
 
 ---
@@ -28,7 +28,7 @@ For step-by-step guidance, refer to [Create pools](/load-balancing/pools/create-
 
 ---
 
-## Per origin Host header override
+## Per-endpoint Host header override
 
 When your application needs specialized routing (`CNAME` setup or custom hosts like Heroku), change the `Host` header used in health monitor requests. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 

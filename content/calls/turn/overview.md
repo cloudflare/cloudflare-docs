@@ -29,8 +29,11 @@ To learn more about the architecture that makes this possible, read this [techni
 
 ## IP Addresses
 
-Communication between TURN clients and the TURN server (as defined in [RFC5766](https://datatracker.ietf.org/doc/html/rfc5766)) which is the traffic that needs to traverse restrictive network environments, is done over a very small set of IPv6 and IPv4 addresses. If you are making adjustments to your firewalls to allow Calls TURN traffic, you must query `turn.cloudflare.com` (A and AAAA records) regularly and allowlist the resulting IP address(es). For static IPs and guarantees, please discuss with a your enterprise account team.
+### Traverse restrictive network environments and IP allowlists (whitelists)
 
+Please allowlist Cloudflare's published [IP address ranges](https://www.cloudflare.com/ips/), both IPv4 and IPv6. Cloudflare's TURN service will use an IP address from this list. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
+
+### Relay allocation IP addresses
 TURN server relay allocations are done using a larger set of [IP address ranges](https://www.cloudflare.com/ips/). Calls relay allocations will be in the 9024-65535 port range.
 
 ## Protocols and Ciphers for TURN over TLS
@@ -57,8 +60,8 @@ There is no specific MTU limit for Cloudflare Calls TURN service.
 
 Cloudflare Calls TURN service places limits on:
 
-- Unique IP address you can communicate with
-- Packet rate outbound and inbound to the relay allocation
-- Data rate outbound and inbound to the relay allocation
+- Unique IP address you can communicate with per relay allocation (>5 new IP/sec)
+- Packet rate outbound and inbound to the relay allocation (>5-10 kpps)
+- Data rate outbound and inbound to the relay allocation (>50-100 Mbps)
 
-These limits are set quite high and suitable for high-demand applications and includes burst rates. Hitting these limits will result in packet drops.
+These limits are suitable for high-demand applications and also have burst rates higher than those documented above. Hitting these limits will result in packet drops.

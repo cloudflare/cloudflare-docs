@@ -6,14 +6,14 @@ weight: 5
 
 # Connect to DocuSign through Access
 
-This guide covers how to protect your DocuSign account with Access for SaaS.
+This guide covers how to configure [Docusign](https://support.docusign.com/s/document-item?language=en_US&bundleId=rrf1583359212854&topicId=ozd1583359139126.html&_LANG=enus) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
-- A domain you own.
-- See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
-- A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- Admin access to a Docusign account that has Single Sign-On available
+- A [domain](https://support.docusign.com/s/document-item?language=en_US&bundleId=rrf1583359212854&topicId=gso1583359141256.html&_LANG=enus) verified in Docusign
+
 
 ## 1. Create the Access for SaaS application
 

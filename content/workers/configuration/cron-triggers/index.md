@@ -155,9 +155,11 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 2. Go to **Workers & Pages**, and select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
-### Via `wrangler.toml`
+{{<Aside type="note">}}
 
-To disable a Cron Trigger on a deployed Worker, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
+You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+
+{{</Aside>}}
 
 ## Limits
 

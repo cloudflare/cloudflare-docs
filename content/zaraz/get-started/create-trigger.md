@@ -8,6 +8,8 @@ weight: 2
 
 Triggers define the conditions under which a tool will start an action. Since a tool must have actions in order to work, and actions must have triggers, it is important to set up your website's triggers correctly. A trigger can be made out of one or more Rules. Zaraz supports [multiple types of Trigger Rules](/zaraz/reference/triggers/).
 
+To create a trigger, first [add a third-party tool](/zaraz/get-started/add-tool/). If you have already added a third-party tool, follow these steps to create a triger.
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Zaraz** > **Tools Configuration**.
 3. Select the **Triggers** tab.

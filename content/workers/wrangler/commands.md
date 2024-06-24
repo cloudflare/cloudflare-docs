@@ -2655,7 +2655,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```sh
+```txt
 wrangler types [<PATH>] [OPTIONS]
 ```
 

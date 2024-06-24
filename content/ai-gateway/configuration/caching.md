@@ -47,6 +47,8 @@ To set the default caching configuration using the API:
 
 This caching behavior will be uniformly applied to all requests that support caching. If you need to modify the cache settings for specific requests, you have the flexibility to override this setting on a per-request basis.
 
+To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`. 
+
 ## Per-request caching
 
 In order to override the default cache behavior defined on the settings tab, you can, on a per-request basis, set headers for the following options:
@@ -64,7 +66,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request skipping the cache
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
   --header 'cf-skip-cache: true' \
@@ -82,7 +84,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/cha
 
 ### Cache TTL (cf-cache-ttl)
 
-Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in seconds.
+Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and requires refreshing from the original source. You can use **cf-cache-ttl** to set the desired caching duration in milliseconds.
 
 For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a more recent response, and that response will repopulate the cache for the next hour.
 
@@ -93,10 +95,10 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 header: Request to be cached for an hour
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer $TOKEN' \
   --header 'Content-Type: application/json' \
-  --header 'cf-cache-ttl: 3600' \
+  --header 'cf-cache-ttl: 3600000' \
   --data ' {
    		 "model": "gpt-3.5-turbo",
    		 "messages": [

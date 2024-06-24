@@ -8,7 +8,7 @@ languages:
   - JavaScript
   - TypeScript
   - Python
-pcx_content_type: configuration
+pcx_content_type: example
 title: 103 Early Hints
 weight: 1001
 layout: example
@@ -21,12 +21,6 @@ To ensure Early Hints are enabled on your zone:
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
-
-{{<Aside type="note">}}
-
-Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view up-to-date information on which browsers support Early Hints, refer to [caniuse.com](https://caniuse.com/mdn-http_status_103).
-
-{{</Aside>}}
 
 You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 

@@ -8,7 +8,7 @@ meta:
 
 # Custom metadata
 
-You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules (deprecated) or Rate Limiting, which have a maximum of 125 rules each.
+You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules (legacy) or Rate Limiting, which have a maximum of 125 rules each.
 
 To do this, you will first need to reach out to your account team to enable access to Custom Metadata. After configuring custom metadata, you can use it in the following ways:
 

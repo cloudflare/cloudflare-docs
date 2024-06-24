@@ -11,7 +11,7 @@ languages:
   - Python
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Sign requests
 weight: 1001
 layout: example

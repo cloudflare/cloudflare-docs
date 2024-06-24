@@ -34,7 +34,7 @@ If you do not have your password stored, you will need to select **Forgot your p
 
 You will end up with a connection string resembling the below:
 
-```sh
+```txt
 postgres://tsdbadmin:YOUR_PASSWORD_HERE@pn79dztyy0.xzhhbfensb.tsdb.cloud.timescale.com:31358/tsdb
 ```
 
