@@ -26,7 +26,7 @@ Page Shield helps manage resources loaded by your website visitors — including
 Displays information about loaded scripts in your domain's pages and the connections they make.
 {{</feature>}}
 
-{{<feature header="Page attribution" href="/page-shield/detection/monitor-connections-scripts/#view-script-or-connection-details" cta="Find resource occurrences">}}
+{{<feature header="Page attribution" href="/page-shield/detection/monitor-connections-scripts/#view-details" cta="Find resource occurrences">}}
 Find in which page a resource first appeared, and view a list of the latest occurrences of the resource in your pages.
 {{</feature>}}
 
