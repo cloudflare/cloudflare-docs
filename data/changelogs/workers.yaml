@@ -5,6 +5,11 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-24'
+  description: |-
+    - Added the community contributed tutorial [Create a sitemap from Sanity CMS with Workers](/workers/tutorials/create-sitemap-from-sanity-cms/) as part of the Developer Spotlight program.
+    - Added the community contributed tutorial [Send form submissions using Astro and Resend](/workers/tutorials/handle-form-submission-with-astro-resend/) as part of the Developer Spotlight program.
+    - Added the community contributed tutorial [Custom access control for files in R2 using D1 and Workers](/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/) as part of the Developer Spotlight program.
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
