@@ -30,7 +30,7 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 ## Block AI bots
 
 {{<render file="_ai-bots-definition.md" >}}
-<br>
+
 {{<render file="_block-ai-bots-enable.md" withParameters="Super Bot Fight Mode">}}
 
 {{<Aside type="note">}}
