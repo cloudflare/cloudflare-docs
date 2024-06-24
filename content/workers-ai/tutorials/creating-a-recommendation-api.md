@@ -1,15 +1,23 @@
 ---
-updated: 2024-06-15
+updated: 2024-06-24
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Recommend products on e-commerce sites using Workers AI and Stripe
 weight: 2
+spotlight:
+  author: Hidetaka Okamoto
+  author_bio_link: https://www.linkedin.com/in/hideokamoto/
+  author_bio_source: LinkedIn
 tags:
   - AI
 ---
 
 # Recommend products on e-commerce sites using Workers AI and Stripe
+
+{{<tutorial-date-info>}}
+
+{{<spotlight-author>}}
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
