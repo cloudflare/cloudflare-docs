@@ -66,10 +66,11 @@ Examples:
 ### For "bash" blocks
 
 Blocks containing **Linux/macOS/generic** commands:
-- Do not use a prefix for multi-line commands, so that the user can run the command immediately after copying and pasting without having to remove the `$` prefix.
+- If a code block contains only one (multi-line) command, do not include a `$` prefix so that the user can run the command immediately after copying and pasting without having to remove the prefix.
+- If a code block includes several commands or it includes output, consider including a prefix before each command to help differentiate between commands and their output. Use the same prefixes as described for `sh` blocks.
 
 Blocks containing **zsh** commands:
-- You can optionally include a `%` prefix, but it is not recommended, since it will also get copied to the clipboard along with the command.
+- You can optionally include a `%` prefix, but for single line commands it is not recommended since it will also get copied to the clipboard along with the command.
 
 ### For "powershell" blocks
 
