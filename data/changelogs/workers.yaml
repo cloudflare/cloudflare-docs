@@ -7,7 +7,10 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2024-06-25'
   description: |-
-    - When you use timers (`Date.now()`, `performance.now()`) in your Worker, the timing information returned now more accurately reflects the time that your Worker's [handler](/workers/runtime-apis/handlers/) is invoked. Refer to the [Performance and timers docs](/workers/runtime-apis/performance/) for more details.
+    - When you use timers (`Date.now()`, `performance.now()`) in your Worker, the timing information returned now more accurately reflects the time that your Worker's [handler](/workers/runtime-apis/handlers/) is invoked.
+    - Previously, the timestamp returned by timers was "frozen" to when the top-level (global) scope of the Worker is entered. This made measuring the timing of I/O inaccurate, as the [startup time](/workers/platform/limits/#worker-startup-time) of your Worker was included in any attempt to measure the first I/O of an invocation of your Worker.
+    - With this change, the timestamp returned by a timer (ex: `performance.now()`) is "frozen" to the time that the [handler](/workers/runtime-apis/handlers/) of your Worker is invoked.
+    - Refer to the [Performance and timers docs](/workers/runtime-apis/performance/) for more details.
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
