@@ -40,7 +40,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
-| Advanced DDoS Protection | ✅ | ✅ | 🚧{{<fnref num="3">}} |
+| Advanced DDoS Protection | ✅ | ✅ | ✅ |
 | API Shield | ✅ | ✅ | ✘{{<fnref num="4">}} |
 | Bot Management | ✅ | ✅ | 🚧{{<fnref num="5">}} |
 | DNS Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
