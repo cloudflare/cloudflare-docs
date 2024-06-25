@@ -274,7 +274,7 @@ const platform = await getPlatformProxy(options);
 
           If no path is specified the default behavior consists in a search from the current directory up the filesystem for a `wrangler.toml` to use.
 
-          **Note:** this field is optional but if a path is specified such path must point to a valid file on the filesystem.
+          **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
         * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
 
