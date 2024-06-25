@@ -32,7 +32,7 @@ fetch('https://api.cloudflare.com/client/v4/workers-ai/model/run', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_TOKEN'
+    'Authorization': 'Bearer <YOUR_API_TOKEN>'
   },
   body: JSON.stringify({ /* your payload */ })
 })
