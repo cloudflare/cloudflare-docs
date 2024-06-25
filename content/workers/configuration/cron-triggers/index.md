@@ -64,8 +64,6 @@ To add Cron Triggers in the Cloudflare dashboard:
 
 Cloudflare supports cron expressions with five fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
 
-{{<table-wrap>}}
-
 | Field         | Values                                                             | Characters   |
 | ------------- | ------------------------------------------------------------------ | ------------ |
 | Minute        | 0-59                                                               | \* , - /     |
@@ -73,8 +71,6 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 | Days of Month | 1-31                                                               | \* , - / L W |
 | Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /     |
 | Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L # |
-
-{{</table-wrap>}}
 
 ### Examples
 
