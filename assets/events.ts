@@ -109,7 +109,9 @@ function $tab(ev: MouseEvent) {
     .closest("[data-link]")
     ?.getAttribute("data-link");
 
-  const linkElement = document.querySelector<HTMLElement>(`#${link}-${tabBlockId}`);
+  // escape ID for use in querySelector
+  const tabID = CSS.escape(`${link}-${tabBlockId}`);
+  const linkElement = document.querySelector<HTMLElement>(`#${tabID}`);
   if(linkElement){
     linkElement.style.display = "block";
   }
