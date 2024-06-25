@@ -24,7 +24,7 @@ Configure [static routes](/magic-transit/how-to/configure-static-routes/) to rou
 
 ## 4. Run pre-flight checks
 
-After setting up your tunnels and static routes, Cloudflare validates tunnel connectivity, tunnel and endpoint [health checks](/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks), {{<glossary-tooltip term_id="letter of agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}, Internet Routing Registry (IRR), and {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS) configurations{{</glossary-tooltip>}}. Configurations for Cloudflare global network is applied and takes around one day to rollout.
+After setting up your tunnels and static routes, Cloudflare validates tunnel connectivity, tunnel and endpoint [health checks](/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks), {{<glossary-tooltip term_id="letter of agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}, Internet Routing Registry (IRR), and {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS) configurations{{</glossary-tooltip>}}. Configurations for Cloudflare global network are applied and take around one day to rollout.
 
 ## 5. Advertise prefixes
 
@@ -41,6 +41,6 @@ When using [Cloudflare Network Interconnect](/magic-transit/network-interconnect
 - GRE tunnels over Classic CNI: 1332 bytes
 - Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
 
-These are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
+MSS clamps are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
 
 {{</Aside>}}
