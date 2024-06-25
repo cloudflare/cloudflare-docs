@@ -97,7 +97,7 @@ Resolve Override            | Origin Rules                         | [Migrate Re
 Respect Strong ETags        | Cache Rules                          | [Migrate Respect Strong ETags](#migrate-respect-strong-etags)
 Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
-Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
+Security Level (I'm Under Attack) | Configuration Rules            | [Migrate Security Level](#migrate-security-level)
 True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
 Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
@@ -1425,14 +1425,14 @@ Page Rules configuration | Migrate to a configuration rule
 {{</tab>}}
 {{</tabs>}}
 
-### Migrate Security Level
+### Migrate Security Level (I'm Under Attack) { #migrate-security-level }
 
 {{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
 **Context:**
 
-You configured a Page Rule setting Security Level (deprecated) to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule turning on I'm Under Attack mode for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: _Security Level_
@@ -1451,8 +1451,8 @@ You configured a Page Rule setting Security Level (deprecated) to _I'm Under Att
             `(http.host contains "example.com")`
 
     - **Then the settings are**:
-        - **Setting**: Security Level
-            - **Select Security Level**: _I'm Under Attack_
+        - **Setting**: I'm Under Attack
+            - **Value**: On
 
     </div>
 

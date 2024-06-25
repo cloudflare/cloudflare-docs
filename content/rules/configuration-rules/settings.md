@@ -329,26 +329,17 @@ header: API configuration example
 
 {{</details>}}
 
-{{<heading-pill style="deprecated" heading="h2">}}Security Level{{</heading-pill>}}
+## I'm Under Attack
 
-[Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
+When [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) is turned on, visitors will receive an interstitial page while Cloudflare analyzes their traffic and behavior to make sure they are a legitimate human visitor trying to access your website. You should only use this mode if your website is under a DDoS attack.
 
-Use this setting to select the security level for matching requests:
-
-- Off
-- I'm Under Attack
-- Essentially Off _(deprecated value)_
-- Low _(deprecated value)_
-- Medium _(deprecated value)_
-- High _(deprecated value)_
-
-Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
+Use this setting to turn on or off I'm Under Attack mode.
 
 {{<details header="API information">}}
 
 API configuration property name: `"security_level"` (string).
 
-API values: `"off"`, `"under_attack"`, `"essentially_off"` (deprecated), `"low"` (deprecated), `"medium"` (deprecated), `"high"` (deprecated).
+API values: `"off"`, `"under_attack"`.
 
 ```json
 ---
