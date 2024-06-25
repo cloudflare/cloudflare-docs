@@ -208,5 +208,5 @@ A validation error is indicated by having the `success` property set to `false`.
 | `invalid-widget-id` | The widget ID extracted from the parsed site secret key was invalid or did not exist. |
 | `invalid-parsed-secret` | The secret extracted from the parsed site secret key was invalid. |
 | `bad-request` | The request was rejected because it was malformed. |
-| `timeout-or-duplicate` | The response parameter has already been validated before. This means that the token was issued five minutes ago and is no longer valid, or it was already redeemed. |
+| `timeout-or-duplicate` | The response parameter (token) has already been validated before. This means that the token was issued five minutes ago and is no longer valid, or it was already redeemed. |
 | `internal-error` | An internal error happened while validating the response. The request can be retried. |
