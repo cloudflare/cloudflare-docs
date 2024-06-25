@@ -70,6 +70,47 @@ Deprecated API:
 
 Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
+## DNS Records: Error chains for DNS validation errors
+**End of life date: October 1st, 2024**
+
+Cloudflare is making a minor change to the representation of certain errors when creating DNS records. Currently, when the DNS record to be created is invalid, an error similar to the following may be returned:
+
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1004,
+      "message": "DNS Validation Error",
+      "error_chain": [
+        {
+          "code": 9999,
+          "message": "This is an example."
+        }
+      ]
+    }
+  ],
+  "messages": []
+}
+```
+
+After the end of life date, the `error_chain` may be omitted, returning the root cause directly without wrapping it in another "DNS Validation Error" error:
+
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 9999,
+      "message": "This is an example."
+    }
+  ],
+  "messages": []
+}
+```
+
 ## Security Level and threat score
 **End of life date: September 30th, 2024**
 
