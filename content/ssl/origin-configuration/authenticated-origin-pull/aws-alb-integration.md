@@ -18,7 +18,7 @@ This guide will walk you through how to set up [per-hostname](/ssl/origin-config
 
 ## 1. Generate a custom certificate
 
-1. Run the following command to generate a 4096-bit RSA private key, unsing AES-256 encryption. Enter a passphrase when prompted.
+1. Run the following command to generate a 4096-bit RSA private key, using AES-256 encryption. Enter a passphrase when prompted.
 
 ```bash
 openssl genrsa -aes256 -out rootca.key 4096
@@ -126,7 +126,7 @@ curl -s --request PUT \
 
 ```bash
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/tls_client_auth \
+https://api.cloudflare.com/client/v4/zones/$ZONEID/settings/tls_client_auth \
 --header "Authorization: Bearer undefined" \
 --header "Content-Type: application/json" \
 --data '{
