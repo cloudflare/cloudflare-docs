@@ -77,7 +77,7 @@ openssl s_client -verify 5 -connect <your-application-load-balancer>:443 -quiet 
 
 ## 3. Configure Cloudflare
 
-1. [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare:
+1. [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare. You should use the leaf certificate, not the root CA.
 
 ```bash
 MYCERT="$(cat cert.crt|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
@@ -95,7 +95,7 @@ EOF
 # Push the certificate
 
 curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
 --data "$request_body"
@@ -107,7 +107,7 @@ curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_clie
 
 curl -s --request PUT \
 --url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
 --data '{
@@ -125,5 +125,15 @@ curl -s --request PUT \
 3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
 
 ```bash
-# see /ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/tls_client_auth \
+--header "Authorization: Bearer undefined" \
+--header "Content-Type: application/json" \
+--data '{
+  "value": "on"
+}'
 ```
+
+{{<Aside type="note">}}
+Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Full** or higher. If you only want to adjust this setting for a specific hostname, use [Configuration Rules](/rules/configuration-rules/settings/#ssl).
+{{</Aside>}}
