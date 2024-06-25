@@ -76,3 +76,54 @@ openssl s_client -verify 5 -connect <your-application-load-balancer>:443 -quiet 
 ```
 
 ## 3. Configure Cloudflare
+
+1. [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare:
+
+```bash
+MYCERT="$(cat cert.crt|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+MYKEY="$(cat cert.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
+
+request_body=$(< <(cat <<EOF
+{
+"certificate": "$MYCERT",
+"private_key": "$MYKEY",
+"bundle_method":"ubiquitous"
+}
+EOF
+))
+
+# Push the certificate
+
+curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: $MYAUTHEMAIL" \
+--header "X-Auth-Key: $MYAUTHKEY" \
+--data "$request_body"
+```
+
+2.[Associate the certificate with the hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) that should use it.
+
+```bash
+
+curl -s --request PUT \
+--url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
+--header 'Content-Type: application/json' \
+--header "X-Auth-Email: $MYAUTHEMAIL" \
+--header "X-Auth-Key: $MYAUTHKEY" \
+--data '{
+"config": [
+{
+"enabled": true,
+"cert_id": "<CERT_ID>",
+"hostname": "<YOUR_HOSTNAME>"
+}
+]
+}'
+
+```
+
+3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
+
+```bash
+# see /ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally
+```
