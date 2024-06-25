@@ -8,7 +8,7 @@ This documentation provides guidelines on handling Workers AI errors from both t
 
 ## REST API Error Handling
 
-When interacting with Workers AI via the REST API, errors are returned in the JSON payload. The error responses typically include an HTTP status code and a JSON body containing details about the error.
+When interacting with Workers AI via the [REST API](/workers-ai/get-started/rest-api/), errors are returned in the JSON payload. The error responses typically include an HTTP status code and a JSON body containing details about the error.
 
 ### Example of Error JSON Response
 
