@@ -1,3 +1,7 @@
+---
+pcx_content_type: reference
+---
+
 # Handling Workers AI Errors
 
 This documentation provides guidelines on handling Workers AI errors from both the REST API and Worker scripts. It includes information on error response structures, handling methods, and lists of common errors with their respective HTTP status codes and descriptions.
