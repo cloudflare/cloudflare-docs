@@ -45,7 +45,7 @@ To enable Logpush to Azure:
 
 1. Create a Blob Storage container. Refer to [instructions from Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal).
 
-2. Create a [shared access signature (SAS)](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview) to secure and restrict access to your blob storage container. Use the [Storage Explorer](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer?) to navigate to your container and right click to create a signature. Set the signature to expire at least 5 years from now and only provide write permission.
+2. Create a [shared access signature (SAS)](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview) to secure and restrict access to your blob storage container. Use [Storage Explorer](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer) to navigate to your container and right click to create a signature. Set the signature to expire at least five years from now and only provide write permission.
 
 3. Provide the SAS URL when prompted by the Logpush API or UI.
 
