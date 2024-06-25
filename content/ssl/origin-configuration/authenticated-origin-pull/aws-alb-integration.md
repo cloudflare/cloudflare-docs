@@ -8,7 +8,7 @@ meta:
 
 # Set up Authenticated Origin Pulls with AWS
 
-This guide will walk you through how to set up [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls to securely connect to an AWS Application Load Balancer using mutual TLS verify.
+This guide will walk you through how to set up [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls to securely connect to an AWS Application Load Balancer using [mutual TLS verify](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html).
 
 ## Before you begin
 
@@ -50,8 +50,8 @@ basicConstraints=CA:FALSE
 
 ## 2. Configure AWS Application Load Balancer
 
-1. Upload the `rootca.cert` to an [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html)
-2. [Create a trust store](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html#create-trust-store) at your EC2 console, indicating the **S3 URI** where yiou uploaded the certificate.
+1. Upload the `rootca.cert` to an [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html).
+2. [Create a trust store](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html#create-trust-store) at your EC2 console, indicating the **S3 URI** where you uploaded the certificate.
 3. Create an EC2 instance and install an HTTPD daemon. Suggested: [T2 instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html) and [Amazon Linux 2023](https://docs.aws.amazon.com/linux/al2023/ug/what-is-amazon-linux.html).
 
 ```bash
