@@ -270,7 +270,11 @@ const platform = await getPlatformProxy(options);
 
         * `configPath` {{<type>}}string{{</type>}}
 
-          The path to the configuration object to use (default `wrangler.toml`).
+          The path to the config file to use.
+
+          If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
+
+          **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
         * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
 
