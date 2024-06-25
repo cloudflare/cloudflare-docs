@@ -28,7 +28,7 @@ When uploading source maps is enabled, Wrangler will automatically generate and 
 ​​
 When your application throws an uncaught exception, we fetch the source map and use it to map the stack trace of the exception back to lines of your application’s original source code. 
 
-You can then view the stack trace when streaming [real-time logs]/pages/functions/debugging-and-logging/).
+You can then view the stack trace when streaming [real-time logs](/pages/functions/debugging-and-logging/).
 
 {{<Aside type="note">}}
 

@@ -112,7 +112,7 @@ If you're debugging an uncaught exception, you might find that the [stack traces
 
 {{<Aside type="note">}}
 
-When developing full stack applications, many build tools (including wrangler for Pages Functions and most fullstack frameworks) will generate source maps for both the client and server, ensure your build step is configured to only emit server sourcemaps or use an additional build step to remove the client source maps. Public source maps might expose the source code of your application to the user.
+When developing fullstack applications, many build tools (including wrangler for Pages Functions and most fullstack frameworks) will generate source maps for both the client and server, ensure your build step is configured to only emit server sourcemaps or use an additional build step to remove the client source maps. Public source maps might expose the source code of your application to the user.
 
 {{</Aside>}}
 
