@@ -386,7 +386,5 @@ The bindings supported by `getPlatformProxy` are:
 
  * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
-    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) respectively.
-
     {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 
