@@ -62,4 +62,4 @@ Neither the key nor the decrypted payload will be stored by Cloudflare.
 
 - DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
   
-  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will contain the encrypted string.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.
