@@ -5,9 +5,24 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-19'
+  description: |-
+    - When using [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), the `buffer` module now has an implementation of `isAscii()` and `isUtf8()` methods.
+    - Fixed a bug where exceptions propagated from [JS RPC](/workers/runtime-apis/rpc) calls to Durable Objects would lack the `.remote` property that exceptions from `fetch()` calls to Durable Objects have.
 - publish_date: '2024-06-12'
   description: |-
-    - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards. 
+    - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
+- publish_date: '2024-05-17'
+  description: |-
+    - Updated v8 to version 12.6.
+- publish_date: '2024-05-15'
+  description: |-
+    - The new [`fetch_standard_url` compatibility flag](/workers/configuration/compatibility-dates/#use-standard-url-parsing-in-fetch) will become active by default on June 3rd, 2024 and ensures that URLs passed into the `fetch(...)` API, the `new Request(...)` constructor, and redirected requests will be parsed using the standard WHATWG URL parser.
+    - DigestStream is now more efficient and exposes a new `bytesWritten` property that indicates that number of bytes written to the digest.
+- publish_date: '2024-05-13'
+  description: |-
+    - Updated v8 to version 12.5.
+    - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new (`blob_standard_mime_type` compatibility flag)[/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers].
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
