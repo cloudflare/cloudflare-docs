@@ -27,7 +27,7 @@ You should check the HTTP status code of the response and handle the error based
 
 #### Example in JavaScript
 
-```javascript
+```js
 fetch('https://api.cloudflare.com/client/v4/workers-ai/model/run', {
   method: 'POST',
   headers: {
