@@ -36,7 +36,7 @@ If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
 You must put the appropriate MSS clamps in place before routing changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
 
-When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic Transit, you must set the following MSS clamp sizes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6.
+When using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit, you must set the following MSS clamp sizes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6.
 
 - GRE tunnels over Classic CNI: 1332 bytes
 - Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
