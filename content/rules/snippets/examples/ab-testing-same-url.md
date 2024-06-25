@@ -6,6 +6,7 @@ goal:
   - A/B testing
 operation:
   - Cookies manipulation
+  - Rewrite
 product:
   - Snippets
 pcx_content_type: example
