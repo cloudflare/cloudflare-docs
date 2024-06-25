@@ -272,7 +272,7 @@ const platform = await getPlatformProxy(options);
 
           The path to the config file to use.
 
-          If no path is specified the default behavior consists in a search from the current directory up the filesystem for a `wrangler.toml` to use.
+          If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
 
           **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
