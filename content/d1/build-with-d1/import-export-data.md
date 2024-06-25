@@ -42,13 +42,13 @@ INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNF67KV7FPPSEJVJME
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
-$ wrangler d1 execute example-db --remote --file=users_export.sql
+$ npx wrangler d1 execute example-db --remote --file=users_export.sql
 ```
 
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement to fetch all the tables from your D1 database:
 
 ```sh
-$ wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;"
+$ npx wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;"
 
 ...
 🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
@@ -121,12 +121,22 @@ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./
 
 To export only D1 database schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data=true
+npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data
 ```
 
 To export only D1 table schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data=true
+npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data
+```
+
+To export only D1 database data:
+```sh
+npx wrangler d1 export <database_name> --remote --output=./data.sql --no-schema
+```
+
+To export only D1 table data:
+```sh
+npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./data.sql --no-schema
 ```
 
 ### Known limitations
