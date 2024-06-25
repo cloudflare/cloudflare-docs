@@ -199,14 +199,14 @@ A validation error is indicated by having the `success` property set to `false`.
 
 ## Error codes
 
-| Error code | Description |
+| <div style="width:200px">Error code</div> | Description |
 | --- | --- |
 | `missing-input-secret` | The secret parameter was not passed. |
 | `invalid-input-secret` | The secret parameter was invalid or did not exist.|
-| `missing-input-response` | The response parameter was not passed. |
-| `invalid-input-response` | The response parameter is invalid or has expired. |
+| `missing-input-response` | The response parameter (token) was not passed. |
+| `invalid-input-response` | The response parameter (token) is invalid or has expired. Most of the time, this means a fake token has been used. If the error persists, contact customer support. |
 | `invalid-widget-id` | The widget ID extracted from the parsed site secret key was invalid or did not exist. |
 | `invalid-parsed-secret` | The secret extracted from the parsed site secret key was invalid. |
 | `bad-request` | The request was rejected because it was malformed. |
-| `timeout-or-duplicate` | The response parameter has already been validated before. |
+| `timeout-or-duplicate` | The response parameter has already been validated before. This means that the token was issued five minutes ago and is no longer valid, or it was already redeemed. |
 | `internal-error` | An internal error happened while validating the response. The request can be retried. |
