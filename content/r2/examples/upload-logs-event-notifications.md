@@ -1,9 +1,15 @@
 ---
 title: Log and store upload events in R2 with event notifications
-pcx_content_type: how-to
+pcx_content_type: tutorial
+content_type: 📝 Tutorial
+products: [Queues, Workers]
+difficulty: Beginner
+updated: 2024-04-02
 ---
 
 # Log and store upload events in R2 with event notifications
+
+{{<tutorial-date-info>}}
 
 This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
 
@@ -97,7 +103,7 @@ export default {
 	async queue(batch: MessageBatch, env: Env): Promise<void> {
 		const batchId = new Date().toISOString().replace(/[:.]/g, '-');
 		const fileName = `upload-logs-${batchId}.json`;
-	
+
 		// Serialize the entire batch of messages to JSON
 		const fileContent = new TextEncoder().encode(JSON.stringify(batch.messages));
 
