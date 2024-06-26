@@ -18,7 +18,7 @@ The following limits apply to Hyperdrive configuration, connections, and queries
 | Maximum username length                        | 63 characters (bytes) <sup>1</sup>                                                   |
 | Maximum database name length                   | 63 characters (bytes) <sup>1</sup>                                                   |
 | Maximum origin database connections per region | 10-20                                                                                |
-| Maximum potential origin database connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>3</sup> |
+| Maximum potential origin database connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>2</sup> |
 
 {{<Aside type="note">}}
 
