@@ -31,7 +31,7 @@ export function toc() {
       let a = document.createElement('a');
       a.classList.add('DocsTableOfContents-link');
       a.href = '#' + tmp.id;
-      a.textContent = tmp?.lastElementChild?.textContent?.trim() ?? '';
+      a.textContent = tmp?.textContent?.trim() ?? '';
       last.append(a);
       container?.appendChild(last);
       last.h = tmp.nodeName;
