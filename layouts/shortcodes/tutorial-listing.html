@@ -1,9 +1,19 @@
 {{- $column_text := default "Type" $.Page.Params.column_text -}}
 {{- $column_param := default "content_type" $.Page.Params.column_param -}}
 
-{{- $current := .Page.RelPermalink -}}
-{{- $len := len (split $current "/") -}}
-{{- $pages := (where .Site.Pages "Section" .Page.Section).ByParam "updated" -}}
+<!-- Pull all tutorials from the current product folder -->
+{{- $sectionFiles := where .Site.Pages "Section" .Page.Section -}}
+{{- $sectionTutorials := (where $sectionFiles ".Params.pcx_content_type" "eq" "tutorial").ByParam "updated" -}}
+
+<!-- Pull tutorials from other folders that match based on the product /data file (and .product.title value) -->
+{{- $productData := index .Site.Data .Page.Section -}}
+{{- $productName := slice $productData.product.title }}
+
+{{- $otherTutorials := (where .Site.Pages ".Params.pcx_content_type" "eq" "tutorial").ByParam "updated" -}}
+{{- $otherMatchedTutorials := where $otherTutorials ".Params.products" "intersect" $productName  -}}
+
+<!-- Combine both collections -->
+{{- $pages := union $sectionTutorials $otherMatchedTutorials -}}
 
 <div class="DocsTutorials">
   <div class="DocsTutorials--header">
@@ -27,10 +37,6 @@
   </div>
   <div class="DocsTutorials--body">
     {{- range $pages.Reverse -}}
-      {{- $x := .RelPermalink -}}
-      {{- $self := eq $x $current -}}
-      {{- $delta := sub (len (split $x "/")) $len -}}
-      {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
         <div class="DocsTutorials--row{{ if false }} DocsTutorials--row-is-new{{ end }}">
           <div class="DocsTutorials--column" data-column="name">
             {{- $href := or .Params.redirect .RelPermalink -}}
@@ -51,7 +57,6 @@
             {{ .Params.difficulty }}
           </div>
         </div>
-      {{- end -}}
     {{- end -}}
   </div>
 </div>
