@@ -16,9 +16,10 @@ layout: example
 ```js
 export default {
   async fetch(request) {
+    // Define a variable with the hostname that needs to be redirected.
     const externalHostname = "examples.cloudflareworkers.com";
 
-    //Define the map object replacing the source and target paths
+    // Define the map object. Replace the sources (/pathX) and targets (/redirectX) with ones that apply to your case.
     const redirectMap = new Map([
       ["/path1", "https://" + externalHostname + "/redirect1"],
       ["/path2", "https://" + externalHostname + "/redirect2"],
@@ -26,14 +27,18 @@ export default {
       ["/path4", "https://example.com"],
     ]);
 
+    // Clone the original URL.
     const requestURL = new URL(request.url);
+
+    // Check the request path against the map and redirect accordingly.
     const path = requestURL.pathname;
     const location = redirectMap.get(path);
 
     if (location) {
       return Response.redirect(location, 301);
     }
-    // If request not in map, return the original request
+
+    // If request not in map, return the original request.
     return fetch(request);
   },
 };
