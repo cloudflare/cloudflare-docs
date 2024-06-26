@@ -3,7 +3,7 @@ entries:
   title: Build Rust Powered Apps
   description: In this video, we will show you how to build a global database using workers-rs to keep track of every country and city you’ve visited.
   tags: []
-  products: [KV]
+  products: [Workers, KV]
   cloudflare: true
   author: confidence
   updated: 2024-06-25
@@ -14,7 +14,7 @@ entries:
   title: Stateful Apps with Cloudflare Workers
   description: Learn how to access external APIs, cache and retrieve data using Workers KV, and create SQL-driven applications with Cloudflare D1.
   tags: []
-  products: [KV, D1]
+  products: [Workers, KV, D1]
   cloudflare: true
   author: kristian
   updated: 2024-05-22
@@ -25,7 +25,7 @@ entries:
   title: Learn Cloudflare Workers - Full Course for Beginners
   description: Learn how to build your first Cloudflare Workers application and deploy it to Cloudflare's global network.
   tags: []
-  products: []
+  products: [Workers]
   cloudflare: true
   author: kristian
   updated: 2024-03-12
@@ -36,7 +36,7 @@ entries:
   title: Learn AI Development (models, embeddings, vectors)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, teaches the basics of AI Development - models, embeddings, and vectors (including vector databases).
   tags: [AI]
-  products: [Workers AI, Vectorize]
+  products: [Workers AI, Workers, Vectorize]
   cloudflare: true
   author: kristian
   updated: 2023-12-14
@@ -47,7 +47,7 @@ entries:
   title: Learn AI Development (models, embeddings, vectors)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, shows how to optimize your existing AI applications with Cloudflare AI Gateway, and how to finetune OpenAI models using R2.
   tags: [AI]
-  products: [R2, AI Gateway]
+  products: [Workers, R2, AI Gateway]
   cloudflare: true
   author: kristian
   updated: 2023-12-14
