@@ -83,7 +83,7 @@ You should ensure that you do not break any existing clients if when you reset t
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):
 
-```sh
+```txt
 postgres://tsdbadmin:YOURPASSWORD@...
 ```
 

@@ -47,7 +47,7 @@ Dashboard label | Field value | Description
 ---|---|---
 _Attack_ | `attack` | Attack score between `1` and `20`.
 _Likely attack_ | `likely_attack` | Attack score between `21` and `50`.
-_Likely clean_ | `likely_clean` | Attack score between `50` and `80`.
+_Likely clean_ | `likely_clean` | Attack score between `51` and `80`.
 _Clean_ | `clean` | Attack score between `81` and `99`.
 
 Requests with an attack score of `100` will have a class of _Unscored_ in the Cloudflare dashboard, but you cannot use this class value in rule expressions.
@@ -80,4 +80,4 @@ If you are an Enterprise customer and you created a rule with _Log_ action, chan
 
 ## Additional remarks
 
-The WAF Attack Score is different from {{<glossary-tooltip term_id="threat score">}}Threat Score{{</glossary-tooltip>}} and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rules do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
+The WAF Attack Score is different from {{<glossary-tooltip term_id="threat score">}}Threat Score{{</glossary-tooltip>}} (deprecated) and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rules do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.

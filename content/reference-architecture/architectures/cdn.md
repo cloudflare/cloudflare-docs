@@ -47,7 +47,7 @@ Enhancements in HTTP/2 and HTTP/3 allow for multiplexing multiple requests to th
 
 * The origin server starts to become overloaded with requests, impacting availability; companies start looking at scaling out to handle the additional load
 * As each request has to make its way to the origin server, performance and user experience is impacted due to latency
-* The latency for end users becomes proportional to the distance between the client and origin server, thus resulting in varying experiences based on client location
+* The latency for end users becomes proportional to the distance between the client and origin server, thus resulting in varying experiences based on client location. This is especially true for specific countries that may experience latency due to traffic from or to that country, like China.
 * As origin servers respond to the increasing requests, bandwidth, egress, and compute costs increase drastically
 * Even as customers scale out to handle the increased demand in traffic, they are left exposed to both infrastructure-level and application-level distributed denial-of-service (DDoS) attacks
 
@@ -237,6 +237,12 @@ Using [Image Resizing](/images/transform-images/) with Cache Reserve will not re
 Figure 8 illustrates how Cache Reserve can help reduce load on an origin server while also helping repopulate cache stores in both upper and lower tier data centers.
 
 ![Figure 8: Traffic between end users and an origin server showing Cache Reserve as the final step in the architecture of the Cloudflare CDN solution.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure8.svg "Figure 8: Cloudflare CDN with Tiered Cache and Cache Reserve")
+
+### China Network & China Express for clients in China
+Latency is not only proportional to the physical distance between the client and the origin or cache, but it may also increase significantly when traffic comes from or goes to certain countries, such as China. To mitigate the latency, Cloudflare offers two solutions:
+
+1. [China Network](https://www.cloudflare.com/application-services/products/china-network/) provides in-China caching for end users located in China, regardless of the origin location. This solution is provided by collaborating with JD Cloud and uses their data centers to ensure the fastest and most reliable cache performance for Chinese users compared to data centers outside of China.
+1. [China Express](https://blog.cloudflare.com/improving-customer-experience-in-china-using-china-express) offers reliable and secure connectivity to streamline content from origins to JD Cloud data centers in China. This is particularly beneficial for dynamic content like web applications and API calls.
 
 ## Summary
 

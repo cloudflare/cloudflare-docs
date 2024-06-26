@@ -4,7 +4,7 @@ summary: Build a rate limiter using Durable Objects and Workers.
 tags:
   - Durable Objects
 pcx_content_type: configuration
-title: Build a rate limiter 
+title: Build a rate limiter
 weight: 2
 layout: example
 ---
@@ -23,13 +23,13 @@ It might seem simpler to implement a global rate limiter, `const id = env.RATE_L
 
 {{<Aside type="note">}}
 
-If you do not need unique or custom rate-limiting capabilities, refer to [Rate limiting rules](/waf/rate-limiting-rules/) that are part of Cloudflare's Web Application Firewall (WAF) product. 
+If you do not need unique or custom rate-limiting capabilities, refer to [Rate limiting rules](/waf/rate-limiting-rules/) that are part of Cloudflare's Web Application Firewall (WAF) product.
 
 {{</Aside>}}
 
 The Durable Object uses a token bucket algorithm to implement rate limiting. The naive idea is that each request requires a token to complete, and the tokens are replenished according to the reciprocal of the desired number of requests per second. As an example, a 1000 requests per second rate limit will have a token replenished every millisecond (as specified by milliseconds_per_request) up to a given capacity limit.
 
-This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future. 
+This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to schedule the Durable Object to be woken up at a time in the future.
 
 * When the alarm's scheduled time comes, the `alarm()` handler method is called, and in this case, the alarm will add a token to the "Bucket".
 * The implementation is made more efficient by adding tokens in bulk (as specified by milliseconds_for_updates) and preventing the alarm handler from being invoked every millisecond. More frequent invocations of Durable Objects will lead to higher invocation and duration charges.
@@ -99,7 +99,7 @@ export class RateLimiter extends DurableObject {
   async checkAndSetAlarm() {
     let currentAlarm = await this.ctx.storage.getAlarm();
     if (currentAlarm == null) {
-      this.ctx.storage.setAlarm(Date.now() + 
+      this.ctx.storage.setAlarm(Date.now() +
         RateLimiter.milliseconds_for_updates * RateLimiter.milliseconds_per_request);
     }
   }
@@ -129,7 +129,7 @@ export interface Env {
 
 // Worker
 export default {
-  async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, _ctx): Promise<Response> {
     // Determine the IP address of the client
     const ip = request.headers.get("CF-Connecting-IP");
     if (ip === null) {
@@ -153,7 +153,7 @@ export default {
     // TODO: Implement me
     return new Response("Call some upstream resource...")
   }
-};
+} satisfies ExportedHandler<Env>;
 
 // Durable Object
 export class RateLimiter extends DurableObject {
@@ -183,7 +183,7 @@ export class RateLimiter extends DurableObject {
   private async checkAndSetAlarm() {
     let currentAlarm = await this.ctx.storage.getAlarm();
     if (currentAlarm == null) {
-      this.ctx.storage.setAlarm(Date.now() + 
+      this.ctx.storage.setAlarm(Date.now() +
         RateLimiter.milliseconds_for_updates * RateLimiter.milliseconds_per_request);
     }
   }

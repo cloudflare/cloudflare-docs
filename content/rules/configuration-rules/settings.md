@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify (deprecated) { #auto-minify }
+{{<heading-pill style="deprecated" heading="h2">}}Auto Minify{{</heading-pill>}}
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
@@ -329,18 +329,18 @@ header: API configuration example
 
 {{</details>}}
 
-## Security Level
+{{<heading-pill style="deprecated" heading="h2">}}Security Level{{</heading-pill>}}
 
 [Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
 
 Use this setting to select the security level for matching requests:
 
 - Off
-- Essentially Off
-- Low
-- Medium
-- High
 - I'm Under Attack
+- Essentially Off _(deprecated value)_
+- Low _(deprecated value)_
+- Medium _(deprecated value)_
+- High _(deprecated value)_
 
 Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
 
@@ -348,14 +348,14 @@ Refer to [Security levels](/waf/tools/security-level/#security-levels) for more 
 
 API configuration property name: `"security_level"` (string).
 
-API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under_attack"`.
+API values: `"off"`, `"under_attack"`, `"essentially_off"` (deprecated), `"low"` (deprecated), `"medium"` (deprecated), `"high"` (deprecated).
 
 ```json
 ---
 header: API configuration example
 ---
 "action_parameters": {
-  "security_level": "low"
+  "security_level": "under_attack"
 }
 ```
 
@@ -363,7 +363,7 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes (deprecated) { #server-side-excludes }
+{{<heading-pill style="deprecated" heading="h2">}}Server Side Excludes{{</heading-pill>}}
 
 [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
 

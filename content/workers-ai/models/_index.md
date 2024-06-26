@@ -7,9 +7,7 @@ hideChildren: true
 
 # Models
 
-Browse our entire catalog of models.
-
-{{<render file="_billing-announcement.md">}}
+Browse our entire catalog of models:
 
 {{<render file="_file_issues.md">}}
 

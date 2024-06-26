@@ -31,7 +31,7 @@ meta:
     * **Cookies**
     * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
     * [**Bot score**](/bots/concepts/bot-score/)
-    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
+    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score** (deprecated){{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
     * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 

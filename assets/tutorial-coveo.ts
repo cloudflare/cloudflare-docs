@@ -11,7 +11,7 @@
 
     // Initialize the framework by targeting the root in the interface.
     // It does not have to be the document body.
-    const root = document.getElementById("searchresults");
+    const root = document.querySelector("#searchresults");
     coveo.init(root);
 
     coveo.SearchEndpoint.configureCloudV2Endpoint(org, token);

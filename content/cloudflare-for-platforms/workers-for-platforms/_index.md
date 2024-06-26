@@ -9,17 +9,11 @@ pcx_content_type: overview
 
 {{<description>}}
 
-With Workers for Platforms you can deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, without you or your users having to manage any infrastructure. 
+Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.
 
 {{</description>}}
 
-{{<plan type="enterprise">}}
-
-{{<Aside type="note">}}
-
-Workers for Platforms will be available as new pay-as-you-go offering on April 16th. For pricing details visit [pricing](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
-{{</Aside>}}
-
+{{<plan type="paid">}}
 
 Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your users' code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
 

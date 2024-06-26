@@ -98,7 +98,7 @@ The country of the user making the request.
 
 ### Virtual Network
 
-{{<render file="gateway/selectors/_virtual-network.md">}}
+{{<render file="gateway/selectors/_virtual-network.md" withParameters="net.vnet_id">}}
 
 ## Comparison operators
 

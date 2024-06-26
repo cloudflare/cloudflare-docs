@@ -5,6 +5,10 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-20'
+  title: Generated Captions to Open beta
+  description: |-
+    Stream has introduced automatically generated captions to open beta for all subscribers at no additional cost. While in beta, only English is supported and videos must be less than 2 hours. For more information, refer to the [product announcement and deep dive](https://blog.cloudflare.com/stream-automatic-captions-with-ai) or refer to the [captions documentation](/stream/edit-videos/adding-captions/) to get started.
 - publish_date: '2024-06-11'
   title: Updated response codes on requests for errored videos
   description: |-

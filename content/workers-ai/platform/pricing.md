@@ -20,14 +20,11 @@ To use more than 10,000 Neurons per day for non-beta models, you need to sign up
 
 You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
 
-{{<table-wrap>}}
-
 |              | Free <br> allocation | Overage<br>pricing            |
 | ------------ | -------------------- | ----------------------------- |
 | Workers Free | 10,000 Neurons per day  | N/A - Upgrade to Workers Paid |
 | Workers Paid | 10,000 Neurons per day  | $0.011 / 1,000 Neurons           |
 
-{{</table-wrap>}}
 All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, further operations will fail with an error.
 
 ## What are Neurons?
@@ -57,62 +54,51 @@ Cloudflare will continue to add Neuron calculations for the other models in the 
 
 ## Pricing comparison
 
-Cloudflare uses Neurons to measure and bill for inference on Workers AI. This may differ from the input-based pricing you might see from other providers. We’ve prepared the below tables to help you understand and evaluate the estimated cost of Neurons and usage on Workers AI compared with the inputs used for the models available in our catalog. 
+Cloudflare uses Neurons to measure and bill for inference on Workers AI. This may differ from the input-based pricing you might see from other providers. We’ve prepared the below tables to help you understand and evaluate the estimated cost of Neurons and usage on Workers AI compared with the inputs used for the models available in our catalog.
 
 **Please note that the below is provided for informational purposes only.** All conversions are based on Cloudflare’s public fees as of March 1, 2024, and do not include taxes and any other fees.
 
 ### Automatic Speech Recognition
 
-{{<table-wrap>}}
 | Model | Price per <br> minute of audio |
 | ------- | ------------------------- |
-| whisper | $0.0022 |
-{{</table-wrap>}}
+| `whisper` | $0.0022 |
 
 ### Image Classification
 
-{{<table-wrap>}}
 | Model | Price per image |
 | --------- | --------------- |
-| Resnet-50 | $0.0000025 |
-{{</table-wrap>}}
+| `Resnet-50` | $0.0000025 |
 
 ### Text Classification
 
-{{<table-wrap>}}
 | Model | Price per 1M <br> input tokens |
 | --------------------- | ------------------------- |
-| distilbert-sst-2-int8 | $0.33 |
-{{</table-wrap>}}
+| `distilbert-sst-2-int8` | $0.33 |
 
 ### Text Embeddings
 
-{{<table-wrap>}}
 | Model | Price per 1M <br> input tokens |
 | ----------------- | ------------------------- |
-| bge-small-en-v1.5 | $0.003 |
-| bge-base-en-v1.5 | $0.014 |
-| bge-large-en-v1.5 | $0.022 |
-{{</table-wrap>}}
+| `bge-small-en-v1.5` | $0.003 |
+| `bge-base-en-v1.5` | $0.014 |
+| `bge-large-en-v1.5` | $0.022 |
 
 ### Text Generation
+
 On April 2, 2024, we updated pricing for our `mistral-7b-instruct` models to be 17x cheaper and `llama-2-7b-chat-int8` to be 7x cheaper. The pricing table below reflects the new pricing, but you can take a look at the [archived pricing](/workers-ai/platform/pricing/#archived-pricing) to see how pricing has changed.
 
-{{<table-wrap>}}
 | Model | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
 | -------------------- | ------------------------------ | ------------------------------- |
-| llama-2-7b-chat-fp16 | $0.56 | $6.66 |
-| llama-2-7b-chat-int8 | $0.16 | $0.24 |
-| mistral-7b-instruct | $0.11 | $0.19 |
-{{</table-wrap>}}
+| `llama-2-7b-chat-fp16` | $0.56 | $6.66 |
+| `llama-2-7b-chat-int8` | $0.16 | $0.24 |
+| `mistral-7b-instruct` | $0.11 | $0.19 |
 
 ### Translation
 
-{{<table-wrap>}}
 | Model | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
 | ----------- | ------------------------ | ------------------------- |
-| m2m100-1.2b | $0.13 | $0.70 |
-{{</table-wrap>}}
+| `m2m100-1.2b` | $0.13 | $0.70 |
 
 ## Pricing Example
 
@@ -126,9 +112,8 @@ If a user uses 50k Neurons per day, every day of the month, the Workers AI usage
 As we find optimizations for our inference platform, we pass on these optimizations to our customers. You can refer to the archived pricing below to see how pricing has changed.
 
 Before April 2, 2024:
-{{<table-wrap>}}
+
 | Model | Price per 1M <br> input tokens | Price per 1M <br> output tokens |
 | -------------------- | ------------------------------ | ------------------------------- |
-| llama-2-7b-chat-int8 | $0.28 | $1.72 |
-| mistral-7b-instruct | $0.28 | $3.33 |
-{{</table-wrap>}}
+| `llama-2-7b-chat-int8` | $0.28 | $1.72 |
+| `mistral-7b-instruct` | $0.28 | $3.33 |

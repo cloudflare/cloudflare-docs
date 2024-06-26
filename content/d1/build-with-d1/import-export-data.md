@@ -111,32 +111,32 @@ In addition to importing existing SQLite databases, you might want to export a D
 
 To export full D1 database schema and data:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./database.sql
+$ npx wrangler d1 export <database_name> --remote --output=./database.sql
 ```
 
 To export single table schema and data:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./table.sql
+$ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./table.sql
 ```
 
 To export only D1 database schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data
+$ npx wrangler d1 export <database_name> --remote --output=./schema.sql --no-data
 ```
 
 To export only D1 table schema:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data
+$ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./schema.sql --no-data
 ```
 
 To export only D1 database data:
 ```sh
-npx wrangler d1 export <database_name> --remote --output=./data.sql --no-schema
+$ npx wrangler d1 export <database_name> --remote --output=./data.sql --no-schema
 ```
 
 To export only D1 table data:
 ```sh
-npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./data.sql --no-schema
+$ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./data.sql --no-schema
 ```
 
 ### Known limitations

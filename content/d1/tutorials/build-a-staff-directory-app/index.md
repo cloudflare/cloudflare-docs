@@ -444,7 +444,7 @@ With your application ready for deployment, you can use Wrangler to build and de
 
 After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
 
-```sh
+```toml
 name = "staff-directory"
 compatibility_date = "2023-12-01"
 

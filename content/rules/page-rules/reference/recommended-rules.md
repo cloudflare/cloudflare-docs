@@ -15,7 +15,7 @@ Use Cloudflare Page Rules to improve the user experience of your domain with ha
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 
 - 301/302 Forwarding URL
-- Security Level and Cache Level
+- Cache Level
 - Edge Cache TTL, Always Online, and Browser Cache TTL
 
 ### 301/302 Forwarding URL
@@ -49,16 +49,15 @@ This example redirects visitors to a specific page with an easy to remember URL:
 
 {{</example>}}
 
-### Security Level and Cache Level
+### Cache Level
 
-Certain sections of a website, like the login or admin section, have different security and performance requirements than your general public-facing pages.
+Certain sections of a website, like the login or admin section, have different requirements than your general public-facing pages.
 
-The following example page rule configuration performs several security and cache adjustments for requests targeting a specific path:
+The following example page rule configuration performs several adjustments for requests targeting a specific path:
 
 {{<example>}}
 
 - **If the URL matches**: `example.com/user*`
-- **Setting**: _Security Level_ | **Value**: _High_
 - **Setting**: _Cache Level_ | **Value**: _Bypass_
 - **Setting**: _Disable Apps_
 
