@@ -93,7 +93,7 @@ The error object thrown by `ai.run` contains the following properties:
 
 | Error Code         | Description                                              |
 |--------------------|----------------------------------------------------------|
-| MODEL_NOT_FOUND    | The specified model does not exist.                      |
+| `MODEL_NOT_FOUND`    | The specified model does not exist.                      |
 | INVALID_PAYLOAD    | The provided payload is invalid or malformed.            |
 | UNAUTHORIZED       | Missing or invalid authentication credentials.           |
 | FORBIDDEN          | You do not have permission to access the specified model.|
