@@ -61,18 +61,14 @@ When creating egress policies with dedicated egress IPs, set your secondary IPv4
 ### IP geolocation
 
 {{<Aside type="note">}}
-IP geolocation will take at least six weeks to update.
+IP geolocation will take at least six weeks to update across databases.
 {{</Aside>}}
 
-Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
+Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user. We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
-When you turn on dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites, such as Google Search, will check the MaxMind database to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
+When you turn on dedicated egress IPs, Gateway will update third-party IP geolocation databases. Other websites, such as Google Search, will check these databases to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
 
-We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
-
-#### Verify IP geolocation
-
-To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](https://www.maxmind.com/en/geoip2-precision-demo) and enter your dedicated egress IP.
+To verify that the IP geolocation has updated, check your dedicated egress IP in one of the supported databases:
 
 {{<details header="Supported IP geolocation databases">}}
 
