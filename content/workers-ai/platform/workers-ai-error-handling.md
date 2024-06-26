@@ -1,5 +1,6 @@
 ---
 pcx_content_type: reference
+title: Error handling
 ---
 
 # Handling Workers AI Errors
@@ -64,18 +65,18 @@ fetch('https://api.cloudflare.com/client/v4/workers-ai/model/run', {
 
 ## Worker Scripts Error Handling
 
-When using Workers AI in Worker scripts, errors can be caught using try/catch blocks. The `ai.run` function can throw errors which should be handled appropriately.
+When using Workers AI in [Worker scripts](/workers-ai/get-started/workers-wrangler/), errors can be caught using try/catch blocks. The `ai.run` function can throw errors which should be handled appropriately.
 
 ### Example of Error Handling in Worker Scripts
 
-```javascript
+```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
   try {
-    const result = await ai.run('model-id', { /* your payload */ });
+    const result = await ai.run('<MODEL_ID>', { /* your payload */ });
     return new Response(JSON.stringify(result), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), { status: error.statusCode || 500 });
