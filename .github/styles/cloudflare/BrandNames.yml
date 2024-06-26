@@ -1,0 +1,14 @@
+---
+# Warning: cloudflare.BrandNames
+#
+# Suggests correct spelling and capitalization for brand names.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: substitution
+message: "**Warning**: Use correct brand name: '%s' instead of '%s'."
+level: warning
+ignorecase: false
+swap:
+  CloudFlare: Cloudflare
+  (?!cdnjs)([cC][dD][nN]\.?[jJ][sS]): cdnjs
