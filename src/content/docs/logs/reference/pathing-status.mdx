@@ -25,7 +25,7 @@ Cloudflare issues the following **Edge Pathing Statuses**:
 * `bic` (browser integrity check)
 * `hot` (hotlink protection)
 * `macro` (the reputation list)
-* `skip` (Always Online or CDNJS resources)
+* `skip` (Always Online or cdnjs resources)
 * `user` (user firewall rule)
 
 For example:
@@ -254,4 +254,3 @@ The macro stage is comprised of many different paths. They are categorized by th
 | `ao_crawl`        | AO (Always Online) crawler request.                       | `wl`          | `skip`         |
 | `cdnjs`           | Request to a cdnjs resource.                              | `wl`          | `skip`         |
 |                   | Certain challenge forced by Cloudflare's special headers. |               | `forced`       |
-
