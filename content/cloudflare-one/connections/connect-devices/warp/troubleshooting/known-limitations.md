@@ -44,6 +44,37 @@ Alternatively, use Powershell:
   PS C:\Users\JohnDoe> Resolve-DnsName -Name google.com
   ```
 
+## Windows Subsystem for Linux (WSL)
+
+Windows Subsystem for Linux (WSL) is a Windows feature that lets you run a Linux environment within Windows. When you install WARP on the Windows host, WARP does not automatically update the DNS nameservers in WSL. This can cause connectivity issues within WSL.
+
+To resolve the issue, manually configure the WSL nameservers to point to [WARP's local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic):
+
+1. Open the WSL shell.
+2. Confirm that WSL has Internet connectivity:
+```sh
+$ dig google.com
+```
+
+3.
+
+4. Determine the MTU of the `CloudflareWARP` interface:
+
+```powershell
+netsh.exe interface ipv4 show interfaces
+
+3. Determine which network interface WSL is connected to:
+```sh
+ifconfig
+```
+
+5. If needed, set the WSL interface to the same MTU as WARP:
+
+```sh
+$ sudo ip link set dev eth0 mtu 1280 up
+```
+
+
 ## 4G/5G embedded modules
 
 Because of how the WARP client instantiates the local DNS Proxy, it is incompatible with 4G/5G cellular adaptors which have IPv6 enabled.  To run WARP on these devices, you will need to disable IPv6 on the system.
