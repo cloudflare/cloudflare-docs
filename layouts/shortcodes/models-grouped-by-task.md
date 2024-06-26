@@ -17,7 +17,7 @@
 <div data-task="{{ $name }}">
   <h2 id="{{ $name | urlize }}">{{ $name }}</h2>
 
-  {{ $description }}
+  <p>{{ $description }}</p>
 
   <style>
     table th:first-of-type {
