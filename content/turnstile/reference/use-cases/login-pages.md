@@ -108,6 +108,7 @@ app.listen(3000, () => {
 {{</tutorial>}}
 
 ## Important considerations
+
 It is crucial to handle the verification of the Turnstile token correctly. Some key points to keep in mind:
 
 ### Verify the token after credentials input
