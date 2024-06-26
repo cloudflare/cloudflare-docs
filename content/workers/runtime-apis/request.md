@@ -133,7 +133,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables or disables [AutoMinify](https://www.cloudflare.com/website-optimization/) (deprecated) for various file types. For example: `{ javascript: true, css: true, html: false }`.
+    *   Enables or disables [AutoMinify (deprecated)](https://developers.cloudflare.com/speed/optimization/content/auto-minify/) for various file types. For example: `{ javascript: true, css: true, html: false }`.
 
 *   `mirage` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
