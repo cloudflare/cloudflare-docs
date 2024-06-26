@@ -20,8 +20,9 @@ export default {
         // Clone the response so that it's no longer immutable
         const newResponse = new Response(response.body, response);
 
-        // Define the expiry and group variables
+        // Define the dynamic expiry time. 24h * 60m * 60s * 1000ms = 86400000ms
         const expiry = new Date(Date.now() + 7 * 86400000).toUTCString();
+        // Define the group variable. "A" if the request header "userGroup" is "premium", "B" if otherwise.
         const group = request.headers.get("userGroup") == "premium" ? "A" : "B";
 
         // Append the custom header with the values
