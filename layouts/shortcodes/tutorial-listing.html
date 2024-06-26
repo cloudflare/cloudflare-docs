@@ -3,17 +3,30 @@
 
 <!-- Pull all tutorials from the current product folder -->
 {{- $sectionFiles := where .Site.Pages "Section" .Page.Section -}}
-{{- $sectionTutorials := (where $sectionFiles ".Params.pcx_content_type" "eq" "tutorial").ByParam "updated" -}}
+{{- $sectionTutorials := (where $sectionFiles ".Params.pcx_content_type" "eq" "tutorial") -}}
 
 <!-- Pull tutorials from other folders that match based on the product /data file (and .product.title value) -->
 {{- $productData := index .Site.Data .Page.Section -}}
 {{- $productName := slice $productData.product.title }}
 
-{{- $otherTutorials := (where .Site.Pages ".Params.pcx_content_type" "eq" "tutorial").ByParam "updated" -}}
+{{- $otherTutorials := (where .Site.Pages ".Params.pcx_content_type" "eq" "tutorial") -}}
 {{- $otherMatchedTutorials := where $otherTutorials ".Params.products" "intersect" $productName  -}}
 
-<!-- Combine both collections -->
+<!-- Pull in video tutorials -->
+{{- $videoFile := index (index .Site.Data "external-resources") "videos" }}
+{{- $videoEntries := index $videoFile "entries" -}}
+{{- $matchedVideoEntries := where (where $videoEntries ".pcx_content_type" "eq" "tutorial") ".products" "intersect" $productName }}
+
+<!-- Massage the data together into a slice format -->
 {{- $pages := union $sectionTutorials $otherMatchedTutorials -}}
+{{- $pagesArray := slice }}
+{{- range $pages -}}
+
+{{- $pagesArray = $pagesArray | append (dict "title" .Title "link" .RelPermalink "updated" .Params.updated "content_type" .Params.content_type "difficulty" .Params.difficulty "category" .Params.category) -}}
+
+{{- end -}}
+
+{{- $pagesArray = sort ($pagesArray | append $matchedVideoEntries) "updated" "desc" -}}
 
 <div class="DocsTutorials">
   <div class="DocsTutorials--header">
@@ -36,25 +49,28 @@
     </div>
   </div>
   <div class="DocsTutorials--body">
-    {{- range $pages.Reverse -}}
-        <div class="DocsTutorials--row{{ if false }} DocsTutorials--row-is-new{{ end }}">
+    {{- range $pagesArray -}}
+        <div class="DocsTutorials--row">
           <div class="DocsTutorials--column" data-column="name">
-            {{- $href := or .Params.redirect .RelPermalink -}}
-            {{- .Page.RenderString (printf "[%s](%s)" .Title $href) -}}
+            {{- printf "[%s](%s)" .title .link | $.Page.RenderString -}}
           </div>
 
           <div class="DocsTutorials--column" data-column="updated">
-            {{- with .Params.updated -}}
+            {{- with .updated -}}
               {{- partial "datetime" (time .) -}}
             {{- end -}}
           </div>
 
           <div class="DocsTutorials--column" data-column="type">
-            {{- index .Params $column_param -}}
+            {{- if eq $column_param "content_type" -}}
+            {{- .content_type -}}
+            {{- else -}}
+            {{ .category -}}
+            {{- end -}}
           </div>
 
            <div class="DocsTutorials--column" data-column="difficulty">
-            {{ .Params.difficulty }}
+            {{ .difficulty }}
           </div>
         </div>
     {{- end -}}

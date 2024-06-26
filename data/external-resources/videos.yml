@@ -9,7 +9,7 @@ entries:
   updated: 2024-06-25
   difficulty: Beginner
   content_type: 🎥 Video
-  purpose: tutorial
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=QTsaAhFvX9o
   title: Stateful Apps with Cloudflare Workers
   description: Learn how to access external APIs, cache and retrieve data using Workers KV, and create SQL-driven applications with Cloudflare D1.
@@ -20,7 +20,7 @@ entries:
   updated: 2024-05-22
   difficulty: Intermediate
   content_type: 🎥 Video
-  purpose: tutorial
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=H7Qe96fqg1M
   title: Learn Cloudflare Workers - Full Course for Beginners
   description: Learn how to build your first Cloudflare Workers application and deploy it to Cloudflare's global network.
@@ -31,7 +31,7 @@ entries:
   updated: 2024-03-12
   difficulty: Beginner
   content_type: 🎥 Video
-  purpose: tutorial
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=9JM5Z0KzQsQ
   title: Learn AI Development (models, embeddings, vectors)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, teaches the basics of AI Development - models, embeddings, and vectors (including vector databases).
@@ -42,7 +42,7 @@ entries:
   updated: 2023-12-14
   difficulty: Beginner
   content_type: 🎥 Video
-  purpose: tutorial
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=idKdjA8t0jw
   title: Learn AI Development (models, embeddings, vectors)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, shows how to optimize your existing AI applications with Cloudflare AI Gateway, and how to finetune OpenAI models using R2.
@@ -53,4 +53,4 @@ entries:
   updated: 2023-12-14
   difficulty: Beginner
   content_type: 🎥 Video
-  purpose: tutorial
+  pcx_content_type: tutorial
