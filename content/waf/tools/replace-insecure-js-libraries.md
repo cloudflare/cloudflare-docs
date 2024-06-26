@@ -12,7 +12,7 @@ This feature, when turned on, automatically rewrites URLs to external JavaScript
 This rewrite operation currently supports the `polyfill` JavaScript library hosted in `polyfill.io`.
 
 {{<Aside type="warning" header="Warning">}}
-You may need to update your CSP when turning on **Replace insecure JavaScript libraries**. The feature, when enabled, will not perform any rewrites if a {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} is present with a `script-src` or `default-src` directive. Cloudflare will not check `report-only` directives and it will not modify CSP headers.
+You may need to update your {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} when turning on **Replace insecure JavaScript libraries**. The feature, when enabled, will not perform any URL rewrites if a CSP is present with a `script-src` or `default-src` directive. Cloudflare will not check `report-only` directives and it will not modify CSP headers.
 
 Additionally, if you are defining a CSP via HTML `meta` tag, you must either turn off this feature or switch to a CSP defined in an HTTP header.
 {{</Aside>}}
