@@ -4,7 +4,7 @@ hideChildren: true
 pcx_content_type: navigation
 title: Tutorials
 weight: 11
-layout: table
+layout: tutorial
 column_text: Category
 column_param: category
 meta:

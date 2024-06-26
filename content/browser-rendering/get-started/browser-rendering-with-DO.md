@@ -1,10 +1,14 @@
 ---
-pcx_content_type: concept
+pcx_content_type: tutorial
 title: Deploy a Browser Rendering Worker with Durable Objects
 weight: 2
+products: [Durable Objects, R2]
+updated: 2023-09-28
 ---
 
 # Deploy a Browser Rendering Worker with Durable Objects
+
+{{<tutorial-date-info>}}
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 

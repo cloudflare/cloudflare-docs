@@ -4,7 +4,7 @@ pcx_content_type: navigation
 title: Tutorials
 weight: 7
 
-layout: table
+layout: tutorial
 column_text: Type
 column_param: content_type
 ---

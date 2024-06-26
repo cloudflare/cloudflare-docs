@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Hono
+tags: [Hono]
 ---
 
 # Hono

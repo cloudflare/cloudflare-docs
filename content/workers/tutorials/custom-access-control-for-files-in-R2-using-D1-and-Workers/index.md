@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
+products: [R2, D1]
 spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK
@@ -16,7 +17,7 @@ spotlight:
 
 {{<spotlight-author>}}
 
-This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage. 
+This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage.
 
 The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.
 
@@ -75,7 +76,7 @@ Replace `<YOUR_DATABASE_NAME>` with the name you want to use for your database. 
 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
-To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file, as shown in the example below. 
+To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.
 
 ```toml
 [[d1_databases]]
@@ -109,7 +110,7 @@ This file will then provide TypeScript with the correct type definitions for the
 You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).
 
 ```sh
-$ npm run cf-typegen    
+$ npm run cf-typegen
 ```
 
 
@@ -118,7 +119,7 @@ $ npm run cf-typegen
 Before you can start developing the Worker, you need to prepare the D1 database.
 
 For this you need to
-1. Create a table in the database which will then be used to store the user data 
+1. Create a table in the database which will then be used to store the user data
 2. Create a unique index on the username column, which will speed up database queries and ensure that the username is unique
 3. Insert a test user into the table, so you can test your code later on
 
@@ -167,7 +168,7 @@ export default {
 			if (!username || !password) {
 				return new Response('Unauthorized!', { status: 401 });
 			}
-			
+
 			// TODO: Check if the username and password are correct
 		} catch (error) {
 			console.error('An error occurred!', error);

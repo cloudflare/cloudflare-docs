@@ -43,21 +43,10 @@
                 <div class="DocsTutorials--column" data-column="difficulty">
                   <span class="DocsTutorials--column-text">Difficulty</span>
                 </div>
-
-                {{- if eq .Params.length true -}}
-                <div class="DocsTutorials--column" data-column="length">
-                  <span class="DocsTutorials--column-text">Length</span>
-                </div>
-                {{- end -}}
               </div>
             </div>
 
             <div class="DocsTutorials--body">
-              {{- $max_words := 0 -}}
-              {{- range $pages -}}
-                {{- $max_words = math.Max $max_words .WordCount -}}
-              {{- end -}}
-
               {{- range $pages.Reverse -}}
                 {{- $x := .RelPermalink -}}
                 {{- $self := eq $x $current -}}
@@ -82,15 +71,6 @@
                      <div class="DocsTutorials--column" data-column="difficulty">
                       {{ .Params.difficulty }}
                     </div>
-
-                    {{- if eq .Params.length true -}}
-                    <div class="DocsTutorials--column" data-column="length">
-                      <div class="DocsTutorials--length-bar">
-                        {{- $percent := (mul (div .WordCount $max_words) 100) -}}
-                        <div class="DocsTutorials--length-bar-inner" style="width: {{ $percent }}%"></div>
-                      </div>
-                    </div>
-                    {{- end -}}
                   </div>
                 {{- end -}}
               {{- end -}}
