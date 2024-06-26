@@ -1,16 +1,17 @@
-{{- $text := .Get "labels" -}} {{- $labels := split $text " | " -}} {{
-$unique_id := substr (md5 .Inner) 0 16 }}
+{{- $text := .Get "labels" -}} {{- $labels := split $text " | " -}} {{-
+$unique_id := lower (substr (md5 .Inner) 0 16) -}}
 
 <div class="tabs-wrapper" tab-wrapper-id="{{$unique_id}}">
   <nav role="navigation" class="tabs">
     <ul class="tab-active" block-id="{{$unique_id}}">
-      {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-"}}
+      {{ range $idx, $txt := $labels }} {{- $link := replace $txt "/" "-" -}}
+      {{- $dataLink := printf "tab-%s" (lower $link) }}
       <li class="tab-label-wrapper">
         {{ if (eq $link "js") }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -34,7 +35,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -59,7 +60,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -83,7 +84,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -108,7 +109,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -144,7 +145,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -165,7 +166,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -190,7 +191,7 @@ $unique_id := substr (md5 .Inner) 0 16 }}
         <a
           class="tab-label"
           href="#"
-          data-link="tab-{{$link}}"
+          data-link="{{$dataLink}}"
           data-id="{{$unique_id}}"
         >
           <svg
@@ -213,10 +214,10 @@ $unique_id := substr (md5 .Inner) 0 16 }}
 
         {{ else }}
         <a
-          class="tab-label noCodeLabel {{ if eq $idx 0 }}active{{ end }}"
+          class="tab-label noCodeLabel"
           href="#"
-          data-link="tab-{{lower $link}}"
-          data-id="{{lower $unique_id}}"
+          data-link="{{$dataLink}}"
+          data-id="{{$unique_id}}"
         >
           {{$link}}
         </a>
