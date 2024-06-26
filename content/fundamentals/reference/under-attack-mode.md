@@ -29,13 +29,13 @@ To turn on I'm Under Attack mode for specific pages or sections of your site, us
 **When incoming requests match**
 
 * **Field:** _URI Path_
-* **Operator:** _equals_
+* **Operator:** _starts with_
 * **Value:** `/admin`
 
 If you are using the Expression Editor, enter the following expression:<br>
-`(http.request.uri.path eq "/admin")`
+`(starts_with(http.request.uri.path, "/admin"))`
 
-**Then the settings are...**
+**Then the settings are**
 
 1. For **I'm Under Attack**, select **Add**.
 2. Switch the toggle to **On**.
