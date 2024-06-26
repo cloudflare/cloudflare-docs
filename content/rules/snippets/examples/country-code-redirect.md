@@ -30,11 +30,14 @@ export default {
     // more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
     const country = request.cf.country;
 
+    // If country is not null and is defined in the country map above, redirect.
     if (country != null && country in countryMap) {
       const url = countryMap[country];
       // Remove this logging statement from your final output.
       console.log(`Based on ${country}-based request, your user would go to ${url}.` )
       return Response.redirect(url);
+
+    // If request not in map, return another page.
     } else {
       return fetch("https://example.com", request);
     }
