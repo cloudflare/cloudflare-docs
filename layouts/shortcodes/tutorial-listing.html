@@ -1,0 +1,57 @@
+{{- $column_text := default "Type" $.Page.Params.column_text -}}
+{{- $column_param := default "content_type" $.Page.Params.column_param -}}
+
+{{- $current := .Page.RelPermalink -}}
+{{- $len := len (split $current "/") -}}
+{{- $pages := (where .Site.Pages "Section" .Page.Section).ByParam "updated" -}}
+
+<div class="DocsTutorials">
+  <div class="DocsTutorials--header">
+    <div class="DocsTutorials--row">
+      <div class="DocsTutorials--column" data-column="name">
+        <span class="DocsTutorials--column-text">Name</span>
+      </div>
+
+      <div class="DocsTutorials--column" data-column="updated">
+        <span class="DocsTutorials--column-text">Last Updated</span>
+      </div>
+
+      <div class="DocsTutorials--column" data-column="type">
+        <span class="DocsTutorials--column-text">{{ $column_text }}</span>
+      </div>
+
+      <div class="DocsTutorials--column" data-column="difficulty">
+        <span class="DocsTutorials--column-text">Difficulty</span>
+      </div>
+    </div>
+  </div>
+  <div class="DocsTutorials--body">
+    {{- range $pages.Reverse -}}
+      {{- $x := .RelPermalink -}}
+      {{- $self := eq $x $current -}}
+      {{- $delta := sub (len (split $x "/")) $len -}}
+      {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+        <div class="DocsTutorials--row{{ if false }} DocsTutorials--row-is-new{{ end }}">
+          <div class="DocsTutorials--column" data-column="name">
+            {{- $href := or .Params.redirect .RelPermalink -}}
+            {{- .Page.RenderString (printf "[%s](%s)" .Title $href) -}}
+          </div>
+
+          <div class="DocsTutorials--column" data-column="updated">
+            {{- with .Params.updated -}}
+              {{- partial "datetime" (time .) -}}
+            {{- end -}}
+          </div>
+
+          <div class="DocsTutorials--column" data-column="type">
+            {{- index .Params $column_param -}}
+          </div>
+
+           <div class="DocsTutorials--column" data-column="difficulty">
+            {{ .Params.difficulty }}
+          </div>
+        </div>
+      {{- end -}}
+    {{- end -}}
+  </div>
+</div>
