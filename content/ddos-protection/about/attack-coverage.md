@@ -16,7 +16,7 @@ The [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/
 As a general guideline, various Cloudflare products operate on different open systems interconnection (OSI) layers and you are protected up to the layer on which your service operates. You can customize the DDoS settings on the layer in which you onboarded. For example, since the CDN/WAF service is a Layer 7 (HTTP/HTTPS) service, Cloudflare provides protection from DDoS attacks on L7 downwards, including L3/4 attacks. 
 
 {{<Aside type="note">}}
-For Magic Transit customers, Cloudflare provides some L7 protection with a L3 service (e.g. the Advanced DNS Protection system that is available for Magic Transit customers. DNS is considered a L7 protocol).
+For Magic Transit customers, Cloudflare provides some L7 protection with a L3 service (like the Advanced DNS Protection system that is available for Magic Transit customers. DNS is considered a L7 protocol).
 {{</Aside>}}
 
 The following table includes a sample of covered attack vectors:
