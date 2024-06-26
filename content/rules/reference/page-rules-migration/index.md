@@ -20,15 +20,21 @@ Cloudflare Page Rules has several fundamental limitations, such as triggering so
 
 In 2022, we announced in our blog post [The future of Page Rules](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
 
-## Main differences
+Improvements in modern Rules features include:
 
 - **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
-
 - **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
-
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
-
 - **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
+
+## Important differences
+
+The evaluation and execution order of Rules features is different from Page Rules:
+
+- Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
+- The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
+- A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated in a fixed sequence. Refer to [Execution order](/rules/origin-rules/#execution-order) for more information.
+- Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
 
 ## Convert Page Rules URLs to filter expressions
 
