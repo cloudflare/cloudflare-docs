@@ -48,7 +48,7 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   Mirage
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
-*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level) (deprecated)
+*   [I'm Under Attack](/workers/configuration/workers-with-page-rules/#im-under-attack)
 *   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
@@ -236,15 +236,15 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 {{</table-wrap>}}
 
-{{<heading-pill style="deprecated" heading="h3">}}Security Level{{</heading-pill>}}
+### I'm Under Attack
 
 {{<table-wrap>}}
 
 |     Page Rule            | Source     | Target     | Behavior       |
 | -------------------------|------------|------------|----------------|
-| Security Level           | Client     | Worker     | Rule Respected |
-| Security Level           | Worker     | Same Zone  | Rule Ignored   |
-| Security Level           | Worker     | Other Zone | Rule Ignored   |
+| I'm Under Attack         | Client     | Worker     | Rule Respected |
+| I'm Under Attack         | Worker     | Same Zone  | Rule Ignored   |
+| I'm Under Attack         | Worker     | Other Zone | Rule Ignored   |
 
 {{</table-wrap>}}
 
