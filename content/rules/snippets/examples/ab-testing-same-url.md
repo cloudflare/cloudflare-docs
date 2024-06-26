@@ -20,15 +20,16 @@ This version supports passing the request through to test and control on the ori
 const NAME = "myExampleWorkersABTest";
 
 export default {
-  async fetch(req) {
-    const url = new URL(req.url);
+  async fetch(request) {
+    //Clone the original URL
+    const url = new URL(request.url);
 
     // Enable Passthrough to allow direct access to control and test routes.
     if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test"))
-      return fetch(req);
+      return fetch(request);
 
     // Determine which group this requester is in.
-    const cookie = req.headers.get("cookie");
+    const cookie = request.headers.get("cookie");
 
     if (cookie && cookie.includes(`${NAME}=control`)) {
       url.pathname = "/control" + url.pathname;
@@ -43,11 +44,11 @@ export default {
         url.pathname = "/test" + url.pathname;
       }
       // Reconstruct response to avoid immutability
-      let res = await fetch(url);
-      res = new Response(res.body, res);
+      let response = await fetch(url);
+      response = new Response(response.body, response);
       // Set cookie to enable persistent A/B sessions.
-      res.headers.append("Set-Cookie", `${NAME}=${group}; path=/`);
-      return res;
+      response.headers.append("Set-Cookie", `${NAME}=${group}; path=/`);
+      return response;
     }
     return fetch(url);
   },
