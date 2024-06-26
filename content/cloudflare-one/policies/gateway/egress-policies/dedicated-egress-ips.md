@@ -70,6 +70,26 @@ When you turn on dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 datab
 
 We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
+{{<details header="Supported IP geolocation databases">}}
+
+- [Google](https://developers.google.com/maps/documentation/geolocation/overview)
+- [MaxMind GeoIP](https://www.maxmind.com/en/geoip-databases)
+- [TransUnion Neustar TruValidate IP Intelligence](https://www.transunion.com/solution/truvalidate/digital-insights/ip-intelligence)
+- [IPinfo.io](https://ipinfo.io/)
+- [IP2Location](https://lite.ip2location.com/)
+- [Digital Element](https://www.digitalelement.com/)
+- [ip2c.org](https://ip2c.org/)
+- [ipapi](https://ipapi.com/)
+- [IP-API.com](https://ip-api.com/)
+- [Geo Targetly](https://geotargetly.com/)
+- [DB-IP](https://db-ip.com/)
+- [Abstract IP Geolocation API](https://www.abstractapi.com/ip-geolocation-api)
+- [ipgeolocation.io](https://ipgeolocation.io/)
+- [Ipstack](https://ipstack.com/)
+- [ipify](https://www.ipify.org/)
+
+{{</details>}}
+
 #### Verify IP geolocation
 
 To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](https://www.maxmind.com/en/geoip2-precision-demo) and enter your dedicated egress IP.
