@@ -67,7 +67,8 @@ In the following example, calling `json_extract` over a string (not valid JSON) 
 SELECT json_extract('not valid JSON: just a string', '$')
 ```
 This will return an error:
-```sh
+
+```txt
 ERROR 9015: SQL engine error: query error: Error code 1: SQL error or missing database (malformed
   JSON)`
 ```

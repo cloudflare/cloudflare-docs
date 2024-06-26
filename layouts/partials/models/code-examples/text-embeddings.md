@@ -52,7 +52,7 @@ stories = [
 
 response = requests.post(
   f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/{{ .Page.Params.model.name }}",
-  headers={"Authorization": "Bearer {AUTH_TOKEN}"},
+  headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
   json={"text": stories}
 )
 

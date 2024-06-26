@@ -89,6 +89,12 @@
 # ai
 /ai/ /use-cases/ai/ 301
 
+# AI Gateway
+
+/ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
+/ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
@@ -269,6 +275,7 @@
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 /support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/best-practices/respond-to-ddos-attacks/ 301
 /support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/about/ 301
+/ddos-protection/change-log/global-changes/ /ddos-protection/change-log/general-updates/ 301
 # Redirect the following pages temporarily (using HTTP 307 Temporary redirect)
 /ddos-protection/dns-protection/rule-settings/ /ddos-protection/dns-protection/ 307
 /ddos-protection/dns-protection/api/ /ddos-protection/dns-protection/ 307
@@ -593,6 +600,7 @@
 /learning-paths/workers/test/intro-to-observability/ /learning-paths/workers/get-started/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-api/ /learning-paths/cybersafe/area1-onboarding/ 301
 /learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
+/learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -1127,6 +1135,7 @@
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
 /waf/custom-rules/use-cases/require-valid-hmac-token/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
+/waf/custom-rules/use-cases/block-ip-reputation/ /waf/custom-rules/use-cases/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1263,6 +1272,7 @@
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
+/workers/tutorials/serverless-api-with-drizzle-hono-and-neon/ https://neon.tech/blog/api-cf-drizzle-neon 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 /workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301

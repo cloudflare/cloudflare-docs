@@ -12,7 +12,7 @@ meta:
 
 ## If I run out of Page Rules, can I buy more?
 
-No, you cannot buy additional Page Rules since they are deprecated. You will need to [migrate to modern Rules features](/rules/reference/page-rules-migration/) to benefit from increased quotas.
+No, you cannot buy additional Page Rules since they are a legacy product. You will need to [migrate to modern Rules features](/rules/reference/page-rules-migration/) to benefit from increased quotas.
 
 ## How do I cancel my Page Rules purchase?
 

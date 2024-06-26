@@ -64,8 +64,6 @@ To add Cron Triggers in the Cloudflare dashboard:
 
 Cloudflare supports cron expressions with five fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
 
-{{<table-wrap>}}
-
 | Field         | Values                                                             | Characters   |
 | ------------- | ------------------------------------------------------------------ | ------------ |
 | Minute        | 0-59                                                               | \* , - /     |
@@ -73,8 +71,6 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 | Days of Month | 1-31                                                               | \* , - / L W |
 | Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /     |
 | Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L # |
-
-{{</table-wrap>}}
 
 ### Examples
 
@@ -155,9 +151,11 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 2. Go to **Workers & Pages**, and select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
-### Via `wrangler.toml`
+{{<Aside type="note">}}
 
-To disable a Cron Trigger on a deployed Worker, set `crons = []`. Commenting out the `crons` key will not disable a Cron Trigger.
+You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+
+{{</Aside>}}
 
 ## Limits
 

@@ -50,13 +50,9 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 
 ## Return codes
 
-{{<table-wrap>}}
-
 | HTTP Status | Meaning |
 | ------------|----------- |
 | `400` | DNS query not specified or too small. |
 | `413` | DNS query is larger than maximum allowed DNS message size. |
 | `415` | Unsupported content type. |
 | `504` | Resolver timeout while waiting for the query response. |
-
-{{</table-wrap>}}

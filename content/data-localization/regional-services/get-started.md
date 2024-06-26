@@ -26,9 +26,13 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 4. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
 
-Refer to the table below for the complete list of available regions and their definitions.
+{{<Aside type="note">}}
 
-{{<table-wrap style="font-size: 87%">}}
+Some regions may not appear on the dropdown because newly announced regions mentioned in the [blog post](https://blog.cloudflare.com/expanding-regional-services-configuration-flexibility-for-customers) are subject to approval by Cloudflare's internal team. For more information and entitlement reach out to your account team.
+
+{{</Aside>}}
+
+Refer to the table below for the complete list of available regions and their definitions.
 
 | Region | Definition |
 | --- | --- |
@@ -44,7 +48,7 @@ Refer to the table below for the complete list of available regions and their de
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
 | South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
 | Austria | Cloudflare will only use data centers that are physically located within Austria to decrypt and service HTTPS traffic. |
-| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |   
+| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |
 | Cloudflare Green Energy | Cloudflare will only use data centers that are committed to powering their operations with renewable energy. |
 | Exclusive of Hong Kong and Macau | Cloudflare will only use data centers that are NOT physically located within Hong Kong and Macau to decrypt and service HTTPS traffic. |
 | Exclusive of Russia and Belarus | Cloudflare will only use data centers that are NOT physically located within Russia and Belarus to decrypt and service HTTPS traffic. |
@@ -62,8 +66,6 @@ Refer to the table below for the complete list of available regions and their de
 | US State of California | Cloudflare will only use data centers that are physically located within the US State of California to decrypt and service HTTPS traffic. |
 | US State of Florida | Cloudflare will only use data centers that are physically located within the US State of Florida to decrypt and service HTTPS traffic. |
 | US State of Texas | Cloudflare will only use data centers that are physically located within the US State of Texas to decrypt and service HTTPS traffic. |
-
-{{</table-wrap>}}
 
 ## Configure Regional Services via API
 

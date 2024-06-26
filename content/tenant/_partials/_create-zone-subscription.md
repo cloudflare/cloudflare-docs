@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create a zone subscription, send a [POST](/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
+To create a zone subscription, typically used to upgrade a zone's plan from `PARTNERS_FREE` to a paid [Zone plan](/tenant/reference/subscriptions/#zone-plans), send a [POST](/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
 

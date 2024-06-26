@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Endpoint pools
+title: Pools
 weight: 4
 ---
 
-# Endpoint pools
+# Pools
 
 {{<glossary-definition term_id="pool">}}
 

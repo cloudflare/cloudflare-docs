@@ -14,8 +14,8 @@ Refer to this page for details about how Cloudflare orchestrates VPN connectivit
 
 ![Diagram showing how Cloudflare creates on-ramps to AWS](/images/magic-cloud-networking/reference/aws.png)
 
-When using Magic Cloud Networking to automatically create on-ramps to your AWS account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
-- Cloudflare will create a new Network Security Group (NSG) named **Cloudflare Magic WAN** with rules allowing outbound/inbound traffic to/from Magic WAN. You must attach this NSG to subnets or virtual machines (VMs) you wish to have connectivity to Magic WAN.
+When using Magic Cloud Networking {{<inline-pill style="beta">}} to automatically create on-ramps to your AWS account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
+- Cloudflare will create a new customer-managed prefix list named **Magic WAN and Cloudflare Edge** populated with your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) prefixes and the IPv4 address ranges for Cloudflare's global network servers (the latter prefixes are necessary if you use any Cloudflare L7 processing features). You must create rules in your Network Security Groups (NSGs) allowing traffic to/from this prefix list in order to have connectivity with Magic WAN. (The prefix list will contain around 15 to 25 entries, which each count against the rules-per-security-group quota for NSGs in your AWS account.)
 - Cloudflare will create a Virtual Private Gateway and attach it to your Virtual Private Cloud (VPC). If an existing Virtual Private Gateway is already attached to the VPC, on-ramp creation will fail.
 - Cloudflare will enable route propagation from the Virtual Private Gateway into all route tables in your VPC. This will result in a route for each prefix in your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) targeting the gateway.
 - Cloudflare will add a route in Magic WAN for each IPv4 CIDR block in your VPC.
@@ -46,6 +46,10 @@ Magic Cloud Networking discovers the following resource types.
 - AWS VPN Connection
 - AWS VPN Connection Route
 - AWS VPN Gateway
+- AWS Security Group
+- AWS VPC Security Group Ingress Rule
+- AWS VPC Security Group Egress Rule
+- AWS EC2 Managed Prefix List
 
 ### Azure
 - Azure Virtual Network
@@ -65,6 +69,7 @@ Magic Cloud Networking discovers the following resource types.
 - Google Compute VPN Tunnel
 - Google Compute Route
 - Google Compute Address
+- Google Compute Global Address
 - Google Compute Router
 - Google Compute Interconnect Attachment
 - Google Compute HA VPN Gateway

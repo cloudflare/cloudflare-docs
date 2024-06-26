@@ -8,6 +8,11 @@ weight: 1
 
 This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the OpenID Connect (OIDC) authentication protocol.
 
+## Prerequisites
+
+- An [OIDC identity provider](/cloudflare-one/identity/idp-integration/generic-oidc/) configured in Cloudflare Zero Trust
+- Admin access to the account of the SaaS application
+
 ## 1. Get SaaS application URL
 
 In your SaaS application account, obtain the **Redirect URL** (also known as the callback URL). This is the SaaS endpoint where users are redirected to after they authenticate with Cloudflare Access.
@@ -53,7 +58,7 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks`|
     | User info endpoint | Returns all user claims in JSON format </br> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo` |
 
-11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering the URL that users should be sent to when they select the tile.
 
 12. {{<render file="access/_access-block-page.md">}}
 
