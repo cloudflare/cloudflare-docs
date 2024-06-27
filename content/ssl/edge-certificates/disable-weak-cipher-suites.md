@@ -17,7 +17,7 @@ While the default cipher suites provided with [Universal SSL certificates](/ss
 
 If the Universal SSL offering does not meet your business requirements, you can use Cloudflare [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to restrict the cipher suites used in connections between Cloudflare and your visitor's browser.
 
-After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting).
+After you subscribed to Advanced Certificate Manager for your domain, you can restrict Cipher Suites at the Zone-level requests via the API. Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URI path.
 
 {{<Aside>}}
 Currently, restricting cipher suites is only possible via API and is not available via the Cloudflare dashboard.
