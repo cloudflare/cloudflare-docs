@@ -8,7 +8,7 @@ title: Embedded Function Calling
 
 Cloudflare has a unique [embedded function calling](https://blog.cloudflare.com/embedded-function-calling) feature that allows you to execute function code alongside your tool call inference. Our npm package [`@cloudflare/ai-utils`]() is the developer toolkit you'll need to get started with embedded function calling.
 
-Embedded function calling can be used to easily make complex agents that interact with websites and APIs, like using natural language to create meetings on Google Calendar, saving data to Notion, automatically routing requests to other APIs, saving data to an R2 bucket - or all of them at the same time. All you need is a prompt and an OpenAPI spec to get started.
+Embedded function calling can be used to easily make complex agents that interact with websites and APIs, like using natural language to create meetings on Google Calendar, saving data to Notion, automatically routing requests to other APIs, saving data to an R2 bucket - or all of this at the same time. All you need is a prompt and an OpenAPI spec to get started.
 
 
 ## Get Started
@@ -16,7 +16,7 @@ To get started, you will need to `npm install @cloudflare/ai-utils` in your proj
 
 Then, import the utils with `import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"` in your `index.js` file. 
 
-Check out the working example and API reference below. Our utils package is also open-sourced on [Github]().
+Check out the working example and API reference below. Our ai-utils package is also open-sourced on [Github]().
 
 ```js
 import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"
