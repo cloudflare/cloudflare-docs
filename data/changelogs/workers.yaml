@@ -22,7 +22,7 @@ entries:
 - publish_date: '2024-05-13'
   description: |-
     - Updated v8 to version 12.5.
-    - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new (`blob_standard_mime_type` compatibility flag)[/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers].
+    - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new [`blob_standard_mime_type` compatibility flag](/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers).
 - publish_date: '2024-05-03'
   description: |-
     - Fixed RPC to/from Durable Objects not honoring the output gate.
