@@ -9,7 +9,7 @@ entries:
 - publish_date: '2024-06-19'
   title: Added support for basic function calling
   description: |-
-    - [Function calling](/workers-ai/configuration/function-calling/) is now supported on enabled models
+    - [Function calling](/workers-ai/function-calling/) is now supported on enabled models
     - Properties added on [models](/workers-ai/models/) page to show which models support function calling
 
 - publish_date: '2024-06-18'
