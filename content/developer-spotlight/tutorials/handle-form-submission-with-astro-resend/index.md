@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send form submissions using Astro and Resend
+tags: [Forms]
 spotlight:
   author: Cody Walsh
   author_bio_link: https://www.linkedin.com/in/cody-walsh-616a979/
@@ -28,7 +29,7 @@ Make sure you have the following set up before proceeding with this tutorial:
 - Installed [npm](https://docs.npmjs.com/getting-started).
 - A [Resend account](https://resend.com/signup).
 
-## 1. Create a new Astro project and install Cloudflare Adapter: 
+## 1. Create a new Astro project and install Cloudflare Adapter:
 
 Open your terminal and run the below command:
 
@@ -40,9 +41,9 @@ npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Follow the prompts to configure your project, selecting your preferred options for TypeScript usage, TypeScript strictness, version control, and deployment.
-	
+
 After the initial installation change into the newly created project directory `my-astro-app` and run the following to add the Cloudflare adapter:
-	
+
 ```bash
 ---
 header: Install Cloudflare Adapter
@@ -116,7 +117,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 ```
 
-## 4. Send emails using Resend 
+## 4. Send emails using Resend
 
 Next you will need to install the Resend SDK.
 
@@ -153,7 +154,7 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({
         message: `Fill out all fields.`,
-      }), 
+      }),
       {
         status: 404,
         statusText: "Did not provide the right data",
@@ -167,7 +168,7 @@ export const POST: APIRoute = async ({ request }) => {
     to: 'delivered@resend.dev',
     subject: `Sumbission from ${name}`,
     html: `<p>Hi ${name},</p><p>Your message was received.</p>`,
-  });  
+  });
 
   // If the message was sent successfully, return a 200 response
   if (sendResend.data) {
