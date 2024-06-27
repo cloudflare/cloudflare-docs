@@ -2,9 +2,16 @@
 title: Connection forwarding
 pcx_content_type: concept
 weight: 3
+layout: wide
 ---
 
 # Connection forwarding
+
+After a request reaches Cloudflare on an ingress data center, and the cache service sends a request for the egress router to connect to your origin, the following scenarios are possible:
+
+## Traffic can egress from the same server
+
+If the server running the egress router has access to an applicable Aegis IP, traffic egresses from that server.
 
 ```mermaid
 flowchart LR
@@ -20,6 +27,12 @@ flowchart LR
         B --egress--> C
 ```
 
+## Connection forwarding is needed
+
+If the server does not have access to an applicable Aegis IP, the following options are checked and the first that is possible will take place:
+
+* Another server in the same data center has access to an applicable Aegis IP and the connection is forwarded to that server.
+
 ```mermaid
 flowchart LR
         accTitle: Cloudflare Aegis and connection forwarding
@@ -34,6 +47,8 @@ flowchart LR
         A --ingress--> X
         Y --egress--> C
 ```
+
+* Another data center in the same location has access to an applicable Aegis IP and the connection is forwarded to that data center.
 
 ```mermaid
 flowchart LR
@@ -54,6 +69,9 @@ flowchart LR
         A --ingress--> X
         Y --egress--> C
 ```
+
+* Another data center in a different location has access to an applicable Aegis IP. The closest location is selected and connection is forwarded to that location.
+
 
 ```mermaid
 flowchart LR
