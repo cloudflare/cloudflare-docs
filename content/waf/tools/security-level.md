@@ -62,7 +62,7 @@ To set a custom security level for your API or any other part of your domain, 
 {{<Aside type="warning">}}
 Since Security Level is deprecated, you can only turn on or off [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) in the Cloudflare dashboard.
 
-To use other security level values, you must use the [Change Security Level setting](/api/operations/zone-settings-change-security-level-setting) endpoint or Terraform.
+To use other security level values, you must use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint or Terraform.
 {{</Aside>}}
 
 To turn on or off I’m Under Attack mode for your entire zone:
