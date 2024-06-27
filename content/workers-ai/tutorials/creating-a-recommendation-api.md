@@ -11,6 +11,7 @@ spotlight:
   author_bio_source: LinkedIn
 tags:
   - AI
+  - Spotlight
 ---
 
 # Recommend products on e-commerce sites using Workers AI and Stripe

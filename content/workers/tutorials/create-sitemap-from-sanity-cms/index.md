@@ -8,6 +8,8 @@ spotlight:
   author: John Siciliano
   author_bio_link: https://www.linkedin.com/in/johnsicili/
   author_bio_source: LinkedIn
+tags:
+  - Spotlight
 ---
 
 # Create a sitemap from Sanity CMS with Workers
