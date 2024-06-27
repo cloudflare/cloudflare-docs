@@ -34,45 +34,61 @@ A Worker cannot call itself or another Worker more than 16 times. In  order to p
 
 ### "The script will never generate a response" errors
 
-Some requests may return a 1101 error with `The script will never generate a response` in the error message. This occurs when the runtime detects that all the code associated with the request has executed and no events are left in the event loop, but a Response has not been returned. This is most often a Response relying on a Promise that never gets resolved or rejected. To debug this problem, look for the creation of Promises within your own code or library code that block a Response, then and ensure their resolution. In other runtimes, this could result in indefinitely hanging code, but Workers error immediately to help with debugging.
+Some requests may return a 1101 error with `The script will never generate a response` in the error message. This occurs when the Workers runtime detects that all the code associated with the request has executed and no events are left in the event loop, but a Response has not been returned.
 
-In the (admittedly contrived) example below, the Response relies on a Promise resolution that never happens. Uncommenting the `resolve` callback solves the issue.
+#### Cause 1: Unresolved Promises
+
+This is most commonly caused by relying on a Promise that is never resolved or rejected, in order to return a Response. To debug, look for Promises within your code or dependencies' code that block a Response, and ensure they are resolved or rejected.
+
+In browsers and other JavaScript runtimes, equivalent code will hang indefinitely, leading to both bugs and memory leaks. The Workers runtime throws an explicit error to help you debug.
+
+In the example below, the Response relies on a Promise resolution that never happens. Uncommenting the `resolve` callback solves the issue.
 
 ```js
+---
+filename: index.js
+highlight: [9]
+---
 export default {
-	fetch(req) {
-		let response = new Response("Example response");
-		let { promise, resolve } = Promise.withResolvers();
+  fetch(req) {
+    let response = new Response("Example response");
+    let { promise, resolve } = Promise.withResolvers();
 
-		// If this a resolve will never happen, the Workers runtime will
-		// recognize this and throw an error.
+    // If the promise is not resolved, the Workers runtime will
+    // recognize this and throw an error.
 
-		// setTimeout(resolve, 0)
+    // setTimeout(resolve, 0)
 
-		return promise.then(() => response);
-	},
+    return promise.then(() => response);
+  },
 };
 ```
 
-A subset of these cases are related to open WebSocket connections. If a WebSocket is missing the proper code to close it's server-side connection, a `script will never generate a response` error is thrown. In the example below, the `'close'` event from the client is not properly handled with a `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
+#### Cause 2: WebSocket connections that are never closed
+
+If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
 
 ```js
+---
+filename: index.js
+highlight: [10]
+---
 async function handleRequest(request) {
-	let webSocketPair = new WebSocketPair();
-	let [client, server] = Object.values(webSocketPair);
-	server.accept();
+  let webSocketPair = new WebSocketPair();
+  let [client, server] = Object.values(webSocketPair);
+  server.accept();
 
-	server.addEventListener('close', () => {
+  server.addEventListener('close', () => {
     // This missing line would keep a WebSocket connection open indefinitely
     // and results in "The script will never generate a response" errors
 
-		// server.close();
-	});
+    // server.close();
+  });
 
-	return new Response(null, {
-		status: 101,
-		webSocket: client,
-	});
+  return new Response(null, {
+    status: 101,
+    webSocket: client,
+  });
 }
 ```
 
