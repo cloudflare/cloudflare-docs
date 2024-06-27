@@ -8,6 +8,8 @@ spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK
   author_bio_source: GitHub
+tags:
+  - Spotlight
 ---
 
 # Custom access control for files in R2 using D1 and Workers
