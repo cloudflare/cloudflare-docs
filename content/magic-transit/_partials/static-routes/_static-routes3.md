@@ -81,9 +81,9 @@ Example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
+  --header "Content-Type: application/json" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
   --data '{
     "routes": [
       {
@@ -101,7 +101,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
         },
         "weight": <WEIGHT>
       }
-      ]
+    ]
   }'
 ```
 
@@ -130,9 +130,9 @@ Example:
 ```bash
 curl --request PUT \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
+  --header "Content-Type: application/json" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
   --data '{
     "routes": [
       {
@@ -149,7 +149,8 @@ curl --request PUT \
           ]
         },
         "weight": <WEIGHT>
-      ]
+      }  
+    ]
   }'
 ```
 
@@ -176,9 +177,8 @@ Example:
 ```bash
 curl --request DELETE \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes/{route_id} \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>"
 ```
 
 {{</tab>}}
