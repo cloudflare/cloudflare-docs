@@ -154,10 +154,6 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 You can use version overrides to send a request to a specific version of your Worker in your gradual deployment.
 
-For example, you may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic.
-
-If your deployment is configured to route all traffic to version A, and you want to test version B before gradually deploying it, you can create a new deployment which routes 0% of traffic to version B and 100% to version A. When this deployment has been created, no requests will use version B unless they specify an appropriate version override.
-
 To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
 
 ```sh
@@ -168,15 +164,42 @@ $ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Ver
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-{{<Aside type="note" header="Verifying that the correct version was invoked">}}
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](https://developers.cloudflare.com/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment. 
+
+{{<Aside type="note" header="Verifying that the version override was applied">}}
 
 There are a number of reasons why a request's version override may not be applied. For example:
 * The deployment containing the specified version may not have propagated yet.
-* The syntax of the header value was incorrect or a typo was made in a worker name or version ID.
+* The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
 To make sure that the request's version override was applied correctly, you can [observe](#observability) the version of your Worker that was invoked. You could even automate this check by using the [runtime binding](#runtime-binding) to return the version in the Worker's response.
 
 {{</Aside>}}
+
+### Example
+
+You may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic.
+
+In this example, your deployment is initially configured to route all traffic to a single version:
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Create a new deployment using [`wrangler versions deploy --experimental-versions`](https://developers.cloudflare.com/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| dc8dcd28-271b-4367-9840-6c244f84cb40   | 0%         |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Now test the new version with a version override before gradually progressing the new version to 100%:
+
+```sh
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
 
 ## Gradual deployments for Durable Objects
 
