@@ -18,7 +18,7 @@ Embedded function calling can be used to easily make complex agents that interac
 To get started, run the following command in your project repository.
 
 ```sh
-$ npm install @cloudflare/ai-utils
+$ npm install @cloudflare/ai-utils --save
 ```
 
 Then, import the utils with `import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"` in your `index.js` file.
