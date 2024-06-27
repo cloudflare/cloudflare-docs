@@ -55,3 +55,9 @@ curl --request PATCH \
 
 {{</tab>}}
 {{</tabs>}}
+
+---
+
+## Final remarks
+
+Since [`pages.dev` zones](/pages/configuration/preview-deployments/) are on a Free plan, the **Replace insecure JavaScript libraries** feature is turned on by default on these zones and it is not possible to turn it off.
