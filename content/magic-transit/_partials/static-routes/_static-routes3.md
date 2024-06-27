@@ -169,7 +169,7 @@ curl --request PUT \
 
 {{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
 
-Create a `DELETE` request [using the API](https://developers.cloudflare.com/api/operations/magic-static-routes-delete-route) to delete a static route.
+Create a `DELETE` request [using the API](/api/operations/magic-static-routes-delete-route) to delete a static route.
 
 Example:
 
