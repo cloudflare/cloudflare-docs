@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Use [bot score field](/workers/runtime-apis/request/#incomingrequestcfproperties) to send bots to a honeypot
+summary: Use the [bot score field](/workers/runtime-apis/request/#incomingrequestcfproperties) to send bots to a honeypot.
 goal:
   - Routing
 operation:
