@@ -23,7 +23,7 @@ When turned on, Cloudflare will check HTTP(S) proxied traffic for `script` tags 
 
 The rewritten URL will keep the original URL scheme (`http://` or `https://`).
 
-For `polyfill.io` URL rewrites, all `3.*` versions of the `polyfill` library are supported. If an unknown version is requested, Cloudflare will rewrite the URL to use the latest `3.*` version of the library (currently `3.111.0`).
+For `polyfill.io` URL rewrites, all `3.*` versions of the `polyfill` library are supported under the `/v3` path. Additionally, the `/v2` path is also supported. If an unknown version is requested under the `/v3` path, Cloudflare will rewrite the URL to use the latest `3.*` version of the library (currently `3.111.0`).
 
 ## Availability
 
