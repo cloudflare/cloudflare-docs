@@ -10,5 +10,5 @@ message: "**Warning**: Use correct brand name: '%s' instead of '%s'."
 level: warning
 ignorecase: false
 swap:
-  CloudFlare: Cloudflare
+  (?!Cloudflare)([cC]loud[fF]lare): Cloudflare
   (?!cdnjs)([cC][dD][nN]\.?[jJ][sS]): cdnjs
