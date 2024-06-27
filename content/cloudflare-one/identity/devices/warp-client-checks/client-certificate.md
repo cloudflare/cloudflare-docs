@@ -18,7 +18,7 @@ The Client Certificate device posture attribute checks if the device has a valid
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | ?         |
 | macOS    | ✅           | ?         |
-| Linux    | ❌           |   |
+| Linux    | Coming soon  |   |
 | iOS      | ❌           |   |
 | Android  | ❌           |   |
 | ChromeOS | ❌           |   |
@@ -49,7 +49,12 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
 
    1. **Name**: Enter a unique name for this device posture check.
    2. **Operating system**: Select your operating system.
-   3. **OS locations**: Select the location(s) where the client certificate is installed.
+   3. **OS locations**: Specify the location(s) where the client certificate is installed.
+| System  | Certificate stores    |
+| ------- | -------------------- |
+| Windows | - Local machine trust store </br> - User trust store|
+| macOS   | - System keychain      |
+| Linux   | - NSSDB </br> - To search a custom location, enter the absolute file path(s) to the certificate and private key (for example `/usr/local/mycompany/certs/client.pem` and `/usr/local/mycompany/certs/client_key.pem`). The certificate and private key must be in `PEM` format. They can either be in two different files or the same file. |
    4. **Certificate ID**: Enter the UUID of the root CA.
    5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
@@ -63,17 +68,8 @@ Next, go to **Logs** > **Posture** and verify that the client certificate check 
 
 Learn how the WARP client determines if a client certificate is installed and trusted on the device.
 
-{{<tabs labels="macOS | Windows ">}}
-{{<tab label="macos" no-code="true">}}
+{{<tabs labels=" Windows | macOS | Linux">}}
 
-1. Open Terminal.
-2. To search System Keychain for a certificate with a specific common name, run the following command:
-
-```sh
-$ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/System.keychain
-```
-
-{{</tab>}}
 {{<tab label="windows" no-code="true">}}
 
 1. Open a PowerShell window.
@@ -88,6 +84,28 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
   ```powershell
   PS C:\Users\JohnDoe> Get-ChildItem Cert:\CurrentUser\My\ | where{$_.Subject -like "*<COMMON_NAME>*"}
   ```
+
+{{</tab>}}
+
+{{<tab label="macos" no-code="true">}}
+
+1. Open Terminal.
+2. To search System Keychain for a certificate with a specific common name, run the following command:
+
+```sh
+$ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/System.keychain
+```
+
+{{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+1. Open Terminal.
+2. To search NSSDB for a certificate with a specific common name, run the following command:
+
+```sh
+$ certutil -L -d sql:/etc/pki/nssdb -r -n <COMMON_NAME>
+```
 
 {{</tab>}}
 
