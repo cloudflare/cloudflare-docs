@@ -9,9 +9,7 @@ Tables make complex information easier to understand by presenting it in a clear
 
 {{<Aside type="warning">}}
 
-Limit tables to three columns (or four if the information is very condensed).
-
-Otherwise, mobile users will have a hard time consuming tabular information.
+Limit tables to three columns (or four if the information is very condensed). Otherwise, mobile users will have a hard time consuming tabular information.
 
 {{</Aside>}}
 
@@ -56,7 +54,7 @@ When using tables:
 
 - Check whether the tables work for both desktop and mobile users.
 - Limit tables to three columns (or four if the information is very condensed).
-- Avoid long sentences or information that is so dense that it defeats the purpose of having tabular displays
+- Avoid long sentences or information that is so dense that it defeats the purpose of having tabular displays.
 
 ### Alternatives
 
@@ -68,7 +66,7 @@ If your information does not fit within the [guidelines](#guidelines), consider 
 
 ### Large tables
 
-As stated in the [guidelines](#guidelines), we generally avoid large tables in our documentations.
+As stated in the [guidelines](#guidelines), we generally avoid large tables in our documentation.
 
 However, if you have a unique use case, use the `{{</*table-wrap*/>}}` shortcode to make your table responsive and scrollable.
 
