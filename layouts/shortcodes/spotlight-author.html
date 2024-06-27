@@ -9,5 +9,5 @@
   <div>
       <span class="author-details">Written by: </span>{{- $author -}}
   </div>
-  <p><span class="author-details">Profile: </span>{{ (printf "[%s](%s)" $source $link ) | .Page.RenderString }}</p>
+  <span class="author-details">Profile: </span>{{ (printf "[%s](%s)" $source $link ) | .Page.RenderString }}
 </div>

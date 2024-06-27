@@ -5,13 +5,12 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Recommend products on e-commerce sites using Workers AI and Stripe
 weight: 2
+products: [Workers, Vectorize]
 spotlight:
   author: Hidetaka Okamoto
   author_bio_link: https://www.linkedin.com/in/hideokamoto/
   author_bio_source: LinkedIn
-tags:
-  - AI
-  - Spotlight
+tags: [AI, Hono]
 ---
 
 # Recommend products on e-commerce sites using Workers AI and Stripe
