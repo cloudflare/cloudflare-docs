@@ -13,11 +13,11 @@ In essence, function calling allows you to perform actions with LLMs by executin
 
 ## How can I use function calling?
 
-Workers AI has [embedded function calling](/workers-ai/function-calling/embedded/) which allows you to execute function code alongside your inference calls. We have a package called [`@cloudflare/ai-utils`]() to help facilitate this, which we have open-sourced on [Github]().
+Workers AI has [embedded function calling](/workers-ai/function-calling/embedded/) which allows you to execute function code alongside your inference calls. We have a package called [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) to help facilitate this, which we have open-sourced on [Github](https://github.com/cloudflare/ai-utils).
 
 For industry-standard function calling, take a look at the documentation on [Traditional Function Calling](/workers-ai/function-calling/traditional/).
 
-To show you the value of embedded function calling, take a look at the example below that compares traditional function calling with embedded function calling.
+To show you the value of embedded function calling, take a look at the example below that compares traditional function calling with embedded function calling. Embedded function calling allowed us to cut down the lines of code from 77 to 31.
 
 {{<tabs labels="Embedded | Traditional">}}
 {{<tab label="Embedded">}}
