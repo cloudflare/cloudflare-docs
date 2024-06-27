@@ -55,6 +55,9 @@ If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare 
 
 ## ​​Create a static route
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to $1.
 3. From the **Static Routes** tab, select **Create** to add a new route.
@@ -67,14 +70,117 @@ If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare 
 10. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
 11. Select **Add routes** when you are done.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
+
+Create a `POST` request [using the API](/api/operations/magic-static-routes-create-routes) to create one or more static routes.
+
+Example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+    "routes": [
+      {
+        "description": "New route for new prefix",
+        "prefix": "<YOUR_IP_PREFIX>",
+        "nexthop": "<IP_NEXT_HOP>",
+        "priority": <PRIORITY>,
+        "scope": {
+          "colo_names": [
+            "<NAME_OF_CLOUDFLARE_SERVER>"
+          ],
+          "colo_regions": [
+            "<NAME_OF_REGION>"
+          ]
+        },
+        "weight": <WEIGHT>
+      }
+      ]
+  }'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## ​​Edit a static route
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. In **Static routes**, select **Edit** next to the route you want to modify.
 2. Enter the updated route information.
 3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
 4. Select **Edit routes** to save the new information when you are done.
 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
+
+Create a `PUT` request [using the API](/api/operations/magic-static-routes-update-many-routes) to update one or more static routes.
+
+Example:
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+  --data '{
+    "routes": [
+      {
+        "description": "New route for new prefix",
+        "nexthop": "<IP_NEXT_HOP>",
+        "prefix": "<YOUR_IP_PREFIX>",
+        "priority": <PRIORITY>,
+        "scope": {
+          "colo_names": [
+            "<NAME_OF_CLOUDFLARE_SERVER>"
+          ],
+          "colo_regions": [
+            "<NAME_OF_REGION>"
+          ]
+        },
+        "weight": <WEIGHT>
+      ]
+  }'
+```
+
+{{</tab>}}
+{{</tabs>}}
+
 ## ​​Delete static route
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. In **Static routes**, locate the static route you want to modify and select **Delete**.
 2. Confirm the action by selecting the checkbox and select **Delete**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="connector/_account-id-api-key" productFolder="magic-wan" >}}
+
+Create a `DELETE` request [using the API](https://developers.cloudflare.com/api/operations/magic-static-routes-delete-route) to delete a static route.
+
+Example:
+
+```bash
+curl --request DELETE \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes/{route_id} \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
+```
+
+{{</tab>}}
+{{</tabs>}}
+
