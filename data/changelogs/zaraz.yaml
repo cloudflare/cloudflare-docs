@@ -9,7 +9,7 @@ entries:
   title:
   description: |-
     * **Hubspot Managed Component**: Fix analytics reporting endpoint issue
-    * **Bugfix**: variables not sent correctly to Custom MCs
+    * **Bugfix**: Variables not sent correctly to Custom MCs
 - publish_date: '2024-06-21'
   title:
   description: |-
