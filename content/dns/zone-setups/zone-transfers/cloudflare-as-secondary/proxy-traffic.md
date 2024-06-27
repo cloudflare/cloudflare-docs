@@ -18,6 +18,12 @@ Only `A`, `AAAA`, and `CNAME` records can be proxied.
 
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+
+Secondary DNS override is only supported with [DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary) Unsigned or set to [Live Signing](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-live-signing-dnssec). If DNSSEC is set to [Pre-signed](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-pre-signed-dnssec) then your proxied hostnames will not resolve to Cloudflare.
+
+{{</Aside>}}
+
 ## Prerequisites
 
 Before you set up Secondary DNS override, make sure that you have:
