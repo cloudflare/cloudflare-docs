@@ -25,24 +25,20 @@ export default {
     async fetch(request, env, ctx) {
         const response = await env.AI.run(
             "@hf/nousresearch/hermes-2-pro-mistral-7b", {
-                messages: [{ role: "user", content: "What's the weather in Austin, Texas?" }],
+                messages: [{ role: "user", content: "Who is Cloudflare on github?" }],
                 tools: [
                     {
-                        name: "getWeather",
-                        description: "Return the weather for a latitude and longitude",
+                        name: "getGithubUser",
+                        description: "Provides publicly available information about someone with a GitHub account.",
                         parameters: {
                             type: "object",
                             properties: {
-                                latitude: {
+                                username: {
                                     type: "string",
-                                    description: "The latitude for the given location",
-                                },
-                                longitude: {
-                                    type: "string",
-                                    description: "The longitude for the given location",
+                                    description: "The handle for the GitHub user account.",
                                 },
                             },
-                            required: ["latitude", "longitude"],
+                            required: ["username"],
                         },
                     },
                 ],
@@ -52,13 +48,15 @@ export default {
         const selected_tool = response.tool_calls[0];
         let res;
 
-        if (selected_tool.name == 'getWeather') {
+        if (selected_tool.name == 'getGithubUser') {
             try {
-                const latitude = selected_tool.arguments.latitude;
-                const longitude = selected_tool.arguments.longitude;
-
-                const url = `https://api.weatherapi.com/v1/current.json?key=${env.WEATHERAPI_TOKEN}&q=${latitude},${longitude}`;
-                res = await fetch(url).then((res) => res.json());
+                const username = selected_tool.arguments.username;
+                const url = `https://api.github.com/users/${username}`;
+                res = await fetch(url, {
+                    headers: { // Github API requires a User-Agent header
+                        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+                    }
+                }).then((res) => res.json());
             }
             catch (error) {
                 return error;
@@ -67,7 +65,7 @@ export default {
 
         const finalResponse = await env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
                 messages: [
-                    { role: "user", content: "What's the weather in Austin, Texas?" },
+                    { role: "user", content: "Who is Cloudflare on github?" },
                     {
                         role: "assistant",
                         content: "",
@@ -81,21 +79,17 @@ export default {
                 ],
                 tools: [
                     {
-                        name: "getWeather",
-                        description: "Return the weather for a latitude and longitude",
+                        name: "getGithubUser",
+                        description: "Provides publicly available information about someone with a GitHub account.",
                         parameters: {
                             type: "object",
                             properties: {
-                                latitude: {
+                                username: {
                                     type: "string",
-                                    description: "The latitude for the given location",
-                                },
-                                longitude: {
-                                    type: "string",
-                                    description: "The longitude for the given location",
+                                    description: "The handle for the GitHub user account.",
                                 },
                             },
-                            required: ["latitude", "longitude"],
+                            required: ["username"],
                         },
                     },
                 ],                
@@ -103,37 +97,44 @@ export default {
         );
 
     return new Response(JSON.stringify(finalResponse));
-    
     }
 }
   ```
   {{</tab>}}
   {{<tab label="Embedded">}}
   ```js
-//TODO: MAKE APPLES TO APPLES WITH TRADITIONAL
 import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"
 
 export default {
-	async fetch(request, env, ctx) {
-		const response = await runWithTools(
-			env.AI,
-			"@hf/nousresearch/hermes-2-pro-mistral-7b",
-			{
-				messages: [{ role: "user",content: "Can you name me 5 repos created by Cloudflare"}],
-				tools: [
-					...(await createToolsFromOpenAPISpec("https://raw.githubusercontent.com/github/rest-api-description/main/descriptions-next/api.github.com/api.github.com.json"))
-				]
-			},
-			{
-				streamFinalResponse: true,
-				maxRecursiveToolRuns: 5,
-				trimFunction: autoTrimTools,
-				verbose: true,
-				strictValidation: true
-			}
-		)
-		return new Response(JSON.stringify(response));
-	};
+  async fetch(request, env, ctx) {
+
+	const response = await runWithTools(
+	  env.AI,
+	  "@hf/nousresearch/hermes-2-pro-mistral-7b",
+	  {
+		messages: [{ role: "user", content: "Who is Cloudflare on github?"}],
+		tools: [
+			// You can pass the OpenAPI spec link or contents directly
+			...await createToolsFromOpenAPISpec(
+				'https://gist.githubusercontent.com/mchenco/fd8f20c8f06d50af40b94b0671273dc1/raw/f9d4b5cd5944cc32d6b34cad0406d96fd3acaca6/partial_api.github.com.json',
+				{ overrides: [{
+					// for all requests on *.github.com, we'll need to add a User-Agent and Authorization.
+					matcher: ({ url, method }) => {
+						return url.hostname === "api.github.com"
+					},
+					values: {
+						headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",}
+					}
+				}]}
+			),
+		]
+	  },
+	).then((response) => {
+	  return response
+	})
+
+	return new Response(JSON.stringify(response))
+  }
 }
   ```
   {{</tab>}}

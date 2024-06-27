@@ -5,8 +5,9 @@ title: Traditional Function Calling
 layout: wide
 ---
 
-# Traditional function calling
-This page shows how you can do traditional function calling, as defined by the industry standards. Workers AI also offers [embedded function calling](), which is drastically easier than traditional function callinng.
+{{<heading-pill style="beta">}} Traditional function calling {{</heading-pill>}}
+
+This page shows how you can do traditional function calling, as defined by industry standards. Workers AI also offers [embedded function calling](/workers-ai/function-calling/embedded-function-calling/), which is drastically easier than traditional function calling.
 
 With traditional function calling, you define an array of tools with the name, description, and tool arguments. The example below shows how you would pass a tool called `getWeather` in an inference request to a model.
 
