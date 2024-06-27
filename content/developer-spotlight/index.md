@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Developer git p program
+title: Developer Spotlight program
 ---
 
 # Developer Spotlight program
