@@ -1680,3 +1680,9 @@
 /support/speed/* /speed/ 301
 /support/troubleshooting/planned-maintenance/* /support/troubleshooting/disruptive-maintenance/ 301
 /support/cloudflare-client-api/* /fundamentals/api/ 301
+/fundamentals/reference/developer-spotlight/* /developer-spotlight/index.md 301
+/workers/tutorials/create-sitemap-from-sanity-cms/* /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/index.md 301
+/workers-ai/tutorials/creating-a-recommendation-api/* /developer-spotlight/tutorials/creating-a-recommendation-api/index.md 301
+/workers/tutorials/custom-access-control-for-files-in-R2-using-D1-and-Workers/* /developer-spotlight/tutorials/custom-access-control-for-files-in-R2-using-D1-and-Workers/index.md 301
+/workers/tutorials/handle-form-submission-with-astro-resend/* /developer-spotlight/tutorials/handle-form-submission-with-astro-resend/index.md 301
+
