@@ -38,7 +38,7 @@ To enable **Automatic HTTPS Rewrites** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting)request with `automatic_https_rewrites` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `automatic_https_rewrites` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}
