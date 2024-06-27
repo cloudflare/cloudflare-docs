@@ -14,9 +14,9 @@ To view the resolver endpoint IP addresses and hostnames for a DNS location:
 2. Locate the DNS location, then select **Configure**.
 3. Go to **Setup instructions**. The addresses and hostnames will appear in **Your configuration**.
 
-## How Gateway matches queries to DNS locations
+## DNS query location matching
 
-Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
+Gateway uses different methods to match a DNS query to DNS locations depending on the type of request and network:
 
 ```mermaid
 flowchart TB
@@ -36,16 +36,13 @@ flowchart TB
     ipv4--"No"-->destination["Look up location by<br />destination IPv4 address"]
 ```
 
-**Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
-
-**Step 2**: If the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.
-
-**Step 3**: If the query was not sent over IPv4, it means it was sent over IPv6. Gateway will look up the DNS location associated with the query based on the unique DNS resolver IPv6 address.
+1. First, Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
+2. Next, if the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.
+3. Last, if the query was not sent over IPv4, it means it was sent over IPv6. Gateway will look up the DNS location associated with the query based on the unique DNS resolver IPv6 address.
 
 ## IPv6 address
 
-When you create a DNS location, your location will receive a unique DNS resolver IPv6 address.
-This IPv6 address is how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
+When you create a DNS location, your location will receive a unique DNS resolver IPv6 address. This IPv6 address is how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
 
 ## IPv4 address
 
@@ -77,11 +74,7 @@ Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gatewa
 
 Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings.
 
-In the example below, the DoH subdomain is: `65y9p2vm1u`.
-
-| DNS over HTTPS hostname                               | DoH subdomain |
-| ----------------------------------------------------- | ------------- |
-| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u`  |
+For example, for the DoH hostname `https://65y9p2vm1u.cloudflare-gateway.com/dns-query`, the DoH subdomain is `65y9p2vm1u`.
 
 ## Send specific queries to Gateway
 
