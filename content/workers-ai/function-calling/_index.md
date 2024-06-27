@@ -21,6 +21,11 @@ To show you the value of embedded function calling, take a look at the example b
 
 {{<tabs labels="Embedded | Traditional">}}
 {{<tab label="Embedded">}}
+```sh
+# The ai-utils package enables embedded function calling
+$ npm i @cloudflare/ai-utils
+```
+
 ```js
 ---
 header: Embedded function calling example
