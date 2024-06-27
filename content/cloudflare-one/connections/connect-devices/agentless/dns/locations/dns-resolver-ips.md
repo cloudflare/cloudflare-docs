@@ -18,7 +18,23 @@ To view the resolver endpoint IP addresses and hostnames for a DNS location:
 
 Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/images/cloudflare-one/policies/gateway-determine-location-dns.png)
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: How Gateway matches queries to DNS locations
+    accDescr: Flowchart describing the order of checks Cloudflare Gateway performs to determine the DNS location of a DNS query.
+
+    %% Flowchart
+    router(["Router"])-->gateway["Cloudflare Gateway"]
+
+    gateway-->query{{"Is the DNS query sent over HTTPS?"}}
+
+    query--Yes-->hostname["Look up location by<br />unique hostname"]
+    query--"No"-->ipv4{{"Is it over IPv4?"}}
+
+    ipv4--Yes-->source["Look up location by<br />source IPv4 address"]
+    ipv4--"No"-->destination["Look up location by<br />destination IPv4 address"]
+```
 
 **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
 
