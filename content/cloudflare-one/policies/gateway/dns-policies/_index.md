@@ -20,10 +20,6 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
-{{<Aside type="warning">}}
-Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
-{{</Aside>}}
-
 ## Actions
 
 Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
@@ -254,3 +250,13 @@ Use this selector to filter based on the country where the query arrived to Gate
 ## Logical operators
 
 {{<render file="gateway/_logical-operators.md" withParameters="**Identity**">}}
+
+## Limitations
+
+### Third-party filtering conflict
+
+Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
+
+### Magic WAN forwarding
+
+To apply DNS policies to queries forwarded through [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/).
