@@ -10,6 +10,28 @@ entries:
   difficulty: Beginner
   content_type: 🎥 Video
   pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=GRpwVMkVmKo
+  title: API Roll (Father's Day)
+  description: This walks through how to use Workers AI with Hono and Zod to create a streaming pun generating API.
+  tags: [AI, Hono]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-06-15
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://youtu.be/MLbo7MGY_lU
+  title: AI can see clearly now - Build Vision Apps on Cloudflare Workers AI
+  description: The LlaVa model is hosted on Cloudflare Workers AI. Which means you are an API call away from brand new powerful vision use cases in all of your applications.
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-06-11
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=QTsaAhFvX9o
   title: Stateful Apps with Cloudflare Workers
   description: Learn how to access external APIs, cache and retrieve data using Workers KV, and create SQL-driven applications with Cloudflare D1.
@@ -19,6 +41,17 @@ entries:
   author: kristian
   updated: 2024-05-22
   difficulty: Intermediate
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://youtu.be/5UTExUQ8Fwo
+  title: Workers AI - Getting Started - Vanilla Chat App
+  description: Get started building AI apps on Cloudflare using Pages and the GitHub starter template for a Vanilla JavaScript Chat App.
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-04-17
+  difficulty: Beginner
   content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=H7Qe96fqg1M
@@ -32,6 +65,17 @@ entries:
   difficulty: Beginner
   content_type: 🎥 Video
   pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=8SnrvAYAJ4Q
+  title: Image Generation, Inpainting, and Vision Models
+  description: Is that person you are about to swipe right on, actually real? Are they AI Generated?
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-03-08
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=9JM5Z0KzQsQ
   title: Learn AI Development (models, embeddings, vectors)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, teaches the basics of AI Development - models, embeddings, and vectors (including vector databases).
@@ -40,17 +84,17 @@ entries:
   cloudflare: true
   author: kristian
   updated: 2023-12-14
-  difficulty: Beginner
+  difficulty: Advanced
   content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=idKdjA8t0jw
-  title: Learn AI Development (models, embeddings, vectors)
+  title: Optimize your AI App & fine-tune models (AI Gateway, R2)
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, shows how to optimize your existing AI applications with Cloudflare AI Gateway, and how to finetune OpenAI models using R2.
   tags: [AI]
   products: [Workers, R2, AI Gateway]
   cloudflare: true
   author: kristian
   updated: 2023-12-14
-  difficulty: Beginner
+  difficulty: Advanced
   content_type: 🎥 Video
   pcx_content_type: tutorial
