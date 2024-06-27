@@ -24,38 +24,32 @@ import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudf
 export default {
   async fetch(request, env, ctx) {
 
-	const response = await runWithTools(
-	  env.AI,
-	  "@hf/nousresearch/hermes-2-pro-mistral-7b",
-	  {
-		messages: [{ role: "user", content: "Who is Cloudflare on github?"}],
-		tools: [
-			// You can pass the OpenAPI spec link or contents directly
-			...await createToolsFromOpenAPISpec(
-				'https://gist.githubusercontent.com/mchenco/fd8f20c8f06d50af40b94b0671273dc1/raw/f9d4b5cd5944cc32d6b34cad0406d96fd3acaca6/partial_api.github.com.json',
-				{ overrides: [{
-					// for all requests on *.github.com, we'll need to add a User-Agent and Authorization.
-					matcher: ({ url, method }) => {
-						return url.hostname === "api.github.com"
-					},
-					values: {
-						headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",}
-					}
-				}]}
-			),
-		]
-	  },   
-	  {
-		strictValidation: true,
-		streamFinalResponse: true,
-		verbose: true,
-		trimFunction: autoTrimTools,
-	  }
-	).then((response) => {
-	  return response
-	})
+    const response = await runWithTools(
+      env.AI,
+      "@hf/nousresearch/hermes-2-pro-mistral-7b",
+      {
+        messages: [{ role: "user", content: "Who is Cloudflare on github?"}],
+        tools: [
+          // You can pass the OpenAPI spec link or contents directly
+          ...await createToolsFromOpenAPISpec(
+            'https://gist.githubusercontent.com/mchenco/fd8f20c8f06d50af40b94b0671273dc1/raw/f9d4b5cd5944cc32d6b34cad0406d96fd3acaca6/partial_api.github.com.json',
+            { overrides: [{
+                // for all requests on *.github.com, we'll need to add a User-Agent.
+                matcher: ({ url, method }) => {
+                    return url.hostname === "api.github.com"
+                },
+                values: {
+                  headers: {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",}
+                }
+            }]}
+          ),
+        ]
+      },
+    ).then((response) => {
+      return response
+    })
 
-	return new Response(JSON.stringify(response))
+    return new Response(JSON.stringify(response))
   }
 }
 ```
@@ -79,7 +73,7 @@ This wrapper method enables you to do embedded function calling. You pass it the
   - {{<code>}}strictValidation{{</code>}}{{<param-type>}}boolean {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
   - {{<code>}}verbose{{</code>}}{{<param-type>}}boolean {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
   - {{<code>}}trimFunction{{</code>}}{{<param-type>}}boolean {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
-  	- For the `trimFunction`, you can pass it `autoTrimTools`, which is another helper method we've devised to automatically choose the correct tools (using an LLM) before sending it off for inference. This means that your final inference call will have fewer input tokens.
+    - For the `trimFunction`, you can pass it `autoTrimTools`, which is another helper method we've devised to automatically choose the correct tools (using an LLM) before sending it off for inference. This means that your final inference call will have fewer input tokens.
 {{</definitions>}}
 
 ### createToolsFromOpenAPISpec
@@ -89,14 +83,14 @@ This method lets you automatically create tool schemas based on OpenAPI specs, s
 
 {{<definitions>}}
 - {{<code>}}spec{{</code>}}{{<param-type>}}string {{</param-type>}}
-	- The OpenAPI specifiction in either JSON or YAML format, or a URL to a remote OpenAPI specification.
+    - The OpenAPI specifiction in either JSON or YAML format, or a URL to a remote OpenAPI specification.
 - {{<code>}}config{{</code>}}{{<param-type>}}Config {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
-	- Configuration options for the createToolsFromOpenAPISpec function
-	- {{<code>}}overrides{{</code>}}{{<param-type>}}ConfigRule[] {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
-	- {{<code>}}matchPatterns{{</code>}}{{<param-type>}}RegExp[] {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
-	- {{<code>}}options{{</code>}}{{<param-type>}}Object {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}} {
-		{{<code>}}verbose{{</code>}}{{<param-type>}}boolean {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
-	}
+    - Configuration options for the createToolsFromOpenAPISpec function
+    - {{<code>}}overrides{{</code>}}{{<param-type>}}ConfigRule[] {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
+    - {{<code>}}matchPatterns{{</code>}}{{<param-type>}}RegExp[] {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
+    - {{<code>}}options{{</code>}}{{<param-type>}}Object {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}} {
+        {{<code>}}verbose{{</code>}}{{<param-type>}}boolean {{</param-type>}}{{<prop-meta>}} optional {{</prop-meta>}}
+    }
 {{</definitions>}}
 
 ## Troubleshooting
