@@ -5,6 +5,10 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-27'
+  title:
+  description: |-
+    * **Hubspot Managed Component**: Fix analytics reporting endpoint issue
 - publish_date: '2024-06-21'
   title:
   description: |-
