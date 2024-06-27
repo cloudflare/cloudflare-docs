@@ -1364,6 +1364,7 @@
 /workers/tutorials/introduction-to-cloudflare-workers/ https://www.youtube.com/watch?v=H7Qe96fqg1M 301
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/tutorials/localize-a-website/ /pages/tutorials/localize-a-website/ 301
+/workers/tutorials/manage-projects-with-lerna/ /pages/configuration/monorepos/#monorepo-management-tools 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
