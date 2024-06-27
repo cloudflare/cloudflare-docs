@@ -95,7 +95,7 @@ Cloudflare is making a minor change to the representation of certain errors when
 }
 ```
 
-After the end of life date, the `error_chain` may be omitted, returning the root cause directly without wrapping it in another "DNS Validation Error" error:
+After October 1st, 2024, the `error_chain` will be omitted, returning the root cause directly without wrapping it in another "DNS Validation Error" error:
 
 ```
 {
