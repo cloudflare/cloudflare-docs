@@ -52,7 +52,7 @@ basicConstraints=CA:FALSE
 
 1. Upload the `rootca.cert` to an [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html).
 2. [Create a trust store](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html#create-trust-store) at your EC2 console, indicating the **S3 URI** where you uploaded the certificate.
-3. Create an EC2 instance and install an HTTPD daemon. Suggested: [T2 instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html) and [Amazon Linux 2023](https://docs.aws.amazon.com/linux/al2023/ug/what-is-amazon-linux.html).
+3. Create an EC2 instance and install an HTTPD daemon. Choose an [instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html) according to your needs - it can be a minimal instance eligible to [AWS Free Tier](https://aws.amazon.com/free/). This tutorial was based on an example using t2.micro and [Amazon Linux 2023](https://docs.aws.amazon.com/linux/al2023/ug/what-is-amazon-linux.html).
 
 ```bash
 sudo yum install -y httpd
@@ -69,10 +69,21 @@ sudo systemctl start httpd
     * For **Default SSL/TLS server certificate**, choose **Import certificate** > **Import to ACM**, and add the certificate private key and body.
     * Under **Client certificate handling**, select **Verify with trust store**.
 7. Save your settings.
-8. (Optional) Run the following command to confirm that the Application Load Balancing is asking for the client certificate.
+8. (Optional) Run the following commands to confirm that the Application Load Balancing is asking for the client certificate.
 
 ```bash
 openssl s_client -verify 5 -connect <your-application-load-balancer>:443 -quiet -state
+```
+
+Since you have not yet uploaded the certificate to Cloudflare, the connection should fail (`read:errno=54`, for example).
+
+You can also run `curl --verbose` and confirm `Request CERT (13)` is present within the SSL/TLS handshake:
+
+```bash
+curl --verbose https://<your-application-load-balancer>
+...
+* TLSv1.2 (IN), TLS handshake, Request CERT (13):
+...
 ```
 
 ## 3. Configure Cloudflare
