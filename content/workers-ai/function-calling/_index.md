@@ -7,14 +7,14 @@ layout: wide
 
 {{<heading-pill style="beta">}} Function calling {{</heading-pill>}}
 
-Function calling enables people to take Large Language Models (LLMs) and use the model response to interact with external APIs. The developer usually defines a set of functions and the required input schema for each function, which we call `tools`. The model then intelligently understands when it needs to do a tool call, and it returns a JSON output which can be fed to another API.
+Function calling enables people to take Large Language Models (LLMs) and use the model response to execute functions or interact with external APIs. The developer usually defines a set of functions and the required input schema for each function, which we call `tools`. The model then intelligently understands when it needs to do a tool call, and it returns a JSON output which the user needs to feed to another function or API.
 
 In essence, function calling allows you to perform actions with LLMs by executing code or making additional API calls.
 
 ## How can I use function calling?
-Workers AI has [embedded function calling]() which allows you to execute function code alongside your inference calls. We have a package called `@cloudflare/ai-utils` to help facilitate this - full documentation can be found on [Embedded Function Calling]().
+Workers AI has [embedded function calling](/workers-ai/function-calling/embedded-function-calling/) which allows you to execute function code alongside your inference calls. We have a package called `@cloudflare/ai-utils` to help facilitate this.
 
-For industry-standard function calling, take a look at the documentation on [Traditional Function Calling]().
+For industry-standard function calling, take a look at the documentation on [Traditional Function Calling](/workers-ai/function-calling/traditional-function-calling/).
 
 To show you the value of embedded function calling, take a look at the example below that compares traditional function calling with embedded function calling.
 
