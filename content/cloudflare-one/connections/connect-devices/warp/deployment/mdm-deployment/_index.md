@@ -29,7 +29,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 To install the WARP client, run the following command:
 
 ```bash
-msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
+msiexec /i "Cloudflare_WARP_<VERSION>.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
@@ -38,8 +38,8 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 To uninstall the WARP client:
 
-1. First, locate the `.msi` package with the following Powershell command:
-```bash
+1. First, locate the `.msi` package with the following PowerShell command:
+```powershell
 PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
 
 IdentifyingNumber                      Name            LocalPackage

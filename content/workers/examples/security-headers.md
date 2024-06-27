@@ -6,13 +6,17 @@ summary: Set common security headers (X-XSS-Protection, X-Frame-Options,
 tags:
   - Security
   - Middleware
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+pcx_content_type: example
 title: Set security headers
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -105,8 +109,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const DEFAULT_SECURITY_HEADERS = {
       /*
     Secure your application with Content-Security-Policy headers.
@@ -187,9 +191,61 @@ const handler: ExportedHandler = {
       });
     }
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import Response, fetch, Headers
+
+async def on_fetch(request):
+    default_security_headers = {
+        # Secure your application with Content-Security-Policy headers.
+        #Enabling these headers will permit content from a trusted domain and all its subdomains.
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+        "Content-Security-Policy": "default-src 'self' example.com *.example.com",
+        #You can also set Strict-Transport-Security headers.
+        #These are not automatically set because your website might get added to Chrome's HSTS preload list.
+        #Here's the code if you want to apply it:
+        "Strict-Transport-Security" : "max-age=63072000; includeSubDomains; preload",
+        #Permissions-Policy header provides the ability to allow or deny the use of browser features, such as opting out of FLoC - which you can use below:
+        "Permissions-Policy": "interest-cohort=()",
+        #X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+        "X-XSS-Protection": "0",
+        #X-Frame-Options header prevents click-jacking attacks.
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+        "X-Frame-Options": "DENY",
+        #X-Content-Type-Options header prevents MIME-sniffing.
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Cross-Origin-Embedder-Policy": 'require-corp; report-to="default";',
+        "Cross-Origin-Opener-Policy": 'same-site; report-to="default";',
+        "Cross-Origin-Resource-Policy": "same-site",
+    }
+    blocked_headers = ["Public-Key-Pins", "X-Powered-By" ,"X-AspNet-Version"]
+
+    res = await fetch(request)
+    new_headers = Headers.new(res.headers)
+
+    # This sets the headers for HTML responses
+    if "text/html" in new_headers["Content-Type"]:
+        return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
+
+    for name in default_security_headers:
+        new_headers.set(name, default_security_headers[name])
+
+    for name in blocked_headers:
+        new_headers.delete(name)
+
+    tls = request.cf.tlsVersion
+
+    if not tls in ("TLSv1.2", "TLSv1.3"):
+        return Response.new("You need to use TLS version 1.2 or higher.", status=400)
+    return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 ```
 
 {{</tab>}}

@@ -1,18 +1,18 @@
 ---
 pcx_content_type: reference
 title: Roles
-weight: 3
+weight: 4
 meta:
     title: Account roles
 ---
 
 # Roles
 
-Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign specific roles to these users.
+Whenever you [add a new member](/fundamentals/setup/manage-members/manage/) to your account, you can assign policies to those users and make use of the available roles. Roles can only ever be assigned to their given scope and multiple roles can be assigned to a given policy.
 
-## Account-scoped Roles
+## Account-scoped roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) includes **All domains** and has no other limitations, you can assign **Account Scoped Roles** that apply to every domain across your account.
+Account-scoped roles apply across an entire Cloudflare account, and through all domains in that account.
 
 | Role | Description |
 | --- | --- |
@@ -33,13 +33,13 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Cloudflare R2 Admin | Can edit Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare R2 Read | Can read Cloudflare [R2](/r2/) buckets, objects, and associated configurations. |
 | Cloudflare Stream | Can edit [Cloudflare Stream](/stream/) media. |
-| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) |
+| Cloudflare Workers Admin | Can edit Cloudflare [Workers](/workers/), [Pages](/pages/), [Durable Objects](/durable-objects/), [KV](/kv/) and [R2](/r2/). Also provides read access to Zones, [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/) and [Page Rules](/rules/) (deprecated). |
 | Cloudflare Zero Trust | Can edit [Cloudflare for Zero Trust](/cloudflare-one/). |
 | Cloudflare Zero Trust PII | Can access [Cloudflare for Zero Trust](/cloudflare-one/) PII. |
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Access rules](/waf/tools/ip-access-rules/), [Zone Lockdown](/waf/tools/zone-lockdown/) settings, and [Cache Rules](/cache/how-to/cache-rules/). |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -67,13 +67,14 @@ If you are adding members whose [role scope](/fundamentals/setup/manage-members/
 | Zone Versioning (Account-Wide) | Can view and edit [Zone Versioning](/version-management/) for all domains in account. |
 | Zone Versioning Read (Account-Wide) | Can view [Zone Versioning](/version-management/) for all domains in account. |
 
-## Domain-scoped Roles
+## Domain-scoped roles
 
-If you are adding members whose [role scope](/fundamentals/setup/manage-members/scope/) has some limitations (specific domains allowed or excluded, limited to a domain group), you can assign **Domain Scoped Roles** that apply to all relevant domains.
+Domain-scoped roles apply for a given domain within an account.
 
 | Role | Description |
 | --- | --- |
 | Bot Management | Can edit [Bot Management](/bots/plans/bm-subscription/) (including [Super Bot Fight Mode](/bots/get-started/pro/)) configurations. |
+| Cache Domain Purge | Grants access to [purge the edge cache](/cache/how-to/purge-cache/) for a specific domain. |
 | Domain Administrator | Grants full access to domains in an account, and read-only access to account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain Administrator Read Only | Grants read-only access to domains in an account, as well as account-wide [Firewall](/waf/managed-rules/deploy-account-dashboard/), [Access](/cloudflare-one/policies/access/), and [Worker](/workers/) resources. |
 | Domain API Gateway | Grants full access to API Gateway (including [API Shield](/api-shield/)). |

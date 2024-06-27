@@ -8,6 +8,8 @@ title: Connect to a PostgreSQL database with Cloudflare Workers
 
 # Connect to a PostgreSQL database with Cloudflare Workers
 
+{{<tutorial-date-info>}}
+
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
 ## Prerequisites
@@ -190,11 +192,7 @@ Replace the existing code in your `worker.ts` file with the following code:
 filename: worker.ts
 ---
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const client = new Client(env.DB_URL);
     await client.connect();
 
@@ -210,7 +208,7 @@ export default {
     ctx.waitUntil(client.end());
     return resp;
   },
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 This code establishes a connection to the PostgreSQL database within your Worker application and queries the `products` table, returning the results as a JSON response.

@@ -39,7 +39,7 @@ To enable **Hotlink Protection** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/operations/zone-settings-change-hotlink-protection-setting) request with the `value` parameter set to `"on"`.
+To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `hotlink_protection` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

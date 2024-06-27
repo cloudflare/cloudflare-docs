@@ -20,7 +20,7 @@ You can transform an image by using a [specially-formatted URL](/images/transfor
 * JPEG
 * PNG
 * GIF (including animations)
-* WebP (no animations)
+* WebP (including animations)
 * SVG
 
 ### Supported output formats
@@ -40,7 +40,7 @@ Transformations can:
 * Save animations as GIF or animated WebP.
 * Support ICC color profiles in JPEG and PNG images.
 * Preserve JPEG metadata (metadata of other formats is discarded).
-* Convert the first frame of GIF animations to a still image.
+* Convert the first frame of GIF/WebP animations to a still image.
 
 {{<render file="_svg.md">}}
 
@@ -60,13 +60,15 @@ Hard limits refers to the maximum image size to process. Soft limits refers to t
 
 File format  | Hard limits on the longest side (width or height) | Soft limits on the longest side (width or height)
 ------------ | ------------------------------------------------- | -------------------------------------------------
-AVIF         | 3,200 pixels                                      | 640 pixels
+AVIF         | 1,200 pixels<sup>1</sup>    | 640 pixels
 Other        | 12,000 pixels                                     | N/A
 WebP         | N/A                                               | 2,560 pixels for lossy; 1920 pixels for lossless
 
+<sup>1</sup>Hard limit is 1,600 pixels when `format=avif` is explicitly used with [image transformations](/images/transform-images/).
+
 All images have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
-GIF animations are limited to a total of 50 megapixels (the sum of sizes of all frames). Animations that exceed this will be passed through unchanged without applying any transformations. Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
+GIF/WebP animations are limited to a total of 50 megapixels (the sum of sizes of all frames). Animations that exceed this will be passed through unchanged without applying any transformations. Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
 
 {{<Aside type="warning" header="Important">}}
 SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.

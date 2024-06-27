@@ -12,7 +12,7 @@ Cloudflare compresses content in two ways: between Cloudflare and your website v
 
 ## Compression between Cloudflare and website visitors
 
-In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/) and [auto minification](/speed/optimization/content/auto-minify/) of CSS, JavaScript, and HTML content, Cloudflare supports Gzip and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/) and [auto minification](/speed/optimization/content/auto-minify/) (deprecated) of CSS, JavaScript, and HTML content, Cloudflare supports Gzip and Brotli compression when delivering content to website visitors.
 
 ```mermaid
 flowchart LR
@@ -26,9 +26,11 @@ C[(Origin server)]
 A == "Request" ==> B -.-> C
 C -.-> B == "Response<br>(Gzip / Brotli / No compression)" ==> A
 
-style A stroke-width: 3px
-style B stroke: orange,fill: orange
+style A stroke-width: 2px
+style B stroke: orange,fill: orange,color: black
 style C stroke-dasharray: 5 5
+linkStyle 0,3 stroke-width: 2px
+linkStyle 1,2 stroke-width: 1px
 ```
 
 If supported by visitors' web browsers, Cloudflare will return Gzip or Brotli-encoded responses for the following content types:
@@ -103,10 +105,6 @@ Smaller responses will not be compressed, regardless of their content type.
 
 ## Content compression from origin servers to the Cloudflare network
 
-{{<Aside type="note">}}
-Brotli support is scheduled to be gradually rolled out beginning February 1st, 2024. Until then, only Gzip compression is supported between Cloudflare and your origin.
-{{</Aside>}}
-
 When requesting content from your origin server, Cloudflare supports Gzip compression, Brotli compression, or no compression.
 
 ```mermaid
@@ -119,11 +117,13 @@ B((Cloudflare))
 C[(Origin server)]
 
 A -.-> B == "Request<br>Accept-Encoding: gzip, br" ==> C
-C == "Response<br>Accept-Encoding: (Gzip / Brotli / No compression)" ==> B -.-> A
+C == "Response<br>(Gzip / Brotli / No compression)" ==> B -.-> A
 
 style A stroke-dasharray: 5 5
-style B stroke: orange,fill: orange
-style C stroke-width: 3px
+style B stroke: orange,fill: orange,color: black
+style C stroke-width: 2px
+linkStyle 1,2 stroke-width: 2px
+linkStyle 0,3 stroke-width: 1px
 ```
 
 If your origin server responds to a Cloudflare request using Gzip/Brotli compression, we will keep the same compression in the response sent to the website visitor if:

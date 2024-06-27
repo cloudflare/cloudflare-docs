@@ -6,7 +6,29 @@ weight: 8
 
 # Activate the Cloudflare WordPress plugin
 
-For users on the free plan, be sure to purchase APO before installing the WordPress plugin. For users on a Pro plan or higher, continue to Install and activate the Cloudflare WordPress plugin.
+After you [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/), activate the Cloudflare WordPress plugin.
+
+## Prerequisites
+
+Before activating the Cloudflare WordPress plugin, review the following prerequisites.
+
+### Plan type
+
+For users on the free plan, [purchase APO](#purchase-apo) before installing the WordPress plugin. 
+
+For users on a Pro plan or higher, continue to [Install and activate](#install-and-activate-the-cloudflare-wordpress-plugin) the Cloudflare WordPress plugin.
+
+### Plugin compatibility
+
+Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
+
+We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
+
+For more details, refer to [Plugin compatibility](/automatic-platform-optimization/about/plugin-compatibility/).
+
+### Limitations
+
+The Cloudflare APO WordPress plugin does not support multisite WordPress installation.
 
 ## Purchase APO
 
@@ -25,14 +47,6 @@ The easiest way to begin using APO is directly from Cloudflare’s WordPress plu
 3.  In the search field, enter `Cloudflare`.
 4.  Locate the Cloudflare plugin and select **Install now**.
 5.  After the plugin finishes installing, select **Activate**. The Cloudflare plugin now displays in your Plugins list.
-
-{{<Aside type="warning">}}
-
-Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
-
-We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
-
-{{</Aside>}}
 
 ## Activate APO
 

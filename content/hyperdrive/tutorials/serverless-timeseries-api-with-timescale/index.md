@@ -4,11 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
+products: [Workers]
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
 
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -83,7 +84,7 @@ You should ensure that you do not break any existing clients if when you reset t
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):
 
-```sh
+```txt
 postgres://tsdbadmin:YOURPASSWORD@...
 ```
 
@@ -123,10 +124,6 @@ To create a new Hyperdrive instance you will need:
 - Your **SERVICEURL** from [step 2](/hyperdrive/tutorials/serverless-timeseries-api-with-timescale/#2-prepare-your-timescale-service).
 - A name for your Hyperdrive service. For this tutorial, you will use **hyperdrive**.
 
-{{<Aside type="note">}}
-Hyperdrive is currently in public beta and free to use under [Workers Paid plans](https://developers.cloudflare.com/workers/platform/pricing/).
-{{</Aside>}}
-
 Hyperdrive uses the `create` command with the `--connection-string` argument to pass this information. Run it as follows:
 
 ```sh
@@ -135,7 +132,7 @@ $ npx wrangler hyperdrive create hyperdrive --connection-string="SERVICEURL"
 
 {{<Aside type="note">}}
 
-Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/reference/troubleshooting/) to debug possible causes.
+Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
 
 {{</Aside>}}
 
@@ -181,9 +178,9 @@ export interface Env {
 
 export default {
     async fetch(
-        request: Request,
-        env: Env,
-        ctx: ExecutionContext
+        request,
+        env,
+        ctx
     ): Promise<Response> {
         const client = new Client({connectionString:env.HYPERDRIVE.connectionString});
         await client.connect();
@@ -234,7 +231,7 @@ export default {
             return resp;
         }
     }
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 ## 5. Deploy your Worker
@@ -299,4 +296,4 @@ In this tutorial, you have learned how to create a working example to ingest and
 
 - Learn more about [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn more about [Timescale](https://timescale.com).
-- Refer to the [troubleshooting guide](/hyperdrive/reference/troubleshooting/) to debug common issues.
+- Refer to the [troubleshooting guide](/hyperdrive/observability/troubleshooting/) to debug common issues.

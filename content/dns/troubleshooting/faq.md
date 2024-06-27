@@ -30,13 +30,19 @@ ___
 
 Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOis search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
 
-Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+{{<Aside type="warning">}}
+Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOis search tool.
+{{</Aside>}}
+
+Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
 
 ___
 
 ## Does Cloudflare limit number of DNS records a domain can have?
 
-Yes. Currently Free, Pro, and Business customers have a limit on the number of DNS records they can create.
+Yes. All customers have a limit on the number of DNS records they can create.
+
+Pro, Business, and Enterprise have limit of 3,500 DNS records.
 
 If you are an Enterprise customer you can contact your Account team if you require more DNS records.
 
@@ -188,7 +194,7 @@ ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/) (deprecated), or [Cloudflare Workers](/workers/).
 
 ___
 

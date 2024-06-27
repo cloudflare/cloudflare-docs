@@ -15,7 +15,7 @@ By default, Cloudflare’s cache treats resources as distinct if their URL query
 
 Query String Sort changes this behavior. If two query strings exist with the same name, the URL is sorted by the parameter value. For example:
 
-`/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
+`/example/file?word=alpha&word=beta` and `/example/file?word=beta&word=alpha`
 
 would be sorted to:
 
@@ -49,7 +49,13 @@ For example in the WordPress admin UI, you might notice any of the following beh
 -   Inability to drag any widget to a sidebar in **Appearance** \> **Widgets**
 -   Inability to edit menus in **Appearance** \> **Menus**
 
-To understand why this happens, note that WordPress [concatenates JavaScript files](https://wordpress.org/support/article/editing-wp-config-php/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of _load\[\]_ parameters in the query string, where the order of those parameters is crucial.
+To understand why this happens, note that WordPress [concatenates JavaScript files](https://developer.wordpress.org/advanced-administration/wordpress/wp-config/#disable-javascript-concatenation) to speed up the administration interface. The way WordPress implements this involves multiple occurrences of `load[]` parameters in the query string, where the order of those parameters is crucial.
+
+{{<Aside type="note">}}
+
+Note that more recent versions of WordPress may not experience this issue, as a patch has been implemented in WordPress since 2019. The patch can be found at [WordPress Core Trac Changeset 45456](https://core.trac.wordpress.org/changeset/45456).
+
+{{</Aside>}}
 
 ### Identify the problem
 
@@ -89,10 +95,10 @@ For example, you might have an image resizing endpoint or a search form, where t
 To minimize problems, consider:
 
 -   Disabling **Query String Sort** for the site if you’re sure that this feature does not add value to any part of your site. Cloudflare disables this option by default in the **Caching** app.
--   Use Cloudflare **Page Rules** to enable **Query String Sort** for URLs where preserving the query string parameter order is not important.
--   Alternatively, use Cloudflare **Page Rules** to disable **Query String Sort** for URLs where a specific parameter order is required. For example, disable Query String Sort for `example.com/wp-admin/load-scripts.php*` or any URLs with similar requirements (replace example.com with your domain name).
+-   Use Cache Rules to enable Query String Sort (in **Cache key** > **Sort query string**) for URLs where preserving the query string parameter order is not important.
+-   Alternatively, use Cache Rules to disable **Query String Sort** for URLs where a specific parameter order is required. For example, set **Cache key** > **Sort query string**: `Off` for URI paths starting with `/wp-admin/load-scripts.php`, or for any URLs with similar requirements.
 
-To learn more about Page Rules, visit [Page Rules](/rules/page-rules/).
+To learn more about Cache Rules, visit [Cache Rules](/cache/how-to/cache-rules/).
 
 ___
 

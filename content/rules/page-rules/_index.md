@@ -9,18 +9,11 @@ weight: 19
 
 Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
 
-{{<Aside type="warning">}}
-We advise considering alternative [Rules](/rules/) options due to their enhanced configurability.<br>
-Page Rules are going to be deprecated in the foreseeable future. Refer to [our blog post](https://blog.cloudflare.com/future-of-page-rules/) for details.
-{{</Aside>}}
-
 ## Availability
 
 The default number of allowed page rules depends on the domain plan as shown below.
 
 {{<feature-table id="rules.page_rules">}}
-
-You can [purchase additional rules](/rules/page-rules/troubleshooting/billing-and-subscription/) (up to a maximum of 100) for domains in the Free, Lite, Pro, Pro Plus, and Business plans.
 
 ___
 

@@ -1,7 +1,7 @@
 (function () {
   let tooEarly = false;
   let btn: HTMLInputElement;
-  let media: MediaQueryList | void;
+  let media;
 
   if (document.readyState !== "loading") init();
   else addEventListener("DOMContentLoaded", init);
@@ -26,11 +26,13 @@
       // security error
     }
     // set tooltip text
+    const themeToggleTooltip = document.querySelector<HTMLElement>("#ThemeToggle--tooltip");
+    if(!themeToggleTooltip) return;
     if (isDark) {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      themeToggleTooltip.textContent =
         "Set theme to light (⇧+D)";
     } else {
-      document.getElementById("ThemeToggle--tooltip").innerHTML =
+      themeToggleTooltip.textContent =
         "Set theme to dark (⇧+D)";
     }
   }

@@ -9,18 +9,12 @@ Cloudflare Zaraz offers properties that you can use when configuring the product
 
 ## Web API
 
-{{<table-wrap>}}
-
 Property               | Description
 ---------------------- | -----------
-_Track Name_           | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
+_Event Name_           | Returns the name of the event sent using the Track method of the Web API. Refer to the [Track method](/zaraz/web-api/track/) for more information.
 _Track Property name:_ | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Set the name of your key here. Refer to the [Set method](/zaraz/web-api/set/) for more information.
 
-{{</table-wrap>}}
-
 ## Page Properties
-
-{{<table-wrap>}}
 
 Property                  | Description
 ------------------------- | -----------
@@ -40,21 +34,13 @@ _URL protocol scheme_     | Returns the protocol scheme of the URL, including th
 _URL query parameters_    | Returns query parameters provided, beginning with the leading `?` character.
 _URL username_            | Returns the username specified before the domain name.
 
-{{</table-wrap>}}
-
 ## Cookies
-
-{{<table-wrap>}}
 
 Property       | Description
 -------------- | ----------
 _Cookie name:_ | Returns cookies obtained from the browser `document`.
 
-{{</table-wrap>}}
-
 ## Device properties
-
-{{<table-wrap>}}
 
 Property                   | Description
 -------------------------- | -----------
@@ -72,11 +58,7 @@ _Operating system name_    | Returns the operating system.
 _Operating system version_ | Returns the version of the operating system.
 _User-agent string_	       | Returns the browser’s user agent.
 
-{{</table-wrap>}}
-
 ## Device location
-
-{{<table-wrap>}}
 
 Property 		| Description
 --------------- | -----------
@@ -88,16 +70,10 @@ _Region_ 		| Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) 
 _Region_ code 	| Returns the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) region code associated with the IP address of the incoming request. For example, `11`.
 _Timezone_ 		| Returns the timezone of the incoming request. For example, `Europe/Lisbon`.
 
-{{</table-wrap>}}
-
 ## Miscellaneous
-
-{{<table-wrap>}}
 
 Property                   | Description
 -------------------------- | -----------
 _Random number_            | Returns a random number unique to each request.
 _Timestamp (milliseconds)_ | Returns the Unix time in milliseconds.
 _Timestamp (seconds)_      | Returns the Unix time in seconds.
-
-{{</table-wrap>}}

@@ -33,7 +33,7 @@ const visibleData = dashArea
     </ul>
     <br />
     <div>
-      Not finding what you need? <a href="#" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>Search the docs</a>,
+      Not finding what you need? <a href="/search/">Search the docs</a>,
       <a href="https://support.cloudflare.com/hc/requests">view tickets</a>, or
       <a href="/products/">browse products</a>.
     </div>

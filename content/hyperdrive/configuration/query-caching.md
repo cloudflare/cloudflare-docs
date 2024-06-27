@@ -19,8 +19,8 @@ For example, a read query that populates the front page of a news site would be 
 ```sql
 -- Cacheable
 SELECT * FROM articles
-WHERE published_date = CURRENT_DATE()
-ORDER BY CURRENT_DATE() DESC
+WHERE DATE(published_time) = CURRENT_DATE()
+ORDER BY published_time DESC
 LIMIT 50
 ```
 
@@ -54,13 +54,13 @@ You can set a maximum `max_age` of 1 hour.
 
 ## Disable caching
 
-Disable caching on a per-Hyperdrive basis using the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
+Disable caching on a per-Hyperdrive basis by using the [Wrangler](/workers/wrangler/install-and-update/) CLI to set the `--caching-disabled` option to `true`.
 
 For example:
 
 ```sh
 # wrangler v3.11 and above required
-$ npx wrangler hyperdrive update my-hyperdrive --disable-caching
+$ npx wrangler hyperdrive update my-hyperdrive-id --origin-password my-db-password --caching-disabled true
 ```
 
 You can also configure multiple Hyperdrive connections from a single application: one connection that enables caching for popular queries, and a second connection where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
@@ -82,4 +82,4 @@ const noCachingClient = new Client({
 
 - Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
 - Learn how to [Connect to PostgreSQL](/hyperdrive/configuration/connect-to-postgres/) from Hyperdrive.
-- Review [Troubleshooting common issues](/hyperdrive/reference/troubleshooting/) when connecting a database to Hyperdrive.
+- Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.

@@ -46,8 +46,6 @@ https://myproject.pages.dev/*
 
 An incoming request which matches multiple rules' URL patterns will inherit all rules' headers. Using the previous `_headers` file, the following requests will have the following headers applied:
 
-{{<table-wrap>}}
-
 | Request URL                                     | Headers                                                                                                                               |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `https://custom.domain/secure/page`             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
@@ -55,8 +53,6 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 | `https://myproject.pages.dev/home`              | `X-Robots-Tag: noindex`                                                                                                               |
 | `https://myproject.pages.dev/secure/page`       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
 | `https://myproject.pages.dev/static/styles.css` | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
-
-{{</table-wrap>}}
 
 A project is limited to 100 header rules. Each line in the `_headers` file has a 2,000 character limit. The entire line, including spacing, header name, and value, counts towards this limit.
 
@@ -138,6 +134,12 @@ https://:project.pages.dev/*
 ```
 
 ### Harden security for an application
+
+{{<Aside type="note">}}
+
+If you are using Pages Functions and wish to attach security headers in order to control access to or browser behavior of server-side logic, the headers should be sent from in Pages Functions' `Response` instead of the `_headers` file. For example, if you have an API endpoint and want to allow cross-origin requests, you should ensure that your Pages Functions attaches CORS headers to its responses, including to `OPTIONS` requests. This is to ensure that, in the unlikely event of an incident involving serving static assets, your API security headers will continue to be configured.
+
+{{</Aside>}}
 
 You can prevent click-jacking by informing browsers not to embed your application inside another (for example, with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header.
 

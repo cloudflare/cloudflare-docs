@@ -53,7 +53,7 @@ There are four ways to connect to a database from a Worker:
 If your database requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
 
 ```sh
-wrangler secret put <SECRET_NAME>
+$ wrangler secret put <SECRET_NAME>
 ```
 
 Then, retrieve the secret value in your code using the following code snippet:
@@ -64,7 +64,7 @@ const secretValue = env.<SECRET_NAME>;
 
 Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 ## Next steps
 

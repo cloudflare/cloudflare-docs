@@ -26,12 +26,14 @@ The custom block page has a few drawbacks:
 To work around these limitations, we recommend using [WARP client block notifications](#warp-client-block-notifications).
 
 {{<Aside type="note">}}
-The Gateway custom block page is a different concept from [Access custom block pages](/cloudflare-one/applications/custom-pages/#block-page), which are used in conjunction with Cloudflare Access policies.
+The Gateway custom block page is a different concept from [Access custom block pages](/cloudflare-one/applications/block-page/), which are used in conjunction with Cloudflare Access policies.
 {{</Aside>}}
 
 ### Enable the block page for DNS policies
 
-{{<render file="gateway/_add-block-page.md" productFolder="cloudflare-one">}}
+For DNS policies, you will need to enable the block page on a per-policy basis.
+
+{{<render file="gateway/_add-block-page.md" productFolder="cloudflare-one" withParameters="**Gateway** > **Firewall Policies** > **DNS**">}}
 
 ### Customize the block page
 

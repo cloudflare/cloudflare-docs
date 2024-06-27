@@ -1,9 +1,11 @@
 ---
 title: Tutorials
 pcx_content_type: navigation
-weight: 2
+weight: 4
+layout: wide
+hideChildren: true
 ---
 
 # Tutorials
 
-{{<directory-listing>}}
+{{<tutorial-listing>}}

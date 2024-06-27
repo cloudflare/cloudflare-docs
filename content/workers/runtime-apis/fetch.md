@@ -17,7 +17,7 @@ Asynchronous tasks such as `fetch` must be executed within a [handler](/workers/
 
 {{<Aside type="warning" header="Worker to Worker">}}
 
-Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/configuration/bindings/about-service-bindings/).
+Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 {{</Aside>}}
 
@@ -78,6 +78,42 @@ async function eventHandler(event) {
   - An object that defines the content and behavior of the request.
 
 {{</definitions>}}
+
+---
+
+## How the `Accept-Encoding` header is handled
+
+When making a subrequest with the `fetch()` API, you can specify which forms of compression to prefer that the server will respond with (if the server supports it) by including the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) header.
+
+Workers supports both the gzip and brotli compression algorithms. Usually it is not necessary to specify `Accept-Encoding` or `Content-Encoding` headers in the Workers Runtime production environment – brotli or gzip compression is automatically requested when fetching from an origin and applied to the response when returning data to the client, depending on the capabilities of the client and origin server.
+
+To support requesting brotli from the origin, you must enable the [`brotli_content_encoding`](/workers/configuration/compatibility-dates/#brotli-content-encoding-support) compatibility flag in your Worker. Soon, this compatibility flag will be enabled by default for all Workers past an upcoming compatibility date.
+
+### Passthrough behavior
+
+One scenario where the Accept-Encoding header is useful is for passing through compressed data from a server to the client, where the Accept-Encoding allows the worker to directly receive the compressed data stream from the server without it being decompressed beforehand. As long as you do not read the body of the compressed response prior to returning it to the client and keep the `Content-Encoding` header intact, it will "pass through" without being decompressed and then recompressed again. This can be helpful when using Workers in front of origin servers or when fetching compressed media assets, to ensure that the same compression used by the origin server is used in the response that your Worker returns.
+
+In addition to a change in the content encoding, recompression is also needed when a response uses an encoding not supported by the client. As an example, when a Worker requests either brotli or gzip as the encoding but the client only supports gzip, recompression will still be needed if the server returns brotli-encoded data to the server (and will be applied automatically). Note that this behavior may also vary based on the [compression rules](/rules/compression-rules/), which can be used to configure what compression should be applied for different types of data on the server side.
+
+```typescript
+export default {
+  async fetch(request) {
+    // Accept brotli or gzip compression
+    const headers = new Headers({
+      'Accept-Encoding': "br, gzip"
+    });
+    let response = await fetch("https://developers.cloudflare.com", {method: "GET", headers});
+
+    // As long as the original response body is returned and the Content-Encoding header is
+    // preserved, the same encoded data will be returned without needing to be compressed again.
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  }
+}
+```
 
 ## Related resources
 

@@ -12,15 +12,14 @@ The "Hello, world!" of Roughtime is very simple: the client sends a request over
 
 You just need the server's address and public key to run the protocol:
 
-- **Server address**: `roughtime.cloudflare.com:2002` (resolves to an IP address in our [anycast IP range](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/)). You can use either IPv4 or IPv6.
-- **Public key**: `gD63hSj3ScS+wuOeGrubXlq35N1c5Lby/S+T7MNTjxo=`
+- **Server address**: `roughtime.cloudflare.com:2003` (resolves to an IP address in our [anycast IP range](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/)). You can use either IPv4 or IPv6.
+- **Public key**: `0GD7c3yP8xEc4Zl2zeuN2SlLvDVVocjsPSL8/Rl/7zg=`
 
 To get started, download and run Cloudflare's [Go client](https://github.com/cloudflare/roughtime):
 
 ```go
-go get -u github.com/cloudflare/roughtime
-go install github.com/cloudflare/roughtime...
-getroughtime -ping roughtime.cloudflare.com:2002 -pubkey gD63hSj3ScS+wuOeGrubXlq35N1c5Lby/S+T7MNTjxo=
+go install github.com/cloudflare/roughtime/cmd/getroughtime@latest
+getroughtime -ping roughtime.cloudflare.com:2003 -pubkey 0GD7c3yP8xEc4Zl2zeuN2SlLvDVVocjsPSL8/Rl/7zg=
 ```
 
 ## Beta notice

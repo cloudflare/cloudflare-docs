@@ -8,7 +8,7 @@ title: Customize Caching
 
 Caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our global network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
 
-You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page Rules](/rules/page-rules/).
+You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/how-to/cache-rules/) or [Page Rules](/rules/page-rules/) (deprecated).
 
 ___
 
@@ -18,7 +18,7 @@ Cloudflare does not cache HTML resources automatically. This prevents us from un
 
 However, you can configure HTML caching through specific Cloudflare Page Rules settings. The degree of HTML caching flexibility varies based on your domain plan as described in the best practice sections below.
 
-When configuring caching settings in the **Page Rules** app, you are essentially manipulating certain options of the **Caching** app. The difference lies in that through **Page Rules**, you apply the caching settings at the URL level (not the entire site), after matching a specific pattern defined in a custom page rule. That way, you have fine-grained control over which specific resources to cache.
+When configuring caching settings with Page Rules, you are essentially manipulating certain options of the **Caching** app. The difference lies in that through Page Rules, you apply the caching settings at the URL level (not the entire site), after matching a specific pattern defined in a custom page rule. That way, you have fine-grained control over which specific resources to cache.
 
 For background information on Cloudflare’s caching tools and options, consult:
 
@@ -30,7 +30,7 @@ ___
 
 ## Cache static, anonymous HTML (all domains)
 
-All domain plans can use the _Cache Everything_ setting in the **Page Rules** app.
+All domain plans can use the _Cache Everything_ setting of Page Rules.
 
 However, this option caches all HTML regardless of the presence of dynamic content. If you use this approach to cache pages that contain dynamic content, it is quite likely that visitors will get information that is not intended for them.
 

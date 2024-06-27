@@ -10,7 +10,7 @@ meta:
 
 These are the settings that you can configure when creating a cache rule.
 
-## Fields 
+## Fields
 
 The fields available for Cache Rule matching expressions in the Expression Builder are:
 
@@ -37,11 +37,11 @@ Not all fields are available as a trigger for Cache Rules due to incompatibility
 
 The operators available for Cache Rule expressions are:
 
-* equals 
-* does not equal 
-* contains 
-* does not contain 
-* matches regex 
+* equals
+* does not equal
+* contains
+* does not contain
+* matches regex
 * does not match regex
 * is in
 * is not in
@@ -67,10 +67,10 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with image transformations . Cache Rules will not be applied to image transformation requests. Page Rules are supported.
+If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly.
 {{</Aside>}}
 
-#### Edge TTL 
+#### Edge TTL
 
 Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests. This setting has three primary options:
 
@@ -282,7 +282,7 @@ API configuration property name: `"additional_cacheable_ports"` (array of intege
 header: API configuration example
 ---
 "action_parameters": {
-    "cache": true 
+    "cache": true
     "additional_cacheable_ports": [8443, 8080]
   }
 }
@@ -294,7 +294,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Proxy Read Timeout (Enterprise-only)
 
-Define a timeout value between two successive read operations to your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce `HTTP 524` errors because of timeouts from an origin server, try increasing this timeout value.
+Defines a timeout value between two successive read operations to your origin server. The default value can be found in the [Connection limits](/fundamentals/reference/connection-limits/) table. If you are attempting to reduce [`HTTP 524`](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-524-a-timeout-occurred) errors because of timeouts from an origin server, try increasing this timeout value using the API endpoint below.
 
 {{<details header="API information">}}
 
@@ -316,7 +316,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Serve stale content while revalidating
 
-Defines if Cloudflare will serve stale content while updating from the origin server. If serving stale content is disabled, origin cache-control headers will be used to tell Cloudflare how to handle content from the origin.
+Defines if Cloudflare will serve stale content while updating the latest content from the origin server. If serving stale content is disabled, Cloudflare will not serve stale content while getting the latest content from the origin.
 
 {{<details header="API information">}}
 

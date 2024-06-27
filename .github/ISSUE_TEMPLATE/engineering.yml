@@ -2,7 +2,8 @@ name: Website and/or content display error(s)
 description: Report an issue with the live website; for example, issues with content display, buggy browser behavior, etc.
 labels: ["engineering"]
 assignees:
-  - codewithkristian
+  - kodster28
+  - KianNH
 body:
   - type: textarea
     id: location-urls
@@ -10,7 +11,7 @@ body:
       required: true
     attributes:
       label: Example URL(s)
-      description: Please provide links that demonstrate the issue or behavior.
+      description: Provide links that demonstrate the issue or behavior.
       placeholder: |
         - https://developers.cloudflare.com/...
         - https://developers.cloudflare.com/...

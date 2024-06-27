@@ -5,12 +5,7 @@ title: Early Hints
 
 # Early Hints
 
-[Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains. [To enable](/cache/advanced-configuration/early-hints/#enable-early-hints) Early Hints for your custom domains:
-
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com). 
-2. Select your account and zone.
-3. Go to **Speed** > **Optimization** > **Content Optimization**.
-4. Turn on the **Early Hints** toggle.
+[Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains and custom domains. 
 
 Early Hints automatically caches any [`preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload) and [`preconnect`](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect) type [`Link` headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) to send as Early Hints to the browser. The hints are sent to the browser before the full response is prepared, and the browser can figure out how to load the webpage faster for the end user. There are two ways to create these `Link` headers in Pages:
 
@@ -34,11 +29,11 @@ Pages will attach this `Link: </styles.css>; rel=preload; as=stylesheet` header.
 
 ### 2. Automatic `Link` header generation
 
-In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with any of the following attributes:
+In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with the following attributes:
 
 - `href`
-- `as`
-- `rel` (`preload` or `preconnect`)
+- `as` (optional)
+- `rel` (one of `preconnect`, `preload`, or `modulepreload`)
 
 `<link>` elements which contain any other additional attributes (for example, `fetchpriority`, `crossorigin` or `data-do-not-generate-a-link-header`) will not be used to generate `Link` headers in order to prevent accidentally losing any custom prioritization logic that would otherwise be dropped as an Early Hint.
 

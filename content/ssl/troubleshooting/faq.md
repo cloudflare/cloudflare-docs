@@ -71,7 +71,7 @@ ___
 
 ## Does SSL work for hosting partners?
 
-A free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [full](/dns/zone-setups/full-setup/) and [partial setups](/dns/zone-setups/partial-setup/).
+A free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner using both [full](/dns/zone-setups/full-setup/) and {{<glossary-tooltip term_id="partial setup" link="/dns/zone-setups/partial-setup/">}}partial setups{{</glossary-tooltip>}}.
 
 For more details, refer to [Enable Universal SSL certificates](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
@@ -106,6 +106,9 @@ ___
 ## Does enabling Cloudflare affect PayPal's TLS 1.2 requirement?
 
 No. Since Cloudflare does not proxy connections made directly to `paypal.com`, enabling Cloudflare for your domain does not affect how TLS connections are made.
+
+However, note that PayPal IPN (Instant Payment Notification) might not support [TLS version 1.3](/ssl/edge-certificates/additional-options/tls-13/) if you have it enabled on your zone.
+If you are encountering issues with PayPal IPN when the traffic is proxied by Cloudflare, try setting the [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
 
 ___
 

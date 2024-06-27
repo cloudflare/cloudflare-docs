@@ -17,7 +17,7 @@ HTTP header names and values may only contain ASCII characters, which is a small
 Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted.
 {{</Aside>}}
 
-These headers map to the `httpMetadata` field in the [R2 bindings](/workers/configuration/bindings/):
+These headers map to the `httpMetadata` field in the [R2 bindings](/workers/runtime-apis/bindings/):
 
 {{<table-wrap>}}
 | HTTP Header           | Property Name                     |
@@ -48,17 +48,11 @@ Host: bucket.account.r2.cloudflarestorage.com
 
 This is only useful if you are creating buckets on demand because you do not know the name of the bucket or the preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [`ListBuckets` extension](#listbuckets), which supports accounts with more than 1,000 buckets, may also be useful.
 
-## PutObject
+## PutObject and CreateMultipartUpload
 
 ### cf-create-bucket-if-missing
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
-
-## CreateMultipartUpload
-
-### cf-create-bucket-if-missing
-
-Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a detailed explanation of when to add this header.
 
 ## PutObject
 
@@ -115,5 +109,5 @@ These headers work akin to the similarly named conditional headers supported on 
 
 #### Non-atomicity relative to `x-amz-copy-source-if`
 
-The the `x-amz-copy-source-if-...` headers are guaranteed to be checked when the source object for the copy operation is selected, and the `cf-copy-destination-if-...` headers are guaranteed to be checked when the object is committed to the bucket state.
+The `x-amz-copy-source-if-...` headers are guaranteed to be checked when the source object for the copy operation is selected, and the `cf-copy-destination-if-...` headers are guaranteed to be checked when the object is committed to the bucket state.
 However, the time at which the source object is selected for copying, and the point in time when the destination object is committed to the bucket state are not necessarily the same. This means that the `cf-copy-destination-if-...` headers are not atomic in relation to the `x-amz-copy-source-if...` headers.

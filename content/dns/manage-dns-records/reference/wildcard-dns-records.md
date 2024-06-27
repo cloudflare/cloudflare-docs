@@ -36,9 +36,32 @@ You can also create a wildcard DNS record specifically for a deeper subdomain. F
 
 | Type | Name  | IPv4 address | Proxy status |
 | --- | --- | --- | --- |
-| `A`    | `*.www` | `192.0.2.2`  | Proxied      |
+| `CNAME`    | `*.www` | `example.com`  | Proxied      |
 
 {{</example>}}
+
+### Aspects to consider
+
+- **Wildcards are only supported on the first label**: This means that a hostname such as `subdomain.*.example.com` is not a wildcard on the level of the asterisk character. If you create a DNS record with that name, the asterisk is interpreted as the literal character `*` and not as the wildcard operator.
+
+- **You cannot create wildcards on multiple levels**: If you create a DNS record on `*.*.example.com`, only the first asterisk is interpreted as a wildcard while the second one is interpreted as the literal `*` character.
+
+- **Specific DNS records take precedence over wildcard records**: Wildcards will be applied for multiple levels, but a specific record on any equal or lower level will terminate anything on or below this specific record.
+
+    {{<details header="Example">}}
+
+If you have only these two records on your domain, `A` and `TXT`:
+
+| Type | Name | Content |
+| --- | --- | --- |
+| `A` | `*.example.com` | `192.0.2.3` |
+| `TXT` | `subdomain1.example.com ` | `<some_text>` |
+
+The `A` wildcard record will be used for queries going to any subdomain of `example.com` except `subdomain1.example.com` or anything below that specific label (`deeper.label.subdomain1.example.com`).
+
+The wildcard will still be used for deeper labels that are not below the specific record on `subdomain1.example.com` — for example, `deeper.label.subdomain2.example.com`.
+
+{{</details>}}
 
 ## Availability
 

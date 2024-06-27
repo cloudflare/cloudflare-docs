@@ -63,7 +63,7 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
 {{</Aside>}}
 
-When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`.
+When adding an endpoint manually, you can specify variable fields in the path or host by enclosing them in braces, `/api/user/{var1}/details` or `{var1}.example.com`.
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
@@ -119,9 +119,9 @@ You can interact with Endpoint Management through the Cloudflare API. Refer to [
 
 Sensitive data comprises various personally identifiable information and financial data. Cloudflare created this ruleset to address common data loss threats, and the WAF can search for this data in HTTP response bodies from your origin.
 
-API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/#managed-rulesets).
+API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/reference/sensitive-data-detection/).
 
-Sensitive Data Detection is currently available in beta to Enterprise customers on our Advanced application security plan.
+Sensitive Data Detection is available to Enterprise customers on our Advanced application security plan.
 
 Once Sensitive Data Detection is enabled for your zone, API Shield queries firewall events from the WAF for the last seven days and places a notification icon on the Endpoint Management table row if there are any matched sensitive responses for your endpoint.
 

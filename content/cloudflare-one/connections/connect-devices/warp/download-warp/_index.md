@@ -12,14 +12,7 @@ Alternatively, download the client from one of the following links after checkin
 
 ## Windows
 
-|                      |    |
-| ---------------------| ---|
-| **OS version**       | Windows 10, Windows 11|
-| **OS type**          | 64-bit only |
-| .NET Framework version | 4.7.2 or later |
-| **HD space**         | 184 MB |
-| **Memory**           | 3 MB |
-| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
+{{<render file="warp/system-requirements/_windows.md">}}
 
 **[Windows Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release)**
 
@@ -27,26 +20,15 @@ Alternatively, download the client from one of the following links after checkin
 
 ## macOS
 
-|                      |    |
-| ---------------------| ---|
-| **OS version**       | Catalina+ (10.15+)
-| **OS type**          | 64-bit only |
-| **HD space**         | 75 MB|
-| **Memory**           | 35 MB |
-| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
+{{<render file="warp/system-requirements/_macOS.md">}}
 
 **[macOS Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release)**
 
 **[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)**
 
 ## Linux
-|                      |    |
-| ---------------------| ---|
-| **OS version**       | CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11|
-| **OS type**          | 64-bit only |
-| **HD space**         | 75 MB|
-| **Memory**           | 35 MB |
-| **Network interface**| <li> WIFI or LAN </li> <li> MTU ≥ 1280 bytes</li>|
+
+{{<render file="warp/system-requirements/_linux.md">}}
 
 **[Package repository](https://pkg.cloudflareclient.com/)**
 
@@ -80,4 +62,4 @@ The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.
 | ---------------------| ---|
 | **OS version**       |Chromebooks manufactured after 2019 |
 
-Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
+Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, [refer to this list](https://www.chromium.org/chromium-os/chrome-os-systems-supporting-android-apps/) to verify that your device is supported.

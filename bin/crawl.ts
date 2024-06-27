@@ -3,9 +3,6 @@
  * - all anchor tags (<a>) do not point to broken links
  * - all images (<img>) do not have broken sources
  * NOTE: Requires `npm run build` first!
- * 2. Crawl the `assets/json` directory (JSON files) and assert:
- * - all `url_path` values do not point to broken links
- * - all anchor tags (<a>) do not point to broken links
  */
 import * as http from "http";
 import * as https from "https";
@@ -16,17 +13,13 @@ import { parse } from "node-html-parser";
 
 let WARNS = 0;
 let ERRORS = 0;
-let JSON_WARNS = 0;
-let JSON_ERRORS = 0;
 let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
-const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
 
 async function walk(dir: string) {
   let files = await fs.readdir(dir);
@@ -36,16 +29,6 @@ async function walk(dir: string) {
       if (name.endsWith(".html")) return task(abs);
       let stats = await fs.stat(abs);
       if (stats.isDirectory()) return walk(abs);
-    })
-  );
-}
-
-async function walkJsonFiles(dir: string) {
-  let files = await fs.readdir(dir);
-  await Promise.all(
-    files.map(async (name) => {
-      let abs = join(dir, name);
-      if (name.endsWith(".json")) return testJSON(abs);
     })
   );
 }
@@ -92,80 +75,6 @@ interface Message {
   html?: string;
   value?: string;
   text?: string;
-}
-
-async function testJSON(file: string) {
-  if (process.platform === "win32") {
-    // Local imports must have a `file://` scheme on Windows
-    file = `file://${file}`;
-  }
-
-  const { default: info } = await import(file, {
-    assert: {
-      type: "json",
-    },
-  });
-
-  const jsonString = JSON.stringify(info);
-  const urlPathRegex = new RegExp('"url_path":"(.*?)"', "g");
-  const hrefRegex = new RegExp("<a href='(.*?)'>", "g");
-  const unanchoredRegex = new RegExp("([^#]*)");
-
-  let urlPathMatches = [...jsonString.matchAll(urlPathRegex)];
-  let pathUrls = urlPathMatches.map((match) => match[1]);
-
-  let hrefMatches = [...jsonString.matchAll(hrefRegex)];
-  let hrefUrls = hrefMatches.map((match) => match[1]);
-
-  let combinedUrls = pathUrls.concat(hrefUrls);
-
-  let messages: Message[] = [];
-  combinedUrls.map(async (item) => {
-    let exists = false;
-
-    if (item.includes(DEV_DOCS_HOSTNAME)) {
-      messages.push({
-        type: "warn",
-        text: `rewrite in "/absolute/" format: "${item}"`,
-      });
-    } else if (item.startsWith("/")) {
-      let unanchoredItem = item.match(unanchoredRegex);
-      let local = join(PUBDIR, unanchoredItem[1]);
-      // is this HTML page? eg; "/foo/"
-      if (extname(local).length === 0) {
-        // TODO? log warning about no trailing slash
-        if (!local.endsWith("/")) local += "/";
-        local += "index.html";
-      }
-      exists = existsSync(local);
-
-      if (!exists) {
-        messages.push({
-          type: "error",
-          value: item,
-        });
-      }
-    }
-  });
-  if (messages.length > 0) {
-    let output = file.substring(
-      file.indexOf(LEARNING_PATH_DIR) + LEARNING_PATH_DIR.length
-    );
-
-    messages.forEach((msg) => {
-      if (msg.type === "error") {
-        output += "\n  ✘";
-        JSON_ERRORS++;
-      } else {
-        output += "\n  ⚠";
-        JSON_WARNS++;
-      }
-      output += "  " + (msg.text || msg.value);
-      if (VERBOSE) output += "\n    ";
-    });
-
-    console.log(output + "\n");
-  }
 }
 
 async function testREDIRECTS(file: string) {
@@ -309,26 +218,6 @@ try {
     }
     if (WARNS > 0) {
       msg += "\n    - " + WARNS.toLocaleString() + " warning(s)";
-    }
-    console.log(msg + "\n\n");
-  }
-} catch (err) {
-  console.error(err.stack || err);
-  process.exit(1);
-}
-
-try {
-  await walkJsonFiles(LEARNING_PATH_DIR);
-  if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /data/learning-paths/ files DONE~!\n\n");
-  } else {
-    let msg = "\n~> /data/learning-paths/ files DONE with:";
-    if (JSON_ERRORS > 0) {
-      process.exitCode = 1;
-      msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
-    }
-    if (JSON_WARNS > 0) {
-      msg += "\n    - " + JSON_WARNS.toLocaleString() + " warning(s)";
     }
     console.log(msg + "\n\n");
   }

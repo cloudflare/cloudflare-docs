@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Always Use HTTPS
 weight: 15
+learning_center:
+    title: What is HTTPS?
+    link: https://www.cloudflare.com/learning/ssl/what-is-https/
 ---
 
 # Always Use HTTPS
@@ -40,7 +43,7 @@ When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `always_use_https` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}

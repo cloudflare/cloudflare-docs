@@ -8,9 +8,9 @@
   <!-- Evaluate content type against standards -->
 
   {{- $availableContentTypes := slice
-    "changelog" "concept" "configuration" "faq" "get-started" "glossary"
+    "changelog" "concept" "configuration" "design-guide" "example" "faq" "get-started" "glossary"
     "how-to" "integration-guide" "learning-path" "learning-unit" "migration"
-    "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
+    "navigation" "overview" "reference" "reference-architecture" "reference-architecture-diagram" "troubleshooting"
     "tutorial"
     -}}
 
@@ -115,6 +115,10 @@
   {{- with $DATA.product.title -}}
   <meta name="algolia_product_filter" content="{{- . -}}">
   {{- end -}}
+  {{- end -}}
+
+  {{- with .Context.Params.tags -}}
+  <meta name="pcx_tags" content="{{- delimit . "," -}}">
   {{- end -}}
 
   <meta name="algolia_page_title" content="{{- $pt -}}">

@@ -21,7 +21,7 @@ meta:
 
 Web analytics is now set up on your website, but it may take a few minutes for Web Analytics data to appear.
 
-Repeat steps 3-7 for all the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from Web Analytics. In **Web Analytics Sites**, select **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
+Repeat steps 3-7 for all the websites you want to track with Web Analytics by selecting **Add a site** from Web Analytics. In **Web Analytics Sites**, select **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
 
 For more information on how many sites you can track, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 

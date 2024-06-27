@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Changelog
-
 ---
 
 # Changelog
@@ -80,6 +79,18 @@ The `product-changelog` component renders data that lives in a file within the [
 
   - Product name to display on the [changelog](/changelog/) product filter list, as well as other areas of the template.
 
+- `productLink` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Link to top-level docs for your product (helpful for context if someone is landing on the top-level changelog page)
+
+- `productArea` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Rollup grouping to surface related products together in context.
+
+- `productAreaLink` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Rollup grouping to surface related products together in context. Helps pull together related RSS feeds.
+
 - `entries` {{<type>}}object{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
     - `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -88,7 +99,7 @@ The `product-changelog` component renders data that lives in a file within the [
      - `title` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
         - Name of published change. Optional, but highly encouraged.
-    
+
      - `description` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
         - Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
@@ -102,6 +113,9 @@ header: /data/changelogs/queues.yaml
 ---
 link: "/queues/changelog/"
 productName: Queues
+productLink: "/queues/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2023-03-28'
   title: Consumer concurrency (enabled)
@@ -165,8 +179,12 @@ header: /data/changelogs/waf.yaml
 ---
 link: "/waf/change-log/"
 productName: WAF
+productLink: "/waf/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 - publish_date: '2023-09-18'
+  scheduled_date: '2023-09-25'
   individual_page: true
   scheduled: true
   link: '/waf/change-log/scheduled-changes/'
@@ -179,7 +197,7 @@ entries:
 {{<definitions>}}
 - `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Date of scheduled change, formatted as `YYYY-MM-DD`.
+    - Date when the page was published, formatted as `YYYY-MM-DD`. For pages with scheduled changes, you should update this field when adding/updating entries, so that the changelog item gets placed at the top of the changelog list (and feed). You should _not_ update this date when clearing all scheduled changes due to a release, since this change is not as relevant.
 
 - `individual_page` {{<type>}}boolean{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -193,7 +211,17 @@ entries:
 
    - Should be included for scheduled pages. Because this component renders content on the underlying page, you should only have a) one scheduled entry per scheduled entry page and b) only a scheduled entry when the scheduled entry page has content.
 
+- `scheduled_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+   - Should be included for pages with scheduled changes. Helps render the date of the upcoming change in the title, which provides more actionable information to folks scanning titles or the associated RSS feeds.
+
 {{</definitions>}}
+
+{{<Aside type="note">}}
+
+If the scheduled date gets pushed for a change, update the `publish_date` and `scheduled_date` fields of the changelog entry. This process makes sure customers will receive notifications via their RSS feeds.
+
+{{</Aside>}}
 
 ## Examples
 

@@ -8,23 +8,26 @@ meta:
 
 # JavaScript and web standards
 
-The Workers runtime provides the following standardized APIs for use by Workers running on Cloudflare's global network.
-
 ---
 
 ## JavaScript standards
 
-Cloudflare Workers uses the V8 JavaScript engine from Google Chrome. The Workers runtime is updated at least once a week, to at least the version that is currently used by Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
+The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAssembly engine](/workers/reference/how-workers-works/). The Workers runtime is updated at least once a week, to at least the version of V8 that is currently used by Google Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
-- `eval()` is not allowed for security reasons.
-- `new Function` is not allowed for security reasons.
+- For security reasons, the following are not allowed:
+  - `eval()`
+  - `new Function`
+  - [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compile_static)
+  - [`WebAssembly.compileStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compileStreaming_static)
+  - `WebAssembly.instantiate` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
+  - [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
 ---
 
-## Web global APIs
+## Web standards and global APIs
 
 The following methods are available per the [Worker Global Scope](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope):
 

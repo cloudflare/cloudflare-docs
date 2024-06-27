@@ -74,14 +74,14 @@ For reference information on rule actions available for Cloudflare products powe
                 <li><a href="/waf/tools/user-agent-blocking/">User Agent Blocking</a></li>
                 <li><a href="/waf/tools/browser-integrity-check/">Browser Integrity Check</a></li>
                 <li><a href="/waf/tools/scrape-shield/hotlink-protection/">Hotlink Protection</a></li>
-                <li><a href="/waf/tools/security-level/">Security Level (IP Reputation)</a></li>
+                <li><a href="/waf/tools/security-level/">Security Level (deprecated)</a></li>
                 <li><a href="/waf/reference/legacy/old-rate-limiting/">Rate Limiting</a> (previous version, deprecated)</li>
                 <li><a href="/waf/tools/zone-lockdown/">Zone Lockdown</a></li>
                 <li><a href="/waf/reference/legacy/old-waf-managed-rules/">WAF managed rules</a> (previous version, deprecated)</li>
               </ul>
               <p><strong>Notes:</strong></p>
               <ul>
-                <li>Currently, you cannot bypass Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
+                <li>Currently, you cannot bypass Bot Fight Mode. For more information on this product, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
                 <li>You cannot bypass the new <a href="/waf/managed-rules/">WAF managed rules</a> using this action, only the previous version of WAF managed rules. To skip one or more managed rules in the new WAF for specific requests, <a href="/waf/managed-rules/waf-exceptions/">create an exception</a>.</li>
               </ul>
               <p></p>

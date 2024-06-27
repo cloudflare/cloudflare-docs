@@ -8,13 +8,7 @@ meta:
 
 # Overview
 
-In the simplest terms, there are providers and subscribers of our threat intelligence data.
-
-A provider is an organization that has a set of data that they are interested in sharing with other Cloudflare organizations. Any organization can be a provider. Examples of current providers are Government Cyber Defense groups.
-
-Subscribers can be any Cloudflare customer that wants to secure their environment further by creating rules based on provider datasets. Subscribers must be authorized by a provider. Authorization is granted using the [Indicator Feeds permissions endpoint](/api/operations/custom-indicator-feeds-add-permission).
-
-If your organization has interest in becoming a provider or a subscriber, please reach out to your account team, who will help facilitate the required authorization.
+{{<render file="_indicator-feeds-overview.md" withParameters="If your organization has interest in becoming a provider or a subscriber, contact your account team, who will help facilitate the required authorization.">}}
 
 ## Get started
 

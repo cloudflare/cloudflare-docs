@@ -4,13 +4,17 @@ summary: Return a response based on the incoming request's URL, HTTP method,
   User Agent, IP address, ASN or device type.
 tags:
   - Middleware
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+pcx_content_type: example
 title: Conditional response
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -64,8 +68,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const BLOCKED_HOSTNAMES = ["nope.mywebsite.com", "bye.website.com"];
     // Return a new Response based on a URL's hostname
     const url = new URL(request.url);
@@ -107,9 +111,54 @@ const handler: ExportedHandler = {
     );
     return fetch(request);
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import re
+from js import Response, URL, fetch
+
+async def on_fetch(request):
+    blocked_hostnames = ["nope.mywebsite.com", "bye.website.com"]
+    url = URL.new(request.url)
+
+    # Block on hostname
+    if url.hostname in blocked_hostnames:
+        return Response.new("Blocked Host", status=403)
+
+    # On paths ending in .doc or .xml
+    if re.search(r'\.(doc|xml)$', url.pathname):
+        return Response.new("Blocked Extension", status=403)
+
+    # On HTTP method
+    if "POST" in request.method:
+        return Response.new("Response for POST")
+
+    # On User Agent
+    user_agent = request.headers["User-Agent"] or ""
+    if "bot" in user_agent:
+        return Response.new("Block User Agent containing bot", status=403)
+
+    # On Client's IP address
+    client_ip = request.headers["CF-Connecting-IP"]
+    if client_ip == "1.2.3.4":
+        return Response.new("Block the IP 1.2.3.4", status=403)
+
+    # On ASN
+    if request.cf and request.cf.asn == 64512:
+        return Response.new("Block the ASN 64512 response")
+
+    # On Device Type
+    # Requires Enterprise "CF-Device-Type Header" zone setting or
+    # Page Rule with "Cache By Device Type" setting applied.
+    device = request.headers["CF-Device-Type"]
+    if device == "mobile":
+        return Response.redirect("https://mobile.example.com")
+
+    return fetch(request)
 ```
 
 {{</tab>}}

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an MkDocs site
+title: MkDocs
 ---
 
-# Deploy an MkDocs site
+# MkDocs
 
 [MkDocs](https://www.mkdocs.org/) is a modern documentation platform where teams can document products, internal knowledge bases and APIs.
 
@@ -26,12 +26,12 @@ $ mkdocs new <PROJECT_NAME>
 Then `cd` into your project, take MkDocs and its dependencies and put them into a `requirements.txt` file:
 
 ```sh
-pip freeze > requirements.txt
+$ pip freeze > requirements.txt
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 You have successfully created a GitHub repository and pushed your MkDocs project to that repository.
 
@@ -53,4 +53,4 @@ Every time you commit new code to your MkDocs site, Cloudflare Pages will automa
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-{{<render file="_learn-more.md" withParameters="MkDocs">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="MkDocs">}}

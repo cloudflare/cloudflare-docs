@@ -1,105 +1,34 @@
 ---
 title: WebSockets
-pcx_content_type: configuration
+pcx_content_type: concept
 weight: 3
 ---
 
 # WebSockets
 
-## Background
+## Background 
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-[Durable Objects](/durable-objects/) support WebSockets — your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
+Durable Objects support the Workers Runtime [WebSocket API](/workers/runtime-apis/websockets/). Your Durable Object can act as a single point-of-coordination for WebSocket sessions, giving you full control over messages sent to and from clients, allowing you to build applications like chat rooms and multiplayer games.
 
-For more information beyond the API reference, refer to [Use WebSockets in Durable Objects](/durable-objects/reference/websockets/).
+For more information beyond the API reference, refer to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example.
 
-## WebSocket Methods
+## WebSocket Hibernation API
 
-### accept
+In addition to [Workers WebSocket API](/workers/runtime-apis/websockets/), Durable Objects WebSocket Hibernation API includes the below extensions to standard WebSocket API, state methods, and handler methods. 
 
-{{<definitions>}}
+The WebSocket Hibernation API allows a Durable Object that is not currently running an event handler (such as [handling a WebSocket message](/durable-objects/api/websockets/#websocketmessage), HTTP request, or [alarms](/durable-objects/api/alarms/)) to be removed from memory while keeping its WebSockets connected ("hibernation"). This reduces duration charges that would otherwise be incurred during periods of inactivity.
 
-- {{<code>}}accept(){{</code>}}
+To learn more about WebSocket Hibernation, refer to [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/) example.
 
-  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+## Extensions to WebSocket API
 
-{{</definitions>}}
-
-### addEventListener
-
-{{<definitions>}}
-
-- {{<code>}}addEventListener(event{{<param-type>}}WebSocketEvent{{</param-type>}}, callbackFunction{{<param-type>}}Function{{</param-type>}}){{</code>}}
-
-  - Add callback functions to be executed when an event has occurred on the WebSocket.
-
-{{</definitions>}}
-
-#### Parameters
-
-{{<definitions>}}
-
-- `event` {{<type-link href="#websocketevent">}}WebSocketEvent{{</type-link>}}
-
-  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
-
-- {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
-
-  - A function to be called when the WebSocket responds to a specific event.
-
-{{</definitions>}}
-
-### close
-
-{{<definitions>}}
-
-- {{<code>}}close(code{{<param-type>}}number{{</param-type>}}, reason{{<param-type>}}string{{</param-type>}}){{</code>}}
-
-  - Close the WebSocket connection.
-
-{{</definitions>}}
-
-#### Parameters
-
-{{<definitions>}}
-
-- {{<code>}}code{{<param-type>}}integer{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
-
-- {{<code>}}reason{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - A human-readable string indicating why the WebSocket connection was closed.
-
-{{</definitions>}}
-
-### send
-
-{{<definitions>}}
-
-- {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
-
-  - Send a message to the other WebSocket in this WebSocket pair.
-
-{{</definitions>}}
-
-#### Parameters
-
-{{<definitions>}}
-
-- {{<code>}}message{{<param-type>}}string{{</param-type>}}{{</code>}}
-
-  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
-
-{{</definitions>}}
-
-{{<heading-pill style="beta" heading="h3">}}serializeAttachment{{</heading-pill>}}
+### serializeAttachment
 
 {{<definitions>}}
 
 - {{<code>}}serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
   - Keeps a copy of `value` in memory (not on disk) to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
@@ -107,20 +36,17 @@ For more information beyond the API reference, refer to [Use WebSockets in Durab
 
 {{</definitions>}}
 
-{{<heading-pill style="beta" heading="h3">}}deserializeAttachment{{</heading-pill>}}
+### deserializeAttachment
 
 {{<definitions>}}
 
 - {{<code>}}deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
-  - This method is part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
 
-  - Retrieves the most recent value passed to `state.serializeAttachment()`, or `null` if none exists.
+  - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
 {{</definitions>}}
 
-{{<heading-pill style="beta" heading="h2">}}State Methods{{</heading-pill>}}
-
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+## State Methods
 
 ### acceptWebSocket
 
@@ -134,7 +60,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
   - `tags` are optional string tags used to look up the WebSocket with `state.getWebSockets()`. Each tag is limited to 256 characters, and each WebSocket is limited to 10 tags associated with it.
 
-  - The Hibernatable WebSockets API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
+  - The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections per Durable Object instance, but the CPU and memory usage of a given workload may further limit the practical number of simultaneous connections.
 
 {{</definitions>}}
 
@@ -222,9 +148,7 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
 {{</definitions>}}
 
-{{<heading-pill style="beta" heading="h2">}}Handler Methods{{</heading-pill>}}
-
-These methods are part of the [Hibernatable WebSockets API](/durable-objects/reference/websockets/#websocket-hibernation).
+## Handler Methods
 
 ### webSocketMessage
 
@@ -266,35 +190,9 @@ These methods are part of the [Hibernatable WebSockets API](/durable-objects/ref
 
 ---
 
-## WebSocketEvent
-
-{{<definitions>}}
-
-- {{<code>}}close{{</code>}}
-  - An event indicating the WebSocket has closed.
-
-- {{<code>}}error{{</code>}}
-  - An event indicating there was an error with the WebSocket.
-
-- {{<code>}}message{{</code>}}
-  - An event indicating a new message received from the client, including the data passed by the client.
-
-{{</definitions>}}
-
-## Types
-
-### Message
-
-{{<definitions>}}
-
-- `data` {{<type>}}any{{</type>}} - The data passed back from the other WebSocket in your pair.
-- `type` {{<type>}}string{{</type>}} - Defaults to `message`.
-
-{{</definitions>}}
-
----
-
 ## Related resources
 
+- Refer to [Build a WebSocket server](/durable-objects/examples/websocket-server/) to learn more about building a WebSocket server using Durable Objects and Workers.
+- For more information beyond the API reference [Durable Objects with WebSockets](/durable-objects/reference/websockets/).
 - [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
-- [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).
+- [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template).

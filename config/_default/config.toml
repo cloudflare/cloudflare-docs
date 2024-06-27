@@ -1,4 +1,4 @@
-baseURL = "https://developers.cloudflare.com"
+baseURL = "https://developers.cloudflare.com/"
 
 title = "Cloudflare Docs"
 languageCode = "en"
@@ -7,7 +7,7 @@ disableHugoGeneratorInject = true
 enableRobotsTXT = false
 summaryLength = 30
 disableAliases = true
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy"]
 timeout = "120s"
 
 enableEmoji = true

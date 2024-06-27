@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Manage
 meta:
-    title: Manage | Page Rules
+    title: Manage | Page Rules (legacy)
 weight: 1
 ---
 
@@ -10,7 +10,7 @@ weight: 1
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
-{{<render file="_page-rule-proxied-dns-warning.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ## Create a page rule
 
@@ -42,8 +42,10 @@ You may also want to review the documentation on [wildcard matching](/rules/page
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
-Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/).
+{{<Aside type="note" header="Notes">}}
+- Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
+
+- Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/).
 {{</Aside>}}
 
 ## Edit a page rule

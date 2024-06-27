@@ -6,17 +6,11 @@ weight: 2
 
 # Limits
 
-{{<Aside type="note" heading="Hyperdrive beta">}}
-
-Many of these limits will increase during Hyperdrive public beta.
-
-{{</Aside>}}
-
 The following limits apply to Hyperdrive configuration, connections, and queries made to your configured origin databases.
 
 | Feature                                        | Limit                                                                                |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Maximum configured databases                   | 10 per account                                                                       |
+| Maximum configured databases                   | 25 per account                                                                       |
 | Initial connection timeout                     | 15 seconds                                                                           |
 | Idle connection timeout                        | 10 minutes                                                                           |
 | Maximum cached query response size             | 50 MB                                                                                |
@@ -24,7 +18,15 @@ The following limits apply to Hyperdrive configuration, connections, and queries
 | Maximum username length                        | 63 characters (bytes) <sup>1</sup>                                                   |
 | Maximum database name length                   | 63 characters (bytes) <sup>1</sup>                                                   |
 | Maximum origin database connections per region | 10-20                                                                                |
-| Maximum potential origin connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>2</sup> |
+| Maximum potential origin database connections           | 10 \* number of regions serving traffic (approx. ~80 - 100 connections) <sup>2</sup> |
+
+{{<Aside type="note">}}
+
+Hyperdrive does not have a hard limit on the number of concurrent _client_ connections made from your Workers.
+
+As many hosted databases have limits on the number of unique connections they can manage, Hyperdrive attempts to keep number of concurrent pooled connections to your origin database lower.
+
+{{</Aside>}}
 
 <sup>1</sup> This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
 

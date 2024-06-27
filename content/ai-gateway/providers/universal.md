@@ -1,7 +1,7 @@
 ---
 title: Universal Endpoint
 pcx_content_type: get-started
-weight: 6
+weight: 1
 ---
 
 # Universal Endpoint

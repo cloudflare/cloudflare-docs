@@ -10,11 +10,13 @@ meta:
 
 This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/) with Cloudflare, using the [model 2](/dns/dnssec/multi-signer-dnssec/about/) as described in [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 
-{{<Aside type="note">}}
-Note that this process requires that your other DNS provider(s) also support multi-signer DNSSEC.
-{{</Aside>}}
+## Before you begin
 
-Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+Note that:
+
+- This process requires that your other DNS provider(s) also support multi-signer DNSSEC.
+- Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+- Enabling **DNSSEC** and **Multi-signer DNSSEC** in [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) only replaces the first step in [1. Set up Cloudflare zone](#1-set-up-cloudflare-zone). You still have to follow the rest of this tutorial to complete the setup.
 
 ## 1. Set up Cloudflare zone
 
@@ -70,7 +72,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_re
 }'
 ```
 
-4. Enable the usage of the nameservers you added in the previous step by using an API request, as in the following example.
+4. Enable the usage of the nameservers you added in the previous step by using the API request below. Alternatively, go to [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) and enable **Multi-provider DNS**.
 
 {{<Aside type="warning">}}
 This step is required if you are using Cloudflare as a primary DNS provider - without enabling this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
@@ -80,13 +82,12 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 {{</Aside>}}
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings/use_apex_ns' \
+$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <KEY>' \
 --header 'Content-Type: application/json' \
 --data '{
-  "id": "use_apex_ns",
-  "value": true
+  "multi_provider": true
 }'
 ```
 

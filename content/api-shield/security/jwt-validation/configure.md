@@ -3,6 +3,7 @@ title: Configure JWT Validation
 pcx_content_type: how-to
 type: overview
 layout: wide
+weight: 1
 meta:
   title: Configure JWT Validation
 ---
@@ -14,16 +15,6 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 ## Token Configurations
 
 A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request.
-
-| Field name | Description | Example | Notes |
-| --- | --- | --- | --- |
-|  `token type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. |
-| `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration |
-| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all {{<glossary-tooltip term_id="API endpoint">}}endpoints{{</glossary-tooltip>}} in endpoint management and checks the JWT in the authorization header.|
-| `enabled` | This enables or disables acting on the validation result. | `true` | possible: `true` or `false` |
-| `allow_absent_token` | How API Shield should handle requests that do not have a JWT present. Setting this to `true` allows hybrid endpoints where JWTs, if present, must be valid, but JWTs are still allowed to be absent. | `true` | possible: `true` or `false` |
-| `token_schema` | This describes where the JWT can be found on a request. Currently, we only support extracting them from headers. | See example below. |The type must be `header`. The name field denotes the header name from which to extract the JWT. |
-| `credentials` | This describes the cryptographic public keys that should be used to validate JWTs. This field must be a JSON web key. | See example below. | See note below. |
 
 {{<Aside type="note">}}
 A zone may have up to four Token Configurations.
@@ -51,13 +42,46 @@ Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/field
 
 ### Credentials
 
-API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, and `ES256`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
+API Shield supports credentials of type `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, `PS512`, `ES256`, and `ES384`. RSA keys must be at least 2048-bit. Each JSON web key must have a “KID” which must be present in the JWT's header as well to allow  API Shield to match them.
 
 We allow up to 4 different keys in order to aid in key rollover.
 
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support.
 
 It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
+
+## Token Configuration JSON object
+
+The example below shows a JSON object with all of the information necessary to create a Token Configuration using the Cloudflare API. If you would like to create JWKs for testing, refer to [mkjwk JSON Web Key Generator](https://mkjwk.org/).
+
+```json
+---
+header: Example
+---
+{
+    "title": "Production JWT configuration",
+    "description": "This configuration checks the JWT in the authorization header or cookie.",
+    "token_sources": [
+        "http.request.headers[\"authorization\"][0]",
+        "http.request.cookies[\"Authorization\"][0]"
+    ],
+    "token_type": "jwt",
+    "credentials": {
+        "keys": [
+            {
+                "kty": "EC",
+                "use": "sig",
+                "crv": "P-256",
+                "kid": "93UrzmNu1mqXs5cZcvCPkTlMHB2Jya30vSTkiBb0vhU",
+                "x": "QG3VFVwUX4IatQvBy7sqBvvmticCZ-eX5-nbtGKBOfI",
+                "y": "A3PXCshn7XcG7Ivvd2K_DerW4LHAlIVKdqhrUnczTD0",
+                "alg": "ES256"
+            }
+        ]
+    }
+}
+```
+
 
 ## Create a Token Configuration using the Cloudflare API
 
@@ -68,7 +92,7 @@ Use cURL or any other API client tool to send the new configuration to Cloudflar
 header: Example using cURL
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
--H 'Content-Type: application/json' \
+--header 'Content-Type: application/json' \
 --data '{
     "title": "Production JWT configuration",
     "description": "This configuration checks the JWT in the authorization header or cookie.",
@@ -511,7 +535,7 @@ header: Result
 
 ## Maintenance
 
-### Update the keys
+### Update Token Configuration 
 
 It is best practice to rotate keys after some time. To support updating the keys, Cloudflare allows up to four keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
 
@@ -581,6 +605,8 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
+Rules can be reordered by setting a position field in the `PATCH` body.
+
 This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124f9bc-d6b5-430d-b488-b6bc2892f2fb`:
 
 ```bash
@@ -617,7 +643,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_vali
 ]'
 ```
 
-## Performing JWT Validation
+## Perform JWT Validation
 
 Here is an overview of how JWT Validation processes incoming requests:
 

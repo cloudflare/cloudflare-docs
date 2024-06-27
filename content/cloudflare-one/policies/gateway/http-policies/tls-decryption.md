@@ -38,7 +38,37 @@ HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gate
 
 Google Chrome can automatically upgrade HTTP requests to HTTPS requests, even when you select a link that explicitly declares `http://`. When you use Gateway to proxy and filter your traffic, this upgrade can interrupt the connection between your Zero Trust users and Gateway.
 
-To disable automatic HTTPS upgrades in Chrome, go to [Chrome flags](chrome://flags/#https-upgrades) and turn **HTTPS Upgrades** off. Chrome Enterprise users can turn off automatic HTTPS upgrades with a [management policy](https://chromeenterprise.google/policies/#HttpsUpgradesEnabled).
+You can turn off automatic HTTPS upgrades via a Gateway pass through policy, a Chrome browser flag, or a Chrome Enterprise policy.
+
+{{<tabs labels="Pass through policy | Chrome browser flag | Chrome Enterprise policy">}}
+{{<tab label="pass through policy" no-code="true">}}
+
+To disable automatic HTTPS upgrades for a URL across your Zero Trust organization, create a Gateway pass through policy.
+
+1. Deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+2. Create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to match the domain of the URL being automatically upgraded. For example:
+
+    | Selector | Operator | Value         | Action |
+    | -------- | -------- | ------------- | ------ |
+    | URL      | in       | `example.com` | Allow  |
+
+3. In **Untrusted certificate action**, choose _Pass through_.
+4. Select **Create policy**.
+
+The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates).
+
+{{</tab>}}
+{{<tab label="chrome browser flag" no-code="true">}}
+
+To disable automatic HTTPS upgrades on a per-browser basis, go to [Chrome flags](chrome://flags/#https-upgrades) and turn off **HTTPS Upgrades**.
+
+{{</tab>}}
+{{<tab label="chrome enterprise policy" no-code="true">}}
+
+Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with a [`HttpsUpgradesEnabled` management policy](https://chromeenterprise.google/policies/#HttpsUpgradesEnabled).
+
+{{</tab>}}
+{{</tabs>}}
 
 ### ESNI and ECH
 
@@ -63,17 +93,21 @@ FIPS-compliant traffic defaults to HTTP/3. Gateway does not inspect HTTP/3 traff
 
 ### Cipher suites
 
-The following table lists the cipher suites Gateway uses for TLS decryption.
+{{<glossary-definition term_id="cipher suite" prepend="A cipher suite is ">}}
 
-| Cipher suite                  | Default | FIPS-compliant |
-| ----------------------------- | ------- | -------------- |
-| ECDHE-ECDSA-AES128-GCM-SHA256 | ✅      | ✅             |
-| ECDHE-ECDSA-AES256-GCM-SHA384 | ✅      | ✅             |
-| ECDHE-RSA-AES128-GCM-SHA256   | ✅      | ✅             |
-| ECDHE-RSA-AES256-GCM-SHA384   | ✅      | ✅             |
-| ECDHE-RSA-AES128-SHA          | ✅      | ❌             |
-| ECDHE-RSA-AES256-SHA384       | ✅      | ✅             |
-| AES128-GCM-SHA256             | ✅      | ✅             |
-| AES256-GCM-SHA384             | ✅      | ✅             |
-| AES128-SHA                    | ✅      | ❌             |
-| AES256-SHA                    | ✅      | ❌             |
+The following table lists the default cipher suites Gateway uses for TLS decryption.
+
+| Name (OpenSSL)                | Name (IANA)                             | FIPS-compliant |
+| ----------------------------- | --------------------------------------- | -------------- |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 | ✅             |
+| ECDHE-ECDSA-AES256-GCM-SHA384 | TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 | ✅             |
+| ECDHE-RSA-AES128-GCM-SHA256   | TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256   | ✅             |
+| ECDHE-RSA-AES256-GCM-SHA384   | TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384   | ✅             |
+| ECDHE-RSA-AES128-SHA          | TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256   | ❌             |
+| ECDHE-RSA-AES256-SHA384       | TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384   | ✅             |
+| AES128-GCM-SHA256             | TLS_RSA_WITH_AES_128_GCM_SHA256         | ✅             |
+| AES256-GCM-SHA384             | TLS_RSA_WITH_AES_256_GCM_SHA384         | ✅             |
+| AES128-SHA                    | TLS_RSA_WITH_AES_128_CBC_SHA            | ❌             |
+| AES256-SHA                    | TLS_RSA_WITH_AES_256_CBC_SHA            | ❌             |
+
+For more information on cipher suites, refer to [Cipher suites](/ssl/reference/cipher-suites/).

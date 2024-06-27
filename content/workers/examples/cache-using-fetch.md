@@ -4,15 +4,18 @@ summary: Determine how to cache a resource by setting TTLs, custom cache keys,
   and cache headers in a fetch request.
 tags:
   - Caching
-  - Cache API
   - Middleware
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+pcx_content_type: example
 title: Cache using fetch
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -45,8 +48,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     const url = new URL(request.url);
     // Only use the path for the cache key, removing query strings
     // and always store using HTTPS, for example, https://www.example.com/file-uri-here
@@ -67,9 +70,45 @@ const handler: ExportedHandler = {
     response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from pyodide.ffi import to_js as _to_js
+from js import Response, URL, Object, fetch
+
+def to_js(x):
+    return _to_js(x, dict_converter=Object.fromEntries)
+
+async def on_fetch(request):
+    url = URL.new(request.url)
+
+    # Only use the path for the cache key, removing query strings
+    # and always store using HTTPS, for example, https://www.example.com/file-uri-here
+    some_custom_key = f"https://{url.hostname}{url.pathname}"
+
+    response = await fetch(
+        request,
+        cf=to_js({
+            # Always cache this fetch regardless of content type
+            # for a max of 5 seconds before revalidating the resource
+            "cacheTtl": 5,
+            "cacheEverything": True,
+            # Enterprise only feature, see Cache API for other plans
+            "cacheKey": some_custom_key,
+        }),
+    )
+
+    # Reconstruct the Response object to make its headers mutable
+    response = Response.new(response.body, response)
+
+    # Set cache control headers to cache on browser for 25 minutes
+    response.headers["Cache-Control"] = "max-age=1500"
+
+    return response
 ```
 
 {{</tab>}}
@@ -131,8 +170,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request) {
+export default {
+  async fetch(request): Promise<Response> {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {
@@ -146,9 +185,7 @@ const handler: ExportedHandler = {
       cf: { cacheKey: request.url },
     });
   },
-};
-
-export default handler;
+} satisfies ExportedHandler;
 ```
 
 {{</tab>}}
@@ -224,11 +261,11 @@ export default {
                       '400-499': cache.clientError,
                       '500-599': cache.serverError
                       },
-                  cacheTags: [ 
+                  cacheTags: [
                       'static'
                       ]
               },
-          
+
           })
 
   const response = new Response(newResponse.body, newResponse)
@@ -239,6 +276,7 @@ export default {
   }
 }
 ```
+
 {{</tab>}}
 {{<tab label="js/sw">}}
 
@@ -285,11 +323,11 @@ const newResponse = await fetch(request,
                     '400-499': cache.clientError,
                     '500-599': cache.serverError
                     },
-                cacheTags: [ 
+                cacheTags: [
                     'static'
                     ]
             },
-        
+
         })
 
 const response = new Response(newResponse.body, newResponse)
@@ -299,5 +337,6 @@ response.headers.set('debug', JSON.stringify(cache))
 return response
 }
 ```
+
 {{</tab>}}
 {{</tabs>}}

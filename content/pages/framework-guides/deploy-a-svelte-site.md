@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Svelte site
+title: Svelte
 ---
 
-# Deploy a Svelte site
+# Svelte
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
 
@@ -13,9 +13,9 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 ## Setting up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
-To use `create-cloudflare` to create a new Svelte project, run the following command:
 
-To use create-cloudflare to create a new Svelte project, run the following command:
+
+To use `create-cloudflare` to create a new Svelte project, run the following command:
 
 ```sh
 $ npm create cloudflare@latest my-svelte-app -- --framework=svelte
@@ -33,7 +33,7 @@ $ npm run dev
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## SvelteKit Cloudflare configuration
 
@@ -103,7 +103,7 @@ In addition to the Cloudflare adapter, review other adapters you can use in your
 
 - [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto)
 
-  SvelteKit's default adapter  automatically chooses the adapter for your current environment. If you use this adapter, [no configuration is needed](https://kit.svelte.dev/docs/adapter-auto). However, the default adapter introduces a few disadvantages for local development because it has no way of knowing what platform the application is going to be deployed to.
+  SvelteKit's default adapter automatically chooses the adapter for your current environment. If you use this adapter, [no configuration is needed](https://kit.svelte.dev/docs/adapter-auto). However, the default adapter introduces a few disadvantages for local development because it has no way of knowing what platform the application is going to be deployed to.
 
 To solve this issue, provide a `CF_PAGES` variable to SvelteKit so that the adapter can detect the Pages platform. For example, when locally building the application: `CF_PAGES=1 vite build`.
 
@@ -156,12 +156,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 ## Functions setup
 
-{{<Aside type="note">}}
-
-It is currently not possible to access [bindings](/pages/functions/bindings/) in dev mode. This feature is being worked on and will be released soon. For now, this limitation is documented in the SvelteKit documentation for both [Workers](https://kit.svelte.dev/docs/adapter-cloudflare-workers#bindings-testing-locally) and [Pages](https://kit.svelte.dev/docs/adapter-cloudflare#bindings-testing-locally). You can track possible workarounds in this [GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/11025).
-
-{{</Aside>}}
-
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
 To have the functionality equivalent to Pages Functions [`onRequests`](/pages/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
@@ -181,4 +175,4 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Svelte">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Svelte">}}

@@ -22,6 +22,9 @@ const search = instantsearch({
         const indexUiState = uiState[indexName];
         return {
           q: indexUiState.query,
+          source:
+            indexUiState.refinementList &&
+            indexUiState.refinementList.source,
           product:
             indexUiState.refinementList && indexUiState.refinementList.product,
           product_group:
@@ -37,6 +40,7 @@ const search = instantsearch({
           [indexName]: {
             query: routeState.q,
             refinementList: {
+              source: routeState.source,
               product: routeState.product,
               product_group: routeState.product_group,
               content_type: routeState.content_type,
@@ -51,6 +55,10 @@ const search = instantsearch({
 const MOBILE_WIDTH = 375;
 
 const productDropdown = createDropdown(refinementList, {
+  closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
+});
+
+const sourceDropdown = createDropdown(refinementList, {
   closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
 });
 
@@ -121,6 +129,11 @@ search.addWidgets([
   configure({
     hitsPerPage: 10,
     attributesToSnippet: ["content:30"],
+  }),
+  sourceDropdown({
+    container: "#source",
+    attribute: "source",
+    searchable: false,
   }),
   productDropdown({
     container: "#product",

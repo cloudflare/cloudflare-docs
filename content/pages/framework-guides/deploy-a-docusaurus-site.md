@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Docusaurus site
+title: Docusaurus
 ---
 
-# Deploy a Docusaurus site
+# Docusaurus
 
 [Docusaurus](https://docusaurus.io) is a static site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site such as a personal website, a product site, a blog, or marketing landing pages.
 
@@ -21,7 +21,7 @@ $ npm create cloudflare@latest my-docusaurus-app -- --framework=docusaurus
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -41,4 +41,4 @@ Every time you commit new code to your Docusaurus site and push those changes to
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-{{<render file="_learn-more.md" withParameters="Docusaurus">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Docusaurus">}}

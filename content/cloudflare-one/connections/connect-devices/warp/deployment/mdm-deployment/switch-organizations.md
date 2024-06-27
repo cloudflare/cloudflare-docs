@@ -16,7 +16,7 @@ weight: 3
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.1.159.0         |
 | macOS    | ✅           | 2024.1.160.0         |
-| Linux    | ❌           |       |
+| Linux    | ✅           | 2024.2.62.0          |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |
@@ -35,9 +35,15 @@ To enable multiple organizations, administrators need to modify their [MDM file]
 
 An MDM file supports a maximum of 25 configurations. The following example includes three configurations.
 
-### XML
+
+{{<tabs labels="Windows | macOS | Linux">}}
+
+{{<tab label="windows" no-code="true">}}
 
 ```xml
+---
+filename: mdm.xml
+---
 <array>
   <dict>
     <key>organization</key>
@@ -48,8 +54,12 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
   <dict>
     <key>organization</key>
     <string>mycompany</string>
+    <key>override_api_endpoint</key>
+    <string>203.0.113.0</string>
+    <key>override_doh_endpoint</key>
+    <string>203.0.113.0</string>
     <key>override_warp_endpoint</key>
-    <string>203.0.113.0:500</string>
+    <string>203.0.113.0:2408</string>
     <key>display_name</key>
     <string>Cloudflare China network</string>
   </dict>
@@ -62,13 +72,56 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 </array>
 ```
 
-### plist
+{{</tab>}}
+
+{{<tab label="macos" no-code="true">}}
+
+**plist**
 
 [Download](/cloudflare-one/static/mdm/multiple-orgs/com.cloudflare.warp.plist) an example `.plist` file. If placing the file manually, be sure to [convert the file into binary format](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#create-plist-file).
 
-### mobileconfig
+**mobileconfig**
 
 [Download](/cloudflare-one/static/mdm/multiple-orgs/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
+
+{{</tab>}}
+
+{{<tab label="linux" no-code="true">}}
+
+```xml
+---
+filename: mdm.xml
+---
+<array>
+  <dict>
+    <key>organization</key>
+    <string>mycompany</string>
+    <key>display_name</key>
+    <string>Production environment</string>
+  </dict>
+  <dict>
+    <key>organization</key>
+    <string>mycompany</string>
+    <key>override_api_endpoint</key>
+    <string>203.0.113.0</string>
+    <key>override_doh_endpoint</key>
+    <string>203.0.113.0</string>
+    <key>override_warp_endpoint</key>
+    <string>203.0.113.0:2408</string>
+    <key>display_name</key>
+    <string>Cloudflare China network</string>
+  </dict>
+  <dict>
+    <key>organization</key>
+    <string>test-org</string>
+    <key>display_name</key>
+    <string>Test environment</string>
+  </dict>
+</array>
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Switch organizations in WARP
 

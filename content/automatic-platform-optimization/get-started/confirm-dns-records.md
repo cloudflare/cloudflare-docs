@@ -16,3 +16,5 @@ Before you change your nameserver, confirm your DNS records are displaying corre
 4.  To add a record, select **Add record.**
 5.  To edit an existing record, select **Edit** for the appropriate record.
 6.  After making your changes, select **Save**.
+
+After you confirm your DNS records, [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/).

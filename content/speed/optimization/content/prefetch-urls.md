@@ -24,18 +24,18 @@ For Cloudflare to start prefetching URLs, you will need to [enable the feature](
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 To enable **Prefetch URLs** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Go to **Speed** > **Optimization** > **Content Optimization**.
 3.  For **Prefetch URLs**, switch the toggle to **On**.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](/api/operations/zone-settings-change-prefetch-preload-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
- 
+To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `prefetch_preload` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -49,8 +49,13 @@ To do this, include a Link HTTP response header pointing to a manifest file with
 Example HTTP response header:<br/>
 `Link: <http://www.example.com/manifest.txt>; rel="prefetch"`
 
-Example manifest.txt:<br/>
-`/static/fetch1 //other.example.com/fetch2 http://another.example.com/fetch3`
+Example `manifest.txt` file:
+
+```txt
+/static/fetch1
+//other.example.com/fetch2
+http://another.example.com/fetch3
+```
 {{</example>}}
 
 The manifest file should contain URIs, protocol-relative URLs or full URLs, separated by new lines. These files must be on your websites that are on Cloudflare. If you reference HTML pages, only the HTML page itself will be pre-fetched - any sub-requests from that HTML will not be fetched unless they are also defined explicitly in your manifest.
@@ -58,6 +63,14 @@ The manifest file should contain URIs, protocol-relative URLs or full URLs, sepa
 {{<Aside type="note" header="Note">}}
 The IP address used to make the prefetch request to the manifest file is logged as `127.0.0.1` in your Cloudflare logs.
 {{</Aside>}}
+
+### Prefetch files limits
+
+The prefetch files limits are the following:
+
+- The maximum number of manifest files is 16.
+- The maximum number of files per manifest file is 1024.
+- A manifest file has a size limit of 1 MB.
 
 ## Limitations
 

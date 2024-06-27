@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Regional Services
-weight: 2
+weight: 6
 ---
 
 # Regional Services
@@ -22,7 +22,7 @@ Regional Services ensures that all edge application services operate within the 
 - Blocking malicious HTTP payloads with the Web Application Firewall (WAF).
 - Detecting and blocking suspicious activity with Bot Management.
 - Running Cloudflare Workers scripts.
-- Load Balancing traffic to the best origin servers.
+- Load Balancing traffic to the best origin servers (or other {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}}).
 
 ## Request flow example
 
@@ -33,10 +33,10 @@ The following diagram is a high-level example of the flow of a request coming fr
 ```mermaid
 sequenceDiagram
     participant User in US as End user in US
-    participant CloudflarePoPNYC as Closest data center in US
+    participant CloudflarePoPNYC as Closest data center <br> in US
     participant CloudflarePoPDUB as Data center in EU
     participant EUOriginServer as Origin Server
- 
+
     User in US->>CloudflarePoPNYC: TCP connection
     Note right of User in US: TLS encryption
     Note left of CloudflarePoPNYC: TCP connection<br> (no TLS unwrapping)
@@ -57,4 +57,4 @@ sequenceDiagram
 
 ## Additional information
 
-For more details about the products that are compatible with Regional Services, refer to the [Overview section](/data-localization/). If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.
+For more details about the products that are compatible with Regional Services, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page. If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.

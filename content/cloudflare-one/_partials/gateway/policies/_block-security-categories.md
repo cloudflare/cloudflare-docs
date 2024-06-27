@@ -7,4 +7,4 @@ _build:
 
 | Selector            | Operator | Value                | Action |
 | ------------------- | -------- | -------------------- | ------ |
-| Security categories | in       | `All security risks` | Block  |
+| Security Categories | in       | _All security risks_ | Block  |

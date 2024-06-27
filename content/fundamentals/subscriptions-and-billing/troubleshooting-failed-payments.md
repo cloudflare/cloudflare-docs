@@ -83,4 +83,4 @@ ___
 
 -   [Cloudflare billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/)
 -   [Understand Cloudflare invoices](/fundamentals/subscriptions-and-billing/understand-invoices/)
--   [Updat your Cloudflare billing information](/fundamentals/subscriptions-and-billing/update-billing-info/)
+-   [Update your Cloudflare billing information](/fundamentals/subscriptions-and-billing/update-billing-info/)

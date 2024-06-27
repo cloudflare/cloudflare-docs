@@ -85,7 +85,6 @@
 .CodeBlock-scrolls-horizontally > code {
   word-break: normal;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .CodeBlock-scrolls-horizontally > code {
@@ -182,7 +181,7 @@
 .CodeBlock-with-rows .CodeBlock--row-content {
   display: block;
   white-space: pre-wrap;
-  padding: 0 var(--padding-horizontal);
+  padding: 0 3.5em 0 1.25em;
 }
 
 .CodeBlock-with-rows.CodeBlock-scrolls-horizontally .CodeBlock--row-content {
@@ -334,7 +333,8 @@
 .CodeBlock--token-object-property,
 .CodeBlock--token-regex,
 .CodeBlock--token-string,
-.CodeBlock--token-template-string {
+.CodeBlock--token-template-string,
+.CodeBlock--token-triple-quoted-string {
   color: var(--code-gold);
 }
 
@@ -486,10 +486,20 @@
   color: var(--code-orange);
 }
 
+[language="powershell"] .CodeBlock--token-directory {
+  color: var(--code-green);
+}
+
 [language="sh"] .CodeBlock--token-prompt {
   color: var(--code-orange);
   opacity: 0.7;
 }
+
+[language="powershell"] .CodeBlock--token-prompt {
+  color: var(--code-green);
+  opacity: 0.7;
+}
+
 
 [language="sh"] .CodeBlock--token-value {
   color: var(--code-cyan);
@@ -499,12 +509,16 @@
   color: var(--code-green);
 }
 
-[language="sh"] .CodeBlock--token-plain {
+[language="sh"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-output {
   color: var(--code-gray);
 }
 
 [language="sh"] .CodeBlock--token-plain,
-[language="sh"] .CodeBlock--token-unselectable {
+[language="sh"] .CodeBlock--token-output,
+[language="sh"] .CodeBlock--token-unselectable,
+[language="powershell"] .CodeBlock--token-plain,
+[language="powershell"] .CodeBlock--token-unselectable {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -516,7 +530,11 @@
 [language="sh"]:hover .CodeBlock--token-plain,
 [language="sh"]:hover .CodeBlock--token-unselectable,
 [language="sh"][has-selection-contained-within] .CodeBlock--token-plain,
-[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable {
+[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable,
+[language="powershell"]:hover .CodeBlock--token-plain,
+[language="powershell"]:hover .CodeBlock--token-unselectable,
+[language="powershell"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="powershell"][has-selection-contained-within] .CodeBlock--token-unselectable {
   opacity: 0.25;
 }
 

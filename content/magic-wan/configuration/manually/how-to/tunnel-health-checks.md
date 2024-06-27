@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Update tunnel health checks frequency
+weight: 4
 ---
 
 # Update health check frequency

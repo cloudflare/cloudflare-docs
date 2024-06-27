@@ -2,7 +2,6 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
-weight: 2
 ---
 
 # Add multiple sites via automation
@@ -31,7 +30,7 @@ To add multiple sites to Cloudflare via automation, you need:
   - Zone-level `Zone: Edit` and `DNS: Edit`
   - Account-level `Domain Administrator`
 - To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name). 
-  - Follow this [tuorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
+  - Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
   
 {{<render file="_dnssec-providers.md" productFolder="dns">}}
 
@@ -54,7 +53,7 @@ ___
       -H 'X-Auth-Key: <CLOUDFLARE_API_KEY>' \
       --data '{
       "account": {
-        "id":"<ACCOUNT_ID" 
+        "id":"<ACCOUNT_ID>" 
       },
       "name": "'"$domain"'",
       "type": "full"
@@ -64,12 +63,7 @@ ___
   done
 ```
 
-3. Add executable commands to the script:
-```js
-  chmod +x add-multiple-zones.sh
-```
-
-4. Open the command line and run:
+3. Open the command line and run:
 ```js
   bash add-multiple-zones.sh
 ```
@@ -91,7 +85,7 @@ After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-s
 This tool is a requirement to complete any `Additional options` steps in this tutorial.
 
 ```sh
-  echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
+$ echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 ```
 
 Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.

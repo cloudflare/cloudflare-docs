@@ -2,14 +2,18 @@
 type: example
 summary: Send a POST request with JSON data. Use to share data with external servers.
 tags:
-  - Originless
-pcx_content_type: configuration
+  - JSON
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+pcx_content_type: example
 title: Post JSON
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -66,8 +70,8 @@ export default {
 {{<tab label="ts">}}
 
 ```ts
-const handler: ExportedHandler = {
-  async fetch(request: Request) {
+export default {
+  async fetch(request): Promise<Response> {
     /**
      * Example someHost is set up to take in a JSON request
      * Replace url with the host you wish to send requests to
@@ -112,9 +116,51 @@ const handler: ExportedHandler = {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-};
+} satisfies ExportedHandler;
+```
 
-export default handler;
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+import json
+from pyodide.ffi import to_js as _to_js
+from js import Object, fetch, Response, Headers
+
+def to_js(obj):
+    return _to_js(obj, dict_converter=Object.fromEntries)
+
+# gather_response returns both content-type & response body as a string
+async def gather_response(response):
+    headers = response.headers
+    content_type = headers["content-type"] or ""
+
+    if "application/json" in content_type:
+        return (content_type, json.dumps(dict(await response.json())))
+    return (content_type, await response.text())
+
+async def on_fetch(_request):
+    url = "https://jsonplaceholder.typicode.com/todos/1"
+
+    body = {
+      "results": ["default data to send"],
+      "errors": None,
+      "msg": "I sent this to the fetch",
+    }
+
+    options = {
+      "body": json.dumps(body),
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    }
+
+    response = await fetch(url, to_js(options))
+    content_type, result = await gather_response(response)
+
+    headers = Headers.new({"content-type": content_type}.items())
+    return Response.new(result, headers=headers)
 ```
 
 {{</tab>}}

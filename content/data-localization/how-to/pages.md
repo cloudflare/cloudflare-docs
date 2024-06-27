@@ -43,7 +43,7 @@ Regional Services only applies to the Custom Domain configured for a Pages proje
 
 Customer Metadata Boundary applies to the Custom Domain configured, as well as the [*.pages.dev](/pages/configuration/preview-deployments/) subdomain. You also have the option to disable access to the [`.dev` domain](/pages/configuration/custom-domains/#disable-access-to-pagesdev-subdomain).
 
-For information on available Analytics and Metrics, review the [Overview](/data-localization/) section.
+For information on available Analytics and Metrics, review the [Cloudflare product compatibility](/data-localization/compatibility/) page.
 
 It is recommended not to store any Personally Identifiable Information (PII) in the Pages project's static assets.
 

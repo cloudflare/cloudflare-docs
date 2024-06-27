@@ -2,7 +2,7 @@
 pcx_content_type: concept
 type: overview
 title: Volumetric Abuse Detection
-weight: 3
+weight: 2
 layout: wide
 ---
 
@@ -42,9 +42,7 @@ p-values describe what percentile of your traffic fits below the value. For exam
 
 In **Endpoint Management**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
 
-{{<Aside type="note">}}
 Implementing low confidence rate limits can still be helpful to prevent API abuse. If you are hesitant due to the recommendation’s confidence, we suggest starting your rate limit rule in `log` mode and observing violations of the rule for false positives.
-{{</Aside>}}
 
 ### Create rate limits
 
@@ -55,7 +53,9 @@ To create rate limits:
 3. In **Endpoint Management**, select an endpoint.
 4. Select **Create rule** to be automatically redirected to the [Advanced Rate Limiting](/waf/rate-limiting-rules/create-zone-dashboard/) rules dashboard.
 {{<Aside type="note">}}
-Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule.
+Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule. The pre-filled rule will only be enforced when the session identifiers are present on incoming requests. 
+
+To apply rate limits to all requests, remove the `exists` logic in the rule and refer to the disclaimer in the [WAF documentation](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value). 
 {{</Aside>}}
 5. Give your rule a name, action, and duration.
 6. Select **Deploy** to activate your rule.

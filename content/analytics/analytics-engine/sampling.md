@@ -4,6 +4,7 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Sampling with Workers Analytics Engine
+  description: How data written to Workers Analytics Engine is automatically sampled at scale
 ---
 
 # Sampling with Workers Analytics Engine
@@ -38,20 +39,20 @@ Each pixel on the map represents a large area, such as several square kilometers
 
 The key point is that the map's quality does not solely depend on the resolution or the area represented by each pixel. It is determined by the total number of pixels used to render the final view.
 
-The table below highlights the similarities between the how a mapping services handles resolution and Cloudflare Analytics delivers analytics using adaptive samples:
+There are similarities between the how a mapping services handles resolution and Cloudflare Analytics delivers analytics using adaptive samples:
 
-{{<table-wrap>}}
-
-| | Mapping service | Cloudflare Analytics |
-|------|------|-------------|
-| **How data is stored** | Imagery stored at different resolutions. | Events stored at different sample rates. |
-| **How data is displayed to user** | The total number of pixels is ~constant for a given screen size, regardless of the area selected. | A similar number of events are read for each query, regardless of the size of the dataset or length of time selected. |
-| **How a resolution is selected** | The area represented by each pixel will depend on the size of the map being rendered. In a more zoomed out map, each pixel will represent a larger area. | The sample interval of each event in the result depends on the size of the underlying dataset and length of time selected. For a query over a large dataset or long length of time, each sampled event may stand in for many similar events. |
-
-{{</table-wrap>}}
+- **How data is stored**:
+  - **Mapping service**: Imagery stored at different resolutions.
+  - **Cloudflare Analytics**: Events stored at different sample rates.
+- **How data is displayed to user**:
+  - **Mapping service**: The total number of pixels is ~constant for a given screen size, regardless of the area selected.
+  - **Cloudflare Analytics**: A similar number of events are read for each query, regardless of the size of the dataset or length of time selected.
+- **How a resolution is selected**:
+  - **Mapping service**: The area represented by each pixel will depend on the size of the map being rendered. In a more zoomed out map, each pixel will represent a larger area.
+  - **Cloudflare Analytics**: The sample interval of each event in the result depends on the size of the underlying dataset and length of time selected. For a query over a large dataset or long length of time, each sampled event may stand in for many similar events.
 
 ## How to read sampled data
- 
+
 To effectively write queries and analyze the data, it is helpful to first learn how sampled data is read in Workers Analytics Engine.
 
 In Workers Analytics Engine, every event is recorded with the `_sample_interval` field. The sample interval is the inverse of the sample rate. For example, if a one percent (1%) sample rate is applied, the `sample_interval` will be set to `100`.
@@ -61,7 +62,6 @@ Using the mapping example in simple terms, the sample interval represents the "n
 The sample interval is a property associated with each individual row stored in Workers Analytics Engine. Due to the implementation of equitable sampling, the sample interval can vary for each row. As a result, when querying the data, you need to consider the sample interval field. Simply multiplying the query result by a constant sampling factor is not sufficient.
 
 Here are some examples of how to express some common queries over sampled data.
-
 
 | Use case | Example without sampling | Example with sampling |
 |------|------|-------------|
@@ -127,7 +127,7 @@ Some limitations and trade-offs to consider are:
     - For example, if you index on `hostname`, you may not be able to count the number of unique URLs.
 - You may not be able to observe very rare values of fields not in the index.
     - For example, a particular URL for a hostname, if you index on host and have millions of unique URLs.
-- You may not be able to run accurate queries across multiple indices at once.  
+- You may not be able to run accurate queries across multiple indices at once.
     - For example, you may only be able to query for one host at a time (or all of them) and expect accurate results.
 - There is no guarantee you can retrieve any one individual record.
 - You cannot necessarily reconstruct exact sequences of events.

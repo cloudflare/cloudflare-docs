@@ -1,16 +1,16 @@
 ---
 title: Generated columns
 pcx_content_type: concept
-weight: 10
+weight: 4
 ---
 
 # Generated columns
 
-D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/reference/query-json/).
+D1 allows you to define generated columns based on the values of one or more other columns, SQL functions, or even [extracted JSON values](/d1/build-with-d1/query-json/).
 
 This allows you to normalize your data as you write to it or read it from a table, making it easier to query and reducing the need for complex application logic.
 
-Generated columns can also have [indexes defined](/d1/build-databases/use-indexes/) against them, which can dramatically increase query performance over frequently queried fields.
+Generated columns can also have [indexes defined](/d1/build-with-d1/use-indexes/) against them, which can dramatically increase query performance over frequently queried fields.
 
 ## Types of generated columns
 
@@ -48,7 +48,7 @@ As a concrete example, to automatically extract the `location` value from the fo
 }
 ```
 
-To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/reference/query-json/#extract-values) function to extract the value from the `raw_data` column each time you write to that row:
+To define a generated column with the value of `$.measurement.location`, you can use the [`json_extract`](/d1/build-with-d1/query-json/#extract-values) function to extract the value from the `raw_data` column each time you write to that row:
 
 ```sql
 CREATE TABLE sensor_readings (
@@ -78,7 +78,7 @@ Generated column definitions cannot be directly modified. To change how a genera
 
 Generated columns are not just limited to JSON functions like `json_extract`: you can use almost any available function to define how a generated column is generated.
 
-For example, you could generate a `date` column based on a `timestamp` column, automatically converting a Unix timestamp into a `YYYY-MM-dd` format within your database:
+For example, you could generate a `date` column based on the `timestamp` column from the previous `sensor_reading` table, automatically converting a Unix timestamp into a `YYYY-MM-dd` format within your database:
 
 ```sql
 ALTER TABLE your_table
@@ -92,8 +92,8 @@ Alternatively, you could define an `expires_at` column that calculates a future 
 -- Filter out "expired" results based on your generated column:
 -- SELECT * FROM your_table WHERE current_date() > expires_at
 ALTER TABLE your_table
--- calculates a date (YYYY-MM-dd) 30 days from the current date.
-ADD COLUMN expires_at AS (date('now', '+30 days');
+-- calculates a date (YYYY-MM-dd) 30 days from the timestamp.
+ADD COLUMN expires_at AS (date(timestamp, '+30 days'));
 ```
 
 ## Additional considerations

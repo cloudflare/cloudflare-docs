@@ -10,7 +10,7 @@ In the following sections, we will give you some details about how different Zer
 
 ## Gateway
 
-Regional Services can be used with Gateway in all [supported regions](/data-localization/). Be aware that Regional Services only apply when using the WARP client in Gateway with WARP mode.
+Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the WARP client in Gateway with WARP mode.
 
 ### Egress policies
 

@@ -20,7 +20,7 @@ For more details about how O2O is different than other Cloudflare setups, refer 
 
 ## Enable
 
-You can only enable O2O on the Cloudflare Enterprise plan.
+You can enable O2O on any Cloudflare zone plan.
 
 To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
 
@@ -32,7 +32,7 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 For questions about Shopify setup, refer to their [support guide](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains/connect-domain-manual).
 
-If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), reach out to your account team.
+If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), reach out to your account team or the [Cloudflare Community](https://community.cloudflare.com).
 
 {{</Aside>}}
 

@@ -42,7 +42,7 @@ The URL redirect parameters are the following:
     - For example, a redirect with source URL defined as `http://example.com/about` will also apply to requests with source URL `http://a.example.com/about` or `http://a.b.example.com/about`.
     - For more information, refer to [Matching the source URL of redirects](/rules/url-forwarding/bulk-redirects/how-it-works/#matching-the-source-url-of-redirects).
 
-- **Preserve query string** {{<type>}}Boolean{{</type>}}
+- <a name="preserve-query-string"></a> **Preserve query string** {{<type>}}Boolean{{</type>}}
 
     - API field name: `preserve_query_string`.
     - If true, the redirect URL will keep the query string of the original request. The default value is `false`.

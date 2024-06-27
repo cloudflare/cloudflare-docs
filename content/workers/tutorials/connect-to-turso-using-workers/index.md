@@ -10,6 +10,12 @@ title: Connect to and query your Turso database using Workers
 
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
+{{<Aside type="note">}}
+
+For a more seamless experience, refer to the [Turso Database Integration guide](/workers/databases/native-integrations/turso/). The Turso Database Integration will connect your Worker to a Turso database by getting the right configuration from Turso and adding it as [secrets](/workers/configuration/secrets/) to your Worker.
+
+{{</Aside>}}
+
 ## Prerequisites
 
 Before continuing with this tutorial, you should have:
@@ -94,7 +100,7 @@ $ npx wrangler init worker-turso-ts
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 
-```sh
+```txt
 ✔ Would you like to use git to manage this Worker? … no
 ✔ No package.json found. Would you like to create one? … yes
 ✔ Would you like to use TypeScript? … yes
@@ -216,14 +222,14 @@ export interface Env {
 }
 
 export default {
-    async fetch(request: Request, env: Env): Promise<Response> {
+    async fetch(request, env): Promise<Response> {
         if (env.router === undefined) {
             env.router = buildRouter(env);
         }
 
         return env.router.handle(request);
     },
-};
+} satisfies ExportedHandler<Env>;
 
 function buildLibsqlClient(env: Env): LibsqlClient {
     const url = env.LIBSQL_DB_URL?.trim();
@@ -302,7 +308,7 @@ $ npx wrangler dev
 
 You should be able to review output similar to the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"
@@ -357,7 +363,7 @@ The first time you run this command, it will launch a browser, ask you to sign i
 
 The `deploy` command will output the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"

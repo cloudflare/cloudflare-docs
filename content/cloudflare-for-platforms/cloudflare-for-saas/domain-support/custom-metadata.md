@@ -8,7 +8,7 @@ meta:
 
 # Custom metadata
 
-You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules or Rate Limiting, which have a maximum of 125 rules each.
+You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules (legacy) or Rate Limiting, which have a maximum of 125 rules each.
 
 To do this, you will first need to reach out to your account team to enable access to Custom Metadata. After configuring custom metadata, you can use it in the following ways:
 
@@ -118,8 +118,8 @@ There are some limitations to the metadata that can be provided to Cloudflare:
 
 {{<Aside type="note">}}
 Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
-{{</Aside>}} 
+{{</Aside>}}
 
 ### Terraform support
-  
+
 [Terraform](/terraform/) only allows maps of a single type, so Cloudflare's Terraform support for custom metadata for custom hostnames is limited to string keys and values.

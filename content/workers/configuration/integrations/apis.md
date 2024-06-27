@@ -34,7 +34,7 @@ async function handleRequest(request) {
 If your API requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
 
 ```sh
-wrangler secret put SECRET_NAME
+$ wrangler secret put SECRET_NAME
 ```
 
 Then, retrieve the secret value in your code using the following code snippet:
@@ -45,7 +45,7 @@ const secretValue = env.SECRET_NAME;
 
 Then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, include it in your request headers.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/bindings/mtls) to present a client certificate.
 
 ## Tips
 

@@ -10,7 +10,7 @@ title: 4xx Client Error
 
 -   4xx codes can be used as a response to any request method.
 -   Origin server should include an explanation which should be displayed by User-Agent, with the exception of a `HEAD` request
--   [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for more details.
+-   [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for more details.
 
 The following are common 4xx codes and their definitions:
 
@@ -45,7 +45,7 @@ Cloudflare will serve 403 responses if the request violated either a default WAF
 If you're seeing a 403 response that contains Cloudflare branding in the response body, this is the HTTP response code returned along with many of our security features:
 
 -   [WAF Custom or Managed Rules](/waf/) with the challenge or block action
--   [Security Level](/waf/tools/security-level/), that is set to Medium by default
+-   [Security Level](/waf/tools/security-level/) (deprecated), that is set to Medium by default
 -   Most [1xxx Cloudflare error codes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 -   The [Browser Integrity Check](/waf/tools/browser-integrity-check/)
 

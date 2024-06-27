@@ -73,29 +73,54 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 API value: `isolate`
 
-[Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) do not support isolation.
+The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
+{{<Aside type="warning">}}
+
+The [Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) selectors do not support isolation.
+
+{{</Aside>}}
 
 ### Do Not Isolate
 
 API value: `noisolate`
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Inspect
 
 API value: `off`
 
-{{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="Visibility limitation">}}
 
-When a Do Not Inspect policy is created for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+
+Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. For more information, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 {{</Aside>}}
 
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. [Learn more](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) about applications which may require a Do Not Inspect policy.
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
 
-All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. [Learn more](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies) about the order of enforcement for HTTP policies.
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
+
+{{<details header="Supported selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Virtual Network](#virtual-network)
+
+{{</details>}}
 
 ### Do Not Scan
 
@@ -125,7 +150,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 {{<Aside type="warning" header="Multiple API selectors required for Terraform">}}
 
-When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.support_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.support_ids[*] in {1245})`.
+When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 
 {{</Aside>}}
 
@@ -163,6 +188,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 | -------------- | ----------------------------- |
 | Destination IP | `http.dst.ip == "10.0.0.0/8"` |
 
+### Device Posture
+
+{{<render file="gateway/selectors/_device-posture.md">}}
+
 ### Domain
 
 Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
@@ -171,17 +200,23 @@ Use this selector to match against a domain and all subdomains — for example,
 | ------- | ----------------------------------------------- |
 | Domain  | `any(http.request.domains[*] == "example.com")` |
 
-### Download and Upload File Type
+### Download and Upload File Types
 
-These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+{{<Aside type="warning" header="Deprecated selectors">}}
 
-| UI name            | API example                                             |
-| ------------------ | ------------------------------------------------------- |
-| Download File Type | `http.download.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 
-| UI name          | API example                                           |
-| ---------------- | ----------------------------------------------------- |
-| Upload File Type | `http.upload.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+{{</Aside>}}
+
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, including executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files.
+
+| UI name             | API example                                         |
+| ------------------- | --------------------------------------------------- |
+| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
+
+| UI name           | API example                                        |
+| ----------------- | -------------------------------------------------- |
+| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
 
 ### Download and Upload Mime Type
 
@@ -225,9 +260,9 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | ------- | ------------------------------------ |
 | URL     | `http.response.status_code == "200"` |
 
-### Device Posture
+### Proxy Endpoint
 
-{{<render file="gateway/selectors/_device-posture.md">}}
+{{<render file="gateway/selectors/_proxy-endpoint.md">}}
 
 ### Security Risks
 
@@ -286,6 +321,10 @@ The country of the user making the request.
 ### Users
 
 {{<render file="gateway/selectors/_users.md">}}
+
+### Virtual Network
+
+{{<render file="gateway/selectors/_virtual-network.md" withParameters="http.conn.vnet_id">}}
 
 ## Comparison operators
 

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Preact site
+title: Preact
 ---
 
-# Deploy a Preact site
+# Preact
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 
@@ -21,7 +21,7 @@ $ cd your-project-name
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-{{<render file="_create-github-repository.md">}}
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -68,4 +68,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-{{<render file="_learn-more.md" withParameters="Preact">}}
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Preact">}}

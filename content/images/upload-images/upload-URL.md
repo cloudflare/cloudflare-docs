@@ -29,17 +29,18 @@ After successfully uploading the image, you will receive a response similar to t
         "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
         "filename": "image.jpeg",
         "metadata": {
-            "key": "value":
+            "key": "value"
         },
         "uploaded": "2022-01-31T16:39:28.458Z",
         "requireSignedURLs": false,
         "variants": [
-                "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public","https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail"
+            "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
+            "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail"
         ]
-        },
-        "success": true,
-        "errors": [],
-        "messages": []
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
 

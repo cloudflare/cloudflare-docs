@@ -9,15 +9,15 @@ pcx_content_type: overview
 
 {{<description>}}
 
-Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms extends the capabilities of Cloudflare Workers to SaaS businesses that want to deploy Worker scripts on behalf of their customers or let their users write Worker scripts directly.
+Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.
 
 {{</description>}}
 
-{{<plan type="enterprise">}}
+{{<plan type="paid">}}
 
-Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your user's code, create custom logic, and use additional APIs such as script tags for bulk operations.
+Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your users' code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
 
-Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
 
 ---
 
@@ -52,6 +52,6 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{</resource-group>}}
