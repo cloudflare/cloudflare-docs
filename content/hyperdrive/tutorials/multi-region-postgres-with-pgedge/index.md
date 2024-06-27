@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Query a pgEdge Distributed PostgreSQL Cluster from Cloudflare Workers
-updated: 2024-05-07
+updated: 2024-06-27
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
