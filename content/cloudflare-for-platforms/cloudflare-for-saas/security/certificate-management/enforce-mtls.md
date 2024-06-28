@@ -44,7 +44,7 @@ For security and regulatory reasons, you may want to only allow connections from
 
 {{<details header="Restrict cipher suites for zone">}}
 
-Refer to [change ciphers setting on a zone](/api/operations/zone-settings-change-ciphers-setting).
+Refer to [Edit zone setting](/api/operations/zone-settings-edit-single-setting) and use `ciphers` as the setting name in the URI path.
 
 {{</details>}}
 

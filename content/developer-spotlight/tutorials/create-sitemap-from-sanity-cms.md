@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 difficulty: Beginner
 content_type: 📝 Tutorial
 title: Create a sitemap from Sanity CMS with Workers
+products: [Workers]
 spotlight:
   author: John Siciliano
   author_bio_link: https://www.linkedin.com/in/johnsicili/

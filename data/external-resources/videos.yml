@@ -1,0 +1,100 @@
+entries:
+- link: https://www.youtube.com/watch?v=dttu4QtKkO0
+  title: Build Rust Powered Apps
+  description: In this video, we will show you how to build a global database using workers-rs to keep track of every country and city you’ve visited.
+  tags: []
+  products: [Workers, KV]
+  cloudflare: true
+  author: confidence
+  updated: 2024-06-25
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=GRpwVMkVmKo
+  title: API Roll (Father's Day)
+  description: This walks through how to use Workers AI with Hono and Zod to create a streaming pun generating API.
+  tags: [AI, Hono]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-06-15
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=MLbo7MGY_lU
+  title: AI can see clearly now - Build Vision Apps on Cloudflare Workers AI
+  description: The LlaVa model is hosted on Cloudflare Workers AI. Which means you are an API call away from brand new powerful vision use cases in all of your applications.
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-06-11
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=QTsaAhFvX9o
+  title: Stateful Apps with Cloudflare Workers
+  description: Learn how to access external APIs, cache and retrieve data using Workers KV, and create SQL-driven applications with Cloudflare D1.
+  tags: []
+  products: [Workers, KV, D1]
+  cloudflare: true
+  author: kristian
+  updated: 2024-05-22
+  difficulty: Intermediate
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=5UTExUQ8Fwo
+  title: Workers AI - Getting Started - Vanilla Chat App
+  description: Get started building AI apps on Cloudflare using Pages and the GitHub starter template for a Vanilla JavaScript Chat App.
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-04-17
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=H7Qe96fqg1M
+  title: Learn Cloudflare Workers - Full Course for Beginners
+  description: Learn how to build your first Cloudflare Workers application and deploy it to Cloudflare's global network.
+  tags: []
+  products: [Workers]
+  cloudflare: true
+  author: kristian
+  updated: 2024-03-12
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=8SnrvAYAJ4Q
+  title: Image Generation, Inpainting, and Vision Models
+  description: Is that person you are about to swipe right on, actually real? Are they AI Generated?
+  tags: [AI]
+  products: [Workers AI]
+  cloudflare: true
+  author: craig
+  updated: 2024-03-08
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=9JM5Z0KzQsQ
+  title: Learn AI Development (models, embeddings, vectors)
+  description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, teaches the basics of AI Development - models, embeddings, and vectors (including vector databases).
+  tags: [AI]
+  products: [Workers AI, Workers, Vectorize]
+  cloudflare: true
+  author: kristian
+  updated: 2023-12-14
+  difficulty: Advanced
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=idKdjA8t0jw
+  title: Optimize your AI App & fine-tune models (AI Gateway, R2)
+  description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, shows how to optimize your existing AI applications with Cloudflare AI Gateway, and how to finetune OpenAI models using R2.
+  tags: [AI]
+  products: [Workers, R2, AI Gateway]
+  cloudflare: true
+  author: kristian
+  updated: 2023-12-14
+  difficulty: Advanced
+  content_type: 🎥 Video
+  pcx_content_type: tutorial

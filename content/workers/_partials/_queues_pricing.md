@@ -19,17 +19,15 @@ Cloudflare Queues charges for the total number of operations against each of you
 * Operations are per message, not per batch. A batch of 10 messages (the default batch size), if processed, would incur 10x write, 10x read, and 10x delete operations: one for each message in the batch.
 * There are no data transfer (egress) or throughput (bandwidth) charges.
 
-{{<table-wrap>}}
-
 |                     | Free Tier                    | Paid                       |
 | ------------------- | ---------------------------- | -------------------------- |
 | Standard operations | 1,000,000 operations / month | $0.40 / million operations |
 
-{{</table-wrap>}}
-
 In most cases, it takes 3 operations to deliver a message: 1 write, 1 read, and 1 delete. Therefore, you can use the following formula to estimate your monthly bill:
 
-    ((Number of Messages * 3) - 1,000,000) / 1,000,000  * $0.40
+```txt
+((Number of Messages * 3) - 1,000,000) / 1,000,000  * $0.40
+```
 
 Additionally:
 

@@ -52,7 +52,7 @@ The following table highlights the performance and consistency characteristics o
 
 <sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
 
-<sup>2</sup> Free accounts are limited to 10 GiB of R2 storage.
+<sup>2</sup> Free accounts are limited to 10 GB of R2 storage.
 
 <sup>3</sup> Free accounts are limited to 5 GiB of database storage.
 

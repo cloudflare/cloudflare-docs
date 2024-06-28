@@ -1468,6 +1468,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <p>Represents HTTP request headers as a Map (or associative array).</p>
          <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
          <p>When there are repeating headers, the array includes them in the order they appear in the request.</p>
+         <p>The request header values are not pre-processed and retain the original case used in the request.</p>
          <p><em><em>Decoding:</em></em> no decoding performed
          <br /><em>Whitespace:</em> preserved
          <br /><em>Non-ASCII:</em> preserved

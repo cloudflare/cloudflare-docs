@@ -36,7 +36,12 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.querySelector(`#${hash.toLowerCase()}`);
+
+  if (!hash) return;
+
+  const headerID = CSS.escape(hash.toLowerCase());
+  let item = document.querySelector(`#${headerID}`);
+
   let timer =
     item &&
     setInterval(() => {
@@ -109,7 +114,9 @@ function $tab(ev: MouseEvent) {
     .closest("[data-link]")
     ?.getAttribute("data-link");
 
-  const linkElement = document.querySelector<HTMLElement>(`#${link}-${tabBlockId}`);
+  // escape ID for use in querySelector
+  const tabID = CSS.escape(`${link}-${tabBlockId}`);
+  const linkElement = document.querySelector<HTMLElement>(`#${tabID}`);
   if(linkElement){
     linkElement.style.display = "block";
   }

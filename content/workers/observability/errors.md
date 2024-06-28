@@ -13,8 +13,6 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-{{<table-wrap>}}
-
 | Error code | Meaning                                                                                                           |
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                              |
@@ -28,8 +26,6 @@ When a Worker running in production has an error that prevents it from returning
 | `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
 
-{{</table-wrap>}}
-
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
 ### Loop limit
@@ -37,8 +33,8 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
 ## Errors on Worker upload
-These errors occur when a Worker is uploaded or modified. 
-{{<table-wrap>}}
+These errors occur when a Worker is uploaded or modified.
+
 | Error code | Meaning                                                                                                                       |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `10006`     | Could not parse your Worker's code.                                                                                          |
@@ -47,7 +43,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10016`     | Invalid Worker name.                                                                                                         |
 | `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details. |
 | `10026`     | Could not parse request body.                                                                                                |
-| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
+| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
 | `10026`     | Could not parse request body.                                                                                                |
 | `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
@@ -56,8 +52,6 @@ These errors occur when a Worker is uploaded or modified.
 | `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                                                                       |
 | `10068`     | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                     |
 | `10069`     | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.           |
-
-{{</table-wrap>}}
 
 ### Validation Errors (10021)
 
@@ -79,15 +73,11 @@ To analyze what is consuming so much CPU time, you should open Chrome DevTools f
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
 
-{{<table-wrap>}}
-
 | Error message                              | Meaning                                                                                                         |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | `Network connection lost`                  | Connection failure. Catch a `fetch` or binding invocation and retry it.                                         |
 | `Memory limit`</br>`would be exceeded`</br> `before EOF`| Trying to read a stream or buffer that would take you over the [memory limit](/workers/platform/limits/#memory).|
 | `daemonDown`                               | A temporary problem invoking the Worker.                                                                        |
-
-{{</table-wrap>}}
 
 ## Identify errors: Workers Metrics
 

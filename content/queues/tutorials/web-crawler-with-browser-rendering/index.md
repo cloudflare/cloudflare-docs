@@ -8,9 +8,12 @@ pcx_content_type: tutorial
 weight: 1002
 meta:
   title: Cloudflare Queues - Queues & Browser Rendering
+products: [Browser Rendering, KV]
 ---
 
 # Build a web crawler with Queues and Browser Rendering
+
+{{<tutorial-date-info>}}
 
 This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer.
 
