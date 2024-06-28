@@ -7,7 +7,7 @@ weight: 4
 layout: example
 ---
 
-pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres. The following example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database.
+The following example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres.
 
 ## Prerequisites
 
