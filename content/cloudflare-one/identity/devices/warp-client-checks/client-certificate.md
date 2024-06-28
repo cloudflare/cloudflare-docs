@@ -18,7 +18,7 @@ The Client Certificate device posture attribute checks if the device has a valid
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.6.415.0 |
 | macOS    | ✅           | 2024.6.416.0 |
-| Linux    | Coming soon  |   |
+| Linux    | Coming soon  |    |
 | iOS      | ❌           |   |
 | Android  | ❌           |   |
 | ChromeOS | ❌           |   |
