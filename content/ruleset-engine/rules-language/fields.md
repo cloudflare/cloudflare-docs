@@ -42,7 +42,7 @@ The Cloudflare Rules language supports these standard fields:
 <table>
   <thead>
     <tr>
-      <th style="width:50%">Field</th>
+      <th>Field</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -629,7 +629,7 @@ The Cloudflare Rules language supports these dynamic fields:
 <table>
   <thead>
    <tr>
-      <th style="width: 51%;">Field Name</th>
+      <th>Field Name</th>
       <th>Description</th>
    </tr>
   </thead>
@@ -764,7 +764,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
           <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
           </p>
-          <p><strong>Note:</strong> This field has been deprecated and will be removed on 2024-09-30. You should not use this field in expressions of new rules.</p>
+          <p><strong>Note:</strong> <a href="/waf/tools/security-level/#threat-score">Threat score has been deprecated</a> and will be removed on 2024-09-30. You should not use this field in expressions of new rules.</p>
         </td>
     </tr>
     <tr id="field-cf-tls_cipher">
@@ -1094,7 +1094,7 @@ The Cloudflare Rules language supports these dynamic fields:
 <table>
   <thead>
    <tr>
-      <th style="width: 50%;">Field Name</th>
+      <th>Field Name</th>
       <th>Description</th>
    </tr>
   </thead>
@@ -1364,7 +1364,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
 <table>
   <thead>
     <tr>
-      <th style="width: 50%;">Field Name</th>
+      <th>Field Name</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -1458,7 +1458,7 @@ The Cloudflare Rules language supports these HTTP header fields:
   <thead>
    <tr>
       <th>Field Name</th>
-      <th style="width: 50%;">Description</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1588,7 +1588,7 @@ The Cloudflare Rules language supports these HTTP body fields:
 <table>
   <thead>
     <tr>
-      <th style="width: 50%;">Field Name</th>
+      <th>Field Name</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -1733,7 +1733,7 @@ The Cloudflare Rules language supports these HTTP response fields:
   <thead>
    <tr>
       <th>Field Name</th>
-      <th style="width: 50%;">Description</th>
+      <th>Description</th>
    </tr>
   </thead>
   <tbody>
