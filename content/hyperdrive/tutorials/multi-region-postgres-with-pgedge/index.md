@@ -83,9 +83,9 @@ Navigate to the `Connect to your database` pane, and copy the connection string 
 
 Move to a terminal window, and use the following command to [create a Hyperdrive](https://developers.cloudflare.com/hyperdrive/get-started/):
 
-`npx wrangler hyperdrive create pgedge --connection-string="pgedge_connection_string"`
+`npx wrangler hyperdrive create pgedge --connection-string="<PGEDGE_CONNECTION_STRING>"`
 
-When the command completes, it will return information about the Hyperdrive, including the Hyperdrive UUID. Copy the ID, and update the `wrangler.toml` file to include the following information:
+When the command completes, it will return information about the Hyperdrive, including the Hyperdrive configuration ID. Copy the ID, and update the `wrangler.toml` file to include the following information:
 
 ```sql
 node_compat = true # required for the postgres connection
