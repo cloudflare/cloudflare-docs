@@ -17,14 +17,14 @@ layout: example
 export default {
   async fetch(request) {
     // Define a variable with the hostname that needs to be redirected.
-    const externalHostname = "examples.cloudflareworkers.com";
+    const externalHostname = "example.com";
 
     // Define the map object. Replace the sources (/pathX) and targets (/redirectX) with ones that apply to your case.
     const redirectMap = new Map([
       ["/path1", "https://" + externalHostname + "/redirect1"],
       ["/path2", "https://" + externalHostname + "/redirect2"],
       ["/path3", "https://" + externalHostname + "/redirect3"],
-      ["/path4", "https://example.com"],
+      ["/path4", "https://cloudflare.com"],
     ]);
 
     // Clone the original URL.

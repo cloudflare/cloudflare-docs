@@ -17,7 +17,7 @@ layout: example
 This version supports passing the request through to test and control on the origin, bypassing random assignment.
 
 ```js
-const NAME = "myExampleWorkersABTest";
+const NAME = "myExampleABTest";
 
 export default {
   async fetch(request) {
