@@ -23,7 +23,7 @@ Embedded function calling depends on features native to the Workers platform. Th
 
 ### 1. Create a Worker project with Workers AI
 
- Follow the general [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangler/) until step 2.
+ Follow the [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangler/) until step 2.
 
 ### 2. Install additional npm package
 
