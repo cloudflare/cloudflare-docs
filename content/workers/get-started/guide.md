@@ -24,24 +24,21 @@ Open a terminal window and run C3 to create your Worker project:
 
 {{<render file="_c3-run-command.md" productFolder="workers">}}
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
+This will prompt you to install the [create-cloudflare](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
-For this guide, set up a basic Worker:
+For this guide:
 
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Worker` as the type of application you want to create.
-3. Answer `yes` or `no` to using TypeScript.
+- For the `In which directory do you want to create your application?` prompt, enter `my-first-worker`.
+- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
+- For the `Do you want to use TypeScript?` prompt, choose `No`.
+- For the `Do you want to use git for version control?` prompt, choose `Yes`.
+- For the `Do you want to deploy your application?` prompt, choose `No`.
 
-{{<Aside type="note">}}
+Now, you have a new project set up. Move into that project folder.
 
-The rest of this guide assumes that you will create a JavaScript project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
-
-{{</Aside>}}
-
-You will be asked if you would like to deploy the project to Cloudflare.
-
-- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
+```sh
+$ cd my-first-worker
+```
 
 {{<details header="What files are in my project?">}}
 
@@ -59,21 +56,21 @@ In your project directory, C3 will have generated the following:
 
 The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
 
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
 
 ```sh
 $ npx wrangler dev
 ```
 
-{{<Aside type="note">}}
-
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
-If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
-
-{{</Aside>}}
-
 You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
+
+{{<details header="Browser issues?">}}
+
+If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation.
+
+{{</details>}}
 
 ## 3. Write code
 
@@ -146,19 +143,21 @@ To review code changes in real time, rewrite the `"Hello World!"` string to `"He
 
 ## 4. Deploy your project
 
-If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-worker-project), deploy your Worker via Wrangler to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/). If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
 ```sh
 $ npx wrangler deploy
 ```
 
+If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-{{<Aside type="note" header="Note">}}
+{{<details header="Seeing errors?">}}
 
 When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
-{{</Aside>}}
+{{</details>}}
 
 ## Next steps
 
