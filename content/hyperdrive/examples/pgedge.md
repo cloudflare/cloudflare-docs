@@ -9,13 +9,6 @@ layout: example
 
 The following example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres.
 
-## Prerequisites
-
-Before starting, install the following software on the system you'll use to create the CloudFlare connection:
-
-* [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-* [npx](https://www.npmjs.com/package/npx)
-
 
 ## 1. Create a Cloudflare Worker
 
