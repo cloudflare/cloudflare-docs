@@ -7,7 +7,7 @@ title: SPF+ port information
 
 The hardware version of the Magic WAN connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput. These ports can be configured as either a WAN or a LAN port, like all of the 1G RJ45 ports in the machine. Because a 10G WAN uplink will often be bottlenecked by IPsec tunnel speeds, the SFP+ ports are most useful for configuring high speed LANs, and for using fiber connections.
 
-{{<Aside type="note" header="Virtual Connector and SPF+ ports">}} Since you decide and set up the hardware where Magic WAN Virtual Connector runs, you can ignore the information on this section.{{</Aside>}}
+{{<Aside type="note" header="Virtual Connector and SPF+ ports">}}Since you decide and set up the hardware where Magic WAN Virtual Connector runs, you can ignore the information on this page.{{</Aside>}}
 
 ## Port configuration
 
