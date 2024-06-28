@@ -259,7 +259,7 @@ curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com'
      -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
 ```
 
-If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#enable-the-block-page-for-dns-policies) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
+If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#turn-on-the-block-page) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
 {{<details header="Example response">}}
 
