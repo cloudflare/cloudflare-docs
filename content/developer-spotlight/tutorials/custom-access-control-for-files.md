@@ -4,13 +4,11 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
-products: [R2, D1]
+products: [R2, D1, Workers]
 spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK
   author_bio_source: GitHub
-tags:
-  - Spotlight
 ---
 
 # Custom access control for files in R2 using D1 and Workers

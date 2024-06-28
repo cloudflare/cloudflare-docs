@@ -385,6 +385,7 @@
 /fundamentals/get-started/task-guides/optimize-site-speed/ /speed/ 301
 /fundamentals/global-configurations/lists/ip-lists/ /waf/tools/lists/custom-lists/ 301
 /fundamentals/internet/ /fundamentals/concepts/the-internet/ 301
+/fundamentals/reference/developer-spotlight/ /developer-spotlight/ 301
 /fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
@@ -1365,6 +1366,9 @@
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/tutorials/localize-a-website/ /pages/tutorials/localize-a-website/ 301
 /workers/tutorials/manage-projects-with-lerna/ /pages/configuration/monorepos/#monorepo-management-tools 301
+/workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ 301
+/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
+/workers/tutorials/handle-form-submission-with-astro-resend/ /developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1387,6 +1391,7 @@
 /workers-ai/rest-api/ /workers-ai/configuration/rest-api/ 301
 /workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
+/workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
@@ -1683,3 +1688,4 @@
 /support/speed/* /speed/ 301
 /support/troubleshooting/planned-maintenance/* /support/troubleshooting/disruptive-maintenance/ 301
 /support/cloudflare-client-api/* /fundamentals/api/ 301
+
