@@ -6,6 +6,11 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-06-28'
+  title: Add new tutorial on how to use Workers AI and Stripe to recommend products on e-commerce sites
+  description: |-
+    - Added community contributed tutorial on how to [recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/)
+
 - publish_date: '2024-06-27'
   title: Introducing embedded function calling
   description: |-
