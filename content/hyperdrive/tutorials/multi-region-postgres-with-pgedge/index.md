@@ -11,7 +11,9 @@ pcx_content_type: tutorial
 
 ## Overview
 
-In this tutorial, we'll walk you through how to use a Cloudflare Worker to consume data from a pgEdge Cloud Postgres database in a three-node distributed multi-master replication cluster optimized with Hyperdrive. pgEdge Cloud distributes your data to the network edge; when optimized with Hyperdrive, data delivery speeds jump dramatically.
+In this tutorial, you will learn how to use a Cloudflare Worker to consume data from a pgEdge Cloud Postgres database in a three-node distributed multi-master replication cluster.
+
+You will create a Worker function that connects to your database using [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) to proxy your database connection and maintain a connection pool to prevent us having to make a new database connection on every request. 
 
 You will learn how to:
 
@@ -21,24 +23,22 @@ You will learn how to:
 - Query your pgEdge Postgres database with a Cloudflare Worker.
 - Test your configuration optimizations.
 
-## Prerequisites
+## Before you start
 
-Before starting, install the following software:
-
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [npx](https://www.npmjs.com/package/npx)
+All of the tutorials assume you have already completed the [Get started guide](/workers/get-started/guide/), which gets you set up with a Cloudflare Workers account, [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare), and [Wrangler](/workers/wrangler/install-and-update/).
 
 ## 1. Create a Cloudflare Worker
 
-You can use a free Cloudflare account or Cloudflare Workers account to access Hyperdrive. Use `npx` to run the Cloudflare Wrangler CLI, and log in to your Cloudflare account:
+Run the following command to create a Worker project from the command line:
 
-`npx wrangler login`
+```sh
+---
+header: Create a project
+---
+$ npm create cloudflare@latest
+```
 
-Then, use the following command to create a Cloudflare Worker project:
-
-`npx wrangler init pgedge-worker`
-
-Follow the on-screen prompts, specifying the following answers:
+For setup, select the following options:
 
 - `Where do you want to create your application?`: Enter: `pgedge`
 - `What type of application do you want to create?`: Select ``Hello World Worker`.
@@ -92,7 +92,7 @@ node_compat = true # required for the postgres connection
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
-id = "hyperdrive_uuid"
+id = "<HYPERDRIVE_CONFIG_ID>"
 ```
 
 ## 4. Update the Cloudflare Worker to query pgEdge
@@ -143,7 +143,9 @@ When the command completes, the result set includes a URL. Navigate to the URL w
 
 ## 5. Compare System Latency
 
-We tested system latency by using Terraform and a simple `Go` program that issues multiple HTTPS requests to our Cloudflare Worker and recorded the average request latencies. Some of the environments evaluated combine regional TCP connection pooling (via Hyperdrive) with the latency-based DNS routing you get with a pgEdge database. _Latency by Location (in ms)_ improved dramatically when using Hyperdrive and pgEdge nearest node queries:
+We can test the system latency by using Terraform and a simple `Go` program that issues multiple HTTPS requests to our Cloudflare Worker and recorded the average request latencies. A sample open-source project has been created to share scripts and Terraform code to configure this and can be accessed on [GitHub](https://github.com/pgEdge/cloudflare-pgedge-latency-tests).
+
+Some of the environments evaluated combine regional TCP connection pooling (via Hyperdrive) with the latency-based DNS routing you get with a pgEdge database. _Latency by Location (in ms)_ improved dramatically when using Hyperdrive and pgEdge nearest node queries:
 
 | Hyperdrive | pgEdge PostgreSQL   | Los Angeles | Salt Lake City | Dallas | Montreal | London |
 | ---------- | ------------------- | ----------- | -------------- | ------ | -------- | ------ |

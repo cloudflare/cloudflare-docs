@@ -12,34 +12,18 @@ The following example shows you how to connect Hyperdrive to a [pgEdge](https://
 
 
 
-## 2. Create a pgEdge Database
+## 1. Allow Hyperdrive access
 
-Visit the [pgEdge website](https://www.pgedge.com/get-started/cloud) to sign up for a pgEdge Developer Edition account. After signing up, connect to the pgEdge Cloud console, and [deploy a 3-node cluster](https://docs.pgedge.com/cloud/cluster/create_cluster). When the deployment completes, use the [PSQL connection string](https://docs.pgedge.com/cloud/connecting/psql) displayed in the `Get Started` pane to connect to the Postgres server.
+You can connect Hyperdrive to any existing pgEdge database by configuring your Hyperdrive connection with the database connection string.
 
-After connecting, use the following statements to generate a table and records:
+### pgEdge Dashboard
 
-`CREATE TABLE products(id varchar, name varchar, primary key(id));`
+1. Go to the [**pgEdge dashboard**](https://app.pgedge.com/databases) and select the database you wish to connect to.
+2. In the **Connect to your database** section, copy the connection string for the `app` user that is displayed on the [`Nearest node` tab](https://docs.pgedge.com/cloud/database/manage_db#connect-to-your-database). 
 
-```sql
-INSERT INTO products (id, name) VALUES
-('1', 'Whisper Quiet Vacuum'),
-('2', 'Everlast Lightbulbs'),
-('3', 'Magic Sponge Erasers'),
-('4', 'EcoFresh Laundry Detergent'),
-('5', 'Sunrise Alarm Clock'),
-('6', 'Infinity Batteries'),
-('7', 'Gleam Window Cleaner'),
-('8', 'IronGlide Steam Iron'),
-('9', 'Breeze Air Purifier'),
-('10', 'QuickFix Super Glue');
-```
+With the connection string, you can now create a Hyperdrive database configuration.
 
-Return to the pgEdge console and select the `Start Replication` button to [start replication](https://docs.pgedge.com/cloud/database/manage_db#the-start-replication-pane) across your cluster. 
-
-Navigate to the `Connect to your database` panel, and copy the connection string for the `app` user that is displayed on the [`Nearest node` tab](https://docs.pgedge.com/cloud/database/manage_db#connect-to-your-database). 
-
-
-## 3. Create a Hyperdrive
+## 2. Create a database configuration
 
 Move to a terminal window, and use the following command to [create a Hyperdrive](https://developers.cloudflare.com/hyperdrive/get-started/):
 
