@@ -15,7 +15,7 @@ Embedded function calling can be used to easily make complex agents that interac
 
 {{<Aside type="warning" header="REST API support">}}
 
-Embedded function calling depends on features native to the Worker's platform. Hence, embedded function calling is only supported via Cloudflare Workers, not via the REST API.
+Embedded function calling depends on features native to the Workers platform. This means that embedded function calling is only supported via [Cloudflare Workers](/workers-ai/get-started/workers-wrangler/), not via the [REST API](/workers-ai/get-started/rest-api/).
 
 {{</Aside>}}
 
@@ -98,11 +98,11 @@ The `ai-utils package` is also open-sourced on [Github](https://github.com/cloud
 
 ### 4. Local development & deployment
 
- Follow the [Workers AI Get Started Guide'](/workers-ai/get-started/workers-wrangler/)s  step 4 and 5 for local development and deployment.
+ Follow steps 4 and 5 of the [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangler/) for local development and deployment.
 
 {{<Aside type="note" header="Workers AI Embedded Function Calling charges">}}
 
-Embedded function calling runs Workers AI inference requests. Stanard charges for inference (e.g. tokens) usage will be charged.
+Embedded function calling runs Workers AI inference requests. Standard charges for inference (e.g. tokens) usage will be charged.
 Resources consumed (e.g. CPU time) during embedded functions' code execution will be charged just as any other Worker's code execution.
 
 {{</Aside>}}
