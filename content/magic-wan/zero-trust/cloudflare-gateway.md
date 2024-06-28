@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Gateway
-pcx_content_type: tutorial
+pcx_content_type: reference
 meta:
   title: Connect to Cloudflare Gateway with Magic WAN
 ---
