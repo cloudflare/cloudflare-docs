@@ -39,6 +39,9 @@ export default {
     // Create a new Headers object to modify response headers
     let newHeaders = new Headers(response.headers);
 
+    const tlsVersion = request.cf.tlsVersion;
+    console.log(tlsVersion);
+
     // This sets the headers for HTML responses:
     if (
       newHeaders.has("Content-Type") &&
@@ -60,6 +63,18 @@ export default {
     BLOCKED_HEADERS.forEach((name) => {
       newHeaders.delete(name);
     });
+
+    if (tlsVersion !== "TLSv1.2" && tlsVersion !== "TLSv1.3") {
+      return new Response("You need to use TLS version 1.2 or higher.", {
+        status: 400,
+      });
+    } else {
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders,
+      });
+    }
   },
 };
 ```
