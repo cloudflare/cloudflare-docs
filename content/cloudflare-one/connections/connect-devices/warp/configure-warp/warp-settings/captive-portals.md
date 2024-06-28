@@ -15,7 +15,7 @@ To allow users to connect through a captive portal, administrators can configure
 ### No user interaction required
 
 - Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection). This allows WARP to temporarily turn off when it detects a captive portal on the network. For more details, refer to [how captive portal detection works](#how-captive-portal-detection-works) and its [limitations](#limitations).
-- Set [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) to **MASQUE**. When using MASQUE, WARP traffic will look like standard HTTPS traffic and is therefore very unlikely to be blocked by captive portals.
+- Set [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) to **MASQUE**. When using MASQUE, WARP traffic will look like standard HTTPS traffic and is therefore less likely to be blocked by captive portals.
 
 ### User interaction required
 

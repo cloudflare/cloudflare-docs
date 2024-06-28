@@ -116,12 +116,12 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 
 | System   | Availability | Minimum WARP version |
 | ---------| -------------| ---------------------|
-| Windows  | ✅           | ?      |
-| macOS    | ✅           | ?      |
-| Linux    | ✅           | ?      |
-| iOS      | ❌           |       |
-| Android  | ❌           |      |
-| ChromeOS | ❌           |      |
+| Windows  | ✅           | 2024.6.415.0      |
+| macOS    | ✅           | 2024.6.416.0      |
+| Linux    | Coming soon           |      |
+| iOS      | Coming soon           |      |
+| Android  | Coming soon           |      |
+| ChromeOS | Coming soon           |      |
 
 {{</details>}}
 
@@ -130,7 +130,7 @@ Configures the protocol used to route IP traffic from the device to Cloudflare G
 **Value**:
 
 - **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`. When switching from MASQUE to WireGuard, users may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for WireGuard to function.
-- **MASQUE** {{<inline-pill style="beta">}}: Establishes an HTTP/3 connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`. Since AES-GCM is a more computationally intensive algorithm, users may experience lower data rates on MASQUE compared to WireGuard. Many modern CPUs support AES-GCM acceleration, which will mitigate the performance impact of switching to MASQUE.
+- **MASQUE** {{<inline-pill style="beta">}}: Establishes an HTTP/3 connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`.
 
 For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
