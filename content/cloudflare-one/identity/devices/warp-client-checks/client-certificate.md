@@ -14,15 +14,16 @@ The Client Certificate device posture attribute checks if the device has a valid
 | -- | -- |
 | All modes | All plans  |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum WARP version<sup>1</sup> |
 | ---------| -------------| ---------------------|
-| Windows  | ✅           | ?         |
-| macOS    | ✅           | ?         |
+| Windows  | ✅           | 2024.6.415.0 |
+| macOS    | ✅           | 2024.6.416.0 |
 | Linux    | Coming soon  |   |
 | iOS      | ❌           |   |
 | Android  | ❌           |   |
 | ChromeOS | ❌           |   |
 
+<sup>1</sup> Client certificate checks that ran on an earlier WARP version will continue to work. To configure a new certificate check, update WARP to the versions listed above.
 {{</details>}}
 
 ## Prerequisites
