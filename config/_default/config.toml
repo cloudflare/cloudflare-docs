@@ -10,7 +10,7 @@ disableAliases = true
 disableKinds = ["taxonomy"]
 timeout = "120s"
 
-enableEmoji = true
+enableEmoji = false
 enableGitInfo = true
 
 paginate = 12 # default 10
