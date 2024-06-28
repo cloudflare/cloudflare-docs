@@ -19,7 +19,7 @@ You will have to move or transfer domains from one Cloudflare account to another
 
 If you are using Cloudflare Registrar, you must first move your domain to a third-party registrar.
 
-Refer to [Requirements](/fundamentals/setup/manage-domains/move-domain/#Requirements) for more details and [Transfer domain out from Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/) for instructions on performing a domain transfer to a 3rd party registrar.
+Refer to [Requirements](/fundamentals/setup/manage-domains/move-domain/#requirements) for more details and [Transfer domain out from Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/) for instructions on performing a domain transfer to a 3rd party registrar.
 
 {{</Aside>}}
 
