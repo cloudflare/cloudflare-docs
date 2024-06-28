@@ -44,11 +44,11 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   [Email Obfuscation](/workers/configuration/workers-with-page-rules/#email-obfuscation)
 *   [Forwarding URL](/workers/configuration/workers-with-page-rules/#forwarding-url)
 *   Host Header Override
+*   [I'm Under Attack](/workers/configuration/workers-with-page-rules/#im-under-attack)
 *   [IP Geolocation Header](/workers/configuration/workers-with-page-rules/#ip-geolocation-header)
 *   Mirage
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
-*   [I'm Under Attack](/workers/configuration/workers-with-page-rules/#im-under-attack)
 *   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
@@ -91,7 +91,6 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Client     | Worker     | Rule Ignored   |
 | Worker     | Same Zone  | Rule Respected |
 | Worker     | Other Zone | Rule Ignored   |
-
 
 ### Browser Cache TTL
 
@@ -157,6 +156,14 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Worker     | Same Zone  | Rule Respected |
 | Worker     | Other Zone | Rule Ignored   |
 
+### I'm Under Attack
+
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
+
 ### IP Geolocation Header
 
 | Source     | Target     | Behavior       |
@@ -178,14 +185,6 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Source     | Target     | Behavior       |
 |------------|------------|----------------|
 | Client     | Worker     | Rule Ignored   |
-| Worker     | Same Zone  | Rule Ignored   |
-| Worker     | Other Zone | Rule Ignored   |
-
-### I'm Under Attack
-
-| Source     | Target     | Behavior       |
-|------------|------------|----------------|
-| Client     | Worker     | Rule Respected |
 | Worker     | Same Zone  | Rule Ignored   |
 | Worker     | Other Zone | Rule Ignored   |
 

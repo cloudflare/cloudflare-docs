@@ -161,29 +161,6 @@ header: API configuration example
 
 {{</details>}}
 
-## Hotlink Protection
-
-[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
-
-Use this setting to turn on or off Hotlink Protection for matching requests.
-
-{{<details header="API information">}}
-
-API configuration property name: `"hotlink_protection"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-    "hotlink_protection": false
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
 ## Email Obfuscation
 
 [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
@@ -223,6 +200,58 @@ header: API configuration example
 ---
 "action_parameters": {
   "fonts": false
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
+## Hotlink Protection
+
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
+
+Use this setting to turn on or off Hotlink Protection for matching requests.
+
+{{<details header="API information">}}
+
+API configuration property name: `"hotlink_protection"` (boolean).
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+    "hotlink_protection": false
+}
+```
+
+{{<render file="_configuration-rule-link-to-examples.md">}}
+
+{{</details>}}
+
+## I'm Under Attack
+
+{{<Aside type="warning">}}
+The I'm Under Attack setting replaced the [Security Level](/waf/tools/security-level/) setting (now deprecated).
+{{</Aside>}}
+
+When [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) is turned on, visitors will receive an interstitial page while Cloudflare analyzes their traffic and behavior to make sure they are a legitimate human visitor trying to access your website. You should only use this mode if your website is under a DDoS attack.
+
+Use this setting to turn on or off I'm Under Attack mode.
+
+{{<details header="API information">}}
+
+API configuration property name: `"security_level"` (string).
+
+API values: `"off"`, `"under_attack"`.
+
+```json
+---
+header: API configuration example
+---
+"action_parameters": {
+  "security_level": "under_attack"
 }
 ```
 
@@ -322,35 +351,6 @@ header: API configuration example
 ---
 "action_parameters": {
   "rocket_loader": true
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
-## I'm Under Attack
-
-{{<Aside type="warning">}}
-The I'm Under Attack setting replaced the [Security Level](/waf/tools/security-level/) setting (now deprecated).
-{{</Aside>}}
-
-When [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) is turned on, visitors will receive an interstitial page while Cloudflare analyzes their traffic and behavior to make sure they are a legitimate human visitor trying to access your website. You should only use this mode if your website is under a DDoS attack.
-
-Use this setting to turn on or off I'm Under Attack mode.
-
-{{<details header="API information">}}
-
-API configuration property name: `"security_level"` (string).
-
-API values: `"off"`, `"under_attack"`.
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "security_level": "under_attack"
 }
 ```
 
