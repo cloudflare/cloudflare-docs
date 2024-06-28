@@ -23,19 +23,28 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**. Select **HTTP**.
 
-2. Add a policy with the following values:
+2. Create a policy with the following values:
 
-   | Selector    | Operator | Value               | Action |
-   | ----------- | -------- | ------------------- | ------ |
-   | Application | in       | Microsoft Office365 | Allow  |
+   | Selector | Operator | Value            | Action | Untrusted certificate action |
+   | -------- | -------- | ---------------- | ------ | ---------------------------- |
+   | Domain   | is       | `login.live.com` | Allow  | Block                        |
 
-3. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
+   | Custom header name                  | Custom header value |
+   | ----------------------------------- | ------------------- |
+   | `Sec-Restrict-Tenant-Access-Policy` | `restrict-msa`      |
 
-    | Custom header name           | Custom header value                                                        |
-    | ---------------------------- | -------------------------------------------------------------------------- |
-    | `Restrict-Access-To-Tenants` | `contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4` |
+3. Select **Create policy**.
+4. Create another policy with the following values. You can add as many custom headers as needed.
 
-4. Select **Create policy**.
+   | Selector    | Operator | Value                 | Action | Untrusted certificate action |
+   | ----------- | -------- | --------------------- | ------ | ---------------------------- |
+   | Application | in       | _Microsoft Office365_ | Allow  | Block                        |
+
+   | Custom header name           | Custom header value        |
+   | ---------------------------- | -------------------------- |
+   | `Restrict-Access-To-Tenants` | Your organization's domain |
+
+5. Select **Create policy**.
 
 Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to a Microsoft 365 application with a personal account, authentication will fail.
 
