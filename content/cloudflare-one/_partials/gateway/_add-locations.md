@@ -17,15 +17,15 @@ To add a DNS location to Gateway:
 
 3. Choose a name for your DNS location.
 
-4. Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise users have the option of manually entering [dedicated DNS resolver IP addresses](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) assigned to their account.
+4. Choose which DNS endpoints to resolve your organization's DNS queries.
 
-   You do not need the IPv4 address field if:
+   If you choose **IPv4 DNS**, Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise users have the option of manually entering [dedicated DNS resolver IP addresses](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) assigned to their account.
+
+   You do not need to turn on IPv4 resolution if:
 
    - Your DNS location only uses IPv6.
-   - Users will be sending all DNS requests from this location using DNS over HTTPS via a browser.
-   - You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
-
-   If any of the above apply to your case, select **Delete**.
+   - Your users will send all DNS requests from this location using DNS over HTTPS via a browser.
+   - You will deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
 {{<Aside type="note" header="Your IPv4 address is taken">}}
 
@@ -39,9 +39,8 @@ If you think someone else is wrongfully using this IPv4 address, [contact Cloudf
 
 5. (Optional) Toggle the following settings:
 
-   - **Set as Default DNS Location** sets this location as the default DoH endpoint for DNS queries.
-   - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS nameservers.
+   - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS nameservers. [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare enables EDNS in a privacy preserving way by not sending the user's exact IP address but rather a `/24` range which contains their IP address.
 
-     [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
+   - **Set as Default DNS Location** sets this location as the default DoH endpoint for DNS queries.
 
 6. Select **Add location**.
