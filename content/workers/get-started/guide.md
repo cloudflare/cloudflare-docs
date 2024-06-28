@@ -40,7 +40,7 @@ Now, you have a new project set up. Move into that project folder.
 $ cd my-first-worker
 ```
 
-{{<details header="What files are in my project?">}}
+{{<details header="What files did C3 create?">}}
 
 In your project directory, C3 will have generated the following:
 
