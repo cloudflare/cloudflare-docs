@@ -95,7 +95,7 @@ binding = "HYPERDRIVE"
 id = "hyperdrive_uuid"
 ```
 
-## 4. Update the Cloudflare Worker to Query pgEdge
+## 4. Update the Cloudflare Worker to query pgEdge
 
 Open the `src/index.ts` file, and update the Worker code to include the following code that:
 
