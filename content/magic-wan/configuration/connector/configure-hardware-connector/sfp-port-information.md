@@ -15,7 +15,7 @@ SFP+ ports are next to the regular LAN ports. They are represented as follows in
 - SFP+ **port 1** is represented by **port 7** in the dashboard
 - SFP+ **port 2** is represented by **port 8** in the dashboard
 
-![The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8.](/images/magic-wan/connector/spf-ports.png)
+![The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8.](/images/magic-wan/connector/sfp-ports.png)
 
 _The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8._
 
