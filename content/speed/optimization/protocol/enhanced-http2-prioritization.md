@@ -32,7 +32,7 @@ To enable **Enhanced HTTP/2 Prioritization** in the Cloudflare dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Enhanced HTTP/2 Prioritization** using the Cloudflare API, send a [`PATCH` request](/api/operations/zone-settings-change-h2_prioritization-setting) with the `value` parameter set to `"on"`.
+To enable **Enhanced HTTP/2 Prioritization** using the Cloudflare API, send a [`PATCH` request](/api/operations/zone-settings-edit-single-setting) with `h2_prioritization` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

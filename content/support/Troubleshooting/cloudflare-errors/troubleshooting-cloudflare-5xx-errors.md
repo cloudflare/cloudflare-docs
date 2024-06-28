@@ -266,7 +266,7 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
+-   Enterprise customers can increase the 524 timeout up to 6,000 seconds using the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint (`proxy_read_timeout` setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
 
 {{<Aside type="note">}}
 If the timeouts are on write requests, the [Proxy Write Timeout](/fundamentals/reference/connection-limits/) of 30 seconds cannot be adjusted.
