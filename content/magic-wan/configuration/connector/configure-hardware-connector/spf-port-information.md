@@ -1,23 +1,23 @@
 ---
 pcx_content_type: reference
-title: SPF+ port information
+title: SFP+ port information
 ---
 
-# SPF+ port information
+# SFP+ port information
 
 The hardware version of the Magic WAN connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput. These ports can be configured as either a WAN or a LAN port, like all of the 1G RJ45 ports in the machine. Because a 10G WAN uplink will often be bottlenecked by IPsec tunnel speeds, the SFP+ ports are most useful for configuring high speed LANs, and for using fiber connections.
 
-{{<Aside type="note" header="Virtual Connector and SPF+ ports">}}Since you decide and set up the hardware where Magic WAN Virtual Connector runs, you can ignore the information on this page.{{</Aside>}}
+{{<Aside type="note" header="Virtual Connector and SFP+ ports">}}Since you decide and set up the hardware where Magic WAN Virtual Connector runs, you can ignore the information on this page.{{</Aside>}}
 
 ## Port configuration
 
-SPF+ ports are next to the regular LAN ports. They are represented as follows in the dashboard:
+SFP+ ports are next to the regular LAN ports. They are represented as follows in the dashboard:
 - SFP+ **port 1** is represented by **port 7** in the dashboard
 - SFP+ **port 2** is represented by **port 8** in the dashboard
 
-![The left port, SFP+1, is port 7. The right port, SFP+2, is port 8.](/images/magic-wan/connector/spf-ports.png)
+![The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8.](/images/magic-wan/connector/spf-ports.png)
 
-_The left port, SFP+1, is port 7. The right port, SFP+2, is port 8._
+_The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8._
 
 ## SFP+ module compatibility
 
