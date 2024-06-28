@@ -32,7 +32,7 @@ If you do not need a high availability configuration for you premises, proceed t
 
 The hardware version of the Magic WAN connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput, as well as six RJ45 ports that support 1G throughput.
 
-If you need higher throughput for your connections, refer to [SPF+ port information](/magic-wan/configuration/connector/configure-hardware-connector/spf-port-information/) for more details on this topic.
+Refer to [SPF+ port information](/magic-wan/configuration/connector/configure-hardware-connector/spf-port-information/) for details on this topic.
 
 ---
 
