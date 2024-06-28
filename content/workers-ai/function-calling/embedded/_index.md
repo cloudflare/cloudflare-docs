@@ -15,15 +15,22 @@ Embedded function calling can be used to easily make complex agents that interac
 
 ## Get Started
 
-To get started, run the following command in your project repository.
+### 1. Create a Worker project with Workers AI
+
+ Follow the general [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangler/) until step 2.
+
+### 2. Install additional npm package
+
+Next, run the following command in your project repository to install the Worker AI utilities package.
 
 ```sh
 $ npm install @cloudflare/ai-utils --save
 ```
 
-Then, import the utils with `import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"` in your `index.js` file.
+### 3. Add Workers AI Embedded function calling
 
-Check out the working example and API reference below. Our `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
+Update the index.ts file in your application directory with the following code:
+
 
 ```js
 ---
@@ -78,6 +85,14 @@ export default {
   },
 };
 ```
+
+This example imports the utils with `import { createToolsFromOpenAPISpec, runWithTools, autoTrimTools } from "@cloudflare/ai-utils"` and follows the  API reference below. 
+
+The `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
+
+### 4. Local development & deploy
+
+ Follow the [Workers AI Get Started Guide'](/workers-ai/get-started/workers-wrangler/)s  step 4 and 5 for local development and deployment.
 
 ## API reference
 
