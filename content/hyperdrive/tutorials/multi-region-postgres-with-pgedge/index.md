@@ -13,7 +13,7 @@ pcx_content_type: tutorial
 
 In this tutorial, we'll walk you through how to use a Cloudflare Worker to consume data from a pgEdge Cloud Postgres database in a three-node distributed multi-master replication cluster optimized with Hyperdrive. pgEdge Cloud distributes your data to the network edge; when optimized with Hyperdrive, data delivery speeds jump dramatically.
 
-In this tutorial we demonstrate how to:
+You will learn how to:
 
 - Deploy a Cloudflare Worker with the Cloudflare Wrangler CLI.
 - Create and connect to a pgEdge distributed Postgres cluster.
