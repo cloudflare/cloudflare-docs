@@ -118,7 +118,7 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.6.415.0      |
 | macOS    | ✅           | 2024.6.416.0      |
-| Linux    | Coming soon           |      |
+| Linux    | Coming soon           |       |
 | iOS      | Coming soon           |      |
 | Android  | Coming soon           |      |
 | ChromeOS | Coming soon           |      |
