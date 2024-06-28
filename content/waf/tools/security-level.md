@@ -27,7 +27,9 @@ The threat score (deprecated) measures IP reputation across Cloudflare services.
 The threat score of a request has a value from 0 to 100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
 
 {{<Aside type="warning">}}
-Since the threat score is deprecated, the [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) no longer shows _Threat Score_ in the list of fields. Until 2024-09-30 you can use the `cf.threat_score` field in an expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
+The [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) no longer shows _Threat Score_ in the list of fields since it is deprecated. Until 2024-09-30 you can use the `cf.threat_score` field in an expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
+
+Since Cloudflare already has other automated security measures in place, you may choose to remove threat score from your existing rules without impacting your security posture, or delete any rules solely based on threat score.
 {{</Aside>}}
 
 ## Security levels
