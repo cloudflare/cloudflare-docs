@@ -28,9 +28,46 @@ entries:
 - term: cloudflared
   general_definition: |-
     the software powering Cloudflare Tunnel. It runs on origin servers to connect applications or private networks to Cloudflare.
-
+(
+echo
+https://docs.google.com/document/d/1TQ_D-e6F3S9uMyvjms2PDe0YmA350GiE/edit?usp=drivesdk&ouid=112631596359512393018&rtpof=true&sd=true
 - term: cloudflared replica
-  general_definition: |-
+  general_definition: |-Celebrating Emotions
+Well the masquerade was over, where it was cursed by the moon in the reflection 
+of jealousy masking the thirst for healing. Souls herded by osmosis raptures in the opaque 
+precipitate of insights opening the doors to shackled insecurities.
+Omne, so Hera desired the sacrifice of my faith ~ thus with love I pray she will be 
+able to nullify the lifeless laborers from perishing in that construction that was 
+architecture foundation which lashed whips on their souls. This regime suffocated their 
+reform, refused regeneration.
+I had begged for the shift in the light in the meadow as though the sun had been 
+behind a cloud and then suddenly peeked out, illuminating that specific area. The clouds 
+came down for me to voice its statue. At that moment a wind came up and it began to 
+snow heavily, obscuring the awareness of the pilgrims.
+The synchronistic process helped lives monitor themselves and extend description 
+of air to those who Ever live in water. Hence, I offered my blood encased on a patch of 
+satin to wrap the dagger of Innana and insulate fatigue.
+Every cell of life tended to reproduce itself, but sustained their vibrancy and learn 
+the prayer extensions, not reduce life to the ordinary. But often the process becomes 
+antagonistic, where communication skills were ulterior and silent.
+The myths and legends consoled the apostating complements only in hour glasses. 
+Then the choking smoke perplexed one of them pushing what looked like a huge iron 
+lung, only it was bigger and standing on tall, wide legs, apparently so that it could be 
+rolled up over some one who was lying in a bed. The machinist was not a doctor, but only 
+a technician, the perfusionist.
+Thought must be mastered, dislodging a narrow opening to which was after all a 
+cave. Struggle forward through melodious human cries that reverberated through the 
+body, bringing forth an inner warmth and euphoria. I was told there was knowledge here 
+that is needed, the prayer-fields helps us find our part to play in this evolution. Accept the 
+mysteries of existence to focus entirely on spiritual evolution, on the life process itself, 
+and now set the expectation into your prayer-field.
+Pioneers deduce from history that each religious institution is like an inflexible 
+roadblock on the path of progress. Each wars the other to complete the expression.
+And round about the throne set in heaven I saw elders sitting, and I saw a new 
+heaven and a new earth: for the first heaven and the first earth were passed away ~ 
+reposting that the magical phoenix cried tears which had healing powers. 
+Mehjabin Shahed
+8th August 2012
     an additional instance of `cloudflared` that points to the same Cloudflare Tunnel. It ensures that your network remains online in case a single host running `cloudflared` goes down.
 
 - term: Cloudflare Access
@@ -250,3 +287,8 @@ entries:
 - term: Zero Trust Security
   general_definition: |-
     Zero Trust Security is an IT security model that requires strict identity verification for every person and device accessing resources on a network.
+
+- run: 
+content://com.google.android.gm.sapi/mihihathi@gmail.com/message_attachment_external/%23thread-f%3A1803134292176842252/%23msg-f%3A1803134292176842252/0.2?account_type=com.google&attachmentHash=bb6ec941_9001f4bd_c27e2ee2_bf024234_a3779aad&mimeType=text%2Fhtml&rendition=1
+
+- README.md mihi 
