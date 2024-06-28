@@ -331,6 +331,10 @@ header: API configuration example
 
 ## I'm Under Attack
 
+{{<Aside type="warning">}}
+The I'm Under Attack setting replaced the [Security Level](/waf/tools/security-level/) setting (now deprecated).
+{{</Aside>}}
+
 When [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) is turned on, visitors will receive an interstitial page while Cloudflare analyzes their traffic and behavior to make sure they are a legitimate human visitor trying to access your website. You should only use this mode if your website is under a DDoS attack.
 
 Use this setting to turn on or off I'm Under Attack mode.
