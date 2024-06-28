@@ -10,23 +10,6 @@ layout: example
 The following example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres.
 
 
-## 1. Create a Cloudflare Worker
-
-Use `npx` to run the Cloudflare Wrangler CLI, and log in to your Cloudflare account:
-
-`npx wrangler login`
-
-Move to your project directory, and create a worker project:
-
-`npx wrangler init pgedge-worker`
-
-Follow the on-screen prompts, selecting the `Hello World` worker (with Typescript enabled). When prompted `Do you want to deploy your application`, answer `Yes`. When you're finished responding to prompts, the CLI will deploy the Worker and display a Worker URL similar to:
-
-`https://pgedge-worker.your-name-423.workers.dev`
-
-Use the following command to install the Cloudflare Wrangler CLI:
-
-`npm install wrangler --save-dev`
 
 
 ## 2. Create a pgEdge Database
