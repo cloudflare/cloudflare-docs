@@ -21,7 +21,7 @@ entries:
   difficulty: Beginner
   content_type: 🎥 Video
   pcx_content_type: tutorial
-- link: https://youtu.be/MLbo7MGY_lU
+- link: https://www.youtube.com/watch?v=MLbo7MGY_lU
   title: AI can see clearly now - Build Vision Apps on Cloudflare Workers AI
   description: The LlaVa model is hosted on Cloudflare Workers AI. Which means you are an API call away from brand new powerful vision use cases in all of your applications.
   tags: [AI]
@@ -43,7 +43,7 @@ entries:
   difficulty: Intermediate
   content_type: 🎥 Video
   pcx_content_type: tutorial
-- link: https://youtu.be/5UTExUQ8Fwo
+- link: https://www.youtube.com/watch?v=5UTExUQ8Fwo
   title: Workers AI - Getting Started - Vanilla Chat App
   description: Get started building AI apps on Cloudflare using Pages and the GitHub starter template for a Vanilla JavaScript Chat App.
   tags: [AI]
