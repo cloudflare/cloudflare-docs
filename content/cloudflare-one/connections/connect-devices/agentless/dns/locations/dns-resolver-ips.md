@@ -33,7 +33,7 @@ flowchart TB
     query--"No"-->ipv4{{"Is it over IPv4?"}}
 
     ipv4--Yes-->source["Look up location by<br />source IPv4 address"]
-    ipv4--"No"-->destination["Look up location by<br />destination IPv4 address"]
+    ipv4--"No"-->destination["Look up location by<br />destination IPv6 address"]
 ```
 
 1. First, Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
