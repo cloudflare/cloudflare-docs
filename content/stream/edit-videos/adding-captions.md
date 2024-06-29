@@ -10,7 +10,7 @@ Adding captions and subtitles to your video library.
 
 ## Add or modify a caption
 
-There are two ways to add captions to a video: generating via AI or uploading a
+There are two ways to add captions to a video: generating via {{<heading-pill style="beta">}}AI{{</heading-pill>}} or uploading a
 caption file.
 
 To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
