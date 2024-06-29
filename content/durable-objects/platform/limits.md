@@ -29,9 +29,12 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 
 ## How much work can a single Durable Object do?
 
-Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
+Durable Objects (DOs) can scale horizontally across many individual Durable Objects.
 
-* An individual Object has a soft limit of 1,000 requests per second. You can have an unlimited number of individual objects per namespace.
+Each individual Object is inherently single-threaded: think of each DO as a stateful server (or virtual machine) that you can create on-the-fly. As with any server, the number of clients it can serve concurrently will depend on the work (compute and storage operations) it is doing per client.
+
+* An individual Object has a soft limit of 1,000 HTTP requests per second, and potentially over 10k concurrent WebSocket messages per second.
+* You can have an unlimited number of individual objects per namespace.
 * A simple [storage](/durable-objects/api/transactional-storage-api/) `get()` on a small value that directly returns the response may realize a higher request throughput compared to a Durable Object that (for example) serializes and/or deserializes large JSON values.
 * Similarly, a Durable Object that performs multiple `list()` operations may be more limited in terms of request throughput.
 
