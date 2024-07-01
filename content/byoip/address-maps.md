@@ -66,7 +66,7 @@ Static IPs are allocated to the account, but can be assigned to a single zone. T
 
 If you need to allowlist your IPs or to communicate your IPs to third parties, allocating static IPs to your account allows you to know them ahead of time.
 
-`- INFO TO BE VERIFIED -`
+Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request. 
 
 If you have a static IP, Cloudflare creates an address map which you can edit and add zones to. You cannot create a new address map using the static IP assigned to your account.
 
