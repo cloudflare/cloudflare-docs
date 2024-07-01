@@ -67,6 +67,12 @@ Pools hold information about where the health monitor requests and your visitors
 
 To support the [use cases](#use-cases) mentioned above, and assuming only one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one endpoint each:
 
+{{<Aside type="warning" header="Important">}}
+The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly. You can find a reference table for correct setup in Step 8 below.
+
+Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
+{{</Aside>}}
+
 1. Go to **Traffic** > **Load Balancing**.
 
 2. Select **Manage Pools** and then **Create**.
@@ -83,7 +89,7 @@ To support the [use cases](#use-cases) mentioned above, and assuming only one or
     * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
     * (Optional) A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
 
-        If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will probably need to add a host header to avoid failing the health monitor request.
+        If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
 
 6. Finish configuring the first pool with the following information:
     * Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
@@ -97,25 +103,19 @@ To support the [use cases](#use-cases) mentioned above, and assuming only one or
 
 {{<table-wrap>}}
 
-| Field                       |  Value                                        |
-|---------------------------- | ----------------------------------------------|
-| Pool name                   | `secondary`                                   |
-| Description                 | `Pages version`                               |
-| Endpoint steering             | `<default>`                                   |
-| Endpoint name                 | `my-pages-website`                            |
-| Endpoint address              | `<IP address>`                                |
-| Host (**Add host header**)* | `<your custom domain or Pages subdomain>`     |
-| Health threshold            | `1`                                           |
-| Monitor                     | `<monitor defined on previous step>`          |
-| Health check regions        | `<select region of your choice>`              |
+| Field                       |  Value                                          |
+|---------------------------- | ------------------------------------------------|
+| Pool name                   | `secondary`                                     |
+| Description                 | `Pages version`                                 |
+| Endpoint steering           | `<default>`                                     |
+| Endpoint name               | `my-pages-website`                              |
+| Endpoint address            | `<your custom domain or Pages subdomain>`       |
+| Host (**Add host header**)  | `<your custom domain or Pages subdomain>`       |
+| Health threshold            | `1`                                             |
+| Monitor                     | `<monitor defined on previous step>`            |
+| Health check regions        | `<select region of your choice>`                |
 
 {{</table-wrap>}}
-
-{{<Aside type="warning" header="*Important">}}
-The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly.
-
-Failing to do so may result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
-{{</Aside>}}
 
 {{</tutorial-step>}}
 
