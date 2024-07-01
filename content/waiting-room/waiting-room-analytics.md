@@ -283,4 +283,3 @@ If you are not seeing any historical data for your waiting room, one or more of 
 
 - Your waiting room was not receiving any traffic for the time period you are inspecting.
 - Your waiting room was not enabled for the time period you are inspecting.
-- You are using the Customer Metadata Boundary to restrict data to the EU region.
