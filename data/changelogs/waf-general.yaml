@@ -1,0 +1,13 @@
+---
+link: "/waf/change-log/general-updates/"
+productName: WAF
+productLink: "/waf/"
+subCategoryName: General updates
+topLevelLink: "/waf/change-log/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+- publish_date: '2024-06-28'
+  title: Attack score update
+  description: |-
+    Update description.
