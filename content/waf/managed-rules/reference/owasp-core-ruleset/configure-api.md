@@ -12,7 +12,7 @@ To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/rule
 
 * [Set the paranoia level](#set-the-paranoia-level).
 * [Configure the score threshold](#configure-the-score-threshold-and-the-action).
-* [Specify the action to perform](#configure-the-score-threshold-and-the-action) when the request threat score is greater than the threshold.
+* [Specify the action to perform](#configure-the-score-threshold-and-the-action) when the threat score is greater than the threshold.
 
 You can also disable specific rules in the managed ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
