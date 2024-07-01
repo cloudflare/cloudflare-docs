@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;anycastURL;;trafficSteering;;trafficRoutesAPI
+inputParameters: productName;;anycastURL;;trafficSteering
 ---
 
 # Configure static routes
@@ -15,7 +15,7 @@ You must assign a route priority to each tunnel–subnet pair in your configurat
 - Lower values have greater priority.
 - When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. For more on how Cloudflare uses ECMP packet forwarding, refer to {{<glossary-tooltip term_id="traffic steering" link="$3">}}Traffic steering{{</glossary-tooltip>}}.
 
-$4
+You can also create and edit static routes using the [Magic Static Routes API](/api/operations/magic-static-routes-list-routes).
 
 ## Edge routing configuration example
 
