@@ -143,6 +143,7 @@ $ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=
 
 - Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
 - A running export will block other database requests.
+- Import is limited to 5GB files.
 
 ## Troubleshooting
 
