@@ -1882,6 +1882,10 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility date to apply.
 - `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}}
   - Show the interactive dev session.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
 
 {{</definitions>}}
 
@@ -2655,7 +2659,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```sh
+```txt
 wrangler types [<PATH>] [OPTIONS]
 ```
 

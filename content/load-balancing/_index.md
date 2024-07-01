@@ -15,7 +15,7 @@ Maximize application performance and availability
 
 {{<plan id="traffic.load_balancing.properties.availability.summary">}}
 
-Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
+Cloudflare Load Balancing distributes traffic across your {{<glossary-tooltip term_id="endpoint" link="/glossary/?term=endpoint">}}endpoints{{</glossary-tooltip>}}, which reduces endpoint strain and latency and improves the experience for end users.
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
@@ -25,19 +25,19 @@ Cloudflare Load Balancing distributes traffic across your servers, which reduces
 
 {{<feature header="Load balancing and failover" href="/load-balancing/load-balancers/">}}
 
-Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
+Distribute traffic evenly across your healthy endpoints, automatically failing over when an endpoint is unhealthy or unresponsive.
 
 {{</feature>}}
 
 {{<feature header="Active monitoring" href="/load-balancing/monitors/">}}
 
-Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
+Monitor your endpoints at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
 
 {{</feature>}}
 
 {{<feature header="Intelligent routing" href="/load-balancing/understand-basics/traffic-steering/">}}
 
-Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
+Choose whether to distribute requests based on endpoint latency, a visitor's geographic region, or even a visitor's GPS coordinates.
 
 {{</feature>}}
 
@@ -49,7 +49,7 @@ Customize the behavior of your load balancer based on the characteristics of ind
 
 {{<feature header="Analytics" href="/load-balancing/reference/load-balancing-analytics/">}}
 
-Review comprehensive analytics to evaluate traffic flow, assess origin health status, and review changes in pools and pool health over time.
+Review comprehensive analytics to evaluate traffic flow, assess endpoint health status, and review changes in pools and pool health over time.
 
 {{</feature>}}
 

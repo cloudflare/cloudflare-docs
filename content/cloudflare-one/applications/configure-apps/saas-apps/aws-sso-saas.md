@@ -6,10 +6,11 @@ weight: 4
 
 # Connect to AWS through Access
 
-This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Access for SaaS allows you to layer additional network and device posture policies on top of existing identity authentication from your identity provider.
+This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source-idp.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to an AWS account
 
 ## 1. Get AWS URLs
@@ -35,8 +36,8 @@ Next, we will obtain **Identity provider metadata** from Zero Trust.
     - **Name ID format**: _Email_
 7. (Optional) Additional SAML attribute statements can be passed from your IdP to AWS SSO. To learn more about AWS Attribute mapping, refer to [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 8. AWS supports uploading a metadata XML file. To download your SAML metadata from Access:
-    1. Copy the **SSO endpoint**.
-    2. In a separate browser window, paste your SSO endpoint URL and append `/saml-metadata`. For example: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/xxx/saml-metadata`
+    1. Copy the **SAML Metadata endpoint**.
+    2. In a separate browser window, go to the SAML Metadata endpoint (`https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/xxx/saml-metadata`).
     3. Save the page as `access_saml_metadata.xml`.
 9. Save your SaaS application configuration.
 10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.

@@ -66,7 +66,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Run an inference task in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/), to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/), to answer a question.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
@@ -77,7 +77,7 @@ filename: "src/index.ts"
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
   // replace "AI" with the variable name you defined.
-  AI: any;
+  AI: Ai;
 }
 
 export default {

@@ -1,201 +1,237 @@
 ---
 pcx_content_type: integration-guide
 title: pfSense
+updated: 2024-06-20
 ---
 
-# pfSense
+# pfSense firewall
 
-This tutorial explains how to set up a policy-based or route-based IPsec VPN with a pfSense device.
+This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare Magic WAN.
 
-## (Policy-based only) LAN interface configuration
+## Software tested
 
-1. From the pfSense WebGUI, select **Interfaces** > **LAN**.
-2. Choose an interface from the **Available network ports** list.
-3. Select **Add**. The **General Configuration** dialog displays.
+Manufacturer | Firmware revision
+---          | ---
+pfSense      | 24.03
 
-{{<Aside type="note" header="Note">}}
+## Prerequisites
 
-You may need to adjust the MSS on the LAN interface. With the selected IPsec encryption ciphers, 1406 is the idle MSS as pfSense will subtract 40 from the value you specify.
+For this tutorial, you will need to know the following information:
+- Your Anycast IP addresses (given to you by Cloudflare)
+- External IP addresses
+- Internal IP address ranges
+- Inside tunnel `/31` ranges
 
-{{</Aside>}}
+## Example scenario
 
-Refer to the image below for guidance on which values to use.
+The following IP addresses are used throughout this tutorial. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation ([RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
 
-![General configuration dialog for interface setup for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config.png)
+Tunnel name                        | `PF_TUNNEL_01`                | `PF_TUNNEL_02`
+---                                | ---                           | ---
+Interface address                  | `10.252.2.26/31`              | `10.252.2.28/31`
+Customer endpoint                  | `203.0.113.254`               | `203.0.113.254`
+Cloudflare endpoint                | `<YOUR_ANYCAST_IP_ADDRESS_1>` | `<YOUR_ANYCAST_IP_ADDRESS_2>`
+Pfsense IPsec Phase 2 Local IP     | `10.252.2.27`                 | `10.252.2.29`
+Pfsense IPsec Phase 2 Remote IP    | `10.252.2.26`                 | `10.252.2.28`
+Magic WAN static routes — Prefix   | `10.1.100.0/24`               | `10.1.100.0/24`
+Magic WAN static routes — Next hop | `PF_TUNNEL_01`                | `PF_TUNNEL_02`
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Enable**                | ✔️ Enable interface |
-| **Description**           | LAN                |
-|**IPv4 Configuration Type**| Static IPv4        |
-|**IPv6 Configuration Type**| Static IPv6        |
-| **MSS**                   | 1446               |
+## 1. Configure Magic WAN IPsec tunnels
 
-## Phase 1
+Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels). The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
-{{<details header="Policy-based configuration">}}
+### Add IPsec tunnels
 
-![pfSense IPsec phase 1 setting values for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
+1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
+    - **Tunnel name**: `PF_TUNNEL_01`
+    - **Interface address**: `10.252.2.26/31`
+    - **Customer endpoint**: `203.0.113.254`
+    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+    - **Health check rate**: _Medium_
+    - **Health check type**: _Request_
+    - **Health check direction**: _Bidirectional_
+2. Select **Add pre-shared key later** > **Add tunnels**.
+3. Repeat the process to create a second IPsec tunnel with the following options:
+    - **Tunnel name**: `PF_TUNNEL_02`
+    - **Interface address**: `10.252.2.28/31`
+    - **Customer endpoint**: `203.0.113.254`
+    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+    - **Health check rate**: _Medium_
+    - **Health check type**: _Request_
+    - **Health check direction**: _Bidirectional_
+4. Select **Add pre-shared key later** > **Add tunnels**.
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Description**           | Name               |
-| **Key Exchange Version**  | IKE v2             |
-| **Internet Protocol**     | IPv4               |
-| **Interface**             | WAN                |
-| **Remote Gateway**        | &lt;Anycast IP provided by Cloudflare> |
+### Generate pre-shared keys
 
-![pfSense IPsec phase 1 expiration and replacement values for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-expiration-replacement.png)
+When you create IPsec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator.
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 28800              |
-| **Rekey Time**            | 14400              |
-| **Reauth Time**           | 0                  |
+1. Select **Edit** to edit the properties of each IPsec tunnel you have created.
+2. Select **Generate a new pre-shared key** > **Update and generate pre-shared key**.
+3. Copy the pre-shared key value for each of your IPsec tunnels, and save these values somewhere safe. Then, select **Done**.
 
-{{</details>}}
+{{<Aside type="note">}} Take note of your pre-shared keys, and keep them in a safe place to use later in pfSense.{{</Aside>}}
 
-{{<details header="Route-based configuration">}}
+### IPsec identifier - User ID
 
- ![pfSense IPsec phase 1 setting values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-settings.png)
+After creating your IPsec tunnels, the Cloudflare dashboard will list them under **Tunnels**. To retrieve your IPsec tunnel's user ID:
 
-| Field                    | Value                                  |
-| ------------------------ | -------------------------------------- |
-| **Description**          | Name                                   |
-| **Key Exchange Version** | IKE v2                                 |
-| **Internet Protocol**    | IPv4                                   |
-| **Interface**            | WAN                                    |
-| **Remote Gateway**       | &lt;Anycast IP provided by Cloudflare> |
+1. Go to **Magic WAN** > **Configuration**.
+2. Select **Tunnels**.
+3. Select the IPsec tunnel.
+4. Scroll to **User ID** and copy the string. For example, `ipsec@long_string_of_letters_and_numbers`.
 
- ![pfSense IPsec phase 1 expiration and replacement values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p1-expiration-replacement.png)
+The User ID will be required when configuring IKE Phase 1 on the pfSense firewall.
 
-| Field                     | Value              |
-|---------------------------|--------------------|
-| **Life Time**             | 28800              |
-| **Rekey Time**            | 14400              |
-| **Reauth Time**           | 0                  |
+## 2. Create Magic WAN static routes
 
-{{</details>}}
+Create a [static route](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default values):
 
-## Phase 2
+### Tunnel 01
 
-{{<details header="Policy-based configuration">}}
+- **Description**: `PF_TUNNEL_01`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `PF_TUNNEL_01`
 
-![pfSense IPsec phase 2 general information values](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info.png)
+### Tunnel 02
 
-| Field                     | Value                                   |
-| ------------------------- | --------------------------------------- |
-| **Description**           | Name                                    |
-| **Mode**                  | Tunnel IPv4                             |
-| **Local Network**         | &lt;Local Network to be tunneled>       |
-| **NAT/BINAT translation** | None                                    |
-| **Remote Network**        | Remote network available via the tunnel |
+- **Description**: `PF_TUNNEL_02`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `PF_TUNNEL_02`
 
-![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-key-exchange.png)
+## 3. Configure the pfSense firewall
 
-| Field                    | Value                     |
-| ------------------------ | ------------------------- |
-| **Protocol**             | ESP                       |
-| **Encryption Algorithm** | ✔️ AES128-GCM, 128 bits |
-| **PFS key group**        | 14 (2048 bit)             |
+Install pfSense and boot up. Then, assign and set LAN and WAN interfaces, as well as IP addresses. For example:
+- **LAN**: `203.0.113.254`
+- **WAN**: `<YOUR_WAN_ADDRESS>`
 
-![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-expiration-replacement.png)
+### Configure IPsec Phase 1
 
-| Field                       | Value                                                                                                |
-| --------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **Life Time**               | 3600                                                                                                 |
-| **Rekey Time**              | 3240                                                                                                 |
-| **Rand Time**               | 360                                                                                                  |
-| **Automatically ping host** | Specify an IP address available via the tunnel. Refer to the Description field for more information. |
+Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/latest/vpn/ipsec/configure-p1.html), with the following settings:
 
-{{</details>}}
+- **General Information**
+    - **Description**: `CF1_IPsec_P1`
+- **IKE Endpoint Configuration**
+    - **Key exchange version**: _IKE_v2_
+    - **Internet Protocol**: _IPv4_
+    - **Interface**: _WAN_
+    - **Remote gateway**: Enter your Cloudflare Anycast IP address.
+- **Phase 1 Proposal (Authentication)**
+    - **Authentication method**: _Mutual PSK_
+    - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br> (You can get this identifier from your Cloudflare IPsec tunnel configuration > **User ID**)
+    - **Peer identifier**: _Peer IP Address_ (your Cloudflare Anycast IP)
+    - **Pre-Shared Key**: Enter the PSK you have on your Cloudflare IPsec tunnel.
+- **Phase 1 proposal (Encryption algorithm)**
+    - **Encryption algorithm**: _AES 256 bits_
+    - **Key length**: _256 bits_
+    - **Hash algorithm**: _SHA256_
+    - **DH key group**: _14_
+    - **Lifetime**: `28800`
 
-{{<details header="Route-based configuration">}}
+<div class="full-img">
 
-![pfSense IPsec phase 2 general information for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-general-info-route-based.png)
+![pfSense IPsec phase 1 settings](images/magic-wan/third-party/pfsense/ipsec-phase1.png)
 
-![pfSense IPsec phase 2 network settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-networks-route-based.png)
+</div>
 
-| Field              | Value                        |
-| ------------------ | ---------------------------- |
-| **Description**    | Name                         |
-| **Mode**           | Routed (VTI)                 |
-| **Local Network**  | &lt;Local Tunnel Inside IP>  |
-| **Remote Network** | &lt;Remote Tunnel Inside IP> |
+<div class="full-img">
 
-![pfSense IPsec phase 2 key exchange values for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-p2-key-exchange.png)
+![pfSense IPsec phase 1 settings](images/magic-wan/third-party/pfsense/ipsec-phase1b.png)
 
-| Field                    | Value                     |
-| ------------------------ | ------------------------- |
-| **Protocol**             | ESP                       |
-| **Encryption Algorithm** | ✔️ AES128-GCM, 128 bits |
-| **PFS key group**        | 14 (2048 bit)             |
+</div>
 
-![pfSense IPsec phase 2 key exchange values](/images/magic-wan/third-party/pfsense/pfsense-p2-expiration-replacement.png)
+### Configure IPsec Phase 2
 
-| Field                       | Value                                                                                                |
-| --------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **Life Time**               | 3600                                                                                                 |
-| **Rekey Time**              | 3240                                                                                                 |
-| **Rand Time**               | 360                                                                                                  |
-| **Automatically ping host** | Specify an IP address available via the tunnel. Refer to the Description field for more information. |
+Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/latest/vpn/ipsec/configure-p2.html), with the following settings. You need to create an entry for tunnel 1 and 2, making the appropriate changes for the IP addresses for local and remote network:
 
-{{</details>}}
+- **General Information**
+    - **Description**: `CF1_IPsec_P2`
+    - **Mode**: _Routed (VTI)_
+- **Networks**
+    - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in Cloudflare tunnel. For example, `10.252.2.27` for tunnel 1 and `10.252.2.29` for tunnel 2.
+    - **Remote Network**: _Address_ > Lower IP address in the `/31` for Cloudflare side. For example, `10.252.2.26` for tunnel 1, and `10.252.2.28` for tunnel 2.
+- **Phase 2 Proposal (SA/Key Exchange)**
+    - **Protocol**: _ESP_
+    - **Encryption algorithm**: _AES 256 bits_
+    - **Hash algorithm**: _SHA256_
+    - **DH key group**: _14_
+    - **Lifetime**: `3600`
 
-## (Route-based only) Interface assignment
+<div class="full-img">
 
-1. From the pfSense WebGUI, select **Interfaces** > **LAN**.
-2. Choose an interface from the **Available network ports** list.
-3. Select **Add**. The **General Configuration** dialog displays.
+![pfSense IPsec phase 2 settings](images/magic-wan/third-party/pfsense/ipsec-phase2.png)
 
-{{<Aside header="Note:">}}
+</div>
 
-You may need to adjust the MSS on the LAN interface. With the selected IPsec encryption ciphers, 1406 is the idle MSS as pfSense will subtract 40 from the value you specify.
+When you are finished, apply your changes. If you go to **Status** > **IPsec**, you should be able to check that both Phase 1 and Phase 2 are connected.
 
-{{</Aside>}}
+<div class="full-img">
 
-Refer to the image below for guidance on which values to use.
+![pfSense IPsec overview](images/magic-wan/third-party/pfsense/ipsec-overview.png)
 
-![General configuration dialog for interface setup for a policy based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config.png)
+</div>
 
-| Field                       | Value                 |
-| --------------------------- | --------------------- |
-| **Enable**                  | ✔️ Enable interface |
-| **Description**             | LAN                   |
-| **IPv4 Configuration Type** | Static IPv4           |
-| **IPv6 Configuration Type** | Static IPv6           |
-| **MSS**                     | 1446                  |
+### Interface assignments
 
-4. From the pfSense WebGUI, select **Interfaces** > **Assignments**.
+In **Interfaces** > **Assignments** > **Add**, create a new interface to assign to the first IPsec tunnel, with the following settings:
 
-![pfSense interface assignment settings for route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-add-ipsec.png)
+- **General configuration**
+    - **Description**: `CF1_IPsec_1`
+    - **MSS**: `1446`
+- **Interface Assignments**
+    - **WAN**: Add your WAN interface. For example, `vnet1`.
+    - **LAN**: Add your LAN interface. For example, `vnet0`.
+    - Add your **CF_IPsec_1** that you have created above for Phase 1.
 
-5. From **Available network ports**, select **+ Add**.
+Select **Save** when you are finished.
 
-![Adding an interface to a pfSense interface assignment with a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-opt1.png)
+<div class="full-img">
 
-6. Under **Interface**, select **OPT1**.
+![Assign a new interface to the first IPsec tunnel](images/magic-wan/third-party/pfsense/interfaces.png)
 
-![pfSense interface general configuration settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-opt1-settings.png)
+</div>
 
-7. Ensure **Enable interface** is selected.
-8. For **Description**, add a description to help you identify the interface.
-9. For **MSS**, enter **1446**, which should be the same as the LAN interface.
-10. Select **Save** to save your changes when you are done.
+<div class="full-img">
 
-### Routing configuration
+![Configuring interface assignments](images/magic-wan/third-party/pfsense/interface-assignments.png)
 
-1. From the pfSense WebGUI, select **System**, **Routing**, **Static Routes**.
-2. On the **Static Routes** page, select **Add**.
-3. Create static routes for all network that will be routed via the tunnel with Gateway as the IPsec VTI interface.
+</div>
 
-![pfSense interface routing configuration settings for a route based configuration](/images/magic-wan/third-party/pfsense/pfsense-interface-config-routing-config.png)
+### Gateway
 
-### Firewall configuration
+In **System** > **Routing** > **Gateways** there should already be a gateway. For this example, it is named `CF1_IPSEC_1_VTIV4`.
 
-1. From the pfSense WebGUI, select **Firewall Rules**.
-2. Select **LAN**.
-3. Ensure a rule exists that allows traffic from LAN to IPsec.
-4. Select **Save** when you are done.
+<div class="full-img">
 
-If you need to allow traffic from IPsec to LAN, you will need to create rules that allow this.
+![There should already be a gateway configured in the interface](images/magic-wan/third-party/pfsense/gateways.png)
+
+</div>
+
+### Firewall Rules IPsec
+
+1. In **Firewall Rules** > **IPsec interface**, allow any type of traffic.
+
+<div class="full-img">
+
+![Allow all traffic for IPsec](images/magic-wan/third-party/pfsense/firewall-ipsec.png)
+
+</div>
+
+2. Navigate to **Status** > **Gateways**. `CF1_IPSEC_1_VTIV4` should now be online.
+
+<div class="full-img">
+
+![The gateway should now be online](images/magic-wan/third-party/pfsense/status-gateways.png)
+
+</div>
+
+### Firewall Rules LAN
+
+1. In **Firewall** > **Rules** > **LAN**, allow any type of traffic.
+2. Expand the **Advanced** section.
+3. Change the Gateway to `CF1_IPSEC_1_VTIV4`.
+
+<div class="full-img">
+
+![Change the gateway in the firewall rules for LAN traffic](images/magic-wan/third-party/pfsense/firewall-lan.png)
+
+</div>

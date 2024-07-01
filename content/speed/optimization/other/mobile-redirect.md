@@ -29,7 +29,7 @@ ___
 4. For **Mobile Redirect**, select the subdomain that you would like to redirect from the drop down list.
 5. Choose **Keep Path** or **Drop Path**:
 
-    - **Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website. 
+    - **Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website.
     - **Drop Path** will redirect all mobile requests to your mobile-optimized website homepage.
 
 6. Toggle switch to **On**.

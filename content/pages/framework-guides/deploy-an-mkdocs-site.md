@@ -26,7 +26,7 @@ $ mkdocs new <PROJECT_NAME>
 Then `cd` into your project, take MkDocs and its dependencies and put them into a `requirements.txt` file:
 
 ```sh
-pip freeze > requirements.txt
+$ pip freeze > requirements.txt
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}

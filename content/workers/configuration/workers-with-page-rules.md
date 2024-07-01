@@ -6,13 +6,13 @@ meta:
   description: Review the interaction between various Page Rules and Workers.
 ---
 
-# Page Rules
+{{<heading-pill style="legacy">}}Page Rules{{</heading-pill>}}
 
-Page Rules (deprecated) trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to [Page Rules](/rules/page-rules/) to learn more about configuring Page Rules.
+Page Rules (legacy) trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to [Page Rules](/rules/page-rules/) to learn more about configuring Page Rules.
 
 ## Page Rules with Workers
 
-Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules (deprecated), to Internet properties. Your application's traffic will pass through a Cloudflare data center that is closest to the visitor. There are hundreds of these around the world, each of which are capable of running services like Workers and Page Rules. If your application is built on Workers and/or Pages, the [Cloudflare global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare global network.
+Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules (legacy), to Internet properties. Your application's traffic will pass through a Cloudflare data center that is closest to the visitor. There are hundreds of these around the world, each of which are capable of running services like Workers and Page Rules. If your application is built on Workers and/or Pages, the [Cloudflare global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare global network.
 
 When using Page Rules with Workers, the following workflow is applied.
 
@@ -70,204 +70,137 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 
 ### Always Use HTTPS
 
-{{<table-wrap>}}
-
-|     Page Rule    | Source     | Target     | Behavior       |
-| -----------------|------------|------------|----------------|
-| Always Use HTTPS | Client     | Worker     | Rule Respected |
-| Always Use HTTPS | Worker     | Same Zone  | Rule Ignored   |
-| Always Use HTTPS | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Auto Minify (deprecated)
 
-{{<table-wrap>}}
-
-|     Page Rule    | Source     | Target     | Behavior       |
-| -----------------|------------|------------|----------------|
-| Auto Minify | Client     | Worker     | Rule Ignored   |
-| Auto Minify | Worker     | Same Zone  | Rule Respected |
-| Auto Minify | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Automatic HTTPS Rewrites
 
-{{<table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Automatic HTTPS Rewrites | Client     | Worker     | Rule Ignored   |
-| Automatic HTTPS Rewrites | Worker     | Same Zone  | Rule Respected |
-| Automatic HTTPS Rewrites | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
 
 ### Browser Cache TTL
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Browser Cache TTL        | Client     | Worker     | Rule Ignored   |
-| Browser Cache TTL        | Worker     | Same Zone  | Rule Respected |
-| Browser Cache TTL        | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Browser Integrity Check
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Browser Integrity Check  | Client     | Worker     | Rule Respected |
-| Browser Integrity Check  | Worker     | Same Zone  | Rule Ignored   |
-| Browser Integrity Check  | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Cache Deception Armor
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Cache Deception Armor    | Client     | Worker     | Rule Respected |
-| Cache Deception Armor    | Worker     | Same Zone  | Rule Respected |
-| Cache Deception Armor    | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Cache Level
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Cache Level              | Client     | Worker     | Rule Respected |
-| Cache Level              | Worker     | Same Zone  | Rule Respected |
-| Cache Level              | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Disable Zaraz
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Disable Zaraz            | Client     | Worker     | Rule Respected |
-| Disable Zaraz            | Worker     | Same Zone  | Rule Respected |
-| Disable Zaraz            | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Edge Cache TTL
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Edge Cache TTL           | Client     | Worker     | Rule Respected |
-| Edge Cache TTL           | Worker     | Same Zone  | Rule Respected |
-| Edge Cache TTL           | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Email Obfuscation
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
+| Source     | Target     | Behavior       |
 | -------------------------|------------|------------|----------------|
-| Email Obfuscation        | Client     | Worker     | Rule Ignored   |
-| Email Obfuscation        | Worker     | Same Zone  | Rule Respected |
-| Email Obfuscation        | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Forwarding URL
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Forwarding URL           | Client     | Worker     | Rule Ignored   |
-| Forwarding URL           | Worker     | Same Zone  | Rule Respected |
-| Forwarding URL           | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### IP Geolocation Header
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| IP Geolocation Header    | Client     | Worker     | Rule Respected |
-| IP Geolocation Header    | Worker     | Same Zone  | Rule Respected |
-| IP Geolocation Header    | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Origin Cache Control
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Origin Cache Control     | Client     | Worker     | Rule Respected |
-| Origin Cache Control     | Worker     | Same Zone  | Rule Respected |
-| Origin Cache Control     | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Rocket Loader
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Rocket Loader            | Client     | Worker     | Rule Ignored   |
-| Rocket Loader            | Worker     | Same Zone  | Rule Ignored   |
-| Rocket Loader            | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Security Level
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Security Level           | Client     | Worker     | Rule Respected |
-| Security Level           | Worker     | Same Zone  | Rule Ignored   |
-| Security Level           | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### Server Side Excludes (deprecated)
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| Server Side Excludes     | Client     | Worker     | Rule Ignored   |
-| Server Side Excludes     | Worker     | Same Zone  | Rule Ignored   |
-| Server Side Excludes     | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Ignored   |
+| Worker     | Same Zone  | Rule Ignored   |
+| Worker     | Other Zone | Rule Ignored   |
 
 ### SSL
 
-{{<table-wrap>}}
-
-|     Page Rule            | Source     | Target     | Behavior       |
-| -------------------------|------------|------------|----------------|
-| SSL                      | Client     | Worker     | Rule Respected |
-| SSL                      | Worker     | Same Zone  | Rule Respected |
-| SSL                      | Worker     | Other Zone | Rule Ignored   |
-
-{{</table-wrap>}}
+| Source     | Target     | Behavior       |
+|------------|------------|----------------|
+| Client     | Worker     | Rule Respected |
+| Worker     | Same Zone  | Rule Respected |
+| Worker     | Other Zone | Rule Ignored   |

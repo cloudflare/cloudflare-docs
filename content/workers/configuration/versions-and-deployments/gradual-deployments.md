@@ -76,7 +76,7 @@ $ npx wrangler versions deploy --experimental-versions
 
 Run a cURL command on your Worker to test the split deployment.
 
-```sh
+```bash
 for j in {0..10}
 do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
@@ -102,7 +102,7 @@ $ npx wrangler versions deploy --experimental-versions
 6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
 7. cURL your Worker to test the split deployment.
 
-```sh
+```bash
 for j in {0..10}
 do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
@@ -119,7 +119,7 @@ You may want requests associated with a particular identifier (such as user, ses
 You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
 For a given [deployment](/workers/configuration/versions-and-deployments/#deployments), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
@@ -194,7 +194,7 @@ When using gradual deployments, you may want to attribute Workers invocations to
 
 A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logging/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
 
-```sh
+```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
 -H 'Authorization: Bearer <TOKEN>' \
 -H 'Content-Type: application/json' \
@@ -209,7 +209,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 
 `ScriptVersion` is an object with the following structure:
 
-```sh
+```json
 scriptVersion: {
     id: "<UUID>",
     message: "<MESSAGE>",

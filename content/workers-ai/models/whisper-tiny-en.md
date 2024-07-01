@@ -17,6 +17,8 @@ model_display_name: "whisper-tiny-en"
 layout: "model"
 weight: 0
 title: "whisper-tiny-en"
-json_schema: ""
+json_schema:
+  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"audio\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      },\n      \"required\": [\n        \"audio\"\n      ]\n    }\n  ]\n}"
+  output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\"\n    },\n    \"word_count\": {\n      \"type\": \"number\"\n    },\n    \"words\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"word\": {\n            \"type\": \"string\"\n          },\n          \"start\": {\n            \"type\": \"number\"\n          },\n          \"end\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    },\n    \"vtt\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
 
 ---

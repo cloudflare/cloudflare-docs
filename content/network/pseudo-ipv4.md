@@ -52,7 +52,7 @@ To change the **Pseudo IPv4** setting in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To change **Pseudo IPv4** with the API, send a [`PATCH`](/api/operations/zone-settings-change-pseudo-i-pv4-setting) request with the `value` parameter set to your desired value (`"off"`, `"add_header"`, `"overwrite_header"`).
+To change **Pseudo IPv4** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `pseudo_ipv4` as the setting name in the URI path, and the `value` parameter set to your desired value: `"off"`, `"add_header"`, or `"overwrite_header"`.
 
 {{</tab>}}
 {{</tabs>}}

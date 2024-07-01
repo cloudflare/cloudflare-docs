@@ -11,7 +11,7 @@ languages:
   - Python
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Respond with another site
 weight: 12
 layout: example

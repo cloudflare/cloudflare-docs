@@ -29,7 +29,7 @@ Users new to D1 and/or Cloudflare Workers should read the [D1 tutorial](/d1/get-
 
 ## 2. Start a remote development session
 
-1. On the top of the page, select **Quick edit**.
+1. On the Worker's page on the Cloudflare dashboard, select **Edit Code** at the top of the page.
 2. Your Worker now has access to D1.
 
 Use the following Worker script to verify that the Worker has access to the bound D1 database:

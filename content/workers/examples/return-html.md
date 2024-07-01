@@ -9,7 +9,7 @@ languages:
 preview:
   - true
 playground-link: true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Return small HTML page
 weight: 1
 layout: example

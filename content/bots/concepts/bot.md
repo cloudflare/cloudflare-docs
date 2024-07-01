@@ -22,3 +22,11 @@ For more background, refer to [What is a bot?](https://www.cloudflare.com/learni
 {{<Aside type="note">}}
 The method for allowing or blocking verified bots depends on [your plan](/bots/get-started/).
 {{</Aside>}}
+
+## AI bots
+
+{{<render file="_ai-bots-definition.md" >}}
+
+{{<Aside type="note">}}
+The method for blocking AI bots depends on [your plan](/bots/get-started/).
+{{</Aside>}}

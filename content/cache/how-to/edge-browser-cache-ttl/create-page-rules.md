@@ -8,7 +8,7 @@ weight: 2
 
 ## Get Started
 
-Before you begin, you should understand two basic behaviors of Page Rules (deprecated):
+Before you begin, you should understand two basic behaviors of Page Rules (legacy):
 
 - Only the highest priority matching page rule takes effect on a request.
 - Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.

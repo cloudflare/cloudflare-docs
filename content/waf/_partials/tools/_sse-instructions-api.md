@@ -6,4 +6,4 @@ _build:
 inputParameters: featureValueOnOff
 ---
 
-To turn $1 **Server-side Excludes** with the API, send a [`PATCH`](/api/operations/zone-settings-change-server-side-exclude-setting) request with the `value` parameter set to `"$1"`.
+To turn $1 **Server-side Excludes** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `server_side_exclude` as the setting name in the URI path, and the `value` parameter set to `"$1"`.

@@ -20,7 +20,7 @@ For more background on HTTP/2, visit the [Learning Center](https://www.cloudflar
 
 ## Enable HTTP/2
 
-HTTP/2 is enabled by default for all plans (though it does require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/)). 
+HTTP/2 is enabled by default for all plans (though it does require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/)).
 
 ## Disable HTTP/2
 
@@ -40,7 +40,7 @@ To disable **HTTP/2** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To disable **HTTP/2** with the API, send a [`PATCH`](/api/operations/zone-settings-change-h-t-t-p-2-setting) request with the `value` parameter set to `"off"`.
+To disable **HTTP/2** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `http2` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 
 {{</tab>}}
 {{</tabs>}}

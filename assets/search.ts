@@ -30,7 +30,7 @@
         }
       }
       },
-      getMissingResultsUrl({ query }) {
+      getMissingResultsUrl({ query }: {query: string}) {
         return `/search/?q=${query}`;
       },
       searchParameters: {
@@ -68,7 +68,8 @@
     let button = $('#MobileSearch')
     if (button) {
       button.addEventListener('click', () => {
-        document.querySelector(".DocSearch.DocSearch-Button").click()
+        const docsSearchButton = document.querySelector<HTMLButtonElement>('.DocSearch.DocSearch-Button')
+        docsSearchButton?.click()
       });
     }
   }

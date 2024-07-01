@@ -4,13 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Postmark
+tags: [Email]
 ---
 
 # Send Emails With Postmark
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to send transactional emails from Workers using [Postmark](https://postmarkapp.com/). At the end of this tutorial, you’ll be able to:
 

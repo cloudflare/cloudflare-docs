@@ -20,7 +20,7 @@ header: Request
 curl -X POST \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/:zone_id/load-balancers" \
+"https://api.cloudflare.com/client/v4/zones/:zone_id/load_balancers" \
 -H "Content-Type: application/json" \
 -d '{
     "description": "Load Balancer for lb.example.com",

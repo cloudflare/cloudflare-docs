@@ -158,7 +158,6 @@ To create a report for your log data based on the Cloudflare template:
 
 8.  Next, update the **Type** for each of the following fields as indicated below:
 
-    {{<table-wrap>}}
 | Cloudflare Log Field       | Type                                 |
 |----------------------------|--------------------------------------|
 | ZoneID                     | Text                                 |
@@ -170,8 +169,6 @@ To create a report for your log data based on the Cloudflare template:
 | OriginResponseStatus       | Number                               |
 | ClientASN                  | Text                                 |
 | ClientCountry              | Geo > Country                        |
-| CacheResponseStatus        | Text                                 |
-    {{</table-wrap>}}
 
 
 9.  Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:

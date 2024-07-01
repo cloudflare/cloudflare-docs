@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Connect Hyperdrive to a Supabase Postgres database.
-pcx_content_type: configuration
+pcx_content_type: example
 title: Connect to Supabase
 weight: 4
 layout: example
