@@ -81,9 +81,9 @@ Failing to add the host header will result in [response code mismatch error](/lo
   * A name for the pool (must be unique). Suggestion: `primary`
   * A description to provide more detail on the name. Suggestion: `production website`
 
-4. Leave the choice for [**Origin Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) as is. Since each pool will only have one endpoint, this steering method will not interfere in this case.
+4. Leave the choice for [**Endpoint Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) as is. Since each pool will only have one endpoint, this steering method will not interfere in this case.
 
-5. Add your origin server with the following information:
+5. Add your origin server as an endpoint with the following information:
   * A name for the endpoint (must be unique). Suggestion: `my-website`.
   * The endpoint IP address.
 
@@ -124,7 +124,7 @@ If your production website is hosted on a platform like Cloudflare Pages, where 
 
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Check the origins health status">}}
+{{<tutorial-step title="Check the endpoints health status">}}
 
 Before setting up the load balancer:
 
