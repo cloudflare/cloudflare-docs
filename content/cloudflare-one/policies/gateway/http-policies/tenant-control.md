@@ -98,8 +98,6 @@ To use custom headers with Browser Isolation, create two HTTP policies targeting
    | -------- | -------- | ------------- | ------- |
    | Domain   | in       | `httpbin.org` | Isolate |
 
-![Results that will appear when configuring the example isolation policy.](/images/cloudflare-one/policies/httpbin-policy-1.png)
-
 2. Create an Allow policy for `httpbin.org` with a custom header.
 
    | Selector | Operator | Value         | Action |
@@ -110,10 +108,6 @@ To use custom headers with Browser Isolation, create two HTTP policies targeting
    | ------------------ | ------------------- |
    | `Example-Header`   | `example-value`     |
 
-![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
+3. Go to [`https://httpbin.org/anything`](https://httpbin.org/anything).
 
-3. Go to [`https://httpbin.org/anything`](https://httpbin.org/anything). Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
-
-HTTPBIN is a helpful service to test request headers. Visiting `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
-
-![Custom Cloudflare header displayed in output from HTTPBIN.](/images/cloudflare-one/policies/httpbin.png)
+Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
