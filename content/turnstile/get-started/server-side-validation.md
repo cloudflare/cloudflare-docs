@@ -1,7 +1,7 @@
 ---
 title: Server-side validation
-pcx_content_type: get-started
 weight: 2
+pcx_content_type: get-started
 ---
 
 # Server-side validation
@@ -42,9 +42,11 @@ $ curl 'https://challenges.cloudflare.com/turnstile/v0/siteverify' --data 'secre
 ```
 </div>
 
-<div>
 
-```javascript
+{{<tabs labels="URL encoded | JSON">}}
+{{<tab label="url encoded" default="true">}}
+
+```js
 ---
 header: Example using fetch from Cloudflare Workers
 ---
@@ -77,11 +79,11 @@ async function handlePost(request) {
 	}
 }
 ```
-</div>
+{{</tab>}}
 
-<div>
+{{<tab label="JSON">}}
 
-```javascript
+```js
 ---
 header: Example using idempotency functionality
 ---
@@ -129,7 +131,8 @@ async function handlePost(request) {
 
 }
 ```
-</div>
+{{</tab>}}
+{{</tabs>}}
 
 ## Accepted parameters
 
