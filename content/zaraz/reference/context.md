@@ -26,11 +26,9 @@ System properties, which are automatically collected by Zaraz, provide insights 
 
 ### Cookies
 
-{{<table-wrap>}}
 | Property | Type | Description |
 | ---------------- | ------ | ------------------------------------------------ |
 | `system.cookies` | Object | Key-Value object containing all present cookies. |
-{{</table-wrap>}}
 
 The the keys inside the `system.cookies` are the cookies name. The property `system.cookies.foo` will return the value of the a cookie named `foo`.
 
@@ -57,21 +55,17 @@ The the keys inside the `system.cookies` are the cookies name. The property `sys
 
 ### Consent Management
 
-{{<table-wrap>}}
 | Property | Type | Description |
 | --- | --- | --- |
 | `system.consent` | Object | Key-value object containing the current consent status from the Zaraz Consent Manager. |
-{{</table-wrap>}}
 
 The keys inside the `system.consent` object are purpose IDs, and values are `true` for consent, `false` for lack of consent.
 
 ### Managed Components
 
-{{<table-wrap>}}
 | Property | Type | Description |
 | --- | --- | --- |
 | `system.clientKV` | Object | Key-value object containing all the KV data from your Managed Components. |
-{{</table-wrap>}}
 
 The keys inside the `system.clientKV` object are formatted as Tool ID, underscore, Key name. Assuming you want to read the value of the `ga4` key used by a tool with ID `abcd`, the path would be `system.clientKV.abcd_ga4`.
 

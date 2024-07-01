@@ -32,7 +32,7 @@ To enable **Response Buffering** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Response Buffering** with the API, send a [`PATCH`](/api/operations/zone-settings-change-response-buffering-setting) request with the `value` parameter set to `"on"`.
+To enable **Response Buffering** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `response_buffering` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

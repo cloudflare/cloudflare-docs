@@ -84,6 +84,8 @@ done
 ```
 You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment).
 
+You can test also target a specific version using [version overrides](#version-overrides).
+
 #### 5. Set your new version to 100% deployment
 
 Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
@@ -148,6 +150,57 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 {{</example>}}
 
+## Version overrides
+
+You can use version overrides to send a request to a specific version of your Worker in your gradual deployment.
+
+To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
+
+```sh
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
+`Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
+
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment. 
+
+{{<Aside type="note" header="Verifying that the version override was applied">}}
+
+There are a number of reasons why a request's version override may not be applied. For example:
+* The deployment containing the specified version may not have propagated yet.
+* The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
+
+To make sure that the request's version override was applied correctly, you can [observe](#observability) the version of your Worker that was invoked. You could even automate this check by using the [runtime binding](#runtime-binding) to return the version in the Worker's response.
+
+{{</Aside>}}
+
+### Example
+
+You may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic.
+
+In this example, your deployment is initially configured to route all traffic to a single version:
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Create a new deployment using [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| dc8dcd28-271b-4367-9840-6c244f84cb40   | 0%         |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Now test the new version with a version override before gradually progressing the new version to 100%:
+
+```sh
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
 ## Gradual deployments for Durable Objects
 
 Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
@@ -155,7 +208,6 @@ Due to [global uniqueness](/durable-objects/platform/known-issues/#global-unique
 When you create a new gradual deployment for a Durable Object Worker, each Durable Object instance is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
 
 ![Gradual Deployments Durable Objects](/images/workers/platform/versions-and-deployments/durable-objects.png)
-
 
 ### Example
 

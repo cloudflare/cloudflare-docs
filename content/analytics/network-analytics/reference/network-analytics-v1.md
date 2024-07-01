@@ -152,6 +152,8 @@ Do the following:
 
 The table below shows the range of fields, operators, and values you can use to filter Network Analytics.
 
+{{<table-wrap>}}
+
 | Field | Operators | Value |
 | --- | --- | --- |
 | Action | Equals<br/>Does not equal | **Allow:** Traffic allowed through Cloudflare's automated DDoS protection systems. May also include traffic mitigated by Firewall Rules, flowtrackd and L7 rules.<br/>**Block:** Traffic blocked by Cloudflare's automated DDoS protection systems.<br/>**Connection-tracking:** Applies only exclusively to L7, as Magic Transit is excluded from scope and no conntrack ever runs for Magic Transit prefixes.<br/>**Rate-limit:** Can be applied per source IP, subnet or any connection. The decision is made programmatically based on heuristics.<br/>**Monitor:** Attacks which were identified but have chosen to simply observe and not mitigate with any rule. |
@@ -168,6 +170,8 @@ The table below shows the range of fields, operators, and values you can use to 
 | Source IP | Equals Does not equal | IP address |
 | Source port | Equals Does not equal<br/>Greater than<br/>Greater than or equals<br/>Less than<br/>Less than or equals | Port number<br/>Port range |
 | TCP Flag | Equals<br/>Does not equal<br/>Contains | SYN, SYN-ACK, FIN, ACK, RST |
+
+{{</table-wrap>}}
 
 ___
 

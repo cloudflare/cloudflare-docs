@@ -4,9 +4,13 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Comments API
+products: [Workers]
+tags: [Hono]
 ---
 
 # Build a Comments API
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 

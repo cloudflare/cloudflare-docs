@@ -12,7 +12,13 @@ Captive portals are used by public Wi-Fi networks (such as airports, coffee shop
 
 To allow users to connect through a captive portal, administrators can configure the following WARP settings:
 
+### No user interaction required
+
 - Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection). This allows WARP to temporarily turn off when it detects a captive portal on the network. For more details, refer to [how captive portal detection works](#how-captive-portal-detection-works) and its [limitations](#limitations).
+- Set [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) to **MASQUE**. When using MASQUE, WARP traffic will look like standard HTTPS traffic and is therefore less likely to be blocked by captive portals.
+
+### User interaction required
+
 - Enable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch) and enable [Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override). Users can contact the IT administrator for a one-time code that allows them to manually turn off WARP and connect to a portal.
 - For employees who travel, disable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch) and set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) duration. This allows the user to manually turn off WARP without contacting IT.
 

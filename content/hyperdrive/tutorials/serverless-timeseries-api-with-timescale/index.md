@@ -4,11 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
+products: [Workers]
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
 
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
