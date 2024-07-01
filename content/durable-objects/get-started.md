@@ -50,7 +50,7 @@ Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-an
 In your terminal, you will be asked a series of questions related to your project:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Durable Object` as the type of application you want to create.
+2. Select `Co-ordination / multiplayer API (using Durable Objects)` as the type of application you want to create.
 3. Answer `yes` or `no` to using TypeScript.
 4. Answer `no` to deploying your Worker.
 
