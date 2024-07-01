@@ -164,7 +164,7 @@ $ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Ver
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](https://developers.cloudflare.com/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment. 
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment. 
 
 {{<Aside type="note" header="Verifying that the version override was applied">}}
 
