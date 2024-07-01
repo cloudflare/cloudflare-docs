@@ -103,7 +103,7 @@ To make an ACNS set the default nameservers for all new zones added to your acco
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. For **DNS zone defaults**, select **Configure defaults**.
-4. Change the **Nameserver assignment method** to **Account custom nameservers** and specify the set that should be used.
+4. Change the **Nameserver assignment method** to **Account custom nameservers**.
 
 Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for more details.
 

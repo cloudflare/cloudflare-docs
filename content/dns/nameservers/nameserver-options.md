@@ -20,9 +20,9 @@ To have control over what nameservers are assigned for different zones within an
 
 If you have an Enterprise account, you also have the option to configure your own [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and change how Cloudflare handles nameserver assignment when you add a new zone to your account:
 
-- Standard nameservers randomized: instead of attempting consistency, Cloudflare assigns random pairs of nameservers names every time you add a new domain to your account.
+- Standard nameservers randomized: instead of attempting consistency, Cloudflare assigns random pairs of nameserver names every time you add a new domain to your account.
 - Advanced nameservers: Cloudflare uses the same method as the default - trying to keep nameserver names consistent for different zones within an account - but uses the specific Foundation DNS nameservers.
-- Account custom nameservers: You specify a set of account custom nameservers that you have previously configured for your account and Cloudflare automatically assigns them during new zone creation.
+- Account custom nameservers: Cloudflare automatically assigns a set of account custom nameservers that you have previously configured for your account.
 
 ## Multi-provider DNS
 
