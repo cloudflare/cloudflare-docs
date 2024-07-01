@@ -12,9 +12,6 @@ Cloudflare WARP allows you to selectively apply WARP client settings if the devi
 
 A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
 
-{{<Aside type="note">}}
-{{</Aside>}}
-
 The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. WARP will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
 
 ### Create a new TLS endpoint
