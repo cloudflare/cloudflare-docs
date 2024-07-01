@@ -91,7 +91,7 @@ $ npx wrangler dev
 
 If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
-You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
+Go to [http://localhost:8787](http://localhost:8787) to view your Worker.
 
 {{<details header="Browser issues?">}}
 
@@ -166,7 +166,31 @@ The Workers runtime expects `fetch` handlers to return a `Response` object or a 
 
 {{</details>}}
 
-To review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
+Replace the content in your current `index.js` file with the content below, which changes the text output.
+
+```js
+---
+header: index.js
+highlight: [3]
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello Worker!");
+  },
+};
+```
+
+Then, save the file and reload the page. Your Worker's output will have changed to the new text.
+
+{{<details header="No visible changes?">}}
+
+If the output for your Worker does not change, make sure that:
+
+1. You saved the changes to `index.js`.
+2. You have `wrangler dev` running.
+3. You reloaded your browser.
+
+{{</details>}}
 
 ## 4. Deploy your project
 
