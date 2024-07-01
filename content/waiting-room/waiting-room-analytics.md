@@ -81,7 +81,7 @@ These may be indicators that users do not need as much time on your site and are
 
 The Active users chart is a time series chart that displays the maximum active users on any URLs covered by your waiting room as well as maximum queued users. These values are shown compared to your configured active user target threshold.
 
-A new user is a novel request made to any urls covered by the waiting room. Waiting Room counts the request as new if no waiting room cookie is tied to the request. Once the request is made, a waiting room cookie is issued. If there is an active queue, the user will be considered a queued user. Once that user makes it through the queue and onto the site, they are now an active user and remain active as long as they keep making HTTP requests to waiting room urls at least once every `session_duration` minutes.
+A new user is a novel request made to any URLs covered by the waiting room. Waiting Room counts the request as new if no waiting room cookie is tied to the request. Once the request is made, a waiting room cookie is issued. If there is an active queue, the user will be considered a queued user. Once that user makes it through the queue and onto the site, they are now an active user and remain active as long as they keep making HTTP requests to waiting room URLs at least once every `session_duration` minutes.
 
 To identify and hone in on peak traffic, select a longer time period, such as 30 days. Then, drag your cursor to the left and right of any time period you would like to check with more granularity to zoom in. You can zoom in until each bar represents a one minute interval. All other metrics on the page will update automatically to reflect the data behind the time period selected.
 
@@ -91,7 +91,7 @@ To check for more details about a particular moment in time, hover over a bar on
 - Maximum queued users reached
 - Configured active user target values
 
-Queueing may occur below your configured limits and active users may sometimes exceed your configured limits. Refer to the [Queuing activation](/waiting-room/how-to/monitor-waiting-room/#queueing-activation) section for more information.
+Queueing may occur below your configured limits, and active users may sometimes exceed your configured limits. Refer to the [Queuing activation](/waiting-room/how-to/monitor-waiting-room/#queueing-activation) section for more information.
 
 ### New users per minute
 
