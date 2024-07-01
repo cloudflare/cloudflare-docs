@@ -202,7 +202,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-[D1](/d1/) is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
