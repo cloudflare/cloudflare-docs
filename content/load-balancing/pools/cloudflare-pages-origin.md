@@ -78,24 +78,29 @@ Failing to add the host header will result in [response code mismatch error](/lo
 2. Select **Manage Pools** and then **Create**.
 
 3. For the first pool, start by filling out the fields:
-    * A name for the pool (must be unique). Suggestion: `primary`
-    * A description to provide more detail on the name. Suggestion: `production website`
+  * A name for the pool (must be unique). Suggestion: `primary`
+  * A description to provide more detail on the name. Suggestion: `production website`
 
 4. Leave the choice for [**Origin Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) as is. Since each pool will only have one endpoint, this steering method will not interfere in this case.
 
 5. Add your origin server with the following information:
-    * A name for the endpoint (must be unique). Suggestion: `my-website`.
-    * The endpoint IP address. If you do not know it, you can run a dig command against your domain with an [online DNS lookup tool](https://digwebinterface.com) to find out.
-    * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
-    * (Optional) A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
+  * A name for the endpoint (must be unique). Suggestion: `my-website`.
+  * The endpoint IP address.
 
-        If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
+    {{<Aside type="warning">}}
+As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's Anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
+{{</Aside>}}
+  * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
+  * A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
 
+    {{<Aside type="warning">}}
+If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
+{{</Aside>}}
 6. Finish configuring the first pool with the following information:
-    * Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
-    * Select the **Monitor** configured in the previous step.
-    * Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the endpoint health.
-    * Set up **Pool Notifications** and **Health Notifications** as you prefer.
+  * Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
+  * Select the **Monitor** configured in the previous step.
+  * Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the endpoint health.
+  * Set up **Pool Notifications** and **Health Notifications** as you prefer.
 
 7. Select **Save**
 
