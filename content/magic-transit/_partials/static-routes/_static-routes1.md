@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;anycastURL;;trafficSteering
+inputParameters: productName;;anycastURL;;trafficSteering;;magicWANecmp
 ---
 
 # Configure static routes
@@ -13,7 +13,7 @@ $1 uses a static configuration to route your traffic through {{<glossary-tooltip
 You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. For more on how Cloudflare uses ECMP packet forwarding, refer to {{<glossary-tooltip term_id="traffic steering" link="$3">}}Traffic steering{{</glossary-tooltip>}}.
+- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. $4 For more on how Cloudflare uses ECMP packet forwarding, refer to {{<glossary-tooltip term_id="traffic steering" link="$3">}}Traffic steering{{</glossary-tooltip>}}.
 
 You can also create and edit static routes using the [Magic Static Routes API](/api/operations/magic-static-routes-list-routes).
 
