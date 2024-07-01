@@ -18,13 +18,13 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 ## 1. Create a new Worker project
 
-[C3 (create-cloudflare-cli)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+[C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
 Open a terminal window and run C3 to create your Worker project:
 
 {{<render file="_c3-run-command.md" productFolder="workers">}}
 
-This will prompt you to install the [create-cloudflare](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
 For this guide:
 
@@ -180,7 +180,7 @@ If you have not configured any subdomain or domain, Wrangler will prompt you dur
 
 Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-{{<details header="Seeing errors?">}}
+{{<details header="Encountering errors?">}}
 
 When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
