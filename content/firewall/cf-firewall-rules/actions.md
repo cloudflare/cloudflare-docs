@@ -74,7 +74,7 @@ For reference information on rule actions available for Cloudflare products powe
                 <li><a href="/waf/tools/user-agent-blocking/">User Agent Blocking</a></li>
                 <li><a href="/waf/tools/browser-integrity-check/">Browser Integrity Check</a></li>
                 <li><a href="/waf/tools/scrape-shield/hotlink-protection/">Hotlink Protection</a></li>
-                <li><a href="/waf/tools/security-level/">Security Level (deprecated)</a></li>
+                <li><a href="/waf/tools/security-level/">Security Level (IP Reputation)</a></li>
                 <li><a href="/waf/reference/legacy/old-rate-limiting/">Rate Limiting</a> (previous version, deprecated)</li>
                 <li><a href="/waf/tools/zone-lockdown/">Zone Lockdown</a></li>
                 <li><a href="/waf/reference/legacy/old-waf-managed-rules/">WAF managed rules</a> (previous version, deprecated)</li>

@@ -10,7 +10,7 @@ weight: 3
 
 ## Page Rules migration
 
-Cloudflare plans to migrate your existing Page Rules during 2025. You do not need to migrate your own rules, as Cloudflare will handle this process for you. However, it is beneficial to understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration. This will help you familiarize yourself with implementing the new types of rules in your Cloudflare account.
+Cloudflare plans to migrate your existing Page Rules during 2025. You do not need to migrate your own rules, as Cloudflare will handle this process for you. However, it is beneficial to understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration. This will help you familiarize yourself with implementing the new types of rules in your Cloudflare account. 
 
 We encourage you to explore and start using the new Rules products to take advantage of their enhanced capabilities and features. This migration guide will be updated in the coming months with additional information about the Page Rules migration. Some instructions may also change as we simplify configuration deployment and release new features as part of this project. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs. We will not perform any migration or changes on your behalf without prior notification.
 
@@ -1438,7 +1438,7 @@ Page Rules configuration | Migrate to a configuration rule
 
 **Context:**
 
-You configured a Page Rule setting Security Level (deprecated) to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: _Security Level_
@@ -1446,7 +1446,7 @@ You configured a Page Rule setting Security Level (deprecated) to _I'm Under Att
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on I'm Under Attack mode for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
