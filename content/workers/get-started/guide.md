@@ -107,7 +107,7 @@ Find the `src/index.js` file. `index.js` will be populated with the code below:
 
 ```js
 ---
-header: index.js
+header: Original index.js
 ---
 export default {
   async fetch(request, env, ctx) {
@@ -122,7 +122,7 @@ This code block consists of a few different parts.
 
 ```js
 ---
-header: index.js
+header: Updated index.js
 highlight: [1]
 ---
 export default {
