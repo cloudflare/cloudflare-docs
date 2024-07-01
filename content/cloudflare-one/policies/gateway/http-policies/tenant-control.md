@@ -30,23 +30,23 @@ Depending on which SaaS application your organization needs access to, different
 
 ### Microsoft 365
 
-Microsoft 365 requires two separate policies for tenant control.
+Microsoft 365 tenant control requires two policies. When you order your policies, make sure they follow [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 
-| Selector | Operator | Value            | Action | Untrusted certificate action |
-| -------- | -------- | ---------------- | ------ | ---------------------------- |
-| Domain   | is       | `login.live.com` | Allow  | Block                        |
+| Precedence | Selector | Operator | Value            | Action | Untrusted certificate action |
+| ---------- | -------- | -------- | ---------------- | ------ | ---------------------------- |
+| 1          | Domain   | is       | `login.live.com` | Allow  | Block                        |
 
 | Custom header name                  | Custom header value |
 | ----------------------------------- | ------------------- |
 | `Sec-Restrict-Tenant-Access-Policy` | `restrict-msa`      |
 
-| Selector    | Operator | Value                 | Action | Header name                                             |
-| ----------- | -------- | --------------------- | ------ | ------------------------------------------------------- |
-| Application | in       | _Microsoft Office365_ | Allow  | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
+| Precedence | Selector    | Operator | Value                 | Action | Untrusted certificate action |
+| ---------- | ----------- | -------- | --------------------- | ------ | ---------------------------- |
+| 2          | Application | in       | _Microsoft Office365_ | Allow  | Block                        |
 
-| Custom header name           | Custom header value        |
-| ---------------------------- | -------------------------- |
-| `Restrict-Access-To-Tenants` | Your organization's domain |
+| Custom header name                                      | Custom header value        |
+| ------------------------------------------------------- | -------------------------- |
+| `Restrict-Access-To-Tenants`, `Restrict-Access-Context` | Your organization's domain |
 
 For more information, refer to the [Microsoft Entra ID documentation](https://learn.microsoft.com/entra/identity/enterprise-apps/tenant-restrictions).
 
@@ -68,9 +68,9 @@ For more information, refer to the [Google Workspace documentation](https://supp
 | ----------- | -------- | ------- | ------ | ---------------------------- |
 | Application | in       | _Slack_ | Allow  | Block                        |
 
-| Custom header name                                                   | Custom header value        |
-| -------------------------------------------------------------------- | -------------------------- |
-| `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | Your organization's domain |
+| Custom header name                                                   | Custom header value           |
+| -------------------------------------------------------------------- | ----------------------------- |
+| `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | Your organization's workspace |
 
 For more information, refer to the [Slack documentation](https://slack.com/help/articles/360024821873-Approve-Slack-workspaces-for-your-network).
 
@@ -80,9 +80,9 @@ For more information, refer to the [Slack documentation](https://slack.com/help/
 | ----------- | -------- | --------- | ------ | ---------------------------- |
 | Application | in       | _Dropbox_ | Allow  | Block                        |
 
-| Custom header name           | Custom header value        |
-| ---------------------------- | -------------------------- |
-| `X-Dropbox-allowed-Team-Ids` | Your organization's domain |
+| Custom header name           | Custom header value    |
+| ---------------------------- | ---------------------- |
+| `X-Dropbox-allowed-Team-Ids` | Your organization's ID |
 
 For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
 
