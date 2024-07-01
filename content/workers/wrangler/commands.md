@@ -202,7 +202,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-[D1](/d1/) is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -527,10 +527,6 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 ---
 
 ## `hyperdrive`
-
-{{<Aside type="note">}}
-Hyperdrive is currently in open beta. Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-{{</Aside>}}
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 

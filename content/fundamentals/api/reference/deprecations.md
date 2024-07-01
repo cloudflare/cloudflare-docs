@@ -111,28 +111,6 @@ After October 1st, 2024, the `error_chain` will be omitted, returning the root c
 }
 ```
 
-## Security Level and threat score
-**End of life date: September 30th, 2024**
-
-After the end of life date, the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) operation will return an error when changing the `security_level` zone setting to any value other than `off` and `under_attack`, since Security Level and threat score were deprecated.
-
-Configuration rules created using the Rulesets API will return an error if they set the security level to any value other than `off` and `under_attack`.
-
-All rules created or updated using the Rulesets API will return an error if their expressions include the `cf.threat_score` field.
-
-Modified APIs:
-- PATCH /zones/:zone_id/settings/security_level
-- POST /accounts/:account_id/rulesets
-- POST /zones/:zone_id/rulesets
-- POST /accounts/:account_id/rulesets/:ruleset_id/rules
-- POST /zones/:zone_id/rulesets/:ruleset_id/rules
-- PUT /accounts/:account_id/rulesets/:ruleset_id
-- PUT /zones/:zone_id/rulesets/:ruleset_id
-- PUT /accounts/:account_id/rulesets/phases/:phase_name/entrypoint
-- PUT /zones/:zone_id/rulesets/phases/:phase_name/entrypoint
-- PATCH /accounts/:account_id/rulesets/:ruleset_id/rules/:rule_id
-- PATCH /zones/:zone_id/rulesets/:ruleset_id/rules/:rule_id
-
 ## Legacy DNS Settings Endpoints
 **End of life date: September 13th, 2024**
 

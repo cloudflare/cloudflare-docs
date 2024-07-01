@@ -33,18 +33,16 @@ When you [log in to your Zero Trust organization](/cloudflare-one/connections/co
 
 ## WARP ingress IP
 
-These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
+WARP connects to the following IP addresses, depending on which [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) is configured for your device. All network traffic from your device to Cloudflare goes through these IPs and ports over UDP.
 
-- IPv4 Range: `162.159.193.0/24`
-- IPv6 Range: `2606:4700:100::/48`
+| Tunnel protocol | IPv4 | IPv6  | Default port | Fallback ports |
+| ---------------------- | ---- | ---- | ---------- | ------------  |
+| WireGuard             | `162.159.193.0/24` | `2606:4700:100::/48` | `UDP 2408` | `UDP 500` </br> `UDP 1701` </br> `UDP 4500` |
+| MASQUE                | `162.159.197.0/24` | `2606:4700:102::/48` | `UDP 443`| `UDP 4443` </br> `UDP 8443` </br> `UDP 8095`|
 
 {{<Aside type="note">}}
 Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.
 {{</Aside>}}
-
-### WARP UDP ports
-
-WARP utilizes UDP for all of its communications. By default, the UDP port required for WARP is `UDP 2408`. WARP can fallback to `UDP 500`, `UDP 1701`, or `UDP 4500`.
 
 ## Captive portal
 
