@@ -10,4 +10,4 @@ $1 custom nameservers ($2CNS) allow you to define $3-level custom nameservers an
 
 $2CNS are organized in different sets (`ns_set`) and $2CNS names can be provided by any domain, even if the domain does not exist as a zone in Cloudflare.
 
-For instance, if the $2CNS are `ns1.example.com` and `ns2.vanity.org`, the domains `example.com` and `vanity.org` are not required to be zones in Cloudflare.
+For instance, if the $2CNS are `ns1.example.com` and `ns2.vanity.test`, the domains `example.com` and `vanity.test` are not required to be zones in Cloudflare.
