@@ -528,10 +528,6 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 ## `hyperdrive`
 
-{{<Aside type="note">}}
-Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-{{</Aside>}}
-
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 ### `create`
