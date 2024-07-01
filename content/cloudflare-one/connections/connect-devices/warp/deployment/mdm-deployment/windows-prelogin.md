@@ -33,6 +33,14 @@ With Cloudflare Zero Trust, you can use an on-premise Active Directory (or simil
 
 {{<render file="access/_create-service-token.md">}}
 
+## 2. Create a device enrollment policy
+
+In your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions), create the following policy:
+
+  | Rule Action  | Rule type | Selector      | Value          |
+  | ------------ | --------- | ------------- | -------------- |
+  | Service Auth | Include   | Service Token | `<TOKEN-NAME>` |
+
 ## 2. (Optional) Restrict access during pre-login
 
 Devices enrolled via a service token are identified by the email address `non_identity@<team-name>.cloudflareaccess.com`. Using this email address, you can apply specific [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) during the pre-login stage. For example, you could provide access to only those resources necessary to complete the Windows login and/or device management activities.
@@ -75,9 +83,9 @@ filename: C:\ProgramData\Cloudflare\mdm.xml
     <key>organization</key>
     <string>mycompany</string>
     <key>auth_client_id</key>
-    <string>something.access</string>
+    <string>your-token-id.access</string>
     <key>auth_client_secret</key>
-    <string>secret</string>
+    <string>your-token-secret</string>
 
   </dict>
   <key>configs</key>
