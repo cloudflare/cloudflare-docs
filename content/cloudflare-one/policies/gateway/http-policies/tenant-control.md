@@ -88,29 +88,31 @@ For more information, refer to the [Dropbox documentation](https://help.dropbox.
 
 ## Use tenant control with Browser Isolation
 
-Browser Isolation may be configured to send custom request headers. This is useful for implementing tenant control for SaaS applications or sending arbitrary custom request headers to isolated websites.
+You can configure [Browser Isolation](/cloudflare-one/policies/browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
 
-You can achieve this by implementing two HTTP policies targeting the same domain or application group in Zero Trust.
+To use custom headers with Browser Isolation, create two HTTP policies targeting the same domain or application group. For example, you can create policies for [httpbin](https://httpbin.org/), an open-source site for testing HTTP requests:
 
-### Example: Implementing a custom request header for a domain
+1. Create an Isolate policy for `httpbin.org`.
 
-#### 1. Create an Isolate policy
-
-| Selector | Operator | Value         | Action  |
-| -------- | -------- | ------------- | ------- |
-| Domain   | in       | `httpbin.org` | Isolate |
+   | Selector | Operator | Value         | Action  |
+   | -------- | -------- | ------------- | ------- |
+   | Domain   | in       | `httpbin.org` | Isolate |
 
 ![Results that will appear when configuring the example isolation policy.](/images/cloudflare-one/policies/httpbin-policy-1.png)
 
-#### 2. Create an Allow policy with a Custom Header
+2. Create an Allow policy for `httpbin.org` with a custom header.
 
-| Selector | Operator | Value         | Action |
-| -------- | -------- | ------------- | ------ |
-| Domain   | in       | `httpbin.org` | Allow  |
+   | Selector | Operator | Value         | Action |
+   | -------- | -------- | ------------- | ------ |
+   | Domain   | in       | `httpbin.org` | Allow  |
+
+   | Custom header name | Custom header value |
+   | ------------------ | ------------------- |
+   | `Example-Header`   | `example-value`     |
 
 ![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
 
-#### 3. Visit `https://httpbin.org/anything`
+3. Go to [`https://httpbin.org/anything`](https://httpbin.org/anything). Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
 
 HTTPBIN is a helpful service to test request headers. Visiting `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
