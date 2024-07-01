@@ -111,37 +111,7 @@ Open the `src/index.ts` file, and update the Worker code to include the followin
 - Queries the `products` table (created in step 2).
 - Returns the result set in a JSON string.
 
-```ts
-import { Client } from "pg";
-
-export interface Env {
-  HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<Response> {
-    const client = new Client(env.HYPERDRIVE.connectionString);
-    try {
-      await client.connect();
-      const result = await client.query("SELECT * FROM products");
-      ctx.waitUntil(client.end());
-      const items = result.rows.map((row: any) => {
-        return { id: row.id, name: row.name };
-      });
-      return new Response(JSON.stringify({ items }), {
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (e) {
-      console.log(e);
-      return Response.json({ error: JSON.stringify(e) }, { status: 500 });
-    }
-  },
-};
-```
+{{<render file="_query-pgedge.md">}}
 
 After updating the file, use the following command to deploy your Cloudflare Worker:
 
