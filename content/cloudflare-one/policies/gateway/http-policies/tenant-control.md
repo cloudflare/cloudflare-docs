@@ -60,6 +60,8 @@ For more information, refer to the [Microsoft Entra ID documentation](https://le
 | ---------------------------- | -------------------------- |
 | `X-GooGApps-Allowed-Domains` | Your organization's domain |
 
+For more information, refer to the [Google Workspace documentation](https://support.google.com/a/answer/1668854).
+
 ### Slack
 
 | Selector    | Operator | Value   | Action | Untrusted certificate action |
@@ -69,6 +71,8 @@ For more information, refer to the [Microsoft Entra ID documentation](https://le
 | Custom header name                                                   | Custom header value        |
 | -------------------------------------------------------------------- | -------------------------- |
 | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | Your organization's domain |
+
+For more information, refer to the [Slack documentation](https://slack.com/help/articles/360024821873-Approve-Slack-workspaces-for-your-network).
 
 ### Dropbox
 
@@ -80,9 +84,11 @@ For more information, refer to the [Microsoft Entra ID documentation](https://le
 | ---------------------------- | -------------------------- |
 | `X-Dropbox-allowed-Team-Ids` | Your organization's domain |
 
+For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
+
 ## Use tenant control with Browser Isolation
 
-Browser Isolation may be configured to send custom request headers. This is useful for implementing tenant control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
+Browser Isolation may be configured to send custom request headers. This is useful for implementing tenant control for SaaS applications or sending arbitrary custom request headers to isolated websites.
 
 You can achieve this by implementing two HTTP policies targeting the same domain or application group in Zero Trust.
 
