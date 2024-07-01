@@ -6,7 +6,9 @@ weight: 21
 
 # Logpush
 
-Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real-time, in smaller file sizes. Note that Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
+Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes. 
+
+Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 
 ## Availability
 
