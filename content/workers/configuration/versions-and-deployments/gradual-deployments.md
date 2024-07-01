@@ -188,7 +188,7 @@ In this example, your deployment is initially configured to route all traffic to
 | :------------------------------------: | :--------: |
 | db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
 
-Create a new deployment using [`wrangler versions deploy --experimental-versions`](https://developers.cloudflare.com/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+Create a new deployment using [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
 
 | Version ID                             | Percentage |
 | :------------------------------------: | :--------: |
