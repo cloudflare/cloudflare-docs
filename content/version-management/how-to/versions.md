@@ -62,7 +62,7 @@ Once you begin [sending traffic](/version-management/reference/traffic-filters/)
 
 To view metrics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and  select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 3. Go to **Version Management**.
 4. On an existing version, select **View Metrics**.
 
