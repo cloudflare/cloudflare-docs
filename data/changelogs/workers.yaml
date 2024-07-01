@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-01'
+  description: |-
+    - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
 - publish_date: '2024-06-19'
   description: |-
     - When using [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), the `buffer` module now has an implementation of `isAscii()` and `isUtf8()` methods.
