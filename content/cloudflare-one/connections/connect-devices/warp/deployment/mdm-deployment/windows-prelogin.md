@@ -23,7 +23,7 @@ weight: 3
 
 {{</details>}}
 
-With Cloudflare Zero Trust, you can use an on-premise Active Directory (or similar) server to validate a remote user's Windows login credentials. Before the user enters their Windows login information, the WARP client establishes a connection using a service token. This initial connection is not associated with a user identity. Once the user completes the Windows login and authenticates to WARP, WARP switches to your default identity-based configuration.
+With Cloudflare Zero Trust, you can use an on-premise Active Directory (or similar) server to validate a remote user's Windows login credentials. Before the user enters their Windows login information, the WARP client establishes a connection using a service token. This initial connection is not associated with a user identity. Once the user completes the Windows login, WARP switches to an identity-based session.
 
 ## Prerequisites
 
@@ -118,6 +118,6 @@ filename: C:\ProgramData\Cloudflare\mdm.xml
 </dict>
 ```
 
-WARP will only apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. To check for an existing WARP registration, you can open PowerShell and run `warp-cli registration show`. After the user registers the WARP client, WARP will automatically switch to the default MDM configuration (`Production environment` in the above example) and establish a connection based on the user's identity. This user registration will then be used for any subsequent connections, including before the next Windows user login.
+WARP will only apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. To check for an existing WARP registration, you can open PowerShell and run `warp-cli registration show`. After the user logs into Windows, WARP will automatically switch to the default MDM configuration (`Production environment` in the above example) and establish a connection based on the user's identity. This user registration will then be used for any subsequent connections, including before the next Windows user login.
 
 Deleting the user registration would cause WARP to switch back to the pre-login configuration.
