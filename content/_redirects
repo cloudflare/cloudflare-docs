@@ -154,6 +154,7 @@
 /byoip/about/ /byoip/concepts/ 301
 /byoip/cloudflare-ips/ /byoip/get-started/#cloudflare-ips 301
 /byoip/how-to/configure-dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301
+/byoip/proxy-ips/ /byoip/address-maps/ 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
