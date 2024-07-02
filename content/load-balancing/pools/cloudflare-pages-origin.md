@@ -85,7 +85,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
 5. Add your origin server as an endpoint with the following information:
   * A name for the endpoint (must be unique). Suggestion: `my-website`.
-  * The endpoint IP address.
+  * The endpoint IP address or hostname.
 
     {{<Aside type="warning">}}
 As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's Anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
@@ -115,6 +115,7 @@ If your production website is hosted on a platform like Cloudflare Pages, where 
 | Endpoint steering           | `<default>`                                     |
 | Endpoint name               | `my-pages-website`                              |
 | Endpoint address            | `<your custom domain or Pages subdomain>`       |
+| Weight                      | `1`       |
 | Host (**Add host header**)  | `<your custom domain or Pages subdomain>`       |
 | Health threshold            | `1`                                             |
 | Monitor                     | `<monitor defined on previous step>`            |
@@ -129,7 +130,7 @@ If your production website is hosted on a platform like Cloudflare Pages, where 
 Before setting up the load balancer:
 
 1. Go to **Traffic** > **Load Balancing** > **Manage Pools**.
-2. Find the pools you created in the list and check if their status is `healthy`.
+2. Find the pools you created in the list and check if their status is `healthy`. You might have to refresh the page.
 3. Expand each pool entry to confirm that the health status for endpoints within them is also `healthy`.
 
 The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
@@ -149,7 +150,7 @@ After confirming the endpoints and monitors are set up correctly and return the 
     * Select your preferred option for [proxy mode](/load-balancing/understand-basics/proxy-modes/), [session affinity](/load-balancing/understand-basics/session-affinity/), and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
 
 3. On the **Add a Pool** page, configure the following and select **Next**.
-    * Select the first pool you created in Step 2 and select **Add Pool**.
+    * Select the first pool you created previously and select **Add Pool**.
     * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Cloudflare Pages pool would be the second (`secondary`).
     * If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
 
@@ -172,13 +173,13 @@ If you have used a temporary hostname for your load balancer, follow the steps b
 1. Go to **Traffic** > **Load Balancing**.
 2. In the **Manage Load Balancers** list, locate the load balancer you created under a test hostname (such as `lb`) and select to enable it.
 3. On your browser, request the temporary hostname (`lb.example.com`). You should see the website or application hosted at your primary origin server.
-4. Go back to the **Manage Load Balancers** list, select to expand the test load balancer, and turn off the primary pool.
+4. Go back to the **Manage Load Balancers** list, select to expand the test load balancer, and disable the primary pool.
 5. On a new incognito window of your browser, request the temporary hostname once again. You should see the website or application hosted at your secondary origin server this time.
 
     If you find issues, revise your pools, monitor, and load balancer configurations to confirm they followed the instructions above. Also refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/) if needed.
 
 {{<Aside type="warning" header="Important">}}
-After you can confirm everything is working correctly, make sure you turn the pools within the load balancer back on.
+After you can confirm everything is working correctly, make sure you re-enable the pools within the load balancer.
 {{</Aside>}}
 
 {{</tutorial-step>}}
