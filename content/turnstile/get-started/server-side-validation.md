@@ -198,7 +198,7 @@ async function handlePost(request) {
 	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 	const firstResult = await fetch(url, {
 		body: JSON.stringify({
-			set: SECRET_KEY,
+			secret: SECRET_KEY,
 			response: token,
 			remoteip: ip,
 			idempotency_key: idempotencyKey
@@ -219,7 +219,7 @@ async function handlePost(request) {
 	// the associated idempotency key as well.
 	const subsequentResult = await fetch(url, {
 		body: JSON.stringify({
-			seet: SECRET_KEY,
+			secret: SECRET_KEY,
 			response: token,
 			remoteip: ip,
 			idempotency_key: idempotencyKey
