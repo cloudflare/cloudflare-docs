@@ -3,7 +3,7 @@ pcx_content_type: configuration
 source: https://support.cloudflare.com/hc/en-us/articles/224509547-Recommended-Page-Rules-to-consider
 title: Recommended rules
 meta:
-    title: Recommended rules | Page Rules (legacy)
+    title: Recommended rules | Page Rules
 ---
 
 # Recommended rules
