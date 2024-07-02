@@ -26,13 +26,13 @@ You can also find instructions on how to [rollback](#rollback-the-cloudflare-con
 openssl genrsa -aes256 -out rootca.key 4096
 ```
 
-2. Create the CA root certificate. Use the domain name as `Common Name`, not the hostname.
+2. Create the CA root certificate. When prompted, fill in the information to be included in the certificate. For the `Common Name` field, use the domain name as value, not the hostname.
 
 ```bash
 openssl req -x509 -new -nodes -key rootca.key -sha256 -days 1826 -out rootca.crt
 ```
 
-3. Create a Certificate Signing Request (CSR). Use the hostname as `Common Name`.
+3. Create a Certificate Signing Request (CSR). When prompted, fill in the information to be included in the request. For the `Common Name` field, use the hostname as value.
 
 ```bash
 openssl req -new -nodes -out cert.csr -newkey rsa:4096 -keyout cert.key
