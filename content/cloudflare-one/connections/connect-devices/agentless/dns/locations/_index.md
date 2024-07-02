@@ -10,9 +10,9 @@ weight: 1
 
 {{<render file="gateway/_add-locations.md">}}
 
-1. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
+10. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-2. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
+11. Select **Go to DNS Location**. Your location will appear in your list of locations.
 
 You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [Location selector](/cloudflare-one/policies/gateway/dns-policies/#location).
 
