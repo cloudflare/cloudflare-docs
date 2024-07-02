@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Use KV API
-weight: 8
+weight: 6
 ---
 
 # Example using Workers KV API

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-weight: 5
+weight: 8
 title: Troubleshooting
 meta:
   title: Troubleshooting

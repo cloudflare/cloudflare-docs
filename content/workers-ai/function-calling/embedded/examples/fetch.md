@@ -1,7 +1,7 @@
 ---
 pcx_content_type: example
 title: Use fetch() handler
-weight: 6
+weight: 4
 ---
 
 # Example using `fetch()` handler

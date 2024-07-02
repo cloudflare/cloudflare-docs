@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Parsing from OpenAPI Spec
-weight: 7
+weight: 5
 ---
 
 # Example using parsing from OpenAPI Spec

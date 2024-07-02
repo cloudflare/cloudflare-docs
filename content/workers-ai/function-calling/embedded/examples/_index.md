@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Examples
-weight: 4
+weight: 3
 ---
 
 # Examples
