@@ -33,9 +33,9 @@
 
 # API & Zones
 /content/pulumi/ @kodster28 @cloudflare/pcx-technical-writing
-/content/tenant/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
-/content/terraform/ @garrettgalow @ranbel @cloudflare/pcx-technical-writing
-/content/version-management/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
+/content/tenant/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/terraform/ @ranbel @cloudflare/pcx-technical-writing
+/content/version-management/ @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
 /content/browser-rendering/ @tanushree-sharma @mchenco @kodster28 @cloudflare/pcx-technical-writing @celso @meddulla
