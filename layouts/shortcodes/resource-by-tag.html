@@ -1,13 +1,17 @@
 {{- $tags := split (lower (.Get "tags")) "," -}}
 {{- $resource_type := split (.Get "resource_type") "," -}}
+{{- $show_description := default true (.Get "show_description")}}
 
 <ul>
   {{ range $index, $siteTag := .Site.Taxonomies.tags }}
   {{ if in $tags $index -}}
   {{ range $siteTag }}
   {{ if in $resource_type .Params.pcx_content_type}}
-  {{ $string := printf "[%s](%s): %s" .Title .RelPermalink (partial "seo-meta-description.html" (dict "content" .Content "params" .Params "truncate" 500 "plainify" true ))| $.Page.RenderString}}
-  <li>{{$string}}</li>
+  {{ $string := printf "[%s](%s)" .Title .RelPermalink }}
+  {{- if $show_description -}}
+  {{- $string = print $string ": " (partial "seo-meta-description.html" (dict "content" .Content "params" .Params "truncate" 500 "plainify" true ))}}
+  {{- end -}}
+  <li>{{$string | $.Page.RenderString }}</li>
   {{ end }}
   {{ end }}
   {{ end }}

@@ -100,3 +100,24 @@
   .DocsMarkdown--table-wrap tr > :last-child {
     padding-right: 1em;
   }
+
+  .DocsMarkdown--plans-flexbox {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    display: flex;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .DocsMarkdown--plans-flexbox {
+      flex-direction: column;
+    }
+  }
+
+  .DocsMarkdown--plans-flexbox > div {
+    flex: 1 1 calc(33.333% - 20px);
+  }
+
+  .DocsMarkdown--plans-flexbox > div > h3 {
+    margin-top: 0 !important;
+  }

@@ -9,7 +9,6 @@ weight: 4
 
 This page describes different DNSSEC states and how they relate to the responses you get from the [DNSSEC details API endpoint](/api/operations/dnssec-dnssec-details).
 
-{{<table-wrap>}}
 | State            | API response                                                     | Description |
 |------------------|------------------------------------------------------------------|-------------|
 | Pending          | `"status":"pending"`<br /> `"modified_on":<TIME_STAMP>`          | DNSSEC has been enabled but the Cloudflare DS record has not been added at the registrar.        |
@@ -17,7 +16,6 @@ This page describes different DNSSEC states and how they relate to the responses
 | Pending-disabled | `"status":"pending-disabled"`<br /> `"modified_on":<TIME_STAMP>` | DNSSEC has been disabled but the Cloudflare DS record is still added at the registrar.        |
 | Disabled         | `"status":"disabled"`<br /> `"modified_on":<TIME_STAMP>`         | DNSSEC has been disabled and the Cloudflare DS record has been removed from the registrar.        |
 | Deleted          | `"status":"disabled"`<br /> `"modified_on": null`                | DNSSEC has never been enabled for the zone or DNSSEC has been disabled and then deleted using the [Delete DNSSEC records endpoint](/api/operations/dnssec-delete-dnssec-records).        |
-{{</table-wrap>}}
 
 {{<Aside type="warning">}}
 Once you have enabled DNSSEC on a zone for the first time, you cannot transition directly from an `active` state to a `deleted` state. You can only [delete DNSSEC records](/api/operations/dnssec-delete-dnssec-records) once your zone DNSSEC is in a `disabled` state. Cloudflare prevents you from deleting DNSSEC records before removing the DS record from the registrar to avoid DNS resolution issues.

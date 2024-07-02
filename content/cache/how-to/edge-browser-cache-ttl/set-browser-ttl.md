@@ -19,7 +19,7 @@ Nevertheless, the value you set via Cache Rule will be ignored if `Cache-Control
 
 ## Set Browser Cache TTL
 
-The Cloudflare UI and API both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
+The Cloudflare UI and [API](/api/operations/zone-settings-edit-single-setting) both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
 
 {{<Aside type="note" header="Note">}}
 

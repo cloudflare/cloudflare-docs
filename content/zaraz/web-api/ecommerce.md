@@ -68,10 +68,8 @@ To create a complete tracking event, you need to add an event and one or more pa
 
 ## List of supported parameters:
 
-{{<table-wrap>}}
-
 Parameter | Type | Description |
---- | --- | --- 
+--- | --- | ---
 `product_id`             | String | Product ID.
 `sku`                    | String | Product SKU number.
 `category`               | String | Product category.
@@ -109,8 +107,6 @@ Parameter | Type | Description |
 `step`                   | Number | The Number of the checkout step in the checkout process.
 `payment_type`           | String | The type of payment used.
 
-{{</table-wrap>}}
-
 ## Event code examples
 
 ### Product viewed
@@ -132,10 +128,10 @@ zaraz.ecommerce('Product Viewed', {
 ### Product List Viewed
 
 ```js
-zaraz.ecommerce('Product List Viewed', 
-  {  products: 
+zaraz.ecommerce('Product List Viewed',
+  {  products:
     [
-    { 
+    {
       product_id: '999555321',
       sku: '2671033',
       category: 'T-shirts',
@@ -144,9 +140,9 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'White',
       price: 14.99,
       currency: 'usd',
-      value: 18.99, 
-      position: 1, 
-    },{ 
+      value: 18.99,
+      position: 1,
+    },{
       product_id: '999555322',
       sku: '2671034',
       category: 'T-shirts',
@@ -155,10 +151,10 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'Pink',
       price: 10.99,
       currency: 'usd',
-      value: 16.99, 
-      position: 2, 
+      value: 16.99,
+      position: 2,
     },
-    ], 
+    ],
   }
 );
 ```

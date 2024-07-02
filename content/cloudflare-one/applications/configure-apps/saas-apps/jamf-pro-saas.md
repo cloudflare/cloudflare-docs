@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Jamf Pro
-weight: 8
+weight: 9
 ---
 
 # Connect to Jamf Pro through Access
@@ -49,7 +49,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 3. Label **Other provider** as `Cloudflare`.
 4. Fill in the following fields:
     - **Entity ID**: Entity ID from Jamf Pro metadata file.
-    - **Identity Provider Metadata Source**: Select **Metadata File** and upload the `.xml` file from step [2. Edit Access SAML Metadata](#2-edit-access-saml-metadata).
+    - **Identity Provider Metadata Source**: Select **Metadata File** and upload the `.xml` file from step [2. Edit Access SAML Metadata](#2-add-a-saas-application-to-cloudflare-zero-trust).
     - **Identity Provider User Mapping**: _Name ID_
     - **Jamf Pro User Mapping**: _Email_
 5. Turn on **Single Sign On**.

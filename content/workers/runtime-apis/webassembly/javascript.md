@@ -1,6 +1,6 @@
 ---
 title: Wasm in JavaScript
-pcx_content_type: tutorial
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Wasm in JavaScript

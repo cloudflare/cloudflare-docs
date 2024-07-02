@@ -8,7 +8,7 @@ weight: 2
 
 ## Get Started
 
-Before you begin, you should understand two basic behaviors of Page Rules (legacy):
+Before you begin, you should understand two basic behaviors of Page Rules:
 
 - Only the highest priority matching page rule takes effect on a request.
 - Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
@@ -126,7 +126,7 @@ Do not use **Cache Everything** for admin sections of your website or for pages 
 
 1.  Log in to your Cloudflare account.
 2.  Choose the appropriate domain.
-3.  Select **Rules** > Page **Rules**.
+3.  Select **Rules** > **Page Rules**.
 4.  Select **Create Page Rule**.
 5.  Under **If the URL matches**, create a URL pattern to differentiate your website's static versus dynamic content.
 6.  Under **Then the settings are**, choose **Cache Level**.

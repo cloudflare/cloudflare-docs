@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (OIDC)
-weight: 9
+weight: 10
 ---
 
 # Connect to Salesforce through Access (OIDC)
@@ -29,9 +29,10 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
     - **Authorization endpoint**
     - **Token endpoint**
     - **User info endpoint**
-10. Select **Save configuration**.
-11. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-12. Select **Done**.
+10. (Optional) configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-domain>.my.salesforce.com`.
+11. Select **Save configuration**.
+12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+13. Select **Done**.
 
 ## 2. Add a SSO provider to Salesforce
 
@@ -58,14 +59,7 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 
 To test the integration, open an incognito browser window and go to the **Test-Only Initialization URL** (   `https://<your-domain>.my.salesforce.com/services/auth/test/<URL Suffix>`)
 
-## 3. Display application on user's App Launcher page
-Cloudflare needs to know the target URL to send the user to. Without this, the application will not appear on the Cloudflare Access App Launcher.
-
-1. Back in the Application Overview section, scroll down to **Application Appearence** and ensure "Enable App in App Launcher" is enabled.
-2. Copy the Salesforce URL (`https://<your-domain>.my.salesforce.com`) into the **App Launcher URL** field.
-3. Click on **Save application**
-
-## 4. Enable Single Sign-On in Salesforce
+## 3. Enable Single Sign-On in Salesforce
 
 1. {{<render file="access/saas-apps/_salesforce-sso.md">}}
 2. (Optional) To require users to login with Cloudflare Access:

@@ -31,7 +31,7 @@ To review the scripts considered malicious:
 
     For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
-4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-script-or-connection-details), review and update the pages where the malicious script was detected.
+4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious script was detected.
 
 You can configure alerts for detected malicious scripts. Refer to [Page Shield alerts](/page-shield/reference/alerts/) for more information on the available alert types.
 
@@ -51,4 +51,4 @@ To review the connections considered malicious:
 
     For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
-4. Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/detection/monitor-connections-scripts/#view-script-or-connection-details), review and update the pages where the malicious connection was detected.
+4. Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious connection was detected.
