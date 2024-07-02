@@ -338,13 +338,46 @@ If you have an Enterprise account, you also have the option to configure your ow
 {{<details header="SOA record fields">}}
 
 * **`MNAME`**: The primary nameserver for the zone. Secondary nameservers receive zone updates from the nameserver specified in this field.
-* **`RNAME`**: The email address of the administrator responsible for the zone. `@` is replaced by the first `.`. If an email address contains a dot before `@`, this should be represented as `\.`. For example, the email `john.doe@example.com` should be added as `john\.doe.example.com`. The default value for this field is `dns.cloudflare.com`
+* **`RNAME`**: The email address of the administrator responsible for the zone.
+
+    The `@` symbol is replaced by the first dot. If an email address contains a dot before `@`, this should be represented as `\.`.
+
+    | Email                     | `RNAME`                 |
+    |---------------------------|-------------------------|
+    |`john@example.com`         | `john.example.com`      |
+    |`john.doe@example.com`     | `john\.doe.example.com` |
+
 * **`Serial`**: The serial number for the zone. Secondary nameservers initiate zone transfers if this number increases.
-* **`Refresh`**: Time (in seconds) after which a secondary nameserver should query the primary for the `SOA` record, to detect zone changes. Only relevant if DNS NOTIFY is not configured. The default value is `10000`.
-* **`Retry`**: Time (in seconds) after which a secondary nameserver should retry getting the serial number from the primary nameserver, after a failed attempt. The default value is `2400`. Any specified values must not be greater than `Refresh`.
-* **`Expire`**: Time (in seconds) after which a secondary nameserver should stop answering queries for a zone if the primary does not respond. The default value is `604800` Any specified values not be smaller than `Refresh`.
-* **`Record TTL`**: The [time to live](/dns/manage-dns-records/reference/ttl/) of the SOA record. The default value is `3600`.
-* **`Minimum TTL`**: The TTL for caching negative responses. Refer to [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html#section-4) for details. The deafult value is `1800`.
+* **`Refresh`**: Time (in seconds) after which a secondary nameserver should query the primary for the `SOA` record, to detect zone changes. Only relevant if DNS NOTIFY ([RFC 1996](https://www.rfc-editor.org/rfc/rfc1996.html)) is not configured.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`10000`       | `600`      | `86400`  |
+
+* **`Retry`**: Time (in seconds) after which a secondary nameserver should retry getting the serial number from the primary nameserver after a failed attempt. Any specified values must not be greater than `Refresh`.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`2400`        | `600`      | `3600`   |
+
+* **`Expire`**: Time (in seconds) after which a secondary nameserver should stop answering queries for a zone if the primary does not respond. Any specified values must not be smaller than `Refresh`.
+
+    | Default      | Minimum    | Maximum   |
+    |--------------|------------|-----------|
+    |`604800`      | `86400`    | `2419200` |
+
+* **`Record TTL`**: The [time to live](/dns/manage-dns-records/reference/ttl/) of the SOA record.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`3600`        | `1800`     | `3600`   |
+
+* **`Minimum TTL`**: The TTL for caching negative responses. Refer to [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html#section-4) for details.
+
+    | Default      | Minimum    | Maximum  |
+    |--------------|------------|----------|
+    |`1800`        | `60`       | `86400`  |
+
 
 {{</details>}}
 
