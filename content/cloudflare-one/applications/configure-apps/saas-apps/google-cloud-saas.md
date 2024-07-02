@@ -6,7 +6,7 @@ weight: 6
 
 # Connect to Google Cloud through Access
 
-This guide covers how to configure [Google Cloud](https://support.google.com/cloudidentity/topic/7558767?hl=en&ref_topic=7558174&sjid=15736394019238538164-NA) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Google Cloud](https://support.google.com/cloudidentity/topic/7558767) as a SAML application in Cloudflare Zero Trust.
 
 {{<Aside type="warning">}}
 When configuring Google Cloud with Access, the following limitations apply:
@@ -20,7 +20,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 
 - A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
-- [Cloud Identity Free or Premium](https://support.google.com/cloudidentity/answer/7389973?hl=en) set up in your organization's Google Cloud account
+- [Cloud Identity Free or Premium](https://support.google.com/cloudidentity/answer/7389973) set up in your organization's Google Cloud account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
