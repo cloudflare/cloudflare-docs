@@ -108,6 +108,4 @@ To use custom headers with Browser Isolation, create two HTTP policies targeting
    | ------------------ | ------------------- |
    | `Example-Header`   | `example-value`     |
 
-3. Go to [`https://httpbin.org/anything`](https://httpbin.org/anything).
-
-Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
+3. Go to [`httpbin.org/anything`](https://httpbin.org/anything). Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
