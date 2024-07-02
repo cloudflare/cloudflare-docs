@@ -19,26 +19,6 @@ Mobile Redirect allows you to automatically redirect mobile device visitors to a
 The mobile redirect service is not available to domains signed up
 through hosting partners.
 {{</Aside>}}
-___
-
-## Enable Mobile Redirect
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Speed** > **Optimization** > **Other**.
-4. For **Mobile Redirect**, select the subdomain that you would like to redirect from the drop down list.
-5. Choose **Keep Path** or **Drop Path**:
-
-    - **Keep Path** will redirect all mobile requests to the same resource hosted on your mobile-optimized website.
-    - **Drop Path** will redirect all mobile requests to your mobile-optimized website homepage.
-
-6. Toggle switch to **On**.
-
-{{<Aside type="note">}}
-
-Mobile redirects only apply if the hostname you want to redirect is [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
-
-{{</Aside>}}
 
 ___
 
