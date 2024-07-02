@@ -10,10 +10,10 @@ Turnstile needs to be verified using siteverify because it is a front-end widget
 
 You must call the siteverify endpoint to validate the Turnstile widget response from your website’s backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
 
-Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint. The siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed. 
+Tokens issued to Turnstile using the success callbacks, via explicit or implicit rendering, must be validated using the siteverify endpoint. The siteverify API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
 
 {{<Aside type="note">}}
-A Turnstile token can have up to 2048 characters. 
+A Turnstile token can have up to 2048 characters.
 
 It is also valid for 300 seconds before it is rejected by siteverify.
 {{</Aside>}}
@@ -102,7 +102,7 @@ async function handlePost(request) {
 	formData.append('response', token);
 	formData.append('remoteip', ip);
 	const idempotencyKey = crypto.randomUUID();
-	formData.append('idempotency_key', idempotencyKey);	
+	formData.append('idempotency_key', idempotencyKey);
 
 	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 	const firstResult = await fetch(url, {
@@ -114,8 +114,8 @@ async function handlePost(request) {
 		// ...
 	}
 
-	// A subsequent validation request to the "/siteverify" 
-	// API endpoint for the same token as before, providing 
+	// A subsequent validation request to the "/siteverify"
+	// API endpoint for the same token as before, providing
 	// the associated idempotency key as well.
 	const subsequentResult = await fetch(url, {
 		body: formData,
@@ -205,8 +205,6 @@ A validation error is indicated by having the `success` property set to `false`.
 | `invalid-input-secret` | The secret parameter was invalid or did not exist.|
 | `missing-input-response` | The response parameter (token) was not passed. |
 | `invalid-input-response` | The response parameter (token) is invalid or has expired. Most of the time, this means a fake token has been used. If the error persists, contact customer support. |
-| `invalid-widget-id` | The widget ID extracted from the parsed site secret key was invalid or did not exist. |
-| `invalid-parsed-secret` | The secret extracted from the parsed site secret key was invalid. |
 | `bad-request` | The request was rejected because it was malformed. |
 | `timeout-or-duplicate` | The response parameter (token) has already been validated before. This means that the token was issued five minutes ago and is no longer valid, or it was already redeemed. |
 | `internal-error` | An internal error happened while validating the response. The request can be retried. |
