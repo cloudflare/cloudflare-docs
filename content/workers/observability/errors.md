@@ -38,7 +38,7 @@ Some requests may return a 1101 error with `The script will never generate a res
 
 #### Cause 1: Unresolved Promises
 
-This is most commonly caused by relying on a Promise that is never resolved or rejected, in order to return a Response. To debug, look for Promises within your code or dependencies' code that block a Response, and ensure they are resolved or rejected.
+This is most commonly caused by relying on a Promise that is never resolved or rejected, which is required to return a Response. To debug, look for Promises within your code or dependencies' code that block a Response, and ensure they are resolved or rejected.
 
 In browsers and other JavaScript runtimes, equivalent code will hang indefinitely, leading to both bugs and memory leaks. The Workers runtime throws an explicit error to help you debug.
 
