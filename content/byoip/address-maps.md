@@ -6,9 +6,9 @@ weight: 5
 
 # IP Address Maps
 
-The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level Static IPs to specify which IP addresses should be mapped to a domain or zone’s DNS records when they are proxied through Cloudflare.
+The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a domain or zone’s DNS records when they are proxied through Cloudflare.
 
-For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) or orange-clouded. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
+For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
 
@@ -20,7 +20,7 @@ If you do not have BYOIP or static IPs and you want to use Address Maps, contact
 
 ## How to use Address Maps
 
-For domains using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use Address Maps to specify which IPs to return for which hostnames.
+For domains using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use address maps to specify which IPs to return for which hostnames.
 
 | Leased static IPs | BYOIPs |
 | --- | --- |
