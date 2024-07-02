@@ -85,6 +85,49 @@ async function handlePost(request) {
 
 ```js
 ---
+header: Example using fetch from Cloudflare Workers
+---
+// This is the demo secret key. In production, we recommend
+// you store your secret key(s) safely.
+const SECRET_KEY = '1x0000000000000000000000000000000AA';
+​
+async function handlePost(request) {
+	const body = await request.formData();
+	// Turnstile injects a token in "cf-turnstile-response".
+	const token = body.get('cf-turnstile-response');
+	const ip = request.headers.get('CF-Connecting-IP');
+​
+	// Validate the token by calling the
+	// "/siteverify" API endpoint.
+	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	const result = await fetch(url, {
+		body: JSON.stringify({
+			secret: SECRET_KEY,
+			response: token,
+			remoteip: ip
+		}),
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+​
+	const outcome = await result.json();
+	if (outcome.success) {
+		// ...
+	}
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+
+{{<tabs labels="URL encoded | JSON">}}
+{{<tab label="url encoded" default="true">}}
+
+```js
+---
 header: Example using idempotency functionality
 ---
 // This is the demo secret key. In production, we recommend
@@ -131,6 +174,70 @@ async function handlePost(request) {
 
 }
 ```
+{{</tab>}}
+
+{{<tab label="JSON">}}
+
+```js
+---
+header: Example using idempotency functionality
+---
+// This is the demo secret key. In production, we recommend
+// you store your secret key(s) safely.
+const SECRET_KEY = '1x0000000000000000000000000000000AA';
+​
+async function handlePost(request) {
+	const body = await request.formData();
+	// Turnstile injects a token in "cf-turnstile-response".
+	const token = body.get('cf-turnstile-response');
+	const ip = request.headers.get('CF-Connecting-IP');
+​
+	// Validate the token by calling the
+	// "/siteverify" API endpoint.
+	const idempotencyKey = crypto.randomUUID();
+	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	const firstResult = await fetch(url, {
+		body: JSON.stringify({
+			set: SECRET_KEY,
+			response: token,
+			remoteip: ip,
+			idempotency_key: idempotencyKey
+		}),
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+​
+	const firstOutcome = await firstResult.json();
+	if (firstOutcome.success) {
+		// ...
+	}
+​
+	// A subsequent validation request to the "/siteverify" 
+	// API endpoint for the same token as before, providing 
+	// the associated idempotency key as well.
+	const subsequentResult = await fetch(url, {
+		body: JSON.stringify({
+			seet: SECRET_KEY,
+			response: token,
+			remoteip: ip,
+			idempotency_key: idempotencyKey
+		}),
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+​
+	const subsequentOutcome = await subsequentResult.json();
+	if (subsequentOutcome.success) {
+		// ...
+	}
+​
+}
+```
+
 {{</tab>}}
 {{</tabs>}}
 
