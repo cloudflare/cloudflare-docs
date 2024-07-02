@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules (legacy)",
+      "title": "Page Rules",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
