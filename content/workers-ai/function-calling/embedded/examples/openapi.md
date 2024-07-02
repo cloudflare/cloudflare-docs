@@ -7,6 +7,7 @@ weight: 7
 # Example using parsing from OpenAPI Spec
 
 TODO: Add desc
+TODO: Refine and test example, change header, check for TS
 
 ```js
 ---
