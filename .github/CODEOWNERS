@@ -33,9 +33,9 @@
 
 # API & Zones
 /content/pulumi/ @kodster28 @cloudflare/pcx-technical-writing
-/content/tenant/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
-/content/terraform/ @garrettgalow @ranbel @cloudflare/pcx-technical-writing
-/content/version-management/ @garrettgalow @patriciasantaana @cloudflare/pcx-technical-writing
+/content/tenant/ @patriciasantaana @cloudflare/pcx-technical-writing
+/content/terraform/ @ranbel @cloudflare/pcx-technical-writing
+/content/version-management/ @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Browser Rendering API
 /content/browser-rendering/ @tanushree-sharma @mchenco @kodster28 @cloudflare/pcx-technical-writing @celso @meddulla
@@ -98,8 +98,8 @@
 /content/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing @irvinebroque
-/content/zaraz/ @bjesus @jonnyparris @cloudflare/pcx-technical-writing
-/data/changelogs/zaraz.yaml @bjesus @jonnyparris @cloudflare/pcx-technical-writing
+/content/zaraz/ @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
+/data/changelogs/zaraz.yaml @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
 /content/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @kodster28 @GregBrimble @cloudflare/pcx-technical-writing
 /content/workers/platform/ @irvinebroque @tanushree-sharma @kodster28 @GregBrimble @cloudflare/pcx-technical-writing

@@ -14,6 +14,6 @@ The execution order of Rules features is the following:
 * [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
 * [Snippets](/rules/snippets/)
 
-The different types of rules listed above will take precedence over [Page Rules](/rules/page-rules/) (deprecated). This means that Page Rules will be overridden if there is a match for both Page Rules and the Rules products listed above.
+The different types of rules listed above will take precedence over [Page Rules](/rules/page-rules/). This means that Page Rules will be overridden if there is a match for both Page Rules and the Rules products listed above.
 
 {{<render file="_challenge-issues.md" withParameters="Rules features">}}

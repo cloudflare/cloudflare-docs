@@ -199,7 +199,7 @@ ___
 
 -   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
--   BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules (legacy). BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
 -   SBFM can be bypassed with IP Access _Allow_ action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
@@ -215,7 +215,7 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 
 {{<render file="_flexible-sbfm.md">}}
 
-You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules (legacy). _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).
+You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).
 
 Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.
 
