@@ -17,7 +17,7 @@ pfSense      | 24.03
 ## Prerequisites
 
 For this tutorial, you will need to know the following information:
-- Your Anycast IP addresses (given to you by Cloudflare)
+- Your anycast IP addresses (given to you by Cloudflare)
 - External IP addresses
 - Internal IP address ranges
 - Inside tunnel `/31` ranges
@@ -46,7 +46,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
     - **Tunnel name**: `PF_TUNNEL_01`
     - **Interface address**: `10.252.2.26/31`
     - **Customer endpoint**: `203.0.113.254`
-    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+    - **Cloudflare endpoint**: Enter the anycast IP address provided by Cloudflare.
     - **Health check rate**: _Medium_
     - **Health check type**: _Request_
     - **Health check direction**: _Bidirectional_
@@ -55,7 +55,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
     - **Tunnel name**: `PF_TUNNEL_02`
     - **Interface address**: `10.252.2.28/31`
     - **Customer endpoint**: `203.0.113.254`
-    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+    - **Cloudflare endpoint**: Enter the anycast IP address provided by Cloudflare.
     - **Health check rate**: _Medium_
     - **Health check type**: _Request_
     - **Health check direction**: _Bidirectional_
@@ -114,11 +114,11 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
     - **Key exchange version**: _IKE_v2_
     - **Internet Protocol**: _IPv4_
     - **Interface**: _WAN_
-    - **Remote gateway**: Enter your Cloudflare Anycast IP address.
+    - **Remote gateway**: Enter your Cloudflare anycast IP address.
 - **Phase 1 Proposal (Authentication)**
     - **Authentication method**: _Mutual PSK_
     - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br> (You can get this identifier from your Cloudflare IPsec tunnel configuration > **User ID**)
-    - **Peer identifier**: _Peer IP Address_ (your Cloudflare Anycast IP)
+    - **Peer identifier**: _Peer IP Address_ (your Cloudflare anycast IP)
     - **Pre-Shared Key**: Enter the PSK you have on your Cloudflare IPsec tunnel.
 - **Phase 1 proposal (Encryption algorithm)**
     - **Encryption algorithm**: _AES 256 bits_

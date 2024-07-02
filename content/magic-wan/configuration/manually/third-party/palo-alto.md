@@ -35,8 +35,8 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 | Local trust subnet (LAN)          | `10.1.100.0/24`                    |                              |
 | NGFW tunnel interface 01          | `10.252.2.26/31` (Cloudflare side) | `10.252.2.27/31` (NGFW side) |
 | NGFW tunnel interface 02          | `10.252.2.28/31` (Cloudflare side) | `10.252.2.29/31` (NGFW side) |
-| Magic WAN Anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
-| Magic WAN health check Anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
+| Magic WAN anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
+| Magic WAN health check anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
 | VLAN0010 - remote Magic WAN site  | `10.1.10.0/24`                     |                              |
 | VLAN0020 - remote Magic WAN site  | `10.1.20.0/24`                     |                              |
 
@@ -382,7 +382,7 @@ set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss ipv4-mss-adjust
 
 ### Tunnel interfaces
 
-Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare Anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
+Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
 
 Review the images below for more information.
 
@@ -1063,12 +1063,12 @@ set network virtual-router default routing-table ip static-route Magic_WAN_VLAN0
 
 ### Magic health checks
 
-Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global Anycast network. These ICMP probes are unique because an ICMP reply packet is sent (as opposed to an ICMP Request).
+Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from random servers across Cloudflare's global anycast network. These ICMP probes are unique because an ICMP reply packet is sent (as opposed to an ICMP Request).
 
 
 {{<Aside type="note">}}The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.{{</Aside>}}
 
-Cloudflare Magic WAN customers must configure IPsec tunnels to use custom Anycast IP addresses for the health check endpoints:
+Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
 - **CF_Health_Check_Anycast_01**: `172.64.240.253`
 - **CF_Health_Check_Anycast_02**: `172.64.240.254`
 
@@ -1233,13 +1233,13 @@ rule eq Cloudflare_Tunnel_Bidirect_HC
 
 If you do not see any traffic matching the filter, replace the filter with one that displays log entries based on the addresses associated with the `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02` Address objects.
 
-##### Filter by health check Anycast IPs
+##### Filter by health check anycast IPs
 
 ```bash
 ( addr.src in 172.64.240.253 ) or ( addr.src in 172.64.240.254 )
 ```
 
-![Bidirectional health check logging - filter by health check Anycast IPs](/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
+![Bidirectional health check logging - filter by health check snycast IPs](/images/magic-wan/third-party/palo-alto/panw_logging/01_logging_tunnel_hc_filter_ip.png)
 
 #### Policy-based forwarding
 
