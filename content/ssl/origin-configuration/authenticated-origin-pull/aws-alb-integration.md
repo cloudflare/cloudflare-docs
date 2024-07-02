@@ -63,10 +63,10 @@ sudo systemctl start httpd
 
 4. Create a [target group](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html#configure-target-group) for your Application Load Balancer.
     * Choose **Instances** as target type.
-    * Specify port HTTP/80.
+    * Specify port `HTTP/80`.
 5. After you finish configuring the target group, confirm that the target group is [healthy](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html).
 6. [Configure a load balancer and a listener](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-application-load-balancer.html#configure-load-balancer).
-    * Choose **Internet-facing** scheme.
+    * Choose the **Internet-facing** scheme.
     * Switch the listener to port `443` so that the **mTLS** option is available, and select the target group created in previous steps.
     * For **Default SSL/TLS server certificate**, choose **Import certificate** > **Import to ACM**, and add the certificate private key and body.
     * Under **Client certificate handling**, select **Verify with trust store**.
@@ -117,22 +117,20 @@ curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_clie
 2.[Associate the certificate with the hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) that should use it.
 
 ```bash
-
 curl -s --request PUT \
 --url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
 --header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
 --data '{
-"config": [
-{
-"enabled": true,
-"cert_id": "<CERT_ID>",
-"hostname": "<YOUR_HOSTNAME>"
-}
-]
+  "config": [
+    {
+      "enabled": true,
+      "cert_id": "<CERT_ID>",
+      "hostname": "<YOUR_HOSTNAME>"
+    }
+  ]
 }'
-
 ```
 
 3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
@@ -164,16 +162,14 @@ curl -s --request PUT \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
 --data '{
-"config": [
-{
-"enabled": false,
-"cert_id": "<CERT_ID>",
-"hostname": "<YOUR_HOSTNAME>"
-}
-]
+  "config": [
+    {
+      "enabled": false,
+      "cert_id": "<CERT_ID>",
+      "hostname": "<YOUR_HOSTNAME>"
+    }
+  ]
 }'
-
-```
 
 2.  (Optional) Use a [`GET` request](/api/operations/per-hostname-authenticated-origin-pull-list-certificates) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
