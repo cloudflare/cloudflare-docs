@@ -235,6 +235,10 @@ entries:
   general_definition: |-
     a software abstraction that allows you to logically segregate resources on a private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes.
 
+- term: Virtual Private Cloud (VPC)
+  general_definition: |-
+    a secure, isolated private network hosted on public cloud infrastructure. Examples of public cloud providers include Google Cloud, AWS, and Microsoft Azure.
+
 - term: Virtual Private Network (VPN)
   general_definition: |-
     a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
