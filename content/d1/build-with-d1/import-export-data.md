@@ -143,7 +143,8 @@ $ npx wrangler d1 export <database_name> --remote --table=<table_name> --output=
 
 - Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
 - A running export will block other database requests.
-- Import is limited to 5GB files.
+- Due to upload limits in R2 storage, D1 import is limited to 5GB files. This limitation applies to any `wrangler d1 execute` command. To avoid file size issues, we recommend users split imports larger than 5GB into smaller files before executing the import command.
+- For imports, 'wrangler d1 execute --file' is limited to 5GiB files, the same as the [R2 upload limit](r2/reference/limits). For imports larger than 5GiB, we recommend splitting the data into multiple files.
 
 ## Troubleshooting
 
