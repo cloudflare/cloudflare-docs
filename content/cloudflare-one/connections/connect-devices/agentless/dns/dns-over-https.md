@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: DNS over HTTPS
-weight: 2
+title: DNS over HTTPS (DoH)
+weight: 3
 ---
 
 # Configure DNS over HTTPS
