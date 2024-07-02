@@ -895,6 +895,9 @@
 /speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
+/speed/optimization/other/mobile-redirect/ /rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects 301
+/speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ /speed/optimization/other/ 301
+/speed/optimization/other/troubleshooting/ /speed/optimization/other/ 301
 
 # ssl
 /ssl/ssl-for-saas/certificate-signing-requests/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ 301

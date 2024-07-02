@@ -2116,20 +2116,6 @@
         }
       }
     },
-    "mobile_redirect": {
-      "title": "Mobile redirect",
-      "link": "/speed/optimization/other/mobile-redirect/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
     "polish": {
       "title": "Polish",
       "link": "/images/polish/",
