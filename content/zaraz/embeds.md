@@ -19,7 +19,7 @@ To add an Embed to Your Website:
 ```html
 <componentName-embedName attribute="value"></componentName-embedName>
 ```
-Replace `componentName`, `embedName`, and `attribute="value"` with the specific Managed Component requirements. Zaraz automatically detects placeholders and replaces them with the content in a secure and efficient way.
+Replace `componentName`, `embedName` and `attribute="value"` with the specific Managed Component requirements. Zaraz automatically detects placeholders and replaces them with the content in a secure and efficient way.
 
 ## Examples
 
