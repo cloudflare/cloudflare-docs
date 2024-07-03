@@ -10,6 +10,8 @@ meta:
 
 Cloudflare automatically issues certificates when you [create a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/).
 
+If you create the custom hostname via API, you can leave the `certificate_authority` parameter empty to set it to “default CA”. With this option, Cloudflare checks the CAA records before requesting the certificates, which helps ensure the certificates can be issued from the CA.
+
 {{<render file="_issue-certs-preamble.md">}}
 
 Refer to [this certificate authorities reference page](/ssl/reference/certificate-authorities/) to learn more about the CAs that Cloudflare uses to issue SSL/TLS certificates.
