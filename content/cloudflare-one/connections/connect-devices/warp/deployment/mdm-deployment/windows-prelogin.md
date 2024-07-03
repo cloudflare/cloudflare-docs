@@ -86,7 +86,6 @@ filename: C:\ProgramData\Cloudflare\mdm.xml
     <string>your-token-id.access</string>
     <key>auth_client_secret</key>
     <string>your-token-secret</string>
-
   </dict>
   <key>configs</key>
   <array>
