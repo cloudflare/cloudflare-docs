@@ -8,6 +8,8 @@ meta:
 
 # Get Started
 
+This guide will instruct you through setting up and deploying your first Workers AI project with embedded function calling. You will use Workers, a Workers AI binding, the [`ai-utils package`](https://github.com/cloudflare/ai-utils), and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network with embedded function calling.
+
 ## 1. Create a Worker project with Workers AI
 
 Follow the [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangler/) until step 2.
@@ -78,9 +80,13 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-TOOO: Add visualization of what's going on.
-
 This example imports the utils with `import { runWithTools} from "@cloudflare/ai-utils"` and follows the API reference below.
+
+Moreover, in this example we define and describe a list of tools that the LLM can leverage to respond to the user query. Here the list contains of only one tool, the `sum` function.
+
+Abstracted by the `runWithTools`, the following steps occur:
+
+TOOO: Add visualization of what's going on.
 
 The `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
 
