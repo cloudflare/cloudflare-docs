@@ -6,8 +6,12 @@ weight: 4
 
 # Example using `fetch()` handler
 
-TODO: Add desc
-TODO: Fix formatting of response
+A very common use case is to provide the LLM with the ability to perform API calls via function calling.
+
+In this example the LLM will retrieve the weather forecast for the next 5 days.
+To do so a `getWeather` function is defined that is passed to the LLM as tool.
+
+The `getWeather`function extracts the user's location from the request and calls the external weather API via the Workers' [`Fetch API`](/workers/runtime-apis/fetch/) and returns the result.
 
 ```ts
 ---
@@ -24,9 +28,14 @@ export default {
 		// Define function
 		const getWeather = async (args: { numDays: number }) => {
 			const { numDays } = args;
-			// Interpolate values for external API call
+      // Location is extracted from request based on
+      // https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties
+      const lat = request.cf?.latitude
+      const long = request.cf?.longitude
+
+      // Interpolate values for external API call
 			const response = await fetch(
-				`https://api.open-meteo.com/v1/forecast?latitude=${request.cf?.latitude}&longitude=${request.cf?.longitude}&daily=temperature_2m_max,precipitation_sum&timezone=GMT&forecast_days=${numDays}`
+				`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,precipitation_sum&timezone=GMT&forecast_days=${numDays}`
 			);
 			console.log('here');
 			return response.text();
