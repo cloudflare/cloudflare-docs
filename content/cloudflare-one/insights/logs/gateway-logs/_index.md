@@ -26,6 +26,12 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 ## DNS logs
 
+{{<Aside type="warning">}}
+
+Enterprise users on per query plans cannot store DNS logs via Cloudflare. For more information, contact your account team.
+
+{{</Aside>}}
+
 ### Explanation of the fields
 
 #### Basic information
