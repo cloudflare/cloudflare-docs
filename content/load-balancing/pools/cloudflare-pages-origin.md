@@ -100,7 +100,6 @@ If your production website is hosted on a platform like Cloudflare Pages, where 
   * Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
   * Select the **Monitor** configured in the previous step.
   * Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the endpoint health.
-  * Set up **Pool Notifications** and **Health Notifications** as you prefer.
 
 7. Select **Save**
 
@@ -147,7 +146,8 @@ After confirming the endpoints and monitors are set up correctly and return the 
 
 2. On the **Hostname** page, configure the following and select **Next**.
     * Enter a **Hostname**, which is the DNS name at which the load balancer is available. Suggestion: for now, you can just add a temporary hostname such as `lb` (so the complete field value would look like `lb.<your_domain>`).
-    * Select your preferred option for [proxy mode](/load-balancing/understand-basics/proxy-modes/), [session affinity](/load-balancing/understand-basics/session-affinity/), and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
+    * Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+    * Select your preferred option for [session affinity](/load-balancing/understand-basics/session-affinity/) and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
 
 3. On the **Add a Pool** page, configure the following and select **Next**.
     * Select the first pool you created previously and select **Add Pool**.
