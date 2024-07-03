@@ -57,8 +57,7 @@ export default {
 					},
 				],
 				tools: toolsFromOpenAPISpec,
-			},
-			{ verbose: true }
+			}
 		);
 
 		return new Response(JSON.stringify(response));
