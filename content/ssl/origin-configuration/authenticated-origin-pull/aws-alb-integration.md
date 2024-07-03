@@ -170,6 +170,7 @@ curl -s --request PUT \
     }
   ]
 }'
+```
 
 2.  (Optional) Use a [`GET` request](/api/operations/per-hostname-authenticated-origin-pull-list-certificates) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
