@@ -82,11 +82,21 @@ export default {
 
 This example imports the utils with `import { runWithTools} from "@cloudflare/ai-utils"` and follows the API reference below.
 
-Moreover, in this example we define and describe a list of tools that the LLM can leverage to respond to the user query. Here the list contains of only one tool, the `sum` function.
+Moreover, in this example we define and describe a list of tools that the LLM can leverage to respond to the user query. Here, the list contains of only one tool, the `sum` function.
 
-Abstracted by the `runWithTools`, the following steps occur:
+Abstracted by the `runWithTools` function, the following steps occur:
 
-TOOO: Add visualization of what's going on.
+```mermaid
+sequenceDiagram
+    participant Worker as Worker
+    participant WorkersAI as Workers AI
+
+    Worker->>+WorkersAI: Send messages, function calling prompt, and available tools
+    WorkersAI->>+Worker: Select tools and arguments for function calling
+    Worker-->>-Worker: Execute function
+    Worker-->>+WorkersAI: Send messages, function calling prompt and function result
+    WorkersAI-->>-Worker: Send response incorporating function output
+```
 
 The `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
 
