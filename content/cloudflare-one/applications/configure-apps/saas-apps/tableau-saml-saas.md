@@ -50,6 +50,6 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 ## 5. Test the Integration and set default authentication type
 1. In Tableau Cloud, go to **Settings** > **Authentication**.
 2. Under **7. Test Configuration**, select **Test Configuration**.
-3. Sign in. If your signin is successful, **You are now signed in as (username)** will appear at the top of the page.
+3. Sign in. If your sign-in is successful, **You are now signed in as (username)** will appear at the top of the page.
 4. Close the pop-up window.
 5. (Optional) Under **Default Authentication Type for Embedded Views**, turn on **cloudflareaccess.com (SAML)**. You can also configure the default authentication type for individual users under **Users** > **Actions** > **Authentication**.
