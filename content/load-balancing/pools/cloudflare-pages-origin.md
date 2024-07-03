@@ -47,7 +47,7 @@ Monitors define the criteria based on which an endpoint will be considered healt
 
 {{</table-wrap>}}
 
-5. Under **Advanced health check settings**, keep the default values and enable the **Follow redirects** option.
+5. Under **Advanced health check settings**, keep the default values and enable the **Follow Redirects** option.
 
     When you are using a service like Cloudflare Pages, it is possible that requests from the health monitor - as well as the ones from your visitors - are redirected before reaching their destination. Enabling this option prevents the monitor from reporting an unhealthy endpoint when it actually has only been redirected (with a `301` code, for example).
 
@@ -65,7 +65,7 @@ This way you can easily remember the criteria a certain monitor is using when yo
 
 Pools hold information about where the health monitor requests and your visitors requests will be directed to.
 
-To support the [use cases](#use-cases) mentioned above, and assuming only one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one endpoint each:
+To support the [use cases](#use-cases) mentioned above, and assuming you only have one origin server for your production website and one for the Cloudflare Pages instance, create two pools with one endpoint each:
 
 {{<Aside type="warning" header="Important">}}
 The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly. You can find a reference table for correct setup in Step 8 below.
@@ -79,7 +79,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
 3. For the first pool, start by filling out the fields:
   * A name for the pool (must be unique). Suggestion: `primary`
-  * A description to provide more detail on the name. Suggestion: `production website`
+  * A description to provide more details on the name. Suggestion: `production website`
 
 4. Leave the choice for [**Endpoint Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) as is. Since each pool will only have one endpoint, this steering method will not interfere in this case.
 
@@ -130,10 +130,10 @@ If your production website is hosted on a platform like Cloudflare Pages, where 
 Before setting up the load balancer:
 
 1. Go to **Traffic** > **Load Balancing** > **Manage Pools**.
-2. Find the pools you created in the list and check if their status is `healthy`. You might have to refresh the page.
-3. Expand each pool entry to confirm that the health status for endpoints within them is also `healthy`.
+2. Find the pools you created in the list and check if their status is `Healthy`. You might have to refresh the page.
+3. Expand each pool entry to confirm that the health status for endpoints within them is also `Healthy`.
 
-The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able get a `200` code as HTTP response.
+The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able to get a `200` code as HTTP response.
 
 Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
 
@@ -171,7 +171,7 @@ A DNS record of the type `LB` will be created under [**DNS** > **Records**](http
 If you have used a temporary hostname for your load balancer, follow the steps below to deploy and test it.
 
 1. Go to **Traffic** > **Load Balancing**.
-2. In the **Manage Load Balancers** list, locate the load balancer you created under a test hostname (such as `lb`) and select to enable it.
+2. In the **Manage Load Balancers** list, locate the load balancer you created under a test hostname (such as `lb`) and enable it.
 3. On your browser, request the temporary hostname (`lb.example.com`). You should see the website or application hosted at your primary origin server.
 4. Go back to the **Manage Load Balancers** list, select to expand the test load balancer, and disable the primary pool.
 5. On a new incognito window of your browser, request the temporary hostname once again. You should see the website or application hosted at your secondary origin server this time.
@@ -179,7 +179,7 @@ If you have used a temporary hostname for your load balancer, follow the steps b
     If you find issues, revise your pools, monitor, and load balancer configurations to confirm they followed the instructions above. Also refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/) if needed.
 
 {{<Aside type="warning" header="Important">}}
-After you can confirm everything is working correctly, make sure you re-enable the pools within the load balancer.
+After you confirm everything is working correctly, make sure you re-enable the pools within the load balancer.
 {{</Aside>}}
 
 {{</tutorial-step>}}
