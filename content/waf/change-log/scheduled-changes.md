@@ -29,7 +29,7 @@ layout: wide
       <td>100700_BETA</td>
       <td>{{<rule-id>}}2a9da4fa28924185b9e81435d4c44dad{{</rule-id>}}</td>
       <td>Apache SSRF vulnerability CVE-2021-40438 Beta</td>
-      <td>This will replace in 100700 in old WAF and {{<rule-id>}}2ce80fe815254f25b3c8f47569fe1e0d{{</rule-id>}} in new WAF</td>
+      <td>This will replace rule 100700 in old WAF and {{<rule-id>}}2ce80fe815254f25b3c8f47569fe1e0d{{</rule-id>}} in new WAF</td>
     </tr>
     <tr>
       <td>2024-07-03</td>
