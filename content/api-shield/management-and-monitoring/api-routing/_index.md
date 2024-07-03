@@ -15,15 +15,7 @@ The term **Source Endpoint** refers to the endpoint managed by API Shield in End
 
 ## Process
 
-You must add Source Endpoints to Endpoint Management through established methods, by [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a Route.
-
-To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Filter the endpoints to find your **Source Endpoint**.
-4. Expand the row for your Source Endpoint and note the **operation ID** field.
-5. Select the copy icon to copy the operation ID to your clipboard.
+{{<render file="_source-endpoints.md">}}
 
 Once your Source Endpoints are added to Endpoint Management, use the following process to create and verify routes on any given operation ID:
 
