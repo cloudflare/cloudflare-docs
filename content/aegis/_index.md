@@ -26,6 +26,10 @@ Cloudflare Access determines who can reach your application by applying the Acce
 Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
 {{</related>}}
 
+{{<related header="Authenticated Origin Pulls" href="/ssl/origin-configuration/authenticated-origin-pull/" product="ssl">}}
+Authenticated Origin Pulls gives you the ability to perform mutual TLS between Cloudflare and your origin environment, providing cryptographically verifiable proof of the source of the traffic you receive.
+{{</related>}}
+
 ---
 
 ## More resources
