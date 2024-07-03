@@ -1,14 +1,14 @@
 ---
 pcx_content_type: navigation
-title: Parsing from OpenAPI Spec
+title: Tools based on OpenAPI Spec
 weight: 5
 ---
 
-# Example using parsing from OpenAPI Spec
+# Example using tools based on OpenAPI Spec
 
-Oftentimes APIs are defined and documented via [OpenAPI sepc](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI sec, which the LLM can then leverage to fullfil the prompt.
+Oftentimes APIs are defined and documented via [OpenAPI sepc](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI spec, which the LLM can then leverage to fullfil the prompt.
 
-In this example the LLM will describe the a Github user, based Github's API and its OpenAPISpec.
+In this example the LLM will describe the a Github user, based Github's API and its OpenAPI spec.
 
 ```ts
 ---
