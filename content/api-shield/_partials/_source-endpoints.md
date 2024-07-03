@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You must add Source Endpoints to Endpoint Management through established methods, by [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a route.
+You must add Source Endpoints to Endpoint Management through established methods, including [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a route.
 
 To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
 

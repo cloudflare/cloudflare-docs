@@ -4,7 +4,7 @@ title: Configure
 weight: 1
 ---
 
-# API Routing
+# Route your API endpoints using API Routing
 
 API Shield Routing enables customers to create a unified external-facing API that routes requests to different back-end services that may have different paths and hosts than the existing zone and DNS configuration.
 
