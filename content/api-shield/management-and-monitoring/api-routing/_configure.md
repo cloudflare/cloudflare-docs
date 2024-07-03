@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
-type: overview
-title: API Routing
+title: Configure
 weight: 1
 ---
 
