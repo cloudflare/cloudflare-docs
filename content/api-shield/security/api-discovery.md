@@ -31,6 +31,19 @@ API Discovery runs this process across all your traffic, generating a simple map
 /api/logout
 ```
 
+Similarly,if you have multiple subdomains that share the same set of endpoints, Cloudflare will consolidate subdomains:
+
+```
+us-api.example.com/api/v1/users/{var1}
+de-api.example.com/api/v1/users/{var1}
+fr-api.example.com/api/v1/users/{var1}
+jp-api.example.com/api/v1/users/{var1}
+```
+
+We will consolidate to `{hostVar1}.example.com/api/v1/users/{var1}{}`.
+
+
+
 {{<render file="_blog-post.md">}}
 
 ### Inbox view
