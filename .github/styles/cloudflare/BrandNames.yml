@@ -11,7 +11,7 @@ level: warning
 ignorecase: false
 swap:
   (?<!https?:\/\/[^\s]*)(?<!create-)(?!Cloudflare)(?:[cC]loud[fF]lare)): Cloudflare
-  (?<!https?:\/\/[^\s]*)(?<!create-)(?!cdnjs)(?:[cC][dD][nN]\.?[jJ][sS]): cdnjs
-  (?<!https?:\/\/[^\s]*)(?<!create-)(?!GitHub)(?:[gG]it\s?[hH]ub): GitHub
-  (?<!https?:\/\/[^\s]*)(?<!create-)(?!GitLab)(?:[gG]it\s?[lL]ab): GitLab
-  (?<!https?:\/\/[^\s]*)(?<!create-)(?!Next\.js)(?:[nN][eE][xX][tT][\s\.]?[jJ[sS]): Next.js
+  (?<!https?:\/\/[^\s]*)(?!cdnjs)(?:[cC][dD][nN]\.?[jJ][sS]): cdnjs
+  (?<!https?:\/\/[^\s]*)(?!GitHub)(?:[gG]it\s?[hH]ub): GitHub
+  (?<!https?:\/\/[^\s]*)(?!GitLab)(?:[gG]it\s?[lL]ab): GitLab
+  (?<!https?:\/\/[^\s]*)(?!Next\.js)(?:[nN][eE][xX][tT][\s\.]?[jJ[sS]): Next.js
