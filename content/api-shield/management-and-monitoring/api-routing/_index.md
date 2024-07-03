@@ -25,11 +25,13 @@ To create a route, you will need the operation ID of the Source Endpoint. To fin
 4. Expand the row for your Source Endpoint and note the **operation ID** field.
 5. Select the copy icon to copy the operation ID to your clipboard.
 
-Once your Source Endpoints are added to Endpoint Management, use the following API calls to create and verify routes on any given operation ID:
+Once your Source Endpoints are added to Endpoint Management, use the following process to create and verify routes on any given operation ID:
 
 ### Create a route
 
 {{<render file="_routing.md" withParameters="Create;;route">}}
+
+{{<render file="_routing-path-variables.md">}}
 
 ### Edit a route
 
