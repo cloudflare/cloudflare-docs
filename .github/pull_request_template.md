@@ -11,6 +11,6 @@
 <!-- Remove items that do not apply -->
 
 - [ ] The [documentation style guide](https://developers.cloudflare.com/style-guide/#style-guide) has been adhered to.
-- [ ] An issue has been opened in relation to incorrect or out of date information this PR fixes.
+- [ ] An issue has been opened in relation to any incorrect or out of date information that this PR fixes.
 - [ ] Files which have changed name or location have been allocated redirects.
 - [ ] Changelogs have been updated where applicable.
