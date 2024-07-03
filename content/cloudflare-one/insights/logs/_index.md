@@ -16,19 +16,15 @@ Review detailed logs for your Zero Trust organization.
 
 Cloudflare Zero Trust logs are stored for a varying period of time based on the service used:
 
-| Zero Trust plan | Admin logs | Access logs | DNS logs | Network logs | HTTP logs |
-| --------------- | ---------- | ----------- | -------- | ------------ | --------- |
-| **Free**        | 24 hours   | 24 hours    | 24 hours | 24 hours     | 24 hours  |
-| **Standard**    | 30 days    | 30 days     | 30 days  | 30 days      | 30 days   |
-| **Access**      | 30 days    | 30 days     | 24 hours | 24 hours     | 24 hours  |
-| **Gateway**     | 30 days    | 24 hours    | 30 days  | 30 days      | 30 days   |
-| **Enterprise**  | 180 days   | 180 days    | 180 days | 30 days      | 30 days   |
+| Zero Trust plan | Admin logs | Access logs | DNS logs                                       | Network logs | HTTP logs |
+| --------------- | ---------- | ----------- | ---------------------------------------------- | ------------ | --------- |
+| **Free**        | 24 hours   | 24 hours    | 24 hours                                       | 24 hours     | 24 hours  |
+| **Standard**    | 30 days    | 30 days     | 30 days                                        | 30 days      | 30 days   |
+| **Access**      | 30 days    | 30 days     | 24 hours                                       | 24 hours     | 24 hours  |
+| **Gateway**     | 30 days    | 24 hours    | 30 days                                        | 30 days      | 30 days   |
+| **Enterprise**  | 180 days   | 180 days    | 180 days<sup><a href="#footnote-1">1</a></sup> | 30 days      | 30 days   |
 
-{{<Aside type="warning">}}
-
-Enterprise users on per query plans cannot store DNS logs via Cloudflare. You can still export logs via [Logpush](logpush/). For more information, contact your account team.
-
-{{</Aside>}}
+<a name="footnote-1"><sup>1</sup></a> Enterprise users on per query plans cannot store DNS logs via Cloudflare. You can still export logs via [Logpush](logpush/). For more information, contact your account team.
 
 ## Customer Metadata Boundary
 
