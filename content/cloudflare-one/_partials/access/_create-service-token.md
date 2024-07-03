@@ -17,5 +17,5 @@ _build:
 
 6. Copy the Client Secret.
 
-   {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+   {{<Aside type="warning">}}This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
    {{</Aside>}}
