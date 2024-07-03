@@ -17,7 +17,7 @@ The term **Source Endpoint** refers to the endpoint managed by API Shield in End
 
 You must add Source Endpoints to Endpoint Management through established methods, by [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a Route.
 
-To create a Route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
+To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
@@ -27,80 +27,23 @@ To create a Route, you will need the operation ID of the Source Endpoint. To fin
 
 Once your Source Endpoints are added to Endpoint Management, use the following API calls to create and verify routes on any given operation ID:
 
-### Create a Route
+### Create a route
 
-```bash
----
-header: cURL command
----
-curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json" \
---data '{"route": "https://api.example.com/api/service"}'
-```
+{{<render file="_routing.md" withParameters="Create;;route">}}
 
-```json
----
-header: Response
----
-{
-  "result": {
-    "route": "https://api.example.com/api/service"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
+### Edit a route
 
-You can reorder path variables if they are present. For example, you can route `/api/{var1}/users/{var2}` to `/{var2}/users/{var1}`. Segments of the path that are not variables may be added or omitted entirely.
+{{<render file="_routing.md" withParameters="Edit;;routing">}}
 
-### Verify a Route
+### Remove a route
 
-```bash
----
-header: cURL command
----
-curl --request GET "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json"
-```
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. In **Endpoint Management**, select an existing endpoint and expand its details.
+4. Under **Routing**, select **Edit routing**.
+5. Select **Delete route**. 
 
-```json
----
-header: Response
----
-{
-  "result": {
-    "route": "https://api.example.com/api/service"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-### Remove a Route
-
-```bash
----
-header: cURL command
----
-curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json"
-```
-
-```json
----
-header: Response
----
-{
-  "result":{},
-  "success":true,
-  "errors":[],
-  "messages":[]
-}
-```
-
-### Test a Route
+### Test a route
 
 After sending a request to your Source Endpoint, you should see the contents of the back-end service as if you called the Target Endpoint directly. 
 
@@ -116,8 +59,4 @@ API Shield Routing is currently in an open beta and is only available for Enterp
 
 ## Limitations
 
-The Target Endpoint cannot be routed to a Worker if the Route is to the same zone.
-
-You cannot change the method of a request. For example, a `GET` Source Endpoint will always send a `GET` request to the Target Endpoint.
-
-You must use all of the variables in the Target Endpoint that appear in the Source Endpoint. For example, routing `/api/{var1}/users/{var2}` to `/api/users/{var2}` is not allowed and will result in an error since `{var1}` is present in the Source Endpoint but not in the Target Endpoint.
+{{<render file="_routing-limitations.md">}}
