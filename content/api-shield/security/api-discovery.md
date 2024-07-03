@@ -40,7 +40,7 @@ fr-api.example.com/api/v1/users/{var1}
 jp-api.example.com/api/v1/users/{var1}
 ```
 
-We will consolidate to `{hostVar1}.example.com/api/v1/users/{var1}{}`.
+We will consolidate to `{hostVar1}.example.com/api/v1/users/{var1}`.
 
 {{<render file="_blog-post.md">}}
 
