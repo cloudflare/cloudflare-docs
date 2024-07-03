@@ -31,7 +31,7 @@ curl -X POST \
 
 The JSON response below can then be passed on to your front-end application:
 
-```JSON
+```json
 {
   "iceServers": {
     "urls": [

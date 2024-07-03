@@ -137,7 +137,7 @@ header: cURL command
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors \
 --header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -166,12 +166,12 @@ header: Response
 ---
 header: cURL command
 ---
-curl --request 'PATCH' 'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
+curl --request PATCH 'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "sso_connector_status" : "DIS"
+  "sso_connector_status": "DIS"
 }'
 ```
 

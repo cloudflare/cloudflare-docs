@@ -19,9 +19,11 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 Refer to the example API request below to purge all mobile assets on the root webpage.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
-    -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>"
-    -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 ```
 
 ## Purge by geo
@@ -29,9 +31,11 @@ Refer to the example API request below to purge all mobile assets on the root we
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
-    -H "X-Auth-Email: <EMAIL>"
-    -H "X-Auth-Key: <API_KEY>" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"CF-IPCountry":"ES"}}]}'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"files":[{"url":"http://my.website.com/", "headers":{"CF-IPCountry":"ES"}}]}'
 ```
 
 ## Purge by language
@@ -39,7 +43,9 @@ Purge resources for a location-based Cache Key by specifying the two-letter coun
 For a Cache Key based on language, purge the asset by passing the `accept-language` header. Refer to the example API request below to purge all assets in Chinese (PRC).
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"    
-    -H "X-Auth-Email: <EMAIL>"    
-    -H "X-Auth-Key: <API_KEY>" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"accept-language":"zh-CN"}}]}'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"files":[{"url":"http://my.website.com/", "headers":{"accept-language":"zh-CN"}}]}'
 ```

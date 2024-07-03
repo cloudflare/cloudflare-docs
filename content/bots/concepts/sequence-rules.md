@@ -24,7 +24,7 @@ Sequence rules is currently in private beta. If you would like to be included in
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
-The short ID will not be visible until our account team has enabled this feature for you. 
+The short ID will not be visible until our account team has enabled this feature for you.
 {{</Aside>}}
 4. Enable the sequence cookie by adding your API token and zone ID to the following API call.
 
@@ -32,18 +32,17 @@ The short ID will not be visible until our account team has enabled this feature
 ---
 header: API call
 ---
-
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_cookies \
-  --header 'Authorization: Bearer <API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{"enabled": true}'
+https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_cookies \
+--header 'Authorization: Bearer <API_TOKEN>' \
+--header 'Content-Type: application/json' \
+--data '{"enabled": true}'
 ```
 
 5. Use the expression editor to write sequence or timing based rules via [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), or [transform rules](/rules/transform/). You can put these rules in log only mode to monitor.
 
 {{<Aside type="note">}}
-When you enable sequence rules, Cloudflare will start setting cookies for all requests that match your endpoints. 
+When you enable sequence rules, Cloudflare will start setting cookies for all requests that match your endpoints.
 {{</Aside>}}
 
 Once you have enabled sequence rules, the rules fields will be populated and you can now use the new fields in your rules.
@@ -89,7 +88,7 @@ These sequence fields are available in:
         <td><p><code>cf.sequence.previous_ops</code><br />{{<type>}}Array&lt;String>{{</type>}}</p>
         </td>
         <td>
-          <p>This field contains an array of the prior operation IDs in the sequence, ordered from most to least recent. It does not include the current request. <br /><br /> If an operation is repeated, it will appear multiple times in the sequence. 
+          <p>This field contains an array of the prior operation IDs in the sequence, ordered from most to least recent. It does not include the current request. <br /><br /> If an operation is repeated, it will appear multiple times in the sequence.
           </p>
         </td>
         <td><p><code>["f54dac32", "c821cc00", "a37dc89b"]</code>
@@ -100,7 +99,7 @@ These sequence fields are available in:
         <td><p><code>cf.sequence.msec_since_op</code><br />{{<type>}}Map&lt;Number>{{</type>}}</p>
         </td>
         <td>
-          <p>This field contains a map where the keys are operation IDs and the values are the number of milliseconds since that operation has most recently occurred. <br /><br /> This does not include the current request or operation as it only factors in previous operations in the sequence. 
+          <p>This field contains a map where the keys are operation IDs and the values are the number of milliseconds since that operation has most recently occurred. <br /><br /> This does not include the current request or operation as it only factors in previous operations in the sequence.
           </p>
         </td>
         <td><p><code>{"f54dac32": 1000, "c821cc00": 2000}</code>
@@ -160,7 +159,7 @@ To disable sequence rules:
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 {{<Aside type="note">}}
-The short ID will not be visible until our account team has enabled this feature for you. 
+The short ID will not be visible until our account team has enabled this feature for you.
 {{</Aside>}}
 4. Disable the sequence cookie using your API token, zone ID, and by setting `enabled` to `false` on the following API call.
 
@@ -169,8 +168,8 @@ The short ID will not be visible until our account team has enabled this feature
 header: API call
 ---
 curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_cookies \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --data '{"enabled": false}'
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"enabled": false}'
 ```
 
 ---
