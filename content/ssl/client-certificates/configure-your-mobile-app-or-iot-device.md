@@ -197,7 +197,7 @@ EOF
 ))
 
 # save the response so we can view it and then extra the certificate
-$ curl https://api.cloudflare.com/client/v4/zones/{zone_id/client_certificates \
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/client_certificates \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --header 'Content-Type: application/json' \

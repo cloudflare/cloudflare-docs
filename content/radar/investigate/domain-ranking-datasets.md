@@ -91,7 +91,7 @@ Then you can request a download url:
 ```bash
 curl "https://api.cloudflare.com/client/v4/radar/datasets/download" \
 --header "Authorization: Bearer <API_TOKEN>" \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --data '{
   "datasetId": 213
 }'

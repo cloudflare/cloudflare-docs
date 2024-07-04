@@ -107,9 +107,9 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>' \
-      --header 'Content-Type: application/json' \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
         "account": {
           "id":"<ACCOUNT_ID>"
@@ -126,8 +126,8 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
     printf "DNS quick scanning ${domain}:\n"
 
     scan_output=`curl --request POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>'`
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>"`
 
     echo $scan_output | jq .
 
@@ -149,9 +149,9 @@ You can find your zones nameservers in the following locations:
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>' \
-      --header 'Content-Type: application/json' \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
         "account": {
           "id": "<ACCOUNT_ID>"
@@ -169,8 +169,8 @@ You can find your zones nameservers in the following locations:
     printf "DNS quick scanning ${domain}:\n"
 
     scan_output=`curl --request POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
-      --header 'X-Auth-Email: <EMAIL>' \
-      --header 'X-Auth-Key: <API_KEY>'`
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>"`
 
     echo $scan_output | jq .
 

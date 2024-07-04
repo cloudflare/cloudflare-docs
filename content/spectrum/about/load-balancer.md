@@ -39,9 +39,9 @@ Under **Advanced health check settings**:
 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/organizations/{organization_id}/load_balancers/monitors'  \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"description":"Spectrum Health Check","type":"tcp","port":2048,"interval":30,"retries":2,"timeout":5,"method":"connection_established"}'
 ```
 
