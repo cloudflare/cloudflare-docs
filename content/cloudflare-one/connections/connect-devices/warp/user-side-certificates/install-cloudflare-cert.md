@@ -427,13 +427,13 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 1. Get curl's `cacert` bundle.
 
    ```sh
-   $ curl -O https://curl.se/ca/cacert.pem
+   $ curl --remote-name https://curl.se/ca/cacert.pem
    ```
 
 2. Get the Cloudflare CA.
 
    ```sh
-   $ curl -O https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem
+   $ curl --remote-name https://developers.cloudflare.com/cloudflare-one/static/Cloudflare_CA.pem
    ```
 
 3. Combine the certs into a single `.pem` file.

@@ -31,9 +31,9 @@ Use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns
 
 ```bash
 curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "foundation_dns": true
 }'

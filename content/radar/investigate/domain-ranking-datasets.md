@@ -18,8 +18,8 @@ Cloudflare regularly generates a domain ranking based on DNS queries to [1.1.1.1
 #### Example: Get the current ordered top domains in the Cloudflare ranking
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&limit=5" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&limit=5" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -57,8 +57,8 @@ etc.. These are available through Cloudflare's [datasets endpoints](/api/operati
 In the following example we will request the last available domain ranking buckets:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=10&datasetType=RANKING_BUCKET" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/datasets?limit=10&datasetType=RANKING_BUCKET" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -89,12 +89,12 @@ If you are interested in a specific top (like the top one million), go through t
 Then you can request a download url:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/radar/datasets/download" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H 'Content-Type: application/json' \
-     --data '{
-      "datasetId": 213
-    }'
+curl "https://api.cloudflare.com/client/v4/radar/datasets/download" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header 'Content-Type: application/json' \
+--data '{
+  "datasetId": 213
+}'
 ```
 
 ```json
@@ -118,8 +118,8 @@ This stream endpoint is only available for datasets generated after 2023-01-08.
 
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets/ranking_top_1000" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/datasets/ranking_top_1000" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```csv

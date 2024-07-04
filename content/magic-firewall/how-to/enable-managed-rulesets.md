@@ -89,7 +89,7 @@ curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header "Content-Type:application/json" \
+--header "Content-Type: application/json" \
 --data '{
   "expression": "true",
   "action": "execute",
@@ -127,7 +127,7 @@ curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header "Content-Type:application/json" \
+--header "Content-Type: application/json" \
 --data '{
   "expression": "true",
   "action": "execute",

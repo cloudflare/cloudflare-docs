@@ -234,8 +234,8 @@ This is a known issue the Bots team is working to resolve in the near future. In
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
@@ -243,9 +243,9 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
 3. Use the ruleset ID you found to delete the SBFM ruleset.
 
 ```bash
-curl -X DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 Note that you need to replace `<API_KEY>` with your own [API key](/fundamentals/api/get-started/keys/).

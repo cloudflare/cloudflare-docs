@@ -17,8 +17,8 @@ Once you have the token, you are ready to make your first request to Radar's API
 In the following example, we will access the global percentage distribution of device types (like mobile and desktop traffic) for the last seven days. For more information, refer to [Get device types summary](/api/operations/radar-get-http-summary-by-device-type) endpoint:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 A successful response will look similar to the following:
@@ -54,8 +54,8 @@ This response means that 41% of the requests are classified as coming from mobil
 The previous example returns all traffic from bots and humans. However, you can access just the traffic classified as coming from humans (the default in [Cloudflare Radar](https://radar.cloudflare.com)) by adding `botClass=LIKELY_HUMAN`. You can also access traffic coming only from bots with `botClass=LIKELY_AUTOMATED` (refer to [bot classes](/radar/concepts/bot-classes) for more information). For example:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&botClass=LIKELY_AUTOMATED&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&botClass=LIKELY_AUTOMATED&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Running the above, can you find any differences between both in the distribution of mobile versus desktop traffic?

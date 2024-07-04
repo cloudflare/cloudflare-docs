@@ -24,9 +24,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-    "name": "iplist",
-    "description": "This contains IPs that should be allowed.",
-    "kind": "ip"
+  "name": "iplist",
+  "description": "This contains IPs that should be allowed.",
+  "kind": "ip"
 }'
 ```
 
@@ -55,13 +55,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-    "action": "skip",
-    "action_parameters": {
-        "ruleset": "current"
-    },
-    "expression": "ip.src in $iplist",
-    "description": "Allowed IPs from iplist",
-    "enabled": true
+  "action": "skip",
+  "action_parameters": {
+    "ruleset": "current"
+  },
+  "expression": "ip.src in $iplist",
+  "description": "Allowed IPs from iplist",
+  "enabled": true
 }'
 ```
 

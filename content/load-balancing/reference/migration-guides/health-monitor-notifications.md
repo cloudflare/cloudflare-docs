@@ -26,14 +26,13 @@ First you should determine which pools are using notifications. It's often easie
 
 Use the [Cloudflare API](/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_balancers/pools" \
-    -H "X-Auth-Email: user@example.com" \
-    -H "X-Auth-Key: REDACTED" \
-    -H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 | jq '[.result[] | select(.notification_email != "") | {name, notification_email}]'
 ```
 
@@ -41,23 +40,23 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/:account_id/load_bala
 ---
 header: Response
 ---
-[ 
-    { 
-        "name": "pool-1", 
-        "notification_email": "user@example.com" 
-    }, 
-    { 
-        "name": "pool-2", 
-        "notification_email": "user@example.com" 
-    }, 
-    { 
-        "name": "pool-3", 
-        "notification_email": "user@example.com" 
-    }, 
-    { 
-        "name": "pool-4", 
-        "notification_email": "user@example.com" 
-    } 
+[
+    {
+        "name": "pool-1",
+        "notification_email": "user@example.com"
+    },
+    {
+        "name": "pool-2",
+        "notification_email": "user@example.com"
+    },
+    {
+        "name": "pool-3",
+        "notification_email": "user@example.com"
+    },
+    {
+        "name": "pool-4",
+        "notification_email": "user@example.com"
+    }
 ]
 ```
 
@@ -110,16 +109,17 @@ Though you can perform these steps in the dashboard, Cloudflare recommends you u
 
 If using the Cloudflare API, we recently added a [`PATCH`](/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/:account_identifier/load_balancers/pools" \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
--H "Content-Type: application/json" \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "notification_email":""
+  "notification_email": ""
 }'
 ```
 

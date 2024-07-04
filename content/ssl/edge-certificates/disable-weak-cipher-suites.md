@@ -31,37 +31,37 @@ Assuming this is just a one-time change, you can trigger the API call using curl
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
 3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
-Here is an example value (list of cipher suites) which you can use to replace <cipher\_suites> in the commands below:
+Here is an example value (list of cipher suites) which you can use to replace `<CIPHER_SUITES>` in the commands below:
 
 ```json
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
-Run the command to make the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
+Run the command to make the API call with the appropriate `{zone_id}`, `<EMAIL>`, `<API_KEY>`, and `<CIPHER_SUITES>`:
 
 ```bash
-curl -X PATCH \
-  "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
-  -H "X-Auth-Email: <auth_email>" \
-  -H "X-Auth-Key: <auth_key>" \
-  -H "Content-Type: application/json" \
-  --data '{"value": <cipher_suites>}'
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": <CIPHER_SUITES>}'
 ```
 
-If you choose to use a token, you will not need <auth\_email> nor <auth\_key>. You would instead need <api\_token> and the command will look like this:
+If you choose to use a token, you will not need `<EMAIL>` nor `<API_KEY>`. You would instead need `<API_TOKEN>` and the command will look like this:
 
 ```bash
-curl -X PATCH \
-  "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
-  -H "Authorization: Bearer <api_token>" \
-  -H "Content-Type: application/json" \
-  --data '{"value": <cipher_suites>}'
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"value": <CIPHER_SUITES>}'
 ```
 
 To revert to the default cipher suites, you can send an empty array as the value, as in the following example.
 
 ```bash
-  --data '{"value": []}'
+--data '{"value": []}'
 ```
 
 Refer to [Managing API Tokens and Keys](/fundamentals/api/get-started/) to learn more about API tokens and keys.

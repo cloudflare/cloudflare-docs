@@ -75,9 +75,10 @@ header: cURL command
 curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "type":"onetimepin",
-  "config":{}
+  "type": "onetimepin",
+  "config": {}
 }'
 ```
 
@@ -112,9 +113,11 @@ header: Response
 ---
 header: cURL command
 ---
-curl --request PUT 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
+curl --request PUT \
+'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
   ...
@@ -166,7 +169,8 @@ header: Response
 ---
 header: cURL command
 ---
-curl --request PATCH 'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
+curl --request PATCH \
+'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \

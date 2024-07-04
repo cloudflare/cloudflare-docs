@@ -182,8 +182,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/users" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "name":"John Doe",
-  "email":"jdoe@acme.com",
+  "name": "John Doe",
+  "email": "jdoe@acme.com",
   "custom": {"groups":[{"id": "02fk6b3p3majl10", "email": "finance@acme.com", "name": "Finance"}]}
 }'
 ```

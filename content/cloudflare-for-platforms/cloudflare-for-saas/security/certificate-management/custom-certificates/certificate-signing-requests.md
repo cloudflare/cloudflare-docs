@@ -50,9 +50,9 @@ EOF
 Now, you want to generate a CSR that you can provide to your customer.
 
 ```bash
-$ curl --silent https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
---header "X-Auth-Email: {email}" \
---header "X-Auth-Key: {key}"\
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"\
 --header "Content-Type: application/json" \
 --data "$request_body"
 
@@ -82,12 +82,11 @@ $ curl --silent https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs
 Replace the `\n` characters with actual newlines before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
 
 ```bash
-curl --silent https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
---header "X-Auth-Email: {email}" \
---header "X-Auth-Key: {key}" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data "$request_body" | jq .result.csr |\
-perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
+--data "$request_body" | jq .result.csr | perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
 ```
 
 ### Step 3 — Customer obtains certificate

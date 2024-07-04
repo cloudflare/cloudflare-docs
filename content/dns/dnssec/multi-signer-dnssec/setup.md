@@ -27,10 +27,11 @@ The following steps also apply if you use [Cloudflare as a secondary DNS provide
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "status": "active",
   "dnssec_multi_signer": true
@@ -41,9 +42,9 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnsse
 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "type": "DNSKEY",
   "name": "<ZONE_NAME>",
@@ -82,10 +83,11 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 {{</Aside>}}
 
 ```bash
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "multi_provider": true
 }'
@@ -99,8 +101,8 @@ API example:
 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>'
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 Command line query example:

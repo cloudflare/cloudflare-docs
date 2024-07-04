@@ -13,9 +13,11 @@ To set up Device Information Only mode:
 1. Enable client certificate provisioning for [your zone](/fundamentals/setup/find-account-and-zone-ids/):
 
     ```bash
-    curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/devices/policy/certificates' \
+    curl --request PATCH \
+    'https://api.cloudflare.com/client/v4/zones/{zone_id}/devices/policy/certificates' \
     --header "X-Auth-Email: <EMAIL>" \
     --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
     --data '{"enabled": true}'
     ```
 

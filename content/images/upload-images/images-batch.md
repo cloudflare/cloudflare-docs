@@ -12,7 +12,7 @@ To use the Images batch API, you will need to obtain a batch token and use the t
 To obtain a token, you can use the new `images/v1/batch_token` endpoint as shown in the example below.
 
 ```bash
-$ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/batch_token" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/batch_token" \
 --header "Authorization: Bearer <API_TOKEN>"
 
 # Response:

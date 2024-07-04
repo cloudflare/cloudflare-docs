@@ -48,8 +48,8 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-   "status": "active"
-  }'
+  "status": "active"
+}'
 ```
 
 2. Use the [DNSSEC Details endpoint](/api/operations/dnssec-dnssec-details) to get the necessary values to create a **DS** record at your registrar.
@@ -104,8 +104,8 @@ curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-   "dnssec_presigned": true
-  }'
+  "dnssec_presigned": true
+}'
 ```
 
 {{</tab>}}
