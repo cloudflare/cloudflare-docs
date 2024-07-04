@@ -333,7 +333,9 @@ A start of authority (SOA) record stores information about your domain such as a
 
 If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-setup/), you do not need to create an SOA record. Cloudflare creates this record automatically when you start using Cloudflare's authoritative nameservers.
 
-If you have an Enterprise account, you also have the option to configure your own [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and change the values for this record. Refer to the following list for information about each SOA record field:
+If you have an Enterprise account, you also have the option to configure your own [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) and change the SOA record values that Cloudflare will use for all new zones added to your account.
+
+Refer to the following list for information about each SOA record field:
 
 {{<details header="SOA record fields">}}
 
