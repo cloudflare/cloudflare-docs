@@ -52,9 +52,11 @@ If your zone is in **Setup** for over 28 days, it will be automatically [deleted
 
 Your zone status is presented as **Pending Nameserver Update** on the Cloudflare dashboard.
 
-Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains). In case that you would like to configure settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and the configuration around [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) work as expected for Enterprise zone.
+Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#pending-domains).
 
-If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
+If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days. Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
+
+For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
 
 ### Causes
 
