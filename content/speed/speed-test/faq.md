@@ -20,6 +20,18 @@ It can vary from about 25 seconds to over a minute. If you leave your speed tab 
 {{</faq-item>}}
 
 {{<faq-item>}}
+{{<faq-question level=2 text="Are query parameters or anchors supported in tested URLs?" >}}
+
+{{<faq-answer>}}
+
+No. At the moment, any query parameter or anchor appended to the tested URL are dropped.
+
+For example, using the https://example.com/blog/?utm_medium=social#title URL, the Observatory will discard the `?utm_medium=social` query parameter as well as the `#title` anchor. The tested URL will actually be https://example.com/blog/.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
 {{<faq-question level=2 text="I get a `403` response when rerunning the website analysis?" >}}
 
 {{<faq-answer>}}
