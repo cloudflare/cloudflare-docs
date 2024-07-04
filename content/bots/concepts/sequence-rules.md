@@ -34,8 +34,8 @@ header: API call
 ---
 curl --request PUT \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_cookies \
---header 'Authorization: Bearer <API_TOKEN>' \
---header 'Content-Type: application/json' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{"enabled": true}'
 ```
 

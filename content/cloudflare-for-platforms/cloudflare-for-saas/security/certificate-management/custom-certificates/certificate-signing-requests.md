@@ -52,7 +52,7 @@ Now, you want to generate a CSR that you can provide to your customer.
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
 --header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"\
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data "$request_body"
 
@@ -103,6 +103,7 @@ Cloudflare only accepts publicly trusted certificates. If you attempt to upload 
 
 ```bash
 $ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+
 $ request_body=$(< <(cat <<EOF
 {
   "hostname": "app.example.com",

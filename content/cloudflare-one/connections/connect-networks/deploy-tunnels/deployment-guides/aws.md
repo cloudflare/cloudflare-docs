@@ -67,7 +67,9 @@ To complete the following procedure, you will need to:
 
   ```bash
   $ apt update
+
   $ apt -y install apache2
+
   $ cat <<EOF > /var/www/html/index.html
   <html><body><h1>Hello Cloudflare!</h1>
   <p>This page was created for a Cloudflare demo.</p>
