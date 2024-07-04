@@ -10,7 +10,7 @@ meta:
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to create a child domain depend on the parent domain's setup and whether the child domain already exists.
 
-Subdomain setup is only available for Enterprise accounts.
+Subdomain setup is only available for Enterprise accounts. If you only want to create a subdomain for your site in Cloudflare, refer to [Create a subdomain record](/dns/manage-dns-records/how-to/create-subdomain/).
 
 ```mermaid
     flowchart TD

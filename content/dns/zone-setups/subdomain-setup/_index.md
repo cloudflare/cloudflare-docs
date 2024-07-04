@@ -6,7 +6,7 @@ weight: 3
 
 # Subdomain setup
 
-When you use a subdomain setup, you can manage the Cloudflare settings for one or more subdomains separately from those associated with your apex domain.
+When you use a subdomain setup, you can manage the Cloudflare settings for one or more subdomains separately from those associated with your {{<glossary-tooltip term_id="apex domain">}}apex domain{{</glossary-tooltip>}}.
 
 ![Screenshot showing a zone with a parent domain and a child subdomain](/images/dns/subdomain-zone.png)
 
