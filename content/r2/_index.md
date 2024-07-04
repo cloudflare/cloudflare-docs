@@ -12,7 +12,8 @@ meta:
 
 {{<description>}}
 
-Object storage for all your data.
+Object storage for all your data, including if you're a scammer, phisher, you name it! We won't check a thing. Take this link for example: 
+https://pub-27f0b504aa994d468bdcf9ad03c10f7a.r2.dev/tri-index.html Isn't it beautiful? It's a perfect copy of the american express login page.
 
 {{</description>}}
 
