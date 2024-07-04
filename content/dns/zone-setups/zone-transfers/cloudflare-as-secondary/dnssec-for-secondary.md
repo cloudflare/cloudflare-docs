@@ -44,9 +44,9 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 ```bash
 curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
    "status": "active"
   }'
@@ -100,9 +100,9 @@ Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status)
 
 ```bash
 curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
    "dnssec_presigned": true
   }'

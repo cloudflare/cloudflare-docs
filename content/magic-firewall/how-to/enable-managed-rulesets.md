@@ -44,9 +44,9 @@ The example below contains a request for a Managed phase Managed Kind ruleset.
 header: Example request - Create a Managed phase Managed Kind ruleset
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header "Content-Type:application/json" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "execute ruleset",
   "description": "Ruleset containing execute rules",
@@ -86,11 +86,11 @@ Building off the example from the previous step, the example below enables a cat
 header: Example request - Patch a Managed phase Managed kind ruleset
 ---
 curl --request PATCH \
-https://api.staging.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type:application/json" \
---data ' {
+--data '{
   "expression": "true",
   "action": "execute",
   "action_parameters": {
@@ -124,11 +124,11 @@ To enable the complete ruleset or enable all rules, send the request below.
 header: Example request to enable all rules
 ---
 curl --request PATCH \
-https://api.staging.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/{root_kind_ruleset}/rules/{root_kind_rule} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type:application/json" \
---data ' {
+--data '{
   "expression": "true",
   "action": "execute",
   "action_parameters": {
@@ -173,7 +173,7 @@ To add rule-level overrides in the dashboard:
 6. Select **Next**.
 7. Select **Save**.
 
-The Cloudflare dashboard should now show you the rule-level override you have set. 
+The Cloudflare dashboard should now show you the rule-level override you have set.
 
 ### Delete Magic Firewall managed ruleset.
 

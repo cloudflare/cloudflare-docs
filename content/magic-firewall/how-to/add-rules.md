@@ -60,27 +60,27 @@ The example below blocks all TCP ports, but allows one port (`8080`) by using th
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "skip",
-        "action_parameters": { "ruleset": "current" },
-        "expression": "tcp.dstport in { 8080 } ",
-        "description": "Allow port 8080"
-      },
-      {
-        "action": "block",
-        "expression": "tcp.dstport in { 1..65535 }",
-        "description": "Block all TCP ports"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "skip",
+      "action_parameters": { "ruleset": "current" },
+      "expression": "tcp.dstport in { 8080 } ",
+      "description": "Allow port 8080"
+    },
+    {
+      "action": "block",
+      "expression": "tcp.dstport in { 1..65535 }",
+      "description": "Block all TCP ports"
+    }
+  ]
 }'
 ```
 
@@ -90,21 +90,21 @@ The example below blocks all packets with a source or destination IP address com
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "block",
-        "expression": "ip.geoip.country == \"BR\"",
-        "description": "Block traffic from Brazil"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "block",
+      "expression": "ip.geoip.country == \"BR\"",
+      "description": "Block traffic from Brazil"
+    }
+  ]
 }'
 ```
 
@@ -119,21 +119,21 @@ Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-exp
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "block",
-        "expression": "ip.src in $cf.anonymizer",
-        "description": "Block traffic from anonymizer proxies"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "block",
+      "expression": "ip.src in $cf.anonymizer",
+      "description": "Block traffic from anonymizer proxies"
+    }
+  ]
 }'
 ```
 

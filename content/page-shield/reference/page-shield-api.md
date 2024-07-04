@@ -76,7 +76,7 @@ This example obtains the current settings of Page Shield, including the status (
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -106,7 +106,7 @@ This example enables Page Shield in the specified zone.
 header: Request
 ---
 curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{ "enabled": true }'
@@ -248,7 +248,7 @@ This `GET` request obtains the details of a script detected by Page Shield with 
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -356,7 +356,7 @@ This `GET` request obtains the details of a connection detected by Page Shield w
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740 \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -451,7 +451,7 @@ This `GET` request obtains the details of a cookie detected by Page Shield with 
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies/beee03ada7e047e79f076785d8cd8b8e \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies/beee03ada7e047e79f076785d8cd8b8e" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -506,7 +506,7 @@ For a list of CSP directives and keywords supported by Page Shield policies, ref
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{

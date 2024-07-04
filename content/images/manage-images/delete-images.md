@@ -19,11 +19,11 @@ Your image will be deleted from your account.
 
 ## Delete images via the API
 
-Make a `DELETE` request to the [delete image endpoint](/api/operations/cloudflare-images-delete-image). `<IMAGE_ID>` must be fully URL encoded in the API call URL.
+Make a `DELETE` request to the [delete image endpoint](/api/operations/cloudflare-images-delete-image). `{image_id}` must be fully URL encoded in the API call URL.
 
 ```bash
-curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
---header 'Authorization: Bearer <API_TOKEN>'
+curl --request DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/{image_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 After the image has been deleted, the response returns `"success": true`.

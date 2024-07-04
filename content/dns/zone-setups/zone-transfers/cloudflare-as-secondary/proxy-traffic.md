@@ -48,12 +48,12 @@ If you use Secondary DNS override and keep other nameservers at your registrar, 
 
 ```bash
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_settings \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-    "secondary_overrides": true
+  "secondary_overrides": true
 }'
 ```
 

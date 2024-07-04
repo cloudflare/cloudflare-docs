@@ -73,12 +73,12 @@ The result will be in JSON (as requested), so piping the output to `jq` will mak
 
 ```bash
 ... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
-  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
+  --header "Content-Type: application/json" \
+  --header "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
+  --header "X-Auth-key: <CLOUDFLARE_API_KEY>" \
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
+
 #=> {
 #=>   "data": {
 #=>     "viewer": {

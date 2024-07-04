@@ -143,10 +143,10 @@ highlight: [3, 4, 7]
 ### 2. Enable DoH functionality for the service token
 
 ```bash
-curl --request PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations/doh/{service_token_id}" \
---header "X-Auth-Email: <YOUR_EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations/doh/{service_token_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 If you get an `access.api.error.service_token_not_found` error, check that `{service_token_id}` is the value of `id` and not `client_id`.
