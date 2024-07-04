@@ -18,20 +18,15 @@ Only `A`, `AAAA`, and `CNAME` records can be proxied.
 
 {{</Aside>}}
 
-{{<Aside type="warning">}}
-
-Secondary DNS override is only supported with [DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary) Unsigned or set to [Live Signing](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-live-signing-dnssec). If DNSSEC is set to [Pre-signed](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-pre-signed-dnssec) then your proxied hostnames will not resolve to Cloudflare.
-
-{{</Aside>}}
-
 ## Prerequisites
 
 Before you set up Secondary DNS override, make sure that you have:
 
-- [Set up a secondary DNS zone](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) and make sure your DNS records are transferred correctly.
+- [Set up a secondary DNS zone](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) and confirmed your DNS records are transferred correctly.
+- Set your [DNSSEC with Secondary DNS](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings/) option to either **Unsigned** or **Live Signing**. If set to [Pre-signed](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-pre-signed-dnssec), Cloudflare will treat all your DNS records as unproxied (DNS only).
 - Removed all nameservers from your registrar except for those provided by Cloudflare (highly recommended).
 
-{{<Aside type="warning">}}
+  {{<Aside type="warning">}}
 
 If you use Secondary DNS override and keep other nameservers at your registrar, DNS responses will be inconsistent across DNS providers, which goes against [official standards](https://www.iana.org/help/nameserver-requirements).
 
