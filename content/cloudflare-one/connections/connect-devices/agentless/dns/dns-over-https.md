@@ -107,18 +107,18 @@ Currently, authentication tokens can only be generated through the API. You can 
 ### 1. Create a service token for the account
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/service_tokens" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
-     --data '{"name":"ACME Corporation service token"}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"name":"ACME Corporation service token"}'
 ```
 
 Save the service token's `client_id`, `client_secret`, and `id`.
 
 {{<details header="Example response">}}
 
-```bash
+```json
 ---
 highlight: [3, 4, 7]
 ---
@@ -143,17 +143,17 @@ highlight: [3, 4, 7]
 ### 2. Enable DoH functionality for the service token
 
 ```bash
-curl --request PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/organizations/doh/<ID>" \
-     --header "X-Auth-Email: <YOUR_EMAIL>" \
-     --header "X-Auth-Key: <API_KEY>" \
-     --header "Content-Type: application/json"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations/doh/{service_token_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
-If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `{service_token_id}` is the value of `id` and not `client_id`.
 
 {{<details header="Example response">}}
 
-```bash
+```json
 {
   "result": {
     "client_id": "88bf3b6d86161464f6509f7219099e57.access",
@@ -177,22 +177,22 @@ If you get an `access.api.error.service_token_not_found` error, check that `<SER
 Create a new user and optionally add them to a group.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/users" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
-     --data '{
-        "name":"John Doe",
-        "email":"jdoe@acme.com",
-        "custom": {"groups":[{"id": "02fk6b3p3majl10", "email": "finance@acme.com", "name": "Finance"}]}
-        }'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/users" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "John Doe",
+  "email": "jdoe@acme.com",
+  "custom": {"groups":[{"id": "02fk6b3p3majl10", "email": "finance@acme.com", "name": "Finance"}]}
+}'
 ```
 
 Save the user's `id` returned in the response.
 
 {{<details header="Example response">}}
 
-```bash
+```json
 ---
 highlight: [3]
 ---
@@ -205,13 +205,13 @@ highlight: [3]
     "name": "John Doe",
     "email": "jdoe@acme.com",
     "custom": {
-        "groups": [
-            {
-                "email": "finance@acme.com",
-                "id": "02fk6b3p3majl10",
-                "name": "Finance"
-            }
-        ]
+      "groups": [
+        {
+          "email": "finance@acme.com",
+          "id": "02fk6b3p3majl10",
+          "name": "Finance"
+        }
+      ]
     }
   },
   "success": true,
@@ -233,18 +233,17 @@ Steps 1-3 above only need to be completed once, while Steps 4-5 below would occu
 Request a DoH token for the user, using your service token to authenticate into your {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}}.
 
 ```bash
-curl -s -X GET "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
-     -H "Cf-Access-Client-Id: <CLIENT_ID>" \
-     -H "Cf-Access-Client-Secret: <CLIENT_SECRET>" \
-     -H "Content-Type: application/json"
+curl "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/doh-token?account-id=<ACCOUNT_ID>&user-id=<USER_ID>&auth-domain=<TEAM_NAME>.cloudflareaccess.com" \
+--header "Cf-Access-Client-Id: <CLIENT_ID>" \
+--header "Cf-Access-Client-Secret: <CLIENT_SECRET>"
 ```
 
 The response contains a unique DoH token associated with the user. This token expires in 24 hours. We recommend setting up a refresh flow for the DoH token instead of generating a new one for every DoH query.
 
 {{<details header="Example response">}}
 
-```bash
-{"token":"y2khbGciOiJSUzI1NiIsImtpZCI6ImJlZjVkYjg4ZTEwMjk3ZDEwNzhkMmEyYjE0MjMxZTljYTQwMjQ2NjAwOTQzNmJhOTQwOGJkODY3ZmI4OWFiOGQifQ.eyJ0eXBlIjoiZG9oIiwiYXVkIjoiY2xvdWRmbGFyZS1nYXRld2F5LmNvbSIsImlhdCI6MTY1NDc1MTg3NSwiZXhwIjoxNjU0ODM4Mjc1LCJhY2NvdW50LWlkIjoiMTA4MDM0OGIyZGYzYmQwN2QxZmI1MjM3Y2Q1ZDU5M2EiLCJ1c2VyLWlkIjoiNTRkNDI1ZGUtN2E3OC00MTg2LTk5NzUtZDQzYzg4ZWU3ODk5In0.I5p4WsH2dPhQ8vwy84zF05PsoBHCsUSXAaMpNhEH36oFZ3tXcs9ksLz7OzpZ_x3HxUfO3n57LlpAF1VehaBt2i94XCkvSgtHpYcwd_qZydLp-BGtcyfU1LbdXQC3m6zxKcIWu5VySi8I-J25UYlpyJhYgZ4DQUZIpqbSSt6WcVRKvA7OBa7xjkTux4OcqWAViO_ZS-GLwl-fqhvolmiwk37seBD3YuV1zG06VeWXfrMkZ5MbhooHD1DZDBHOZpTtmN8MbeKeI4tlY1mb_O3-jE-um6F9Hrl4NQm89MKFzsum-_Rywi5m4PTSlDza7fjdJs7RzFgJd3VWgzG-jgyQKw"}%
+```json
+{"token":"y2khbGciOiJSUzI1NiIsImtpZCI6ImJlZjVkYjg4ZTEwMjk3ZDEwNzhkMmEyYjE0MjMxZTljYTQwMjQ2NjAwOTQzNmJhOTQwOGJkODY3ZmI4OWFiOGQifQ.eyJ0eXBlIjoiZG9oIiwiYXVkIjoiY2xvdWRmbGFyZS1nYXRld2F5LmNvbSIsImlhdCI6MTY1NDc1MTg3NSwiZXhwIjoxNjU0ODM4Mjc1LCJhY2NvdW50LWlkIjoiMTA4MDM0OGIyZGYzYmQwN2QxZmI1MjM3Y2Q1ZDU5M2EiLCJ1c2VyLWlkIjoiNTRkNDI1ZGUtN2E3OC00MTg2LTk5NzUtZDQzYzg4ZWU3ODk5In0.I5p4WsH2dPhQ8vwy84zF05PsoBHCsUSXAaMpNhEH36oFZ3tXcs9ksLz7OzpZ_x3HxUfO3n57LlpAF1VehaBt2i94XCkvSgtHpYcwd_qZydLp-BGtcyfU1LbdXQC3m6zxKcIWu5VySi8I-J25UYlpyJhYgZ4DQUZIpqbSSt6WcVRKvA7OBa7xjkTux4OcqWAViO_ZS-GLwl-fqhvolmiwk37seBD3YuV1zG06VeWXfrMkZ5MbhooHD1DZDBHOZpTtmN8MbeKeI4tlY1mb_O3-jE-um6F9Hrl4NQm89MKFzsum-_Rywi5m4PTSlDza7fjdJs7RzFgJd3VWgzG-jgyQKw"}
 ```
 
 {{</details>}}
@@ -254,16 +253,16 @@ The response contains a unique DoH token associated with the user. This token ex
 Send DoH queries to the resolver at `https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query`, making sure to include the user's DoH token in the `CF-Authorization` header.
 
 ```bash
-curl -s 'https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com' \
-     -H 'accept: application/dns-json' \
-     -H 'CF-Authorization: <USER_DOH_TOKEN>' | jq
+curl --silent "https://<ACCOUNT_ID>.cloudflare-gateway.com/dns-query?name=example.com" \
+--header "accept: application/dns-json" \
+--header "CF-Authorization: <USER_DOH_TOKEN>" | jq
 ```
 
 If the site is blocked and you have enabled [**Display block page**](/cloudflare-one/policies/gateway/configuring-block-page/#turn-on-the-block-page) for the policy, the query will return `162.159.36.12` (the IP address of the Gateway block page). If the block page is disabled, the response will be `0.0.0.0`.
 
 {{<details header="Example response">}}
 
-```bash
+```json
 {
   "Status": 0,
   "TC": false,

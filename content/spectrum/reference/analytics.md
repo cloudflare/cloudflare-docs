@@ -81,10 +81,9 @@ Use the operators below to filter data.
 ## Analytics query example
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
-   -H "X-Auth-Email: you@email.com" \
-   -H "X-Auth-Key: 0000" \
-   -H "Content-Type: application/json"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 Refer to the [Spectrum API documentation](/api/operations/spectrum-aggregate-analytics-get-current-aggregated-analytics) for more examples of API requests.

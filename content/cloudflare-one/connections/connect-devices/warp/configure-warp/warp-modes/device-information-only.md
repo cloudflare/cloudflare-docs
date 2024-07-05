@@ -12,12 +12,14 @@ To set up Device Information Only mode:
 
 1. Enable client certificate provisioning for [your zone](/fundamentals/setup/find-account-and-zone-ids/):
 
-   ```bash
-   curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE ID>/devices/policy/certificates' \
-       -H "X-Auth-Email: <EMAIL>" \
-       -H "X-Auth-Key: <API_KEY>" \
-       --data '{"enabled": true}'
-   ```
+    ```bash
+    curl --request PATCH \
+    'https://api.cloudflare.com/client/v4/zones/{zone_id}/devices/policy/certificates' \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
+    --data '{"enabled": true}'
+    ```
 
 2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 

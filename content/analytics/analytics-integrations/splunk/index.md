@@ -55,7 +55,7 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
 
 9.  Determine the endpoint to use to send the data to. The endpoint should be:
 
-```bash
+```sql
 "<protocol>://input-<host>:<port>/<endpoint>" or "<protocol>://http-inputs-<host>:<port>/<endpoint>"
 ```
 

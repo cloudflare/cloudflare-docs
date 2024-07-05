@@ -78,10 +78,10 @@ Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "gre_tunnels": [
     {
@@ -106,10 +106,10 @@ Note that in example below, replay protection is disabled by default. You can en
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
+--header 'Content-Type: application/json' \
 --data '{
   "ipsec_tunnels": [
     {
@@ -163,8 +163,8 @@ This will generate a response like the following:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
---header 'X-Auth-Email: <EMAIL>'
---header 'X-Auth-Key: <API_KEY>'
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 You will receive a response like the following:
@@ -197,9 +197,9 @@ You can enable bidirectional health checks via the API with `--data '{"health_ch
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Content-Type: application/json" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --data '{"health_check": {"direction": "bidirectional"}}'
 ```
 

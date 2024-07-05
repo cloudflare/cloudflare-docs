@@ -130,7 +130,7 @@ To serve the TLS certificate using Python:
 3. To test that the server is working, run a curl command from the end user's device:
 
 ```sh
-$ curl -v --insecure https://<private-server-IP>:3333/
+$ curl --verbose --insecure https://<private-server-IP>:3333/
 ```
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.

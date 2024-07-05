@@ -14,10 +14,10 @@ Make a `POST` request to the `direct_upload` endpoint using the example below as
 
 ```bash
 curl --request POST \
- https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
- --header 'Authorization: Bearer <API_TOKEN>' \
- --form 'requireSignedURLs=true' \
- --form 'metadata={"key":"value"}'
+https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v2/direct_upload \
+--header "Authorization: Bearer <API_TOKEN>" \
+--form 'requireSignedURLs=true' \
+--form 'metadata={"key":"value"}'
 ```
 
 After a successful request, you will receive a response similar to the example below. The `id` field is a future image identifier that will be uploaded by a creator.
@@ -42,11 +42,11 @@ After calling the endpoint, a new draft image record is created, but the image w
 To check the status of a new draft image record, use the one-time upload URL as shown in the example below.
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
- --header 'Authorization: Bearer <API_TOKEN>'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/{image_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
-After a successful request, you should receive a response similar to the example below. The `draft` field is set to `true` until a creator uploads an image. After an image is uploaded, the draft field is removed. 
+After a successful request, you should receive a response similar to the example below. The `draft` field is set to `true` until a creator uploads an image. After an image is uploaded, the draft field is removed.
 
 ```json
 {
@@ -68,7 +68,7 @@ After a successful request, you should receive a response similar to the example
   "messages": []
 }
 ```
-The backend endpoint should return the `uploadURL` property to the client, which uploads the image without needing to pass any authentication information with it. 
+The backend endpoint should return the `uploadURL` property to the client, which uploads the image without needing to pass any authentication information with it.
 
 Below is an example of an HTML page that takes a one-time upload URL and uploads any image the user selects.
 
