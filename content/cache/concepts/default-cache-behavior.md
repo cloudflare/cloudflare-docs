@@ -24,7 +24,7 @@ When [Origin Cache Control](/cache/concepts/cache-control/) is enabled on an Ent
 
 ## Default cached file extensions
 
-Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website’s robots.txt.
+Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML or JSON by default. Additionally, Cloudflare caches a website’s robots.txt.
 
 |       |      |      |      |      |       |     |
 | ----- | ---- | ---- | ---- | ---- | ----- | --- |
