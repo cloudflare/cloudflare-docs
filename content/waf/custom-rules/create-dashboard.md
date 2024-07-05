@@ -13,7 +13,7 @@ meta:
 
 2. Go to **Security** > **WAF** > **Custom rules**.
 
-3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select three dots next to it > **Duplicate**.
+3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
 4. Enter a descriptive name for the rule in **Rule name**.
 

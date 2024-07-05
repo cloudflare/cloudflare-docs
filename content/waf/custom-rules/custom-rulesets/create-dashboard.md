@@ -23,7 +23,7 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
     ![Custom rulesets page in the Cloudflare dashboard](/images/waf/account/custom-rulesets-dashboard.png)
 
-3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select three dots next to it > **Duplicate**.
+3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
 
 4. In the page that displays, enter a name and (optionally) a description for the custom ruleset.
 

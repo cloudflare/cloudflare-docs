@@ -13,7 +13,7 @@ meta:
 
 2. Go to **Security** > **WAF** > **Rate limiting rules**.
 
-3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select three dots next to it > **Duplicate**.
+3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
     ![The Create rate limiting rule page in the Cloudflare dashboard](/images/waf/custom-rules/rate-limiting-create.png)
 

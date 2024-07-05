@@ -16,7 +16,7 @@ To create a rule:
 
 2. Go to **Rules** > **Transform Rules**.
 
-3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select three dots next to it > **Duplicate**.
+3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
     ![The rewrite URL rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-url-rewrite-rule.png)
 
