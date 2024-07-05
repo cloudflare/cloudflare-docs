@@ -78,7 +78,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 7. Enter the credentials that you have created in [Set up cloud credentials](#1-set-up-cloud-credentials). These allow Magic Cloud Networking to access the resources in your cloud provider.
 8. Select **Authorize**.
 
-You have successfully connected your cloud provider to Magic Cloud Network. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
+You have successfully connected your cloud provider to Magic Cloud Networking. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
 ## Next steps
 
