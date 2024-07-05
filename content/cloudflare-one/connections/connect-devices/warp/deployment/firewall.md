@@ -68,6 +68,10 @@ The WARP client reports connectivity issues to our NEL endpoint via `a.nel.cloud
 
 The WARP client generates ICMP traffic to the [WARP ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) when running tunnel latency tests. This is not technically required to operate but will result in errors in our logs if not excluded properly.
 
+## Time synchronization (optional)
+
+The WARP client attempts to synchronize the exact time by NTP (`UDP 123`)to [Cloudflare’s Time Service](/time-services/ntp/usage/) via `time.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
 ## Scope of firewall rules
 
 ### Required scopes
