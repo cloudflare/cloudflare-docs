@@ -25,7 +25,7 @@ The origin rule expression will determine when these overrides will be applied.
 
 ## Execution order
 
-{{<render file="_product_execution_order.md">}}
+{{<render file="_product-execution-order.md">}}
 
 ## Important remarks
 

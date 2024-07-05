@@ -20,9 +20,7 @@ When evaluating a rule, Cloudflare compares the values of request/response prope
 
 If the entire expression evaluates to `true`, there is a rule match and Cloudflare triggers the [action](/ruleset-engine/rules-language/actions/) configured in the rule. If the expression evaluates to `false`, the rule does not match and its configured action is not applied.
 
-Generally speaking, for [non-terminating actions](/ruleset-engine/rules-language/actions/) the last change made by rules in the same phase will win (later rules can overwrite changes done by previous rules). However, for terminating actions (_Block_, _Redirect_, or one of the challenge actions), rule evaluation will stop and the action will be executed immediately.
-
-For example, if multiple rules with the _Redirect_ action match, Cloudflare will always use the URL redirect of the first rule that matches. Also, if you configure URL redirects using different Cloudflare products (Single Redirects and Bulk Redirects), the product executed first will apply, if there is a rule match (in this case, Single Redirects). Refer to the [Phases list](/ruleset-engine/reference/phases-list/) for the product execution order.
+{{<render file="_rule-terminating-actions.md">}}
 
 When you use `true` as the rule filter expression, this means "apply the rule to every incoming request" at the current [phase](/ruleset-engine/about/phases/) level, which can be zone or account.
 
