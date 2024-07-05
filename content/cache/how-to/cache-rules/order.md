@@ -20,4 +20,4 @@ Cache rules affect requests differently from Page Rules. This is how they are ap
 
 ## Execution order of Rules products
 
-{{<render file="_product_execution_order.md" productFolder="rules">}}
+{{<render file="_product-execution-order.md" productFolder="rules">}}
