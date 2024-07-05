@@ -8,7 +8,7 @@ meta:
 
 # Parent domain on partial setup
 
-If the parent domain is using a [partial setup](/dns/zone-setups/partial-setup/)[^2], your child domain setup depends on whether the child domain already exists.
+When the parent domain is using a [partial setup](/dns/zone-setups/partial-setup/)[^2], the steps to set up your child domain depend on whether the subdomain already exists in the parent domain.
 
 ## Subdomain does not exist in the parent domain
 
