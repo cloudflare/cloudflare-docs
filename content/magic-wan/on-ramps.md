@@ -14,5 +14,5 @@ Additional compatible on-ramps include:
 - [Cloudflare Network Interconnect (CNI)](/magic-wan/network-interconnect/)
 - [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/#cloudflare-tunnel)
 - [WARP](/cloudflare-one/connections/connect-devices/warp/)
-- [Magic Cloud Network](/magic-wan/configuration/magic-cloud-networking/)
+- [Magic Cloud Networking](/magic-wan/configuration/magic-cloud-networking/)
 - [Network on-ramp partnerships](https://www.cloudflare.com/network-onramp-partners/). Refer to our [third-party integration tutorials](/magic-wan/configuration/manually/third-party/) for guidance on configuring the most asked for third-party products.
