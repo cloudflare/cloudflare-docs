@@ -62,7 +62,7 @@ You can check if `cloudflared` was installed by a package manager by running `ls
 1. Update the `cloudflared` package:
 
 ```sh
-$ curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb
+$ curl --location --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb
 ```
 
 2. Restart the service:

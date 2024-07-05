@@ -6,93 +6,106 @@ weight: 7
 
 # Tenant control
 
-Cloudflare Zero Trust offers IT administrators a way to ensure users have access to SaaS applications for corporate use, while at the same time blocking access to their personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
+With Gateway tenant control, you can allow your users access to corporate SaaS applications while blocking access to personal applications. This helps prevent the loss of sensitive or confidential data from a corporate network.
 
-You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
-
-Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
-
-- Microsoft 365
-- Google Workspace
-- Slack
-- Dropbox
+When creating an HTTP policy with an Allow action, you will have the option to configure custom headers. Gateway can use custom headers to control SaaS application access. If a user’s HTTP request is headed to your organization’s account for the SaaS application, Gateway will approve the request. If the request does not match the information in the header, Gateway will block the request.
 
 ## Add custom headers for a SaaS application
 
-This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
+To create an HTTP policy with custom headers:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies**. Select **HTTP**.
+2. Select **Add a policy**.
+3. Build an expression to match the SaaS traffic you want to control.
+4. In **Action**, select _Allow_. In **Untrusted certificate action**, select _Block_.
+5. Under **Add headers to matched requests**, select **Add a header**.
+6. Add any custom header names and values corresponding to your [SaaS application](#common-policy-configurations).
+7. Select **Create policy**.
 
-2. Add a policy with the following values:
-
-   | Selector    | Operator | Value               | Action |
-   | ----------- | -------- | ------------------- | ------ |
-   | Application | in       | Microsoft Office365 | Allow  |
-
-3. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
-
-    | Custom header name           | Custom header value                                                        |
-    | ---------------------------- | -------------------------------------------------------------------------- |
-    | `Restrict-Access-To-Tenants` | `contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4` |
-
-4. Select **Create policy**.
-
-Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to a Microsoft 365 application with a personal account, authentication will fail.
+Your policy is now displayed in your list of HTTP policies. When your users attempt to authenticate your configured SaaS application with a personal account, authentication will fail.
 
 ## Common policy configurations
 
-This section covers policy configurations for common SaaS applications.
+Depending on which SaaS application your organization needs access to, different tenant control policies are required.
 
 ### Microsoft 365
 
-| Selector    | Operator | Value               | Action | Header name                                             |
-| ----------- | -------- | ------------------- | ------ | ------------------------------------------------------- |
-| Application | in       | Microsoft Office365 | Allow  | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
+Microsoft 365 tenant control requires two policies. When you order your policies, make sure they follow [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+| Precedence | Selector | Operator | Value            | Action | Untrusted certificate action |
+| ---------- | -------- | -------- | ---------------- | ------ | ---------------------------- |
+| 1          | Domain   | is       | `login.live.com` | Allow  | Block                        |
+
+| Custom header name                  | Custom header value |
+| ----------------------------------- | ------------------- |
+| `Sec-Restrict-Tenant-Access-Policy` | `restrict-msa`      |
+
+| Precedence | Selector    | Operator | Value                 | Action | Untrusted certificate action |
+| ---------- | ----------- | -------- | --------------------- | ------ | ---------------------------- |
+| 2          | Application | in       | _Microsoft Office365_ | Allow  | Block                        |
+
+| Custom header name                                      | Custom header value        |
+| ------------------------------------------------------- | -------------------------- |
+| `Restrict-Access-To-Tenants`, `Restrict-Access-Context` | Your organization's domain |
+
+For more information, refer to the [Microsoft Entra ID documentation](https://learn.microsoft.com/entra/identity/enterprise-apps/tenant-restrictions).
+
+### Google Workspace
+
+| Selector    | Operator | Value              | Action | Untrusted certificate action |
+| ----------- | -------- | ------------------ | ------ | ---------------------------- |
+| Application | in       | _Google Workspace_ | Allow  | Block                        |
+
+| Custom header name           | Custom header value        |
+| ---------------------------- | -------------------------- |
+| `X-GooGApps-Allowed-Domains` | Your organization's domain |
+
+For more information, refer to the [Google Workspace documentation](https://support.google.com/a/answer/1668854).
 
 ### Slack
 
-| Selector    | Operator | Value | Action | Header name                                                          |
-| ----------- | -------- | ----- | ------ | -------------------------------------------------------------------- |
-| Application | in       | Slack | Allow  | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
+| Selector    | Operator | Value   | Action | Untrusted certificate action |
+| ----------- | -------- | ------- | ------ | ---------------------------- |
+| Application | in       | _Slack_ | Allow  | Block                        |
 
-### G Suite
+| Custom header name                                                   | Custom header value           |
+| -------------------------------------------------------------------- | ----------------------------- |
+| `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | Your organization's workspace |
 
-| Selector    | Operator | Value            | Action | Header name                  |
-| ----------- | -------- | ---------------- | ------ | ---------------------------- |
-| Application | in       | Google Workspace | Allow  | `X-GooGApps-Allowed-Domains` |
+For more information, refer to the [Slack documentation](https://slack.com/help/articles/360024821873-Approve-Slack-workspaces-for-your-network).
 
 ### Dropbox
 
-| Selector    | Operator | Value   | Action | Header name                  |
-| ----------- | -------- | ------- | ------ | ---------------------------- |
-| Application | in       | Dropbox | Allow  | `X-Dropbox-allowed-Team-Ids` |
+| Selector    | Operator | Value     | Action | Untrusted certificate action |
+| ----------- | -------- | --------- | ------ | ---------------------------- |
+| Application | in       | _Dropbox_ | Allow  | Block                        |
 
-## Using Tenant Control with Browser Isolation
+| Custom header name           | Custom header value    |
+| ---------------------------- | ---------------------- |
+| `X-Dropbox-allowed-Team-Ids` | Your organization's ID |
 
-Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
+For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
 
-You can achieve this by implementing two HTTP policies targeting the same domain or application group in Zero Trust.
+## Use tenant control with Browser Isolation
 
-### Example: Implementing a custom request header for a domain
+You can configure [Browser Isolation](/cloudflare-one/policies/browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
 
-#### 1. Create an Isolate policy
+To use custom headers with Browser Isolation, create two HTTP policies targeting the same domain or application group. For example, you can create policies for [httpbin](https://httpbin.org/), an open-source site for testing HTTP requests:
 
-| Selector | Operator | Value         | Action  |
-| -------- | -------- | ------------- | ------- |
-| Domain   | in       | `httpbin.org` | Isolate |
+1. Create an Isolate policy for `httpbin.org`.
 
-![Results that will appear when configuring the example isolation policy.](/images/cloudflare-one/policies/httpbin-policy-1.png)
+   | Selector | Operator | Value         | Action  |
+   | -------- | -------- | ------------- | ------- |
+   | Domain   | in       | `httpbin.org` | Isolate |
 
-#### 2. Create an Allow policy with a Custom Header
+2. Create an Allow policy for `httpbin.org` with a custom header.
 
-| Selector | Operator | Value         | Action |
-| -------- | -------- | ------------- | ------ |
-| Domain   | in       | `httpbin.org` | Allow  |
+   | Selector | Operator | Value         | Action |
+   | -------- | -------- | ------------- | ------ |
+   | Domain   | in       | `httpbin.org` | Allow  |
 
-![Results that will appear when configuring the example allow policy.](/images/cloudflare-one/policies/httpbin-policy.png)
+   | Custom header name | Custom header value |
+   | ------------------ | ------------------- |
+   | `Example-Header`   | `example-value`     |
 
-#### 3. Visit `https://httpbin.org/anything`
-
-HTTPBIN is a helpful service to test request headers. Visiting `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
-
-![Custom Cloudflare header displayed in output from HTTPBIN.](/images/cloudflare-one/policies/httpbin.png)
+3. Go to [`httpbin.org/anything`](https://httpbin.org/anything). Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.

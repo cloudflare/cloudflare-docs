@@ -262,7 +262,7 @@ The OWASP managed ruleset supports the following configurations:
 
 * Enable all the rules up to a specific paranoia level by creating tag overrides that disable all the rules associated with higher paranoia levels.
 
-* Set the action to perform when the calculated request threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}}), and including the `action` property.
+* Set the action to perform when the calculated threat score is greater than the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}}), and including the `action` property.
 
 * Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID {{<rule-id>}}6179ae15870a4bb7b2d480d4843b323c{{</rule-id>}}), and including the `score_threshold` property.
 

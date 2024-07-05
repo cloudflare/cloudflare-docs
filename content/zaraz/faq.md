@@ -13,6 +13,8 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 - [Tools](#tools)
 - [Consent](#consent)
 
+If you're looking for information regarding Zaraz Pricing, see the [Zaraz Pricing](/zaraz/pricing-info/) page.
+
 ---
 
 ## General
@@ -231,15 +233,14 @@ It can take between 15 minutes to several hours for data to appear on Facebookâ€
 Conversion ID and Conversion Label are usually provided by Google Ads as a "gtag script". Here's an example for a $1 USD conversion:
 
 ```js
-gtag('event', 'conversion', {
-   'send_to': 'AW-123456789/AbC-D_efG-h12_34-567',
-   'value': 1.0,
-   'currency': 'USD'
- });
+gtag("event", "conversion", {
+  send_to: "AW-123456789/AbC-D_efG-h12_34-567",
+  value: 1.0,
+  currency: "USD",
+});
 ```
 
 The Conversion ID is the first part of `send_to` parameter, without the `AW-`. In the above example it would be `123456789`. The Conversion Label is the second part of the `send_to` parameter, therefore `AbC-D_efG-h12_34-567` in the above example. When setting up your Google Ads conversions through Zaraz, take the information from the original scripts you were asked to implement.
-
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -317,7 +318,7 @@ The Zaraz team is working with third-party vendors to build their own Zaraz inte
 
 {{<faq-answer>}}
 
-In such a case, you can change the cookie name in the *Consent cookie name* field in the Zaraz Consent configuration. This will cause the consent modal to reappear for all users. Make sure to use a cookie name that has not been used for Zaraz on your site.
+In such a case, you can change the cookie name in the _Consent cookie name_ field in the Zaraz Consent configuration. This will cause the consent modal to reappear for all users. Make sure to use a cookie name that has not been used for Zaraz on your site.
 
 {{</faq-answer>}}
 {{</faq-item>}}

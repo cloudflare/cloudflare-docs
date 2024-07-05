@@ -15,21 +15,21 @@ The following procedure makes two changes to the `sshd_config` file on the remot
 
 2. Go to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
 
-   ```bash
+   ```txt
    # PubkeyAuthentication yes
    ```
 
-3. Remove the # symbol to uncomment the line; keep the setting `yes` enabled.
+3. Remove the `#` symbol to uncomment the line; keep the setting `yes` enabled.
 
 4. Next, add a new line below `PubkeyAuthentication` as follows:
 
-   ```bash
+   ```txt
    TrustedUserCAKeys /etc/ssh/ca.pub
    ```
 
    Save the file and quit the editor. You might need to use the following command again to save and exit.
 
-   ```bash
+   ```txt
    :w !sudo tee %
    :q!
    ```

@@ -62,7 +62,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
   "disable_auto_fallback": true,
   "exclude_office_ips": false,
   "service_mode_v2": {
-    "mode": "warp"},
+    "mode": "warp"
+  },
   "support_url": "https://it.company.com/help",
   "switch_locked": true
 }'

@@ -46,21 +46,21 @@ An example of the API configuration for Magic Tunnel health alerts is provided b
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/policies \
---header 'Authorization: Bearer <API_TOKEN>' \
---header 'Content-Type: application/json' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "<NAME_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
   "alert_type": "magic_tunnel_health_check_event",
   "description": "<DESCRIPTION_OF_MAGIC_TUNNEL_HEALTH_ALERT>",
   "enabled": true,
   "filters": {
-      "slo": [ "99.0" ],
-      "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
+    "slo": [ "99.0" ],
+    "tunnel_name": [ "Name(s) of the tunnels monitored in the alert" ]
   },
   "mechanisms": {
-      "email": [ { "id": "test@example.com" } ],
-      "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
-      "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
+    "email": [ { "id": "test@example.com" } ],
+    "pagerduty": [ { "id": "<PAGERDUTY_ID>" } ],
+    "webhooks": [ { "id": "<WEBHOOKS_ID>" } ]
   }
 }'
 ```

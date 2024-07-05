@@ -56,6 +56,34 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 {{</details>}}
 
+{{<details header="Example: Add a rule that sets the Security Level to _High_">}}
+
+The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — changing the Security Level to _High_ for the administration area — using the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation:
+
+```bash
+---
+header: Request
+---
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "expression": "http.host eq \"admin.example.com\"",
+      "description": "Change Security Level for admin area",
+      "action": "set_config",
+      "action_parameters": {
+        "security_level": "high"
+      }
+    }
+  ]
+}'
+```
+
+{{</details>}}
+
 ---
 
 ## Required API token permissions

@@ -95,7 +95,7 @@ kv_namespaces = [
 
 2. In your `wrangler.toml` file, add the following with the values generated in your terminal:
 
-```bash
+```toml
 ---
 filename: wrangler.toml
 ---

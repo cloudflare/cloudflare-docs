@@ -3,7 +3,7 @@ pcx_content_type: configuration
 source: https://support.cloudflare.com/hc/en-us/articles/224509547-Recommended-Page-Rules-to-consider
 title: Recommended rules
 meta:
-    title: Recommended rules | Page Rules (legacy)
+    title: Recommended rules | Page Rules
 ---
 
 # Recommended rules
@@ -15,7 +15,7 @@ Use Cloudflare Page Rules to improve the user experience of your domain with ha
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 
 - 301/302 Forwarding URL
-- Cache Level
+- Security Level and Cache Level
 - Edge Cache TTL, Always Online, and Browser Cache TTL
 
 ### 301/302 Forwarding URL
@@ -49,15 +49,16 @@ This example redirects visitors to a specific page with an easy to remember URL:
 
 {{</example>}}
 
-### Cache Level
+### Security Level and Cache Level
 
-Certain sections of a website, like the login or admin section, have different requirements than your general public-facing pages.
+Certain sections of a website, like the login or admin section, have different security and performance requirements than your general public-facing pages.
 
-The following example page rule configuration performs several adjustments for requests targeting a specific path:
+The following example page rule configuration performs several security and cache adjustments for requests targeting a specific path:
 
 {{<example>}}
 
 - **If the URL matches**: `example.com/user*`
+- **Setting**: _Security Level_ | **Value**: _High_
 - **Setting**: _Cache Level_ | **Value**: _Bypass_
 - **Setting**: _Disable Apps_
 

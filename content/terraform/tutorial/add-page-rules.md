@@ -3,14 +3,14 @@ title: 5 – Add exceptions with Page Rules
 pcx_content_type: tutorial
 weight: 6
 meta:
-  title: Add exceptions with Page Rules (legacy)
+  title: Add exceptions with Page Rules
 ---
 
 # Add exceptions with Page Rules
 
-In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all incoming requests for `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](/rules/page-rules/) (deprecated).
+In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/) tutorial, you configured zone settings that apply to all incoming requests for `example.com`. In this tutorial, you will add an exception to these settings using [Page Rules](/rules/page-rules/).
 
-Specifically, you will enable I'm Under Attack mode for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
+Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
 ## 1. Create a new branch and append the page rule
 

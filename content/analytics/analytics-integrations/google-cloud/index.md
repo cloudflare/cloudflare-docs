@@ -177,7 +177,7 @@ To create a report for your log data based on the Cloudflare template:
 
     - In the **Formula** text box, paste the following code:
 
-    ```bash
+    ```sql
     CASE
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ip" THEN "ip block"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ctry" THEN "country block"
@@ -201,7 +201,7 @@ To create a report for your log data based on the Cloudflare template:
     - For **Field Name**, type _EdgeResponseStatusClass_.
     - In the **Formula** text box, paste the following code:
 
-    ```bash
+    ```sql
     CASE
     WHEN EdgeResponseStatus > 199 AND EdgeResponseStatus < 300 THEN "2xx"
     WHEN EdgeResponseStatus > 299 AND EdgeResponseStatus < 400 THEN "3xx"

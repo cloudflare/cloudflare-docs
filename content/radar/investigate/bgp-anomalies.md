@@ -13,8 +13,8 @@ To access Cloudflare Radar BGP Anomaly Detection results, you will first need to
 In the following example, we will query the [BGP hijack events API][hijack-api-doc] for the most recent BGP origin hijacks originated by or affecting `AS64512` (example ASN).
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The result shows the most recent 10 BGP hijack events that affects `AS64512`.
@@ -90,8 +90,8 @@ In the response we can learn about the following information about each event:
 Users can further filter out low-confidence events by attaching a `minConfidence=8` parameter, which will return only events with a `confidence_score` of `8` or higher.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10&minConfidence=8" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10&minConfidence=8" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Search BGP route leak events
@@ -104,8 +104,8 @@ the `provider-customer-provider` type of route leak. You can learn more about ou
 In the following example, we will query the [BGP route leak events API][route-leak-api-doc] for the most recent BGP route leak events affecting `AS64512`.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/leaks/events?invlovedAsn=64512&format=json&per_page=10" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/bgp/leaks/events?invlovedAsn=64512&format=json&per_page=10" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The result shows the most recent 10 BGP route leak events that affects `AS64512`.

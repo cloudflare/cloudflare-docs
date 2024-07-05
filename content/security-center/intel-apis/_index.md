@@ -31,12 +31,10 @@ Below you can find examples of Threat Intelligence API calls. Make sure you are 
 {{<details header="Get ASN Overview" open="true">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-
+# Example response:
 {
     "result": {
         "asn": 13335,
@@ -57,12 +55,10 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get Domain Details">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain?domain=cloudflare.com" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain?domain=cloudflare.com" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-
+# Example response:
 {
     "result": {
         "domain": "cloudflare.com",
@@ -113,11 +109,8 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get Domain History">}}
 
 ```bash
-
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-history?domain=cloudflare.com" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
 {
     "result": [
@@ -163,12 +156,10 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get IP Overview">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/ip?ipv4=1.1.1.1" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/ip?ipv4=1.1.1.1" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-
+# Example response:
 {
     "result": [
         {
@@ -203,12 +194,10 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get Passive DNS by IP">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/dns?ipv4=1.1.1.1&start=2023-07-15&end=2023-07-18&per_page=5" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/dns?ipv4=1.1.1.1&start=2023-07-15&end=2023-07-18&per_page=5" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-
+# Example response:
 {
     "result": {
         "reverse_records": [
@@ -256,11 +245,10 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get results for a URL scan">}}
 
 ```bash
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protection/url-info?url=http://worcester-realistic-ellen-portland.trycloudflare.com/login.html \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protection/url-info?url=http://worcester-realistic-ellen-portland.trycloudflare.com/login.html" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
+# Example response:
 {
     "errors": [],
     "messages": [],
@@ -299,30 +287,29 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/bra
 {{<details header="Create Miscategorization">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+    "content_adds": [
+        82
+    ],
+    "content_removes": [
+        82
+    ],
+    "indicator_type": "url",
+    "ip": null,
+    "security_adds": [
+        117,
+        131
+    ],
+    "security_removes": [
+        117
+    ],
+    "url": "https://wrong-category.example.com"
+}'
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscategorization" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-    --data '{
-            "content_adds": [
-                82
-            ],
-            "content_removes": [
-                82
-            ],
-            "indicator_type": "url",
-            "ip": null,
-            "security_adds": [
-                117,
-                131
-            ],
-            "security_removes": [
-                117
-            ],
-            "url": "https://wrong-category.theburritobot.com"
-        }'
-
+# Example response:
 {
     "result": "",
     "success": true,
@@ -338,12 +325,10 @@ $ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/int
 {{<details header="Get WHOIS Record">}}
 
 ```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/whois?domain=cloudflare.com" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 
-$ curl --request "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/whois?domain=cloudflare.com" \
-    --header "Content-Type: application/json" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" | jq .
-
+# Example response:
 {
     "result": {
         "domain": "cloudflare.com",

@@ -6,13 +6,13 @@ meta:
   description: Review the interaction between various Page Rules and Workers.
 ---
 
-{{<heading-pill style="legacy">}}Page Rules{{</heading-pill>}}
+# Page Rules
 
-Page Rules (legacy) trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to [Page Rules](/rules/page-rules/) to learn more about configuring Page Rules.
+Page Rules trigger certain actions whenever a request matches one of the URL patterns you define. You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Refer to [Page Rules](/rules/page-rules/) to learn more about configuring Page Rules.
 
 ## Page Rules with Workers
 
-Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules (legacy), to Internet properties. Your application's traffic will pass through a Cloudflare data center that is closest to the visitor. There are hundreds of these around the world, each of which are capable of running services like Workers and Page Rules. If your application is built on Workers and/or Pages, the [Cloudflare global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare global network.
+Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules, to Internet properties. Your application's traffic will pass through a Cloudflare data center that is closest to the visitor. There are hundreds of these around the world, each of which are capable of running services like Workers and Page Rules. If your application is built on Workers and/or Pages, the [Cloudflare global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare global network.
 
 When using Page Rules with Workers, the following workflow is applied.
 
@@ -32,7 +32,7 @@ The following Page Rules may not work as expected when an incoming request is ma
 
 *   Always Online
 *   [Always Use HTTPS](/workers/configuration/workers-with-page-rules/#always-use-https)
-*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify) (deprecated)
+*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify-deprecated) (deprecated)
 *   [Automatic HTTPS Rewrites](/workers/configuration/workers-with-page-rules/#automatic-https-rewrites)
 *   [Browser Cache TTL](/workers/configuration/workers-with-page-rules/#browser-cache-ttl)
 *   [Browser Integrity Check](/workers/configuration/workers-with-page-rules/#browser-integrity-check)
@@ -48,8 +48,8 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   Mirage
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
-*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level) (deprecated)
-*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes) (deprecated)
+*   [Security Level](/workers/configuration/workers-with-page-rules/#security-level)
+*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes-deprecated) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
@@ -76,7 +76,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Worker     | Same Zone  | Rule Ignored   |
 | Worker     | Other Zone | Rule Ignored   |
 
-{{<heading-pill style="deprecated" heading="h3">}}Auto Minify{{</heading-pill>}}
+### Auto Minify (deprecated)
 
 | Source     | Target     | Behavior       |
 |------------|------------|----------------|
@@ -181,7 +181,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Worker     | Same Zone  | Rule Ignored   |
 | Worker     | Other Zone | Rule Ignored   |
 
-{{<heading-pill style="deprecated" heading="h3">}}Security Level{{</heading-pill>}}
+### Security Level
 
 | Source     | Target     | Behavior       |
 |------------|------------|----------------|
@@ -189,7 +189,7 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Worker     | Same Zone  | Rule Ignored   |
 | Worker     | Other Zone | Rule Ignored   |
 
-{{<heading-pill style="deprecated" heading="h3">}}Server Side Excludes{{</heading-pill>}}
+### Server Side Excludes (deprecated)
 
 | Source     | Target     | Behavior       |
 |------------|------------|----------------|

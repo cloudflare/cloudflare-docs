@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Page Rules are now a legacy product.** Cloudflare recommends considering our new Rules features for your new implementations. Please follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
+Cloudflare recommends that you consider using modern Rules features for your new implementations instead of Page Rules. Follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
 
 ## Page Rules migration
 
@@ -1438,7 +1438,7 @@ Page Rules configuration | Migrate to a configuration rule
 
 **Context:**
 
-You configured a Page Rule setting Security Level (deprecated) to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: _Security Level_
@@ -1446,7 +1446,7 @@ You configured a Page Rule setting Security Level (deprecated) to _I'm Under Att
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on I'm Under Attack mode for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 

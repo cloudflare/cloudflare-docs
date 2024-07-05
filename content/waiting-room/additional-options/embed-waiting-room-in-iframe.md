@@ -44,27 +44,28 @@ If you are embedding a waiting room in an iFrame, specify the following values o
 
 {{<details header="Request">}}
 
-```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: xxxxxxxx" \
-     -H "Content-Type: application/json" \
-     --data '{"name":"shop_waiting_room",
-              "description":"Waiting room for webshop",
-              "host":"shop.example.com",
-              "path":"/shop",
-              "queue_all": true,
-              "new_users_per_minute":200,
-              "total_active_users":300,
-              "session_duration":1,
-              "disable_session_renewal": false,
-              "json_response_enabled": false,
-              "queueing_method": "FIFO",
-              "cookie_attributes": {
-                "samesite": "none",
-                "secure": "auto"
-              },
-            }'
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "shop_waiting_room",
+  "description": "Waiting room for webshop",
+  "host": "shop.example.com",
+  "path": "/shop",
+  "queue_all": true,
+  "new_users_per_minute": 200,
+  "total_active_users": 300,
+  "session_duration": 1,
+  "disable_session_renewal": false,
+  "json_response_enabled": false,
+  "queueing_method": "FIFO",
+  "cookie_attributes": {
+    "samesite": "none",
+    "secure": "auto"
+  }
+}'
 ```
 
 {{</details>}}
@@ -95,7 +96,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
       "cookie_attributes": {
         "samesite": "none",
         "secure": "auto"
-      },
+      }
     }
   ]
 }

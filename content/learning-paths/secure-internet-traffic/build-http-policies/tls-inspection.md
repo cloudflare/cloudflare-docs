@@ -75,11 +75,11 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 1. Create a list of device serial numbers that you do not want to inspect.
 
     ```bash
-    curl --request POST \
-      --url <https://api.cloudflare.com/client/v4/accounts/account_id/gateway/lists> \
-      --header 'Content-Type: application/json' \
-      --header 'X-Auth-Email: ' \
-      --data '{
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "description": "The serial numbers for administrators",
       "items": [
         {
@@ -94,10 +94,10 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 2. Create a Do Not Inspect policy that checks the device against the list of serial numbers.
 
     ```bash
-    curl <https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules> \
-    --header 'Content-Type: application/json' \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <API_KEY>' \
+    curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
     --data '{
       "name": "Do not inspect corporate devices",
       "conditions": [
@@ -142,27 +142,27 @@ If you filter your network-connected devices with Magic WAN tunnels, the WARP Co
 {{<tab label="api" no-code="true">}}
 
 ```bash
-curl <https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules> \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "Do not inspect corporate devices",
   "conditions": [
-        {
-          "type": "traffic",
-          "expression": {
-            "in": {
-              "lhs": "http.conn.internal_src_ip",
-              "rhs": [
-                {
-                  "cidr": "203.0.113.0/24"
-                }
-              ]
+    {
+      "type": "traffic",
+      "expression": {
+        "in": {
+          "lhs": "http.conn.internal_src_ip",
+          "rhs": [
+            {
+              "cidr": "203.0.113.0/24"
             }
-          },
+          ]
         }
-      ],
+      }
+    }
+  ]
 }'
 ```
 

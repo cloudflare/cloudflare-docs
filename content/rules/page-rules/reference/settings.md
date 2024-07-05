@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-c
 title: Settings
 layout: wide
 meta:
-  title: Settings | Page Rules (legacy)
+  title: Settings | Page Rules
 weight: 3
 ---
 
@@ -24,7 +24,7 @@ Below is the full list of settings available, presented in the order that they a
 | **Setting** | **Description** | **Plans** |
 | --- | --- | --- |
 | [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) | Enable **Always Use HTTPS** feature. If enabled, any `http://` URL is converted to `https://` through a 301 redirect.<br/><br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
-| [Auto Minify](/speed/optimization/content/auto-minify/) | Configures Auto Minify (deprecated), indicating which file extensions to minify automatically.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
+| [Auto Minify](/speed/optimization/content/auto-minify/) (deprecated) | Indicate which file extensions to minify automatically.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) | Turn on or off **Automatic HTTPS Rewrites**.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | [Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/) | Control how long resources cached by client browsers remain valid. The Cloudflare dashboard and the API both prohibit setting **Browser Cache TTL** to `0` for non-Enterprise domains. | All |
 | [Browser Integrity Check](/waf/tools/browser-integrity-check/) | Inspect the visitor's browser for headers commonly associated with spammers and certain bots.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
@@ -54,8 +54,8 @@ Below is the full list of settings available, presented in the order that they a
 | [Respect Strong ETags](/cache/reference/etag-headers/) | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. | Enterprise |
 | Response Buffering | Turn on or off whether Cloudflare should wait for an entire file from the origin server before forwarding it to the site visitor. By default, Cloudflare sends packets to the client as they arrive from the origin server. |  Enterprise |
 | [Rocket Loader](/speed/optimization/content/rocket-loader/) | Turn on or off **Rocket Loader** in the Cloudflare **Speed** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
-| [Security Level](/waf/tools/security-level/) | Control options for **Security Level** (deprecated) from the **Security** app. {{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
-| [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) | Turn on or off **Server Side Excludes** (deprecated) of the Cloudflare **Scrape Shield** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} |  All |
+| [Security Level](/waf/tools/security-level/) | Control options for the **Security Level** feature from the **Security** app. {{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
+| [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (deprecated) | Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} |  All |
 | [SSL](/ssl/origin-configuration/ssl-modes/) | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app.{{<render file="_configuration-rule-promotion.md" productFolder="rules">}} | All |
 | True Client IP Header | Turn on or off the [**True-Client-IP Header**](/network/true-client-ip-header/) feature of the Cloudflare **Network** app. | Enterprise |
 | Web Application Firewall | Turn on or off [WAF managed rules (previous version, deprecated)](/waf/reference/legacy/old-waf-managed-rules/).<br/>You cannot enable or disable individual WAF managed rules via Page Rules. | Pro and above |

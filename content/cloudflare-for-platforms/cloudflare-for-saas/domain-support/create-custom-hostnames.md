@@ -29,8 +29,4 @@ To create a custom hostname:
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
-
 {{<render file="_issue-certs-preamble.md">}}
-
-{{</Aside>}}

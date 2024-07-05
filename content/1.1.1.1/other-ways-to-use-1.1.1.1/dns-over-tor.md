@@ -81,7 +81,7 @@ $ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3
 3. Instruct your machine to treat the `.onion` address as localhost:
 
 ```bash
-$ cat << EOF >> /etc/hosts
+cat << EOF >> /etc/hosts
 127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
 EOF
 ```

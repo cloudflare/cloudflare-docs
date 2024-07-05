@@ -758,13 +758,12 @@ The Cloudflare Rules language supports these dynamic fields:
       </td>
     </tr>
     <tr id="field-cf-threat_score">
-        <td><code>cf.threat_score</code> (deprecated)<br />{{<type>}}Number{{</type>}}</td>
+        <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
           </p>
           <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
           </p>
-          <p><strong>Note:</strong> This field has been deprecated and will be removed on 2024-09-30. You should not use this field in expressions of new rules.</p>
         </td>
     </tr>
     <tr id="field-cf-tls_cipher">
