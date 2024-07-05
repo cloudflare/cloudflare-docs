@@ -69,7 +69,7 @@ Next, go to **Logs** > **Posture** and verify that the client certificate check 
 
 Learn how the WARP client determines if a client certificate is installed and trusted on the device.
 
-{{<tabs labels=" Windows | macOS | Linux">}}
+{{<tabs labels="Windows | macOS | Linux">}}
 
 {{<tab label="windows" no-code="true">}}
 
@@ -102,10 +102,61 @@ $ /usr/bin/security find-certificate -c "<COMMON_NAME>" -p /Library/Keychains/Sy
 {{<tab label="linux" no-code="true">}}
 
 1. Open Terminal.
-2. To search NSSDB for a certificate with a specific common name, run the following command:
+2. To list all client certificates in NSSDB, run the following command:
 
 ```sh
-$ certutil -L -d sql:/etc/pki/nssdb -r -n <COMMON_NAME>
+$ certutil -L -d /etc/pki/nssdb
+Certificate Nickname                                         Trust Attributes
+                                                             SSL,S/MIME,JAR/XPI
+
+meow                                                         CTu,Cu,Cu
+noPrivateKey                                                 CT,,
+
+```
+
+3. Open your desired certificate using its certificate nickname. The common name will appear in the line `Subject: "CN=123456.mycompany"`.
+
+```sh
+$ certutil -L -d /etc/pki/nssdb -n meow
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 236 (0xec)
+        Signature Algorithm: PKCS #1 SHA-256 With RSA Encryption
+        Issuer: "CN=123456.mycompany"
+        Validity:
+            Not Before: Tue Jul 02 17:20:40 2024
+            Not After : Sun Jul 02 17:20:40 2034
+        Subject: "CN=123456.mycompany"
+        Subject Public Key Info:
+            Public Key Algorithm: PKCS #1 RSA Encryption
+            RSA Public Key:
+                Modulus:
+                    <redacted>
+                Exponent: 65537 (0x10001)
+    Signature Algorithm: PKCS #1 SHA-256 With RSA Encryption
+    Signature:
+        <redacted>
+    Fingerprint (SHA-256):
+        <redacted>
+    Fingerprint (SHA1):
+        <redacted>
+
+    Mozilla-CA-Policy: false (attribute missing)
+    Certificate Trust Flags:
+        SSL Flags:
+            Valid CA
+            Trusted CA
+            User
+            Trusted Client CA
+        Email Flags:
+            Valid CA
+            Trusted CA
+            User
+        Object Signing Flags:
+            Valid CA
+            Trusted CA
+            User
 ```
 
 {{</tab>}}
