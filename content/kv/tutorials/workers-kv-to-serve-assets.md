@@ -69,7 +69,7 @@ binding = "assets"
 id = "<GENERATED_NAMESPACE_ID>"
 ```
 
-The [KV binding](/kv/reference/kv-bindings) `assets` is how your Worker will interact with the [KV namespace](/kv/reference/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the the Workers runtime.
+The [KV binding](/kv/reference/kv-bindings) `assets` is how your Worker will interact with the [KV namespace](/kv/reference/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
 
 We'll also create a preview KV namespace. It is recommended to create a separate preview KV namespace when developing locally to avoid making changes to the production resource. The Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
 
