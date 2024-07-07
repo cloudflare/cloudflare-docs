@@ -20,12 +20,6 @@ The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-user
 
 Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 
-{{<Aside type="warning" header="Warning">}}
-
-WARP does not provide anonymity and is not designed to prevent servers you communicate with from identifying you. WARP also does not allow you to pretend to be accessing the Internet from a different country than the one you are currently in.
-
-{{</Aside>}}
-
 ## WARP via Local Proxy
 
 Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
