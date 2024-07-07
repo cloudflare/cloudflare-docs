@@ -48,6 +48,10 @@ While standard Cloudflare nameservers are hosted under `ns.cloudflare.com` or `s
 
 Using the different TLDs (`.com`, `.net`, and `.org`) and making these available only to enterprise accounts allows for better predictability and consistency in nameserver assignment.
 
+{{<Aside type="note">}}
+The advantages that come with Foundation DNS advanced nameservers are currently not available for custom nameservers.
+{{</Aside>}}
+
 There should also be less conflicts when guaranteeing that directly descending zones do not have the same nameserver set.
 
 {{<details header="Descending zones example">}}
