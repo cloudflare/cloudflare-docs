@@ -48,4 +48,4 @@ In Smartsheet, SSO is configured for a domain. If you have multiple plans using 
 8. Turn on **I have successfully verified the connection**.
 9. Select **Save & Next**.
 10. Under **Assign domains to SAML IdP**, select your desired domain.
-11. Select **Save and Next**, and then **Finish**.
+11. Select **Save and Next** and then **Finish**.
