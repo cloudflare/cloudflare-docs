@@ -369,7 +369,7 @@ In the dashboard, you will see a text box by each video labeled `Enter allowed o
 
 *   `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and does not cover badtortilla.com
 *   `example.com` does not cover www.example.com or any subdomain of example.com
-*   `localhost` requires a port if it is not being served over https on port 80 or over https on port 443
+*   `localhost` requires a port if it is not being served over HTTP on port 80 or over HTTPS on port 443
 *   There's no path support - `example.com` covers example.com/\*
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
