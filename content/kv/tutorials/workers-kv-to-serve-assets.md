@@ -14,7 +14,7 @@ By storing static assets in Workers KV, you can retrieve these assets globally w
 
 {{<Aside type="note">}}
 
-This tutorial demonstrates how to access data and assets from KV and use them to generate static and dynamic responses. If you want to serve static assets of a frontend web application, consider using [Cloudflare Pages](/pages/) which provides a purpose-built experience for web applications with built-in environments, CI/CD integration and more.
+This tutorial demonstrates how to access data and assets from KV and use them to generate static and dynamic responses. If you want to serve static assets of a frontend web application, consider using [Cloudflare Pages](/pages/) which provides a purpose-built experience for web applications with built-in environments, CI/CD, Pages Functions for dynamic responses, and more.
 
 {{</Aside>}}
 
@@ -71,7 +71,7 @@ id = "<GENERATED_NAMESPACE_ID>"
 
 The [KV binding](/kv/reference/kv-bindings) `assets` is how your Worker will interact with the [KV namespace](/kv/reference/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
 
-We'll also create a preview KV namespace. It is recommended to create a separate preview KV namespace when developing locally to avoid making changes to the production resource. The Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
+We'll also create a preview KV namespace. It is recommended to create a separate KV namespace when developing locally to avoid making changes to the production namespace. When developing locally against remote resources, the Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
 
 3. In your terminal, run the following command:
 
