@@ -365,6 +365,19 @@ entries:
   nextSteps: Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
   otherFilters: None.
 
+- name: mTLS Certificate Store Certificate Expiration Alert
+  audience: |-
+    Customers that upload their own client certificates for mTLS via [bring your own CA](/ssl/client-certificates/byo-ca/).
+
+    This notification will be sent 30 and 14 days before the expiration of the certificate.
+  availability: |-
+    [Bring your own CA](/ssl/client-certificates/byo-ca/).
+
+    The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/create-a-client-certificate/).
+  associatedProducts: SSL/TLS
+  nextSteps: Upload a renewed certificate.
+  otherFilters: None.
+
 - name: Stream Live Notifications
   audience: Customers who are using [Stream](/stream/) and want to receive webhooks with the status of their videos.
   availability: Stream subscription.

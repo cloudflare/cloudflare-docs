@@ -15,10 +15,11 @@ Available fields<br/>in counting expression | N/A | N/A | All rule expression fi
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
 Rate limiting<br>action behavior | Perform action during mitigation period | Perform action during mitigation period | Perform action during mitigation period | Perform action during mitigation period,<br>Throttle requests above rate with block action | Perform action during mitigation period,<br>Throttle requests above rate with block action
 Counting periods | 10 s | 10 s, 1 min | 10 s, 1 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h
-Mitigation timeout periods | 10 s | 10 s, 1 min, 1 h | 10 s, 1 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day
+Mitigation timeout periods | 10 s | 10 s, 1 min, 1 h | 10 s, 1 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day<sup>3</sup> | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day<sup>3</sup>
 Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{</table-wrap>}}
 
 <sup>1</sup> _Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/)._<br>
-<sup>2</sup> _Availability depends on your WAF plan._
+<sup>2</sup> _Availability depends on your WAF plan._<br>
+<sup>3</sup> _Enterprise customers can specify a custom mitigation timeout period via API._

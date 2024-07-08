@@ -5,8 +5,8 @@ pcx_content_type: tutorial
 title: Create a fine-tuned OpenAI model with R2
 updated: 2024-06-07
 weight: 1
-tags:
-  - AI
+products: [R2]
+tags: [AI, Hono]
 ---
 
 # Create a fine-tuned OpenAI model with R2
@@ -43,11 +43,11 @@ First, use the `c3` CLI to create a new Cloudflare Workers project.
 $ npm create cloudflare@latest <PROJECT_NAME>
 ```
 
-Replace `<PROJECT_NAME>` with your desired project name. 
+Replace `<PROJECT_NAME>` with your desired project name.
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options:
 
-```sh
+```txt
 What type of application do you want to create? … "Hello World" Worker
 Do you want to use TypeScript? … Yes
 Do you want to use git for version control? … Yes

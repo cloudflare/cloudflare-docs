@@ -1,7 +1,7 @@
 ---
 title: Analytics
 pcx_content_type: reference
-weight: 8
+weight: 9
 meta:
     description: Use Magic WAN's different analytic options for an overview of the performance of your sites, or to troubleshoot potential issues.
 ---

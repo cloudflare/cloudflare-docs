@@ -62,3 +62,19 @@ $ openssl x509 -in certificateFile.pem -noout -text
 ```
 
 If it does not exist, you will need to request a new certificate.
+
+## The private key you uploaded is invalid. Please check your input and try again. (Code: 2106)
+
+### Problem description
+
+You receive the error "The private key you uploaded is invalid. Please check your input and try again. (Code: 2106)" when trying to upload a new custom certificate or edit an existing one.
+
+### Root cause
+
+Cloudflare requires separate, pem-encoded files for the SSL private key and certificate. 
+Contact your Certificate Authority (CA) to confirm whether your current certificate meets this requirement or request your CA to assist with certificate format conversion.
+
+### Solution
+
+Make sure your certificate complies with these [requirements](/ssl/edge-certificates/custom-certificates/uploading/#certificate-requirements).
+Check that the certificate and private keys match before uploading the certificate in the Cloudflare dashboard. This [external resource](https://www.sslshopper.com/article-most-common-openssl-commands.html) might help.

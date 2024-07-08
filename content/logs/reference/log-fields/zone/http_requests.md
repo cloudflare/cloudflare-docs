@@ -16,6 +16,12 @@ Type: array[int]
 
 List of IDs that correlate to the Bot Management Heuristic detections made on a request. Available only for Bot Management customers. To enable this feature, contact your account team.
 
+## BotDetectionTags
+
+Type: array[string]
+
+List of tags that correlate to the Bot Management Heuristic detections made on a request. Available only for Bot Management customers. To enable this feature, contact your account team.
+
 ## BotScore
 
 Type: int

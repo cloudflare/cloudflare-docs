@@ -63,5 +63,5 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 ## Steps in trace results
 
 * Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
-* [Page Rules](/rules/page-rules/) (deprecated): Execution of one or more rules.
+* [Page Rules](/rules/page-rules/): Execution of one or more rules.
 * [Workers](/workers/): Execution of one or more scripts.

@@ -3,15 +3,15 @@ title: Manage pools
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Manage endpoint pools
-  description: Learn how to set up and maintain endpoint pools.
+  title: Manage pools
+  description: Learn how to set up and maintain pools.
 ---
 
-# Manage endpoint pools
+# Manage pools
 
 {{<glossary-definition term_id="pool">}}
 
-For more background information on pools, refer to [Endpoint pools](/load-balancing/pools/).
+For more background information on pools, refer to [Pools](/load-balancing/pools/).
 
 {{<Aside type="warning">}}
 {{<render file="_endpoints-introduction-callout.md">}}
@@ -92,7 +92,7 @@ To delete a pool using the API, send a [DELETE](/api/operations/account-load-bal
 
 ## Set up alerts
 
-You can configure alerts to receive notifications for changes in the status of your pools. 
+You can configure alerts to receive notifications for changes in the status of your pools.
 
 {{<available-notifications product="Load Balancing">}}
 

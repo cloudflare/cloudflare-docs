@@ -17,7 +17,7 @@ Start by identifying the [detection system](/page-shield/how-it-works/malicious-
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield**.
-3. Under **Active Scripts** or **Active Connections**, search for the resource mentioned on the alert you received.
+3. Select **Scripts** or **Connections** and search for the resource mentioned on the alert you received.
 4. Select **Details** next to the resource you identified. The example screenshot below shows a malicious script resource.
 
 ![Page Shield dialog box showing the details of a script considered malicious.](/images/page-shield/handle-alert-malicious-script-example.png)
@@ -34,7 +34,7 @@ Different detection mechanisms may consider the script malicious at the same tim
 
 If you received an alert for a potentially malicious script:
 
-1. Navigate to the page on your website that is loading the script or performing the connection. Open a browser and navigate to one of the URLs in the **Last seen on pages** field (shown in the script details dialog box).
+1. Navigate to the page on your website that is loading the script or performing the connection. Open a browser and navigate to one of the URLs in the **Page URLs** field (shown in the script details dialog box).
 
 2. Open the browser's developer tools to confirm that the script is being loaded. You can check this in the developer tools' **Network** tab, searching for the script name, URL, or hostname.
 

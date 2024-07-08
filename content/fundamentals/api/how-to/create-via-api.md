@@ -128,13 +128,11 @@ Each parameter in the `in` and `not_in` objects must be in CIDR notation. For ex
 
 Combine the previous information to create a token as in the following example:
 
-```json
-$ curl -X POST
-"https://api.cloudflare.com/client/v4/user/tokens" \
-     -H "Authorization: Bearer <api token secret>" \
-     -H "Content-Type: application/json" \
-     --data '
- {
+```bash
+curl "https://api.cloudflare.com/client/v4/user/tokens" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "readonly token",
   "policies": [
     {

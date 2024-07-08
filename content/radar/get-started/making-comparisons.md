@@ -15,8 +15,8 @@ When comparing time series, across locations/time ranges/etc., in endpoints that
 In the following example, we will compare the traffic change across two different locations — United States and Portugal. The example will use [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) for the last seven days:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=us_data&dateRange=7d&location=US&name=pt_data&dateRange=7d&location=PT&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=us_data&dateRange=7d&location=US&name=pt_data&dateRange=7d&location=PT&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 In the example above we are asking for two timeseries. The first series has the following parameters:
@@ -62,8 +62,8 @@ Comparisons can be made in most endpoints, not just endpoints that use `min-max`
 In the next example, we will compare the United States across different date ranges using the shortcuts `7d` and `7dControl`. These mean the last seven days and the last seven days before those, respectively — or, in other words, this week versus the previous week.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=this_week&dateRange=7d&location=US&name=previous_week&dateRange=7dControl&location=US&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=this_week&dateRange=7d&location=US&name=previous_week&dateRange=7dControl&location=US&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The first series has these parameters:
@@ -96,8 +96,8 @@ Examining this information, we can conclude that the maximum value was reached a
 You can also request for specific timestamps. In the following example, we will ask for data relative to [Tonga](https://blog.cloudflare.com/tonga-internet-outage/) in October versus January 2022, when there was an outage.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z&location=TO&name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z&location=TO&name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The first series has these parameters (URL encoded):

@@ -19,27 +19,27 @@ Once you get your static IP from Cloudflare, you can use it via API, just like [
 When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example below that creates an application routing traffic through Cloudflare’s HTTP pipeline.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/spectrum/apps" \
-    -H "X-Auth-Email: <USER_EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -H "Content-Type: application/json" \
-    --data '{
-     "protocol": "tcp/80",
-     "dns": {
-       "type": "ADDRESS",
-       "name": "www.example.com"
-     },
-     "origin_direct": [
-       "tcp://192.0.2.1:80"
-     ],
-     "tls": "off",
-     "traffic_type": "http",
-     "edge_ips": {
-       "type": "static",
-       "ips": [
-         "198.51.100.10",
-         "2001:DB8::1"
-       ]
-     }
-   }'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "protocol": "tcp/80",
+  "dns": {
+    "type": "ADDRESS",
+    "name": "www.example.com"
+  },
+  "origin_direct": [
+    "tcp://192.0.2.1:80"
+  ],
+  "tls": "off",
+  "traffic_type": "http",
+  "edge_ips": {
+    "type": "static",
+    "ips": [
+      "198.51.100.10",
+      "2001:DB8::1"
+    ]
+  }
+}'
 ```

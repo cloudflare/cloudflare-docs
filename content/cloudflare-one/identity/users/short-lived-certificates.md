@@ -70,7 +70,7 @@ $ cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
 
 If you prefer to configure manually, this is an example of the generated SSH config:
 
-```bash
+```txt
 Match host vm.example.com exec "/usr/local/bin/cloudflared access ssh-gen --hostname %h"
     HostName vm.example.com
     ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h

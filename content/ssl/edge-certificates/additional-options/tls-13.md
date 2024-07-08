@@ -36,7 +36,7 @@ To enable TLS 1.3 in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To adjust your TLS 1.3 settings with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-1.-3-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To adjust your TLS 1.3 settings with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `tls_1_3` as the setting name in the URI path, and set the `value` parameter to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}

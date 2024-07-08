@@ -3,7 +3,7 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/206190798-Using-Resolve-Override-in-Page-Rules
 title: Override URL or IP address
 meta:
-    title: Override URL or IP address | Page Rules (legacy)
+    title: Override URL or IP address | Page Rules
 ---
 
 # Override URL or IP address

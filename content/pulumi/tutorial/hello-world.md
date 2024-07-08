@@ -112,7 +112,7 @@ You have not yet created any Cloudflare resources but have defined a variable, `
 
 Example:
 
-```sh
+```bash
 View in Browser (Ctrl+O):
 https://app.pulumi.com/diana-pulumi-corp/serverless-cloudflare/dev/updates/1
 ```

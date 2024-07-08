@@ -155,21 +155,21 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels?validate_only=true" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "ipsec_tunnels":[
-      {
-        "name":"EdgeConnect_IPSEC_1",
-        "customer_endpoint":"35.188.72.56",
-        "cloudflare_endpoint":"172.64.241.205",
-        "interface_address":"192.168.10.11/31",
-        "description":"Tunnel for EdgeConnect - GCP Central"
-        }
-      ]
-  }'
+  "ipsec_tunnels": [
+    {
+      "name": "EdgeConnect_IPSEC_1",
+      "customer_endpoint": "35.188.72.56",
+      "cloudflare_endpoint": "172.64.241.205",
+      "interface_address": "192.168.10.11/31",
+      "description": "Tunnel for EdgeConnect - GCP Central"
+    }
+  ]
+}'
 ```
 
 2. Create a new IPsec tunnel
@@ -179,20 +179,20 @@ curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tun
 header: Request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "ipsec_tunnels":[
+  "ipsec_tunnels": [
     {
-      "name":"EdgeConnect_IPSEC_1",
-      "customer_endpoint":"35.188.72.56",
-      "cloudflare_endpoint":"172.64.241.205",
-      "interface_address":"192.168.10.11/31",
-      "description":"Tunnel for EdgeConnect - GCP Central"
-      }
-    ]
-  }'
+      "name": "EdgeConnect_IPSEC_1",
+      "customer_endpoint": "35.188.72.56",
+      "cloudflare_endpoint": "172.64.241.205",
+      "interface_address": "192.168.10.11/31",
+      "description": "Tunnel for EdgeConnect - GCP Central"
+    }
+  ]
+}'
 ```
 
 ```json
@@ -233,10 +233,10 @@ Use the tunnel ID from the response in Step 2. Save the pre-shared key generated
 ---
 header: Request
 ---
-curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
---header "X-Auth-Email: <YOUR_EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json"
+curl --request POST \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

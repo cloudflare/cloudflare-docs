@@ -15,9 +15,9 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
   "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
@@ -29,9 +29,9 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
   "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
@@ -47,9 +47,9 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
   "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
@@ -61,9 +61,9 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
   "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
@@ -77,9 +77,9 @@ Use the examples below to filter out fields that are not relevant to traffic flo
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
   "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",

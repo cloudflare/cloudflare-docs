@@ -1,7 +1,7 @@
 ---
 title: Network Interconnect (CNI)
 pcx_content_type: concept
-weight: 7
+weight: 8
 meta:
   title: Network Interconnect and Magic WAN
 ---

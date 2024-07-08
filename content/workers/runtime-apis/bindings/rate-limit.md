@@ -181,3 +181,4 @@ For example, if many requests come in to your Worker in a single Cloudflare loca
 ## Examples
 
 - [`@elithrar/workers-hono-rate-limit`](https://github.com/elithrar/workers-hono-rate-limit) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application.
+- [`@hono-rate-limiter/cloudflare`](https://github.com/rhinobase/hono-rate-limiter) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application, with multiple data stores to choose from.

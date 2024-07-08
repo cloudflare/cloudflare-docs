@@ -7,7 +7,7 @@
     "assets/*.ts"
   ],
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./components/*"],

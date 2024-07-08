@@ -10,7 +10,7 @@ You can monitor the status of your waiting rooms using the [dashboard](#status-i
 
 Note that the **Total active users** and **Queued users** shown in the dashboard, as well as through API endpoints are estimates. That data corresponding to each of these metrics is cached for around 30 seconds after the time it takes to be synced from all data centers globally. Therefore, the status will range between 20-50 seconds in the past, depending on the exact moment the data was queried, aggregated, as well as the age of the cache.
 
-{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Room.{{</Aside>}}
+Refer to [Waiting Room Analytics](/waiting-room/waiting-room-analytics/) for more details about the traffic going through your waiting room.
 
 ## Status in the dashboard
 
@@ -93,8 +93,12 @@ The value of `queue_all` indicates whether all traffic is forced to queue in the
 
 Waiting Room queues traffic at the data-center level to increase scalability, letting each data center make decisions independently.
 
-Because of this design, a waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
+Because of this design, the configured traffic limits of a waiting room are target values which your waiting room will work to keep your traffic volumes near. A waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
 
 Waiting Room also continuously monitors the rate of users entering throughout each minute, and not just at the end of the minute. Therefore, if at the beginning of your minute, a large fraction of your set `new_users_per_minute` value already joined, we may start queueing users, even if the overall `new_users_per_minute` value that is reached for that minute is not hit.
 
-To help prevent a waiting room from active queueing, increase the values for `new_users_per_minute` and/or `total_active_users`.
+To help prevent a waiting room from active queueing, increase the values for `new_users_per_minute` and/or `total_active_users`. For more information about how Waiting Room makes queueing decisions, review our [blogpost](https://blog.cloudflare.com/how-waiting-room-queues).
+
+{{<Aside type="note">}}
+Note that Waiting Room is designed to handle legitimate traffic. If you notice frequent or abnormal queueing behavior, ensure that you are properly handling malicious and automated traffic using Cloudflare security products.
+{{</Aside>}}

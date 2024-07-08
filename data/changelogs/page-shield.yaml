@@ -6,6 +6,16 @@ productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 
+- publish_date: '2024-06-18'
+  title: Cookie Monitor now available
+  description: |-
+    Page Shield now captures HTTP cookies set and used by your web application. The [list of detected cookies](/page-shield/detection/monitor-connections-scripts/) in available in the Cloudflare dashboard or via API.
+
+- publish_date: '2024-06-14'
+  title: Added filter operators for scripts and connections
+  description: |-
+    You can now filter scripts and connections in the Cloudflare dashboard using the `does not contain` operator. Pages associated with scripts and connections can be filtered by `includes`, `starts with`, and `ends with`.
+
 - publish_date: '2024-04-26'
   title: Suggestions for the default directive
   description: |-
