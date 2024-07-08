@@ -21,7 +21,7 @@ The following steps are similar if your Cloudflare parent zone is in a secondary
 If you have not yet created DNS records covering your child domain in the parent zone:
 
 1. Add the child domain to a Cloudflare account. It can be the same account where the parent domain exists or a different one.
-2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
+2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. Get the nameserver names for the child domain. These can be found in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and will not be the same nameservers as the parent domain.
 4. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records for the subdomain you want to delegate.
 
@@ -41,7 +41,7 @@ If you have not yet created DNS records covering your child domain in the parent
 If you have already created DNS records covering your child domain in the parent zone:
 
 1. Add the child domain to a Cloudflare account. It can be the same account where the parent domain exists or a different one.
-2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
+2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. In your child domain, make sure you have all DNS records that relate to the subdomain. This includes all DNS records deeper than the delegated subdomain. For example, if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
     {{<Aside type="note">}}If your child domain is on a full setup, consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.

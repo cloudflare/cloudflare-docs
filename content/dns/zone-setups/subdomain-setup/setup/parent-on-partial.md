@@ -14,11 +14,11 @@ When the parent domain is using a [partial setup](/dns/zone-setups/partial-setup
 
 If you have not yet created a DNS record covering your child domain in the parent zone:
 
-{{<tabs labels="Child is Full or Secondary | Child is Partial">}}
+{{<tabs labels="Child is full or secondary | Child is partial">}}
 {{<tab label="child is full or secondary" no-code="true">}}
 
 1. [Add the child domain](/fundamentals/setup/manage-domains/add-site/) to the parent domain’s Cloudflare account or another account.
-2. Complete the configuration accordingly for [Full](/dns/zone-setups/full-setup/setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
+2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. After creating the DNS records on the child zone, add the Cloudflare nameservers as `NS` records at your external DNS provider.
 4. Within a short period of time, the child domain should be active.
 
@@ -39,7 +39,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 If you have already created a DNS record covering your child domain in the parent domain:
 
-{{<tabs labels="Child is Full or Secondary | Child is Partial">}}
+{{<tabs labels="Child is full or secondary | Child is partial">}}
 {{<tab label="child is full or secondary" no-code="true">}}
 
 1. [Add the child domain](/fundamentals/setup/manage-domains/add-site/) to the parent domain’s Cloudflare account or another account.

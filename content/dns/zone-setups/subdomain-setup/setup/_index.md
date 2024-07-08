@@ -41,7 +41,7 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 | [Partial](/dns/zone-setups/partial-setup/) | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes | [Set up child domain with parent on partial setup](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) |
 | [Partial](/dns/zone-setups/partial-setup/) | [Partial](/dns/zone-setups/partial-setup/) | Yes | [Set up child domain with parent on partial setup](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) |
 
-This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a Partial setup, you can [convert the parent zone to Partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
+This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a partial setup, you can [convert the parent zone to partial](/dns/zone-setups/partial-setup/setup/#add-your-domain-to-cloudflare) while it is still in pending status.
 
 Although the how-to guides in this documentation are focused on both parent domain and child domain existing in Cloudflare, it is also possible to achieve a subdomain setup in Cloudflare while the parent domain exists in a different DNS provider.
 
