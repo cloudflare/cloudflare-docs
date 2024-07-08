@@ -2,7 +2,7 @@
 
 <!-- Add context such as the type of documentation being updated or added -->
 
-### Screenshots
+### Screenshots (optional)
 
 <!-- Add imagery to convey the changes made by this PR (optional) -->
 
