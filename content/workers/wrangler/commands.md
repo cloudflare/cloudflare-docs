@@ -1651,7 +1651,9 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 ## `secret`
 
-Manage the secret variables for a Worker.
+Manage the secret variables for a Worker. 
+
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
 ### `put`
 
@@ -2272,22 +2274,65 @@ wrangler versions list [OPTIONS] --experimental-versions
 
 {{</definitions>}}
 
-### `view`
+### `secret put`
 
-Retrieve details for the specified [version](/workers/configuration/versions-and-deployments/#versions). Details include `Version ID`, `Created`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+Create or replace a secret for a Worker.  Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 
 ```txt
-wrangler versions view [OPTIONS] --experimental-versions
+wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
-- `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the version you wish to view.
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The variable name for this secret to be accessed in the Worker.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+
+
+{{</definitions>}}
+
+### `secret delete`
+
+Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions delete <KEY> [OPTIONS] --experimental-versions
+```
+
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The variable name for this secret to be accessed in the Worker.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+
+{{</definitions>}}
+
+### `secret:bulk`
+
+Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions secret:bulk <FILENAME> [OPTIONS] --experimental-versions
+```
+
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
 
 {{</definitions>}}
 
