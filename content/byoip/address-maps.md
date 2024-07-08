@@ -6,7 +6,7 @@ weight: 5
 
 # IP Address Maps
 
-The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a domain or zone’s DNS records when they are proxied through Cloudflare.
+The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a zone or domain's DNS records when they are proxied through Cloudflare.
 
 For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
