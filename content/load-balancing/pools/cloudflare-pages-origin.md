@@ -2,9 +2,13 @@
 pcx_content_type: tutorial
 title: Use Pages as origin
 weight: 3
+updated: 2024-07-03
+products: [Pages]
 ---
 
 # Use Cloudflare Pages as origin
+
+{{<tutorial-date-info>}}
 
 This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
