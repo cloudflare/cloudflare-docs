@@ -38,7 +38,7 @@ The `runWithTools` function has a `verbose` mode that emits helpful logs for deb
 
 ```ts
 ---
-header: Embedded function calling example
+header: Enabled verbose mode
 ---
 
 const response = await runWithTools(
@@ -65,9 +65,38 @@ Consider the following to improve performance:
 
 - Shorten prompts to reduce time for input processing
 - Reduce number of tools provided for embedded function calling to tools that are required for the use case
-- Stream the final response to the end user to minimize the time to interaction
+- Stream the final response to the end user to minimize the time to interaction. See example below:
 
-TODO: Add final response streaming example
+```ts
+---
+header: Streamed response example
+---
+async fetch(request, env, ctx) {
+  const response = (await runWithTools(
+    env.AI,
+    '@hf/nousresearch/hermes-2-pro-mistral-7b',
+    {
+      messages: [
+        ...
+      ],
+      tools: [
+        ...
+      ],
+    },
+    {
+      // Enable response streaming
+      streamFinalResponse: true,
+    }
+  )) as ReadableStream;
+
+  // Set response headers for streaming
+  return new Response(response, {
+    headers: {
+      'content-type': 'text/event-stream',
+    },
+  });
+}
+```
 
 ## Common Errors
 
