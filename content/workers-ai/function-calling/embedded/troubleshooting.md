@@ -19,6 +19,10 @@ General [logging](/workers/observability/logging/) capabilities for Workers also
 The invocations of tools can be logged as in any Worker using `console.log()`:
 
 ```ts
+---
+header: Logging tool invocations
+highlight: [6]
+---
 export default {
 	async fetch(request, env, ctx) {
 		const sum = (args: { a: number; b: number }): Promise<string> => {
@@ -39,6 +43,7 @@ The `runWithTools` function has a `verbose` mode that emits helpful logs for deb
 ```ts
 ---
 header: Enabled verbose mode
+highlight: [13]
 ---
 
 const response = await runWithTools(
@@ -59,17 +64,18 @@ const response = await runWithTools(
 
 ## Performance
 
-To respond to a LLM prompt with embedded function potentially multiple AI inference requests and function invocations are needed, which can have an impact on user experience.
+To respond to a LLM prompt with embedded function, potentially multiple AI inference requests and function invocations are needed, which can have an impact on user experience.
 
 Consider the following to improve performance:
 
-- Shorten prompts to reduce time for input processing
+- Shorten prompts (to reduce time for input processing)
 - Reduce number of tools provided for embedded function calling to tools that are required for the use case
 - Stream the final response to the end user to minimize the time to interaction. See example below:
 
 ```ts
 ---
 header: Streamed response example
+highlight: [15]
 ---
 async fetch(request, env, ctx) {
   const response = (await runWithTools(

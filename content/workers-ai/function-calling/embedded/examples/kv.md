@@ -3,6 +3,8 @@ pcx_content_type: navigation
 title: Use KV API
 weight: 6
 layout: wide
+products: [KV]
+tags: [AI]
 ---
 
 # Example using Workers KV API

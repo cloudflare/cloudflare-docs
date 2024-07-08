@@ -17,3 +17,7 @@ Embedded function calling can be used to easily make complex agents that interac
 Embedded function calling depends on features native to the Workers platform. This means that embedded function calling is only supported via [Cloudflare Workers](/workers-ai/get-started/workers-wrangler/), not via the [REST API](/workers-ai/get-started/rest-api/).
 
 {{</Aside>}}
+
+## Resources
+
+{{<directory-listing>}}

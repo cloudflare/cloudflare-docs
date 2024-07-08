@@ -3,6 +3,7 @@ pcx_content_type: example
 title: Use fetch() handler
 weight: 4
 layout: wide
+tags: [AI]
 ---
 
 # Example using `fetch()` handler
@@ -38,7 +39,6 @@ export default {
 			const response = await fetch(
 				`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,precipitation_sum&timezone=GMT&forecast_days=${numDays}`
 			);
-			console.log('here');
 			return response.text();
 		};
 		// Run AI inference with function calling

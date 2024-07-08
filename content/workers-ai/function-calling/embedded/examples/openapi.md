@@ -3,6 +3,7 @@ pcx_content_type: navigation
 title: Tools based on OpenAPI Spec
 weight: 5
 layout: wide
+tags: [AI]
 ---
 
 # Example using tools based on OpenAPI Spec
