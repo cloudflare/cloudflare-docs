@@ -20,7 +20,7 @@ If you do not have BYOIP or static IPs and you want to use Address Maps, contact
 
 ## How to use Address Maps
 
-For domains using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use address maps to specify which IPs to return for which hostnames.
+For zones using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use address maps to specify which IPs to return for which hostnames.
 
 | Leased static IPs | BYOIPs |
 | --- | --- |
@@ -28,7 +28,7 @@ For domains using Cloudflare authoritative DNS, we typically respond to DNS quer
 
 ### Create address maps
 
-To avoid any errors if you have static IPs, Cloudflare creates an address map during the static IP onboarding process where you can instead add or edit your domains. You cannot create a new address map with your static IPs, you may only edit the Cloudflare-created map.
+To avoid any errors if you have static IPs, Cloudflare creates an address map during the static IP onboarding process where you can instead add or edit your zones. You cannot create a new address map with your static IPs, you may only edit the Cloudflare-created map.
 
 Refer to [Static IPs](#static-ips) for more information.
 
@@ -36,7 +36,7 @@ Refer to [Static IPs](#static-ips) for more information.
 2. Go to **IP Addresses** > **Address Maps**.
 3. Select **Create an address map**.
 4. Choose the scope of the address map.
-5. Add the domains and IP addresses that you want to map.
+5. Add the zones and IP addresses that you want to map.
 6. Name your address map.
 7. Review the information and select **Save and Deploy**.
 
