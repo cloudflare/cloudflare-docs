@@ -50,20 +50,24 @@ If you have already created DNS records covering your child domain in the parent
 4. If the parent zone is in Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 5. In the child domain zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 6. Get the nameserver names for the child domain. These can be found in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and will not be the same nameservers as the parent domain.
-7. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records) referencing the child domain or any of its deeper subdomains.
-8. Within the **DNS** > **Records** of the parent zone, leave one address record referencing the child domain and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
-9. Change the type of the last address record to `NS` and its content to one of the child domain's nameserver names. If the parent domain is in Cloudflare, use [a `PATCH` request](/api/operations/dns-records-for-a-zone-patch-dns-record) to achieve this.
-10. Within the **DNS** > **Records** of the parent zone, [create](/dns/manage-dns-records/how-to/create-dns-records/) the second `NS` record in the parent zone for the subdomain you want to delegate.
+7. Within the **DNS** > **Records** of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.
 
-    For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
+    For example, to delegate the subdomain `www.example.com`, the updated records in the parent zone `example.com` should contain `NS` records similar to the following:
 
     | **Type** | **Name** | **Content** |
     | --- | --- | --- |
     | `NS` | www | john.ns.cloudflare.com |
+    | `NS` | www | adam.ns.cloudflare.com |
 
-11. Flush the address records of your child domain in public resolvers ([1.1.1.1](https://1.1.1.1/purge-cache/) and [8.8.8.8](https://developers.google.com/speed/public-dns/cache)).
-12. Within a short period of time, the child domain should be active.
-13. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/) on the child domain.
+    In this example, `john.ns.cloudflare.com` and `adam.ns.cloudflare.com` represent the child domain nameservers that you got from step 6.
+
+8. Flush the address records of your child domain in public resolvers ([1.1.1.1](https://1.1.1.1/purge-cache/) and [8.8.8.8](https://developers.google.com/speed/public-dns/cache)).
+9. In the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all the remaining records on the delegated subdomain, except the `NS` records that you created in step 7.
+
+    Also delete all DNS records deeper than the delegated subdomain. For example, if you are delegating `www.example.com`, records for `api.www.example.com` should only exist in the new child zone.
+
+10. Within a short period of time, the child domain should be active.
+11. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/) on the child domain.
 
 
 [^1]: Meaning that Cloudflare is your Authoritative DNS provider.
