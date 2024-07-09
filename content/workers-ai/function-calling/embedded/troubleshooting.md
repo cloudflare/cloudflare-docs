@@ -69,8 +69,8 @@ To respond to a LLM prompt with embedded function, potentially multiple AI infer
 Consider the following to improve performance:
 
 - Shorten prompts (to reduce time for input processing)
-- Reduce number of tools provided for embedded function calling to tools that are required for the use case
-- Stream the final response to the end user to minimize the time to interaction. See example below:
+- Reduce number of tools provided
+- Stream the final response to the end user (to minimize the time to interaction). See example below:
 
 ```ts
 ---
