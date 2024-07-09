@@ -71,6 +71,24 @@ SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
 API_HOST = "production.example.com"
 API_ACCOUNT_ID = "production_example_user"
 SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
+
+# used when providing "--env=local" flag to "wrangler dev"
+[env.local.vars]
+API_HOST = "localhost:3000"
+API_ACCOUNT_ID = "local_example_user"
+SERVICE_X_DATA = { URL = "localhost:4000", MY_ID = 789 }
+```
+
+For local development, you can specify an `environment` value via the `env` flag when running the development command like so `wrangler dev --env=local`. Note that you may want to modify your `package.json` if you include a `dev` script that calls `wrangler dev`.
+
+Alternatively, wrangler automatically uses values defined in a `.dev.vars` file located in the root directory of your worker when you run `wrangler dev`. These values will override any values specified in your `wrangler.toml` file. Nested variables are not supported in `.dev.vars`.
+
+```shell
+---
+filename: .dev.vars
+---
+API_HOST = "localhost:4000"
+API_ACCOUNT_ID = "local_example_user"
 ```
 
 ## Add environment variables via the dashboard
