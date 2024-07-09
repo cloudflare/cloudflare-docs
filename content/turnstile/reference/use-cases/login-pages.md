@@ -22,7 +22,7 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Turnstile** and [create a new Turnstile widget](/turnstile/get-started/).
-3. Note the sitekey and the secret key.
+3. Copy the sitekey and the secret key to use in the next step.
 
 {{</tutorial-step>}}
 
@@ -51,16 +51,16 @@ highlight: [13-14]
         <!-- Turnstile widget -->
         <div class="cf-turnstile" data-sitekey="YOUR-SITE-KEY"></div>
         
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
     </form>
 </body>
 </html>
 ```
 {{</tutorial-step>}}
 
-{{<tutorial-step title="Verify the Turnstile token on the server-side">}}
+{{<tutorial-step title="Verify the Turnstile token on the server side">}}
 
-You will need to verify the Turnstile token sent from the client-side. Below is an example in Node.js.
+You will need to verify the Turnstile token sent from the client side. Below is an example in Node.js.
 
 ```js
 ---
@@ -109,15 +109,15 @@ app.listen(3000, () => {
 
 ## Important considerations
 
-It is crucial to handle the verification of the Turnstile token correctly. Some key points to keep in mind:
+It is crucial to handle the verification of the Turnstile token correctly. This section covers some key points to keep in mind.
 
 ### Verify the token after credentials input
 
-- Ensure that you verify the Turnstile token after the user has put in their credentials and selected **login** to your website or application.
+- Ensure that you verify the Turnstile token after the user has put in their credentials and selected **log in** to your website or application.
 - If you verify the token before the user inputs their credentials, a malicious visitor could bypass the protection by reentering the login credentials.
 
 ### Proper flow implementation
 
 - When the user submits the login form, send both the login credentials and the Turnstile token to your server.
-- On the server-side, verify the Turnstile token first.
+- On the server side, verify the Turnstile token first.
 - Based on the verification response, decide whether to proceed with checking the login credentials.
