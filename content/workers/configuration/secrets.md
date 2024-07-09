@@ -33,12 +33,9 @@ $ npx wrangler secret put <KEY>
 ```
 
 
-If using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), instead use the `wrangler versions secret put`command. This will only create a new version of the Worker, that can then be deploying using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2). 
+If using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), instead use the `wrangler versions secret put` command. This will only create a new version of the Worker, that can then be deploying using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2). 
 
 ```sh
----
-filename: wrangler versions secret put
----
 $ npx wrangler versions secret put <KEY> --x-versions
 ```
 
@@ -71,12 +68,9 @@ filename: wrangler secret delete
 $ npx wrangler secret delete <KEY>
 ```
 
-If using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), instead use the `wrangler versions secret delete`command. This will only create a new version of the Worker, that can then be deploying using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2). 
+If using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), instead use the `wrangler versions secret delete` command. This will only create a new version of the Worker, that can then be deploying using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2). 
 
 ```sh
----
-filename: wrangler versions secret delete 
----
 $ npx wrangler versions secret delete <KEY> --x-versions
 ```
 
