@@ -36,9 +36,9 @@ The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd
 | --- | --- | --- | --- |
 | `CNAME` | `<YOUR_HOSTNAME>` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
 
-{{<Aside type="note">}}
-
 For O2O to be configured properly, make sure your Proxied DNS record targets your SFCC CNAME **directly**. Do not indirectly target the SFCC CNAME by targeting another Proxied DNS record in your Cloudflare zone which targets the SFCC CNAME.
+
+{{<details header="Correct configuration">}}
 
 For example, if the hostnames routing traffic to SFCC are `www.example.com` and `preview.example.com`, the following is a **correct** configuration in your Cloudflare zone:
 
@@ -47,6 +47,10 @@ For example, if the hostnames routing traffic to SFCC are `www.example.com` and 
 | `CNAME` | `www.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
 | `CNAME` | `preview.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
 
+{{</details>}}
+
+{{<details header="Incorrect configuration">}}
+
 And, the following is an **incorrect** configuration because `preview.example.com` indirectly targets the SFCC CNAME via the `www.example.com` Proxied DNS record, which means O2O will not be properly enabled for hostname `preview.example.com`:
 
 | Type | Name | Target | Proxy status |
@@ -54,7 +58,7 @@ And, the following is an **incorrect** configuration because `preview.example.co
 | `CNAME` | `www.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
 | `CNAME` | `preview.example.com` | `www.example.com` | Proxied |
 
-{{</Aside>}}
+{{</details>}}
 
 ## Product compatibility
 
