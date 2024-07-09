@@ -233,7 +233,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
 ## 6. Configure Durable Object classes with migrations
 
-A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, renaming, deleting and transferring an existing Durable Object class.
+A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
 
