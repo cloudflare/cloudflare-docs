@@ -11,9 +11,9 @@ Breakout traffic allows you to define which applications should bypass Cloudflar
 
 Breakout traffic will not work for applications that use DNS-over-HTTPs.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="A note on security">}}
 
-We recommend routing all traffic through our global network for comprehensive security filtering and access controls, but there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
+We recommend routing all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
 Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn how Cloudflare routes traffic.
 {{</Aside>}}
@@ -27,7 +27,7 @@ You need to configure Breakout traffic for each of your existing sites, as it is
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 7. Select **Add applications**.
 
-The traffic for that application will now go directly to the Internet and bypass Cloudflare filtering.
+The traffic for that application will now go directly to the Internet and bypass Cloudflare's filtering.
 
 ## Delete an application
 
