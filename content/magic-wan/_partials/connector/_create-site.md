@@ -38,9 +38,9 @@ Example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "site": {
     "description": "<SITE_DESCRIPTION>",
@@ -51,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
 
 If you created your site successfully, you should receive a message similar to the following:
 
-```bash
+```json
 {
   "result": {
     "site": {
@@ -107,9 +107,9 @@ Example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "wan": {
     "description": "<YOUR_WAN_NAME>",
@@ -157,18 +157,18 @@ Example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "lan": {
-  "description": "<YOUR_LAN_NAME>",
-  "physport": 2,
-  "static_addressing": {
-    "address": "172.16.14.0/24"
-  },
-  "vlan_tag": 0
-}
+    "description": "<YOUR_LAN_NAME>",
+    "physport": 2,
+    "static_addressing": {
+      "address": "172.16.14.0/24"
+    },
+    "vlan_tag": 0
+  }
 }'
 ```
 

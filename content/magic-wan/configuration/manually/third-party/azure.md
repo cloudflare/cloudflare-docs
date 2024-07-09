@@ -143,8 +143,8 @@ More details on how to install the root CA certificate can be found in [User-sid
 
 Once the root CA certificate is installed, open a web browser or use curl to validate Internet connectivity:
 
-```bash
-curl https://ipinfo.io
+```sh
+$ curl https://ipinfo.io
 
 {
   "ip": "104.xxx.xxx.225",
@@ -274,16 +274,17 @@ curl --location 'https://management.azure.com/subscriptions/{{subscriptionId}}/r
 
 4. Locate the line that controls disabling IPsec anti-replay protection, and change it from `false` to `true`:
 
-```bash
+```txt
 "disableIPSecReplayProtection": true
 ```
 
 5. Upload the entire response in a subsequent API call (`PUT` request):
 
 ```bash
-curl --location --request PUT 'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg' \
+curl --location --request PUT \
+'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
+--header "Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg" \
+--header "Content-Type: application/json" \
 --data '{
     "name": "{{virtualNetworkGatewayName}}",
     "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}",
@@ -352,8 +353,7 @@ curl --location --request PUT 'https://management.azure.com/subscriptions/{{subs
         "allowRemoteVnetTraffic": false,
         "allowVirtualWanTraffic": false
     }
-}
-'
+}'
 ```
 
 6. Leave the replay protection setting checked in the Cloudflare dashboard, and wait several minutes before validating connectivity again.

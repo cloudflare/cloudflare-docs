@@ -23,7 +23,7 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 Example request:
 
 ```sh
-$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
+$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
 ```
 
 Example response:
@@ -56,7 +56,8 @@ Example response:
 In the case of an invalid request a `400 Bad Request` error is returned:
 
 ```sh
-$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+
 {
   "error": "Invalid CD flag `2`. Expected to be empty or one of `0`, `false`, `1`, or `true`."
 }

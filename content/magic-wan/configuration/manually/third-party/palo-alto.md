@@ -13,6 +13,7 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 - PAN-OS 9.1.14-h4
 
 ## Use Cases
+
 - **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
 - **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 

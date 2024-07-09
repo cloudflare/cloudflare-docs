@@ -34,6 +34,8 @@ A single instance of a Durable Object cannot do more work than is possible on a 
 
 To solve this error, you can either do less work per request, or send fewer requests. For example, you can split the requests among more instances of the Durable Object.
 
+These errors and others that are due to overload will have an [`.overloaded` property](/durable-objects/best-practices/error-handling) set on their exceptions, which can be used to avoid retrying overloaded operations.
+
 ### Your account is generating too much load on Durable Objects. Please back off and try again later.
 
 There is a limit on how quickly you can [create new Durable Objects or lookup different existing Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/). Those lookups are usually cached, meaning attempts for the same set of recently accessed Durable Objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.

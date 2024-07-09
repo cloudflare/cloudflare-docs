@@ -6,7 +6,11 @@ weight: 2
 
 # Get started
 
-To bring your own IPs, you must go through the onboarding process. Work with your account team to understand everything you need to ensure a smooth transition.
+To bring your own IPs, you must work with your account team to understand everything you need to ensure a smooth transition during the onboarding process.
+
+{{<Aside type="note">}}
+BYOIP is ingress only.
+{{</Aside>}}
 
 ## Overview
 
@@ -16,8 +20,8 @@ Cloudflare requires a service-specific configuration for your prefixes, as well 
 
 There are two major prerequisites before Cloudflare can begin onboarding your IP space.
 
-1.  You must verify your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date with the correct prefix or ASN information.
-2.  Cloudflare must receive a [Letter of Agency (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
+1. You must verify your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date with the correct prefix or ASN information.
+2. Cloudflare must receive a [Letter of Agency (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
 
 Optionally, if you use the {{<glossary-tooltip term_id="Resource Public Key Infrastructure (RPKI)">}}Resource Public Key Infrastructure (RPKI){{</glossary-tooltip>}} protocol to sign your routes, Cloudflare can help with this as well. Contact your account team know if you are interested in using RPKI.
 

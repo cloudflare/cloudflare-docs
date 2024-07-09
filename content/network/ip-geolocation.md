@@ -32,7 +32,7 @@ To enable **IP Geolocation** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **IP Geolocation** with the API, send a [`PATCH`](/api/operations/zone-settings-change-ip-geolocation-setting) request with the `value` parameter set to `"on"`.
+To enable **IP Geolocation** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `ip_geolocation` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

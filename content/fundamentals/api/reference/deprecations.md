@@ -70,27 +70,46 @@ Deprecated API:
 
 Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
-## Security Level and threat score
-**End of life date: September 30th, 2024**
+## DNS Records: Error chains for DNS validation errors
+**End of life date: October 1st, 2024**
 
-After the end of life date, the [Change Security Level setting](/api/operations/zone-settings-change-security-level-setting) operation will return an error if you use any value other than `off` and `under_attack`, since Security Level and threat score were deprecated.
+Cloudflare is making a minor change to the representation of certain errors when creating DNS records. Currently, when the DNS record to be created is invalid, an error similar to the following may be returned:
 
-Configuration rules created using the Rulesets API will return an error if they set the security level to any value other than `off` and `under_attack`.
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1004,
+      "message": "DNS Validation Error",
+      "error_chain": [
+        {
+          "code": 9999,
+          "message": "This is an example."
+        }
+      ]
+    }
+  ],
+  "messages": []
+}
+```
 
-All rules created or updated using the Rulesets API will return an error if their expressions include the `cf.threat_score` field.
+After October 1st, 2024, the `error_chain` will be omitted, returning the root cause directly without wrapping it in another "DNS Validation Error" error:
 
-Modified APIs:
-- PATCH /zones/:zone_id/settings/security_level
-- POST /accounts/:account_id/rulesets
-- POST /zones/:zone_id/rulesets
-- POST /accounts/:account_id/rulesets/:ruleset_id/rules
-- POST /zones/:zone_id/rulesets/:ruleset_id/rules
-- PUT /accounts/:account_id/rulesets/:ruleset_id
-- PUT /zones/:zone_id/rulesets/:ruleset_id
-- PUT /accounts/:account_id/rulesets/phases/:phase_name/entrypoint
-- PUT /zones/:zone_id/rulesets/phases/:phase_name/entrypoint
-- PATCH /accounts/:account_id/rulesets/:ruleset_id/rules/:rule_id
-- PATCH /zones/:zone_id/rulesets/:ruleset_id/rules/:rule_id
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 9999,
+      "message": "This is an example."
+    }
+  ],
+  "messages": []
+}
+```
 
 ## Legacy DNS Settings Endpoints
 **End of life date: September 13th, 2024**

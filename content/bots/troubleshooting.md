@@ -105,8 +105,8 @@ ___
 
 The difference is significant:
 
--   Threat score (`cf.threat_score`), now deprecated, is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
--   Bot management score (`cf.bot_management.score`) is what Cloudflare uses in Bot Management to measure if the request is from a human or a script. The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
+-   Threat score (_cf.threat\_score_) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
+-   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script. The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
 
 These fields are available via [WAF custom rules](/waf/custom-rules/) and other products based on the Ruleset Engine.
 
@@ -199,7 +199,7 @@ ___
 
 -   BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.
 
--   BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules (legacy). BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+-   BFM has limited control. You cannot bypass or skip BFM using the _Skip_ action in WAF custom rules or using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
 
 -   SBFM can be bypassed with IP Access _Allow_ action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
 
@@ -215,7 +215,7 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 
 {{<render file="_flexible-sbfm.md">}}
 
-You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules (legacy). _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).
+You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/pro/).
 
 Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.
 
@@ -233,24 +233,22 @@ This is a known issue the Bots team is working to resolve in the near future. In
 1. List the existing Rulesets at the zone level
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -H Content-Type: application/json
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
 
-3. Use the ruleset ID you found to delete the SBFM ruleset
+3. Use the ruleset ID you found to delete the SBFM ruleset.
 
 ```bash
-curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -H "Content-Type: application/json"
+curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
-Note that you need to replace <key> with your own [API key](/fundamentals/api/get-started/keys/).
+Note that you need to replace `<API_KEY>` with your own [API key](/fundamentals/api/get-started/keys/).
 
 {{</faq-answer>}}
 {{</faq-item>}}

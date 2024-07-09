@@ -77,10 +77,9 @@ You can also use Regional Services via API. These are some examples of API reque
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/addressing/regional_hostnames/regions" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regional_hostnames/regions" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ```json
@@ -112,11 +111,11 @@ header: Response
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" \
-     -d '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "Content-Type: application/json" \
+--data '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
 ```
 
 ```json
@@ -143,10 +142,9 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ```json
@@ -175,10 +173,9 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ```json
@@ -205,11 +202,12 @@ header: Response
 ---
 header: Request
 ---
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" \
-     -d '{"region_key": "eu"}' | jq .
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"region_key": "eu"}' | jq .
 ```
 
 ```json
@@ -236,10 +234,10 @@ header: Response
 ---
 header: Request
 ---
-curl -X DELETE "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ```json

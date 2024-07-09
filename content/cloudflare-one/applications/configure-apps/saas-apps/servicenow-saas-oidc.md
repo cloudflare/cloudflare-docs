@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: ServiceNow (OIDC)
-weight: 10
+weight: 12
 ---
 
 # Connect to ServiceNow through Access (OIDC)
