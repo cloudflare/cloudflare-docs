@@ -72,7 +72,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
   "rules": [
     {
       "expression": "http.host eq \"admin.example.com\"",
-      "description": "Turn on I'm Under Attack mode for admin area",
+      "description": "Turn on I'\''m Under Attack mode for admin area",
       "action": "set_config",
       "action_parameters": {
         "security_level": "under_attack"
