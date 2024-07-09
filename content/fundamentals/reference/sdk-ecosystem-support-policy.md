@@ -28,9 +28,8 @@ The active support stage is where planned changes and support are being offered 
 
 End of life commonly occurs when we release a new major version of the library or tool. At this point, the previous major version is marked as no longer receiving improvements or bug fixes. If you continue to run end of life versions, support will be very limited.
 
-_The diagram below show all the lifecycle stages and their relation to one another._
 
-![](/images/fundamentals/support-policy.png)
+![All lifecycle stages and their relation to one another](/images/fundamentals/support-policy.png "All lifecycle stages and their relation to one another")
 
 ## Previous or end of life versions
 
