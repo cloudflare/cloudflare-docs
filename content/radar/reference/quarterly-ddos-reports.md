@@ -41,7 +41,7 @@ For both source and target insights, Cloudflare looks at the total volume of att
 
 #### Ranking
 
-For source, target and industry insights, Cloudflare may calculate a "Rank" for each dimension. The calculation takes into consideration HTTP DDoS attacks, network-layer DDoS attacks and the total volume and the percentage of DDoS attack traffic out of the total traffic for each of attack types. The Ranking system lets Cloudflare provide a simple single score that signfies how much a certain industry is being attacked, for example. In the graphs, the Rank values are visualized inverted. A longer bar in the chart means a higher rank and more attacks. 
+For source, target, and industry insights, Cloudflare may calculate a "Rank" for each dimension. The calculation takes into consideration HTTP DDoS attacks, network-layer DDoS attacks, and the total volume and the percentage of DDoS attack traffic out of the total traffic for each attack type. The Ranking system lets Cloudflare provide a simple single score that means how much a certain industry is being attacked, for example. In the graphs, the Rank values are displayed in an inverted way (a longer bar in the chart means a higher rank and more attacks).
 
 ### How we calculate attack characteristics
 
