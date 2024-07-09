@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Google Cloud
-weight: 6
+weight: 7
 ---
 
 # Connect to Google Cloud through Access
