@@ -1,18 +1,18 @@
 ---
-title: Create a Cloudflare account
+title: Connect a Cloudflare account
 pcx_content_type: how-to
 weight: 6
 ---
 
-# Create a Cloudflare account
+# Connect a Cloudflare account
 
-Existing Cloud Email Security (formerly Area 1) users must create a Cloudflare account to access the new Zero Trust Cloud Email Security product.
+Existing Cloud Email Security (formerly Area 1) users must connect a Cloudflare account to access the new Zero Trust Cloud Email Security product.
 
-You can create a Cloudflare account from the Cloudflare dashboard, or by connecting from the Cloud Email Security (formerly Area 1) login page.
+You can connect a Cloudflare account from the Cloudflare dashboard, or by connecting from the Cloud Email Security (formerly Area 1) login page.
 
-## Create account from the dashboard
+## Connect account from the dashboard
 
-To create a Cloudflare account from the dashboard:
+To connect a Cloudflare account from the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. On the left bar, select **Area 1**.
