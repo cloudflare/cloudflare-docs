@@ -60,9 +60,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/mistr
 ### JavaScript
 ```js
 ---
-highlight: [10]
+highlight: [11]
 ---
-const answer = await env.ai.run('@cf/mistral/mistral-7b-instruct-v0.1',
+const answer = await env.AI.run('@cf/mistral/mistral-7b-instruct-v0.1',
   {
     stream: true,
     raw: true,
