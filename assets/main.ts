@@ -19,7 +19,6 @@ declare global {
   events.mobile();
   events.dropdowns();
   contents.toc();
-  events.toggleSidebar();
   events.activeTab();
   events.tabs();
   events.zarazTrackDocEvents();
