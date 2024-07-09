@@ -17,7 +17,7 @@ This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Pingboard` and select the textbox that appears below.
+3. For **Application**, type `Pingboard` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
@@ -33,10 +33,10 @@ This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/
 
 1. In Pingboard, go to **Account** > **Add-Ons**.
 2. Under **Third-Party Integrations**, select **Custom SSO**.
-3. In a web browser, paste the SAML Metadata endpoint from application configuration in Cloudflare Zero Trust. Copy the contents.
+3. In a web browser, paste the SAML Metadata endpoint you copied from the application configuration in Cloudflare Zero Trust. Next, copy the contents of the displayed page.
 4. In Pingboard, under **IdP Metadata**, paste the contents from the SAML Metadata endpoint.
 5. (Optional) Under **Sign in with**, enter a name (for example, `Cloudflare Access`). Your users will select this name when signing in.
 
-## 3. Test the Integration
+## 3. Test the integration
 
 Open an incognito browser window and go to your Pingboard URL. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
