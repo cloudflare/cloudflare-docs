@@ -7,7 +7,7 @@ meta:
 
 # Breakout traffic
 
-Breakout traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire, and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.
+Breakout traffic allows you to define which applications should bypass Cloudflare’s security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.
 
 Breakout traffic will not work for applications that use DNS-over-HTTPs.
 
