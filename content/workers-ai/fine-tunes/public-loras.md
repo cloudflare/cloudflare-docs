@@ -57,7 +57,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/mistr
   }'
 ```
 
-### Javascript
+### JavaScript
 ```js
 ---
 highlight: [10]
@@ -65,12 +65,13 @@ highlight: [10]
 const answer = await env.ai.run('@cf/mistral/mistral-7b-instruct-v0.1',
   {
     stream: true,
+    raw: true,
     messages: [
       {
         "role": "user",
         "content": "Summarize the following: Some newspapers, TV channels and well-known companies publish false news stories to fool people on 1 April. One of the earliest examples of this was in 1957 when a programme on the BBC, the UKs national TV channel, broadcast a report on how spaghetti grew on trees. The film showed a family in Switzerland collecting spaghetti from trees and many people were fooled into believing it, as in the 1950s British people didnt eat much pasta and many didnt know how it was made! Most British people wouldnt fall for the spaghetti trick today, but in 2008 the BBC managed to fool their audience again with their Miracles of Evolution trailer, which appeared to show some special penguins that had regained the ability to fly. Two major UK newspapers, The Daily Telegraph and the Daily Mirror, published the important story on their front pages."
       }
     ],
-    lora: "cf-public-jigsaw-summarization"
+    lora: "cf-public-cnn-summarization"
   });
 ```
