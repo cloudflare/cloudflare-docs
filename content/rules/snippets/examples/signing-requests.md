@@ -45,7 +45,7 @@ export default {
 
       const currentTimestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
 
-      // Data to authenticate: combine pathname, timestamp, and expiration
+      // Data to authenticate: combine pathname and timestamp
       const dataToAuthenticate = `${url.pathname}${currentTimestamp}`;
 
       // Sign the data with HMAC-SHA256
