@@ -2,7 +2,7 @@
 type: example
 summary: Define a delay to be used when incoming requests match a rule you consider suspicious.
 goal:
-  - (TBD)
+  - Other
 operation:
   - Request manipulation
 product:

@@ -2,7 +2,7 @@
 type: example
 summary: Remove certain query strings from a request before passing to the origin.
 goal:
-  - (TBD)
+  - Other
 operation:
   - Request manipulation
 product:

@@ -2,7 +2,7 @@
 type: example
 summary: If origin responds with `JSON`, parse the response and delete fields to return a modified response.
 goal:
-  - (TBD)
+  - Other
 operation:
   - Response manipulation
 product:
