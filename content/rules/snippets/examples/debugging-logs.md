@@ -9,7 +9,6 @@ product:
   - Snippets
 pcx_content_type: example
 title: Debugging logs
-weight: 1001
 layout: example
 ---
 
