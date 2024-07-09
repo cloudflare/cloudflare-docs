@@ -29,7 +29,7 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 9. (Optional) In **Ports** specify the TCP/UDP ports you want to use. Add a comma to separate each of the ports.
 10. In **LAN 2**, select the destination LAN and repeat the above process to configure it.
 11. (Optional) Select the type of traffic. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
-12. Select the option to forward traffic locally or to forward traffic over Cloudflare’s network.
+12. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
 13. Select **Create policy**.
 
 {{</tab>}}
