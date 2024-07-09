@@ -1,6 +1,10 @@
-# Custom Metadata in Cloudflare AI Gateway
+---
+pcx_content_type: configuration
+weight: 4
+title: Custom metadata
+---
 
-## Overview
+# Custom metadata
 
 Custom metadata in Cloudflare AI Gateway allows you to tag requests with user IDs or other identifiers, enabling better tracking and analysis of your requests. Metadata values can be strings, numbers, or booleans, and will appear in your logs, making it easy to search and filter through your data.
 
@@ -16,23 +20,15 @@ Custom metadata in Cloudflare AI Gateway allows you to tag requests with user ID
 - Number
 - Boolean
 
-*Note: Objects are not supported as metadata values.*
+{{<Aside type="note">}}
 
-## Example Use Cases
+Objects are not supported as metadata values.
 
-- **Tagging Requests**: Identify requests with specific user IDs or team names.
-- **Testing Indicators**: Mark requests that are for testing purposes.
-- **Analysis**: Attach additional data to requests for later analysis, such as model parameters or unique identifiers.
+{{</Aside>}}
 
-## Adding Metadata to Requests
+## Implementations
 
-### Configuration
-
-Add metadata to your requests in the "Configuration" section of your request setup.
-
-### Example Implementations
-
-#### Using cURL
+### Using cURL
 
 To include custom metadata in your request using cURL:
 
@@ -44,7 +40,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/open
   --data '{"model": "gpt-4o", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
 ```
 
-#### Using SDK
+### Using SDK
 
 To include custom metadata in your request using the OpenAI SDK:
 
@@ -85,7 +81,7 @@ export default {
 };
 ```
 
-#### Using Binding
+### Using Binding
 
 To include custom metadata in your request using Binding:
 
@@ -96,23 +92,6 @@ export default {
        '@cf/mistral/mistral-7b-instruct-v0.1',
        { prompt: 'What should I eat for lunch?' },
        { gateway: { id: 'for-testing', metadata: { "employee":1337, "team":"AI"} } }
-   );
-
-   return new Response(aiResp);
- },
-};
-```
-
-### Additional Example
-
-
-```javascript
-export default {
- async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-   const aiResp = await env.AI.run(
-       '@cf/mistral/mistral-7b-instruct-v0.1',
-       {prompt: 'what’s the best star wars movie'},
-       { gateway: { id: 'gateway-name', metadata: { "employee":1337} } }
    );
 
    return new Response(aiResp);
