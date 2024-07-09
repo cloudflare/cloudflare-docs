@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Tableau Cloud (SAML)
-weight: 15
+weight: 17
 ---
 
 # Connect to Atlassian Cloud through Access
