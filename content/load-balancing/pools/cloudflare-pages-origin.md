@@ -1,10 +1,16 @@
 ---
 pcx_content_type: tutorial
-title: Use Pages as origin
+title: Use Pages as an origin for Load Balancing
 weight: 3
+updated: 2024-07-03
+difficulty: Beginner
+content_type: 📝 Tutorial
+products: [Pages]
 ---
 
 # Use Cloudflare Pages as origin
+
+{{<tutorial-date-info>}}
 
 This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
