@@ -149,7 +149,7 @@ Network-level DDoS attacks graphs are based on traffic measured in bytes.
 
 The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
 
-## TCP resets and timeouts early in connection
+## TCP resets and timeouts
 
 In the Transmission Control Protocol (TCP), client-initiated connection resets (via the RST flag, TCP's "panic button") are atypical, and indicate to the server that _something went wrong_ requiring the connection to be closed immediately. Similarly, connection timeouts (where the server closes a connection due to an unresponsive client) should not happen in conventional data exchanges. For comparison, a typical TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A FIN close is considered graceful because it ensures both sides complete their data transfer before closing the connection. In contrast, a timeout or RST flag triggers a hard stop, even if data is waiting to be sent or acknowledged. See [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293) for more details on the TCP protocol.
 
