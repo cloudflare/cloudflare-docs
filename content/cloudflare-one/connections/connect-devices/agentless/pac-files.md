@@ -188,7 +188,7 @@ Chromium-based browsers (such as Google Chrome, Microsoft Edge, and Brave) rely 
 
 {{<details header="Safari">}}
 
-Safari relies on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS](https://support.apple.com/guide/mac-help/mchlp2591/mac) documentation.
+Safari relies on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS documentation](https://support.apple.com/guide/mac-help/mchlp2591/mac).
 
 {{</details>}}
 
@@ -196,7 +196,7 @@ Safari relies on your operating system's proxy server settings. To configure you
 
 To test your configuration, you can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
-You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/policies/gateway/http-policies/#proxy-endpoint) policies to filter traffic proxied by Gateway via PAC files.
+You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/policies/gateway/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
 ## Limitations
 
