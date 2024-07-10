@@ -173,15 +173,9 @@ All major browsers support PAC files. You can configure individual browsers, or 
 The following example demonstrates the setup procedure for Firefox.
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
-
-   ![Going to Network Settings menu in Firefox](/images/cloudflare-one/connections/firefox-network-settings.png)
-
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
-
-   ![Enter PAC file URL into Firefox](/images/cloudflare-one/connections/firefox-pac-file.png)
-
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
 
 ## 5. Test your HTTP policy
