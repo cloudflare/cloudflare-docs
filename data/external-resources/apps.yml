@@ -50,7 +50,8 @@ entries:
 - link: https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects
   name: NBA Finals Polling and Predictor
   description: This stateful polling application uses Cloudflare Workers AI, Cloudflare Pages, Cloudflare Durable Objects, and Hono to keep track of users' votes for different basketball teams and generates personal predictions for the series.
-  tags: [AI]
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Durable Objects]
   cloudflare: true
   updated: 2024-06-06
 - link: https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam
