@@ -165,7 +165,7 @@
 /data/changelogs/waf.yaml @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
 
 # Support
-/content/support/ @shanecloudflare @zeinjaber @rprice74 @ngayerie @cloudflare/pcx-technical-writing
+/content/support/ @shanecloudflare @zeinjaber @TracyCloudflare @ngayerie @cloudflare/pcx-technical-writing
 
 # Turnstile
 /content/turnstile/ @migueldemoura @punkeel @worenga @patriciasantaana @cloudflare/pcx-technical-writing
