@@ -35,3 +35,34 @@ entries:
   tags: [AI]
   cloudflare: true
   updated: 2024-05-15
+- link: https://github.com/elizabethsiegle/cfworkers-ai-translate
+  name: Multimodal AI Translator
+  description: This application uses Cloudflare Workers AI to perform multimodal translation of languages via audio and text in the browser.
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-05-28
+- link: https://github.com/elizabethsiegle/cf-ai-lora-news-summarizer
+  name: LoRA News Summarizer
+  description: This application uses Cloudflare Workers AI, Streamlit, and Beautiful Soup to summarize input news article URLs in a variety of tones.
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-07-08
+- link: https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects
+  name: NBA Finals Polling and Predictor
+  description: This stateful polling application uses Cloudflare Workers AI, Cloudflare Pages, Cloudflare Durable Objects, and Hono to keep track of users' votes for different basketball teams and generates personal predictions for the series.
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Durable Objects]
+  cloudflare: true
+  updated: 2024-06-06
+- link: https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam
+  name: Workers AI Object Detector
+  description: Detect objects from a webcam in a Cloudflare Worker web app with detr-resnet-50 hosted on Cloudflare using Cloudflare Workers AI.
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-05-23
+- link: https://github.com/elizabethsiegle/cf-ai-lora-news-summarizer
+  name: Fanfic Generator
+  description: This application uses Cloudflare Workers AI, Streamlit, and AstraDB to generate personal scifi fanfiction.
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-06-29
