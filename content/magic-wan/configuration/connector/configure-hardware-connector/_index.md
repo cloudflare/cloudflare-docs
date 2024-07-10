@@ -46,7 +46,18 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 
 ### Device installation
 
-There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.
+There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it. For example:
+
+```mermaid
+flowchart BT
+accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet
+    b(Magic WAN Connector)-->|WAN|a(ISP or upstream router <br> at the site) --> f(Internet) --> g(Cloudflare)
+    c[LAN 172.16.1.0/24] --> b
+    d[LAN 172.16.2.0/24] --> b
+    e(Customer site) --- c & d
+    classDef orange fill:#f48120
+    class b,g orange
+```
 
 #### Firewall settings required
 
