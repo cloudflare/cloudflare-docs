@@ -104,9 +104,7 @@ Any deleted folders will be created automatically the next time you run `wrangle
 
 ## Local-only environment variables
 
-When developing locally, you may wish to use environment variables or secrets that are different from your production values. This can be achieved in several ways.
-
-Firstly, when running `wrangler dev`, variables in `wrangler.toml` are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
+When running `wrangler dev`, variables in `wrangler.toml` are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
 
 ```shell
 ---
