@@ -106,29 +106,12 @@ Any deleted folders will be created automatically the next time you run `wrangle
 
 When developing locally, you may wish to use environment variables or secrets that are different from your production values. This can be achieved in several ways.
 
-First, wrangler automatically uses values defined in a `.dev.vars` file located in the root directory of your worker when you run `wrangler dev`. These values will override any values specified in your `wrangler.toml` file. This is particularly useful for values you do not with to check into source control.
+Firstly, when running `wrangler dev`, variables in `wrangler.toml` are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
 
 ```shell
 ---
 filename: .dev.vars
 ---
-API_HOST = "localhost:4000"
-API_ACCOUNT_ID = "local_example_user"
-```
-
-Alternatively, you can specify local-only values in `wrangler.toml` and provide an `environment` value via the `env` flag when running the development command like so `wrangler dev --env=local`.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker-dev"
-
-[vars]
-API_HOST = "production-app.example.com"
-API_ACCOUNT_ID = "prod_example_user"
-
-[env.local.vars]
 API_HOST = "localhost:4000"
 API_ACCOUNT_ID = "local_example_user"
 ```
