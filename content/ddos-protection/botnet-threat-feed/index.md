@@ -35,19 +35,19 @@ Make sure that:
 
 ## Get started
 
-### 1. Obtain Cloudflare API token
-
-You must [obtain a Cloudflare API token](/fundamentals/api/get-started/create-token/) with at least the following account-level permission:
-
-- _DDoS Botnet Feed_ > _Read_
-
-### 2. Register your ASN via PeeringDB
+### 1. Register your ASN via PeeringDB
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Select **DDoS Threat Feed ASNs**.
-4. On the list of ASNs configured for your threat feed, select **Add ASN**. 
-5. You will be redirected to the PeeringDB authentication page, where you can log in and consent to share the affiliation data with us. You will be redirected back to the configuration page once it is successful. 
+4. On the list of ASNs configured for your threat feed, select **Add ASN**.
+5. You will be redirected to the PeeringDB authentication page, where you can log in and consent to share the affiliation data with us. You will be redirected back to the configuration page once it is successful.
+
+### 2. Obtain Cloudflare API token
+
+You must [obtain a Cloudflare API token](/fundamentals/api/get-started/create-token/) with at least the following account-level permission:
+
+- _DDoS Botnet Feed_ > _Read_
 
 ### 3. Call Botnet Threat Feed API
 
