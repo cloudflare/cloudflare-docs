@@ -37,6 +37,7 @@ This guide covers how to configure [Greenhouse Recruiting](https://support.green
 5. Keep this window open without selecting **Begin testing**. You will finish this configuration in step [5. Test the integration and finalize configuration](#5-test-the-integration-and-finalize-configuration).
 
 ## 4. Finish adding a SaaS application to Cloudflare Zero Trust
+
 1. In your open Zero Trust window, fill in the following fields:
     - **Entity ID**: `greenhouse.io`
     - **Assertion Consumer Service URL**: SSO Assertion Consumer URL from SSO configuration in Greenhouse Recruiting.
@@ -46,6 +47,7 @@ This guide covers how to configure [Greenhouse Recruiting](https://support.green
 4. Select **Done**.
 
 ## 5. Test the integration and finalize configuration
+
 1. In your open Greenhouse Recruiting window, select **Begin Testing** > **Proceed**.
 2. Open an incognito browser window and go to your Greenhouse Recruiting URL. Choose the SSO login option. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
 3. Once SSO sign in is successful, go to the **Configure** icon > **Dev Center** > **Single sign-on**.
