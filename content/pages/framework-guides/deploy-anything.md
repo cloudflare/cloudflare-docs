@@ -43,7 +43,7 @@ After you have deployed your site, you will receive a unique subdomain for your 
 
 {{<details header="Getting 404 errors on *.pages.dev?" >}}
 
-If you are getting `404` errors when visiting your `*.pages.dev` domain, make sure your website has a top-level file for `index.html`. This `index.html` is what Pages will serve on your on your apex with no page specified.
+If you are getting `404` errors when visiting your `*.pages.dev` domain, make sure your website has a top-level file for `index.html`. This `index.html` is what Pages will serve on your apex with no page specified.
 
 {{</details>}}
 
