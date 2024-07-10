@@ -28,8 +28,8 @@ export default {
             // Split the Set-Cookie headers
             const cookieArray = cookies.split(/,(?=\s*[^;]+=[^;]+)/g);
             const updatedCookies = cookieArray.map(cookie => {
+              // For example, replace the currency value with GBP
                 if (cookie.trim().startsWith("currency=")) {
-                    // Replace the currency value with GBP
                     return cookie.replace(/currency=[^;]+/, "currency=GBP");
                 }
                 return cookie;

@@ -17,6 +17,7 @@ export default {
     async fetch(request) {
         // Send original request to the origin
         const response = await fetch(request);
+
         // If response is not 200 OK or a redirect, send to another origin
         if (!response.ok && !response.redirected) {
           // First, clone the original request to construct a new request
@@ -30,6 +31,7 @@ export default {
           // Serve response to the new request from the origin
           return await fetch(url, newRequest);
         }
+
       // If response is 200 OK or a redirect, serve it
       return response;
     },

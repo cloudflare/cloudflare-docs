@@ -56,7 +56,7 @@ export default {
                 headers: Object.fromEntries(request.headers),
             };
 
-            // Log the error details to your logging service
+            // Log error details to your logging service
             await logError(errorDetails);
 
             // Return a generic error response

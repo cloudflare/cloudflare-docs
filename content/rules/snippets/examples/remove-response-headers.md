@@ -1,7 +1,6 @@
 ---
 type: example
 summary: Remove from response all headers that start with a certain name.
-  cookies.
 goal:
   - Manage headers
 operation:

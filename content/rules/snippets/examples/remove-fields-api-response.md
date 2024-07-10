@@ -21,7 +21,7 @@ export default {
         try {
             // Parse API response as JSON
             var api_response = response.json()
-            // Delete "botManagement" array from parsed JSON
+            // Specify the fields you want to delete. For example, to delete "botManagement" array from parsed JSON:
             delete api_response.botManagement;
             // Serve modified API response
             return Response.json(api_response);

@@ -19,7 +19,7 @@ export default {
     const base = "https://example.com";
     const statusCode = 301;
 
-    // Clone the original URL
+    // Clone the original URL.
     const url = new URL(request.url);
 
     // Define a "pathname" and "search" variables, extracting their values from the cloned URL.
