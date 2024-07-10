@@ -11,6 +11,16 @@ Breakout traffic allows you to define which applications should bypass Cloudflar
 
 Breakout traffic will not work for applications that use DNS-over-HTTPs.
 
+```mermaid
+flowchart LR
+    a(Magic WAN Connector) --> b(Internet) --x c(Cloudflare)
+    d[Application 1] --> a
+    e[Application 2] --> a
+    classDef orange fill:#f48120,color: black
+    class a,c orange
+```
+_In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet_
+
 {{<Aside type="note" header="A note on security">}}
 
 We recommend routing all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare’s security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
