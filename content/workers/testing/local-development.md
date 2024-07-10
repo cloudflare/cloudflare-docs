@@ -55,7 +55,7 @@ With any bindings that are not supported locally, you will need to use the `--re
 
 ## Work with local data
 
-When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources. 
+When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources.
 
 ### Use bindings in `wrangler.toml`
 
@@ -101,6 +101,37 @@ Running `wrangler kv:key put` will create a new key `test` with a value of `1234
 If you need to clear local storage entirely, delete the `.wrangler/state` folder. You can also be more fine-grained and delete specific resource folders within `.wrangler/state`.
 
 Any deleted folders will be created automatically the next time you run `wrangler dev`.
+
+## Local-only environment variables
+
+When developing locally, you may wish to use environment variables or secrets that are different from your production values. This can be achieved in several ways.
+
+First, wrangler automatically uses values defined in a `.dev.vars` file located in the root directory of your worker when you run `wrangler dev`. These values will override any values specified in your `wrangler.toml` file. This is particularly useful for values you do not with to check into source control.
+
+```shell
+---
+filename: .dev.vars
+---
+API_HOST = "localhost:4000"
+API_ACCOUNT_ID = "local_example_user"
+```
+
+Alternatively, you can specify local-only values in `wrangler.toml` and provide an `environment` value via the `env` flag when running the development command like so `wrangler dev --env=local`.
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+
+[vars]
+API_HOST = "production-app.example.com"
+API_ACCOUNT_ID = "prod_example_user"
+
+[env.local.vars]
+API_HOST = "localhost:4000"
+API_ACCOUNT_ID = "local_example_user"
+```
 
 ## Develop using remote resources and bindings
 
