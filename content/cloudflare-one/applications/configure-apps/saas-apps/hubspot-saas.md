@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Hubspot
-weight: 8
+weight: 9
 ---
 
 # Connect to Hubspot through Access
