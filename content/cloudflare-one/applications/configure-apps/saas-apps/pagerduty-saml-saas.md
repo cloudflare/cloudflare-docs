@@ -44,6 +44,7 @@ This guide covers how to configure [PagerDuty](https://support.pagerduty.com/doc
 5. Select **Save Changes**.
 
 ## 4. Test the integration and finalize SSO configuration
+
 1. In an incognito window, paste your PagerDuty URL and select **Sign In With Single Sign-On**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
 2. Once SSO sign in is successful, select your profile picture and go to **Account Settings** > **Single Sign-on**.
 3. Turn off **Allow username/password login** and select **Save Changes**. Now, users will only be able to sign in with SSO.
