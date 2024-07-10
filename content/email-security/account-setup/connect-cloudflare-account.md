@@ -15,7 +15,9 @@ You can connect a Cloudflare account from the Cloudflare dashboard, or by connec
 To connect a Cloudflare account from the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
 2. On the left bar, select **Area 1**.
+
 3. Select **Launch dashboard**.
 
     <div class="full-img">
@@ -30,7 +32,9 @@ To connect a Cloudflare account from the dashboard:
     ![Select Allow to make changes to your Cloudflare account](/images/email-security/sso/generic/area1-allow.png)
     
     </div>
+
 5. After selecting **Allow**, log in to Area 1.
+
 6. From here, you can either log in via [Cloudflare's Single Sign-on](https://horizon.area1security.com/), or via the **Launch dashboard** button.
 
 ## Connect account from Cloud Email Security (formerly Area 1)
@@ -42,6 +46,7 @@ To connect a Cloudflare account from the dashboard:
     ![Sign in with Cloudflare](/images/email-security/sso/generic/sign-with-cloudflare.png)
     
     </div>
+
 2. Log in using Cloudflare's credentials.
 
 3. Select **Allow** so that Area 1 can make changes to your Cloudflare account.
@@ -51,5 +56,7 @@ To connect a Cloudflare account from the dashboard:
     ![Select Allow to make changes to your Cloudflare account](/images/email-security/sso/generic/area1-allow.png)
     
     </div>
+
 4. After selecting **Allow**, you will be auto-logged in.
+
 5. Now, you can log in via [Cloudflare's Single Sign-on](https://horizon.area1security.com/).
