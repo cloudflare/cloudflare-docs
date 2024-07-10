@@ -1862,20 +1862,6 @@
           "ent": "Yes"
         }
       }
-    },
-    "server_side_excludes": {
-      "title": "Server-side Excludes (deprecated)",
-      "link": "/waf/tools/scrape-shield/server-side-excludes/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
     }
   },
   "spectrum": {

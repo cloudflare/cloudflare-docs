@@ -105,7 +105,6 @@ Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
 Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
 True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
-Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
 Web Application Firewall    | N/A (deprecated)                     | N/A
 
@@ -696,7 +695,7 @@ Page Rules configuration | Migrate to a configuration rule
 The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
+This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
 
 {{<tabs labels="Dashboard">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -708,14 +707,13 @@ You configured a Page Rule with **Disable Security** (deprecated) for all subdom
 - **URL**: `*example.com/*`
 - **Setting**: _Disable Security_
 
-This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version).
+This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
 **How to replace**:
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
     - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
-    - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
 2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
@@ -1557,7 +1555,6 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
 - **Disable Security** (this setting is deprecated)
 - **Response Buffering** (this setting is deprecated)
-- **Server Side Excludes** (this setting is deprecated, since Server-side Excludes is deprecated)
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 All other Page Rules settings will be migrated during 2025.
