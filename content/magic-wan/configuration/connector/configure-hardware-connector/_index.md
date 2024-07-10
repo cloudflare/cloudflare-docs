@@ -52,7 +52,7 @@ When Connector acts like the WAN router for your site, deployement will be somet
 
 ```mermaid
 flowchart BT
-accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet
+accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
     a(Magic WAN Connector)-->|WAN|b(Internet) --> c(Cloudflare)
     d[LAN 172.16.1.0/24] --> a
     e[LAN 172.16.2.0/24] --> a
@@ -65,7 +65,7 @@ In the next example, the Connector sits behind the WAN router in your site and o
 
 ```mermaid
 flowchart BT
-accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet
+accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
     a(Magic WAN Connector)-->|WAN|b((Site's router)) --> c(Internet) --> i(Cloudflare)
     d[LAN 172.16.1.0/24] --> a
     e[LAN 172.16.2.0/24] --> a
