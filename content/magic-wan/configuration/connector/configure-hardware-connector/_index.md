@@ -51,27 +51,30 @@ There are several deployment options for Magic WAN Connector. Connector can act 
 When Connector acts like the WAN router for your site, deployement will be something like this:
 
 ```mermaid
-flowchart BT
+flowchart LR
 accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
     a(Magic WAN Connector)-->|WAN|b(Internet) --> c(Cloudflare)
-    d[LAN 172.16.1.0/24] --> a
-    e[LAN 172.16.2.0/24] --> a
+    d[LAN 1] --> a
+    e[LAN 2] --> a
     f(Customer site) --- d & e
     classDef orange fill:#f48120,color: black
     class a,c orange
 ```
 <br>
-In the next example, the Connector sits behind the WAN router in your site and on-ramps only some of the existing LANs to Cloudflare.
+
+In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.
+
+<br>
 
 ```mermaid
-flowchart BT
+flowchart LR
 accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
     a(Magic WAN Connector)-->|WAN|b((Site's router)) --> c(Internet) --> i(Cloudflare)
-    d[LAN 172.16.1.0/24] --> a
-    e[LAN 172.16.2.0/24] --> a
+    d[LAN 1] --> a
+    e[LAN 2] --> a
     f(Customer site) --- d & e & g & h
-    g(LAN 172.17.1.0/24) --> b
-    h(LAN 172.17.2.0/24) --> b
+    g(LAN 3) --> b
+    h(LAN 4) --> b
     classDef orange fill:#f48120,color: black
     class a,i orange
 ```

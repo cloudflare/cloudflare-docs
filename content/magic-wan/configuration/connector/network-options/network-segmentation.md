@@ -11,10 +11,10 @@ You can define policies in your Connector to either allow traffic to flow betwee
 flowchart LR
 accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
     a(Magic WAN Connector)-->|WAN|b(Internet) --> c(Cloudflare)
-    d[LAN 172.16.1.0/24] --> a
-    e[LAN 172.16.2.0/24] --> a
-    g[LAN 172.16.4.0/24] <--> h[LAN 172.16.5.0/24]
-    f(Customer site) --> d & e & g & h
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    g[LAN 3] <--> h[LAN 4]
+    f(Customer site) --> d & e & g
     classDef orange fill:#f48120,color: black
     class a,c orange
 ```
