@@ -22,7 +22,7 @@ To connect a Cloudflare account from the dashboard:
 4. Select **Allow**, so that Area 1 can make changes to your Cloudflare account.
 
 ![Select Allow to make changes to your Cloudflare account](/images/email-security/sso/generic/area1-allow.png)
-5. After selecting Allow, log in to Area 1.
+5. After selecting **Allow**, log in to Area 1.
 6. From here, you can either log in via [Cloudflare's Single Sign-on](https://horizon.area1security.com/), or via the **Launch dashboard** button.
 
 ## Connect account from Cloud Email Security (formerly Area 1)
