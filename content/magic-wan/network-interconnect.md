@@ -1,7 +1,7 @@
 ---
 title: Network Interconnect (CNI)
 pcx_content_type: concept
-weight: 7
+weight: 8
 meta:
   title: Network Interconnect and Magic WAN
 ---
@@ -33,3 +33,5 @@ Magic WAN only supports GRE tunnels over CNI. You will need to set your {{<gloss
 Magic WAN with Classic CNI does not support BGP for the private encapsulated traffic. You need to create policy-based routes to ensure traffic is routed correctly. Classic CNI does support BGP for the outer GRE packet, and this can be used for re-routing the tunnel over a backup CNI in the event of an issue with the primary.
 
 For more information about Network Interconnect, refer to the [Cloudflare Network Interconnect documentation](/network-interconnect/).
+
+{{<render file="_traceroute.md">}}

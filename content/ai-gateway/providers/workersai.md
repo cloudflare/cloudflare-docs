@@ -1,6 +1,7 @@
 ---
 title: Workers AI
 pcx_content_type: configuration
+weight: 2
 ---
 
 # Workers AI
@@ -17,7 +18,7 @@ To interact with a REST API, update the URL used for your request:
 For these parameters:
 
 - `{account_id}` is your Cloudflare [account ID](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
-- `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/creating-gateway/).
+- `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
 - `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
 
 ### Examples
@@ -104,7 +105,7 @@ Workers AI supports the following parameters for AI gateways:
 {{<definitions>}}
 
 - `id` {{<type>}}string{{</type>}}
-  - Name of your existing [AI Gateway](/ai-gateway/get-started/creating-gateway/). Must be in the same account as your Worker.
+  - Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
 - `skipCache` {{<type>}}boolean{{</type>}}{{<prop-meta>}}(default: false){{</prop-meta>}}
   - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-skip-cache).
 - `cacheTtl` {{<type>}}number{{</type>}}

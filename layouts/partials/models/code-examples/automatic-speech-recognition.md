@@ -11,7 +11,7 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const res: any = await fetch(
+    const res = await fetch(
       "https://github.com/Azure-Samples/cognitive-services-speech-sdk/raw/master/samples/cpp/windows/console/samples/enrollment_audio_katie.wav"
     );
     const blob = await res.arrayBuffer();

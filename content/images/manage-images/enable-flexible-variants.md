@@ -19,14 +19,14 @@ Flexible variants allow you to create variants with dynamic resizing which can p
 Make a `PATCH` request to the [Update a variant endpoint](/api/operations/cloudflare-images-variants-update-a-variant).
 
 ```bash
-curl -X PATCH https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/config \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{"flexible_variants": true}'
+curl --request PATCH https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/config \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"flexible_variants": true}'
 ```
 
 After activation, you can use [transformation parameters](/images/transform-images/transform-via-url/#options) on any Cloudflare image. For example,
 
-`https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/w=400,sharpen=3`
+`https://imagedelivery.net/{account_hash}/{image_id}/w=400,sharpen=3`
 
 Note that flexible variants cannot be used for images that require a [signed delivery URL](/images/manage-images/serve-images/serve-private-images).

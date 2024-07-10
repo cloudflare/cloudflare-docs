@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (OIDC)
-weight: 9
+weight: 11
 ---
 
 # Connect to Salesforce through Access (OIDC)
@@ -29,9 +29,10 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
     - **Authorization endpoint**
     - **Token endpoint**
     - **User info endpoint**
-10. Select **Save configuration**.
-11. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-12. Select **Done**.
+10. (Optional) configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-domain>.my.salesforce.com`.
+11. Select **Save configuration**.
+12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+13. Select **Done**.
 
 ## 2. Add a SSO provider to Salesforce
 
@@ -66,3 +67,4 @@ To test the integration, open an incognito browser window and go to the **Test-O
     2. Turn on **Disable login with Salesforce credentials**.
 
 To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).
+

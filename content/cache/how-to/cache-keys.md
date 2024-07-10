@@ -9,7 +9,7 @@ meta:
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. For example, consider the following HTTP request on a TLS connection:
 
-```bash
+```txt
 GET /logo.jpg HTTP/1.1
 Host: www.cloudflare.com
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36

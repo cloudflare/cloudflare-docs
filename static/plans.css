@@ -19,31 +19,31 @@
 [js-focus-visible-polyfill-available] .DocsMarkdown a:focus {
     outline: none;
   }
-  
+
   .DocsMarkdown a[is-focus-visible] {
     border-color: transparent;
   }
-  
+
   .DocsMarkdown a:not([is-focus-visible]) {
     --focus-size: 0;
   }
-  
+
   .DocsMarkdown a:hover {
     --background-color-alpha: 0.15;
   }
-  
+
   .DocsMarkdown a[data-is-type-link="true"] {
     background: transparent;
     border: none;
   }
-  
+
   [theme="dark"] .DocsMarkdown a {
     --background-color-alpha: 0.03;
     --border-bottom-color-rgb: var(--orange-rgb);
     --border-bottom-color-alpha: 0.35;
     color: var(--code-orange);
   }
-  
+
   [theme="dark"] .DocsMarkdown a:hover {
     --background-color-alpha: 0.08;
   }
@@ -54,17 +54,16 @@
     padding: 0.25em 0;
     border-radius: 0.3125em;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
-  
+
   .DocsMarkdown--table-wrap:not(:last-child) {
     margin-bottom: 1.5em;
   }
-  
+
   .DocsMarkdown--table-wrap-inner {
     display: flex;
   }
-  
+
   .DocsMarkdown--table-wrap table {
     min-width: calc(
       var(--docs-body-width) - var(--docs-content-gap) * 2 -
@@ -72,7 +71,7 @@
     );
     margin: 0;
   }
-  
+
   @media (max-width: 768px) {
     .DocsMarkdown--table-wrap table {
       min-width: calc(
@@ -85,11 +84,11 @@
   .DocsMarkdown--table-wrap table {
     width: 90%;
   }
-  
+
   .DocsMarkdown--table-wrap table {
     word-break: normal;
   }
-  
+
   .DocsMarkdown--table-wrap tr > :first-child {
     position: -webkit-sticky;
     position: sticky;
@@ -97,7 +96,28 @@
     white-space: nowrap;
     padding-left: 1em;
   }
-  
+
   .DocsMarkdown--table-wrap tr > :last-child {
     padding-right: 1em;
+  }
+
+  .DocsMarkdown--plans-flexbox {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    display: flex;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .DocsMarkdown--plans-flexbox {
+      flex-direction: column;
+    }
+  }
+
+  .DocsMarkdown--plans-flexbox > div {
+    flex: 1 1 calc(50% - 20px);
+  }
+
+  .DocsMarkdown--plans-flexbox > div > h3 {
+    margin-top: 0 !important;
   }

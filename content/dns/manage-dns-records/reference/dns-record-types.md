@@ -44,22 +44,22 @@ When creating `A` or `AAAA` records [using the API](/dns/manage-dns-records/how-
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 highlight: [8, 10]
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "type":"A",
-  "name":"www.example.com",
-  "content":"192.0.2.1",
-  "ttl":3600,
-  "proxied":false
-  }'
+  "type": "A",
+  "name": "www.example.com",
+  "content": "192.0.2.1",
+  "ttl": 3600,
+  "proxied": false
+}'
 ```
 
 ```json
@@ -124,21 +124,21 @@ When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/cre
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 highlight: [8, 10]
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "type":"CNAME",
-  "name":"www.example.com",
-  "content":"www.another-example.com",
-  "ttl":3600,
-  "proxied":false
+  "type": "CNAME",
+  "name": "www.example.com",
+  "content": "www.another-example.com",
+  "ttl": 3600,
+  "proxied": false
 }'
 ```
 
@@ -249,14 +249,14 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "type": "SRV",
   "name": "_xmpp._tcp.example.com",

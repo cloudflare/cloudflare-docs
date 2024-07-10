@@ -29,14 +29,14 @@ If you are an account owner and your account is part of a tenant that has custom
 
 ``` bash
 curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_ns \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <KEY>" \
-  --header "Content-Type: application/json" \
-  --data '{
-     "enabled":true,
-     "ns_type":"tenant",
-     "ns_set": <SET>
-     }'
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "enabled": true,
+  "ns_type": "tenant",
+  "ns_set": <SET>
+}'
 ```
 
 {{<Aside>}}
@@ -63,14 +63,14 @@ If you are a tenant owner and you want to make TCNS available for accounts withi
 1. Observe the [conditions](#configuration-conditions) for `ns_name` and `ns_set`, and create TCNS in your tenant by using the following POST command:
 
 ```bash
-$ curl --request POST https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <KEY>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "ns_name":"<NS_NAME>",
-    "ns_set": <SET>
-  }'
+curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "ns_name": "<NS_NAME>",
+  "ns_set": <SET>
+}'
 ```
 
 {{<render file="_ns-set-omission-callout.md">}}
@@ -92,7 +92,7 @@ $ curl --request POST https://api.cloudflare.com/client/v4/tenants/{tenant_id}/c
 To get a list of all TCNS names in your tenant account, use the following API request:
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <KEY>"
+curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```

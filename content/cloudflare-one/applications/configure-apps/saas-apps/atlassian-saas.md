@@ -38,14 +38,14 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 
 {{<Aside type="note">}}
 
-This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-application-policy-to-test-integration).
+This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-authentication-policy-to-test-integration).
 
 {{</Aside>}}
 
 5. Fill in the following fields:
     - **Identity provider Entity ID**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
     - **Identity provider SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-    - **Public x509 certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
+    - **Public x509 certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 6. Select **Next**.
 7. Copy the **Service provider entity URL** and **Service provider assertion consumer service URL**.
 8. Select **Next**.
@@ -77,4 +77,4 @@ To enable SSO for users in Atlassian Cloud, create an [Atlassian authentication 
 
 ## 6. Test the integration
 
-Open an incognito browser window and log in with the credentials of the test user you added to the test authentication policy. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. When this is successful, turn on **Enforce single sign-on** in your desired authentication policy, or add the desired users to the application policy created in step [5. Create an Application Policy to test Integration](#5-create-an-application-policy-to-test-integration).
+Open an incognito browser window and log in with the credentials of the test user you added to the test authentication policy. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. When this is successful, turn on **Enforce single sign-on** in your desired authentication policy, or add the desired users to the application policy created in step [5. Create an Application Policy to test Integration](#5-create-an-authentication-policy-to-test-integration).

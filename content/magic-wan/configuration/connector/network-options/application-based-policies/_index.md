@@ -15,4 +15,4 @@ Magic WAN Connector's ability to classify traffic allows you to define which app
 
 Refer to the following pages for more information.
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true">}}

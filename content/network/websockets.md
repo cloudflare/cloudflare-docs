@@ -30,7 +30,7 @@ To enable **WebSockets** connections to your origin server in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/operations/zone-settings-change-web-sockets-setting) request with the `value` parameter set to `"on"`.
+To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `websockets` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

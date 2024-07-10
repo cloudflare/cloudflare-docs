@@ -158,7 +158,6 @@ To create a report for your log data based on the Cloudflare template:
 
 8.  Next, update the **Type** for each of the following fields as indicated below:
 
-    {{<table-wrap>}}
 | Cloudflare Log Field       | Type                                 |
 |----------------------------|--------------------------------------|
 | ZoneID                     | Text                                 |
@@ -170,8 +169,6 @@ To create a report for your log data based on the Cloudflare template:
 | OriginResponseStatus       | Number                               |
 | ClientASN                  | Text                                 |
 | ClientCountry              | Geo > Country                        |
-| CacheResponseStatus        | Text                                 |
-    {{</table-wrap>}}
 
 
 9.  Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
@@ -180,7 +177,7 @@ To create a report for your log data based on the Cloudflare template:
 
     - In the **Formula** text box, paste the following code:
 
-    ```bash
+    ```sql
     CASE
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ip" THEN "ip block"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ctry" THEN "country block"
@@ -204,7 +201,7 @@ To create a report for your log data based on the Cloudflare template:
     - For **Field Name**, type _EdgeResponseStatusClass_.
     - In the **Formula** text box, paste the following code:
 
-    ```bash
+    ```sql
     CASE
     WHEN EdgeResponseStatus > 199 AND EdgeResponseStatus < 300 THEN "2xx"
     WHEN EdgeResponseStatus > 299 AND EdgeResponseStatus < 400 THEN "3xx"

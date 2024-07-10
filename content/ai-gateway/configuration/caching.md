@@ -110,3 +110,32 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
    	 }
 '
 ```
+
+### Custom cache key (cf-aig-cache-key)
+
+Custom cache keys let you override the default cache key in order to precisely set the cacheability setting for any resource. To override the default cache key, you can use the header **cf-aig-cache-key**. 
+
+When you use the **cf-aig-cache-key** header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If the **cf-cache-ttl** header is used, responses will be cached according to the specified Cache Time To Live. Otherwise, responses will be cached according to the cache settings in the dashboard. If caching is not enabled for the gateway, responses will be cached for 5 minutes by default.
+
+As an example, when submitting a request to OpenAI, include the header in the following manner:
+
+```bash
+---
+header: Request with custom cache key
+---
+
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {openai_token}' \
+  --header 'Content-Type: application/json' \
+  --header 'cf-aig-cache-key: responseA' \
+  --data ' {
+   		 "model": "gpt-3.5-turbo",
+   		 "messages": [
+   			 {
+   				 "role": "user",
+   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
+   			 }
+   		 ]
+   	 }
+'
+```

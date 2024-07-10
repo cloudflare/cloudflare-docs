@@ -18,12 +18,12 @@ Before you can use WAF for SaaS, you need to create a custom hostname. Review [G
 
 You can also create a custom hostname through the API:
 
-```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostnames" \
-     -H "X-Auth-Email: {email}" \
-     -H "X-Auth-Key: {key}" \
-     -H "Content-Type: application/json" \
-        --data '{"Hostname":"example.com"}, "Ssl":{wildcard:false}}'
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"Hostname":"example.com"}, "Ssl":{wildcard:false}}'
 ```
 
 ## Step 1 - Associate custom metadata to a custom hostname
@@ -36,12 +36,10 @@ To apply WAF to your custom hostname, you need to create an association between 
 
 3. Locate your custom hostname ID by making a `GET` call in the API:
 
-```json
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-     -H "X-Auth-Email: {email}" \
-     -H "X-Auth-Key: {key}" \
-     -H "Content-Type: application/JSON"
-
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
@@ -54,11 +52,13 @@ One instance of low, medium, and high rules could be rate limiting. You can spec
 
 5. Make an API call in the format below using your Cloudflare email and the IDs gathered above:
 
-```json
-curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone:id}/custom_hostnames/{custom_hostname:id}" \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
-    -H "Content-Type: application/json" \
-    -d '{
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+--header "X-Auth-Email: <EMAIL>"
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "custom_metadata": {
     "customer_id": "12345",
     "security_level": "low"
@@ -73,28 +73,29 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 2. Build your rules either [through the dashboard](/waf/custom-rules/create-dashboard/) or via the API. An example rate limiting rule, corresponding to `"security_level"` low, is shown below as an API call.
 
-```json
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone:id}/rulesets/phases/http_ratelimit/entrypoint" \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-    -H "Content-Type: application/json"\
-    -d '{
-
-"rules": [
-              {
-                "action": "block",
-                "ratelimit": {
-                  "characteristics": [
-                    "cf.colo.id",
-                    "ip.src"
-                  ],
-                  "period": 10,
-                  "requests_per_period": 2,
-                  "mitigation_timeout": 60
-                },
-                "expression": "lookup_json_string(cf.hostname.metadata, \"security_level\") eq \"low\" and http.request.uri contains \"login\""
-              }
-            ]
-          }}'
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_ratelimit/entrypoint" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "block",
+      "ratelimit": {
+        "characteristics": [
+          "cf.colo.id",
+          "ip.src"
+        ],
+        "period": 10,
+        "requests_per_period": 2,
+        "mitigation_timeout": 60
+      },
+      "expression": "lookup_json_string(cf.hostname.metadata, \"security_level\") eq \"low\" and http.request.uri contains \"login\""
+    }
+  ]
+}'
 ```
 
 To build rules through the dashboard:

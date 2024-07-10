@@ -67,13 +67,12 @@ echo '{ "query":
     }
   }
 }' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/
+  https://api.cloudflare.com/client/v4/graphql/ \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --silent \
+  --data @-
 ```
 
 [1]: </analytics/graphql-api/tutorials/export-graphql-to-csv/>

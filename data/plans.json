@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules (legacy)",
+      "title": "Page Rules",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
@@ -1664,7 +1664,7 @@
           "ent_plus": "Yes"
         },
         "f_new_script_new_domain_alerts": {
-          "title": "New Resources, New Domain,<br/> and New Cookie Alerts",
+          "title": "New Resources Alerts<br/> and New Domain Alerts",
           "summary": "Business and above",
           "free": "No",
           "pro": "No",
@@ -2110,20 +2110,6 @@
           "title": "Availability",
           "summary": "Pro and above",
           "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "mobile_redirect": {
-      "title": "Mobile redirect",
-      "link": "/speed/optimization/other/mobile-redirect/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"

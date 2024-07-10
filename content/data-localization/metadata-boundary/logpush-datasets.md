@@ -11,8 +11,6 @@ The table below lists the [Logpush datasets](/logs/reference/log-fields/) that s
 
 Be aware that if you enable CMB for a dataset that does not support your region, no data will be pushed to your destination.
 
-{{<table-wrap style="font-size: 87%">}}
-
 | Dataset name | Level | Respects CMB | Available with US CMB region | Available with EU CMB region |
 | --- | --- | --- | --- | --- |
 | HTTP requests | Zone | ✅ | ✅ | ✅ |
@@ -34,5 +32,3 @@ Be aware that if you enable CMB for a dataset that does not support your region,
 | Workers Trace Events | Account | ✅ | ✅ | ✅ |
 | Zero Trust Sessions | Account | ✅ | ✅ | ✅ |
 | Sinkhole Events | Account | ✅ | ✅ | ✅ |
-
-{{</table-wrap>}}

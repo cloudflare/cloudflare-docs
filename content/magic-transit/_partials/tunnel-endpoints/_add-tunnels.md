@@ -18,7 +18,7 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 {{<details header="GRE tunnel">}}
 
-5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer GRE endpoint**, enter your router’s public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
@@ -37,7 +37,7 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 {{<details header="IPsec tunnel">}}
 
-5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer endpoint**, enter your router’s public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
@@ -78,10 +78,10 @@ Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "gre_tunnels": [
     {
@@ -106,10 +106,10 @@ Note that in example below, replay protection is disabled by default. You can en
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
 --header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
+--header 'Content-Type: application/json' \
 --data '{
   "ipsec_tunnels": [
     {
@@ -163,8 +163,8 @@ This will generate a response like the following:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
---header 'X-Auth-Email: <EMAIL>'
---header 'X-Auth-Key: <API_KEY>'
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 You will receive a response like the following:
@@ -197,9 +197,9 @@ You can enable bidirectional health checks via the API with `--data '{"health_ch
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Content-Type: application/json" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --data '{"health_check": {"direction": "bidirectional"}}'
 ```
 

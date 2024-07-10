@@ -3084,11 +3084,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown table {
-    word-break: break-word;
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    --border-color: rgba(var(--color-rgb), .1)
+    --border-color: rgba(var(--color-rgb), .1);
+    display: block;
+    overflow-x: auto;
+}
+
+/* Stop display: block applying to table-wrap shortcode */
+.DocsMarkdown--table-wrap table {
+    display: table;
 }
 
 .DocsMarkdown th {
@@ -3251,7 +3257,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     padding: .25em 0;
     border-radius: .3125em;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch
 }
 
 .DocsMarkdown--table-wrap:not(:last-child) {

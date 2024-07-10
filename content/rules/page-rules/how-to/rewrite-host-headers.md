@@ -3,7 +3,7 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/206652947-Using-Page-Rules-to-rewrite-Host-Headers
 title: Rewrite Host headers
 meta:
-    title: Rewrite Host headers | Page Rules (legacy)
+    title: Rewrite Host headers | Page Rules
 ---
 
 # Rewrite Host headers

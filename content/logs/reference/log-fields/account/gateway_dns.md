@@ -16,6 +16,18 @@ Type: int
 
 ID of the application the domain belongs to (for example, 1, 2). Set to 0 when no ApplicationID is matched.
 
+## CNAMECategoryIDs
+
+Type: array[int]
+
+ID or IDs of category that the intermediate cname domains belongs to (for example, [7,12,28,122,129,163]).
+
+## CNAMECategoryNames
+
+Type: array[string]
+
+Name or names of category that the intermediate cname domains belongs to (for example, ['Photography', 'Weather']).
+
 ## ColoCode
 
 Type: string
@@ -94,6 +106,18 @@ Type: string
 
 Email used to authenticate the client (for example, 'user@test.com').
 
+## InitialCategoryIDs
+
+Type: array[int]
+
+ID or IDs of category that the queried domains belongs to (for example, [7,12,28,122,129,163]).
+
+## InitialCategoryNames
+
+Type: array[string]
+
+Name or names of category that the queried domains belongs to (for example, ['Photography', 'Weather']).
+
 ## IsResponseCached
 
 Type: bool
@@ -158,13 +182,13 @@ The protocol used for the DNS query by the client (for example, 'udp').
 
 Type: array[int]
 
-ID or IDs of category that the domain belongs to (for example, [7,12,28,122,129,163]).
+Union of all categories; Initial categories + Resolved IP categories + Cname intermediate categories
 
 ## QueryCategoryNames
 
 Type: array[string]
 
-Name or names of category that the domain belongs to (for example, ['Photography', 'Weather']).
+Union of all category names; Initial categories + Resolved IP categories + Cname intermediate categories
 
 ## QueryIndicatorFeedIDs
 
@@ -219,6 +243,18 @@ The return code sent back by the DNS resolver.
 Type: array[object]
 
 The rdata objects (for example, {"type":"5","data":"dns-packet-placeholder..."}).
+
+## ResolvedIPCategoryIDs
+
+Type: array[int]
+
+ID or IDs of category that the ips in the response belongs to (for example, [7,12,28,122,129,163]).
+
+## ResolvedIPCategoryNames
+
+Type: array[string]
+
+Name or names of category that the ips in the response belongs to (for example, ['Photography', 'Weather']).
 
 ## ResolvedIPs
 

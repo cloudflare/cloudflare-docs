@@ -48,6 +48,10 @@ Alternatively, use Powershell:
 
 Because of how the WARP client instantiates the local DNS Proxy, it is incompatible with 4G/5G cellular adaptors which have IPv6 enabled.  To run WARP on these devices, you will need to disable IPv6 on the system.
 
+{{<Aside type="note">}}
+This limitation does not apply to mobile phones, only desktop machines with cellular connectivity.
+{{</Aside>}}
+
 ## Comcast DNS servers
 
 Comcast DNS traffic (to the IPs below) cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.

@@ -24,7 +24,7 @@ To create a new custom rate limiting ruleset:
 
 2. Go to Account Home > **WAF** > **Rate limiting rulesets**.
 
-3. Under **Your custom rate limiting rulesets**, select **Create new ruleset**.
+3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
 
 4. Enter a name for the ruleset and (optionally) a description.
 
