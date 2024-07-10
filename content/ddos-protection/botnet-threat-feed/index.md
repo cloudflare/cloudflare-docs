@@ -35,7 +35,7 @@ Make sure that:
 
 ## Get started
 
-### 1. Register your ASN via PeeringDB
+### 1. Authenticate your ASN via PeeringDB
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Manage Account** > **Configurations**.
