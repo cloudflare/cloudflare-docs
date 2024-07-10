@@ -33,7 +33,7 @@ header: API configuration example
 
 {{</details>}}
 
-{{<heading-pill style="deprecated" heading="h2">}}Auto Minify{{</heading-pill>}}
+## Auto Minify (deprecated) { #auto-minify }
 
 [Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
 
@@ -329,18 +329,18 @@ header: API configuration example
 
 {{</details>}}
 
-{{<heading-pill style="deprecated" heading="h2">}}Security Level{{</heading-pill>}}
+## Security Level
 
 [Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
 
 Use this setting to select the security level for matching requests:
 
 - Off
+- Essentially Off
+- Low
+- Medium
+- High
 - I'm Under Attack
-- Essentially Off _(deprecated value)_
-- Low _(deprecated value)_
-- Medium _(deprecated value)_
-- High _(deprecated value)_
 
 Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
 
@@ -348,37 +348,14 @@ Refer to [Security levels](/waf/tools/security-level/#security-levels) for more 
 
 API configuration property name: `"security_level"` (string).
 
-API values: `"off"`, `"under_attack"`, `"essentially_off"` (deprecated), `"low"` (deprecated), `"medium"` (deprecated), `"high"` (deprecated).
+API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under_attack"`.
 
 ```json
 ---
 header: API configuration example
 ---
 "action_parameters": {
-  "security_level": "under_attack"
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
-{{<heading-pill style="deprecated" heading="h2">}}Server Side Excludes{{</heading-pill>}}
-
-[Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
-
-Use this setting to turn on or off Server Side Excludes for matching requests.
-
-{{<details header="API information">}}
-
-API configuration property name: `"server_side_excludes"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "server_side_excludes": false
+  "security_level": "low"
 }
 ```
 

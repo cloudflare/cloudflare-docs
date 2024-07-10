@@ -10,7 +10,7 @@ meta:
 
 The Cloudflare DDoS Botnet Threat Feed is a threat intelligence feed for service providers (SPs) such as hosting providers and Internet service providers (ISPs) that provides information about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. The feed aims to help service providers stop the abuse and reduce DDoS attacks originating from within their networks.
 
-Each service provider can only get information about IP addresses associated with their autonomous system numbers (ASNs).
+Each service provider can only get information about IP addresses associated with their autonomous system numbers (ASNs). The affiliation of a service provider with their ASNs will be checked against [PeeringDB](https://www.peeringdb.com/), a reliable and globally recognized interconnection database.
 
 To ensure the feed’s accuracy, Cloudflare will only include in the feed IP addresses that have participated in multiple HTTP DDoS attacks and have triggered high-confidence rules.
 
@@ -24,10 +24,6 @@ In the case of HTTPS DDoS attacks, service providers only see encrypted payloads
 
 The Cloudflare DDoS Botnet Threat Feed is available in early access for free to service providers. To get access, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/). For more information, refer to the [Terms of Use](https://www.cloudflare.com/en-gb/service-specific-terms-application-services/#ddos-botnet-threat-feed).
 
-{{<Aside type="note">}}
-During early access, Cloudflare will manually provision your account with information about your ASNs. Also, currently this service is only available via Cloudflare API.
-{{</Aside>}}
-
 ---
 
 ## Before you begin
@@ -36,17 +32,24 @@ Make sure that:
 
 - You have [created a Cloudflare account](/fundamentals/setup/account/).
 - You have access to the DDoS Botnet Threat Feed. If not, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/).
-- Cloudflare has already provisioned your account with information about your ASNs.
 
 ## Get started
 
-### 1. Obtain Cloudflare API token
+### 1. Authenticate your ASN via PeeringDB
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Manage Account** > **Configurations**.
+3. Select **DDoS Threat Feed ASNs**.
+4. On the list of ASNs configured for your threat feed, select **Add ASN**.
+5. You will be redirected to the PeeringDB authentication page, where you can log in and consent to share the affiliation data with us. You will be redirected back to the configuration page once it is successful.
+
+### 2. Obtain Cloudflare API token
 
 You must [obtain a Cloudflare API token](/fundamentals/api/get-started/create-token/) with at least the following account-level permission:
 
 - _DDoS Botnet Feed_ > _Read_
 
-### 2. Call Botnet Threat Feed API
+### 3. Call Botnet Threat Feed API
 
 Invoke one of the Botnet Threat Feed API endpoints:
 

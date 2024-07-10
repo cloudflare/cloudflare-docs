@@ -60,7 +60,14 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 {
   "outcome": "ok",
   "scriptName": null,
-  "exceptions": [],
+  "exceptions": [
+    {
+      "stack": "    at src/routes/index.tsx17:4\n    at new Promise (<anonymous>)\n",
+      "name": "Error",
+      "message": "An error has occurred",
+      "timestamp": 1668542036110
+    }
+  ],
   "logs": [],
   "eventTimestamp": 1668542036104,
   "event": {
@@ -98,3 +105,15 @@ The following limits apply to Functions logs:
 * Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
 * Logs from any [Durable Objects](/pages/functions/bindings/#durable-objects) your Functions bind to will show up in the Cloudflare dashboard.
 * A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.
+
+## Sourcemaps
+
+If you're debugging an uncaught exception, you might find that the [stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) in your logs contain line numbers to generated JavaScript files. Using Pages' support for [source maps](https://web.dev/articles/source-maps) you can get stack traces that match with the line numbers and symbols of your original source code.
+
+{{<Aside type="note">}}
+
+When developing fullstack applications, many build tools (including wrangler for Pages Functions and most fullstack frameworks) will generate source maps for both the client and server, ensure your build step is configured to only emit server sourcemaps or use an additional build step to remove the client source maps. Public source maps might expose the source code of your application to the user.
+
+{{</Aside>}}
+
+Refer to [Source maps and stack traces](/pages/functions/source-maps/) for an in-depth explanation.

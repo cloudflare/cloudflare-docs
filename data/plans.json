@@ -1131,7 +1131,7 @@
       }
     },
     "page_rules": {
-      "title": "Page Rules (legacy)",
+      "title": "Page Rules",
       "link": "/rules/page-rules/",
       "properties": {
         "availability": {
@@ -1862,20 +1862,6 @@
           "ent": "Yes"
         }
       }
-    },
-    "server_side_excludes": {
-      "title": "Server-side Excludes (deprecated)",
-      "link": "/waf/tools/scrape-shield/server-side-excludes/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
     }
   },
   "spectrum": {
@@ -2110,20 +2096,6 @@
           "title": "Availability",
           "summary": "Pro and above",
           "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "mobile_redirect": {
-      "title": "Mobile redirect",
-      "link": "/speed/optimization/other/mobile-redirect/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"

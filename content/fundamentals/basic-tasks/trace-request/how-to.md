@@ -31,7 +31,7 @@ meta:
     * **Cookies**
     * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/#field-ip-src-country), [region](/ruleset-engine/rules-language/fields/#field-ip-src-region_code), and [city](/ruleset-engine/rules-language/fields/#field-ip-src-city))
     * [**Bot score**](/bots/concepts/bot-score/)
-    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score** (deprecated){{</glossary-tooltip>}}
+    * {{<glossary-tooltip term_id="threat score" link="/ruleset-engine/rules-language/fields/#field-cf-threat_score">}}**Threat score**{{</glossary-tooltip>}}
     * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
     * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
@@ -63,5 +63,5 @@ Use the [Request Trace](/api/operations/account-request-tracer-request-trace) op
 ## Steps in trace results
 
 * Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
-* [Page Rules](/rules/page-rules/) (deprecated): Execution of one or more rules.
+* [Page Rules](/rules/page-rules/): Execution of one or more rules.
 * [Workers](/workers/): Execution of one or more scripts.

@@ -6,9 +6,9 @@ _build:
 ---
 
 {{<Aside type="note" header="Prerequisite">}}
- 
+
 Before you begin, [find your zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/).
- 
+
 {{</Aside>}}
 
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/), go to **My Profile** > **API Tokens**.
@@ -36,8 +36,8 @@ Before you begin, [find your zone and account IDs](/fundamentals/setup/find-acco
 The token secret page also includes an example command to test the token. Use the `/user/tokens/verify` endpoint to fetch the current status of the given token.
 
 ```bash
- $ curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The result:

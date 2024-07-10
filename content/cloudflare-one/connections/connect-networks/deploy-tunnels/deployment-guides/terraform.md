@@ -270,6 +270,8 @@ The following script will install `cloudflared`, create a permissions and config
         image: kennethreitz/httpbin
         restart: always
         container_name: httpbin
+        ports:
+          - 8080:80
 
       cloudflared:
         image: cloudflare/cloudflared:latest

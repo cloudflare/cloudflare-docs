@@ -36,7 +36,12 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.querySelector(`#${hash.toLowerCase()}`);
+
+  if (!hash) return;
+
+  const headerID = CSS.escape(hash.toLowerCase());
+  let item = document.querySelector(`#${headerID}`);
+
   let timer =
     item &&
     setInterval(() => {
@@ -109,7 +114,9 @@ function $tab(ev: MouseEvent) {
     .closest("[data-link]")
     ?.getAttribute("data-link");
 
-  const linkElement = document.querySelector<HTMLElement>(`#${link}-${tabBlockId}`);
+  // escape ID for use in querySelector
+  const tabID = CSS.escape(`${link}-${tabBlockId}`);
+  const linkElement = document.querySelector<HTMLElement>(`#${tabID}`);
   if(linkElement){
     linkElement.style.display = "block";
   }
@@ -244,56 +251,6 @@ export function dropdowns() {
       });
     }
   });
-}
-
-export function toggleSidebar() {
-  const toggleButton = document.querySelectorAll(".toggleSidebar");
-  if (toggleButton.length > 0) {
-    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
-    if(!div) return;
-    let btn = div.querySelector("button");
-    if(!btn) return;
-    btn.addEventListener("click", () => {
-      let classToggleList = [
-        ".DocsSidebar",
-        ".DocsToolbar",
-        ".DocsFooter",
-        ".DocsContent",
-        ".DocsMarkdown",
-        ".DocsSidebar--sections .toggleSidebar",
-        ".breadcrumb",
-      ];
-
-      classToggleList.forEach(function (querySelector) {
-        let item = document.querySelector(querySelector);
-        if(!item) return;
-        item.classList.toggle("collapsed");
-      });
-
-      let attr = "is-visually-hidden";
-      let attrToggleList = [
-        ".DocsSidebar--nav-item",
-        ".DocsSidebar--section-more",
-        ".DocsSidebar--docs-title-section a div span span",
-        ".DocsSidebar--header-section a div span",
-      ];
-
-      attrToggleList.forEach(function (querySelector) {
-        let item = document.querySelector(querySelector);
-        if(!item) return;
-        let isHidden = item.hasAttribute(attr);
-        item.toggleAttribute(attr, !isHidden);
-      });
-
-      let moduleCounters = document.querySelectorAll(".moduleCounter")
-      if (moduleCounters) {
-        for (const counter of moduleCounters) {
-          let isHidden2 = counter.hasAttribute(attr);
-          counter.toggleAttribute(attr, !isHidden2)
-        }
-      }
-    });
-  }
 }
 
 export function zarazTrackDocEvents() {

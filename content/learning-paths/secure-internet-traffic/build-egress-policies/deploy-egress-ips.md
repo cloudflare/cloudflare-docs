@@ -42,25 +42,25 @@ We recommend building baseline egress policies that can cover a majority of your
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header 'Content-Type: application/json' \
-    --data '{
-    "action": "egress",
-    "description": "Define static egress for finance team",
-    "enabled": true,
-    "filters": [
-      "egress"
-    ],
-    "name": "Finance team static egress",
-    "precedence": 0,
-    "identity": "any(identity.groups.name[*] in {\"finance\"})",
-    "rule_settings": {
-        "egress": {
-          "ipv4": <DEDICATED_IPV4_ADDRESS>,
-          "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>,
-          "ipv6": <DEDICATED_IPV6_ADDRESS>
-          }
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "action": "egress",
+  "description": "Define static egress for finance team",
+  "enabled": true,
+  "filters": [
+    "egress"
+  ],
+  "name": "Finance team static egress",
+  "precedence": 0,
+  "identity": "any(identity.groups.name[*] in {\"finance\"})",
+  "rule_settings": {
+    "egress": {
+      "ipv4": <DEDICATED_IPV4_ADDRESS>,
+      "ipv4_fallback": <SECONDARY_DEDICATED_IPV6_ADDRESS>,
+      "ipv6": <DEDICATED_IPV6_ADDRESS>
     }
+  }
 }'
 ```
 

@@ -10,7 +10,7 @@ inputParameters: productName
 
 In this example, you are going to use the GraphQL Analytics API to query $1 ingress tunnel traffic over a specified time period.
 
-The following API call will request $1 ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request $1 ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 
@@ -41,7 +41,7 @@ PAYLOAD='{ "query":
       }
   }",
     "variables": {
-      "accountTag": <CLOUDFLARE_ACCOUNT_TAG>,
+      "accountTag": "<CLOUDFLARE_ACCOUNT_ID>",
       "direction": "ingress",
       "datetimeStart": "2022-05-04T11:00:00.000Z",
       "datetimeEnd": "2022-05-04T12:00:00.000Z"
@@ -50,21 +50,18 @@ PAYLOAD='{ "query":
 }'
 
 # curl with Legacy API Key
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
-  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/
+curl https://api.cloudflare.com/client/v4/graphql/ \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data "$(echo $PAYLOAD)"
+
 
 # curl with API Token
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <CLOUDFLARE_API_KEY>" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/
+curl https://api.cloudflare.com/client/v4/graphql/ \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data "$(echo $PAYLOAD)"
 ```
 
 The returned values represent the total bandwidth in bits/second during the five minute interval for a particular tunnel. To use aggregations other than five minutes, make sure that you use the same window for both your metric and date time. For example, to see hourly groups, use `bitRateHour` and `datetimeHour`.
@@ -73,12 +70,12 @@ The result will be in JSON (as requested), so piping the output to `jq` will mak
 
 ```bash
 ... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
-  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+  https://api.cloudflare.com/client/v4/graphql/ \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --data "$(echo $PAYLOAD)" | jq .
+
 #=> {
 #=>   "data": {
 #=>     "viewer": {

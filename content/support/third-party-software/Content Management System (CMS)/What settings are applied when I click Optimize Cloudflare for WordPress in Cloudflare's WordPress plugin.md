@@ -16,7 +16,7 @@ If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for Wor
 
 | **Setting** | **Value** |
 | --- | --- |
-| Security level (deprecated) | Medium |
+| Security level | Medium |
 | Caching level | Standard |
 | Auto Minify (deprecated) | Enable Auto Minify for JS, CSS, and HTML |
 | Browser Cache TTL | 4 hours |
@@ -26,7 +26,6 @@ If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for Wor
 | WebSockets | On |
 | IP Geolocation | On |
 | Email Address Obfuscation | On |
-| Server-side Excludes (deprecated) | On |
 | Hotlink Protection | Off |
 | Image optimization (Polish and Mirage) | Off (unless on Pro or higher plan) |
 | Rocket Loader | Off |

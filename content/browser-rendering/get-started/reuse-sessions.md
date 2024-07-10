@@ -6,7 +6,7 @@ weight: 3
 
 # Reuse sessions
 
-The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](../browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
+The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](/browser-rendering/get-started/browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
 
 In short, this entails using `browser.disconnect()` instead of `browser.close()`, and, if there are available sessions, using `puppeteer.connect(env.MY_BROWSER, sessionID)` instead of launching a new browser session.
 

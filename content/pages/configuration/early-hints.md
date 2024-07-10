@@ -25,7 +25,7 @@ filename: _headers
   Link: </styles.css>; rel=preload; as=style
 ```
 
-Pages will attach this `Link: </styles.css>; rel=preload; as=stylesheet` header. Early Hints will then emit this header as an Early Hint once cached.
+Pages will attach this `Link: </styles.css>; rel=preload; as=style` header. Early Hints will then emit this header as an Early Hint once cached.
 
 ### 2. Automatic `Link` header generation
 

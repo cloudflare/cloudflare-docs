@@ -16,13 +16,13 @@ Before you deploy your project with Direct Upload, run the appropriate [build co
 
 ## Upload methods
 
-After you have your prebuilt assets ready, there are two ways to begin uploading: 
+After you have your prebuilt assets ready, there are two ways to begin uploading:
 
 * [Wrangler](/pages/get-started/direct-upload/#wrangler-cli).
 * [Drag and drop](/pages/get-started/direct-upload/#drag-and-drop).
 
 {{<Aside type= "note">}}
-  
+
 Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. However, you cannot create deployments with Direct Upload on a project that you created through Git integration on the dashboard. Only projects created with Direct Upload can be updated with Direct Upload.
 
 {{</Aside>}}
@@ -33,7 +33,7 @@ Below is the supported file types for each Direct Upload options:
 * Wrangler: A single folder of assets. (Zip files are not supported.)
 * Drag and drop: A zip file or single folder of assets.
 
-## Wrangler CLI 
+## Wrangler CLI
 
 ### Set up Wrangler
 
@@ -47,7 +47,7 @@ Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/command
 $ npx wrangler pages project create
 ```
 
-You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev` (or your project name plus a few random characters if your project name is already taken). You will also be prompted to specify your production branch. 
+You will then be prompted to specify the project name. Your project will be served at `<PROJECT_NAME>.pages.dev` (or your project name plus a few random characters if your project name is already taken). You will also be prompted to specify your production branch.
 
 Subsequent deployments will reuse both of these values (saved in your `node_modules/.cache/wrangler` folder).
 
@@ -62,20 +62,20 @@ $ npx wrangler pages deploy <BUILD_OUTPUT_DIRECTORY>
 Find the appropriate build output directory for your project in [Build directory under Framework presets](/pages/configuration/build-configuration/#framework-presets).
 
 Your production deployment will be available at `<PROJECT_NAME>.pages.dev`.
- 
+
 {{<Aside type= "note">}}
 
-Before using the `wrangler pages deploy` command, you will need to make sure you are inside the project. If not, you can also pass in the project path. 
+Before using the `wrangler pages deploy` command, you will need to make sure you are inside the project. If not, you can also pass in the project path.
 
 {{</Aside>}}
- 
-To deploy assets to a preview environment, run: 
+
+To deploy assets to a preview environment, run:
 
 ```sh
 $ npx wrangler pages deploy <OUTPUT_DIRECTORY> --branch=<BRANCH_NAME>
 ```
 
-For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`. 
+For every branch you create, a branch alias will be available to you at `<BRANCH_NAME>.<PROJECT_NAME>.pages.dev`.
 
 {{<Aside type= "note">}}
 
@@ -83,7 +83,7 @@ If you are in a Git workspace, Wrangler will automatically pull the branch infor
 
 {{</Aside>}}
 
-If you would like to streamline the project creation and asset deployment steps, you can also use the deploy command to both create and deploy assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [`create` command](#create-your-project). 
+If you would like to streamline the project creation and asset deployment steps, you can also use the deploy command to both create and deploy assets at the same time. If you execute this command first, you will still be prompted to specify your project name and production branch. These values will still be cached for subsequent deployments as stated above. If the cache already exists and you would like to create a new project, you will need to run the [`create` command](#create-your-project).
 
 #### Other useful commands
 
@@ -99,7 +99,7 @@ If you would like to use Wrangler to obtain a list of all unique preview URLs fo
 $ npx wrangler pages deployment list
 ```
 
-For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/). 
+For step-by-step directions on how to use Wrangler and continuous integration tools like GitHub Actions, Circle CI, and Travis CI together for continuous deployment, refer to [Use Direct Upload with continuous integration](/pages/how-to/use-direct-upload-with-continuous-integration/).
 
 ## Drag and drop
 
@@ -113,24 +113,20 @@ To deploy with drag and drop:
 4. Enter your project name in the provided field and drag and drop your assets.
 5. Select **Deploy**.
 
-Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project. 
+Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project.
 
 #### Create a new deployment
 
-After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment branch or enter an existing one. 
+After you have your project created, select **Create a new deployment** to begin a new version of your site. Next, choose whether your new deployment will be made to your production or preview environment. If choosing preview, you can create a new deployment branch or enter an existing one.
 
 ## Troubleshoot
 
 ### Limits
 
-{{<table-wrap>}}
-
 | Upload method | File limit   | File size |
 | ------------- | ------------ | --------- |
 | Wrangler      | 20,000 files | 25 MiB    |
 | Drag and drop | 1,000 files  | 25 MiB    |
-
-{{</table-wrap>}}
 
 If using the drag and drop method, a red warning symbol will appear next to an asset if too large and thus unsuccessfully uploaded. In this case, you may choose to delete that asset but you cannot replace it. In order to do so, you must reupload the entire project.
 

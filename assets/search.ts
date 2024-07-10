@@ -36,13 +36,15 @@
       searchParameters: {
         optionalFilters: facetFilters
       },
-      transformItems: items => {
-        return items.filter(item => {
+      // TODO: improve types
+      transformItems: (items: any) => {
+        return items.filter((item: any) => {
           const url = new URL(item.url)
           return url.pathname.endsWith('/')
         })
       },
-      resultsFooterComponent({ state }) {
+      // TODO: improve types
+      resultsFooterComponent({ state }: any) {
         return {
           // The HTML `tag`
           type: 'a',

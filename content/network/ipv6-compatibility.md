@@ -42,7 +42,7 @@ To disable **IPv6 Compatibility** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/operations/zone-settings-change-i-pv6-setting) request with the `value` parameter set to `"off"`.
+To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 
 {{</tab>}}
 {{</tabs>}}

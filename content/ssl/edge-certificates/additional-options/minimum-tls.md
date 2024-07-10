@@ -47,7 +47,7 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Use the [Change Minimum TLS Version setting](/api/operations/zone-settings-change-minimum-tls-version-setting) endpoint, specifying your preferred minimum version in the `value` parameter.
+Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` parameter.
 
 {{</tab>}}
 {{</tabs>}}

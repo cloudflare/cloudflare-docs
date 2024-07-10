@@ -6,7 +6,7 @@ weight: 3
 
 # Page Rules migration guide
 
-**Page Rules are now a legacy product.** Cloudflare recommends considering our new Rules features for your new implementations. Please follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
+Cloudflare recommends that you consider using modern Rules features for your new implementations instead of Page Rules. Follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
 
 ## Page Rules migration
 
@@ -20,15 +20,21 @@ Cloudflare Page Rules has several fundamental limitations, such as triggering so
 
 In 2022, we announced in our blog post [The future of Page Rules](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
 
-## Main differences
+Improvements in modern Rules features include:
 
 - **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
-
 - **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
-
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
-
 - **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
+
+## Important differences
+
+The evaluation and execution order of Rules features is different from Page Rules:
+
+- Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
+- The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
+- A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
+- Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
 
 ## Convert Page Rules URLs to filter expressions
 
@@ -99,7 +105,6 @@ Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
 Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
 True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
-Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
 Web Application Firewall    | N/A (deprecated)                     | N/A
 
@@ -690,7 +695,7 @@ Page Rules configuration | Migrate to a configuration rule
 The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
+This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
 
 {{<tabs labels="Dashboard">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -702,14 +707,13 @@ You configured a Page Rule with **Disable Security** (deprecated) for all subdom
 - **URL**: `*example.com/*`
 - **Setting**: _Disable Security_
 
-This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version).
+This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
 **How to replace**:
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
     - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
-    - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
 2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
@@ -1432,7 +1436,7 @@ Page Rules configuration | Migrate to a configuration rule
 
 **Context:**
 
-You configured a Page Rule setting Security Level (deprecated) to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: _Security Level_
@@ -1440,7 +1444,7 @@ You configured a Page Rule setting Security Level (deprecated) to _I'm Under Att
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on I'm Under Attack mode for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
@@ -1551,7 +1555,6 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
 - **Disable Security** (this setting is deprecated)
 - **Response Buffering** (this setting is deprecated)
-- **Server Side Excludes** (this setting is deprecated, since Server-side Excludes is deprecated)
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 All other Page Rules settings will be migrated during 2025.
