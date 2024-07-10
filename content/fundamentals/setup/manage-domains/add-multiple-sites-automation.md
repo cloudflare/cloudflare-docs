@@ -49,8 +49,7 @@ ___
     printf "Adding ${domain}:\n"
 
     curl https://api.cloudflare.com/client/v4/zones \
-    --header "X-Auth-Email: <EMAIL>" \
-    --header "X-Auth-Key: <API_KEY>" \
+    --header "Authorization: Bearer <API_TOKEN>" \
     --header "Content-Type: application/json" \
     --data '{
       "account": {
@@ -107,8 +106,7 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      --header "X-Auth-Email: <EMAIL>" \
-      --header "X-Auth-Key: <API_KEY>" \
+      --header "Authorization: Bearer <API_TOKEN>" \
       --header "Content-Type: application/json" \
       --data '{
         "account": {
@@ -149,8 +147,7 @@ You can find your zones nameservers in the following locations:
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      --header "X-Auth-Email: <EMAIL>" \
-      --header "X-Auth-Key: <API_KEY>" \
+      --header "Authorization: Bearer <API_TOKEN>" \
       --header "Content-Type: application/json" \
       --data '{
         "account": {

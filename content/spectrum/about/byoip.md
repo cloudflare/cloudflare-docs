@@ -51,8 +51,7 @@ In the example below, the application routes traffic through Cloudflare’s HTTP
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "protocol": "tcp/80",
