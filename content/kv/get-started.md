@@ -84,7 +84,7 @@ $ npx wrangler kv:namespace create <YOUR_NAMESPACE>
 The `npx wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you.
 
 ```sh
-$ wrangler kv:namespace create <YOUR_NAMESPACE>
+$ npx wrangler kv:namespace create <YOUR_NAMESPACE>
 🌀  Creating namespace with title <YOUR_WORKER-YOUR_NAMESPACE>
 ✨  Success!
 Add the following to your configuration file:
