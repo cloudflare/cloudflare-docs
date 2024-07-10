@@ -41,4 +41,10 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
+{{<details header="Getting 404 errors on *.pages.dev?" >}}
+
+If you are getting `404` errors when visiting your `*.pages.dev` domain, make sure your website has a top-level file for `index.html`. This `index.html` is what Pages will serve on your on your apex with no page specified.
+
+{{</details>}}
+
 {{<render file="/_framework-guides/_learn-more.md" withParameters=" ">}}
