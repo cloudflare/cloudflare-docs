@@ -8,7 +8,7 @@ weight: 6
 
 Existing Cloud Email Security (formerly Area 1) users must connect a Cloudflare account to access the new Zero Trust Cloud Email Security product.
 
-You can connect a Cloudflare account from the Cloudflare dashboard, or by connecting from the Cloud Email Security (formerly Area 1) login page.
+You can connect a Cloudflare account from the Cloudflare dashboard or from the Cloud Email Security (formerly Area 1) login page.
 
 ## Connect account from the dashboard
 
@@ -16,7 +16,7 @@ To connect a Cloudflare account from the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
-2. On the left bar, select **Area 1**.
+2. On the side bar, select **Area 1**.
 
 3. Select **Launch dashboard**.
 
@@ -25,7 +25,7 @@ To connect a Cloudflare account from the dashboard:
     ![Launch dashboard button](/images/email-security/sso/generic/launch-dashboard.png)
 
     </div>
-4. Select **Allow**, so that Area 1 can make changes to your Cloudflare account.
+4. Select **Allow** to enable Area 1 to make changes to your Cloudflare account.
     
     <div class="full-img">
     
@@ -49,7 +49,7 @@ To connect a Cloudflare account from the dashboard:
 
 2. Log in using Cloudflare's credentials.
 
-3. Select **Allow** so that Area 1 can make changes to your Cloudflare account.
+3. Select **Allow** to enable Area 1 to make changes to your Cloudflare account.
     
     <div class="full-img">
     
