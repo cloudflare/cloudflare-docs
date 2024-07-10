@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Atlassian Cloud
-weight: 3
+weight: 2
 ---
 
 # Connect to Atlassian Cloud through Access
