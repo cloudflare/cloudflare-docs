@@ -78,13 +78,13 @@ To create a KV namespace via Wrangler:
 1. Open your terminal and run the following command:
 
 ```sh
-$ wrangler kv:namespace create <YOUR_NAMESPACE>
+$ npx wrangler kv:namespace create <YOUR_NAMESPACE>
 ```
 
-The `wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you.
+The `npx wrangler kv:namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you.
 
 ```sh
-$ wrangler kv:namespace create <YOUR_NAMESPACE>
+$ npx wrangler kv:namespace create <YOUR_NAMESPACE>
 🌀  Creating namespace with title <YOUR_WORKER-YOUR_NAMESPACE>
 ✨  Success!
 Add the following to your configuration file:
@@ -139,21 +139,21 @@ You can interact with your KV namespace via [Wrangler](/workers/wrangler/install
 To write a value to your empty KV namespace using Wrangler, run the `wrangler kv:key put` subcommand in your terminal, and input your key and value respectively.  `<KEY>` and `<VALUE>` are values of your choice.
 
 ```sh
-$ wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
+$ npx wrangler kv:key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
 Instead of using `--binding`, you may use `--namespace-id` to specify which KV namespace should receive the operation:
 
 ```sh
-$ wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "<KEY>" "<VALUE>"
+$ npx wrangler kv:key put --namespace-id=e29b263ab50e42ce9b637fa8370175e8 "<KEY>" "<VALUE>"
 Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
 ```
 
 To create a key and a value in local mode, use the `--local` flag:
 
 ```sh
-$ wrangler kv:key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --local
+$ npx wrangler kv:key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --local
 ```
 
 ### Get a value via Wrangler
@@ -161,7 +161,7 @@ $ wrangler kv:key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --local
 To access the value using Wrangler, run the `wrangler kv:key get` subcommand in your terminal, and input your key value:
 
 ```sh
-$ wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
+$ npx wrangler kv:key get <KEY> [OPTIONS] # Replace [OPTIONS] with --binding or --namespace-id
 ```
 
 A KV namespace can be specified in two ways:
@@ -169,7 +169,7 @@ A KV namespace can be specified in two ways:
 -  With a `--binding`:
 
   ```sh
-  $ wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
+  $ npx wrangler kv:key get --binding=<YOUR_BINDING> "<KEY>"
   ```
 
 This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
@@ -177,7 +177,7 @@ This can be combined with `--preview` flag to interact with a preview namespace 
 -  With a `--namespace-id`:
 
   ```sh
-  $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
+  $ npx wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
   ```
 
 {{<Aside type="warning">}}
