@@ -98,10 +98,9 @@ The error message `TypeError: Illegal invocation: function called with incorrect
 
 This is typically caused by calling a function that calls `this`, but the value of `this` has been lost.
 
-For example, if `obj.foo()` is a method, and within that method `this` references `obj`, executing the method via `obj.foo();` will work properly. However, assigning it to a variable, `let func = obj.foo;`, then calling it, `func();`, will result in `this` being undefined. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript.
+For example, given an `obj` object with the `obj.foo()` method which logic relies on `this`, executing the method via `obj.foo();` will make sure that `this` properly references the `obj` object. However, assigning the method to a variable, e.g.`const func = obj.foo;` and calling such variable, e.g. `func();` would result in `this` being `undefined`. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript. 
 
-In practice, this is often seen when destructuring Javscript objects that have functions that rely on the presence of `this`, such as `ctx`. Avoid destructuring or re-bind the function to
-the original context to avoid the error.
+In practice, this is often seen when destructuring runtime provided Javscript objects that have functions that rely on the presence of `this`, such as `ctx`. Avoid destructuring or re-bind the function to the original context to avoid the error.
 
 ```js
 ---
@@ -110,7 +109,7 @@ filename: index.js
 export default {
   async fetch(request, env, ctx) {
 
-    // destructuring ctx makes waitUntil lose its receiver
+    // destructuring ctx makes waitUntil lose its 'this' reference
     let { waitUntil } = ctx;
     // waitUntil errors, as it has no 'this'
     waitUntil(somePromise);
@@ -118,11 +117,11 @@ export default {
     // re-binding to ctx via apply, call, or bind avoids the error
     waitUntil.apply(ctx, [somePromise]);
     waitUntil.call(ctx, somePromise);
-    let reboundWaitUntil = waitUntil.bind(ctx)
-    reboundWaitUntil(someAsyncFunction)
+    const reboundWaitUntil = waitUntil.bind(ctx);
+    reboundWaitUntil(somePromise);
 
-    // not destructuring ctx at all avoids the error
-    ctx.waitUntil(someAsyncFunction)
+    // directly calling the method on ctx avoids the error
+    ctx.waitUntil(somePromise);
 
     return fetch(request);
   }
