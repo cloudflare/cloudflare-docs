@@ -4,29 +4,34 @@ entries:
   description: This application uses Cloudflare Workers AI, Twilio, and AssemblyAI. Your phone is an input and output device.
   tags: [AI]
   cloudflare: true
+  author: craig
   updated: 2024-03-01
 - link: https://github.com/craigsdennis/image-model-streamlit-workers-ai
   name: Image Model Streamlit starters
   description: Collection of Streamlit applications that are making use of Cloudflare Workers AI.
   tags: [AI]
+  author: craig
   cloudflare: true
   updated: 2024-03-01
 - link: https://github.com/craigsdennis/vanilla-chat-workers-ai
   name: Vanilla JavaScript Chat Application using Cloudflare Workers AI
   description: A web based chat interface built on Cloudflare Pages that allows for exploring Text Generation models on Cloudflare Workers AI. Design is built using tailwind.
   tags: [AI]
+  author: craig
   cloudflare: true
   updated: 2024-03-01
 - link: https://github.com/craigsdennis/whatever-ify-workers-ai
   name: Whatever-ify
   description: Turn yourself into...whatever. Take a photo, get a description, generate a scene and character, then generate an image based on that calendar.
   tags: [AI]
+  author: craig
   cloudflare: true
   updated: 2024-04-01
 - link: https://github.com/craigsdennis/comically-bad-art-workers-ai-streamlit
   name: Comically Bad Art Generation
   description: This app uses the wonderful Python UI Framework Streamlit and Cloudflare Workers AI.
   tags: [AI]
+  author: craig
   cloudflare: true
   updated: 2024-05-01
 - link: https://github.com/craigsdennis/floor-is-llava-workers-ai
