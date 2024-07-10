@@ -10,7 +10,7 @@ meta:
 
 The Cloudflare DDoS Botnet Threat Feed is a threat intelligence feed for service providers (SPs) such as hosting providers and Internet service providers (ISPs) that provides information about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. The feed aims to help service providers stop the abuse and reduce DDoS attacks originating from within their networks.
 
-Each service provider can only get information about IP addresses associated with their autonomous system numbers (ASNs).
+Each service provider can only get information about IP addresses associated with their autonomous system numbers (ASNs). The affiliation of a service provider with their ASNs will be checked against [PeeringDB](https://www.peeringdb.com/), a reliable and globally recognized interconnection database.
 
 To ensure the feed’s accuracy, Cloudflare will only include in the feed IP addresses that have participated in multiple HTTP DDoS attacks and have triggered high-confidence rules.
 
