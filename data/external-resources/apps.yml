@@ -29,9 +29,28 @@ entries:
   tags: [AI]
   cloudflare: true
   updated: 2024-05-01
-- link: https://github.com/craigsdennis/chatflare
-  name: Chatflare
-  description: A web based chat interface built on Cloudflare Pages that allows for exploring Text Generation models on Cloudflare Workers AI. Design is built using tailwind.
+- link: https://github.com/craigsdennis/floor-is-llava-workers-ai
+  name: Floor is Llava
+  description: This is an example repo to explore using the AI Vision model Llava hosted on Cloudflare Workers AI. This is a SvelteKit app hosted on Pages.
   tags: [AI]
   cloudflare: true
-  updated: 2024-05-15
+  updated: 2024-05-23
+- link: https://github.com/craigsdennis/hackathon-helper-workers-ai
+  name: Hackathon Helper
+  description: A series of starters for Hackathons. Get building quicker! Python, Streamlit, Workers, and Pages starters for all your AI needs!
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-06-12
+- link: https://github.com/craigsdennis/lightbulb-moment-tool-calling
+  name: Homie - Home Automation using Function Calling
+  description: A home automation tool that uses AI Function calling to change the color of lightbulbs in your home.
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-06-17
+- link: https://github.com/craigsdennis/shorty-dot-dev
+  name: shrty.dev
+  description: A URL shortener that makes use of KV and Workers Analytics Engine. The admin interface uses Function Calling. Go Shorty!
+  tags: [AI]
+  cloudflare: true
+  updated: 2024-07-02
+
