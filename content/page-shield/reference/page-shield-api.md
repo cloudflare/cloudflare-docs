@@ -38,11 +38,13 @@ The following table summarizes the available operations:
 | [Get a Page Shield script][4]     | `GET zones/{zone_id}/page_shield/scripts/{script_id}`  | Fetch the details of a script.                        |
 | [List Page Shield connections][5] | `GET zones/{zone_id}/page_shield/connections`          | Fetch a list of detected connections.                 |
 | [Get a Page Shield connection][6] | `GET zones/{zone_id}/page_shield/connections/{connection_id}` | Fetch the details of a connection.             |
-| [List Page Shield policies][7]    | `GET zones/{zone_id}/page_shield/policies`             | Fetch a list of all configured CSP policies.          |
-| [Get a Page Shield policy][8]     | `GET zones/{zone_id}/page_shield/policies/{policy_id}` | Fetch the details of a CSP policy.                    |
-| [Create a Page Shield policy][9]  | `POST zones/{zone_id}/page_shield/policies`            | Creates a CSP policy with the provided configuration. |
-| [Update a Page Shield policy][10] | `PUT zones/{zone_id}/page_shield/policies/{policy_id}` | Updates an existing CSP policy.                       |
-| [Delete a Page Shield policy][11] | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}` | Deletes an existing CSP policy.                    |
+| [List Page Shield cookies][7]     | `GET zones/{zone_id}/page_shield/cookies`              | Fetch a list of detected cookies.                     |
+| [Get a Page Shield cookie][8]     | `GET zones/{zone_id}/page_shield/cookies/{cookie_id}`  | Fetch the details of a cookie.                        |
+| [List Page Shield policies][9]    | `GET zones/{zone_id}/page_shield/policies`             | Fetch a list of all configured CSP policies.          |
+| [Get a Page Shield policy][10]    | `GET zones/{zone_id}/page_shield/policies/{policy_id}` | Fetch the details of a CSP policy.                    |
+| [Create a Page Shield policy][11] | `POST zones/{zone_id}/page_shield/policies`            | Creates a CSP policy with the provided configuration. |
+| [Update a Page Shield policy][12] | `PUT zones/{zone_id}/page_shield/policies/{policy_id}` | Updates an existing CSP policy.                       |
+| [Delete a Page Shield policy][13] | `DELETE zones/{zone_id}/page_shield/policies/{policy_id}` | Deletes an existing CSP policy.                    |
 
 [1]: /api/operations/page-shield-get-settings
 [2]: /api/operations/page-shield-update-settings
@@ -50,11 +52,13 @@ The following table summarizes the available operations:
 [4]: /api/operations/page-shield-get-script
 [5]: /api/operations/page-shield-list-connections
 [6]: /api/operations/page-shield-get-connection
-[7]: /api/operations/page-shield-list-policies
-[8]: /api/operations/page-shield-get-policy
-[9]: /api/operations/page-shield-create-policy
-[10]: /api/operations/page-shield-update-policy
-[11]: /api/operations/page-shield-delete-policy
+[7]: /api/operations/page-shield-list-cookies
+[8]: /api/operations/page-shield-get-cookie
+[9]: /api/operations/page-shield-list-policies
+[10]: /api/operations/page-shield-get-policy
+[11]: /api/operations/page-shield-create-policy
+[12]: /api/operations/page-shield-update-policy
+[13]: /api/operations/page-shield-delete-policy
 
 ## API notes
 
@@ -72,7 +76,7 @@ This example obtains the current settings of Page Shield, including the status (
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -102,7 +106,7 @@ This example enables Page Shield in the specified zone.
 header: Request
 ---
 curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/page_shield" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{ "enabled": true }'
@@ -244,7 +248,7 @@ This `GET` request obtains the details of a script detected by Page Shield with 
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts/8337233faec2357ff84465a919534e4d" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -352,7 +356,7 @@ This `GET` request obtains the details of a connection detected by Page Shield w
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740 \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections/0a7bb628776f4e50a50d8594c4a01740" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -382,6 +386,105 @@ header: Response
 }
 ```
 
+
+### Fetch list of detected cookies
+
+This `GET` request fetches a list of cookies detected by Page Shield, requesting the first page with 15 items per page.
+
+By default, the response will only include cookies with `active` status when you do not specify a `status` filter parameter in the URL query string.
+
+```bash
+---
+header: Request
+---
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies?page=1&per_page=15" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": [
+    {
+      "id": "beee03ada7e047e79f076785d8cd8b8e",
+      "type": "first_party",
+      "name": "PHPSESSID",
+      "host": "example.net",
+      "domain_attribute": "example.net",
+      "expires_attribute": "2024-10-21T12:28:20Z",
+      "http_only_attribute": true,
+      "max_age_attribute": null,
+      "path_attribute": "/store",
+      "same_site_attribute": "strict",
+      "secure_attribute": true,
+      "first_seen_at": "2024-05-06T10:51:08Z",
+      "last_seen_at": "2024-05-07T11:56:01Z",
+      "first_page_url": "example.net/store/products",
+      "page_urls": [
+        "example.net/store/products/1"
+      ]
+    },
+    // (...)
+  ],
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result_info": {
+    "page": 1,
+    "per_page": 15,
+    "count": 15,
+    "total_count": 16,
+    "total_pages": 2
+  }
+}
+```
+
+For details on the available filtering, paging, and sorting parameters, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/#pagination).
+
+### Get details of a detected cookie
+
+This `GET` request obtains the details of a cookie detected by Page Shield with ID `beee03ada7e047e79f076785d8cd8b8e`.
+
+```bash
+---
+header: Request
+---
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies/beee03ada7e047e79f076785d8cd8b8e" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "beee03ada7e047e79f076785d8cd8b8e",
+    "type": "first_party",
+    "name": "PHPSESSID",
+    "host": "example.net",
+    "domain_attribute": "example.net",
+    "expires_attribute": "2024-10-21T12:28:20Z",
+    "http_only_attribute": true,
+    "max_age_attribute": null,
+    "path_attribute": "/store",
+    "same_site_attribute": "strict",
+    "secure_attribute": true,
+    "first_seen_at": "2024-05-06T10:51:08Z",
+    "last_seen_at": "2024-05-07T11:56:01Z",
+    "first_page_url": "example.net/store/products",
+    "page_urls": [
+      "example.net/store/products/1"
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
 ### Create a policy
 
 This `POST` request creates a Page Shield policy with _Log_ action, defining the following scripts as allowed based on where they are hosted:
@@ -403,7 +506,7 @@ For a list of CSP directives and keywords supported by Page Shield policies, ref
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies \
+curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{

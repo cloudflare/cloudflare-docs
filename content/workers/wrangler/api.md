@@ -270,7 +270,11 @@ const platform = await getPlatformProxy(options);
 
         * `configPath` {{<type>}}string{{</type>}}
 
-          The path to the configuration object to use (default `wrangler.toml`).
+          The path to the config file to use.
+
+          If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
+
+          **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
 
         * `experimentalJsonConfig` {{<type>}}boolean{{</type>}}
 
@@ -381,8 +385,6 @@ The bindings supported by `getPlatformProxy` are:
  * [D1 database bindings](/d1/build-with-d1/d1-client-api/)
 
  * [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
-
-    * To use the `AI` binding with `getPlatformProxy`, you need to set the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables to your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/) and a [Workers AI enabled API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) respectively.
 
     {{<render file="_ai-local-usage-charges.md" productFolder="workers">}}
 

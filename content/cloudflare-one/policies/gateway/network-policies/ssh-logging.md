@@ -31,12 +31,12 @@ Other short-lived CAs, such as those used to [secure SSH servers behind Cloudfla
 
 To generate a Gateway SSH proxy CA and get its public key:
 
-1. Make a request to the Cloudflare API with your email address and [API key](/fundamentals/api/get-started/keys/) as request headers.
+1. Make a `POST` request to the Cloudflare API with your email address and [API key](/fundamentals/api/get-started/keys/) as request headers.
 
    ```bash
-   curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
-       -H "X-Auth-Email: <EMAIL>" \
-       -H "X-Auth-Key: <API_KEY>"
+   curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca" \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>"
    ```
 
 2. A success response will include a `public_key` value. Save the key for configuring your server.

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Wildcard matching
 meta:
-    title: Wildcard matching | Page Rules (legacy)
+    title: Wildcard matching | Page Rules
 weight: 5
 ---
 

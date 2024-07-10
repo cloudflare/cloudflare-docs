@@ -9,7 +9,7 @@ meta:
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. For example, consider the following HTTP request on a TLS connection:
 
-```bash
+```txt
 GET /logo.jpg HTTP/1.1
 Host: www.cloudflare.com
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
@@ -26,15 +26,9 @@ As we can see from the example, the default cache key includes:
 3.  `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
 
-{{<Aside type="warning" header="Warning">}}
-
-Using Custom Cache Keys may result in cache sharding and reduction of your cache hit ratio.
-
-{{</Aside>}}
-
 ## Create custom cache keys
 
-A [Cache Key](/cache/how-to/cache-keys/) is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
+Custom cache keys let you precisely set the cacheability setting for any resource. They provide the benefit of more control, though they may reduce your cache hit rate and result in cache sharding:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Caching** > **Cache Rules**.

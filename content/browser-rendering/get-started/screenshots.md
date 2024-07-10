@@ -51,9 +51,9 @@ For the purpose of this guide, you are going to use a [KV store](/kv/reference/k
 
 Create two namespaces, one for production, and one for development.
 
-```bash
-npx wrangler kv:namespace create BROWSER_KV_DEMO
-npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
+```sh
+$ npx wrangler kv:namespace create BROWSER_KV_DEMO
+$ npx wrangler kv:namespace create BROWSER_KV_DEMO --preview
 ```
 
 Take note of the IDs for the next step.

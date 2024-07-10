@@ -83,6 +83,12 @@ Refer to [HTTP Events API](/zaraz/http-events-api/) for more information on this
 
 Choose whether to prevent Zaraz from loading on suspected bot-initiated requests. This is based on the request's [bot score](/bots/concepts/bot-score/) which is an estimate, and therefore cannot be guaranteed to be always accurate.
 
+The options are:
+
+- **Block none**: Load Zaraz for all requests, even if those come from bots.
+- **Block automated only**: Prevent Zaraz from loading on requests from requests in the [**Automated** category](/bots/concepts/bot-score/#bot-groupings).
+- **Block automated and likely automated**: Prevent Zaraz from loading on requests from requests in the [**Automated** and **Likely Automated** category](/bots/concepts/bot-score/#bot-groupings).
+
 ### Context Enricher
 
 Refer to the [Context Enricher](/zaraz/advanced/context-enricher/) for more information on this setting.

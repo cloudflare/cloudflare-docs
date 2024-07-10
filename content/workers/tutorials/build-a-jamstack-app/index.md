@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list Jamstack application
+products: [KV]
 ---
 
 # Build a todo list Jamstack application

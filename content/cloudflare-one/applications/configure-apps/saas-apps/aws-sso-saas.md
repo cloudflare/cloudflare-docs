@@ -6,10 +6,11 @@ weight: 4
 
 # Connect to AWS through Access
 
-This guide covers how to configure AWS SSO with Access for SaaS. Cloudflare Access for SaaS allows you to layer additional network and device posture policies on top of existing identity authentication from your identity provider.
+This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source-idp.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to an AWS account
 
 ## 1. Get AWS URLs

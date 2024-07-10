@@ -20,7 +20,8 @@ To get the details of a zone subscription, send a [`GET`](/api/operations/zone-s
 
 ### Update zone subscription
 
-To get the details of a zone subscription, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint.
+To update a subscription on a zone, typically used to update an existing subscription's 'component_values' or to downgrade a zone's subscription, send a [`PUT`](/api/operations/zone-subscription-update-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint.
+
 
 ---
 

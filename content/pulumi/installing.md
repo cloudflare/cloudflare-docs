@@ -28,7 +28,7 @@ To avoid resource management conflicts, it’s **always** recommended to manage 
 
 Install via Homebrew package manager.
 
-```bash
+```sh
 $ brew install pulumi/tap/pulumi
 ```
 
@@ -36,7 +36,7 @@ $ brew install pulumi/tap/pulumi
 
 Use the installation script.
 
-```bash
+```sh
 $ curl -fsSL https://get.pulumi.com | sh
 ```
 
@@ -49,7 +49,7 @@ $ curl -fsSL https://get.pulumi.com | sh
 
 To verify your installation, run the following in the terminal:
 
-```bash
+```sh
 $ pulumi version
 ```
 

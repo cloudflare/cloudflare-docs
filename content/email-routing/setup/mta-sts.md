@@ -17,7 +17,7 @@ Suppose that `example.com` is your domain and uses Email Routing. Here is how yo
 
 3. Confirm that the record was created:
 
-```bash
+```sh
 $ dig txt _mta-sts.example.com
 _mta-sts.example.com. 300 IN  CNAME _mta-sts.mx.cloudflare.net.
 _mta-sts.mx.cloudflare.net. 300 IN  TXT "v=STSv1; id=20230615T153000;"
@@ -39,7 +39,7 @@ To do this you need to deploy a Worker that allows email clients to pull Cloudfl
 
 You can then confirm that your policy file is working with the following:
 
-```bash
+```sh
 $ curl https://mta-sts.example.com/.well-known/mta-sts.txt
 version: STSv1
 mode: enforce

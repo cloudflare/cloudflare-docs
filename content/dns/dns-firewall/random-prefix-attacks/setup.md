@@ -13,16 +13,17 @@ In order to enable automatic mitigation of [random prefix attacks](/dns/dns-fire
 1. Set up [DNS Firewall](/dns/dns-firewall/setup/).
 2. Send a [`PATCH` request](/api/operations/dns-firewall-update-dns-firewall-cluster) to update your DNS Firewall cluster.
 
-   ```sh
-   curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/dns_firewall/<CLUSTER_TAG>" \
-    -H "Authorization: Bearer <token>" \
-    -H "Content-Type: application/json" \
-    --data '{"attack_mitigation":{
-      "enabled":true,
-      "only_when_upstream_unhealthy":true
+    ```bash
+    curl --request PATCH "https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_firewall/{cluster_tag}" \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "attack_mitigation": {
+        "enabled": true,
+        "only_when_upstream_unhealthy": true
       }
     }'
-   ```
+    ```
 
 Once you receive a `200` success response from the API, queries identified as being part of a random prefix attack will receive a `REFUSED` response.
 

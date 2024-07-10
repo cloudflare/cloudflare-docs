@@ -4,6 +4,7 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
+products: [Images]
 ---
 
 # Generate YouTube thumbnails with Workers and Cloudflare Image Resizing

@@ -53,7 +53,7 @@ header: Sample output
 }
 ```
 
-When JA4 signals are missing, the output appears as follows:
+When JA4 Signals are missing, the output appears as follows:
 
 ```json
 ---

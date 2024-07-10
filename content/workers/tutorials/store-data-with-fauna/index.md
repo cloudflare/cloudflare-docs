@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
+tags: [Hono]
 ---
 
 # Create a serverless, globally distributed REST API with Fauna
