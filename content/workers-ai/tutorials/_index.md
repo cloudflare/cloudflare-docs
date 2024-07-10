@@ -8,4 +8,6 @@ hideChildren: true
 
 # Tutorials
 
+Explore the following tutorials for Workers AI.
+
 {{<tutorial-listing>}}
