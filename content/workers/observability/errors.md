@@ -92,6 +92,41 @@ async function handleRequest(request) {
 }
 ```
 
+### "Illegal invocation" errors
+
+The error message `TypeError: Illegal invocation: function called with incorrect \`this\` reference` can be a source of confusion.
+
+This is typically caused by calling a member function of an object without the object itself as the receiver. For example, `let foo = obj.foo; foo();`. This is standard behavior in Javscript.
+
+In practice, this is often seen when destructuring Javscript classes that have functions that rely on the presence of `this`, such as `ctx`. Avoid destructuring or re-bind the function to
+the original context to avoid the error.
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+
+    // destructuring ctx makes waitUntil lose its receiver
+    let { waitUntil } = ctx;
+    // waitUntil errors, as it has no 'this'
+    waitUntil(somePromise);
+
+    // re-binding to ctx via apply, call, or bind avoids the error
+    waitUntil.apply(ctx, [somePromise]);
+    waitUntil.call(ctx, somePromise);
+    let reboundWaitUntil = waitUntil.bind(ctx)
+    reboundWaitUntil(someAsyncFunction)
+
+    // not destructuring ctx at all avoids the error
+    ctx.waitUntil(someAsyncFunction)
+
+    return fetch(request);
+  }
+}
+```
+
 ## Errors on Worker upload
 These errors occur when a Worker is uploaded or modified.
 
