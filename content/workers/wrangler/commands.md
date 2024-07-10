@@ -544,6 +544,22 @@ wrangler hyperdrive create <ID> [OPTIONS]
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The hostname or IP address Hyperdrive should connect to.
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database port to connect to.
+- `--scheme` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The scheme used to connect to the origin database - e.g. postgresql or postgres.
+- `--database` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database (name) to connect to. For example, Postgres or defaultdb.
+- `--user` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The username used to authenticate to the database.
+- `--password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The password used to authenticate to the database.
+- `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret.
+- `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -577,6 +593,10 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - The new username used to authenticate to the database.
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
+- `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret.
+- `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
