@@ -7,6 +7,19 @@ title: Network segmentation
 
 You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN to LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
+```mermaid
+flowchart LR
+accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
+    a(Magic WAN Connector)-->|WAN|b(Internet) --> c(Cloudflare)
+    d[LAN 172.16.1.0/24] --> a
+    e[LAN 172.16.2.0/24] --> a
+    g[LAN 172.16.4.0/24] <--> h[LAN 172.16.5.0/24]
+    f(Customer site) --> d & e & g & h
+    classDef orange fill:#f48120,color: black
+    class a,c orange
+```
+_In the above example, the policies set up enable traffic flow between LANs, without it leaving the customer's premises_
+
 Creating these policies to segment your network means LAN to LAN traffic can be allowed either locally or via Cloudflare’s network. As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
 
 The following guide assumes you have already created a site and configured your Connector. To learn how to create a site and configure your Connector, refer to [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure virtual connector](/magic-wan/configuration/connector/configure-virtual-connector/), depending on the type of Magic WAN Connector you have on your premises.
