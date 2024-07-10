@@ -94,11 +94,13 @@ async function handleRequest(request) {
 
 ### "Illegal invocation" errors
 
-The error message `TypeError: Illegal invocation: function called with incorrect \`this\` reference` can be a source of confusion.
+The error message `TypeError: Illegal invocation: function called with incorrect this reference` can be a source of confusion.
 
-This is typically caused by calling a member function of an object without the object itself as the receiver. For example, `let foo = obj.foo; foo();`. This is standard behavior in Javscript.
+This is typically caused by calling a function that calls `this`, but the value of `this` has been lost.
 
-In practice, this is often seen when destructuring Javscript classes that have functions that rely on the presence of `this`, such as `ctx`. Avoid destructuring or re-bind the function to
+For example, if `obj.foo()` is a method, and within that method `this` references `obj`, executing the method via `obj.foo();` will work properly. However, assigning it to a variable, `let func = obj.foo;`, then calling it, `func();`, will result in `this` being undefined. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript.
+
+In practice, this is often seen when destructuring Javscript objects that have functions that rely on the presence of `this`, such as `ctx`. Avoid destructuring or re-bind the function to
 the original context to avoid the error.
 
 ```js
