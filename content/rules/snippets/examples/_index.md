@@ -7,6 +7,10 @@ weight: 3
 layout: wide
 ---
 
-# Examples
+# Snippets examples
+
+Refer to the following examples to get started creating your snippet code.
+
+Refer to [How it works](/rules/snippets/#how-it-works) and [Create in the dashboard](/rules/snippets/create-dashboard/) for overall guidance.
 
 {{<list-examples filters="goal,operation" directory="/rules/snippets/examples/">}}
