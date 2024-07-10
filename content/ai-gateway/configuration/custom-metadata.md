@@ -33,8 +33,8 @@ Objects are not supported as metadata values.
 To include custom metadata in your request using cURL:
 
 ```bash
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer token' \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {api_token}' \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-metadata: {"team": "AI", "user": "JaneDoe", "test":"true"}' \
   --data '{"model": "gpt-4o", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
@@ -83,7 +83,7 @@ export default {
 
 ### Using Binding
 
-To include custom metadata in your request using Binding:
+To include custom metadata in your request using [Bindings](/workers/runtime-apis/bindings/):
 
 ```javascript
 export default {
@@ -91,7 +91,7 @@ export default {
    const aiResp = await env.AI.run(
        '@cf/mistral/mistral-7b-instruct-v0.1',
        { prompt: 'What should I eat for lunch?' },
-       { gateway: { id: 'for-testing', metadata: { "employee":1337, "team":"AI"} } }
+       { gateway: { id: 'gateway_id', metadata: { "employee":1337, "team":"AI"} } }
    );
 
    return new Response(aiResp);
