@@ -7,7 +7,7 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 
 - publish_date: '2024-07-11'
-  title: Introducing embedded function calling
+  title: New community-contributed tutorial
   description: |-
     - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/).
 
