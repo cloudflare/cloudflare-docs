@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: PagerDuty (SAML)
-weight: 11
+title: PagerDuty
+weight: 12
 ---
 
-# Connect to PagerDuty through Access (SAML)
+# Connect to PagerDuty through Access
 
 This guide covers how to configure [PagerDuty](https://support.pagerduty.com/docs/sso) as a SAML application in Cloudflare Zero Trust.
 
