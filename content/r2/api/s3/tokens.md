@@ -8,6 +8,12 @@ weight: 2
 
 You can generate an API token to serve as the Access Key for usage with existing S3-compatible SDKs or XML APIs. 
 
+{{<Aside type="note">}}
+
+If you create an API token via the API or Terraform, you must hash the returned token to SHA256 to be compatible with the S3 API.
+
+{{</Aside>}}
+
 You must purchase R2 before you can generate an API token.
 
 To create an API token: 
