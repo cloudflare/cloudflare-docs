@@ -6,6 +6,8 @@ title: Browser Cache TTL
 
 # Browser Cache TTL
 
+{{<render file="_page-rules-migration.md">}}
+
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
 
 <div class="DocsMarkdown--example">

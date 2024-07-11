@@ -7,6 +7,8 @@ layout: wide
 
 # Custom Cache Key
 
+{{<render file="_page-rules-migration.md">}}
+
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to set a custom cache key for all query string parameters, for any hostname containing `example.com`:
 
 <div class="DocsMarkdown--example">

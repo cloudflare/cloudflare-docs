@@ -6,6 +6,8 @@ title: Cache TTL by status code
 
 # Cache TTL by status code
 
+{{<render file="_page-rules-migration.md">}}
+
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses with status code between `200` and `599` for one day for any hostname containing `example.com`:
 
 <div class="DocsMarkdown--example">

@@ -6,6 +6,8 @@ title: Cache Deception Armor
 
 # Cache Deception Armor
 
+{{<render file="_page-rules-migration.md">}}
+
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to protect against cache deception attacks for any hostname containing `example.com`:
 
 <div class="DocsMarkdown--example">

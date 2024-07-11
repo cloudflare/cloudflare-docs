@@ -7,6 +7,8 @@ layout: wide
 
 # Cache Level (Cache Everything)
 
+{{<render file="_page-rules-migration.md">}}
+
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust cache level for any hostname containing `example.com`:
 
 <div class="DocsMarkdown--example">

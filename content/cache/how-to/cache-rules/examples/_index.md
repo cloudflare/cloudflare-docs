@@ -9,4 +9,6 @@ layout: wide
 
 # Cache Rules examples
 
+In the following sections, you can find common cache rules examples.
+
 {{<directory-listing>}}
