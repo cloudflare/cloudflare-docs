@@ -91,8 +91,8 @@ Because Connectors in high availability configurations share a single site, you 
 Make sure all IPs are part of the same subnet.
 
 {{<Aside type="note">}}
-- Failure conditions include connector down or software restart, LAN or WAN link down, tunnel health down, 
-- HA is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
+- Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
+- High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
 {{</Aside>}}
 
 ### ​​Create a high availability configuration
