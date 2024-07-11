@@ -18,28 +18,30 @@
       <article class="DocsMarkdown">
           <h1>{{ .Title }}</h1>
           <div class="DocsMarkdown-beta">
+          {{ $now := now }}
           {{ range .Params.model.properties }}
             {{ if and (eq .property_id "beta") (eq .value "true") }}
-              {{/* Cannot use heading-pill shortcode outside of content dir */}}
               <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div>
             {{ end }}
             {{ if and (eq .property_id "lora") (eq .value "true") }}
-              {{/* Cannot use heading-pill shortcode outside of content dir */}}
               <div class="DocsMarkdown--pill DocsMarkdown--pill-early-access"><a href="/workers-ai/fine-tunes/">LoRA</a></div>
             {{ end }}
             {{ if and (eq .property_id "function_calling") (eq .value "true") }}
-              {{/* Cannot use heading-pill shortcode outside of content dir */}}
               <div class="DocsMarkdown--pill DocsMarkdown--pill-alpha" style="width: max-content"><a href="/workers-ai/function-calling/">Function Calling</a></div>
             {{ end }}
             {{ if (eq .property_id "planned_deprecation_date") }}
-              {{/* Cannot use heading-pill shortcode outside of content dir */}}
-              <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecating on {{.value}}</div>
+              {{ $deprecationDate := time.Parse "2006-01-02" .value }}
+              {{ if ge $now $deprecationDate }}
+                <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">This model has been deprecated since {{.value}}</div>
+              {{ else }}
+                <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecating on {{.value}}</div>
+              {{ end }}
             {{ end }}
           {{ end }}
         </div>
         {{ partial "models/header.md" . | markdownify }}
         {{- .Content -}}
-        {{ partial "models/footer.md" .| markdownify }}
+        {{ partial "models/footer.md" . | markdownify }}
       </article>
     </div>
   </main>
