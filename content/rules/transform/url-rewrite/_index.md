@@ -18,6 +18,8 @@ Use a URL rewrite to return the content of a URL while displaying a different UR
 
 {{<Aside type="warning">}}
 You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/).
+
+{{<render file="_snippets-alternative.md" withParameters="rewrite logic">}}
 {{</Aside>}}
 
 ## Static and dynamic rewrites

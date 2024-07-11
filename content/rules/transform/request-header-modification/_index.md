@@ -39,6 +39,8 @@ Through HTTP request header modification rules you can:
 
 You can create an HTTP request header modification rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/) or [via API](/rules/transform/request-header-modification/create-api/).
 
+{{<render file="_snippets-alternative.md" withParameters="request header modifications">}}<br />
+
 ## Important remarks
 
 *   You cannot modify or remove HTTP request headers whose name starts with `x-cf-` or `cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
