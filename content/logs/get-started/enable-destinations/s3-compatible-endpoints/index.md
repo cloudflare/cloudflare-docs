@@ -31,7 +31,7 @@ For more information about Logpush and the current production APIs, refer to [Cl
     - **Bucket** - S3 Compatible bucket name
     - **Path** - bucket location within the storage container
     - **Organize logs into daily subfolders** (recommended) 
-    - **Endpoint URL** - The url without the bucket name or path. Example, `sfo2.digitaloceanspaces.com`.
+    - **Endpoint URL** - The URL without the bucket name or path. Example, `sfo2.digitaloceanspaces.com`.
     - **Bucket region**
     - **Access Key ID**
     - **Secret Access Key**

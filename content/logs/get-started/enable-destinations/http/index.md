@@ -16,7 +16,7 @@ Note that when using Logpush to HTTP endpoints, Cloudflare customers are expecte
 
 5. In **Select a destination**, choose **HTTP destination**.
 
-6. Enter the **HTTP endpoint** where you want to send the logs and select **Continue**.
+6. Enter the **HTTP endpoint** where you want to send the logs to, and select **Continue**.
 
 7. Select the dataset to push to the storage service.
 
