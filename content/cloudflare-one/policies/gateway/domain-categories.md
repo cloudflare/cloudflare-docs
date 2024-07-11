@@ -226,7 +226,7 @@ When creating a DNS policy for security or content categories, you can optionall
 
 ### Ignore `CNAME` domain categories
 
-The categories for a site's `CNAME` records may differ from its `A` record. For example, `blog.example.com` may be categorized under Personal Blogs, while `example.com` is categorized under Technology. To limit matches to only the root domain's categories, turn on **Ignore CNAME domain categories**.
+The categories for a site's `CNAME` records may differ from its `A` record. For example, `blog.example.com` may be categorized under Personal Blogs, while `example.com` is categorized under Technology. To limit matches for a DNS policy to only the root domain's categories, turn on **Ignore CNAME domain categories**.
 
 Regardless of this setting, `CNAME` domain categories will still appear in your Gateway [Logpush](/cloudflare-one/insights/logs/logpush/) logs.
 
