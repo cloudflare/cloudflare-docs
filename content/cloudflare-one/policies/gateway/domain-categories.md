@@ -222,9 +222,13 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 ### Filter traffic by resolved IP category
 
-When creating a DNS block policy for security or content categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
+When creating a DNS policy for security or content categories, you can optionally turn on **Filter traffic by resolved IP category** in the policy settings. When turned on, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
 
-### Ignore CNAME domain categories
+### Ignore `CNAME` domain categories
+
+The categories for a site's `CNAME` records may differ from its `A` record. For example, `blog.example.com` may be categorized under Personal Blogs, while `example.com` is categorized under Technology. To limit matches to only the root domain's categories, turn on **Ignore CNAME domain categories**.
+
+Regardless of this setting, `CNAME` domain categories will still appear in your Gateway [Logpush](/cloudflare-one/insights/logs/logpush/) logs.
 
 ## Categorization process
 
@@ -234,7 +238,7 @@ Cloudflare's domain categorization engine begins with multiple data sources, inc
 
   2. Third-party intelligence feeds. Cloudflare uses data from over 30 open-source intelligence feeds and premium commercial feeds, such as Avira and Zvelo.
 
-Then, the initial categorization is refined and continuously improved through:
+Then, the initial categorization is refined via:
 
   3. Machine learning models. Our algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
 
