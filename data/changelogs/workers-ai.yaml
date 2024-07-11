@@ -9,6 +9,11 @@ entries:
 - publish_date: '2024-06-27'
   title: Introducing embedded function calling
   description: |-
+    - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/).
+
+- publish_date: '2024-06-27'
+  title: Introducing embedded function calling
+  description: |-
     - A new way to do function calling with [Embedded function calling](/workers-ai/function-calling/embedded)
     - Published new [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) npm package
     - Open-sourced [`ai-utils on Github`](https://github.com/cloudflare/ai-utils)
