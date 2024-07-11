@@ -61,7 +61,8 @@ entries:
 - link: https://github.com/elizabethsiegle/cfworkers-ai-translate
   name: Multimodal AI Translator
   description: This application uses Cloudflare Workers AI to perform multimodal translation of languages via audio and text in the browser.
-  tags: [AI]
+  tags: [TEST]
+  products: [Durable Objects]
   author: lizzie
   cloudflare: true
   updated: 2024-05-28

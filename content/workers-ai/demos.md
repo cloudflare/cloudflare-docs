@@ -8,4 +8,4 @@ weight: 6
 
 Explore the following demo applications for Workers AI.
 
-{{<external-resources-by-tag resource_type="apps" tags="AI">}}
+{{<external-resources resource_type="apps" tags="AI">}}
