@@ -83,7 +83,7 @@ API_HOST = "localhost:4000"
 API_ACCOUNT_ID = "local_example_user"
 ```
 
-Alternatively, you can specify local-only values in `wrangler.toml` and provide an `environment` value via the `env` flag when running the development command like so `wrangler dev --env=local`.
+Alternatively, you can specify per-environment values in `wrangler.toml` and provide an `environment` value via the `env` flag when developing locally like so `wrangler dev --env=local`.
 
 ## Add environment variables via the dashboard
 
