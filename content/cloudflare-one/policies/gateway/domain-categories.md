@@ -218,24 +218,24 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{</table-wrap>}}
 
-## Filter by resolved IP category
+## Filtering options
+
+### Filter traffic by resolved IP category
 
 When creating a DNS block policy for security or content categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
 
-## Categorization Process
+### Ignore CNAME domain categories
 
-Our domain categorization process consists of a robust data-driven approach that combines Cloudflare's proprietary data and third-party intelligence (encompassing both open-source and commercial feeds), with machine learning models and insights from our community feedback. This multifaceted strategy ensures the most accurate, timely, and comprehensive domain categorization available.
+## Categorization process
 
-First, the categorization engine begins with a vast array of data sources. This includes:
+Cloudflare's domain categorization engine begins with multiple data sources, including:
 
-1. Cloudflare’s proprietary data leveraging Cloudflare’s extensive network data.
+  1. Cloudflare's proprietary data using our global network.
 
-2. Third-party intelligence feeds. We incorporate data from over 30 open-source intelligence feeds and premium commercial feeds, including industry leaders like Avira, Zvelo and others. This aggregation enriches our categorization with diverse insights and global threat intelligence.
+  2. Third-party intelligence feeds. Cloudflare uses data from over 30 open-source intelligence feeds and premium commercial feeds, such as Avira and Zvelo.
 
 Then, the initial categorization is refined and continuously improved through:
 
-3. Machine learning models. Our advanced algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
+  3. Machine learning models. Our algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
 
-4. Community feedback. Direct input from our customers plays a critical role in refining and verifying our categorizations. Through a review process, feedback is assessed by both our internal models and threat analysts, ensuring that our categorizations reflect the most current and accurate threat intelligence.
-
-This approach outlines how each component of our process contributes to the creation of a secure and accurately categorized Internet environment. By leveraging both data-driven insights and machine learning, complemented by the critical eye of our community, our categories are not just comprehensive, but also dynamically attuned to the evolving digital landscape.
+  4. Community feedback. Through a review process, Cloudflare assesses feedback by both our internal models and threat analysts. This ensures that our categorizations reflect the most current and accurate threat intelligence.
