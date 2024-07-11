@@ -7,9 +7,9 @@ title: Developer Spotlight program
 
 Find examples of how our community of developers are getting the most out of our products.
 
-While applications are not currently open, you can register your interest to get updates on the program via email by filling out the [Developer Spotlight interest form](https://docs.google.com/forms/d/e/1FAIpQLSd7CESg7obtOh7CPVEbBeJ2_DtwWeAwb6aazNpukjbka_zYUw/viewform?usp=sf_link).
+While applications are not currently open, you can register your interest to get updates on the program via email by filling out the [Developer Spotlight program interest form](https://docs.google.com/forms/d/e/1FAIpQLSd7CESg7obtOh7CPVEbBeJ2_DtwWeAwb6aazNpukjbka_zYUw/viewform?usp=sf_link).
 
-If you are interested in contributing a tutorial to the Developer Spotlight program or would like to learn more, please read our [application guide documentation](/developer-spotlight/application-guide/). 
+If you are interested in contributing a tutorial to the Developer Spotlight program or would like to learn more, please read our [application guide](/developer-spotlight/application-guide/). 
 
 ## View latest contributions
 
