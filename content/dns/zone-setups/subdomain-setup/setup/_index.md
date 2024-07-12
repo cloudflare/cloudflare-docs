@@ -53,6 +53,6 @@ Although the how-to guides in this documentation are focused on both parent doma
 
 ## SSL/TLS certificates
 
-If the parent domain's SSL/TLS certificate explicitly lists the child domain and is created after the child domain's SSL/TLS certificate, the parent domain's certificate will take precedence over the child domain's certificate.
+If the parent domain's SSL/TLS certificate explicitly lists the delegated subdomain and is created after the subdomain's SSL/TLS own certificate, the parent domain's certificate will take precedence over the subdomain's certificate.
 
 For instance, if `example.com` [creates an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) that directly lists `docs.example.com`, visitors to `docs.example.com` might see the SSL/TLS certificate for `example.com`.
