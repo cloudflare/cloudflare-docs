@@ -43,7 +43,7 @@ Workers using ES modules format replace the `addEventListener` syntax with an ob
 
 ```js
 export default {
-  fetch(request) {
+  async fetch(request) {
     const base = 'https://example.com';
     const statusCode = 301;
 
