@@ -52,7 +52,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 5. Fill in the following information:
    - **Sign-in page URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
    - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
-   - **Verification certificate**: Upload the `.crt` certificate file from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
+   - **Verification certificate**: Upload the `.crt` certificate file from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 6. (Optional) Turn on **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Cloud domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 
 ## 4. Test the integration
