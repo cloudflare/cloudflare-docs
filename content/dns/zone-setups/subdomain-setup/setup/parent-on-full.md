@@ -16,13 +16,13 @@ The following steps are similar if your Cloudflare parent zone is in a secondary
 
 {{</Aside>}}
 
-## Subdomain does not exist in the parent zone
+## Subdomain does not exist
 
 If you have not yet created DNS records covering your subdomain in the parent zone:
 
 1. Add the subdomain to a Cloudflare account. It can be the same account where the parent zone exists or a different one.
 2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
-3. Get the nameserver names for the subdomain. These can be found in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and will not be the same nameservers as the parent domain.
+3. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
 4. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records for the subdomain you want to delegate.
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
@@ -36,7 +36,7 @@ If you have not yet created DNS records covering your subdomain in the parent zo
 6. Create the various DNS records needed for your child zone.
 7. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/) on the child zone.
 
-## Subdomain already exists in the parent zone
+## Subdomain already exists
 
 If you have already created DNS records covering your subdomain in the parent zone:
 
@@ -49,7 +49,7 @@ If you have already created DNS records covering your subdomain in the parent zo
 
 4. If the parent zone is in Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
 5. In the child zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
-6. Get the nameserver names for the subdomain. These can be found in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and will not be the same nameservers as the parent domain.
+6. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
 7. Within the **DNS** > **Records** of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.
 
     For example, to delegate the subdomain `www.example.com`, the updated records in the parent zone `example.com` should contain `NS` records similar to the following:

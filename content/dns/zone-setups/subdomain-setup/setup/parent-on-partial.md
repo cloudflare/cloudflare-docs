@@ -10,7 +10,7 @@ meta:
 
 When the parent zone is using a [partial setup](/dns/zone-setups/partial-setup/)[^2], the steps to set up your child zone depend on whether the subdomain already exists in the parent domain.
 
-## Subdomain does not exist in the parent zone
+## Subdomain does not exist
 
 If you have not yet created a DNS record covering your subdomain in the parent zone:
 
@@ -35,7 +35,7 @@ If you have not yet created a DNS record covering your subdomain in the parent z
 {{</tab>}}
 {{</tabs>}}
 
-## Subdomain already exists in the parent zone
+## Subdomain already exists
 
 If you have already created a DNS record covering your subdomain in the parent zone:
 
