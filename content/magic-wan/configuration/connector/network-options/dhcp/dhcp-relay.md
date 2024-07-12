@@ -11,9 +11,12 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 flowchart LR
 accTitle: An example of Connector in DHCP Relay mode
     a(Magic WAN Connector) --> b(Internet) --> c(DHCP server)
+
+    subgraph Customer site
     d[LAN 1] <--> a
     e[LAN 2] <--> a
-    f(Customer site) --> d & e
+    end
+
     c --> a
     classDef orange fill:#f48120,color: black
     class a orange
