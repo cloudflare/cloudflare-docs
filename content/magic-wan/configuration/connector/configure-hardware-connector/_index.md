@@ -72,12 +72,15 @@ In the example below, the Connector sits behind the WAN router in your site, and
 ```mermaid
 flowchart LR
 accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
-    a(Magic WAN Connector)-->|WAN|b((Site's router)) --> c(Internet) --> i(Cloudflare)
+    a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
+
+    subgraph Customer site
     d[LAN 1] --> a
     e[LAN 2] --> a
-    f(Customer site) --- d & e & g & h
     g(LAN 3) --> b
     h(LAN 4) --> b
+    end
+
     classDef orange fill:#f48120,color: black
     class a,i orange
 ```
