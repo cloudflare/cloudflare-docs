@@ -13,10 +13,10 @@ accTitle: In this example, there are LANs where traffic flows between each other
     a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
 
     subgraph Customer site
-    d[LAN 1] --> a
-    e[LAN 2] --> a
-    g[LAN 3] --> a
-    h[LAN 4] --> a
+    d[LAN 1] <--> a
+    e[LAN 2] <--> a
+    g[LAN 3] <--> a
+    h[LAN 4] <--> a
     end
     classDef orange fill:#f48120,color: black
     class a,c orange
