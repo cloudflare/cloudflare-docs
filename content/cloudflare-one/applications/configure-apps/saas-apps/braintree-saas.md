@@ -51,7 +51,7 @@ This guide covers how to configure [Braintree](https://developer.paypal.com/brai
 
 ## 4. Test the integration and add SSO users
 
-1. In your Braintree Control Panel, go to the **Settings** icon > **Team**.
+1. In your Braintree Control Panel, select the **settings** icon > **Team**.
 2. Select your desired test user.
 3. Under **Single Sign-On**, select **Enable**.
 4. Open an incognito browser window. In the address bar, paste `https://id.sandbox.braintreegateway.com` for a sandbox account or
