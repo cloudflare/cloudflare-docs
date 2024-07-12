@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Digicert
-weight: 5
+weight: 6
 ---
 
-# Connect to Digicert through Access (SAML)
+# Connect to Digicert through Access
 
 This guide covers how to configure [Digicert](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/configure-saml-single-sign-on.html) as a SAML application in Cloudflare Zero Trust.
 

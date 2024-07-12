@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: DocuSign
-weight: 6
+weight: 7
 ---
 
 # Connect to DocuSign through Access
