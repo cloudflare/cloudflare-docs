@@ -7,7 +7,7 @@
 
 <ul>
 
-{{ range $entry := $entries }}
+{{ range $entry := (sort $entries "updated" "desc")}}
 
 <!-- Look for commonalities between tags arrays and products arrays -->
 {{ $tag_intersect := $tags | intersect $entry.tags }}

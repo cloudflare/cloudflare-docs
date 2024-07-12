@@ -137,8 +137,16 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Hono site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Related tutorials
+## Related resources
+
+### Tutorials
 
 For more tutorials involving Hono, refer to the following resources:
 
 {{<resource-by-tag tags="Hono" resource_type="tutorial" show_description=false >}}
+
+### Demo apps
+
+For demo applications using Hono, refer to the following resources:
+
+{{<external-resources resource_type="apps" tags="Hono">}}
