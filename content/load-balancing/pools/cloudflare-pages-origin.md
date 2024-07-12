@@ -140,7 +140,7 @@ Before setting up the load balancer:
 
 The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able to get a `200` code as HTTP response.
 
-Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
+Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-endpoint-or-pool-considered-unhealthy).
 
 {{</tutorial-step>}}
 
