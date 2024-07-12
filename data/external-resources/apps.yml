@@ -121,3 +121,21 @@ entries:
   author: lizzie
   cloudflare: true
   updated: 2024-06-29
+- link: https://github.com/harshil1712/nextjs-r2-demo
+  name: Upload Image to R2 starter
+  description: Upload images to Cloudflare R2 from a Next.js application.
+  tags: [R2]
+  products: [R2]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-06-21
+- link: https://github.com/harshil1712/remix-d1-auth-template
+  name: Remix Authentication Starter
+  description: Implement authenticatin to a Remix app and store user data in Cloudflare D1
+  tags: [D1]
+  products: [D1]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-09
