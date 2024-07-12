@@ -17,7 +17,7 @@ This guide covers how to configure [Braintree](https://developer.paypal.com/brai
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Braintree` and select the textbox that appears below.
+3. For **Application**, enter `Braintree` and select the textbox that appears below.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields with temporary values:
@@ -33,7 +33,7 @@ This guide covers how to configure [Braintree](https://developer.paypal.com/brai
 
 1. In Braintree, create a [support ticket](https://developer.paypal.com/braintree/help).
 2. In **Search Issues**, enter `Login and password issues` and select the corresponding value.
-3. In **Issue Details**, provide the following:
+3. In **Issue Details**, fill in the following:
     - **Merchant ID**: Your Braintree Merchant ID. This is the 16-digit value that follows `/merchants/`in your Braintree Control Panel URL.
     - **Email domain(s) to be used in user IDs**: The email domain(s) that should be allowed to sign in to your account via SSO.
     - **Single Sign-on HTTP POST Binding URL**: SSO endpoint from application configuration in Cloudflare Zero Trust
