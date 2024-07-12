@@ -17,8 +17,12 @@ The [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource
 let eventSource = new EventSource(url, options);
 ```
 
+{{<definitions>}}
+
 - `url` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/URL">}}USVString{{</type-link>}} - The URL to which to connect.
 - `options` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource/EventSource">}}EventSourceInit{{</type-link>}} - An optional dictionary containing any optional settings.
+
+{{</definitions>}}
 
 By default, the `EventSource` will use the global `fetch()` function under the
 covers to make requests. If you need to use a different fetch implementation as
