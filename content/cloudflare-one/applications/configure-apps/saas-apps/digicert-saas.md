@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Digicert
-weight: 5
+weight: 6
 ---
 
-# Connect to Digicert through Access (SAML)
+# Connect to Digicert through Access
 
 This guide covers how to configure [Digicert](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/configure-saml-single-sign-on.html) as a SAML application in Cloudflare Zero Trust.
 
@@ -47,7 +47,7 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 
 {{<Aside type="note">}}
 
-Users can sign in using service provider initiated SSO by using the **SP Initiated Custom SSO URL**. Alternatively, users can go to `www.digicert.com/account`, select **Sign in with SSO**, and enter the name of the identity provider configured in step [2. Add a SAML SSO provider in Digicert](#2-add-a-SAML-SSO-provider-in-Digicert).
+Users can sign in using service provider initiated SSO by using the **SP Initiated Custom SSO URL**. Alternatively, users can go to `www.digicert.com/account`, select **Sign in with SSO**, and enter the name of the identity provider configured in step [2. Add a SAML SSO provider in Digicert](#2-add-a-saml-sso-provider-in-digicert).
 
 {{</Aside>}}
 
