@@ -10,13 +10,13 @@ You can define policies in your Connector to either allow traffic to flow betwee
 ```mermaid
 flowchart LR
 accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
-    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+    a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
 
     subgraph Customer site
-    d[LAN 1] <--> a
-    e[LAN 2] <--> a
-    g[LAN 3] <--> a
-    h[LAN 4] <--> a
+    d[LAN 1] <---> a
+    e[LAN 2] <---> a
+    g[LAN 3] <---> a
+    h[LAN 4] <---> a
     end
     classDef orange fill:#f48120,color: black
     class a,c orange
@@ -24,7 +24,9 @@ accTitle: In this example, there are LANs where traffic flows between each other
     linkStyle 0,1,2,3 stroke:#f48120,stroke-width:3px
     linkStyle 4,5 stroke:red,stroke-width:3px
 ```
-_In the above example, the policies set up enable traffic flow between LANs, without it leaving the customer's premises. The red path shows traffic that stays in the customer's premises (allowing direct communication between LAN 3 and LAN 4), and the orange path shows traffic that goes to Cloudflare before returning to the customer's premises (processing traffic between LAN 1 and LAN 2 in Cloudflare)._
+_In the above example, the red path shows traffic that stays in the customer's premises (allowing direct communication between LAN 3 and LAN 4), and the orange path shows traffic that goes to Cloudflare before returning to the customer's premises (processing traffic between LAN 1 and LAN 2 in Cloudflare)._
+
+<br>
 
 Creating these policies to segment your network means LAN to LAN traffic can be allowed either locally or via Cloudflare’s network. As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
 
