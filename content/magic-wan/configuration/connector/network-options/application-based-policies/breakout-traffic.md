@@ -14,11 +14,12 @@ Breakout traffic will not work for applications that use DNS-over-HTTPs.
 ```mermaid
 flowchart LR
 accTitle: In this example, the applications go directly to the Internet, skippking Cloudflare's security. filtering
-    a(Magic WAN Connector) --> b(Internet) --x c(Cloudflare)
-    d[Application 1] --> a
-    e[Application 2] --> a
+    a(Magic WAN Connector) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
+
+    a-- Breakout traffic ---d(Application1) & e(Application2) --> c
+
     classDef orange fill:#f48120,color: black
-    class a,c orange
+    class a,b orange
 ```
 _In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet_
 
