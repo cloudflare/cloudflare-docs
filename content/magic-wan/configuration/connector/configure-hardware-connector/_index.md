@@ -53,10 +53,13 @@ When Connector acts like the WAN router for your site, deployement will be somet
 ```mermaid
 flowchart LR
 accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
-    a(Magic WAN Connector)-->|WAN|b(Internet) --> c(Cloudflare)
+    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+
+    subgraph Customer site
     d[LAN 1] --> a
     e[LAN 2] --> a
-    f(Customer site) --- d & e
+    end
+
     classDef orange fill:#f48120,color: black
     class a,c orange
 ```
