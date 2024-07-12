@@ -24,7 +24,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, type `Jamf`  or `Jamf Pro` and select the textbox that appears below.
+3. For **Application**, enter `Jamf`  or `Jamf Pro` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:

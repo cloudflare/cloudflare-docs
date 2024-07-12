@@ -17,7 +17,7 @@ This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Pingboard` and select the corresponding textbox that appears.
+3. For **Application**, enter `Pingboard` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
