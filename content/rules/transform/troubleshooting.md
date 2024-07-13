@@ -16,6 +16,6 @@ For more information on runtime errors related to Transform Rules configuration,
 
 Transform Rules performing request header modifications affect the HTTP headers sent by Cloudflare's network to your origin server. You will not find these headers in your browser request or response data, which can make it difficult to tell if the rule is working as intended.
 
-To check if a request header modification is taking effect, you can check the logs on your origin server or use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to check that the rule is matching traffic correctly.
+To check if a request header modification is taking effect, you can check the logs on your origin server or use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to check that the rule is matching traffic correctly. Note that [Cloudflare Logpush](/logs/about/) does not log header transformations.
 
 To add HTTP headers that website visitors will receive in their browsers, you must [modify the response headers](/rules/transform/response-header-modification/) instead.
