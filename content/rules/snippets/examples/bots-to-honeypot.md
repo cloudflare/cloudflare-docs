@@ -17,15 +17,15 @@ export default {
   async fetch(request) {
     const response = await fetch(request);
 
-    // Clone the response so that it's no longer immutable
+    // Clone the response so that it is no longer immutable
     const newResponse = new Response(response.body, response);
 
     if (request.cf.botManagement.score < 30) {
       const honeypot = "https://example.com/";
       return await fetch(honeypot, request);
     } else {
-      return newResponse;}
-
+      return newResponse;
+    }
   },
 };
 ```

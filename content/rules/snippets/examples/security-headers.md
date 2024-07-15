@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Set common security headers such as X-XSS-Protection, X-Frame-Options,
-  X-Content-Type-Options, and more.
+  and X-Content-Type-Options.
 goal:
   - Manage headers
 operation:

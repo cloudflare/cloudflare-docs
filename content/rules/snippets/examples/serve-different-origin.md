@@ -27,7 +27,7 @@ export default {
           // Clone the original URL
           const url = new URL(request.url);
           // Send request to a different origin / hostname
-          url.hostname = "example.com"
+          url.hostname = "example.com";
           // Serve response to the new request from the origin
           return await fetch(url, newRequest);
         }

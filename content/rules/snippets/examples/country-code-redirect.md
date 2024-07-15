@@ -21,7 +21,7 @@ export default {
      * A map of the URLs to redirect to
      * @param {Object} countryMap
      */
-    const countryMap = {
+    const countryMap = {  // Replace the country codes and target URLs with ones that apply to your case.
       US: "https://example.com/us",
       EU: "https://example.com/eu",
     };
@@ -34,10 +34,10 @@ export default {
     if (country != null && country in countryMap) {
       const url = countryMap[country];
       // Remove this logging statement from your final output.
-      console.log(`Based on ${country}-based request, your user would go to ${url}.` )
+      console.log(`Based on ${country}-based request, your user would go to ${url}.`);
       return Response.redirect(url);
 
-    // If request not in map, return another page.
+    // If request country not in map, return another page.
     } else {
       return fetch("https://example.com", request);
     }

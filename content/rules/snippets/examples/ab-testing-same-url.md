@@ -14,14 +14,14 @@ title: A/B testing with same-URL direct access
 layout: example
 ---
 
-This version supports passing the request through to test and control on the origin, bypassing random assignment.
+This version passes through requests for `/test/*` and `/control/*` URI paths to the origin server, bypassing random assignment.
 
 ```js
 const NAME = "myExampleABTest";
 
 export default {
   async fetch(request) {
-    //Clone the original URL
+    // Clone the original URL
     const url = new URL(request.url);
 
     // Enable Passthrough to allow direct access to control and test routes.

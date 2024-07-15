@@ -17,7 +17,7 @@ export default {
     async fetch(request) {
         // For any request, respond with JSON object containing all incoming request properties provided by Cloudflare network
         return Response.json(request.cf, {
-            // Add additional header to identify request was served by Snippets
+            // Add new header to identify request was served by Snippets
             headers: {
                 "x-snippets-hello": "Hello from Cloudflare Snippets",
             },

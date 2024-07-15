@@ -17,10 +17,10 @@ export default {
     async fetch(request) {
         const response = await fetch(request);
 
-        // Clone the response so that it's no longer immutable
+        // Clone the response so that it is no longer immutable
         const newResponse = new Response(response.body, response);
 
-        // Define the dynamic expiry time. 24h * 60m * 60s * 1000ms = 86400000ms
+        // Define the dynamic expiry time. 24 h * 60 m * 60 s * 1000 ms = 86,400,000 ms
         const expiry = new Date(Date.now() + 7 * 86400000).toUTCString();
         // Define the group variable. "A" if the request header "userGroup" is "premium", "B" if otherwise.
         const group = request.headers.get("userGroup") == "premium" ? "A" : "B";

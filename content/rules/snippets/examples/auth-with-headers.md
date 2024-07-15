@@ -25,7 +25,7 @@ export default {
   async fetch(request) {
     /**
      * @param {string} PRESHARED_AUTH_HEADER_KEY Custom header to check for key
-     * @param {string} PRESHARED_AUTH_HEADER_VALUE Hard coded key value
+     * @param {string} PRESHARED_AUTH_HEADER_VALUE Hard-coded key value
      */
     const PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK";
     const PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey";

@@ -13,8 +13,8 @@ layout: example
 ---
 
 ```js
-// Define your logging endpoint
-const loggingEndpoint = 'https://your-logging-endpoint'; // Replace with your actual logging service endpoint
+// Replace with your actual logging service endpoint
+const loggingEndpoint = 'https://your-logging-endpoint';
 
 export default {
     async fetch(request) {
@@ -22,7 +22,7 @@ export default {
             // Attempt to fetch the request from the origin server
             const response = await fetch(request.clone());
 
-            // Check if the response status indicates an error (e.g., 4xx or 5xx)
+            // Check if the response status indicates an error (for example, 4xx or 5xx)
             if (!response.ok) {
                 // Prepare error details and context for logging
                 const errorDetails = {

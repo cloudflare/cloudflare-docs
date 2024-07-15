@@ -16,11 +16,11 @@ layout: example
 export default {
     async fetch(request) {
         // Send original request to the origin
-        const response = await fetch(request)
+        const response = await fetch(request);
         // Check if origin responded with JSON
         try {
             // Parse API response as JSON
-            var api_response = response.json()
+            var api_response = response.json();
             // Specify the fields you want to delete. For example, to delete "botManagement" array from parsed JSON:
             delete api_response.botManagement;
             // Serve modified API response

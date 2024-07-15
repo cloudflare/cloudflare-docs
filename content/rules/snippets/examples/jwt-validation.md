@@ -36,17 +36,17 @@ export default {
       const decodedHeader = JSON.parse(atob(header))
       const decodedPayload = JSON.parse(atob(payload))
 
-      // Here you would implement the logic to verify the JWT signature
-      // For this example, let's assume a simple validation that just checks the payload
-      // Replace the following lines with your actual validation logic
+      // Here you would implement the logic to verify the JWT signature.
+      // This example assumes a simple validation that just checks the payload.
+      // Replace the following lines with your actual validation logic.
 
       // Ensure that JWT token hasn't expired (to test, try sending a request with an expired token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjI0OTkyMDAwLCJleHAiOjE2MjI1MDAwMDB9.TldRGokRHJvG69SefbxIqAlQ6nnco6aLa3y7jsYXHMI")
       if (decodedPayload.exp < Math.floor(Date.now() / 1000)) {
         throw new Error('JWT has expired')
       }
 
-      // Optionally, you could add more validation checks here (issuer, audience, etc.)
-      // Also, implement actual signature validation with a custom function
+      // Optionally, you could add more validation checks here (issuer, audience, etc.).
+      // Also, implement actual signature validation with a custom function.
 
       return true
     }
