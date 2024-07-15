@@ -17,10 +17,10 @@ Before you enable China Authoritative DNS, you should confirm that majority (ove
 
 After you [enable the Cloudflare China Network service](/china-network/get-started/), do the following:
 
-1. Reach out to your Cloudflare sales team or submit a ticket to the support team to enable the feature. Currently, you cannot enable China Authoritative DNS in the Cloudflare dashboard.
+1. Contact your account team to enable the feature. Currently, you cannot enable China Authoritative DNS in the Cloudflare dashboard.
 
     The Cloudflare China Network currently supports domains using a [full setup](/dns/zone-setups/full-setup/) or a [partial setup](/dns/zone-setups/partial-setup/). 
 2. Update your domain registrar with the assigned in-China nameservers. These nameservers are displayed in the Cloudflare dashboard.
 3. Test your configuration by checking if the domain resolves correctly.
 
-For further assistance, contact your sales team.
+For further assistance, contact your account team.
