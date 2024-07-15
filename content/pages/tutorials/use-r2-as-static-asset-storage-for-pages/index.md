@@ -17,7 +17,7 @@ To illustrate how this is done, we'll build a simple hello-world app with [Hono]
 
 ## Create an R2 bucket
 
-Let's begin by creating an R2 bucket to store the static assets. A new bucket can be created created through the dashboard, or via Wrangler.
+Let's begin by creating an R2 bucket to store the static assets. A new bucket can be created through the dashboard, or via Wrangler.
 
 On the dashboard, navigate to the R2 tab using the side bar, click on _Create bucket_ and give your bucket a descriptive name (i.e static-assets).
 
