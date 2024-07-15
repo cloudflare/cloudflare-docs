@@ -58,7 +58,13 @@ $ npm install wrangler --save-dev
 
 ## 2. Create a pgEdge Cluster
 
-Visit the pgEdge website to sign up for a free pgEdge Designer Edition Cloud account. After signing up, connect to the pgEdge Cloud console, and deploy a 3-node cluster. When the deployment completes, copy the PSQL connection string displayed in the `Get Started` pane to a terminal window, and connect to the Postgres server hosted in pgEdge Cloud.
+Visit the pgEdge website to sign up for a free pgEdge Designer Edition Cloud account. After signing up, connect to the pgEdge Cloud console, and deploy a 3-node cluster. When the deployment completes, copy the PSQL connection string displayed in the `Get Started` pane, and connect to the Postgres server hosted in pgEdge Cloud. You can connect using the `psql` command-line tool or a GUI tool like pgAdmin.
+
+The PSQL command will look similar to the following:
+
+```sh
+$ PGSSLMODE=require PGPASSWORD=randompassword psql -U app -h random-name.a1.pgedge.io -d defaultdb
+```
 
 After connecting, use the following statements to create a table and populate the table with records:
 
