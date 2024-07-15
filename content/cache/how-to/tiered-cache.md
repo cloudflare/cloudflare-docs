@@ -35,7 +35,7 @@ Generic Global topology allows for all of Cloudflare’s global data centers to 
 
 ### Regional Tiered Cache
 
-Regional Tiered Cache provides an additional layer of caching for Enterprise customers who have a global traffic footprint and want to serve content faster by avoiding network latency when there is a cache MISS in a lower-tier, resulting in an upper-tier fetch in a data center located far away.
+Regional Tiered Cache provides an additional layer of caching for Enterprise customers who have a global traffic footprint and want to serve content faster by avoiding network latency when there is a cache `MISS` in a lower-tier, resulting in an upper-tier fetch in a data center located far away.
 
 Regional Cache instructs Cloudflare to check a regional hub data center near the lower tier before going to the upper tier that may be outside of the region. This can help improve performance for **Smart** and **Custom Tiered Cache** topologies with upper-tiers in one or two regions. Regional Tiered Cache is not beneficial for customers with many upper tiers in many regions like Generic Global Tiered Cache.
 
