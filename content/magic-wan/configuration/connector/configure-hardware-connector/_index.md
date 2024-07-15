@@ -48,7 +48,7 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 
 There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.
 
-When Connector acts like the WAN router for your site, deployement will be something like this:
+When Connector acts like the WAN router for your site, deployment will be something like this:
 
 ```mermaid
 flowchart LR
