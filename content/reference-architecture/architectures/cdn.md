@@ -34,13 +34,13 @@ Over the last several years, especially with the advent of the COVID-19 pandemic
 Companies running their applications in the cloud or on-premise are faced with the challenges of:
 
 1. Implementing solutions to increase performance
-2. As demand grows, scaling out their architecture to meet availability and redundancy concerns 
-3. Securing their environments and applications from growing Internet threats 
+2. As demand grows, scaling out their architecture to meet availability and redundancy concerns
+3. Securing their environments and applications from growing Internet threats
 4. Reining in growing costs related to doing all of the above
 
-With companies serving customers across the globe, the above challenges require a significant undertaking. Traditionally, a website/application is deployed centrally and replicated to another region for availability, or the website/application is deployed across a handful of servers, sometimes across multiple data centers for resiliency. 
+With companies serving customers across the globe, the above challenges require a significant undertaking. Traditionally, a website/application is deployed centrally and replicated to another region for availability, or the website/application is deployed across a handful of servers, sometimes across multiple data centers for resiliency.
 
-The servers hosting the websites are called origin servers. When clients access a website, they make a request for resources from the server. Navigating to one website can generate hundreds of requests from the browser for HTML, CSS, images, videos, etc. With versions of HTTP prior to HTTP/2, each of these HTTP requests would also require a new TCP connection. 
+The servers hosting the websites are called origin servers. When clients access a website, they make a request for resources from the server. Navigating to one website can generate hundreds of requests from the browser for HTML, CSS, images, videos, etc. With versions of HTTP prior to HTTP/2, each of these HTTP requests would also require a new TCP connection.
 
 Enhancements in HTTP/2 and HTTP/3 allow for multiplexing multiple requests to the same server over a single TCP connection, thus saving server resources. However, compute and network resources are still consumed as servers respond to these requests. As more clients access the website, the following can result:
 
@@ -53,7 +53,7 @@ Enhancements in HTTP/2 and HTTP/3 allow for multiplexing multiple requests to th
 
 In Figure 1 below, there is no CDN present and there is an origin server sitting in the US. As clients access the website, the first step is DNS resolution, typically done by the user’s ISP. The next step is the HTTP request sent directly to the origin server. The user experience will vary depending on their location. For example, you can see the latency is much lower for users in the US, where the origin server is located. For users outside the US, the latency increases, thus resulting in a higher round-trip time (RTT).
 
-As more clients make requests to the origin server, the load on the network and server increases, resulting in higher latency and higher costs for resource and bandwidth use. 
+As more clients make requests to the origin server, the load on the network and server increases, resulting in higher latency and higher costs for resource and bandwidth use.
 
 From a security perspective, the origin server is also vulnerable to DDoS attacks at both the infrastructure and application layer. A DDoS attack could be initiated from a botnet sending millions of requests to the origin server, consuming resources and preventing it from serving legitimate clients.
 
@@ -65,13 +65,13 @@ Further, in terms of resiliency, if the origin server temporarily goes offline, 
 
 A CDN helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. A CDN's core goal is to decrease latency and increase performance for websites and applications by caching content as close as possible to end users or those accessing the content.
 
-CDNs decrease latency and increase performance by having many data center locations across the globe that cache the content from the origin. The goal is to have content cached as close as possible to users, so content is cached at the edge of the CDN provider's network. 
+CDNs decrease latency and increase performance by having many data center locations across the globe that cache the content from the origin. The goal is to have content cached as close as possible to users, so content is cached at the edge of the CDN provider's network.
 
 ### Impacts
- 
+
 * **Improved website load time**: Instead of every client making a request to the origin server, which could be located a considerable distance away, the request is routed to a local server that responds with cached content, thus decreasing latency and increasing overall performance. Regardless of where the origin server and clients are located, performance will be more consistent for all users, as the CDN will serve locally cached content when possible.
 
-* **Increased content availability and redundancy:** Because every client request no longer needs to be sent to the origin server, CDNs provide not only performance benefits, but also availability and redundancy. Requests are load balanced over local servers with cached content; these servers respond to local requests, significantly decreasing overall load on the origin server. The origin server only is contacted when needed (when content is not cached or for dynamic non-cacheable content). 
+* **Increased content availability and redundancy:** Because every client request no longer needs to be sent to the origin server, CDNs provide not only performance benefits, but also availability and redundancy. Requests are load balanced over local servers with cached content; these servers respond to local requests, significantly decreasing overall load on the origin server. The origin server only is contacted when needed (when content is not cached or for dynamic non-cacheable content).
 
 * **Improved website security:** A CDN acts as a reverse proxy and sits in front of origin servers. Thus it can provide enhanced security such as DDoS mitigation, improvements to security certificates, and other optimizations.
 
@@ -91,13 +91,13 @@ Another challenge with DNS-based CDNs is that DNS is not very graceful upon fail
 
 **Anycast routing**
 
-The Cloudflare CDN, which is discussed in more detail in the next section, uses Anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
+The Cloudflare CDN, which is discussed in more detail in the next section, uses anycast routing. anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
 
-Using an Anycast-based CDN has several advantages:
+Using an anycast-based CDN has several advantages:
 
-* Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently. 
+* Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently.
 * Availability and redundancy is inherently provided. Since multiple nodes have the same IP address, if one node were to fail, requests are simply routed to another node in close proximity.
-* Because Anycast distributes traffic across multiple data centers, it increases the overall surface area, thus preventing any one location from becoming overwhelmed with requests. For this reason, Anycast networks are very resilient to DDoS attacks.
+* Because anycast distributes traffic across multiple data centers, it increases the overall surface area, thus preventing any one location from becoming overwhelmed with requests. For this reason, anycast networks are very resilient to DDoS attacks.
 
 ## Introducing the Cloudflare CDN
 
@@ -108,24 +108,24 @@ The benefits of the Cloudflare CDN can be attributed to the below two points, di
 1. CDNs inherently increase performance by caching content on servers close to the user
 2. The unique Cloudflare architecture and integrated ecosystem
 
-Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global Anycast network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin. 
+Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving their response back from a server on Cloudflare’s global anycast network closest to where the clients are located, thus drastically reducing the latency and RTT. The diagram depicts a consistent end-user experience regardless of the physical location of the clients and origin.
 
-![Figure 2 is a diagram representing the traffic between a client and a server on Cloudflare's global Anycast network at different client locations.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure2.svg "Figure 2: HTTP request to Cloudflare CDN with Anycast")
+![Figure 2 is a diagram representing the traffic between a client and a server on Cloudflare's global anycast network at different client locations.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure2.svg "Figure 2: HTTP request to Cloudflare CDN with anycast")
 
 ## Cloudflare CDN architecture and design
 
-Figure 3 is a view of the Cloudflare CDN on the global Anycast network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
+Figure 3 is a view of the Cloudflare CDN on the global anycast network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
 
-![Figure 3: Diagram representing requests coming from an end user, protected by Cloudflare products including WAF and DDoS protection, and traveling through the Anycast Network to reach the origin server using Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure3.svg "Figure 3: Cloudflare CDN with Tiered Cache on global Anycast network")
+![Figure 3: Diagram representing requests coming from an end user, protected by Cloudflare products including WAF and DDoS protection, and traveling through the anycast Network to reach the origin server using Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure3.svg "Figure 3: Cloudflare CDN with Tiered Cache on global anycast network")
 
-In the above diagram, there are a few important key points to understand about the Cloudflare CDN and the global Anycast network it resides on:
+In the above diagram, there are a few important key points to understand about the Cloudflare CDN and the global anycast network it resides on:
 
 * An important differentiator is that Cloudflare utilizes one global network and runs every service on every server in every Cloudflare data center, thus providing end users the closest proximity to Cloudflare’s services, with the highest scale, resiliency, and performance.
 * Cloudflare is a reverse proxy, meaning it receives requests from clients and proxies the requests back to the customer’s origin servers. Thus, every request traverses through Cloudflare’s network before reaching the customer’s network. Since Cloudflare has hardened and protected its infrastructure at the edge (ingress), all customers are consequently also protected from infrastructure-level and volumetric DDoS attacks. Requests and traffic must go through the protected Cloudflare network before reaching the customer’s origin server.
-* The Cloudflare CDN leverages the Cloudflare global Anycast network. Thus the incoming request is routed to and answered by the node closest to the user.
-* The inherent benefits of Anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global Anycast network spans [hundreds of cities worldwide](https://www.cloudflare.com/network/), reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing over 280 Tbps of network capacity and DDoS protection capability.
-* Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture. 
-* [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution. 
+* The Cloudflare CDN leverages the Cloudflare global anycast network. Thus the incoming request is routed to and answered by the node closest to the user.
+* The inherent benefits of anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global anycast network spans [hundreds of cities worldwide](https://www.cloudflare.com/network/), reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing over 280 Tbps of network capacity and DDoS protection capability.
+* Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture.
+* [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution.
 
 ### Tiered Cache
 
@@ -153,7 +153,7 @@ The different cache topologies allow customers to control how Cloudflare interac
 
 In Figure 4, Tiered Caching is enabled with Smart Tiered Cache Topology. The diagram depicts two separate traffic flows, summarized below. The first traffic flow (Client 1) is a request from a client that comes into Data Center 1. The second traffic flow (Client 2) is a subsequent request for the same resource into a different data center, Data Center 2.
 
-![Figure 4: The same diagram as Figure 3 demonstrating requests between end users and origin server over the Anycast Network, with bidirectional arrows indicating traffic flow enabled by Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure4.svg "Figure 4: HTTP requests and traffic flow through Cloudflare CDN")
+![Figure 4: The same diagram as Figure 3 demonstrating requests between end users and origin server over the anycast Network, with bidirectional arrows indicating traffic flow enabled by Smart Tiered Cache.](/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure4.svg "Figure 4: HTTP requests and traffic flow through Cloudflare CDN")
 
 | Request 1 | Request 2 |
 |------|---------|
@@ -227,9 +227,9 @@ There are three main criteria to match for content to be considered cacheable vi
 When combined with Tiered Caching and Argo Smart Routing, Cache Reserve can be a powerful tool for increasing cache hits and in turn reducing load on origin servers while also improving performance by bringing the content closer to the end user.
 
 {{<Aside type="note">}}
- 
+
 Using [Image Resizing](/images/transform-images/) with Cache Reserve will not result in resized images being stored in Cache Reserve since Image Resizing takes place after reading from Cache Reserve. Resized images will be cached in other available tiers when they are served after resizing.
- 
+
 {{</Aside>}}
 
 ### Traffic flow: Cache Reserve topology
@@ -246,6 +246,6 @@ Latency is not only proportional to the physical distance between the client and
 
 ## Summary
 
-To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global Anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
+To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
 
 
