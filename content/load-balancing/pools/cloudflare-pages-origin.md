@@ -1,10 +1,16 @@
 ---
 pcx_content_type: tutorial
-title: Use Pages as origin
+title: Use Pages as an origin for Load Balancing
 weight: 3
+updated: 2024-07-03
+difficulty: Beginner
+content_type: 📝 Tutorial
+products: [Pages]
 ---
 
 # Use Cloudflare Pages as origin
+
+{{<tutorial-date-info>}}
 
 This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
@@ -88,7 +94,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
   * The endpoint IP address or hostname.
 
     {{<Aside type="warning">}}
-As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's Anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
+As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
 {{</Aside>}}
   * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
   * A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
@@ -134,7 +140,7 @@ Before setting up the load balancer:
 
 The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able to get a `200` code as HTTP response.
 
-Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-origin-or-pool-considered-unhealthy).
+Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-endpoint-or-pool-considered-unhealthy).
 
 {{</tutorial-step>}}
 

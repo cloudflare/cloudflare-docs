@@ -33,7 +33,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 3. After you create your tunnel, Cloudflare dashboard will load a list of tunnels set up for your account. Select the arrow to expand the tunnels you have just created, and check the following settings:
     - **Customer endpoint**: Refers to the SonicWall WAN IP that the VPN policy is bound to (in red).
-    - **Cloudflare endpoint**: Refers to the Anycast IP provided by Cloudflare (in blue).
+    - **Cloudflare endpoint**: Refers to the anycast IP provided by Cloudflare (in blue).
     - **FQDN ID**: The ID used in the VPN policy for the SonicWall's Local IKE ID. Copy this ID and save it. You will need it when configuring the tunnel on your SonicWall (in green).
 
     ![An example of what your IPsec tunnel should look like](/images/magic-wan/third-party/sonicwall/step3.png)
@@ -56,11 +56,11 @@ Static routes are required for any networks that will be reached via the IPsec t
 2. Select **Add**.
 3. In **General** > **Security Policy** group, add the following settings:
     - **Authentication Method**: _IKE Using Preshared Secret_.
-    - **IPsec Primary Gateway Name or Address**: Enter Cloudflare's Anycast IP address for the primary gateway (in blue).
+    - **IPsec Primary Gateway Name or Address**: Enter Cloudflare's anycast IP address for the primary gateway (in blue).
 4. In the **IKE Authentication** group, add the following settings:
     - **Shared secret**: Paste the pre-shared key you use to create the IPsec tunnel in step 1 (in purple).
     - **Local IKE ID**: Select _Domain name_ from the dropdown menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
-    - **Peer IKE IDE**: Select _IPv4_ Address from the dropdown menu, and enter the Cloudflare Anycast IP address (in blue).
+    - **Peer IKE IDE**: Select _IPv4_ Address from the dropdown menu, and enter the Cloudflare anycast IP address (in blue).
 
 <div class="large-img">
 

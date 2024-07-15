@@ -10,7 +10,9 @@ weight: 3
 
 You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
 
-You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
+You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
+
+Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
 
 ---
 
@@ -24,7 +26,7 @@ If you need a high availability configuration for your premises, refer to [About
 
 If you do not need a high availability configuration for you premises, proceed to [Configure Cloudflare dashboard settings](#configure-cloudflare-dashboard-settings).
 
-{{<Aside type="warning">}}You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.{{</Aside>}}
+{{<Aside type="warning" header="Warning">}}You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.{{</Aside>}}
 
 ---
 
@@ -38,13 +40,50 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 
 ## Configure Cloudflare dashboard settings
 
-{{<render file="connector/_create-site.md" withParameters="refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector.;;refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.;;You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows in this list." >}}
+{{<render file="connector/_create-site.md" withParameters="refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.;;refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.;;You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows up in this list." >}}
 
 ## Set up your Magic WAN Connector
 
 ### Device installation
 
 There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.
+
+When Connector acts like the WAN router for your site, deployement will be something like this:
+
+```mermaid
+flowchart LR
+accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
+    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,c orange
+```
+<br>
+
+In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.
+
+<br>
+
+```mermaid
+flowchart LR
+accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
+    a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    g(LAN 3) --> b
+    h(LAN 4) --> b
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,i orange
+```
 
 #### Firewall settings required
 
@@ -55,7 +94,7 @@ Protocol/port | Destination IP/URL | Purpose
 `UDP/53` | DNS destination IP `1.1.1.1` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API endpoints.
 `TCP/443` | - | The Connector will open outbound HTTPS connections over this port for control plane operations.
 `UDP/4500` | Destination IP `162.159.64.1` | Needed for Connector's initialization and discovery traffic through outbound connections.
-`UDP/4500` | Destination IP - Cloudflare Anycast IPs | Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
+`UDP/4500` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 `TCP/7844`, `UDP/7844` | Outbound connections | This is for debugging facilities in the Connector.
 `UDP/123` | `http://time.cloudflare.com/` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services.
 
@@ -88,10 +127,9 @@ Because Connectors in high availability configurations share a single site, you 
 
 Make sure all IPs are part of the same subnet.
 
-{{<Aside type="note" header="Limitations">}}
-The high availability (HA) feature is being rolled out in phases. The present version has the following limitations:
-- Only node failure is detected as a failure condition to trigger a failover. Other failure conditions, such as link status and tunnel health, are not yet enabled to trigger failovers.
-- HA is run in preempt mode, which means the primary node always comes up as the active node.
+{{<Aside type="note">}}
+- Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
+- High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
 {{</Aside>}}
 
 ### ​​Create a high availability configuration

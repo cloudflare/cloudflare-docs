@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Slack
-weight: 12
+weight: 16
 ---
 
 # Connect to Slack through Access

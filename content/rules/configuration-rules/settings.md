@@ -363,29 +363,6 @@ header: API configuration example
 
 {{</details>}}
 
-## Server Side Excludes (deprecated) { #server-side-excludes }
-
-[Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
-
-Use this setting to turn on or off Server Side Excludes for matching requests.
-
-{{<details header="API information">}}
-
-API configuration property name: `"server_side_excludes"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "server_side_excludes": false
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
 ## SSL
 
 [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.

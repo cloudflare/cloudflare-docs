@@ -1022,7 +1022,7 @@
 /support/more-dashboard-apps/cloudflare-registrar/ /registrar/
 /support/more-dashboard-apps/cloudflare-registrar/icloud-custom-email-domains/ /registrar/account-options/icloud-domains/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/ /waf/tools/scrape-shield/hotlink-protection/ 301
-/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/server-side-excludes/ 301
+/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
@@ -1140,6 +1140,7 @@
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
 /waf/custom-rules/use-cases/require-valid-hmac-token/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
+/waf/tools/scrape-shield/server-side-excludes/ /waf/tools/scrape-shield/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1306,6 +1307,7 @@
 /workers/platform/tail-workers/ /workers/observability/logging/tail-workers/ 301
 /workers/observability/tail-workers/  /workers/observability/logging/tail-workers/ 301
 /workers/errors/script-will-never-generate-a-response/  /workers/observability/errors/#the-script-will-never-generate-a-response-errors 301
+/workers/errors/illegal-invocation/  /workers/observability/errors/#illegal-invocation-errors 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/platform/routing/ 301
