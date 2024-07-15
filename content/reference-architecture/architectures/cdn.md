@@ -91,7 +91,7 @@ Another challenge with DNS-based CDNs is that DNS is not very graceful upon fail
 
 **Anycast routing**
 
-The Cloudflare CDN, which is discussed in more detail in the next section, uses anycast routing. anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
+The Cloudflare CDN, which is discussed in more detail in the next section, uses anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
 
 Using an anycast-based CDN has several advantages:
 
