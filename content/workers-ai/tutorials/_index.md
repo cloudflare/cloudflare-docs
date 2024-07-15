@@ -8,6 +8,6 @@ hideChildren: true
 
 # Tutorials
 
-Explore the following tutorials for Workers AI.
+View {{<glossary-tooltip term_id="tutorial">}}tutorials{{</glossary-tooltip>}} to help you get started with Workers AI.
 
 {{<tutorial-listing>}}
