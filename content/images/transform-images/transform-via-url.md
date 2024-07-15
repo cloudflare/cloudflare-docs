@@ -6,7 +6,21 @@ weight: 21
 
 # Transform via URL
 
-You can convert and resize images by requesting them via a specially-formatted URL. This way you do not need to write any code, only change HTML markup of your website to use the new URLs. The format is:
+Cloudflare Images lets you optimize any publicly available image on the Internet. Through the specially formatted transformation URL, you can specify how an image should be resized or manipulated.
+
+Learn how to configure the transformation URL to optimize any image that is stored outside of Images.
+
+Before you begin, make sure to [enable transformations for your zone](/images/get-started/#enable-transformations).
+
+{{<Aside type="note">}}
+
+To optimize images that are stored in Cloudflare Images, use the image delivery URL.
+
+{{</Aside>}}
+
+## Format 
+
+The default transformation URL uses the following structure:
 
 ```txt
 https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
@@ -15,30 +29,38 @@ https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
 Here is a breakdown of each part of the URL:
 
 {{<definitions>}}
+
 - `<ZONE>`
-  - Your domain name on Cloudflare. Unlike other third-party image resizing services, image transformations do not use a separate domain name for an API. Every Cloudflare zone with image transformations enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
+  - Your domain name at Cloudflare. Transformations can be requested on every Cloudflare zone that has transformations enabled.
 
 - `/cdn-cgi/image/`
-  - A fixed prefix that identifies that this is a special path handled by Cloudflare's built-in Worker.
+  - A fixed prefix that identifies that this path is a request to optimize an image. To hide this part, you can set up Transform Rules to [serve images from a custom path](/images/transform-images/serve-images-custom-paths/#serve-images-from-custom-paths-1/).
 
 - `<OPTIONS>`
-  - A comma-separated list of options such as `width`, `height`, and `quality`.
+  - A list of optimization parameters, separated by a comma. A valid URL must specify at least one parameter.
 
 - `<SOURCE-IMAGE>`
-  - An absolute path on the origin server, or an absolute URL (starting with `https://` or `http://`), pointing to an image to resize. The path is not URL-encoded, so the resizing URL can be safely constructed by concatenating `/cdn-cgi/image/options` and the original image URL. For example: `/cdn-cgi/image/width=100/https://s3.example.com/bucket/image.png`.
+  - The original image that you want to transform. You can use an absolute path on the origin server or an absolute URL that starts with `https://` or `http://`.
 {{</definitions>}}
 
-Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a `<SOURCE-IMAGE>` of `uploads/avatar1.jpg`:
+Below is an example URL that delivers an image with the following optimizations:
+
+- Automatically changes the focal point to the auto-detected face, then crops the image to fit into a 150x150 square.
+- Delivers the image in the most efficient format for the requesting browser.
+
+![Original image modified to use the face parameter and use the most efficient format for the browser.](/images/images/format.jpg)
 
 ```html
-<img src="/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg" />
+https://example.com/cdn-cgi/image/w=150,h=150,f=auto,fit=crop,gravity=face,zoom=0.5/https://example.r2.dev/image.jpg
 ```
 
 {{<render file="_ir-svg-aside.md">}}
 
-## Options
+## Parameters
 
-You must specify at least one option. Options are comma-separated (spaces are not allowed anywhere). Names of options can be specified in full or abbreviated.
+This section describes all of the parameters and their corresponding options that you can use to resize, crop, compress, and manipulate your images.
+
+Each transformation URL must specify at least one parameter. You can apply multiple parameters in the same request by separating them with a comma. Spaces are not allowed.
 
 {{<render file="_supported-properties.md">}}
 
