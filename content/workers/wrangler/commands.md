@@ -557,9 +557,9 @@ wrangler hyperdrive create <ID> [OPTIONS]
 - `--password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The password used to authenticate to the database.
 - `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret.
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `port`.
 - `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID.
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `port`.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -594,9 +594,9 @@ wrangler hyperdrive update <ID> [OPTIONS]
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
 - `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret.
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `origin-port`.
 - `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID.
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `origin-port`.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
