@@ -182,7 +182,7 @@ By contrast, many other SaaS-based load balancing providers use Unicast routing 
 
 Figure 6 shows how using the Cloudflare network allows geographically disparate users to connect to their resources as fast as possible.
 
-![Cloudflare’s global anycast network ensures that the closest data center is always selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-6.svg "Figure 6: Load balancers hosted on Cloudflare’s Global anycast Network")
+![Cloudflare’s global anycast network ensures that the closest data center is always selected](/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-6.svg "Figure 6: Load balancers hosted on Cloudflare’s global anycast network")
 
 Figure 6, above, shows other Cloudflare services are also running in each of these data centers since Cloudflare runs every service in every data center so users have a consistent experience everywhere. For example, Cloudflare’s layer 7 load balancer will also be able to take advantage of other services such as DDoS protection, CDN/Cache, Bot Management, or WAF. All of these additional services can help protect your service from unnecessary traffic whether it be malicious requests (blocked by DDoS Protection, Bot Management, or WAF) or requests that can be served via cache rather than a request to endpoint. All of these services can be combined as needed to make a service or offering as protected, resilient, and performant as possible.
 
