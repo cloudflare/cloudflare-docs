@@ -10,7 +10,7 @@ title: Browser Cache TTL
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -23,4 +23,4 @@ title: Browser Cache TTL
     - **Browser TTL**: Override origin and use this TTL
     - **Input time-to-live (TTL)**: _1 day_
 
-</div>
+{{</example>}}

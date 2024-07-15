@@ -9,7 +9,7 @@ layout: wide
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust edge cache TTL for caching resources on Cloudflare edge to one day, for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -23,4 +23,4 @@ layout: wide
         - Ignore cache-control header and use this TTL
             - **Input time-to-live (TTL)**: _1 day_
 
-</div>
+{{</example>}}

@@ -9,7 +9,7 @@ layout: wide
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to respect strong ETags for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -22,4 +22,4 @@ layout: wide
     - **Setting**: Respect strong ETags
         - **Use strong ETag headers**: On
 
-</div>
+{{</example>}}

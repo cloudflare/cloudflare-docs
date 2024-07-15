@@ -10,7 +10,7 @@ title: Cache Deception Armor
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to protect against cache deception attacks for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -23,4 +23,4 @@ title: Cache Deception Armor
     - **Setting**: Cache key
         - **Cache deception armor**: On
 
-</div>
+{{</example>}}

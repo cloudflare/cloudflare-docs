@@ -10,7 +10,7 @@ title: Bypass Cache on Cookie
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to bypass cache for requests containing cookie `test_cookie` for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -21,4 +21,4 @@ title: Bypass Cache on Cookie
 - **Then**:
     - **Cache eligibility**: Bypass cache
 
-</div>
+{{</example>}}

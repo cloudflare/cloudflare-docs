@@ -10,7 +10,7 @@ title: Cache by Device Type
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache content based on user agent or device type for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -23,4 +23,4 @@ title: Cache by Device Type
     - **Setting**: Cache key
         - **Cache by device type**: On
 
-</div>
+{{</example>}}

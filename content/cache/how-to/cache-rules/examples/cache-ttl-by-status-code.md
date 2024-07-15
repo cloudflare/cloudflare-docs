@@ -10,7 +10,7 @@ title: Cache TTL by status code
 
 [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses with status code between `200` and `599` for one day for any hostname containing `example.com`:
 
-<div class="DocsMarkdown--example">
+{{<example>}}
 
 - **When incoming requests match**: Custom filter expression
     - Using the Expression Builder:<br>
@@ -28,5 +28,5 @@ title: Cache TTL by status code
             - **To**: _599_
             - **Duration**: _1 day_
 
-</div>
+{{</example>}}
 
