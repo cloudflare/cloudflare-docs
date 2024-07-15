@@ -12,27 +12,32 @@ Cloudflare Logpush supports pushing logs directly to Microsoft Azure via the Clo
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Microsoft Azure via the dashboard.
-
-To enable the Cloudflare Logpush service:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **Microsoft Azure**.
+5. In **Select a destination**, choose **Microsoft Azure**.
 
-8. Enter or select the following destination information:
+6. Enter or select the following destination details:
+    - **SAS URL** - a pre-signed URL that grants access to Azure Storage resources. Refer to [Azure storage documentation](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer?tabs=macos#shared-access-signature-sas-url) for more information on generating a SAS URL using Azure Storage Explorer.
+    - **Path** - bucket location within the storage container
+    - **Organize logs into daily subfolders** (recommended) 
 
-    - **SAS URL**
-    - **Blob container subpath (optional)**
-    - **Daily subfolders**
+When you are done entering the destination details, select **Continue**.
 
-9. Select **Validate access**.
+7. To prove ownership, Cloudflare will send a file to your designated destination. To find the token, select the **Open** button in the **Overview** tab of the ownership challenge file, then paste it into the Cloudflare dashboard to verify your access to the bucket. Enter the **Ownership Token** and select **Continue**.
 
-10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and select **Prove ownership**. To find the ownership token, select **Open** in the **Overview** tab of the ownership challenge file.
+8. Select the dataset to push to the storage service.
 
-11. Select **Save and Start Pushing** to finish enabling Logpush.
+9. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-Once connected, Cloudflare lists Microsoft Azure as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+10. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+11. Select **Submit** once you are done configuring your logpush job.
 
 ## Create and get access to a Blob Storage container
 
