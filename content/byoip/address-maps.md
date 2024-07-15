@@ -1,12 +1,12 @@
 ---
 title: Address Maps
 pcx_content_type: concept
-weight: 5
+weight: 5>
 ---
 
 # IP Address Maps
 
-The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a zone or domain's DNS records when they are proxied through Cloudflare.
+{{<glossary-definition term_id="address map" prepend="The address map is ">}}
 
 For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
@@ -62,11 +62,11 @@ To specify different addresses for certain zones, [create a new address map](#cr
 
 ## Static IPs
 
-Static IPs are allocated to the account, but can be assigned to a single zone. This means that you can place multiple zones on the same static IPs. You can also specify which zones are mapped to your static IPs and control when the IPs for your zones change. 
+Static IPs are allocated to the account, but can be assigned to a single zone. This means that you can place multiple zones on the same static IPs. You can also specify which zones are mapped to your static IPs and control when the IPs for your zones change.
 
 If you need to allowlist your IPs or to communicate your IPs to third parties, allocating static IPs to your account allows you to know them ahead of time.
 
-Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request. 
+Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request.
 
 If you have a static IP, Cloudflare creates an address map which you can edit and add zones to. You cannot create a new address map using the static IP assigned to your account.
 
