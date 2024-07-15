@@ -8,7 +8,7 @@ weight: 5>
 
 {{<glossary-definition term_id="address map" prepend="The address map is ">}}
 
-For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
+When DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/), [Cloudflare authoritative DNS](/dns/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
 
