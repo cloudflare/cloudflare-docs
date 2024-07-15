@@ -1,16 +1,14 @@
 ---
 type: example
 summary: Connect Hyperdrive to a pgEdge Postgres database.
-pcx_content_type: configuration
+pcx_content_type: example
 title: Connect to pgEdge Cloud
 weight: 4
-layout: example
 ---
 
-The following example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres.
+# Connect to pgEdge Cloud
 
-
-
+This example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of secure, fully-managed, and fully-distributed Postgres.
 
 ## 1. Allow Hyperdrive access
 
@@ -25,25 +23,13 @@ With the connection string, you can now create a Hyperdrive database configurati
 
 ## 2. Create a database configuration
 
-Move to a terminal window, and use the following command to [create a Hyperdrive](https://developers.cloudflare.com/hyperdrive/get-started/):
+{{<render file="_npx-wrangler-hyperdrive.md">}}
 
-`npx wrangler hyperdrive create pgedge --connection-string="pgedge_connection_string"`
-
-When the command completes, it will return information about the Hyperdrive, including the Hyperdrive UUID. Copy the ID, and update the `wrangler.toml` file to include the following information:
-
-```sql
-node_compat = true # required for the postgres connection
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "hyperdrive_uuid"
-```
-
-## 4. Update the Cloudflare worker to Query pgEdge
+## 3. Update the Cloudflare Worker to query pgEdge
 
 Open the `src/index.ts` file, and update the code to include the following:
 
-```js
+```ts
 import { Client } from 'pg';
 
 export interface Env {
@@ -55,10 +41,10 @@ export default {
    	 const client = new Client(env.HYPERDRIVE.connectionString);
    	 try {
    		 await client.connect();
-   		 const result = await client.query('SELECT * FROM products');
+   		 const result = await client.query('SELECT * FROM spock.node');
    		 ctx.waitUntil(client.end());
    		 const items = result.rows.map((row: any) => {
-   			 return { id: row.id, name: row.name };
+   			 return { id: row.node_id, name: row.node_name };
    		 });
    		 return new Response(JSON.stringify({ items }), {
    			 headers: { 'Content-Type': 'application/json' },
@@ -73,26 +59,8 @@ export default {
 
 After updating the file, use the following command to deploy the updates:
 
-`npx wrangler deploy`
+```sh
+$ npx wrangler deploy
+```
 
-After completing these steps, you can use the Cloudflare worker to query your Postgres database, provisioned and managed by pgEdge Cloud. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+After completing these steps, you can use the Cloudflare Worker to query your Postgres database, provisioned and managed by pgEdge Cloud. 

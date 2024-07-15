@@ -11,7 +11,7 @@ pcx_content_type: tutorial
 
 ## Overview
 
-In this tutorial, you will learn how to use a Cloudflare Worker to consume data from a pgEdge Cloud Postgres database in a three-node distributed multi-master replication cluster.
+In this tutorial, you will learn how to use a Cloudflare Worker to consume data from a pgEdge Cloud Postgres database in a three-node distributed multi-active replication cluster.
 
 You will create a Worker function that connects to your database using [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) to proxy your database connection and maintain a connection pool to prevent us having to make a new database connection on every request. 
 
@@ -19,7 +19,7 @@ You will learn how to:
 
 - Deploy a Cloudflare Worker with the Cloudflare Wrangler CLI.
 - Create and connect to a pgEdge distributed Postgres cluster.
-- Use Cloudflare Wrangler to create a [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) connection to your pgEdge Postgres database.
+- Use Cloudflare Wrangler to create a [Hyperdrive](/hyperdrive/) connection to your pgEdge Postgres database.
 - Query your pgEdge Postgres database with a Cloudflare Worker.
 - Test your configuration optimizations.
 
@@ -51,8 +51,10 @@ When you're finished responding to prompts, the CLI will deploy the Worker and d
 
 Then, navigate into the `pgedge` directory, and install the Cloudflare Wrangler CLI in your project:
 
-`cd pgedge`
-`npm install wrangler --save-dev`
+```sh
+$ cd pgedge
+$ npm install wrangler --save-dev
+```
 
 ## 2. Create a pgEdge Cluster
 
@@ -81,19 +83,7 @@ Navigate to the `Connect to your database` pane, and copy the connection string 
 
 ## 3. Create a Hyperdrive
 
-Move to a terminal window, and use the following command to [create a Hyperdrive](https://developers.cloudflare.com/hyperdrive/get-started/):
-
-`npx wrangler hyperdrive create pgedge --connection-string="<PGEDGE_CONNECTION_STRING>"`
-
-When the command completes, it will return information about the Hyperdrive, including the Hyperdrive configuration ID. Copy the ID, and update the `wrangler.toml` file to include the following information:
-
-```sql
-node_compat = true # required for the postgres connection
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<HYPERDRIVE_CONFIG_ID>"
-```
+{{<render file="_npx-wrangler-hyperdrive.md">}}
 
 ## 4. Update the Cloudflare Worker to query pgEdge
 
@@ -103,7 +93,7 @@ Open the `src/index.ts` file, and update the Worker code to include the followin
 - Queries the `products` table (created in step 2).
 - Returns the result set in a JSON string.
 
-```js
+```ts
 import { Client } from "pg";
 
 export interface Env {
@@ -137,7 +127,9 @@ export default {
 
 After updating the file, use the following command to deploy your Cloudflare Worker:
 
-`npx wrangler deploy`
+```sh
+$ npx wrangler deploy
+```
 
 When the command completes, the result set includes a URL. Navigate to the URL with your browser or curl to review information about the `products` table.
 
