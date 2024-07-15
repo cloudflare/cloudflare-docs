@@ -52,14 +52,14 @@ Cloudflare provides a reverse proxy architecture using its global [anycast netwo
 
 Cloudflare has one global network with every service running on every server in every Cloudflare data center. Since Cloudflare’s network uses anycast, the closest data center to the client will respond to the client request. This decreases latency while improving network resiliency, availability, and security due to the increased overall distribution of traffic across Cloudflare's network.
 
-[Cloudflare’s Global anycast Network](https://www.cloudflare.com/network/) provides the following advantages:
+[Cloudflare’s global anycast network](https://www.cloudflare.com/network/) provides the following advantages:
 
 * Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently.
 * Availability and redundancy is inherently provided. Since multiple nodes advertise the same IP address, if one node were to fail, requests are simply routed to another node in close proximity.
 * Because anycast distributes traffic across multiple data centers, it increases overall distribution of traffic across Cloudflare’s network, preventing any one location from becoming overwhelmed with requests. For this reason, anycast networks are very resilient to DDoS attacks.
 
 
-![Figure 4: Cloudflare providing DNS and security/performance services via Global anycast Network](/images/reference-architecture/multi-vendor-architecture-images/Figure_4.png "Figure 4")
+![Figure 4: Cloudflare providing DNS and security/performance services via global anycast network](/images/reference-architecture/multi-vendor-architecture-images/Figure_4.png "Figure 4")
 
 
 ## Cloudflare onboarding options
