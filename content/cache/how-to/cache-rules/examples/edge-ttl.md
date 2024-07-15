@@ -21,6 +21,6 @@ layout: wide
     - **Cache eligibility**: Eligible for cache
     - **Setting**: Edge TTL
         - Ignore cache-control header and use this TTL
-        - **Input time-to-live (TTL)**: _1 day_
+            - **Input time-to-live (TTL)**: _1 day_
 
 </div>
