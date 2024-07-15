@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Choose a data or storage product
+title: Choose a storage product
 
 external_link: /workers/platform/storage-options/
 weight: 1

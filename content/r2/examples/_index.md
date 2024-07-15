@@ -2,7 +2,7 @@
 type: overview
 pcx_content_type: navigation
 title: Examples
-weight: 8
+weight: 7
 layout: wide
 ---
 
