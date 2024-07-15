@@ -47,8 +47,10 @@ Each dedicated egress IP assigned to your organization supports 40,000 concurren
 Dedicated egress IPs do not apply to:
 
 - DNS queries resolved through Gateway
-- Zero Trust networks connected via Cloudflare Tunnel or Magic WAN
+- Zero Trust networks connected via Cloudflare Tunnel
 - ICMP traffic (such as `ping`)
+
+When using [Magic WAN](/magic-wan/), you can egress via dedicated egress IPs. Gateway does not support dedicated egress IPs for Magic WAN destination networks.
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
 
