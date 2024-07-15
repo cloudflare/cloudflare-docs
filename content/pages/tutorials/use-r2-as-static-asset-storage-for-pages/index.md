@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use R2 As Static Asset Storage For Your Pages App
 products: [R2]
+tags: [Hono]
 ---
 
 # Use R2 As Static Asset Storage For Your Pages App
