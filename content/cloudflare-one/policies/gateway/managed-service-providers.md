@@ -8,6 +8,8 @@ weight: 15
 
 Managed service providers (MSPs) are third-party entities that can remotely deploy and manage a Cloudflare Zero Trust configuration for your organization. Gateway implements MSP configurations using the [Cloudflare Tenant](/tenant/) API.
 
+To become an MSP with Cloudflare, refer to the [Cloudflare Partner Program](https://portal.cloudflarepartners.com/).
+
 ## Types of accounts
 
 ### Parent-child accounts
