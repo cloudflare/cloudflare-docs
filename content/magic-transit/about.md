@@ -31,7 +31,7 @@ E([BGP <br> announcement])
 
 A --x B
 E --- B
-B-- anycast <br> GRE tunnel ---C
+B-- Anycast <br> GRE tunnel ---C
 B-- Cloudflare <br> Network <br> Interconnect ---C
 C-- Egress via <br> Direct Server <br> Return --> D
 D -- Ingress --> B

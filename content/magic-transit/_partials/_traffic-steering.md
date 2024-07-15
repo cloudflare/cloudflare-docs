@@ -26,10 +26,10 @@ C[Cloudflare <br> data center]
 D[Cloudflare <br> data center]
 end
 
-A((User)) --> Cloudflare --- E[anycast IP]
-E[anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> data center/ <br> network 1}}
-E[anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> data center/ <br> network 2}}
-E[anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> data center/ <br> network 3}}
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> data center/ <br> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> data center/ <br> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> data center/ <br> network 3}}
 ```
 <br />
 
@@ -71,10 +71,10 @@ D[Cloudflare <br> data center]
 end
 
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
-A((User)) --> Cloudflare --- E[anycast IP]
-E[anycast IP] --> F[/"GRE Tunnel 1 / <br> priority 1 / <br> ~50% of flows"/] --> I{{Customer <br> data center/ <br> network 1}}
-E[anycast IP] --> G[/"GRE Tunnel 2 / <br> priority 1 / <br> ~50% of flows"/] --> J{{Customer <br> data center/ <br> network 2}}
-E[anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/"GRE Tunnel 1 / <br> priority 1 / <br> ~50% of flows"/] --> I{{Customer <br> data center/ <br> network 1}}
+E[Anycast IP] --> G[/"GRE Tunnel 2 / <br> priority 1 / <br> ~50% of flows"/] --> J{{Customer <br> data center/ <br> network 2}}
+E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
 ```
 <br />
 
@@ -97,10 +97,10 @@ D[Cloudflare <br> data center]
 end
 
 Z(Tunnel health is <br> determined by <br> health checks that <br> run from all Cloudflare <br> data centers) --- Cloudflare
-A((User)) --> Cloudflare --- E[anycast IP]
-E[anycast IP] --> F[/"Tunnel 1 / <br> priority 1 / <br> ~100% of flows"/]:::green --> I{{Customer <br> data center/ <br> network 1}}
-E[anycast IP] --> G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
-E[anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/"Tunnel 1 / <br> priority 1 / <br> ~100% of flows"/]:::green --> I{{Customer <br> data center/ <br> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
 classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
@@ -125,10 +125,10 @@ D[Cloudflare <br> data center]
 end
 
 Z(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy) --- Cloudflare
-A((User)) --> Cloudflare --- E[anycast IP]
-E[anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x I{{Customer <br> data center/ <br> network 1}}
-E[anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
-E[anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green --> K{{Customer <br> data center/ <br> network 3}}
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x I{{Customer <br> data center/ <br> network 1}}
+E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center/ <br> network 2}}
+E[Anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green --> K{{Customer <br> data center/ <br> network 3}}
 classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
