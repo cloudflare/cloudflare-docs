@@ -46,7 +46,7 @@ In this tutorial, you will use Workers KV from Rust to build an app to store and
 In the terminal, use Wrangler to create a KV namespace for `cities`. This generates a configuration to be added to the project:
 
 ```sh
-$ npx wrangler kv:namespace create cities
+$ npx wrangler kv namespace create cities
 ```
 
 To add this configuration to your project, open the `wrangler.toml` file and create an entry for `kv_namespaces` above the build command:
