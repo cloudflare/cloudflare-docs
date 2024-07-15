@@ -20,7 +20,7 @@ If you do not have BYOIP or static IPs and you want to use Address Maps, contact
 
 ## How to use Address Maps
 
-For zones using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use address maps to specify which IPs to return for which hostnames.
+For zones using Cloudflare authoritative DNS, Cloudflare typically responds to DNS queries for proxied hostnames with [anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) - by leasing static Cloudflare IPs or bringing your own IPs (BYOIP) - use Address Maps to specify which IPs to return for proxied hostnames.
 
 | Leased static IPs | BYOIPs |
 | --- | --- |
