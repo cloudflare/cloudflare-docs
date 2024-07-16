@@ -3,7 +3,7 @@ updated: 2024-07-15
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Use R2 As Static Asset Storage For Your Pages App
+title: Use R2 As static asset storage for your Pages app
 products: [R2]
 tags: [Hono]
 ---
