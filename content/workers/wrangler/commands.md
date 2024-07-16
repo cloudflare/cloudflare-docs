@@ -2030,11 +2030,8 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 {{</Aside>}}
 
-### `secret`
 
-Generate a secret that can be referenced in a Pages project.
-
-### `put`
+### `secret put`
 
 Create or update a secret for a Pages project.
 
@@ -2054,7 +2051,7 @@ wrangler pages secret put <KEY> [OPTIONS]
 
 {{</definitions>}}
 
-### `delete`
+### `secret delete`
 
 Delete a secret from a Pages project.
 
@@ -2074,7 +2071,7 @@ wrangler pages secret delete <KEY> [OPTIONS]
 
 {{</definitions>}}
 
-### `list`
+### `secret list`
 
 List the names of all the secrets for a Pages project.
 
@@ -2090,7 +2087,7 @@ wrangler pages secret list [OPTIONS]
 
 {{</definitions>}}
 
-### `bulk`
+### `secret bulk`
 
 Upload multiple secrets for a Pages project at once.
 
