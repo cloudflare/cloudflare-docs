@@ -2316,7 +2316,7 @@ wrangler whoami
 ---
 ## `versions`
 
-[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{<Aside type="warning">}}
 
