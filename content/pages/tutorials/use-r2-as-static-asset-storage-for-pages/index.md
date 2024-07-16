@@ -8,7 +8,7 @@ products: [R2]
 tags: [Hono]
 ---
 
-# Use R2 As Static Asset Storage For Your Pages App
+# Use R2 as static asset storage for your Pages app
 
 {{<tutorial-date-info>}}
 
