@@ -1,11 +1,11 @@
 ---
 type: overview
 pcx_content_type: navigation
-title: Examples 
+title: Examples
 weight: 10
 layout: wide
 ---
 
-# Examples 
+# Examples
 
-{{<directory-listing>}}
+{{<list-examples directory="/rules/url-forwarding/examples/">}}

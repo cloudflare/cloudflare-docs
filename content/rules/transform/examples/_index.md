@@ -8,4 +8,4 @@ layout: wide
 
 # Examples
 
-{{<directory-listing>}}
+{{<list-examples directory="/rules/transform/examples/">}}
