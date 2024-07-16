@@ -55,7 +55,7 @@ The Rules language supports these transformation functions:
 
   - Returns the network address corresponding to an IP address (IPv4 or IPv6), given the provided IPv4 and IPv6 network bits (which determine the corresponding netmasks).
   - The `address` parameter must be a field, that is, it cannot be a literal String.
-
+  - The `ipv4_network_bits` value must be between 1 and 32, and the `ipv6_network_bits` value must be between 1 and 128.
   - <em>Examples:</em>
     <br />
     A) If `ip.src` is `113.10.0.2`,<br/>
@@ -71,8 +71,8 @@ You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and
 
   - Returns the IPv6 network address corresponding to an IPv6 address, given the provided network bits (which determine the netmask). If you provide an IPv4 address in the first parameter, it will be returned unchanged.
   - The `address` parameter must be a field, that is, it cannot be a literal String.
+  - The `ipv6_network_bits` value must be between 1 and 128.
   - This function is equivalent to: `cidr(<address>, 32, <ipv6_network_bits>)`.
-
   - <em>Examples:</em>
     <br />
     A) If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`,<br/>
