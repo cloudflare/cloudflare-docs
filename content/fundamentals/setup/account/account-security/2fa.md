@@ -135,8 +135,8 @@ Refer to Google's documentation to [transfer Google Authenticator codes from one
 When setting up 2FA, you should have saved your backup codes in a secure location. To restore lost access using a Cloudflare backup code:
 
 1. Retrieve the backup code from where you stored it.
-2. Go to the Cloudflare login page, enter your username and password and select **Log in**.
-3. You should see a page titled "Two-Factor Authentication"
+2. Go to the [Cloudflare login page](https://dash.cloudflare.com/login), enter your username and password and select **Log in**.
+3. You should see a page titled **Two-Factor Authentication**
     - If it has a text box, enter one of your backup codes and select **Log in**.
     - If instead you see "Insert your security key and touch it", cancel any prompts from your browser that appear and select **try another authentication method or backup code**. Proceed to enter one of your backup codes and select **Log in**.
 
