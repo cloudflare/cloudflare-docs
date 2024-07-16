@@ -120,7 +120,7 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 {{<render file="gateway/selectors/_content-categories.md">}}
 
-When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-traffic-by-resolved-ip-category) or [filter categories for `CNAME` records](/cloudflare-one/policies/gateway/domain-categories/#ignore-cname-domain-categories).
+{{<render file="gateway/selectors/_category-options.md">}}
 
 ### DNS CNAME Record
 
@@ -223,7 +223,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 {{<render file="gateway/selectors/_security-categories.md">}}
 
-When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-traffic-by-resolved-ip-category) or [filter categories for `CNAME` records](/cloudflare-one/policies/gateway/domain-categories/#ignore-cname-domain-categories).
+{{<render file="gateway/selectors/_category-options.md">}}
 
 ### Source Continent
 
