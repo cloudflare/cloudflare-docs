@@ -1072,8 +1072,6 @@
 /r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
 /r2/learning/data-location/ /r2/reference/data-location/ 301
 /r2/platform/pricing/ /r2/pricing/ 301
-/r2/platform/limits/ /r2/reference/limits/ 301
-/r2/platform/changelog/ /r2/reference/changelog/ 301
 /r2/examples/aws-cli/ /r2/examples/aws/aws-cli/ 301
 /r2/examples/aws-sdk-go/ /r2/examples/aws/aws-sdk-go/ 301
 /r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js/ 301
@@ -1083,6 +1081,10 @@
 /r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
 /r2/examples/boto3/ /r2/examples/aws/boto3/ 301
 /r2/buckets/data-location/ /r2/reference/data-location/ 301
+/r2/reference/audit-logs/ /r2/platform/audit-logs/ 301
+/r2/reference/changelog/ /r2/platform/changelog/ 301
+/r2/reference/limits/ /r2/platform/limits/ 301
+/r2/reference/metrics-analytics/ /r2/platform/metrics-analytics/ 301
 
 # style-guide
 /style-guide/formatting/symbols-in-ui-element-names/ /style-guide/formatting/ui-elements/ 301

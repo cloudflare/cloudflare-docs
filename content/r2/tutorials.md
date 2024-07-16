@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Tutorials
-weight: 9
+weight: 8
 layout: wide
 ---
 
