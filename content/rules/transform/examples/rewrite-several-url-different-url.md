@@ -4,7 +4,7 @@ summary: A transform rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewr
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite path with several URL segments to a different URL segment
 ---
 

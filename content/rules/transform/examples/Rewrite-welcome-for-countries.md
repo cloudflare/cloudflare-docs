@@ -4,7 +4,7 @@ summary: A transform rule where the path of the welcome page for visitors in spe
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite path of welcome page for visitors in specific countries
 ---
 

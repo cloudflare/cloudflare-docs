@@ -4,7 +4,7 @@ summary: A transform rule where the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>`
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite blog archive URLs to support a new URL format
 ---
 

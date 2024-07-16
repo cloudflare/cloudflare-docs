@@ -4,7 +4,7 @@ summary: A transform rule where all requests to `/news/2012/...` are rewritten t
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite path of archived blog posts
 ---
 

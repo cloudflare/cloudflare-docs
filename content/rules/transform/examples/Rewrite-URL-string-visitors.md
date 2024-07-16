@@ -4,7 +4,7 @@ summary: A transform rule where a request to the `/blog` path is rewritten to `/
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite URL query string of blog visitors
 ---
 

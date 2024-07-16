@@ -9,7 +9,7 @@ meta:
 
 # Create an HTTP request header modification rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP request header modification rules via API. Refer to the[Rules examples gallery](/rules/examples/) for common use cases.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP request header modification rules via API. Refer to the[Rules examples gallery](/rules/transform/examples/) for common use cases.
 
 ## Basic rule settings
 

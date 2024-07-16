@@ -4,7 +4,7 @@ summary: A transform rule where everything under `/blog/<PATH>` is rewritten to 
 product:
   - Transform Rules
 operation:
-  - Redirect
+  - Rewrite URL
 title: Rewrite path of moved section of a website
 ---
 
