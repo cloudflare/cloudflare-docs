@@ -50,20 +50,27 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 3. For the tunnel type, select **WARP Connector**. Select **Next step**.
 4. Turn on **Warp to Warp** and [**Override local interface IP**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip). These settings allow Cloudflare to assign a unique {{<glossary-tooltip term_id="CGNAT IP">}}CGNAT IP{{</glossary-tooltip>}} to each WARP device and route traffic between them.
 5. Select **Next step**.
-6. Give the tunnel any name (for example, `Subnet-10.0.0.0/24`) and select **Next step**.
+6. Give the tunnel any name (for example, `Subnet-10.0.0.0/24`) and select **Create tunnel**.
 7. Select the operating system of your host machine.
 
 {{<Aside type="warning" header="Warning">}}
 If you are managing the deployment remotely over SSH, your connection may drop when you install the WARP Connector. Because the connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will be routed to Cloudflare instead of via the server's public IP and will timeout your existing connection. You can work around this issue by temporarily adding the public IP of your local machine to your [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 {{</Aside>}}
 
-8. In a terminal window, run the commands shown in the box below. Select **Next step**.
+8. On your host machine, open a terminal window and run the commands shown in the Zero Trust dashboard.
+
+9. (Optional) Enable IP forwarding to persist after reboot:
+
+  ```sh
+  $ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
+  $ sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf
+  ```
 
 {{<Aside type="note" header="IP forwarding on VPC">}}
 If you are setting up WARP Connector on a {{<glossary-tooltip term_id="Virtual Private Cloud (VPC)">}}virtual private cloud (VPC) {{</glossary-tooltip>}}, you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
 
-9. Verify that the WARP Connector is connected to Cloudflare:
+10. Verify that the WARP Connector is connected to Cloudflare:
     ```sh
     $ warp-cli status
     Status update: Connected
