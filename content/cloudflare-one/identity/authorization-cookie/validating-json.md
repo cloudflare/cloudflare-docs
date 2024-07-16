@@ -79,7 +79,9 @@ To verify the token manually:
 
 4. Paste the JWT into the **Encoded** box.
 
-5. Ensure that the signature says **verified**.
+5. In the **Payload** box, ensure that the `iss` field points to your team domain (`https://<your-team-name>.cloudflareaccess.com`). `jwt.io` uses the `iss` value to fetch the public key for token validation.
+   
+6. Ensure that the page says **Signature Verified**.
 
 You can now trust that this request was sent by Access.
 
