@@ -748,12 +748,12 @@ trim.left=800
 // This removes 800 pixels from the left of the image
 
 trim.width=800
-// This sets the width of the image to 800 from the left of the image, then trims everything to the right of that point
+// This sets the width of the image to 800 pixels from the left of the image, then trims everything to the right of that point
 ```
 
 ### `width`
 
-Specifies the maximum width of an image in pixels. Exact behavior depends on the f`it` parameter. This can be abbreviated to `w`.
+Specifies the maximum width of an image in pixels. Exact behavior depends on the `fit` parameter. This can be abbreviated to `w`.
 
 ```js
 ---
