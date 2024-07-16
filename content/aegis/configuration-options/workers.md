@@ -1,6 +1,6 @@
 ---
 title: Workers
-pcx_content_type: how-to
+pcx_content_type: reference
 weight: 6
 meta:
   title: Use Aegis with Cloudflare Workers

@@ -1,6 +1,6 @@
 ---
 title: Configuration options
-pcx_content_type: concept
+pcx_content_type: navigation
 weight: 2
 ---
 

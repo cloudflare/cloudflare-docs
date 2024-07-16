@@ -1,6 +1,6 @@
 ---
 title: Network firewall
-pcx_content_type: how-to
+pcx_content_type: concept
 weight: 2
 meta:
   title: Use Aegis with network firewall

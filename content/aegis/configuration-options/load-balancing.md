@@ -1,6 +1,6 @@
 ---
 title: Load balancing
-pcx_content_type: how-to
+pcx_content_type: reference
 weight: 5
 meta:
   title: Use Aegis with Load Balancing
