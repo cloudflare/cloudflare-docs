@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Share a Radar chart
 meta:
     title: Share a Radar chart
-weight: 3
+weight: 4
 ---
 
 # Share a Radar chart

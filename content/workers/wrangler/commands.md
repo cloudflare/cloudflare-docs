@@ -20,9 +20,9 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete-3) - Delete your Worker from Cloudflare.
-- [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
-- [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
-- [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
+- [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
+- [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
@@ -202,7 +202,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-[D1](/d1/) is currently in open beta. Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -528,10 +528,6 @@ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 ## `hyperdrive`
 
-{{<Aside type="note">}}
-Hyperdrive is currently in open beta. Report Hyperdrive bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-{{</Aside>}}
-
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 ### `create`
@@ -766,11 +762,11 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Path to a custom certificate key.
-- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Path to a custom certificate.
-- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Protocol to listen to requests on.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -924,12 +920,16 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 {{</definitions>}}
 
-## `kv:namespace`
+## `kv namespace`
 
 Manage Workers KV namespaces.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 {{</Aside>}}
 
 ### `create`
@@ -937,7 +937,7 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Create a new namespace.
 
 ```txt
-wrangler kv:namespace create <NAMESPACE> [OPTIONS]
+wrangler kv namespace create <NAMESPACE> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -954,7 +954,7 @@ wrangler kv:namespace create <NAMESPACE> [OPTIONS]
 The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
 
 ```sh
-$ npx wrangler kv:namespace create "MY_KV"
+$ npx wrangler kv namespace create "MY_KV"
 🌀 Creating namespace with title "worker-MY_KV"
 ✨ Success!
 Add the following to your configuration file in your kv_namespaces array:
@@ -966,7 +966,7 @@ kv_namespaces = [
 The following is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
 
 ```sh
-$ npx wrangler kv:namespace create "MY_KV" --preview
+$ npx wrangler kv namespace create "MY_KV" --preview
 🌀 Creating namespace with title "my-site-MY_KV_preview"
 ✨ Success!
 Add the following to your configuration file in your kv_namespaces array:
@@ -980,13 +980,13 @@ kv_namespaces = [
 List all KV namespaces associated with the current account ID.
 
 ```txt
-wrangler kv:namespace list
+wrangler kv namespace list
 ```
 
 The following is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
-$ npx wrangler kv:namespace list | jq "."
+$ npx wrangler kv namespace list | jq "."
 [
   {
     "id": "06779da6940b431db6e566b4846d64db",
@@ -1004,7 +1004,7 @@ $ npx wrangler kv:namespace list | jq "."
 Delete a given namespace.
 
 ```txt
-wrangler kv:namespace delete {--bindings=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv namespace delete {--bindings=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1027,7 +1027,7 @@ This command requires `--binding` or `--namespace-id`.
 The following is an example of deleting a KV namespace called `MY_KV.`
 
 ```sh
-$ npx wrangler kv:namespace delete --binding=MY_KV
+$ npx wrangler kv namespace delete --binding=MY_KV
 Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
 yes
 Deleting namespace f7b02e7fc70443149ac906dd81ec1791
@@ -1037,19 +1037,23 @@ Deleted namespace f7b02e7fc70443149ac906dd81ec1791
 The following is an example of deleting a preview KV namespace called `MY_KV`.
 
 ```sh
-$ npx wrangler kv:namespace delete --binding=MY_KV --preview
+$ npx wrangler kv namespace delete --binding=MY_KV --preview
 Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
 yes
 Deleting namespace 15137f8edf6c09742227e99b08aaf273
 Deleted namespace 15137f8edf6c09742227e99b08aaf273
 ```
 
-## `kv:key`
+## `kv key`
 
 Manage key-value pairs within a Workers KV namespace.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 {{</Aside>}}
 
 ### `put`
@@ -1057,7 +1061,7 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Write a single key-value pair to a particular namespace.
 
 ```txt
-wrangler kv:key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1097,28 +1101,28 @@ This command requires a `--binding` or `--namespace-id` flag.
 The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
 
 ```sh
-$ npx wrangler kv:key put --binding=MY_KV "my-key" "some-value"
+$ npx wrangler kv key put --binding=MY_KV "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 The following is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
 
 ```sh
-$ npx wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
+$ npx wrangler kv key put --binding=MY_KV --preview "my-key" "some-value"
 Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
 ```
 
 The following is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
 
 ```sh
-$ npx wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
+$ npx wrangler kv key put --binding=MY_KV "my-key" "some-value" --ttl=10000
 Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 The following is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
 
 ```sh
-$ npx wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
+$ npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
 Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
@@ -1127,7 +1131,7 @@ Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc7044
 Output a list of all keys in a given namespace.
 
 ```txt
-wrangler kv:key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1156,7 +1160,7 @@ This command requires `--binding` or `--namespace-id`.
 Below is an example that passes the Wrangler command through the `jq` command:
 
 ```sh
-$ npx wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
+$ npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
 [
   {
     "name": "public_key"
@@ -1173,7 +1177,7 @@ $ npx wrangler kv:key list --binding=MY_KV --prefix="public" | jq "."
 Read a single value by key from the given namespace.
 
 ```txt
-wrangler kv:key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1204,7 +1208,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
 
 ```sh
-$ npx wrangler kv:key get --binding=MY_KV "my-key"
+$ npx wrangler kv key get --binding=MY_KV "my-key"
 value
 ```
 
@@ -1213,7 +1217,7 @@ value
 Remove a single key value pair from the given namespace.
 
 ```txt
-wrangler kv:key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1242,16 +1246,20 @@ Exactly one of `--binding` or `--namespace-id` is required.
 The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
 
 ```sh
-$ npx wrangler kv:key delete --binding=MY_KV "my-key"
+$ npx wrangler kv key delete --binding=MY_KV "my-key"
 Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
-## `kv:bulk`
+## `kv bulk`
 
 Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 {{<Aside type="note">}}
-The `kv:...` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [Workers KV](/kv/). Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 {{</Aside>}}
 
 ### `put`
@@ -1259,7 +1267,7 @@ The `kv:...` commands allow you to manage application data in the Cloudflare net
 Write a JSON file containing an array of key-value pairs to the given namespace.
 
 ```txt
-wrangler kv:bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1335,7 +1343,7 @@ If both `expiration` and `expiration_ttl` are specified for a given key, the API
 The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
 
 ```sh
-$ npx wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
+$ npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
 Success!
 ```
 
@@ -1344,7 +1352,7 @@ Success!
 Delete all keys read from a JSON file within a given namespace.
 
 ```txt
-wrangler kv:bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -1380,7 +1388,7 @@ The following is an example of the JSON input:
 The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.
 
 ```sh
-$ npx wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
+$ npx wrangler kv bulk delete --binding=MY_KV allthethingsdelete.json
 ? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
 Success!
 ```
@@ -1407,6 +1415,10 @@ wrangler r2 bucket create <NAME>
 
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the new R2 bucket.
+- `--storage-class` {{<type>}}"Standard"|"InfrequentAccess"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The default storage class for objects uploaded to the bucket.
+- `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
 {{</definitions>}}
 
@@ -1516,7 +1528,7 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
 - `--r2-secret-access-key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Your R2 Secret Access Key. Requires read and write access.
 - `--jurisdiction` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions)
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 - **AWS S3 provider-specific options:**
 - `--key-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
@@ -1823,6 +1835,8 @@ wrangler tail <WORKER> [OPTIONS]
   - Filter by a text match in `console.log` messages.
 - `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+- `--version-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by Worker version.
 
 {{</definitions>}}
 
@@ -1856,6 +1870,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - The directory of static assets to serve.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Run on your local machine.
+- `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
 - `--binding` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1874,8 +1890,12 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Runtime compatibility flags to apply.
 - `--compatibility-date` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}} 
+- `--show-interactive-dev-session` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true if the terminal supports interactivity){{</prop-meta>}}
   - Show the interactive dev session.
+- `--https-key-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate key.
+- `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Path to a custom certificate.
 
 {{</definitions>}}
 
@@ -2649,7 +2669,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 Generate types from bindings and module rules in configuration.
 
-```sh
+```txt
 wrangler types [<PATH>] [OPTIONS]
 ```
 

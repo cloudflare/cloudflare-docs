@@ -51,9 +51,3 @@ Rate limits are default per task type, with some per-model limits defined as fol
 
 ### [Translation](/workers-ai/models/#translation)
 - 720 requests per minute
-
-## Limitations
-
-Streaming during local development is currently unsupported.
-
-You will see all messages come in at once. When deployed, the server will properly stream the messages.

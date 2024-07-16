@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Page Shield provides you with visibility on the scripts loaded on your domain's pages, and helps you detect attacks happening in your end users' browsers.
+Page Shield provides you with visibility on the scripts loaded on your domain's pages, and helps you detect attacks happening in your end users' browsing environment.

@@ -21,13 +21,13 @@ Check out the [Get started guide](/ai-gateway/get-started/) to learn how to conf
 
 ## Features
 
-{{<feature header="Analytics" href="/ai-gateway/get-started/configuring-settings/#analytics" cta="View Analytics">}}
+{{<feature header="Analytics" href="/ai-gateway/observability/analytics/" cta="View Analytics">}}
 
 View metrics such as the number of requests, tokens, and the cost it takes to run your application.
 
 {{</feature>}}
 
-{{<feature header="Real-time logs" href="/ai-gateway/get-started/configuring-settings/#logging" cta="View Real-time logs">}}
+{{<feature header="Real-time logs" href="/ai-gateway/observability/analytics/#logging" cta="View Real-time logs">}}
 
 Gain insight on requests and errors.
 
@@ -39,7 +39,7 @@ Serve requests directly from Cloudflare's cache instead of the original model pr
 
 {{</feature>}}
 
-{{<feature header="Rate limiting" href="/ai-gateway/get-started/configuring-settings/#rate-limiting">}}
+{{<feature header="Rate limiting" href="/ai-gateway/configuration/rate-limiting">}}
 
 Control how your application scales by limiting the number of requests your application receives.
 
@@ -79,6 +79,8 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
+
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{</resource-group>}}

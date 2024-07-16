@@ -16,7 +16,7 @@ Adding multiple sites can be useful when you:
 
 Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
-This tutorial assumes domains will be added using [full mode](/dns/zone-setups/full-setup/). 
+This tutorial assumes domains will be added using [full mode](/dns/zone-setups/full-setup/).
 ___
 
 ## Prerequisites
@@ -29,9 +29,9 @@ To add multiple sites to Cloudflare via automation, you need:
   - Zone-level `Administrator`
   - Zone-level `Zone: Edit` and `DNS: Edit`
   - Account-level `Domain Administrator`
-- To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name). 
-  - Follow this [tuorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
-  
+- To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
+  - Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
+
 {{<render file="_dnssec-providers.md" productFolder="dns">}}
 
 {{<render file="_dnssec-enabled-migration.md" productFolder="dns">}}
@@ -42,30 +42,32 @@ ___
 ## Add domains
 
 1. Create a list of domains you want to add, each on a separate line (newline separated), stored in a file such as `domains.txt`.
-2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update its path accordingly. 
-```js
+2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update its path accordingly.
+
+```bash
   for domain in $(cat domains.txt); do
     printf "Adding ${domain}:\n"
 
     curl https://api.cloudflare.com/client/v4/zones \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
-      -H 'X-Auth-Key: <CLOUDFLARE_API_KEY>' \
-      --data '{
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "account": {
-        "id":"<ACCOUNT_ID>" 
+        "id":"<ACCOUNT_ID>"
       },
       "name": "'"$domain"'",
       "type": "full"
     }'
-  
-  printf "\n\n"
+
+    printf "\n\n"
   done
 ```
 
 3. Open the command line and run:
-```js
-  bash add-multiple-zones.sh
+
+```sh
+$ bash add-multiple-zones.sh
 ```
 
 {{<Aside type="warning">}}
@@ -74,18 +76,18 @@ ___
 
 {{</Aside>}}
 
-After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-setups/reference/domain-status/) state. 
+After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-setups/reference/domain-status/) state.
 
 ## Additional options
 
 ### jq
 
-[`jq`](https://jqlang.github.io/jq/) is a command-line tool that parses and beautifies JSON outputs. 
+[`jq`](https://jqlang.github.io/jq/) is a command-line tool that parses and beautifies JSON outputs.
 
 This tool is a requirement to complete any `Additional options` steps in this tutorial.
 
 ```sh
-  echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
+$ echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 ```
 
 Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
@@ -105,16 +107,16 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
-      -H 'X-Auth-Key: <API_KEY>' \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
-      "account": {
-        "id":"<ACCOUNT_ID>" 
-      },
-      "name": "'"$domain"'",
-      "type": "full"
-    }'`
+        "account": {
+          "id":"<ACCOUNT_ID>"
+        },
+        "name": "'"$domain"'",
+        "type": "full"
+      }'`
 
     echo $add_output | jq .
 
@@ -123,10 +125,9 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
     printf "\n\n"
     printf "DNS quick scanning ${domain}:\n"
 
-    scan_output=`curl -X POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
-      -H 'X-Auth-Key: <API_KEY>'`
+    scan_output=`curl --request POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>"`
 
     echo $scan_output | jq .
 
@@ -139,7 +140,7 @@ For each domain to become active on Cloudflare, it must be activated in either [
 
 You can find your zones nameservers in the following locations:
 - [Create Zone](/api/operations/zones-post#Request)
-- [Zone Details](/api/operations/zones-0-get) 
+- [Zone Details](/api/operations/zones-0-get)
 
 1. Modify your script `add-multiple-zones.sh` to print a CSV with data from the `Create Zone` JSON response.
 
@@ -148,30 +149,28 @@ You can find your zones nameservers in the following locations:
     printf "Adding ${domain}:\n"
 
     add_output=`curl https://api.cloudflare.com/client/v4/zones \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
-      -H 'X-Auth-Key: <API_KEY>' \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
-      "account": {
-        "id":"<ACCOUNT_ID>" 
-      },
-      "name": "'"$domain"'",
-      "type": "full"
-    }'`
+        "account": {
+          "id": "<ACCOUNT_ID>"
+        },
+        "name": "'"$domain"'",
+        "type": "full"
+      }'`
 
-    # Create csv of nameservers  
+    # Create csv of nameservers
     echo $add_output | jq -r '[.result.name,.result.id,.result.name_servers[]] | @csv' >> /tmp/domain_nameservers.csv
-
 
     domain_id=`echo $add_output | jq -r .result.id`
 
     printf "\n\n"
     printf "DNS quick scanning ${domain}:\n"
 
-    scan_output=`curl -X POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
-      -H 'Content-Type: application/json' \
-      -H 'X-Auth-Email: <CLOUDFLARE_EMAIL>' \
-      -H 'X-Auth-Key: <API_KEY>'`
+    scan_output=`curl --request POST https://api.cloudflare.com/client/v4/zones/$domain_id/dns_records/scan \
+      --header "X-Auth-Email: <EMAIL>" \
+      --header "X-Auth-Key: <API_KEY>"`
 
     echo $scan_output | jq .
 
@@ -181,7 +180,7 @@ You can find your zones nameservers in the following locations:
   cat /tmp/domain_nameservers.csv
 ```
 
-  | ID | ZONE | NAME SERVERS | 
+  | ID | ZONE | NAME SERVERS |
   | --- | --- | --- |
   | <ZONE_ID> | `example.com` | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` |
 

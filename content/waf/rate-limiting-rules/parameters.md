@@ -130,6 +130,11 @@ Use one or more of the following characteristics:
       <td></td>
     </tr>
     <tr>
+      <td><strong>JA4</strong></td>
+      <td><code>cf.bot_management.ja4</code></td>
+      <td></td>
+    </tr>
+    <tr>
       <td>
         <strong>JSON string value of</strong><br />
         (enter key)

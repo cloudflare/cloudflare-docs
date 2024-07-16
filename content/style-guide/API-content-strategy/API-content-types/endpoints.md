@@ -39,7 +39,7 @@ Endpoints that act on/return a collection of items: verb + plural resource name.
 
 **Endpoint**: Lists the endpoint and should be stylized as code snippet.
 
-When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead"). See [Deprecated APIs](/style-guide/api-content-strategy/api-content-types/deprecated-apis/) for more.
+When an endpoint will be deprecated in a specified timeframe but is still available, add a note to the endpoint description about the upcoming deprecation ("`<name of endpoint>` will be deprecated on `<full month name, date, year>`. Use the `<alternative endpoint>` instead"). Refer to [Deprecated APIs](/style-guide/api-content-strategy/api-content-types/deprecated-apis/) for more information.
 
 ### Optional components
 

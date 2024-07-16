@@ -7,13 +7,11 @@ weight: 3
 
 # Developer documentation content strategy
 
-Content strategy means using the right tool for the job. Cloudflare's documentation will provide the most effective content types that serve a customer-focused purpose. Adoption of this content strategy will be impacted by product releases, resourcing, and company goals.
-
 The purpose of Cloudflare's developer documentation content strategy is to:
 
 + Create and document standard templates to streamline content creation
-+ Document specific content types to help identify customers specific needs
-+ Enable life cycle management in an effort to maintain and optimize a smaller set of pages
++ Document specific content types to help identify customers' specific needs
++ Enable life cycle management to maintain and optimize a smaller set of pages
 + Suggest easier navigation paths
 
 Strategically speaking, the mission and guiding principles translate into the following initiatives:
@@ -23,6 +21,8 @@ Strategically speaking, the mission and guiding principles translate into the fo
 + Develop content that increases product adoption, deflects support, and makes customers successful
 + Partner with various internal departments and stakeholders in creating and sustaining a rich, consistent content experience across all Cloudflare products
 + Devise new and better ways to give users the information they need, when and where they need it
+
+Adoption of this content strategy will be impacted by product releases, resourcing, and company goals.
 
 ## Purpose statements
 
@@ -42,6 +42,6 @@ This approach includes:
 
 ## Content requirements
 
-Content requirements help the contributor ensure they have answered the user question and have not lost the purpose of the content after moving to execution.
+Content requirements help the contributor ensure they have answered the user question and have not lost the purpose of the content after moving into execution.
 
 {{<directory-listing>}}

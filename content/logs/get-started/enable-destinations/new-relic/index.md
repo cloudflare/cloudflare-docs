@@ -12,25 +12,42 @@ Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflar
 
 ## Manage via the Cloudflare dashboard
 
-To enable a Logpush service to New Relic via the dashboard:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **New Relic**.
+5. In **Select a destination**, choose **New Relic**.
 
-8. Enter the **New Relic Logs Endpoint**:
+6. Enter the **New Relic Logs Endpoint**:
 
-    US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+    {{<tabs labels="US | EU">}}
+  {{<tab label="US" no-code="true">}}
 
-    EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+* `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
-    Use the region that matches the one that has been set on your New Relic account. The `<NR_LICENSE_KEY>` field can be found on the New Relic dashboard. It can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
+  {{</tab>}}
+  {{<tab label="EU" no-code="true">}}
 
-9. Select **Validate access**.
+* `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
-10. Select **Save and Start Pushing** to finish enabling Logpush.
+  {{</tab>}}
+    {{</tabs>}}
 
-Once connected, Cloudflare lists New Relic as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+    Use the region that matches the one that has been set on your New Relic account. The **License key** field can be found on the New Relic dashboard. It can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
+
+When you are done entering the destination details, select **Continue**.
+
+7. Select the dataset to push to the storage service.
+
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

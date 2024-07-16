@@ -12,23 +12,27 @@ Cloudflare Logpush supports pushing logs directly to Sumo Logic via the Cloudfla
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Sumo Logic via the dashboard.
-
-To enable the Cloudflare Logpush service:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **Sumo Logic**.
+5.  In **Select a destination**, choose **Sumo Logic**.
 
-8. Enter or select the **HTTP Source Address**. Note that the same collector can be used for multiple Logpush jobs, but each job must have a dedicated source.
+6. Enter the **HTTP Source Address**. To get the HTTP Source Address (URL) configure a [Sumo Logic Hosted Collector](https://help.sumologic.com/docs/send-data/hosted-collectors/) with an [HTTP Logs & Metrics Source](https://help.sumologic.com/docs/send-data/hosted-collectors/http-source/logs-metrics/). Note that the same collector can be used for multiple Logpush jobs, but each job must have a dedicated source. When you are done entering the destination details, select **Continue**.
 
-9. Select **Validate access**.
+7. To prove ownership, Cloudflare will send a file to your designated destination. To find the token, select the **Open** button in the **Overview** tab of the ownership challenge file, then paste it into the Cloudflare dashboard to verify your access to the bucket. Enter the **Ownership Token** and select **Continue**.
 
-10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and select **Prove ownership**. To find the ownership token, select **Open** in the **Overview** tab of the ownership challenge file.
+8. Select the dataset to push to the storage service.
 
-11. Select **Save and Start Pushing** to finish enabling Logpush.
+9. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-Once connected, Cloudflare lists Sumo Logic as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+10. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+11. Select **Submit** once you are done configuring your logpush job.
 
 ## Configure a Hosted Collector
 

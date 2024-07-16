@@ -286,7 +286,7 @@ errors.
 ### Resolution
 
 - To allow CNAME record resolution to a domain in a different Cloudflare account, the domain owner of the CNAME target must use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
-- To allow connecting to a R2 bucket with a custom domain, disable the [zone hold](/fundamentals/setup/account/account-security/zone-holds/) feature on the custom domain target zone to resovle the 1014 error.
+- To allow connecting to a R2 bucket with a custom domain, disable the [zone hold](/fundamentals/setup/account/account-security/zone-holds/) feature on the custom domain target zone to resolve the 1014 error.
 
 ___
 

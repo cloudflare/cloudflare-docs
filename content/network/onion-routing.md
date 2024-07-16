@@ -43,7 +43,7 @@ To enable **Onion Routing** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Onion Routing** with the API, send a [`PATCH`](/api/operations/zone-settings-change-opportunistic-onion-setting) request with the `value` parameter set to `"on"`.
+To enable **Onion Routing** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `opportunistic_onion` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

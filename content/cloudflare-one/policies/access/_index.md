@@ -69,7 +69,7 @@ As part of implementing a Zero Trust security model, we do not recommend using B
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules (deprecated). If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured Page Rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 

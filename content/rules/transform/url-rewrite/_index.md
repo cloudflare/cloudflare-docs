@@ -17,7 +17,7 @@ You can manipulate the URL of a request through different operations, namely rew
 Use a URL rewrite to return the content of a URL while displaying a different URL in the browser. You can rewrite the URI path, the query string, or both.
 
 {{<Aside type="warning">}}
-You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/) (deprecated).
+You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/).
 {{</Aside>}}
 
 ## Static and dynamic rewrites

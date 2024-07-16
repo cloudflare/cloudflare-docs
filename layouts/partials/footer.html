@@ -71,6 +71,6 @@
       {{- end -}}
     </div>
   </div>
-  <script type="text/javascript" src="/lightbox.js" defer></script>
+  {{- partial "script" (dict "src" "lightbox.js" "defer" true) -}}
   <link rel="stylesheet" href="/lightbox.css">
 </footer>

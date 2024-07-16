@@ -9,7 +9,17 @@ import * as cybersafe from "data/learning-paths/cybersafe.json";
 import * as zero_trust_web_access from "data/learning-paths/zero-trust-web-access.json";
 import * as secure_internet_traffic from "data/learning-paths/secure-internet-traffic.json";
 
-let learning_paths = [
+export type LearningPath = {
+  title: string;
+  path: string;
+  priority: number;
+  description: string;
+  products: string[];
+  product_group: string;
+  additional_groups?: string[];
+}
+
+let learning_paths: LearningPath[] = [
   get_started_free,
   load_balancing,
   prevent_ddos_attacks,

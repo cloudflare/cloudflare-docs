@@ -4,19 +4,20 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
-layout: single
+tags:
+  - AI
 ---
 
 # Use OpenAI GPT function calling with JavaScript and Cloudflare Workers
 
-{{<render file="_tutorials-before-you-start.md">}}
+{{<tutorial-date-info>}}
 
-## Overview
+In this tutorial, you will build a project that leverages [OpenAI's function calling](https://platform.openai.com/docs/guides/function-calling) feature, available in OpenAI's latest Chat Completions API models.
 
-In this tutorial, you will build a project that leverages [OpenAI's function calling](https://platform.openai.com/docs/guides/function-calling) feature, available in OpenAI's latest Chat Completions API models. The function calling feature allows the AI model to intelligently decide when to call a function based on the input, and respond in JSON format to match the function's signature. You will use the function calling feature to request for the model to determine a website URL which contains information relevant to a message from the user, retrieve the text content of the site, and, finally, return a final response from the model informed by real-time web data.
+The function calling feature allows the AI model to intelligently decide when to call a function based on the input, and respond in JSON format to match the function's signature. You will use the function calling feature to request for the model to determine a website URL which contains information relevant to a message from the user, retrieve the text content of the site, and, finally, return a final response from the model informed by real-time web data.
 
 
-### What you will learn
+## What you will learn
 
 - How to use OpenAI's function calling feature.
 - Integrating OpenAI's API in a Cloudflare Worker.
@@ -25,6 +26,8 @@ In this tutorial, you will build a project that leverages [OpenAI's function cal
 - Storing API keys as secrets with Wrangler.
 
 ---
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## 1. Create a new Worker project
 
@@ -39,10 +42,11 @@ $ npm create cloudflare@latest
 
 For setup, select the following options:
 
-- For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
-- For `What type of application do you want to create?`, choose `"Hello World" script`.
-- For `Do you want to use TypeScript?`, choose `no`.
-- For `Do you want to deploy your application?`, choose `yes`.
+- For `In which directory do you want to create your application?`, indicate `openai-function-calling-workers`.
+- For `What type of application do you want to create?`, choose `"Hello World" Worker`.
+- For `Do you want to use TypeScript?`, choose `No`.
+- For `Do you want to use git for version control?`, choose `Yes`.
+- For `Do you want to deploy your application?`, choose `Yes`.
 
 Go to your new `openai-function-calling-workers` Worker project:
 
@@ -112,7 +116,7 @@ $ npx wrangler secret put <OPENAI_API_KEY>
 
 For local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 
-```
+```txt
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
 

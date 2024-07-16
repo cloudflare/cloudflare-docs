@@ -9,4 +9,4 @@ Cloudflare automatically detects and mitigates DDoS attacks using its [Autonomou
 
 {{<render file=_ddos-attack-coverage.md productFolder="ddos-protection">}}
 
-Refer to the learning path [`Prevent DDoS Attaacks`](/learning-paths/prevent-ddos-attacks/)  to dive deeper into this subject.
+Refer to the learning path [Prevent DDoS attacks](/learning-paths/prevent-ddos-attacks/)  to dive deeper into this subject.

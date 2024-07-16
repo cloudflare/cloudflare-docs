@@ -3,14 +3,14 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/206652947-Using-Page-Rules-to-rewrite-Host-Headers
 title: Rewrite Host headers
 meta:
-    title: Rewrite Host headers | Page Rules (deprecated)
+    title: Rewrite Host headers | Page Rules
 ---
 
 # Rewrite Host headers
 
 Customers can rewrite `Host` headers using different Cloudflare rules. This feature is currently available for domains on the Enterprise plan.
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 A common use case for this functionality is when your content is hosted on an Amazon S3 bucket. Amazon has designed their system to only accept host headers that have the same name as the bucket hosting your content. In this way, a request to `Host: your-domain.com` must be rewritten to `Host: your-bucket.s3.amazonaws.com`, or else the request will be denied.
 

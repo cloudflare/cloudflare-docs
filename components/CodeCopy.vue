@@ -26,8 +26,12 @@ function copyCode(e: MouseEvent) {
     lines.forEach((line) =>
       textLines.push((line as HTMLElement).innerText.trimEnd())
     );
-    const text = textLines.join("\n");
+    let text = textLines.join("\n");
     if (text) {
+      // Remove extraneous newlines at the end of shell
+      // codeblocks, that persist after removing comment/output
+      // lines.
+      text = text.replaceAll(/\n{1,}$/g, "");
       try {
         //copy to clipboard
         navigator.clipboard.writeText(text);

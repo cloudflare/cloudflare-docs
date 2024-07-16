@@ -82,7 +82,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 2. After running the call, you should see an output similar to
 
-   ```bash
+   ```json
    ---
    header: Example output
    highlight: 10
@@ -127,7 +127,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 2. Verify that nothing is returned by a `curl` command:
 
    ```sh
-   $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
+   $ curl --ipv4 --proxytunnel --proxy https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
    ```
 
 If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that `curl` is not using IPv6 (use the `-4` option to force IPv4).
@@ -166,33 +166,39 @@ function FindProxyForURL(url, host) {
 - Use a proper text editor such as VS Code to avoid added characters.
   {{</Aside>}}
 
-## 4. Configure your browser
+## 4. Configure your devices
 
 All major browsers support PAC files. You can configure individual browsers, or you can configure system settings that apply to all browsers on the device. Multiple devices can call the same PAC file as long as their source IP addresses were included in the proxy endpoint configuration.
 
-The following example demonstrates the setup procedure for Firefox.
+{{<details header="Chromium-based browsers">}}
+
+Chromium-based browsers (such as Google Chrome, Microsoft Edge, and Brave) rely on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS](https://support.apple.com/guide/mac-help/mchlp2591/mac) or [Windows](https://support.microsoft.com/windows/use-a-proxy-server-in-windows-03096c53-0554-4ffe-b6ab-8b1deee8dae1) documentation.
+
+{{</details>}}
+
+{{<details header="Mozilla Firefox">}}
 
 1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
-
-   ![Going to Network Settings menu in Firefox](/images/cloudflare-one/connections/firefox-network-settings.png)
-
 2. Select **Settings**.
 3. Select **Automatic proxy configuration URL**.
 4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
-
-   ![Enter PAC file URL into Firefox](/images/cloudflare-one/connections/firefox-pac-file.png)
-
 5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
+
+{{</details>}}
+
+{{<details header="Safari">}}
+
+Safari relies on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS documentation](https://support.apple.com/guide/mac-help/mchlp2591/mac).
+
+{{</details>}}
 
 ## 5. Test your HTTP policy
 
-You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+To test your configuration, you can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+
+You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/policies/gateway/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
 ## Limitations
-
-### HTTP policy proxy endpoint specificity
-
-The Gateway HTTP policy does not have a [Proxy Endpoint selector](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) to match specific proxy endpoints. Despite this, Gateway will still apply HTTP policies to traffic sent to Cloudflare proxy servers.
 
 ### Traffic limitations
 

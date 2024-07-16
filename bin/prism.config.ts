@@ -55,6 +55,11 @@ Prism.languages.sh = {
       },
     },
   },
+
+  output: {
+    pattern: /.(?:.*(?:[\r\n]|.$))*/,
+    alias: "unselectable"
+  }
 };
 
 const originalGrammar = Prism.languages.powershell;

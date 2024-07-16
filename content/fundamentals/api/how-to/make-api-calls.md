@@ -8,6 +8,8 @@ weight: 2
 
 Once you [create your API token](/fundamentals/api/get-started/create-token/), all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
 
+<!-- The following example uses an invalid API key to demonstrate what those keys look like -->
+
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}" \
 --header "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"
@@ -96,7 +98,7 @@ PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for
 The following example uses the `Invoke-RestMethod` cmdlet:
 
 ```powershell
-PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'}
+PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'}
 ```
 
 ```txt
@@ -116,7 +118,7 @@ messages    : {}
 By default, the output will only contain the first level of the JSON object hierarchy (in the above example, the content of objects such as `hosts` and `certificates` is not shown). To show additional levels and format the output like the `jq` tool, you can use the `ConvertFrom-Json` cmdlet specifying the desired maximum depth (by default, `2`):
 
 ```powershell
-PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<KEY>'} | ConvertTo-Json -Depth 5
+PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/certificate_packs?ssl_status=all' -Method 'GET' -ContentType 'application/json' -Headers @{'X-Auth-Email'='<EMAIL>';'X-Auth-Key'='<API_KEY>'} | ConvertTo-Json -Depth 5
 ```
 ```json
 ---

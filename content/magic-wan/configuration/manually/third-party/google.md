@@ -32,7 +32,7 @@ A Classic VPN Gateway is required to support static routing. Route tables will a
 2. Select the **Cloud VPN Tunnels** tab > **Create VPN Tunnel**.
 3. Select the VPN Gateway you have created > **Continue**.
 4. Give your tunnel a descriptive name.
-5. For **Remote Peer IP Address**, use one of the public Anycast Magic WAN IPs given to you by your account team.
+5. For **Remote Peer IP Address**, use one of the public anycast Magic WAN IPs given to you by your account team.
 6. In **IKE version**, select **IKEv2**.
 7. You can generate an IKE pre-shared key, or add one you already own. If you generate one during this set up, keep it somewhere safe since you will need it in other steps to finish setting up Magic WAN and GCP.
 8. Choose **Route-based** as routing option.
@@ -40,7 +40,7 @@ A Classic VPN Gateway is required to support static routing. Route tables will a
 
 {{<Aside type="note">}}You can add new IP ranges once the VPN object is created. They will need to be created as VPC routes using this VPN connection (refer to the **Static Routes** section).{{</Aside>}}
 
-10. Repeat the same process using your second Cloudflare Anycast IP.
+10. Repeat the same process using your second Cloudflare anycast IP.
 
 ### Static Routes
 
@@ -68,7 +68,7 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
     - **Tunnel name**: `tunnel01`
     - **Interface address**: The IPsec tunnel inner `/30`CIDR block. For example, `169.254.244.2`.
     - **Customer endpoint**: The IP address from GCP VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-    - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
+    - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the GCP VPN tunnel.
     - **Health check type**: Choose Reply
     - **Health check destination**: Choose **custom** and set the IP corresponding to the interface address for the tunnel
@@ -77,7 +77,7 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
 2. Select **Save**.
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
-{{<Aside type="note">}}Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR of the Magic WAN tunnel (`169.254.244.2` in the example above). 
+{{<Aside type="note">}}Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR of the Magic WAN tunnel (`169.254.244.2` in the example above).
 
 Refer to the **Static Routes** section for more detail on how to create a VPC route leading to your newly created tunnel.{{</Aside>}}
 

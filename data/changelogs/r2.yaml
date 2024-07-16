@@ -1,9 +1,49 @@
 ---
 link: "/r2/reference/changelog/"
 productName: R2
+productLink: "/r2/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-07'
+  description: |-
+      - Fixed an issue that prevented Sippy from copying over objects from S3 buckets with SSE set up.
+- publish_date: '2024-06-06'
+  description: |-
+      - R2 will now ignore the `x-purpose` request parameter.
+- publish_date: '2024-02-20'
+  description: |-
+      - When an `OPTIONS` request against the public entrypoint does not include an `origin` header, an `HTTP 400` instead of an `HTTP 401` is returned.
+- publish_date: '2024-02-06'
+  description: |-
+      - The response shape of `GET /buckets/:bucket/sippy` has changed. 
+      - The `/buckets/:bucket/sippy/validate` endpoint is exposed over APIGW to validate Sippy's configuration. 
+      - The shape of the configuration object when modifying Sippy's configuration has changed.
+- publish_date: '2024-01-30'
+  description: |-
+      - Fixed a bug where the API would accept empty strings in the `AllowedHeaders` property of `PutBucketCors` actions.
+- publish_date: '2024-01-26'
+  description: |-
+      - Parts are now automatically sorted in ascending order regardless of input during `CompleteMultipartUpload`.
+- publish_date: '2024-01-11'
+  description: |-
+      - Sippy is available for Google Cloud Storage (GCS) beta.
+- publish_date: '2023-12-11'
+  description: |-
+      - The `x-id` query param for `S3 ListBuckets` action is now ignored. 
+      - The `x-id` query param is now ignored for all S3 actions. 
+- publish_date: '2023-10-23'
+  description: |-
+      - `PutBucketCors` now only accepts valid origins.
+- publish_date: '2023-09-01'
+  description: |-
+      - Fixed an issue with `ListBuckets` where the `name_contains` parameter would also search over the jurisdiction name.
+- publish_date: '2023-08-23'
+  description: |-
+      - Config Audit Logs GA.
+- publish_date: '2023-08-11'
+  description: |-
+      - Users can now complete conditional multipart publish operations. When a condition failure occurs when publishing an upload, the upload is no longer available and is treated as aborted.
 - publish_date: '2023-07-05'
   description: |-
       - Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than

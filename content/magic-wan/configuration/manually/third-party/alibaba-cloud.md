@@ -39,7 +39,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 ### 3. Create IPsec connections
 
 1. Go to **VPC** > **Customer Gateways** > **Create Customer Gateway**.
-2. Create a customer gateway with the Cloudflare Anycast IP address given to you by your account team. Typically starts with `162.xx.xx.xx`.
+2. Create a customer gateway with the Cloudflare anycast IP address given to you by your account team. Typically starts with `162.xx.xx.xx`.
 3. Now, go to **VPC** > **IPsec Connections** > **Create IPsec Connection**.
 4. Create an IPsec connection with the following settings:
     1. **Name**: give it a descriptive name, like `CF-Magic-WAN-IPsec`.
@@ -67,7 +67,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
     1. **Tunnel name**: Give your tunnel a descriptive name, like `Alibaba`.
     2. **Interface address**: Choose from the subnet in your Alibaba Cloud configuration. For example, if your Alibaba default configuration is `169.xx.xx.1/30`, you might want to choose `169.xx.xx.2/30` for your Magic WAN side of the IPsec tunnel.
     3. **Customer endpoint**: This is the IP address you entered for **Locali** in Alibaba's IPsec connection. For example, `47.xxx.xxx.xxx`.
-    4. **Cloudflare endpoint**: Enter the same Anycast IP address provided by Cloudflare you have entered for Alibaba's Customer Gateway. Typically starts with `162.xx.xx.xx`.
+    4. **Cloudflare endpoint**: Enter the same anycast IP address provided by Cloudflare you have entered for Alibaba's Customer Gateway. Typically starts with `162.xx.xx.xx`.
     5. **Pre-shared key**: Select **Use my own pre-shared key**, and enter the PSK key from your Alibaba Cloud IPsec tunnel.
     6. **Replay protection**: **Enabled**.
 2. Select **Add tunnels** when you are done.

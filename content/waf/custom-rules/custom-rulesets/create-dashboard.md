@@ -3,6 +3,8 @@ pcx_content_type: how-to
 type: overview
 title: Use the dashboard
 weight: 2
+meta:
+  title: Work with custom rulesets in the dashboard
 ---
 
 # Work with custom rulesets in the dashboard
@@ -21,7 +23,7 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
     ![Custom rulesets page in the Cloudflare dashboard](/images/waf/account/custom-rulesets-dashboard.png)
 
-3. Under **Deployed custom rulesets**, select **Create ruleset**.
+3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
 
 4. In the page that displays, enter a name and (optionally) a description for the custom ruleset.
 
@@ -41,14 +43,14 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 9. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+10. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
 
 11. Select **Deploy**.
 
-12. Add other rules to the custom ruleset, if needed.
+12. Add other rules to the custom ruleset, if needed. You can also duplicate an existing rule in the custom ruleset.
 
 13. Select **Create**.
 
-## Configuring a custom response for blocked requests
+## Configure a custom response for blocked requests
 
 {{<render file="_custom-response-blocked-requests.md" withParameters="WAF block;;403">}}

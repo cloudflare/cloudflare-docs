@@ -3,7 +3,7 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
 title: URL forwarding
 meta:
-    title: URL forwarding | Page Rules (deprecated)
+    title: URL forwarding | Page Rules
 weight: 1
 ---
 
@@ -11,7 +11,7 @@ weight: 1
 
 Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/reference/redirects/).
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ---
 

@@ -57,7 +57,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
 4. In the **Encryption** group, make sure you have the following settings:
     - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
-    - **Gateway address**: Enter your Cloudflare Anycast IP address provided by Cloudflare.
+    - **Gateway address**: Enter your Cloudflare anycast IP address provided by Cloudflare.
     - **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
@@ -108,7 +108,7 @@ Contact Sophos support.
 
 ### 1. Configure a GRE tunnel between SFOS and Cloudflare
 
-Start by configuring a GRE tunnel between SFOS and the Cloudflare Anycast IP address.
+Start by configuring a GRE tunnel between SFOS and the Cloudflare anycast IP address.
 
 1. Sign in to the CLI.
 2. Enter **4** to choose **Device console**, and enter the following command:
@@ -189,21 +189,21 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ### Make Cloudflare health checks work
 
-1. The ICMP probe packet from Cloudflare must be the type ICMP request, with Anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
+1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "health_check": {
-        "enabled":true,
-        "target":"172.64.240.252",
-        "type":"request",
-        "rate":"mid"
-    }
+  "health_check": {
+    "enabled": true,
+    "target": "172.64.240.252",
+    "type": "request",
+    "rate": "mid"
+  }
 }'
 ```
 

@@ -124,4 +124,4 @@ If you receive an error deploying:
 
 * Refer to [Workers Python documentation](/workers/languages/python/) to learn more about how to use Python in Workers.
 * Review the [D1 client API](/d1/build-with-d1/d1-client-api/) and how to query D1 databases.
-* Learn [how to import data](/d1/build-with-d1/import-data/) to your D1 database.
+* Learn [how to import data](/d1/build-with-d1/import-export-data/) to your D1 database.

@@ -1,6 +1,7 @@
 ---
 link: "/cloudflare-one/changelog/dlp/"
 productName: DLP
+productLink: "/cloudflare-one/policies/data-loss-prevention/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:

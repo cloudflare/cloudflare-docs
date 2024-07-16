@@ -330,6 +330,9 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 
   - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
 
+- `upload_source_maps` {{<type>}}boolean{{</type>}}
+
+  - When `upload_source_maps` is set to `true`, Wrangler will upload any server-side source maps part of your Pages project to give corrected stack traces in logs.
 {{</definitions>}}
 
 ## Non-inheritable keys

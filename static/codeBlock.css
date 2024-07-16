@@ -85,7 +85,6 @@
 .CodeBlock-scrolls-horizontally > code {
   word-break: normal;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .CodeBlock-scrolls-horizontally > code {
@@ -334,7 +333,8 @@
 .CodeBlock--token-object-property,
 .CodeBlock--token-regex,
 .CodeBlock--token-string,
-.CodeBlock--token-template-string {
+.CodeBlock--token-template-string,
+.CodeBlock--token-triple-quoted-string {
   color: var(--code-gold);
 }
 
@@ -509,11 +509,13 @@
   color: var(--code-green);
 }
 
-[language="sh"] .CodeBlock--token-plain {
+[language="sh"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-output {
   color: var(--code-gray);
 }
 
 [language="sh"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-output,
 [language="sh"] .CodeBlock--token-unselectable,
 [language="powershell"] .CodeBlock--token-plain,
 [language="powershell"] .CodeBlock--token-unselectable {

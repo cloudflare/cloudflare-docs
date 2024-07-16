@@ -4,10 +4,10 @@ type: overview
 title: Create via API
 weight: 16
 meta:
-  title: Create rate limiting rules via API
+  title: Create a rate limiting rule via API
 ---
 
-# Create rate limiting rules via API
+# Create a rate limiting rule via API
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting rule via API.
 
@@ -52,7 +52,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 
 This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
 
-The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```bash
 ---

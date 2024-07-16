@@ -11,7 +11,6 @@ Even when using the same compression algorithm end to end (between your origin s
 
 - [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
-- [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (deprecated)
 - [Mirage](/speed/optimization/images/mirage/)
 - [HTML Minification](/speed/optimization/content/auto-minify/) (deprecated)
 - [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)

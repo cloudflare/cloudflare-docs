@@ -50,7 +50,7 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 #### TLS decryption limitations
 
-Applicatons can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
+Applications can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
 
 {{<glossary-definition term_id="certificate pinning" prepend="- **Certificate pinning**: Certificate pinning is ">}}
 
@@ -66,7 +66,7 @@ Instead of creating a Do Not Inspect policy for an application, you may be able 
 
 #### Microsoft 365 integration
 
-To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicity defined.
+To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicitly defined.
 
 To turn on the Microsoft 365 integration:
 

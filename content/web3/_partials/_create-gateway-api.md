@@ -12,21 +12,20 @@ To create a gateway using the API, send a [`POST`](/api/operations/web3-hostname
 
 If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/web3/hostnames" \
--H "Content-Type: application/json" \
--d '{
-      "name": "gateway.example.com",
-      "description":"This is my IPFS gateway.",
-      "target":"ipfs",
-      "dnslink":"/ipns/onboarding.ipfs.cloudflare.com"
-  }'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/web3/hostnames" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "gateway.example.com",
+  "description": "This is my IPFS gateway.",
+  "target": "ipfs",
+  "dnslink": "/ipns/onboarding.ipfs.cloudflare.com"
+}'
 ```
 
 The response contains the complete definition of the new gateway.

@@ -26,7 +26,7 @@ meta:
 
 ## Add tunnels
 
-{{<render file="tunnel-endpoints/_add-tunnels.md" withParameters="Magic Transit;;**Magic Transit** > **Configuration**;;/magic-transit/how-to/tunnel-health-checks/;;/magic-transit/reference/tunnel-health-checks/;;/magic-transit/reference/anti-replay-protection/;;unidirectional">}}
+{{<render file="tunnel-endpoints/_add-tunnels.md" withParameters="Magic Transit;;**Magic Transit** > **Configuration**;;/magic-transit/how-to/tunnel-health-checks/;;/magic-transit/reference/tunnel-health-checks/;;/magic-transit/reference/anti-replay-protection/;;unidirectional;;/magic-transit/how-to/check-tunnel-health-dashboard/">}}
 
 ## Bidirectional vs unidirectional health checks
 

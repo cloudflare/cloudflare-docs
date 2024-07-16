@@ -8,7 +8,7 @@ meta:
   title: Queues - Publish Directly via HTTP
 ---
 
-The following example shows you how to publsh messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
+The following example shows you how to publish messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
 
 This allows you to write to a Queue from any service or programming language that support HTTP, including Go, Rust, Python or even a Bash script.
 

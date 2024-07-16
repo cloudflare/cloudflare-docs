@@ -29,8 +29,8 @@ Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can b
 Let us examine the global distribution of mitigated requests by product.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/timeseries_groups?aggInterval=1h&dateRange=1d&name=attacks&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/timeseries_groups?aggInterval=1h&dateRange=1d&name=attacks&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 From the abbreviated response below, we can conclude that distributed denial-of-service (DDoS) attacks make up the majority of the requests — which makes sense since DDoS attacks, by their very nature, will perform more requests. This is followed by WAF and then I reputation requests.
@@ -69,8 +69,8 @@ For more information refer to [Get layer 7 attacks by mitigation technique, over
 We can also filter by source location and examine attacks coming from a specific place - in the following example, we examine attacks coming from Great Britain:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location=GB&name=attacks_gb&aggInterval=1h&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location=GB&name=attacks_gb&aggInterval=1h&dateRange=1d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -96,8 +96,8 @@ For more information refer to [Get layer 7 attacks summary](/api/operations/rada
 In the following example, we will examine the top locations being targeted in application layer attacks, in the last 24 hours:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/target?name=attacks_target&limit=5&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/target?name=attacks_target&limit=5&dateRange=1d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -152,8 +152,8 @@ Which source-target location pairs constitute the biggest attacks in the last 24
 How big an attack is, or the attack magnitude, can be defined by the number of mitigated requests (the default) or by the number of total zones under attack.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&magnitude=MITIGATED_REQUESTS&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&magnitude=MITIGATED_REQUESTS&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 A typical response will be similar to the following:

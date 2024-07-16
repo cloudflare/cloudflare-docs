@@ -12,7 +12,7 @@ weight: 2
 
 {{</Aside>}}
 
-The tunnel [configuration file](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#4-create-a-configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file, you can specify top-level properties for your `cloudflared` instance as well as configure [origin-specific properties](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/).
+The tunnel [configuration file](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#4-create-a-configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file, you can specify top-level properties for your `cloudflared` instance as well as configure [origin-specific properties](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/). For a full list of configuration options, type `cloudflared tunnel help` in your terminal.
 
 In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port `8080`.
 

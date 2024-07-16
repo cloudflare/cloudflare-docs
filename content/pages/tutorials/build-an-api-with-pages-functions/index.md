@@ -7,7 +7,8 @@ title: Build an API for your front end using Pages Functions
 ---
 
 # Build an API for your front end using Pages Functions
-## Introduction
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build a full-stack Pages application. Your application will contain:
 

@@ -25,8 +25,8 @@ Besides comparing time series across locations or date ranges (discussed in [Mak
 In the following example, we will examine both `ALL` and `HTTP` traffic in two [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). First, we will examine [AS3243](https://radar.cloudflare.com/as3243), a Portuguese local Internet Service Provider (ISP). The parameters for all traffic are `name=AS3243_all&product=ALL&dateRange=1d&asn=3243`, and for just the HTTP traffic are `name=AS3243_http&product=HTTP&dateRange=1d&asn=3243`):
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=meo_all&product=ALL&dateRange=1d&asn=3243&name=meo_http&product=HTTP&dateRange=1d&asn=3243&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=meo_all&product=ALL&dateRange=1d&asn=3243&name=meo_http&product=HTTP&dateRange=1d&asn=3243&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 This is the abbreviated response:
@@ -47,8 +47,8 @@ This is the abbreviated response:
 In this other example, we will examine [AS174](https://radar.cloudflare.com/as174), another autonomous system that is not an ISP:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_all&product=ALL&dateRange=1d&asn=174&name=AS174_http&product=HTTP&dateRange=1d&asn=174&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_all&product=ALL&dateRange=1d&asn=174&name=AS174_http&product=HTTP&dateRange=1d&asn=174&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The abbreviated response is:
@@ -69,8 +69,8 @@ Here, there is less `HTTP` traffic compared to other types of traffic — which 
 Note that here we made two separate requests since we are only interested in whether `HTTP` comprises the majority of the traffic in each AS or not. If we wanted to actually [compare](/radar/get-started/making-comparisons/) the traffic values between them to, for example, examine who has more traffic, we would have to make a single request including all series. Here is how we could do that:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_all&product=ALL&dateRange=1d&asn=174&name=AS174_http&product=HTTP&dateRange=1d&asn=174&name=AS3243_all&product=ALL&dateRange=1d&asn=3243&name=AS3243_http&product=HTTP&dateRange=1d&asn=3243&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_all&product=ALL&dateRange=1d&asn=174&name=AS174_http&product=HTTP&dateRange=1d&asn=174&name=AS3243_all&product=ALL&dateRange=1d&asn=3243&name=AS3243_http&product=HTTP&dateRange=1d&asn=3243&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 which would lead to a response like this:

@@ -50,7 +50,7 @@ Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-an
 In your terminal, you will be asked a series of questions related to your project:
 
 1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Durable Object` as the type of application you want to create.
+2. Select `Co-ordination / multiplayer API (using Durable Objects)` as the type of application you want to create.
 3. Answer `yes` or `no` to using TypeScript.
 4. Answer `no` to deploying your Worker.
 
@@ -233,7 +233,7 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
 ## 6. Configure Durable Object classes with migrations
 
-A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, renaming, deleting and transferring an existing Durable Object class.
+A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
 

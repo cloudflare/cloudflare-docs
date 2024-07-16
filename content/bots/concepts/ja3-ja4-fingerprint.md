@@ -15,6 +15,64 @@ JA3 and JA4 fingerprints are only available to Enterprise customers who have pur
 
 {{<render file="_signals-intelligence-and-ja4.md">}}
 
+```json
+---
+header: Sample output
+---
+{
+  "ja4Signals": {
+    "h2h3_ratio_1h": 0.98826485872269,
+    "heuristic_ratio_1h": 7.288895722013e-05,
+    "reqs_quantile_1h": 0.99905741214752,
+    "uas_rank_1h": 901,
+    "browser_ratio_1h": 0.93640440702438,
+    "paths_rank_1h": 655,
+    "reqs_rank_1h": 850,
+    "cache_ratio_1h": 0.18918327987194,
+    "ips_rank_1h": 662,
+    "ips_quantile_1h": 0.99926590919495
+  },
+  "jaSignalsParsed": {
+    "ratios": {
+      "h2h3_ratio_1h": 0.98826485872269,
+      "heuristic_ratio_1h": 7.288895722013e-05,
+      "browser_ratio_1h": 0.93640440702438,
+      "cache_ratio_1h": 0.18918327987194
+    },
+    "ranks": {
+      "uas_rank_1h": 901,
+      "paths_rank_1h": 655,
+      "reqs_rank_1h": 850,
+      "ips_rank_1h": 662
+    },
+    "quantiles": {
+      "reqs_quantile_1h": 0.99905741214752,
+      "ips_quantile_1h": 0.99926590919495
+    }
+  }
+}
+```
+
+When JA4 Signals are missing, the output appears as follows:
+
+```json
+---
+header: Missing JA4 signals output
+---
+{
+  "ja4Signals": {},
+  "jaSignalsParsed": {
+    "ratios": {},
+    "ranks": {},
+    "quantiles": {}
+  }
+}
+```
+
+{{<Aside type="note">}}
+This sample was generated using [Workers' Cloudflare Object script](/workers/examples/accessing-the-cloudflare-object/).
+{{</Aside>}}
+
 ## Analytics
 
 To get more information about potential bot requests, use these JA3 and JA4 fingerprints in:

@@ -8,9 +8,7 @@ model:
     id: "dfce1c48-2a81-462e-a7fd-de97ce985207"
     name: "Automatic Speech Recognition"
     description: "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
-  tags:
-    - "automatic-speech-recognition"
-    - "openai"
+  tags: []
   properties:
     - property_id: "beta"
       value: "false"
@@ -21,6 +19,8 @@ model_display_name: "whisper"
 layout: "model"
 weight: 100
 title: "whisper"
-json_schema: ""
+json_schema:
+  input: "{\n  \"oneOf\": [\n    {\n      \"type\": \"string\",\n      \"format\": \"binary\"\n    },\n    {\n      \"type\": \"object\",\n      \"properties\": {\n        \"audio\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        }\n      },\n      \"required\": [\n        \"audio\"\n      ]\n    }\n  ]\n}"
+  output: "{\n  \"type\": \"object\",\n  \"contentType\": \"application/json\",\n  \"properties\": {\n    \"text\": {\n      \"type\": \"string\"\n    },\n    \"word_count\": {\n      \"type\": \"number\"\n    },\n    \"words\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"word\": {\n            \"type\": \"string\"\n          },\n          \"start\": {\n            \"type\": \"number\"\n          },\n          \"end\": {\n            \"type\": \"number\"\n          }\n        }\n      }\n    },\n    \"vtt\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"text\"\n  ]\n}"
 
 ---
