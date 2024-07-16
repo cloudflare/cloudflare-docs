@@ -65,7 +65,7 @@ The Rules language supports these transformation functions:
 
   - <em>Example:</em>
   <br/>
-  With the following HTTP request header: `client_id: MTIzYWJj`,<br>
+  With the following HTTP request header: `client_id: MTIzYWJj`,<br/>
   `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
 {{<Aside type="warning">}}
