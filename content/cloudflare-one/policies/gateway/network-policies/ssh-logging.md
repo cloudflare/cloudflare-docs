@@ -136,4 +136,6 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
    This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.
 
-   Note: SSH Command Logging does not support SFTP since it cannot be inspected and logged.
+## Limitations
+
+SSH Command Logging does not support SFTP since it cannot be inspected and logged.
