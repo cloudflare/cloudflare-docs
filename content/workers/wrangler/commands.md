@@ -2030,6 +2030,87 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 {{</Aside>}}
 
+### `secret`
+
+Generate a secret that can be referenced in a Pages project.
+
+### `put`
+
+Create or update a secret for a Pages project.
+
+```txt
+wrangler pages secret put <KEY> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete a secret from a Pages project.
+
+```txt
+wrangler pages secret delete <KEY> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `list`
+
+List the names of all the secrets for a Pages project.
+
+```txt
+wrangler pages secret list [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `bulk`
+
+Upload multiple secrets for a Pages project at once.
+
+```txt
+wrangler pages secret bulk [<FILENAME>] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
 ---
 
 ## `queues`
