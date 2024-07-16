@@ -70,7 +70,7 @@ Devices enrolled via a service token are identified by the email address `non_id
 
 ## 3. Configure the MDM file
 
-To enable the Windows pre-login feature, an MDM file in the following format must be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows) on the device. In the example below, the `pre_login` key allows the device to connect using the service token while `configs` contains your default Zero Trust configuration.
+To enable the Windows pre-login feature, an MDM file in the following format must be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows) on the device. In the following example, the `pre_login` key allows the device to connect using the service token, while `configs` contains your default Zero Trust configuration.
 
 ```xml
 ---
