@@ -1,5 +1,5 @@
 ---
-title: Load balancing
+title: Load Balancing
 pcx_content_type: reference
 weight: 5
 meta:
