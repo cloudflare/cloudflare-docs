@@ -14,7 +14,7 @@ tags: [Hono]
 
 This tutorial will teach you how to use [R2](/r2/) as a static asset bucket for your [Pages](/pages/) app. This is especially helpful if you're hitting the [file limit on Pages](/pages/platform/limits/#files).
 
-To illustrate how this is done, we'll build a simple hello-world app with [Hono](https://hono.dev/), and host it's static assets (i.e images and JavaScript libraries) in an R2 bucket.
+To illustrate how this is done, we will build a simple hello-world app with [Hono](https://hono.dev/), and host its static assets (such as images and JavaScript libraries) in an R2 bucket.
 
 ## Create an R2 bucket
 
