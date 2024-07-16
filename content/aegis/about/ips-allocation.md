@@ -6,7 +6,7 @@ meta:
   title: Aegis IPs allocation
 ---
 
-# How are Aegis IPs allocated
+# How Aegis IPs are allocated
 
 Cloudflare Aegis supports both IPv4 and IPv6 addresses.
 

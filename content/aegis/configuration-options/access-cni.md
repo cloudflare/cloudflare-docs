@@ -10,7 +10,7 @@ meta:
 
 You can use Aegis combined with [Cloudflare Network Interconnect (CNI)](/network-interconnect/) to secure your applications with [Cloudflare Access](/cloudflare-one/policies/access/) without installing software or customizing code on your server.
 
-While Access allows you to enforce policies at the hostname level, other solutions are usually necessary to protect against origin IP bypass - when an attacker knows your origin server IP and uses it to directly interact with the target application.
+While Access allows you to enforce policies at the hostname level, other solutions are usually necessary to protect against origin IP bypass — when an attacker knows your origin server IP and uses it to directly interact with the target application.
 
 With Aegis IPs, you only allow a small number of IPs (that are not publicly listed) through your [network firewall](/aegis/configuration-options/network-firewall/). And with Cloudflare Network Interconnect, you can use a completely private path between Cloudflare and your application server, without exposure to the public Internet.
 
