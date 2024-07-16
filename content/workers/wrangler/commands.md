@@ -2316,7 +2316,7 @@ wrangler versions delete <KEY> [OPTIONS] --experimental-versions
 
 {{</definitions>}}
 
-### `secret:bulk`
+### `secret bulk`
 
 Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
