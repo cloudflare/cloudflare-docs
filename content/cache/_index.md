@@ -79,6 +79,10 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 {{</related>}}
 
+{{<related header="Aegis" href="/aegis/" product="aegis">}}
+Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) for your layer 7 WAF and CDN services.
+{{</related>}}
+
 ---
 
 ## More resources
