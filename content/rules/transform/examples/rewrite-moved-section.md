@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where everything under `/blog/<PATH>` is rewritten to `/marketing/<PATH>`.
 product:
   - Transform Rules
+operation:
+  - Redirect
 title: Rewrite path of moved section of a website
 ---
 

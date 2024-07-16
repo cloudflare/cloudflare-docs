@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where the header `X-Source` with a static value (`Cloudflare`) is added to the request.
 product:
   - Transform Rules
+operation:
+  - Request modification
 title: Add an HTTP request header with a static value
 ---
 

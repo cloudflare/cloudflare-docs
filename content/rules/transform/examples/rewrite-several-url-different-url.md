@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
 product:
   - Transform Rules
+operation:
+  - Redirect
 title: Rewrite path with several URL segments to a different URL segment
 ---
 

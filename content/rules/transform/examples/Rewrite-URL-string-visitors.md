@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where a request to the `/blog` path is rewritten to `/blog?sort-by=date`.
 product:
   - Transform Rules
+operation:
+  - Redirect
 title: Rewrite URL query string of blog visitors
 ---
 

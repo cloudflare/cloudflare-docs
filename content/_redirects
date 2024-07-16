@@ -869,9 +869,13 @@
 /registrar/get-started/transfer-uk-domain/ /registrar/top-level-domains/uk-domains/ 301
 
 # rules
-/rules/configuration-rules/terraform-example/ /rules/compression-rules/examples/ 301
-/rules/origin-rules/terraform-example/ /rules/origin-rules/examples/ 301
+/rules/configuration-rules/terraform-example/ /rules/configuration-rules/examples/define-single-configuration-terraform/ 301
+/rules/origin-rules/terraform-example/ /rules/origin-rules/examples/define-single-origin-terraform/ 301
 /rules/transform/create-header-modification-rule/ /rules/transform/request-header-modification/create-dashboard/ 301
+/rules/transform/response-header-modification/examples/ /rules/transform/examples/?operation=Response+modification 301
+/rules/transform/request-header-modification/examples/ /rules/transform/examples/?operation=Request+modification 301
+/rules/transform/url-rewrite/examples/ /rules/transform/examples/?operation=Redirect 301
+/rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
 # spectrum

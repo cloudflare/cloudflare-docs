@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where a header named `X-Bot-Score` is set to a static value (`Cloudflare`) in the response.
 product:
   - Transform Rules
+operation:
+  - Response modification
 title: Set an HTTP response header to a static value
 ---
 

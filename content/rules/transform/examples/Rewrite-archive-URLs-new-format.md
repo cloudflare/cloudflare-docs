@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` is rewritten to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`.
 product:
   - Transform Rules
+operation:
+  - Redirect
 title: Rewrite blog archive URLs to support a new URL format
 ---
 

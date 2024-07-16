@@ -3,6 +3,8 @@ pcx_content_type: example
 summary: A transform rule where the `cf-connecting-ip` header is removed from the request.
 product:
   - Transform Rules
+operation:
+  - Request modification
 title: Remove an HTTP request header
 ---
 
