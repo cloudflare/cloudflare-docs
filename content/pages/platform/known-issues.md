@@ -46,6 +46,8 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
+- Features based on client certificates like [mTLS](/ssl/client-certificates/) or [API Shield](/api-shield/) cannot be used with Cloudflare Pages. 
+
 ## Pages Functions
 
 - [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
