@@ -13,7 +13,7 @@ For IPv4 traffic, based on [IPs allocation](/aegis/about/ips-allocation/), not a
 
 Aegis does not forward to another location in response to traffic spikes. Instead, each IPv4 can be split across up to four locations, where some of these locations may have multiple data centers. IP capacity in each data center can also be adjusted in accordance with the amount of traffic that reaches each location.
 
-After a request reaches Cloudflare on an ingress data center, and the cache service sends a request for the egress router to connect to your origin, the following scenarios are possible:
+After a request reaches Cloudflare on an ingress data center, and the cache service sends a request for the egress router to connect to your origin, the following scenarios are possible.
 
 ## Traffic can egress from the same server
 
