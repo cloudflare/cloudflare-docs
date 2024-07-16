@@ -188,7 +188,7 @@ The following table represents the comparison operators that are supported and e
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#x2705;</td>
+      <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
          <code class="InlineCode">{\"key\":\"EdgeResponseStatus\",\"operator\":\"<strong>in</strong>\",\"value\":[200,201]}</code>
@@ -200,7 +200,7 @@ The following table represents the comparison operators that are supported and e
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#x2705;</td>
+      <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
          <code class="InlineCode">{\"key\":\"EdgeResponseStatus\",\"operator\":\"<strong>!in</strong>\",\"value\":[200,201]}</code>
