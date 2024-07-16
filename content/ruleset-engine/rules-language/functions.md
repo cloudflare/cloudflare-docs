@@ -59,9 +59,9 @@ The Rules language supports these transformation functions:
 
 - <code id="function-decode_base64">{{<name>}}decode_base64{{</name>}}(source{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
-  - Decodes a Base64-encoded string specified in `source`.
+  - Decodes a Base64-encoded String specified in `source`.
 
-  - `source` must be a field, that is, it cannot be a literal string.
+  - `source` must be a field, that is, it cannot be a literal String.
 
   - <em>Example:</em>
   <br/>
