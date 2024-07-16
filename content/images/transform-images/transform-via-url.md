@@ -84,7 +84,7 @@ Here is an example of markup to configure a maximum size for your image:
 
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.
 
-You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only).
+You can detect device type by enabling the `CF-Device-Type` header [via Cache Rules](/cache/how-to/cache-rules/settings/#cache-key).
 
 ## Caching
 
