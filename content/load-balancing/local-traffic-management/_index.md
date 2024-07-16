@@ -37,7 +37,7 @@ Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traff
 
 ### Magic WAN 
 
-LTM supports off-ramping traffic for Magic WAN tunnels, such as GRE, IPSec or CNI tunnels. For more information refer to the Set up LTM with Magic Wan.
+LTM supports off-ramping traffic for Magic WAN tunnels, such as GRE, IPSec or CNI tunnels. For more information refer to the [Set up LTM with Magic Wan](/load-balancing/local-traffic-management/ltm-magic-wan/).
 
 ---
 
