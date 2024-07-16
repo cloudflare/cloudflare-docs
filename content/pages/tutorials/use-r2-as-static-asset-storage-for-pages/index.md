@@ -107,7 +107,7 @@ export default app;
 
 ## Deploy your app
 
-After saving `index.tsx` , open a new terminal window in run:
+After saving `index.tsx` , open a new terminal window and run:
 
 ```sh
 $ npm run deploy
