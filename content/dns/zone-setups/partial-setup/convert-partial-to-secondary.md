@@ -101,7 +101,7 @@ dig example.com @ns0123.secondary.cloudflare.com
 
 4. At your registrar, [update your nameservers](/dns/nameservers/update-nameservers/) to point to the Cloudflare nameservers.
 
-At this point, the zone should work as if it was in a full setup.
+Once the time to live (TTL) of previous `NS` records is expired and this information is evicted from resolvers' cache, your zone will be properly delegated to Cloudflare. In order to update DNS records, you must configure [zone transfers](/dns/zone-setups/zone-transfers/) in the next steps.
 
 ## 3. Configure the zone transfers
 
