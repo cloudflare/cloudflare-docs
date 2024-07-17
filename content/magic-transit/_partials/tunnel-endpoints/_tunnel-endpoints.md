@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;loadBalancing
+inputParameters: ipRange
 ---
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare will assign two Cloudflare endpoint addresses shortly after your onboarding kickoff call that you can use as the tunnel destinations on your network location's routers/endpoints.
@@ -22,5 +22,3 @@ This value is not required for {{<glossary-tooltip term_id="IPsec tunnel">}}IPse
   {{<Aside type="warning">}}Especially for cloud service providers that might automatically generate prefixes for you, make sure the prefixes are always within the allowed Cloudflare ranges, or the tunnel will not work.{{</Aside>}}
 - **TTL**: Time to Live (TTL) in number of hops for the {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnel. The default value is 64.
 - **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
-
-$2

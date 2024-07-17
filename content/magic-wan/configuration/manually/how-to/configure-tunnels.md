@@ -8,7 +8,7 @@ meta:
 
 # Configure tunnel endpoints
 
-{{<render file="tunnel-endpoints/_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.240.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address));;If you purchase Load Balancing, you can use it with Magic WAN to distribute traffic across endpoints and prevent potential bottlenecks. Refer to [Load Balancing](/magic-wan/load-balancing/) for more information.">}}
+{{<render file="tunnel-endpoints/_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.240.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address))">}}
 
 ## GRE and IPsec tunnels
 
