@@ -8,7 +8,7 @@ meta:
 
 # Create an HTTP response header modification rule in the dashboard
 
-Refer to [Response header modification examples](/rules/transform/examples/?operation=Response+modification) for examples of rule definitions.
+Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Response+modification) for examples of rule definitions.
 
 To create a rule:
 

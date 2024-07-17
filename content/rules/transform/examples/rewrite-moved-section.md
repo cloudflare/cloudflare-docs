@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: A transform rule where everything under `/blog/<PATH>` is rewritten to `/marketing/<PATH>`.
+summary: Create a rewrite URL rule (part of Transform Rules) to rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>`.
 product:
   - Transform Rules
 operation:

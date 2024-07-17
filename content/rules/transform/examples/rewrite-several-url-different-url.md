@@ -1,11 +1,11 @@
 ---
 pcx_content_type: example
-summary: A transform rule where `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` is rewritten to `/img/<FILENAME>`.
+summary: Create a rewrite URL rule (part of Transform Rules) to rewrite any requests for `/images/<FOLDER1>/<FOLDER2>/<FILENAME>` to `/img/<FILENAME>`.
 product:
   - Transform Rules
 operation:
   - Rewrite URL
-title: Rewrite path with several URL segments to a different URL segment
+title: Rewrite image paths with several URL segments
 ---
 
 # Rewrite path with several URL segments to a different URL segment

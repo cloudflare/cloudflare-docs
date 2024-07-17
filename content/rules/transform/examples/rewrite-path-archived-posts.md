@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: A transform rule where all requests to `/news/2012/...` are rewritten to `/archive/news/2012/...`.
+summary: Create a rewrite URL rule (part of Transform Rules) to rewrite any requests for `/news/2012/...` URI paths to `/archive/news/2012/...`.
 product:
   - Transform Rules
 operation:

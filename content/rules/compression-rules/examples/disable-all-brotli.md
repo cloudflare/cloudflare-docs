@@ -1,9 +1,9 @@
 ---
 pcx_content_type: example
-summary: A compression rule where Brotli compression for all incoming requests of a given zone is disabled.
+summary: Create a compression rule to turn off Brotli compression for all incoming requests of a given zone.
 product:
   - Compression Rules
-title: Disable Brotli compression for all requests of a zone
+title: Disable Brotli compression
 ---
 
 # Disable Brotli compression for all requests of a zone

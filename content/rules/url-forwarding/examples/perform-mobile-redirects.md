@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: A redirect rule where visitors using mobile devices are redirected to a different hostname.
+summary: Create a redirect rule to redirect visitors using mobile devices to a different hostname.
 product:
   - Redirect Rules
 title: Perform mobile redirects
