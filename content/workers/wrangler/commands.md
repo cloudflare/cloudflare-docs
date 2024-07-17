@@ -789,9 +789,12 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Path to a custom certificate.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--legacy-assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
+  - Root folder of static assets to be served.
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -863,9 +866,12 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
-- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--legacy-assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
+  - Root folder of static assets to be served.
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1489,7 +1495,7 @@ wrangler r2 bucket notification create <NAME> [OPTIONS]
   - Specifies the key name prefix that an object must match to trigger event notifications.
 - `--suffix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specifies the key name suffix that an object must match to trigger event notifications.
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `notification delete`
 
@@ -1683,7 +1689,7 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 ## `secret`
 
-Manage the secret variables for a Worker. 
+Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
@@ -2062,7 +2068,6 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 {{</Aside>}}
 
-
 ### `secret put`
 
 Create or update a secret for a Pages project.
@@ -2218,7 +2223,7 @@ wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
   - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
 - `--retry-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long a retried message should be delayed for, in seconds. Must be a positive integer.
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `consumer remove`
 
@@ -2313,7 +2318,9 @@ Retrieve your user information and test your authentication configuration.
 ```txt
 wrangler whoami
 ```
+
 ---
+
 ## `versions`
 
 [Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
@@ -2335,6 +2342,7 @@ wrangler versions upload [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--tag` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2354,6 +2362,7 @@ wrangler versions deploy [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2368,6 +2377,7 @@ For example:
 `wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90%    --experimental-versions`
 
 {{</Aside>}}
+
 ### `list`
 
 Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
@@ -2375,6 +2385,7 @@ Retrieve details for the 10 most recent versions. Details include `Version ID`, 
 ```txt
 wrangler versions list [OPTIONS] --experimental-versions
 ```
+
 {{<definitions>}}
 
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -2386,14 +2397,14 @@ wrangler versions list [OPTIONS] --experimental-versions
 
 ### `secret put`
 
-Create or replace a secret for a Worker.  Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
-
+Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
 wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -2402,7 +2413,6 @@ wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 - `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific environment.
-
 
 {{</definitions>}}
 
@@ -2415,6 +2425,7 @@ wrangler versions delete <KEY> [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
@@ -2435,6 +2446,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2447,6 +2459,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
 {{</definitions>}}
 
 ---
+
 ## `triggers`
 
 This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
@@ -2463,18 +2476,17 @@ The minimum required wrangler version to use these commands is 3.40.0.
 
 Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
 
-
 ```txt
 wrangler triggers deploy [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
+
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
     {{</definitions>}}
-
 
 --
 
@@ -2482,12 +2494,12 @@ wrangler triggers deploy [OPTIONS] --experimental-versions
 
 [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
-
 {{<Aside type="note">}}
 
 Deployments are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</Aside>}}
+
 ### `view`
 
 Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
@@ -2520,8 +2532,6 @@ wrangler deployments list [OPTIONS]
 
 {{</definitions>}}
 
-
-
 {{<Aside type="note">}}
 
 `Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
@@ -2546,6 +2556,7 @@ wrangler deployments list [OPTIONS] --experimental-versions
 {{<definitions>}}
 
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -2564,13 +2575,13 @@ wrangler deployments status --experimental-versions
 {{<definitions>}}
 
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
   - Required for version commands. Can be replaced with `--x-versions`.
 
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
-
 
 ## `rollback`
 
