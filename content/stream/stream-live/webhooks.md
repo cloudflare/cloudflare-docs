@@ -42,4 +42,38 @@ header: Example webhook payload
 }
 ```
 
-The `event_type` property of the data object will either be `live_input.connected` or `live_input.disconnected`.
+The `event_type` property of the data object will either be `live_input.connected`, `live_input.disconnected`, or `live_input.errored`.
+
+If there are issues detected with the input, the `event_type` will be `live_input.errored`. Additional data will be under the `live_input_errored` json key and will include a `code` with one of the values listed below.
+
+## Error codes
+
+- `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded.
+- `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is out of range.
+- `ERR_UNSUPPORTED_VIDEO_CODEC` – The input video codec is unsupported for the protocol used.
+- `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
+
+```json
+---
+header: Example live_input.errored webhook payload
+---
+{
+  "name": "Live Webhook Test",
+  "text": "Notification type: Stream Live Input\nInput ID: 2c28dd2cc444cb77578c4840b51e43a8\nEvent type: live_input.errored\nUpdated at: 2024-07-09T18:07:51.077371662Z\nError Code: ERR_GOP_OUT_OF_RANGE\nError Message: Input GOP size or keyframe interval is out of range.\nVideo Codec: \nAudio Codec: ",
+  "data": {
+    "notification_name": "Stream Live Input",
+    "input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
+    "event_type": "live_input.errored",
+    "updated_at": "2024-07-09T18:07:51.077371662Z",
+    "live_input_errored": {
+      "error": {
+        "code": "ERR_GOP_OUT_OF_RANGE",
+        "message": "Input GOP size or keyframe interval is out of range."
+      },
+      "video_codec": "",
+      "audio_codec": ""
+    }
+  },
+  "ts": 1720548474,
+}
+```
