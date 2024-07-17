@@ -5,7 +5,7 @@ title: Tutorial
 
 # Tutorial
 
-A tutorial connects products to real-world scenarios to meet a user's goal.
+{{<glossary-definition term_id="tutorial">}}
 
 ## Template
 

@@ -25,15 +25,8 @@ To avoid this state, make sure you manage Terraform resources only in Terraform.
 The easiest way to install Terraform on macOS is with Homebrew.
 
 ```sh
-$ brew install terraform
-
-==> Downloading https://homebrew.bintray.com/bottles/terraform-0.11.6.sierra.bottle.tar.gz
-######################################################################## 100.0%
-==> Pouring terraform-0.11.6.sierra.bottle.tar.gz
-🍺  /usr/local/Cellar/terraform/0.11.6: 6 files, 80.2MB
-
-$ terraform version
-Terraform v0.11.6
+$ brew tap hashicorp/tap
+$ brew install hashicorp/tap/terraform
 ```
 
 ## Linux

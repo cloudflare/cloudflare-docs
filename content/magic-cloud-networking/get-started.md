@@ -6,7 +6,7 @@ weight: 2
 
 # Configure Magic Cloud Networking
 
-To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
+To get started with Magic Cloud Networking {{<inline-pill style="beta">}} you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
 
 Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources — like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
@@ -30,7 +30,11 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
                 "ec2:DeleteTransitGatewayPeeringAttachment",
                 "ec2:DescribeRegions",
                 "ec2:DescribeTransitGatewayPeeringAttachments",
-                "ec2:RejectTransitGatewayPeeringAttachment"
+                "ec2:RejectTransitGatewayPeeringAttachment",
+                "ec2:GetManagedPrefixListEntries",
+                "ec2:CreateManagedPrefixList",
+                "ec2:ModifyManagedPrefixList",
+                "ec2:DeleteManagedPrefixList"
             ],
             "Resource": "*"
         }
@@ -74,7 +78,7 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 7. Enter the credentials that you have created in [Set up cloud credentials](#1-set-up-cloud-credentials). These allow Magic Cloud Networking to access the resources in your cloud provider.
 8. Select **Authorize**.
 
-You have successfully connected your cloud provider to Magic Cloud Network. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
+You have successfully connected your cloud provider to Magic Cloud Networking. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
 ## Next steps
 

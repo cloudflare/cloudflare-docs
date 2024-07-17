@@ -8,84 +8,110 @@ meta:
 
 # Deploy `cloudflared` in AWS
 
-The purpose of this guide is to walk through some best practices for accessing private resources on AWS by deploying Cloudflare's lightweight connector, `cloudflared`.
+This guide covers how to connect an Amazon Web Services (AWS) virtual machine to Cloudflare using our lightweight connector, `cloudflared`.
 
-We will walk through how to initialize a service on a Linux VM in AWS, and route to it from another VM running cloudflared. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
+We will deploy:
 
-## Prerequisites
+- An EC2 virtual machine that runs a basic HTTP server.
+- A Cloudflare Tunnel that allows users to connect to the service via either a public hostname or a private IP address.
 
-- In [Zero Trust](https://one.dash.cloudflare.com/), create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) into your Cloudflare Zero Trust account.
+### Prerequisites
 
-## Create your environment
+To complete the following procedure, you will need to:
 
-1. From the AWS console, go to **Build a Solution** and select **Launch a Virtual Machine with EC2**.
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) on an end-user device
 
-   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-console.png)
+## 1. Create a VM instance in AWS
 
-1. Next, select the appropriate AMI. In this instance, we are using Ubuntu 18.0.
+1. From the AWS console, go to **Compute** > **EC2** > **Instances**
 
-   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-2.png)
+2. Select **Launch instance**.
 
-1. When selecting your instance type, choose `t2.micro`. This type is available for the free tier.
+3. Name your VM instance. In this example we will name it `http-test-server`.
 
-1. Select **Next: Configure Instance Details**.
+4. For **Amazon Machine Image (AMI)* choose your desired operating system and specifications. For this example, we will use _Ubuntu Server 24.04 LTS (HVM), SSD Volume Type_.
 
-1. Because we are leaving this device on the default VPC, you will not need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Select **Next: Add Storage**, and then select **Next: Add Tags**.
+5. For **Instance type:**, you can select _t2.micro_ which is available on the free tier.
 
-   ![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-3.png)
+6. In **Key pair (login)**, create a new key pair to use for SSH. You will need to download the `.pem` file onto your local machine.
 
-1. Next, advance to **Security Group Settings** and add two policies:
+7. In **Network settings**, select **Create security group**.
 
-   - Ensure SSH is only accessible from your IP to prevent it being publicly accessible.
-   - Allow traffic from `172.31.0.0/16`, which is the default internal IP range that AWS will give your device.
+8. Turn on the following Security Group rules:
+    - **Allow SSH traffic from _My IP_** to prevent the instance from being publicly accessible.
+    - **Allow HTTPS traffic from the internet**
+    - **Allow HTTP traffic from the internet**
 
-1. Deploy two `t2.micro` devices, and then build a key pair. You will need to [download the `.pem` file](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) in order to use SSH in the next steps.
+9. Select **Launch instance**.
 
-1. Finally, make sure you locate the Public IPv4 DNS address inside the instance summary on the AWS console. You will need that parameter as well in order to use SSH.
+10. Once the instance is up and running, go to the **Instances** summary page and copy its **Public IPv4 DNS** hostname (for example, `ec2-44-202-59-16.compute-1.amazonaws.com`).
 
-![AWS console](/images/cloudflare-one/connections/connect-apps/aws-step-4.png)
+11. To log in to the instance over SSH, open a terminal and run the following commands:
 
-The next step is to build out and route a service.
+  ```sh
+  $ cd Downloads
+  ```
 
-## Deploy `cloudflared`
+  ```
+  chmod 400 "YourKeyPair.pem"
+  ```
 
-Now that we have EC2 up and running in AWS, you can log in to your instance.
+  ```sh
+  $ ssh -i "YourKeyPair.pem" ubuntu@ec2-44-202-59-16.compute-1.amazonaws.com
+  ```
 
-1. SSH into your AWS instance using the command line.
+12. Run `sudo su` to gain full admin rights to the instance.
 
-   ```sh
-   $ cd Downloads
-   ```
+13. For testing purposes, you can deploy a basic Apache web server on port `80`:
 
-   ```sh
-   $ ssh -i "TestKeyPair.pem" ubuntu@ec2-44-202-59-16.compute-1.amazonaws.com
-   ```
+  ```bash
+  $ apt update
 
-1. Run `sudo su` to gain full admin rights to the Virtual Machine.
+  $ apt -y install apache2
 
-1. Run `apt install curl` to install any relevant dependencies for your new instance.
+  $ cat <<EOF > /var/www/html/index.html
+  <html><body><h1>Hello Cloudflare!</h1>
+  <p>This page was created for a Cloudflare demo.</p>
+  </body></html>
+  EOF
+  ```
 
-1. Install `cloudflared` on your instance. In this example, we are running a Debian-based instance, so use the Debian package of `cloudflared`:
+14. To verify that the Apache server is running, open a browser and go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` (make sure to connect over `http`, not `https`). You should see the **Hello Cloudflare!** test page.
 
-   {{<render file="tunnel/_cloudflared-debian-install.md">}}
+## 2. Create a Cloudflare Tunnel
 
-1. Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
+{{<render file="tunnel/_cloud-create-tunnel.md" withParameters="AWS instance;;aws">}}
 
-   ```sh
-   $ cloudflared tunnel login
-   ```
+## 3. Connect using a public hostname
 
-1. Create a tunnel.
+{{<render file="tunnel/_cloud-public-hostname.md">}}
 
-   ```sh
-   $ cloudflared tunnel create AWS-01
-   ```
+## 4. Connect using a private IP
 
-1. Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
+[Private network routes](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) allow users to connect to your virtual private cloud (VPC) using the WARP client. To add a private network route for your Cloudflare Tunnel:
 
-   ```sh
-   $ cloudflared tunnel route ip add 172.31.0.0/16 AWS-01
-   ```
+1. In the **Private Network** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`). You can expand the IP range later if necessary.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `172.16.0.0/12`.  We recommend re-adding the IPs that are not explicitly used by your AWS instance -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
+3. To test on a user device:
+    1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
+    2. Open a terminal window and connect to the service using its private IP:
 
-{{<render file="tunnel/_cloudflared-cloud-deployment.md">}}
+      ```sh
+      $ curl 172.31.19.0
+      <html><body><h1>Hello Cloudflare!</h1>
+      <p>This page was created for a Cloudflare demo.</p>
+      </body></html>
+      ```
+
+You can optionally [create Gateway network policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to control who can access the instance via its private IP.
+
+## Firewall configuration
+
+To secure your AWS instance, you can configure your [Security Group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html) to deny all inbound traffic and allow only outbound traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). All Security Group rules are Allow rules; traffic that does not match a rule is blocked. Therefore, you can delete all inbound rules and leave only the relevant outbound rules.
+
+{{<Aside type="note">}}
+If you delete the inbound rule for port `22`, you will be unable to SSH back into the instance.
+{{</Aside>}}
+
+After configuring your Security Group rules, verify that you can still access the service through Cloudflare Tunnel via its [public hostname](#3-connect-using-a-public-hostname) or [private IP](#4-connect-using-a-private-ip). The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` the test page should no longer load.

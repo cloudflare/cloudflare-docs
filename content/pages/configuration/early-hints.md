@@ -25,15 +25,15 @@ filename: _headers
   Link: </styles.css>; rel=preload; as=style
 ```
 
-Pages will attach this `Link: </styles.css>; rel=preload; as=stylesheet` header. Early Hints will then emit this header as an Early Hint once cached.
+Pages will attach this `Link: </styles.css>; rel=preload; as=style` header. Early Hints will then emit this header as an Early Hint once cached.
 
 ### 2. Automatic `Link` header generation
 
-In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with any of the following attributes:
+In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with the following attributes:
 
 - `href`
-- `as`
-- `rel` (`preload` or `preconnect`)
+- `as` (optional)
+- `rel` (one of `preconnect`, `preload`, or `modulepreload`)
 
 `<link>` elements which contain any other additional attributes (for example, `fetchpriority`, `crossorigin` or `data-do-not-generate-a-link-header`) will not be used to generate `Link` headers in order to prevent accidentally losing any custom prioritization logic that would otherwise be dropped as an Early Hint.
 

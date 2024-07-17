@@ -7,7 +7,7 @@ meta:
 
 # WARP on-ramp to Magic WAN
 
-Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an {{<glossary-tooltip term_id="on-ramp">}}on-ramp{{</glossary-tooltip>}} to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels ({{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}GRE{{</glossary-tooltip>}}, {{<glossary-tooltip term_id="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}IPsec{{</glossary-tooltip>}}, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
+Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an {{<glossary-tooltip term_id="on-ramp">}}on-ramp{{</glossary-tooltip>}} to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels ({{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}GRE{{</glossary-tooltip>}}, {{<glossary-tooltip term_id="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels">}}IPsec{{</glossary-tooltip>}}, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare’s global network.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ When connecting a WARP device to Magic WAN, you will have virtual IP addresses f
 
 ### 1. Route packets back to WARP devices
 
-Route packets back to WARP devices from services behind an Anycast GRE or other type tunnel. You need to do this before actually installing WARP. Otherwise, your infrastructure will not route packets correctly to Cloudflare global network and connectivity will fail.
+Route packets back to WARP devices from services behind an anycast GRE or other type tunnel. You need to do this before actually installing WARP. Otherwise, your infrastructure will not route packets correctly to Cloudflare global network and connectivity will fail.
 
 Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your WARP devices. To view your virtual IP address, open the [Cloudflare Zero Trust dashboard](https://one.dash.cloudflare.com/), and select **My Team** > **Devices**.
 
@@ -77,4 +77,4 @@ When a WARP user goes to a location (like an office) with a Magic WAN tunnel alr
 
 Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
 
-To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-udp-ports).
+To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) and [WARP UDP ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).

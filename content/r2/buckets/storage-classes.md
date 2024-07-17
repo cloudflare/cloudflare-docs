@@ -77,7 +77,7 @@ Standard storage is designed for data that is accessed frequently. This is the d
 
 {{<Aside type="note" header="Open Beta">}}
 
-This feature is currently in beta. To report bugs or request features, go to the #r2-storage channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/5FqffSHcsL8ifEG8A).
+This feature is currently in beta. To report bugs or request features, go to the #r2 channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/5FqffSHcsL8ifEG8A).
 
 {{</Aside>}}
 

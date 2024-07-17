@@ -9,7 +9,7 @@ meta:
 
 # Configure Sequence Mitigation
 
-Configuring Sequence Mitigation via the API consists of building a rule object by choosing the sequence and setting the type of rule and its action. 
+Configuring Sequence Mitigation via the API consists of building a rule object by choosing the sequence and setting the type of rule and its action.
 
 ``` json
 ---
@@ -30,7 +30,7 @@ header: Example of a rule object
 }
 ```
 
-This rule enforces that a request to endpoint `0d9bf70c-92e1-4bb3-9411-34a3bcc59003` must come before a request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9`. 
+This rule enforces that a request to endpoint `0d9bf70c-92e1-4bb3-9411-34a3bcc59003` must come before a request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9`.
 
 Otherwise, the request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9` is blocked.
 
@@ -72,7 +72,7 @@ The response will reflect the rule that has been written with its ID. In case so
 ---
 header: Example using cURL
 ---
-curl POST "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules/rules" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/rules" \
 --header "Content-Type: application/json" \
 --data '{
   "title": "string",
@@ -98,7 +98,7 @@ The response will reflect the rules that have been written with their IDs in cas
 ---
 header: Example using cURL
 ---
-curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/seqrules" \
+curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules" \
 --header "Content-Type: application/json" \
 --data '{
   "rules": [

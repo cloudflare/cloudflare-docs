@@ -23,27 +23,34 @@ For more information about Logpush and the current production APIs, refer to [Cl
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to an S3-compatible destination via the dashboard.
-
-To enable the Cloudflare Logpush service:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **S3-Compatible**.
+5.  In **Select a destination**, choose **S3-Compatible**.
 
-8. Enter or select the following destination information:
-
-    - **S3 Compatible Bucket Path**
+6. Enter or select the following destination information:
+    - **Bucket** - S3 Compatible bucket name
+    - **Path** - bucket location within the storage container
+    - **Organize logs into daily subfolders** (recommended) 
+    - **Endpoint URL** - The URL without the bucket name or path. Example, `sfo2.digitaloceanspaces.com`.
     - **Bucket region**
     - **Access Key ID**
     - **Secret Access Key**
-    - **Endpoint URL**
 
-9. Select **Validate access**.
+When you are done entering the destination details, select **Continue**.
 
-10. Select **Save and Start Pushing** to finish enabling Logpush.
+7. Select the dataset to push to the storage service.
 
-Once connected, Cloudflare lists the S3-compatible destination as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

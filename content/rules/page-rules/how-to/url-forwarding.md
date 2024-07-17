@@ -3,7 +3,7 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
 title: URL forwarding
 meta:
-    title: URL forwarding | Page Rules (legacy)
+    title: URL forwarding | Page Rules
 weight: 1
 ---
 

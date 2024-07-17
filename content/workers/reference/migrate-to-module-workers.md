@@ -44,10 +44,11 @@ Workers using ES modules format replace the `addEventListener` syntax with an ob
 ```js
 export default {
   fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
-    const destination = new URL(request.url, base);
+    const source = new URL(request.url);
+    const destination = new URL(source.pathname, base);
     return Response.redirect(destination.toString(), statusCode);
   },
 };

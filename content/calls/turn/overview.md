@@ -23,7 +23,7 @@ Using Cloudflare Calls TURN service is available free of charge when used togeth
 
 Calls TURN service is available in every Cloudflare datacenter.
 
-When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using Anycast routing.
+When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using anycast routing.
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 

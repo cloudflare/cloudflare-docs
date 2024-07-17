@@ -32,7 +32,7 @@ To disable **Email Address Obfuscation** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To disable **Email Address Obfuscation** with the API, send a [`PATCH`](/api/operations/zone-settings-change-email-obfuscation-setting) request with the `value` parameter set to `"off"`.
+To disable **Email Address Obfuscation** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `email_obfuscation` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 
 {{</tab>}}
 {{</tabs>}}
@@ -43,12 +43,12 @@ To disable **Email Address Obfuscation** with the API, send a [`PATCH`](/api/ope
 
 To prevent Cloudflare from obfuscating specific email addresses, you can:
 
--   Add the following comment in the page HTML code:  
+-   Add the following comment in the page HTML code: 
 
     ```
     <!--email_off-->contact@example.com<!--/email_off-->
     ```
-    
+
 -   Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of `application/json`.
 -   Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) to be applied on a specific endpoint.
 

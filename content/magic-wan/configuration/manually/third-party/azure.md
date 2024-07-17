@@ -42,14 +42,14 @@ The Virtual Network Gateway is used to form the tunnel to the devices on your pr
 
 The Local Network Gateway typically refers to your on-premises location. In this case, the Local Network Gateway represents the Cloudflare side of the connection.
 
-We recommend creating two Local Network Gateways - one for each of the two Cloudflare Anycast IPs associated with your Magic WAN account.
+We recommend creating two Local Network Gateways - one for each of the two Cloudflare anycast IPs associated with your Magic WAN account.
 
 1. Create a new local network gateway.
-2. In **Anycast**, select **IP address** and enter the Cloudflare Anycast address.
+2. In **Anycast**, select **IP address** and enter the Cloudflare anycast address.
 3. In **Address space**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
 
-Repeat this process to create a Local Network Gateway to represent the redundant Cloudflare Anycast IP address.
+Repeat this process to create a Local Network Gateway to represent the redundant Cloudflare anycast IP address.
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
@@ -82,7 +82,7 @@ To configure the Address Space for the Local Network Gateway to support Tunnel H
 3. Add the`/31` subnet in CIDR notation (for example, `10.252.3.54/31`) under **Address Space(s)**.
 4. Select **Save**.
 
-Repeat this process to define the Address Space on the Local Network Gateway corresponding to the redundant Cloudflare Anycast IP address.
+Repeat this process to define the Address Space on the Local Network Gateway corresponding to the redundant Cloudflare anycast IP address.
 
 ### 5. Create an IPsec VPN Connection
 
@@ -109,7 +109,7 @@ Choose the following settings when creating your VPN Connection:
     8. **Use custom traffic selectors**: **Disabled**
 6. After the connection is created, select **Settings** > **Authentication**, and input your PSK (this will need to match the PSK used by the Magic WAN configuration).
 
-Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare Anycast IP address.
+Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
 ### 5. Define remote Magic WAN Sites
 
@@ -120,7 +120,7 @@ Use the Address Space settings within the Local Network Gateway objects to defin
 3. Do not remove the subnet configured to support the Tunnel Health Checks.
 4. Select **Save**
 
-Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare Anycast IP address.
+Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
 ### 6. Route all Internet traffic through Magic WAN and Cloudflare Gateway
 
@@ -133,7 +133,7 @@ Microsoft does not permit specifying a default route (`0.0.0.0/0`) under Address
 3. Do not remove the subnet configured to support the Tunnel Health Checks.
 4. Select **Save**
 
-Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare Anycast IP address.
+Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
 ## Install Cloudflare Zero Trust CA Certificate
 
@@ -143,8 +143,8 @@ More details on how to install the root CA certificate can be found in [User-sid
 
 Once the root CA certificate is installed, open a web browser or use curl to validate Internet connectivity:
 
-```bash
-curl https://ipinfo.io
+```sh
+$ curl https://ipinfo.io
 
 {
   "ip": "104.xxx.xxx.225",
@@ -167,7 +167,7 @@ curl https://ipinfo.io
 2. For each tunnel, make sure that you have the following settings:
     1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
     2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
-    3. **Cloudflare endpoint**: Use the Cloudflare Anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
+    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
     4. **Health check rate**: Leave the default option (Medium) selected.
     5. **Health check type**: Leave the default option (Reply) selected.
     6. **Health check direction**: Leave default option.
@@ -274,16 +274,17 @@ curl --location 'https://management.azure.com/subscriptions/{{subscriptionId}}/r
 
 4. Locate the line that controls disabling IPsec anti-replay protection, and change it from `false` to `true`:
 
-```bash
+```txt
 "disableIPSecReplayProtection": true
 ```
 
 5. Upload the entire response in a subsequent API call (`PUT` request):
 
 ```bash
-curl --location --request PUT 'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg' \
+curl --location --request PUT \
+'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
+--header "Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg" \
+--header "Content-Type: application/json" \
 --data '{
     "name": "{{virtualNetworkGatewayName}}",
     "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}",
@@ -352,8 +353,7 @@ curl --location --request PUT 'https://management.azure.com/subscriptions/{{subs
         "allowRemoteVnetTraffic": false,
         "allowVirtualWanTraffic": false
     }
-}
-'
+}'
 ```
 
 6. Leave the replay protection setting checked in the Cloudflare dashboard, and wait several minutes before validating connectivity again.

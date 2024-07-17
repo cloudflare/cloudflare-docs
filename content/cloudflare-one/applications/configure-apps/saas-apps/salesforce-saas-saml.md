@@ -1,15 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (SAML)
-weight: 8
+weight: 14
 ---
 
 # Connect to Salesforce through Access (SAML)
 
-This guide covers how to configure Salesforce as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Salesforce](https://help.salesforce.com/s/articleView?id=sf.sso_saml.htm&type=5) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
 - Admin access to a Salesforce account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
@@ -62,5 +63,5 @@ This guide covers how to configure Salesforce as a SAML application in Cloudflar
     2. (Optional) To require users to login with Cloudflare Access, turn on **Disable login with Salesforce credentials**.
     3. Turn on **SAML Enabled**.
     4. Turn on **Make federation ID case-insensitive**.
-  
+
 To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).

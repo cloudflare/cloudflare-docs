@@ -62,9 +62,9 @@ Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.
 | ------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `none`        | No                              | Hyperdrive does not support insecure plain text connections.                                                                              |
 | `prefer`      | No (use `require`)              | Hyperdrive will always use TLS.                                                                                                           |
-| `require`     | Yes (default)                   | TLS is required, but server certificates are not validated.                                                                               |
-| `verify-ca`   | Not currently supported | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
-| `verify-full` | Not currently supported | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
+| `require`     | Yes (default)                   | TLS is required, and server certificates are validated (based on WebPKI).                                                                               |
+| `verify-ca`   | Not currently supported in beta | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
+| `verify-full` | Not currently supported in beta | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
 
 {{<Aside type="warning">}}
 
@@ -192,19 +192,6 @@ export default {
 
 {{</tab>}}
 {{</tabs>}}
-
-## Transaction and statement support
-
-Hyperdrive's connection pooling mode is equivalent to the `transaction` mode of connection poolers like [PgBouncer](https://www.pgbouncer.org/) and [PgCat](https://github.com/postgresml/pgcat).
-
-Hyperdrive does not support the following PostgreSQL features:
-
-- `SET` statements.
-- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
-- `LISTEN` and `NOTIFY`.
-- `PREPARE` and `DEALLOCATE`.
-
-In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 
 ## Identify connections from Hyperdrive
 

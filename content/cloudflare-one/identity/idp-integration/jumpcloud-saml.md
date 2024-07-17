@@ -30,7 +30,7 @@ To set up JumpCloud SAML as your identity provider:
 
     When asked to enter a Distinguished Name or a DN to incorporate into your certificate request, you can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
 
-    ```bash
+    ```txt
     -----
     Country Name (2 letter code) [AU]:.
     State or Province Name (full name) [Some-State]:.

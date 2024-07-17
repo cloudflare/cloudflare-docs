@@ -32,8 +32,7 @@ We connect to servers who announce support of HTTP/2 connections via [ALPN](http
 If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)). 
 
 {{<Aside type="note" header="Note">}}
-Connection multiplexing is currently being rolled out. It will be enabled gradually on Free, Pro and Business zones. This release will be complete by June 15th 2024.
-Enterprise zones will be enabled at a later stage.
+Connection multiplexing is currently being rolled out. It has been enabled by default on Free, Pro and Business zones. Enterprise zones will be enabled at a later date.
 {{</Aside>}}
 
 

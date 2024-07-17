@@ -67,9 +67,9 @@ Leave `filter_v1` empty to collect all packets without any filtering.
 header: Full PCAP example request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "filter_v1": {},
   "time_limit": 300,
@@ -79,7 +79,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
   "colo": "ORD",
   "system": "magic-transit",
   "destination_conf": "${BUCKET}"
-  }'
+}'
 ```
 
 While the collection is in progress, the response returns the `status` field as `pending`. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to `success`.
@@ -121,9 +121,9 @@ Leave `filter_v1` to collect all packets without any filtering.
 header: Sample PCAP example request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "filter_v1": {
     "source_address": "1.2.3.4",
@@ -190,8 +190,7 @@ To check the status of a running job, send a request to the endpoint and specify
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>'
 ```
 
@@ -263,8 +262,7 @@ Once the sample PCAP collection is complete, you can download the PCAP by specif
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/download \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
+--header 'X-Auth-Email: <EMAIL>' \
 --header 'X-Auth-Key: <API_KEY>' \
 --output download.pcap
 ```
@@ -294,9 +292,8 @@ To view a list of sent requests, use the following command:
 header: List request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>'
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.

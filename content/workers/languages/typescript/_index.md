@@ -12,7 +12,7 @@ TypeScript is a first-class language on Cloudflare Workers. Cloudflare publishes
 
 ### Known issues
 
-#### Transitive loading of `@types/node` overrides `@cloudflare/workers-types
+#### Transitive loading of `@types/node` overrides `@cloudflare/workers-types`
 
 You project's dependencies may load the `@types/node` package on their own. As of `@types/node@20.8.4` that package now overrides `Request`, `Response` and `fetch` types (possibly others) specified by `@cloudflare/workers-types` causing type errors.
 

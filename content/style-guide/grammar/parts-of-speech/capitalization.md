@@ -12,12 +12,12 @@ Each product, service, and feature should be properly spelled and capitalized wh
 | ✅ | ❌ | Rationale |
 |-----|----|--------|
 |This interactive demo provides three different scenarios on how to utilize **Cloudflare Rate Limiting** to protect your endpoints from suspicious requests. | This interactive demo provides three different scenarios on how to utilize **rate limiting** to protect your endpoints from suspicious requests. | This demo is specific to a Cloudflare product (Cloudflare Rate Limiting), not a tutorial on utilizing generic rate limiting.|
-|The **Cloudflare Web Application Firewall (WAF)** sits on the same Anycast network that powers our global CDN, HTTP/2, and web optimization features. | Our **web application firewall** sits on the same Anycast network that powers our global CDN, HTTP/2, and web optimization features. | Cloudflare Web Application Firewall (WAF) is a specific product we offer and should be capitalized and identified with the Cloudflare name.
+|The **Cloudflare Web Application Firewall (WAF)** sits on the same anycast network that powers our global CDN, HTTP/2, and web optimization features. | Our **web application firewall** sits on the same anycast network that powers our global CDN, HTTP/2, and web optimization features. | Cloudflare Web Application Firewall (WAF) is a specific product we offer and should be capitalized and identified with the Cloudflare name.
 
 ## Example of capitalization and pluralization usage for the Waiting Room
 
 **When to use Waiting Room capitalized and singular:**
-+ Naming the product: *Waiting Room keeps wait times low by dynamically managing traffic.* 
++ Naming the product: *Waiting Room keeps wait times low by dynamically managing traffic.*
 + Page title: *Access Waiting Room*
 + Preceded by “Cloudflare”: *Cloudflare Waiting Room allows organizations to…*
 + Preceding a feature name: *Waiting Room Event Scheduling*

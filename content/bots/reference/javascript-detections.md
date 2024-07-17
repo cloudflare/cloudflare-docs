@@ -33,6 +33,10 @@ Customers who enabled Enterprise Bot Management before June 2020 do not have Jav
 
 {{<render file="_javascript-detections-csp.md">}}
 
+{{<Aside type="warning" header="Warning">}}
+JavaScript detections are not supported with `nonce` set via `<meta>` tags. 
+{{</Aside>}}
+
 ### If you have ETags
 
 Enabling JavaScript Detections (JSD) will strip [ETags](/cache/reference/etag-headers/) from HTML responses where JSD is injected.

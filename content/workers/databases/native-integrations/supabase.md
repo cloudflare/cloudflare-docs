@@ -45,7 +45,7 @@ To set up an integration with Supabase:
 5. In your Worker, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data:
 
     ```sh
-    npm install @supabase/supabase-js
+    $ npm install @supabase/supabase-js
     ```
 
 6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.

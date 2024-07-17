@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Connect to AWS RDS and Aurora
 weight: 11
 ---

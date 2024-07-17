@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Reference
 meta:
-    title: Reference | Page Rules (legacy)
+    title: Reference | Page Rules
 weight: 9
 ---
 

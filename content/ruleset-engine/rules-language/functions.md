@@ -57,6 +57,21 @@ The Rules language supports these transformation functions:
 
   - For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
 
+- <code id="function-decode_base64">{{<name>}}decode_base64{{</name>}}(source{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+
+  - Decodes a Base64-encoded String specified in `source`.
+
+  - `source` must be a field, that is, it cannot be a literal String.
+
+  - <em>Example:</em>
+  <br/>
+  With the following HTTP request header: `client_id: MTIzYWJj`,<br/>
+  `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
+
+{{<Aside type="warning">}}
+You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
 - <code id="function-ends_with">{{<name>}}ends_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).

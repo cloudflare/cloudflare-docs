@@ -14,7 +14,7 @@ Create a load balancer that monitors endpoint health and intelligently routes tr
 By the end of this module, you will be able to:
 
 - Configure a monitor and health checks.
-- Create an endpoint pool.
+- Create a pool.
 - Create a load balancer.
 - Analyze traffic patterns.
 

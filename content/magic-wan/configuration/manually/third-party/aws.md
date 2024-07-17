@@ -22,7 +22,7 @@ Additionally, you also need to configure the necessary route table entries for t
 3. For **Attachment type**, select _VPN_.
 4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values):
     1. **Customer Gateway**: Select **New**.
-    2. **IP Address**: Enter your Cloudflare Anycast IP address.
+    2. **IP Address**: Enter your Cloudflare anycast IP address.
     3. **Routing options**: Select **Static**.
 5. Select **Create transit gateway attachment**.
 
@@ -64,7 +64,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
     - **Tunnel name**: `tunnel01`
     - **Interface address**: The `/30`CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
     - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-    - **Cloudflare endpoint**: Enter the first of your two Anycast IPs.
+    - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
     - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
     - **Health check type**: Choose **Request**
     - **Health check direction**: Choose **Bidirectional**

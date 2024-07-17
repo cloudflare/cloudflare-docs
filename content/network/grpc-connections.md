@@ -33,8 +33,8 @@ However, the following products have limited capabilities with gRPC requests:
 -   HTTP/2 must be advertised over ALPN.
 -   Use `application/grpc` or `application/grpc+<message type` (for example: `application/grpc+proto`) for the **Content-Type** header of gRPC requests.
 -   Make sure that the hostname that hosts your gRPC endpoint:
-        - Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
-        - Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
+    - Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
+    - Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 
 ### Procedure
 

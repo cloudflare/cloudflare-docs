@@ -26,7 +26,7 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 ### Check whether log retention is turned on:
 
 ```sh
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
 ```
 
 #### Response:
@@ -47,7 +47,7 @@ $ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api
 On Linux or macOS:
 
 ```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
+curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
 ```
 
 On Windows in Command Prompt:

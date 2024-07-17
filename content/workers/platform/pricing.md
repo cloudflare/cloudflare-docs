@@ -44,7 +44,6 @@ Users on the Workers Paid plan only have access to the Standard usage model.
 
 Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, reach out to your CSM. Some Workers Enterprise customers maintain the ability to change usage models.
 
-
 {{<table-wrap>}}
 |             |  Requests<sup>1</sup>                                                                                                | Duration                | CPU time                                                   |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------- |

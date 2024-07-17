@@ -25,8 +25,8 @@ Refer the [blog post](https://blog.cloudflare.com/announcing-cloudflare-radar-ou
 #### Example: Get outages in the last 7 days
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limit=5&offset=0&dateRange=7d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/annotations/outages?limit=5&offset=0&dateRange=7d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
