@@ -109,7 +109,9 @@ Once the time to live (TTL) of previous `NS` records is expired and this informa
 If you are also migrating to a new primary DNS provider, import the same zone file you prepared in [Step 1](#1-prepare-a-zone-file) onto your new primary zone. Make sure there are no records that still refer `cdn.cloudflare.net`. Otherwise, HTTP traffic for these hostnames will break.
 {{</Aside>}}
 
-1. Enable outgoing zone transfers at your primary provider and [create a peer DNS server](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#2-create-peer-server) on your Cloudflare account.
+1. Enable outgoing zone transfers at your primary provider and create a peer DNS server on your Cloudflare account.
+
+{{<render file="_create-peer-server.md">}}
 
 2. Use the [Update Secondary Zone Configuration endpoint](/api/operations/secondary-dns-(-secondary-zone)-update-secondary-zone-configuration) to link your Cloudflare zone to the peer DNS server you just created.
 
