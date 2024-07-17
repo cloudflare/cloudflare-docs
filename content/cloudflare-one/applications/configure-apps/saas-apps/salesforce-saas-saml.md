@@ -10,7 +10,7 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
 - Admin access to a Salesforce account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

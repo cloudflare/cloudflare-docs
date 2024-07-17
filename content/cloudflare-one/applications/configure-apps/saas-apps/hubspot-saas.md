@@ -10,7 +10,7 @@ This guide covers how to configure [Hubspot](https://knowledge.hubspot.com/accou
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
 - Admin access to a Hubspot Enterprise plan account
 
 ## 1. Configure Hubspot

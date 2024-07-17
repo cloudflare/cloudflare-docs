@@ -10,7 +10,7 @@ This guide covers how to configure [Smartsheet](https://help.smartsheet.com/arti
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
 - Admin access to a Smartsheet Enterprise account
 - A [domain](https://help.smartsheet.com/articles/2483051-domain-management) verified in Smartsheet
 
