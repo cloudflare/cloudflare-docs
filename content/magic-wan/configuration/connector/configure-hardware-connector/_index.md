@@ -130,7 +130,7 @@ Make sure all IPs are part of the same subnet.
 {{<Aside type="note">}}
 - Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
 - High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
-- In the case of a failover where a Magic WAN Connector is acting as a DHCP server, DHCP leases will be synchronized.
+- In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
 {{</Aside>}}
 
 ### ​​Create a high availability configuration
