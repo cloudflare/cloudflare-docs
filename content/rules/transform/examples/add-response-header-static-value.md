@@ -5,7 +5,7 @@ product:
   - Transform Rules
 operation:
   - Response modification
-title: Add an HTTP response header with a static value
+title: Add a response header with a static value
 ---
 
 # Add an HTTP response header with a static value
