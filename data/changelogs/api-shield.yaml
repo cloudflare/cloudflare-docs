@@ -25,3 +25,8 @@ entries:
   title: Build Sequence Mitigation rules via the Cloudflare dashboard
   description: |-
     Customers can now build [Sequence Mitigation](/api-shield/security/sequence-mitigation/) rules with a new user interface inside the API Shield section of the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+- publish_date: '2024-02-23'
+  title: Endpoint Management supports hostname variables
+  description: |-
+    Customers can now save endpoints in [Endpoint Management](/api-shield/management-and-monitoring/) that contain variables in the hostname.
