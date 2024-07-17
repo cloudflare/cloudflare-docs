@@ -17,7 +17,7 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `ServiceNow` and select the textbox that appears below.
+3. For **Application**, enter `ServiceNow` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
