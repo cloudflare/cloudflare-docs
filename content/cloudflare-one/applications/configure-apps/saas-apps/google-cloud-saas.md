@@ -18,7 +18,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 
 ## Prerequistes
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
 - [Cloud Identity Free or Premium](https://support.google.com/cloudidentity/answer/7389973) set up in your organization's Google Cloud account
 

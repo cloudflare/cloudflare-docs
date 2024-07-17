@@ -10,7 +10,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Jamf Pro account
 
 ## 1. Collect Jamf Pro information
