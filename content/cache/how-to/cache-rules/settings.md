@@ -169,7 +169,7 @@ Cache keys refer to the criteria that Cloudflare uses to determine how to store 
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/), customizing the following options:
 
-* You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
+* You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
 
 Enterprise customers have these additional options for custom cache keys:
 
