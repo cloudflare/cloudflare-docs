@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Pingboard
-weight: 13
+weight: 14
 ---
 
 # Connect to Pingboard through Access (SAML)
