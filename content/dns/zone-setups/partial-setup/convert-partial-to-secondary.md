@@ -113,6 +113,27 @@ If you are also migrating to a new primary DNS provider, import the same zone fi
 
 {{<render file="_create-peer-server.md">}}
 
-2. Use the [Update Secondary Zone Configuration endpoint](/api/operations/secondary-dns-(-secondary-zone)-update-secondary-zone-configuration) to link your Cloudflare zone to the peer DNS server you just created.
+2. Link your Cloudflare zone to the peer DNS server you just created
 
-3. At your secondary zone [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**.
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To create a peer server using the dashboard:
+
+1. Go to **DNS** > **Records**.
+2. Under **DNS Zone Transfers**, select **Manage linked peers**.
+3. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
+    {{<Aside type="warning">}}Cloudflare will not use the REFRESH value inside the SOA record that is served by your primary provider. Instead the value of zone refresh configured for your secondary zone on Cloudflare will be used to determine the interval after which the SOA serial of the primary zone will be checked for changes.
+    {{</Aside>}}
+4. Select the peer server you previously created. If needed, you can link more than one peer server to a zone.
+5. Select **Save** to confirm.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Use the [Update Secondary Zone Configuration endpoint](/api/operations/secondary-dns-(-secondary-zone)-update-secondary-zone-configuration) to link your Cloudflare zone to the peer DNS server.
+
+{{</tab>}}
+{{</tabs>}}
+
+3. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/operations/secondary-dns-(-secondary-zone)-force-axfr).
