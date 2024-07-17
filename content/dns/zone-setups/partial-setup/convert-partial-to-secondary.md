@@ -16,7 +16,7 @@ This page will guide you through how to achieve this conversion using [export an
 
 Make sure you consider the following:
 
-- Proxying traffic with secondary zones require a setting that is not turned on by default. Refer to [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) to learn more. The steps below include enabling this setting.
+- Proxying traffic with secondary zones requires a setting that is not turned on by default. Refer to [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) to learn more. The steps below include enabling this setting.
 - There are a few options for [DNSSEC with incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/). If you want to use DNSSEC, plan for which option you will configure and confirm that your other DNS provider(s) support the setup.
 - You can prepare SSL/TLS in advance by either ordering an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [uploading a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/). You should confirm that the certificate covers all your proxied hostnames and that the [status of your SSL certificate](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) is **Active**.
 
@@ -80,7 +80,7 @@ Final records adjusted in the zone file:
 
 ## 2. Configure the Cloudflare zone
 
-1. Use the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted zone file](/dns/manage-dns-records/how-to/import-and-export/#format-your-zone-file) to import the records into your zone.
+1. Use the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted zone file](/dns/manage-dns-records/how-to/import-and-export/#format-your-zone-file) to import the records into your partial zone.
 
     Existing and already proxied records will not be overwritten by the import.
 
@@ -90,15 +90,16 @@ Final records adjusted in the zone file:
 This step is essential so that Cloudflare can keep the proxy status of the records after the conversion.
 {{</Aside>}}
 
-3. Use the [TBD endpoint] to convert the zone type to Secondary.
+3. Use the [Edit Zone endpoint](/api/operations/zones-0-patch) with `type` set to `secondary`, to convert the zone type.
 
-    You can verify if it answers as expected by querying the new assigned secondary nameservers:
+    You can verify if it answers as expected by querying the new assigned secondary nameservers. You can find your nameservers in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and they should follow a format like `ns0123.secondary.cloudflare.com`.
 
 ```bash
-dig example.com @<YOUR_NEW_NAMESERVER_NAMES>.secondary.cloudflare.com
+# Replace ns0123 with your actual Cloudflare nameservers
+dig example.com @ns0123.secondary.cloudflare.com
 ```
 
-4. At your registrar, [update your nameservers](/dns/nameservers/update-nameservers/) to point to the Cloudflare nameservers. You can find your nameservers in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
+4. At your registrar, [update your nameservers](/dns/nameservers/update-nameservers/) to point to the Cloudflare nameservers.
 
 At this point, the zone should work as if it was in a full setup.
 
@@ -112,4 +113,4 @@ If you are also migrating to a new primary DNS provider, import the same zone fi
 
 2. Use the [Update Secondary Zone Configuration endpoint](/api/operations/secondary-dns-(-secondary-zone)-update-secondary-zone-configuration) to link your Cloudflare zone to the peer DNS server you just created.
 
-3. At your secondary zone [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the liked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**.
+3. At your secondary zone [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**.
