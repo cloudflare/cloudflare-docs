@@ -10,7 +10,7 @@ meta:
 
 If you initially set up a [partial zone](/dns/zone-setups/partial-setup/) on Cloudflare, you can later convert it to use a [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
 
-This page will guide you through how to achieve this conversion using [export and import](/dns/manage-dns-records/how-to/import-and-export/) and API calls.
+This page will guide you through this conversion using [export and import](/dns/manage-dns-records/how-to/import-and-export/) and API calls.
 
 ## Before you begin
 
@@ -113,12 +113,10 @@ If you are also migrating to a new primary DNS provider, import the same zone fi
 
 {{<render file="_create-peer-server.md">}}
 
-2. Link your Cloudflare zone to the peer DNS server you just created
+2. Link your Cloudflare zone to the peer DNS server you just created.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
-
-To create a peer server using the dashboard:
 
 1. Go to **DNS** > **Records**.
 2. Under **DNS Zone Transfers**, select **Manage linked peers**.
