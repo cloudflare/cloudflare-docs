@@ -1,6 +1,6 @@
 ---
 pcx_content_type: example
-summary: A transform rule where the header `set-cookie` with a static value (`cookiename=value`) is added to the response.
+summary: Create a response header modification rule (part of Transform Rules) to add a `set-cookie` HTTP header to the response with a static value (`cookiename=value`).
 product:
   - Transform Rules
 operation:

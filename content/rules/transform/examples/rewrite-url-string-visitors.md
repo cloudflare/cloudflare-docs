@@ -1,11 +1,11 @@
 ---
 pcx_content_type: example
-summary: A transform rule where a request to the `/blog` path is rewritten to `/blog?sort-by=date`.
+summary: Create a transform rule to rewrite the request path from `/blog` to `/blog?sort-by=date`.
 product:
   - Transform Rules
 operation:
   - Rewrite URL
-title: Rewrite URL query string of blog visitors
+title: Rewrite URL query string
 ---
 
 # Rewrite URL query string of blog visitors

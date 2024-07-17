@@ -1,11 +1,11 @@
 ---
 pcx_content_type: example
-summary: A transform rule where a header named `X-Bot-Score` is set to the current bot score in the response.
+summary: Create a response header modification rule (part of Transform Rules) to set an `X-Bot-Score` HTTP header in the response with the current bot score.
 product:
   - Transform Rules
 operation:
   - Response modification
-title: Set an HTTP response header to the current bot score
+title: Set a response header with the current bot score
 ---
 
 # Set an HTTP response header to the current bot score

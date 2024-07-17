@@ -1,9 +1,9 @@
 ---
 pcx_content_type: example
-summary: A redirect rule where visitors requesting the `/contact-us/` page are redirected to the new page URL `/contacts/`.
+summary: Create a redirect rule to redirect visitors from `/contact-us/` to the page's new path `/contacts/`.
 product:
   - Redirect Rules
-title: Redirect visitors to the new URL of a specific page
+title: Redirect visitors to a new page URL
 ---
 
 # Redirect visitors to the new URL of a specific page
