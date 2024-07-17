@@ -10,7 +10,7 @@ This guide covers how to configure [Adobe Acrobat Sign](https://helpx.adobe.com/
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Adobe Acrobat Sign account
 - A [claimed domain](https://helpx.adobe.com/sign/using/claim-domain-names.html) in Adobe Acrobat Sign
 
