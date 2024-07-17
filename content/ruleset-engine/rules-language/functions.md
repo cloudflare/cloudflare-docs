@@ -268,6 +268,44 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
 {{</Aside>}}
 
+- <code id="function-wildcard_replace">{{<name>}}wildcard_replace{{</name>}}(source{{<param-type>}}Bytes{{</param-type>}}, wildcard_pattern{{<param-type>}}Bytes{{</param-type>}}, replacement{{<param-type>}}Bytes{{</param-type>}} [, flags{{<param-type>}}Bytes{{</param-type>}}])</code> {{<type>}}String{{</type>}}
+
+    - Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
+    - The `source` must be a field (it cannot be a literal string). Additionally, the entire `source` value must match the `wildcard_pattern` parameter (it cannot match only part of the field value).
+    - Use `$$` to add a literal `$` character in the `replacement` parameter.
+    - To use case-sensitive wildcard matching, set the `flags` parameter to `"s"`. Currently the only supported values are `""` (empty string) and `"s"`.
+    - If there is no match, the function will return `source` unchanged.
+    - This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
+
+    - _Examples:_
+
+      If the full URI is `https://apps.example.com/calendar/admin?expand=true`,<br />
+      `wildcard_replace(http.request.full_uri, "https://*.example.com/*/*", "https://example.com/${1}/${2}/${3}")` will return `https://example.com/apps/calendar/admin?expand=true`
+
+      If the full URI is `https://example.com/applications/app1`,<br />
+      `wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged URI value, since there is no match for the full value).
+
+      If the URI path is `/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/*", "/apps/${1}")` will return `/apps/calendar`.
+
+      If the URI path is `/Apps/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}")` will return `/calendar` (case-insensitive match by default).
+
+      If the URI path is `/Apps/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}", "s")` will return `/Apps/calendar` (unchanged value) because there is no case-sensitive match.
+
+      If the URI path is `/apps/calendar/login`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login` (`*` matches the shortest possible string).
+
+      If the URI path is `/apps/calendar/team/1/overview`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*/overview", "/${1}/overview")` will return `/apps/calendar/team/1/login` (unchanged value, since there is no match – `*` always matches the shortest possible string, which in this case it is `calendar`).
+
+      For more examples of wildcard matching, refer to [Wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching).
+
+{{<Aside type="warning">}}
+Currently, you can only use the `wildcard_replace()` function in target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
+{{</Aside>}}
+
 {{</definitions>}}
 
 ## Magic Firewall Functions
