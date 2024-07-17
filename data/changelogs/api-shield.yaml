@@ -29,4 +29,4 @@ entries:
 - publish_date: '2024-02-23'
   title: Endpoint Management supports hostname variables
   description: |-
-    Customers can now save endpoints in [Endpoint Management](/api-shield/management-and-monitoring/) that contain variables in the hostname.
+    Customers can now save endpoints in [Endpoint Management](/api-shield/management-and-monitoring/) that contain variables in the hostname. Hostname variables are supported across all product features.
