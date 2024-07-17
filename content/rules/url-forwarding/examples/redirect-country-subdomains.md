@@ -3,7 +3,7 @@ pcx_content_type: example
 summary: Create a redirect rule to redirect United Kingdom and France visitors from the `example.com` website's  root path (`/`) to their localized subdomains `https://gb.example.com` and `https://fr.example.com`, respectively.
 product:
   - Redirect Rules
-title: Redirect UK and France visitors to specific subdomains
+title: Redirect local visitors to specific subdomains
 ---
 
 # Redirect UK and France visitors to their specific subdomains

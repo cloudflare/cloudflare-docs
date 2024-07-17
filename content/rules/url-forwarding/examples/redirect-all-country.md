@@ -3,10 +3,10 @@ pcx_content_type: example
 summary: Create a redirect rule to redirect all website visitors from the United Kingdom to a different domain, maintaining the current functionality in the same paths.
 product:
   - Redirect Rules
-title: Redirect all requests from one country to another domain
+title: Redirect requests from one country to a domain
 ---
 
-# Redirect all requests from one country to another domain
+# Redirect requests from one country to another domain
 
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.
 

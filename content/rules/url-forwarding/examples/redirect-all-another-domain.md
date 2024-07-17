@@ -3,7 +3,7 @@ pcx_content_type: example
 summary: Create a redirect rule to redirect all requests to a different domain, maintaining all functionality, except for the discontinued HTTP service (port 80).
 product:
   - Redirect Rules
-title: Redirect all requests from one domain to another
+title: Redirect requests from one domain to another
 ---
 
 # Redirect all requests from one domain to another domain

@@ -3,7 +3,7 @@ pcx_content_type: example
 summary: Create a redirect rule to redirect all URLs for a domain to point to the root of a new domain, including any subdomains of the old domain.
 product:
   - Redirect Rules
-title: Redirect all requests for a domain to the root page of different domain
+title: Redirect requests for a domain to a new domain
 ---
 
 # Redirect all requests for a domain to the root page of different domain
