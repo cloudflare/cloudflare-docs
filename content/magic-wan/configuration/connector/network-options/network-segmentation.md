@@ -5,9 +5,30 @@ title: Network segmentation
 
 # Network segmentation
 
-You can define policies in your Connector to allow traffic to flow between your LANs without it leaving your local premises. These policies can be created for specific subnets, and link two LANs.
+You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN to LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
-Creating these policies to segment your network means traffic will flow locally and bypass Cloudflare. As a best practice for security, we recommend sending all traffic through Cloudflare's network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
+```mermaid
+flowchart LR
+accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
+    a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] <---> a
+    e[LAN 2] <---> a
+    g[LAN 3] <---> a
+    h[LAN 4] <---> a
+    end
+    classDef orange fill:#f48120,color: black
+    class a,c orange
+
+    linkStyle 0,1,2,3 stroke:#f48120,stroke-width:3px
+    linkStyle 4,5 stroke:red,stroke-width:3px
+```
+_In the above example, the red path shows traffic that stays in the customer's premises (allowing direct communication between LAN 3 and LAN 4), and the orange path shows traffic that goes to Cloudflare before returning to the customer's premises (processing traffic between LAN 1 and LAN 2 in Cloudflare)._
+
+<br>
+
+Creating these policies to segment your network means LAN to LAN traffic can be allowed either locally or via Cloudflare’s network. As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
 
 The following guide assumes you have already created a site and configured your Connector. To learn how to create a site and configure your Connector, refer to [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure virtual connector](/magic-wan/configuration/connector/configure-virtual-connector/), depending on the type of Magic WAN Connector you have on your premises.
 
@@ -28,23 +49,24 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 8. (Optional) Specify a subnet for your first LAN in **Subnets**.
 9. (Optional) In **Ports** specify the TCP/UDP ports you want to use. Add a comma to separate each of the ports.
 10. In **LAN 2**, select the destination LAN and repeat the above process to configure it.
-11. (Optional) Select the type of traffic you want to keep local. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
-12. Select **Create policy**.
+11. (Optional) Select the type of traffic. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
+12. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
+13. Select **Create policy**.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a `POST` request [using the API](/api/operations/magic-site-acls-create-site-acl) to create a network policy.
+Create a `POST` request [using the API](/api/operations/magic-site-acls-create-acl) to create a network policy.
 
 Example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "acl": {
     "description": "<POLICY_DESCRIPTION>",
@@ -79,7 +101,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 If successful, you will receive a response like the following:
 
-```bash
+```json
 {
   "errors": [],
   "messages": [],
@@ -151,10 +173,10 @@ Example:
 
 ```bash
 curl --request PUT \
---url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "acl": {
     "description": "<POLICY_DESCRIPTION>",
@@ -215,10 +237,9 @@ Example:
 
 ```bash
 curl --request DELETE \
---url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 {{</tab>}}

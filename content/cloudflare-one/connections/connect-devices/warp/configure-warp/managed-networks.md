@@ -12,7 +12,7 @@ Cloudflare WARP allows you to selectively apply WARP client settings if the devi
 
 A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
 
-The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. Therefore, do not choose a [private network IP](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) that is exposed to users over Cloudflare Tunnel. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
+The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. WARP will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
 
 ### Create a new TLS endpoint
 
@@ -130,7 +130,7 @@ To serve the TLS certificate using Python:
 3. To test that the server is working, run a curl command from the end user's device:
 
 ```sh
-$ curl -v --insecure https://<private-server-IP>:3333/
+$ curl --verbose --insecure https://<private-server-IP>:3333/
 ```
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
@@ -141,7 +141,10 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 ## 2. Extract the SHA-256 fingerprint
 
-To obtain the SHA-256 fingerprint of a certificate:
+{{<tabs labels="Local certificate | Remote server">}}
+{{<tab label="local certificate" no-code="true">}}
+
+To obtain the SHA-256 fingerprint of a local certificate:
 
 ```sh
 $ openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
@@ -152,6 +155,24 @@ The output will look something like:
 ```txt
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
+
+{{</tab>}}
+{{<tab label="remote server" no-code="true">}}
+
+To obtain the SHA-256 fingerprint of a remote server:
+
+```sh
+$ openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
+```
+
+The output will look something like:
+
+```txt
+SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
+```
+
+{{</tab>}}
+{{</tabs>}}
 
 ## 3. Add managed network to Zero Trust
 

@@ -8,10 +8,7 @@ title: GitHub SMS notifications using Twilio
 
 # GitHub SMS notifications using Twilio
 
-
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
@@ -24,6 +21,8 @@ You will learn how to:
 ![Animated gif of receiving a text message on your phone after pushing changes to a repository](/images/workers/tutorials/github-sms/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 ---
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Create a Worker project
 
@@ -74,7 +73,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dashboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
 ---
 

@@ -27,3 +27,7 @@ You can set a maximum of eight tags per script. Avoid special characters like `,
 ## Gradual Deployments
 
 [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) is not supported yet for user Workers. Changes made to user Workers create a new version that deployed all-at-once to 100% of traffic.
+
+## API Rate Limits
+
+{{<render file="_api-rate-limits.md" productFolder="fundamentals">}}

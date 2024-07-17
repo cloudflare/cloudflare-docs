@@ -24,13 +24,13 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
     - **Tunnel name**: `FITEL-tunnel-1`
     - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
     - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/configuration/manually/how-to/configure-tunnels/).
-    - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
+    - **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your first tunnel.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
     - **Tunnel name**: `FITEL-tunnel-2`
     - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
     - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`](/magic-wan/configuration/manually/how-to/configure-tunnels/).
-    - **Cloudflare endpoint**: The Cloudflare Anycast IP assigned to you by your account team.
+    - **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
     - **Pre-shared key**: Create a pre-shared key for your second tunnel.
 
 ### FITELnet router configuration

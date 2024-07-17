@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vite 3 site
+title: Vite 3
 ---
 
-# Deploy a Vite 3 site
+# Vite 3
 
 [Vite](https://vitejs.dev) is a next-generation build tool for front-end developers. With [the release of Vite 3](https://vitejs.dev/blog/announcing-vite3.html), developers can make use of new command line (CLI) improvements, starter templates, and [more](https://github.com/vitejs/vite/blob/main/packages/vite/CHANGELOG.md#300-2022-07-13) to help build their front-end applications.
 

@@ -101,6 +101,23 @@ Below is a non-exhaustive list of third-party software that are known to cause `
 
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
 
+## CF_FAILED_READ_SYSTEM_DNS_CONFIG
+
+### Symptoms
+
+- Unable to connect WARP
+- Unable to browse the Internet
+
+### Cause
+
+WARP could not read the system DNS configuration, most likely because it contains an invalid nameserver or search domain.
+
+### Resolution
+
+On macOS and Linux, validate that `/etc/resolv.conf` is [formatted correctly](https://man7.org/linux/man-pages/man5/resolv.conf.5.html) and check for [invalid characters](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#maclinux-the-devices-etcresolvconf-file-has-an-invalid-character).
+
+On Windows, validate that the registry entry `HKLM\System\CurrentControlSet\Services\TCPIP\Parameters\SearchList` contains only valid search domains. Examples of invalid entries include IP addresses and domains that start with a period (such as `.local`).
+
 ## CF_FAILED_TO_SET_MTLS
 
 ### Symptoms
@@ -116,7 +133,7 @@ The device failed to present a [valid mTLS certificate](/cloudflare-one/connecti
 1. Ensure that there are no admin restrictions on certificate installation.
 2. Re-install the client certificate on the device.
 
-## CF_HAPPY_EYEBALLS_MITM_FAILURE
+## CF_HAPPY_EYEBALLS_FAILURE
 
 ### Symptoms
 

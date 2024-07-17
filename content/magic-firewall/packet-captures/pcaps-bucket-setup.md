@@ -8,7 +8,7 @@ weight: 2
 
 Before you can begin a full {{<glossary-tooltip term_id="data packet">}}packet{{</glossary-tooltip>}} capture, you must first configure a bucket that Cloudflare can use to upload your files. Setting up a bucket is not required for sample packet captures.
 
-You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target.
+You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target. You can also [use R2](#r2) as a target using the API.
 
 ## Set up a bucket
 
@@ -62,11 +62,11 @@ The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` 
 header: Ownership challenge request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
 --data '{
-       "destination_conf": "'${bucket}'"
+  "destination_conf": "'${bucket}'"
 }'
 ```
 
@@ -98,9 +98,9 @@ Validate the bucket by inserting the copied text in the `ownership_text` below:
 header: Bucket validation example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
 --data '{
   "destination_conf": "'${bucket}'",
   "ownership_challenge": "'${ownership_text}'"
@@ -159,8 +159,7 @@ The list of buckets associated with your account displays.
 header: Bucket list request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
--H 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
@@ -188,3 +187,54 @@ header: Bucket list response example
 {{</tabs>}}
 
 To learn how to collect packet captures, refer to [Collect packet captures](/magic-firewall/packet-captures/collect-pcaps/).
+
+## R2
+
+To start collecting packet captures with R2, you first need to configure it properly. For all the required details, refer to the [Cloudflare R2](/r2/) documentation.
+
+### Create bucket and API token
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **R2** > **Create bucket**.
+3. Give your bucket a name > **Create bucket**.
+4. Go to the R2 Overview page, and select **Manage R2 API Tokens**.
+5. Select **Create API Token**.
+6. In **Permissions**, choose **Object Read & Write**. Make sure you also select **Apply to specific buckets only**, and select the bucket you have created for PCAPs from the drop-down menu.
+7. Select **Create API Token**.
+8. Make sure you copy the **Secret Access Key** and **Access Key ID** values, as you will need them for the next step.
+
+### Create initial request
+
+Create your initial request to R2:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "destination_conf": "r2://<BUCKET_NAME>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>"
+}'
+```
+
+The [response](/api/operations/magic-pcap-collection-add-buckets-for-full-packet-captures) has a `"filename"` parameter with the name of a file that Cloudflare wrote to your R2 bucket. You need to download it for the next step. Example:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "destination_conf": "<YOUR_R2_BUCKET>",
+    "filename": "ownership-challenge-9883874ecac311ec8475433579a6bf5f.txt",
+    "id": "9883874ecac311ec8475433579a6bf5f",
+    "status": "success",
+    "submitted": "2020-01-01T08:00:00Z",
+    "validated": "2020-01-01T08:00:00Z"
+  },
+  "success": true
+}
+```
+
+### Validate bucket ownership
+
+Refer to the [Validate a bucket](#validate-a-bucket) API instructions for more details on the entire process to [validate your R2 bucket](/api/operations/magic-pcap-collection-validate-buckets-for-full-packet-captures). When specifying the R2 destination for this validation, exclude the secret and access keys from the URL.

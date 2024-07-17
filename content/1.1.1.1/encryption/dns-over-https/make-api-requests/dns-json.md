@@ -11,8 +11,6 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 
 ## Supported parameters
 
-{{<table-wrap>}}
-
 | Field | Required? | Description | Default |
 | --- | --- | --- | --- |
 | `name` | Yes | Query name. | - |
@@ -20,14 +18,12 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 | `do` | No | `DO` bit - whether the client wants DNSSEC data (either empty or one of `0`, `false`, `1`, or `true`).| `false` |
 | `cd` | No | `CD` bit - disable validation (either empty or one of `0`, `false`, `1`, or `true`). | `false` |
 
-{{</table-wrap>}}
-
 ## Examples
 
 Example request:
 
 ```sh
-$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
+$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
 ```
 
 Example response:
@@ -60,7 +56,8 @@ Example response:
 In the case of an invalid request a `400 Bad Request` error is returned:
 
 ```sh
-$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+
 {
   "error": "Invalid CD flag `2`. Expected to be empty or one of `0`, `false`, `1`, or `true`."
 }
@@ -71,8 +68,6 @@ $ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?n
 The following tables have more information on each response field.
 
 ### Successful response
-
-{{<table-wrap>}}
 
 | Field | Description |
 | --- | --- |
@@ -98,14 +93,8 @@ The following tables have more information on each response field.
 | `Additional: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
 | `Comment` | List of EDE messages. Refer to [Extended DNS error codes](/1.1.1.1/infrastructure/extended-dns-error-codes/) for more information.
 
-{{</table-wrap>}}
-
 ### Error response
-
-{{<table-wrap>}}
 
 | Field | Description |
 | --- | --- |
 | `error` | An explanation of the error that occurred. |
-
-{{</table-wrap>}}

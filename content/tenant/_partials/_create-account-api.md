@@ -52,14 +52,14 @@ All KYC parameters are text fields, have a 120 character limit, and are optional
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-    "name": "<ACCOUNT_NAME>",
-    "type": "standard"
-    }'
+curl 'https://api.cloudflare.com/client/v4/accounts' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<ACCOUNT_NAME>",
+  "type": "standard"
+}'
 ```
 
 A successful request will return an HTTP status of `200` and the following response body:
@@ -71,7 +71,7 @@ header: Response
 {
   "result": {
     "id": "2bab6ace8c72ed3f09b9eca6db1396bb",
-    "name": "<Account Name>",
+    "name": "<ACCOUNT_NAME>",
     "type": "standard",
     "settings": {
       "enforce_twofactor": false
@@ -89,17 +89,17 @@ A request with a unit ID:
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-    "name": "<ACCOUNT_NAME>",
-    "type": "standard",
-    "unit": {
-      "id": "1a2b3c4d5e6f7g8h",
-    }
-    }'
+curl 'https://api.cloudflare.com/client/v4/accounts' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<ACCOUNT_NAME>",
+  "type": "standard",
+  "unit": {
+    "id": "1a2b3c4d5e6f7g8h"
+  }
+}'
 ```
 
 A request with a unit ID and KYC:
@@ -108,20 +108,20 @@ A request with a unit ID and KYC:
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-    "name": "<ACCOUNT_NAME>",
-    "type": "standard",
-    "business_name": "Cloudflare",
-    "business_email": "email@business.com",
-    "business_address": "San Fransisco",
-    "business_phone": "1234567890",
-    "external_metadata": "{'testKey': 'testValue'}",
-    "unit": {
-      "id": "1a2b3c4d5e6f7g8h",
-    }
-    }'
+curl 'https://api.cloudflare.com/client/v4/accounts' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<ACCOUNT_NAME>",
+  "type": "standard",
+  "business_name": "Cloudflare",
+  "business_email": "email@business.com",
+  "business_address": "San Francisco",
+  "business_phone": "1234567890",
+  "external_metadata": "{'\''testKey'\'': '\''testValue'\''}",
+  "unit": {
+    "id": "1a2b3c4d5e6f7g8h"
+  }
+}'
 ```

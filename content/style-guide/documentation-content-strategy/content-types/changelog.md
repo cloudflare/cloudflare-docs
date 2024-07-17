@@ -79,6 +79,18 @@ The `product-changelog` component renders data that lives in a file within the [
 
   - Product name to display on the [changelog](/changelog/) product filter list, as well as other areas of the template.
 
+- `productLink` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Link to top-level docs for your product (helpful for context if someone is landing on the top-level changelog page)
+
+- `productArea` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Rollup grouping to surface related products together in context.
+
+- `productAreaLink` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Rollup grouping to surface related products together in context. Helps pull together related RSS feeds.
+
 - `entries` {{<type>}}object{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
     - `publish_date` {{<type>}}date{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
@@ -87,7 +99,7 @@ The `product-changelog` component renders data that lives in a file within the [
      - `title` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
         - Name of published change. Optional, but highly encouraged.
-    
+
      - `description` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
         - Markdown string that also follows YAML conventions. For multi-line strings, start the entry with `|-` and then type on an indented new line.
@@ -101,6 +113,9 @@ header: /data/changelogs/queues.yaml
 ---
 link: "/queues/changelog/"
 productName: Queues
+productLink: "/queues/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2023-03-28'
   title: Consumer concurrency (enabled)
@@ -164,6 +179,9 @@ header: /data/changelogs/waf.yaml
 ---
 link: "/waf/change-log/"
 productName: WAF
+productLink: "/waf/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 - publish_date: '2023-09-18'
   scheduled_date: '2023-09-25'

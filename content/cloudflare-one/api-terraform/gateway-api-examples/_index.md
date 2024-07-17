@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx_content_type: configuration
+pcx_content_type: example
 title: Gateway API examples
 weight: 2
 layout: wide

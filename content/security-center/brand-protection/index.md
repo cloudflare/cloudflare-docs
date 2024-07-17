@@ -57,6 +57,8 @@ To investigate a query:
 
 {{<render file="_brand-protection-alerts.md">}}
 
+{{<available-notifications product="Security Center">}}
+
 To set a Brand Protection Alert:
 
 1. Go to the **Monitored queries** section and select the three dots in front of the query for which you would like to create notifications.

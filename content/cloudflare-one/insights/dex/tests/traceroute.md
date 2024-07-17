@@ -45,9 +45,11 @@ Next, [view the results](/cloudflare-one/insights/dex/tests/view-results/) of yo
 
 A traceroute test measures the following data:
 
-| Data | Description |
+| Data  <div style="width: 100px;">| Description |
 | ----------- | ----------- |
+| Network path | IP address, average response time, and packet loss for each hop between the device and the target. |
 | Round trip time | Time between sending out a packet and receiving a response from the target. |
 | Number of hops | Number of routers encountered between the device and the target. |
 | Packet loss | Percentage of IP packets that failed to receive a response. |
 | Availability | Percentage of tests where at least one packet reached the destination. |
+| Last seen ISP | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br> <br> DEX looks up the IP address of the ISP in the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases) and returns the corresponding [ASO and ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in MaxMind. |

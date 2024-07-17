@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/perplexity-ai`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai`
 
 
 ```bash
@@ -13,27 +13,22 @@ _build:
 header: Example fetch request
 ---
 
-curl --request POST \
-     --url https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/perplexity-ai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai/chat/completions \
      --header 'accept: application/json' \
      --header 'content-type: application/json' \
-     --header 'Authorization: Bearer pplx-XXXXXXXXXXXXXXXXX' \
+     --header 'Authorization: Bearer {perplexity_token}' \
      --data '{
       "model": "mistral-7b-instruct",
       "messages": [
         {
-          "role": "system",
-          "content": "Be precise and concise."
-        },
-        {
           "role": "user",
-          "content": "How many stars are there in our galaxy?"
+          "content": "What is Cloudflare?"
         }
       ]
     }'
 ```
 
-Perplexity doesn't have their own SDK, but they have compatability with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
+Perplexity doesn't have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
 
 ```javascript
 ---
@@ -41,14 +36,14 @@ filename: index.js
 ---
 import OpenAI from "openai";
 
-  const perplexity = new OpenAI({
-    apiKey: env.PERPLEXITY_API_KEY,
-    baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/perplexity-ai"
-  });
+const perplexity = new OpenAI({
+  apiKey: env.PERPLEXITY_API_KEY,
+  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai"
+});
 
-   const chatCompletion = await perplexity.chat.completions.create({
-      model: "mistral-7b-instruct",
-      messages: [{role: "user", content: "What is petrichor?"}],
-      max_tokens: 20,
-    });
+const chatCompletion = await perplexity.chat.completions.create({
+  model: "mistral-7b-instruct",
+  messages: [{role: "user", content: "What is Cloudflare?"}],
+  max_tokens: 20,
+});
 ```

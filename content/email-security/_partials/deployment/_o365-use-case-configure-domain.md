@@ -6,9 +6,9 @@ _build:
 inputParameters: quarantinePolicy
 ---
 
-You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
+You first need to configure the domains you are onboarding on the Cloud Email Security (formerly Area 1) dashboard. To configure your domains:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Securitydashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.

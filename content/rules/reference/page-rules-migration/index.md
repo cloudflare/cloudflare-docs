@@ -6,17 +6,13 @@ weight: 3
 
 # Page Rules migration guide
 
-**Cloudflare Page Rules are deprecated.** For new Cloudflare accounts and zones, Page Rules will stop being available on Free plans from 2024-07-01 onward (refer to [Relevant dates](#relevant-dates) for information on other plans). For existing accounts and zones, the creation of new Page Rules will no longer be available from 2025-01-06 onward, and existing rules will be migrated to different Rules features throughout 2025. This change will affect customers using the Cloudflare dashboard, the [Cloudflare API](/api/), and the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/).
+Cloudflare recommends that you consider using modern Rules features for your new implementations instead of Page Rules. Follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
 
-Cloudflare recommends that you start transitioning from Page Rules to our new Rules features immediately by following the recommendations in this migration guide.
+## Page Rules migration
 
-## Relevant dates
+Cloudflare plans to migrate your existing Page Rules during 2025. You do not need to migrate your own rules, as Cloudflare will handle this process for you. However, it is beneficial to understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration. This will help you familiarize yourself with implementing the new types of rules in your Cloudflare account.
 
-- **2024-07-01** – Page Rules no longer available for new Cloudflare accounts and zones on a Free plan.
-- **2024-08-01** – Page Rules no longer available for new Cloudflare accounts and zones on a Pro or Business plan.
-- **2024-10-01** – Page Rules no longer available for new Cloudflare accounts and zones on an Enterprise plan.
-- **2025-01-06** – For existing accounts and zones on any plan, you can no longer create new Page Rules (maintenance mode).
-- **2025 (all year)** – Migration of existing Page Rules to modern Rules features. You cannot edit any existing Page Rules eligible for migration during this migration period.
+We encourage you to explore and start using the new Rules products to take advantage of their enhanced capabilities and features. This migration guide will be updated in the coming months with additional information about the Page Rules migration. Some instructions may also change as we simplify configuration deployment and release new features as part of this project. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs. We will not perform any migration or changes on your behalf without prior notification.
 
 ## Context
 
@@ -24,37 +20,51 @@ Cloudflare Page Rules has several fundamental limitations, such as triggering so
 
 In 2022, we announced in our blog post [The future of Page Rules](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
 
-## Main differences
+Improvements in modern Rules features include:
 
 - **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
-
 - **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
-
 - **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
-
 - **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
 
-## Page Rules migration
+## Important differences
 
-Cloudflare plans to migrate your existing Page Rules during 2025. However, it is strongly recommended that you understand the correspondence between the different Page Rules settings and new Rules features ahead of the migration, and learn how you can implement the new types of rules in your Cloudflare account.
+The evaluation and execution order of Rules features is different from Page Rules:
 
-This migration guide will be updated in the following months with additional information about the Page Rules migration. Cloudflare users will receive email updates about the migration of the Page Rules configured on their Cloudflare account before the migration occurs.
+- Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
+- The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
+- A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
+- Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
 
-### Settings that will not be migrated
+## Convert Page Rules URLs to filter expressions
 
-The following Page Rules settings will not be migrated to other types of rules:
+When migrating a Page Rule you will need to write a filter expression equivalent to your Page Rules URL using the Rules language.
 
-- **Auto Minify** (this setting is deprecated)
-- **Disable Performance** (this setting is deprecated)
-- **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
-- **Disable Security** (this setting is deprecated)
-- **Response Buffering** (this setting is deprecated)
-- **Server Side Excludes** (this setting is deprecated, since Server-side Excludes is deprecated)
-- **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
+Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-If you have a use case for these settings and you intend to keep their behavior, you will need to implement it yourself using new Rules features, since these settings will not be migrated.
+Strings in filter expressions do not support wildcards yet. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise and Business customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
 
-All other Page Rules settings will be migrated during 2025.
+The following table lists the most common Page Rule URLs and their equivalent filters:
+
+{{<table-wrap style="font-size: 87%">}}
+
+Target and components | <div style="width:130px">Page Rule URL example</div> | Filter expression using Rules language
+---|---|---
+Index page of root domain only<br>_(Domain + Path)_ | `example.com/` | `http.host eq "example.com" and http.request.uri.path eq "/"`
+Everything on a specific domain<br>_(Domain)_ | `example.com/*` | `http.host eq "example.com"`
+All subdomains and URLs on a specific domain<br>_(Domain)_ | `*example.com/*` | `http.host contains "example.com"`
+Only subdomains and their URLs<br>_(Domain)_ | `*.example.com/*` | `http.host contains ".example.com"`
+Specific file on subdomains of a specific domain<br>_(Domain + Path)_ | `*.example.com/*wp-login.php` | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`
+Specific file extension in a directory or its subdirectories of a domain<br>_(Domain + Path)_ | `example.com/archives/*.zip` | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`
+Specific file extension in any subdirectory of a domain<br>_(Domain + Path)_ | `example.com/*/downloads/*.txt` | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"`
+Specific directory and all its contents on all subdomains of a specific subdomain<br>_(Domain + Path)_ | `*cdn.example.com/file/*` | `http.request.full_uri contains "cdn.example.com/file/"`
+Specific URL on all domains<br>_(Path)_ | `*/images`<br>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.path eq "/images"`
+Specific directory and its subdirectories on all domains<br>_(Path)_ | `*/images/*`<br>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `starts_with(http.request.uri.path, "/images/")`
+Specific file in any directory<br>_(Path)_ | `*/wp-login.php`<br>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `ends_with(http.request.uri.path, "/wp-login.php")`
+Specific query string on all domains<br>_(Path)_ | `*/*?country=GB`<br>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.query eq "country=GB"`
+Part of a query string on all domains<br>_(Path)_ | `*/*?*country=GB*`<br>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.query contains "country=GB"`
+
+{{</table-wrap>}}
 
 ## Feature correspondence table
 
@@ -95,7 +105,6 @@ Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
 Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
 True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
-Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
 Web Application Firewall    | N/A (deprecated)                     | N/A
 
@@ -686,7 +695,7 @@ Page Rules configuration | Migrate to a configuration rule
 The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
+This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
 
 {{<tabs labels="Dashboard">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -698,14 +707,13 @@ You configured a Page Rule with **Disable Security** (deprecated) for all subdom
 - **URL**: `*example.com/*`
 - **Setting**: _Disable Security_
 
-This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version).
+This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
 **How to replace**:
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
     - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
-    - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
 2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
@@ -854,6 +862,8 @@ Page Rules configuration | Migrate to a configuration rule
 
 ### Migrate Forwarding URL
 
+**Example #1: Redirect `www` to root domain**
+
 {{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
 
@@ -893,10 +903,58 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 Page Rules configuration | Migrate to a dynamic redirect
 -------------------------|------------------------------
-![Example Page Rule with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
+![Example Page Rule #1 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #1](/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png)
 
 {{</tab>}}
 {{</tabs>}}
+
+**Example #2: Redirect all pages under old path to new path**
+
+{{<tabs labels="Dashboard | Visual guide">}}
+{{<tab label="dashboard" no-code="true">}}
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `example.com/old-path` to `example.com/new-path`:
+
+- **URL**: `example.com/old-path/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/new-path/$1`
+
+**How to migrate**:
+
+1. [Create a dynamic redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
+
+    <div class="DocsMarkdown--example">
+
+    - **When incoming requests match**: Custom filter expression
+        - Using the Expression Builder:<br>
+            `Hostname equals "example.com" AND URI Path starts with "/old-path/"`
+        - Using the Expression Editor:<br>
+            `(http.host eq "example.com" and starts_with(http.request.uri.path, "/old-path/"))`
+
+    - **Then**:
+        - **Type**: _Dynamic_
+        - **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br>
+        (where `10` (start byte value) is the length of `/old-path/`)
+        - **Status code**: _301_
+
+    </div>
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+3. If your tests succeed, delete the existing Page Rule.
+
+{{</tab>}}
+{{<tab label="visual guide" no-code="true">}}
+
+Page Rules configuration | Migrate to a dynamic redirect
+-------------------------|------------------------------
+![Example Page Rule #2 with 'Forwarding URL' setting](/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Dynamic redirect matching the 'Forwarding URL' setting of the example Page Rule #2](/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png)
+
+{{</tab>}}
+{{</tabs>}}
+
 
 ### Migrate Host Header Override
 
@@ -1487,6 +1545,19 @@ Page Rules configuration | Migrate to a configuration rule
 
 {{</tab>}}
 {{</tabs>}}
+
+## Settings that will not be migrated
+
+The following Page Rules settings will not be migrated to other types of rules:
+
+- **Auto Minify** (this setting is deprecated)
+- **Disable Performance** (this setting is deprecated)
+- **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
+- **Disable Security** (this setting is deprecated)
+- **Response Buffering** (this setting is deprecated)
+- **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
+
+All other Page Rules settings will be migrated during 2025.
 
 ## More resources
 

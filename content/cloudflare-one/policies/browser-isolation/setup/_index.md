@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Setup
+title: Set up Browser Isolation
 weight: 1
 ---
 

@@ -1,0 +1,141 @@
+entries:
+- link: https://github.com/craigsdennis/phoney-ai
+  name: Phoney AI
+  description: This application uses Cloudflare Workers AI, Twilio, and AssemblyAI. Your phone is an input and output device.
+  tags: [AI, Twilio, Hono]
+  products: [Workers AI, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  author: craig
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/image-model-streamlit-workers-ai
+  name: Image Model Streamlit starters
+  description: Collection of Streamlit applications that are making use of Cloudflare Workers AI.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: craig
+  cloudflare: true
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/vanilla-chat-workers-ai
+  name: Vanilla JavaScript Chat Application using Cloudflare Workers AI
+  description: A web based chat interface built on Cloudflare Pages that allows for exploring Text Generation models on Cloudflare Workers AI. Design is built using tailwind.
+  tags: [AI, Tailwind, Hono]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  author: craig
+  cloudflare: true
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/whatever-ify-workers-ai
+  name: Whatever-ify
+  description: Turn yourself into...whatever. Take a photo, get a description, generate a scene and character, then generate an image based on that calendar.
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  author: craig
+  cloudflare: true
+  updated: 2024-04-01
+- link: https://github.com/craigsdennis/comically-bad-art-workers-ai-streamlit
+  name: Comically Bad Art Generation
+  description: This app uses the wonderful Python UI Framework Streamlit and Cloudflare Workers AI.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: craig
+  cloudflare: true
+  updated: 2024-05-01
+- link: https://github.com/craigsdennis/floor-is-llava-workers-ai
+  name: Floor is Llava
+  description: This is an example repo to explore using the AI Vision model Llava hosted on Cloudflare Workers AI. This is a SvelteKit app hosted on Pages.
+  tags: [AI, SvelteKit]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-05-23
+- link: https://github.com/craigsdennis/hackathon-helper-workers-ai
+  name: Hackathon Helper
+  description: A series of starters for Hackathons. Get building quicker! Python, Streamlit, Workers, and Pages starters for all your AI needs!
+  tags: [AI, Streamlit, Hono]
+  products: [Workers, Workers AI, Pages]
+  languages: [JavaScript, Python]
+  cloudflare: true
+  updated: 2024-06-12
+- link: https://github.com/craigsdennis/lightbulb-moment-tool-calling
+  name: Homie - Home Automation using Function Calling
+  description: A home automation tool that uses AI Function calling to change the color of lightbulbs in your home.
+  tags: [AI, Hono]
+  products: [Workers AI, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-06-17
+- link: https://github.com/craigsdennis/shorty-dot-dev
+  name: shrty.dev
+  description: A URL shortener that makes use of KV and Workers Analytics Engine. The admin interface uses Function Calling. Go Shorty!
+  tags: [AI, Hono]
+  products: [Workers AI, KV, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-07-02
+- link: https://github.com/elizabethsiegle/cfworkers-ai-translate
+  name: Multimodal AI Translator
+  description: This application uses Cloudflare Workers AI to perform multimodal translation of languages via audio and text in the browser.
+  tags: [AI]
+  products: [Workers, Workers AI]
+  languages: [JavaScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-05-28
+- link: https://github.com/elizabethsiegle/cf-ai-lora-news-summarizer
+  name: LoRA News Summarizer
+  description: This application uses Cloudflare Workers AI, Streamlit, and Beautiful Soup to summarize input news article URLs in a variety of tones.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-07-08
+- link: https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects
+  name: NBA Finals Polling and Predictor
+  description: This stateful polling application uses Cloudflare Workers AI, Cloudflare Pages, Cloudflare Durable Objects, and Hono to keep track of users' votes for different basketball teams and generates personal predictions for the series.
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Durable Objects]
+  languages: [TypeScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-06-06
+- link: https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam
+  name: Workers AI Object Detector
+  description: Detect objects from a webcam in a Cloudflare Worker web app with detr-resnet-50 hosted on Cloudflare using Cloudflare Workers AI.
+  tags: [AI]
+  products: [Workers, Workers AI]
+  languages: [JavaScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-05-23
+- link: https://github.com/elizabethsiegle/star-wars-fanfic-generator-streamlit-astra-cf
+  name: Fanfic Generator
+  description: This application uses Cloudflare Workers AI, Streamlit, and AstraDB to generate personal scifi fanfiction.
+  tags: [AI, Streamlit, AstraDB]
+  products: [Workers AI]
+  languages: [Python]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-06-29
+- link: https://github.com/harshil1712/nextjs-r2-demo
+  name: Upload Image to R2 starter
+  description: Upload images to Cloudflare R2 from a Next.js application.
+  tags: [NextJS]
+  products: [R2]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-06-21
+- link: https://github.com/harshil1712/remix-d1-auth-template
+  name: Remix Authentication Starter
+  description: Implement authenticating to a Remix app and store user data in Cloudflare D1.
+  tags: [Remix]
+  products: [D1]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-09

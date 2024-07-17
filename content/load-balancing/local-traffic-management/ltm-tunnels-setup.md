@@ -13,7 +13,7 @@ Consider the following steps to learn how to configure Cloudflare local traffic 
 The specific configuration steps can vary depending on your infrastructure and services you are looking to connect. If you are not familiar with Cloudflare Tunnel, the pages linked on each step provide more guidance.
 
 1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).
-2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to the data center hosting the origin servers.
+2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to your data center.
 3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
 
     {{<tabs labels="Dashboard | CLI">}}
@@ -53,17 +53,17 @@ $ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 
 ## 2. Configure Cloudflare Load Balancing
 
-Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each origin when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP origins.
+Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each endpoint when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP endpoints.
 
 The specific configuration will vary depending on your use case. Refer to the following steps to understand the workflow.
 
 1. [Create the Load Balancing monitor](/load-balancing/monitors/create-monitor/) according to your needs.
-2. [Create the origin pool](/load-balancing/pools/create-pool/) specifying your private origin IP addresses and corresponding virtual networks.
+2. [Create the pool](/load-balancing/pools/create-pool/) specifying your private IP addresses and corresponding virtual networks.
 
     {{<Aside type="note">}}
 
-* Currently, Cloudflare does not support entering the same origin IP addresses more than once, even when using different virtual networks.
-* All origins with private IPs must have `virtual_network_id` specified.
+* Currently, Cloudflare does not support entering the same endpoint IP addresses more than once, even when using different virtual networks.
+* All endpoints with private IPs must have `virtual_network_id` specified.
 
 {{</Aside>}}
 
@@ -88,12 +88,12 @@ All origins with private IPs must have `virtual_network_id` specified.
 {{</Aside>}}
 
 ```bash
-$ curl --request PATCH \
-  https://api.cloudflare.com/client/v4/accounts/<account_id>/load_balancers/pools/<pool_id> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <email>' \
-  --header 'X-Auth-Key: <key>' \
-  --data '{
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
 	"origins": [
 		{
 			"name": "origin-1",

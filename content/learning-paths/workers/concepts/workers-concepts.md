@@ -43,7 +43,7 @@ By reading this page, you have learned:
 
 - The basics of how Worker projects are organized.
 - The fundamentals of how Workers execute on the Cloudflare network.
-- How the request to reponse flow executes.
+- How the request to response flow executes.
 
 In the next module, you build and deploy your first Worker to the Cloudflare global network.
 

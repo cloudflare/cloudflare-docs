@@ -9,7 +9,7 @@ _build:
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare
 ```
 
 {{</tab>}}

@@ -30,7 +30,7 @@ Those who read this reference architecture will learn:
 
 ## Cloud based security and performance providers
 
-Before discussing multi-vendor security and performance solutions, it’s important to note how cloud-based solutions providing these services work in general and how traffic is routed through them. 
+Before discussing multi-vendor security and performance solutions, it’s important to note how cloud-based solutions providing these services work in general and how traffic is routed through them.
 
 Cloud-based security and performance providers like Cloudflare work as a reverse proxy. A reverse proxy is a server that sits in front of web servers and forwards client requests to those web servers. Reverse proxies are typically implemented to help increase security, performance, and reliability.
 
@@ -48,18 +48,18 @@ In some cases, the vendor providing the reverse proxy also provides DNS services
 
 ## Cloudflare’s reverse proxy architecture and solution
 
-Cloudflare provides a reverse proxy architecture using its global [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) for the respective security, performance, and reliability services it provides. Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations or ‘nodes’ advertising the same IP address space. Cloudflare is extremely performant and reliable thanks to Anycast, as well as its global presence in [hundreds of cities worldwide](https://www.cloudflare.com/network/). Cloudflare is also directly connected to 12,000 networks, including every major ISP, cloud provider, and enterprise, and within ~50 ms from 95% of the world’s Internet-connected population.
+Cloudflare provides a reverse proxy architecture using its global [anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) for the respective security, performance, and reliability services it provides. Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations or ‘nodes’ advertising the same IP address space. Cloudflare is extremely performant and reliable thanks to anycast, as well as its global presence in [hundreds of cities worldwide](https://www.cloudflare.com/network/). Cloudflare is also directly connected to 12,000 networks, including every major ISP, cloud provider, and enterprise, and within ~50 ms from 95% of the world’s Internet-connected population.
 
-Cloudflare has one global network with every service running on every server in every Cloudflare data center. Since Cloudflare’s network uses Anycast, the closest data center to the client will respond to the client request. This decreases latency while improving network resiliency, availability, and security due to the increased overall distribution of traffic across Cloudflare's network.
+Cloudflare has one global network with every service running on every server in every Cloudflare data center. Since Cloudflare’s network uses anycast, the closest data center to the client will respond to the client request. This decreases latency while improving network resiliency, availability, and security due to the increased overall distribution of traffic across Cloudflare's network.
 
-[Cloudflare’s Global Anycast Network](https://www.cloudflare.com/network/) provides the following advantages:
+[Cloudflare’s global anycast network](https://www.cloudflare.com/network/) provides the following advantages:
 
 * Incoming traffic is routed to the nearest data center with the capacity to process the requests efficiently.
 * Availability and redundancy is inherently provided. Since multiple nodes advertise the same IP address, if one node were to fail, requests are simply routed to another node in close proximity.
-* Because Anycast distributes traffic across multiple data centers, it increases overall distribution of traffic across Cloudflare’s network, preventing any one location from becoming overwhelmed with requests. For this reason, Anycast networks are very resilient to DDoS attacks.
+* Because anycast distributes traffic across multiple data centers, it increases overall distribution of traffic across Cloudflare’s network, preventing any one location from becoming overwhelmed with requests. For this reason, anycast networks are very resilient to DDoS attacks.
 
 
-![Figure 4: Cloudflare providing DNS and security/performance services via Global Anycast Network](/images/reference-architecture/multi-vendor-architecture-images/Figure_4.png "Figure 4")
+![Figure 4: Cloudflare providing DNS and security/performance services via global anycast network](/images/reference-architecture/multi-vendor-architecture-images/Figure_4.png "Figure 4")
 
 
 ## Cloudflare onboarding options
@@ -76,11 +76,11 @@ There are several methods to proxy traffic through Cloudflare and the method use
 
 **1. Full DNS setup - Cloudflare as primary DNS provider**
 
-Cloudflare is configured as the primary DNS provider and A records are configured to proxy traffic through Cloudflare. When the proxy is enabled on a DNS record, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
+Cloudflare is configured as the primary DNS provider and A records are configured to proxy traffic through Cloudflare. When the proxy is enabled on a DNS record, the response will be Cloudflare anycast IP addresses allowing for Cloudflare to be the proxy.
 
 **2. Secondary DNS setup with Secondary DNS override**
 
-Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare Anycast IP addresses allowing for Cloudflare to be the proxy.
+Cloudflare is configured as a secondary provider and all DNS records are transferred from the primary provider. Cloudflare provides a feature called [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) that allows customers to override the response served from Cloudflare secondary nameservers. This allows for customers to take advantage of leveraging zone transfers to automatically sync between DNS providers. It also provides the flexibility to update select records in Cloudflare DNS to redirect certain traffic to another service provider like Cloudflare. In this case, the response will be Cloudflare anycast IP addresses allowing for Cloudflare to be the proxy.
 
 **3. Partial / CNAME setup**
 
@@ -116,7 +116,7 @@ Just like the performance of a particular vendor can vary based on content, time
 
 Any multi-vendor architecture will contain several components an organization must decide on prior to implementing, both on the business and technical side. Additionally, there are several things to keep in mind to help optimize your setup to align with Cloudflare’s strengths and unique differentiators.
 
-Optimize for feature set and delivery methodology. Cloudflare is able to offer feature parity with most major vendors, with custom features easily delivered through our serverless compute service. For delivery methodology, Cloudflare’s Anycast architecture is unique in that every server can deliver every service that Cloudflare offers, making it an optimal candidate for an active/active approach.
+Optimize for feature set and delivery methodology. Cloudflare is able to offer feature parity with most major vendors, with custom features easily delivered through our serverless compute service. For delivery methodology, Cloudflare’s anycast architecture is unique in that every server can deliver every service that Cloudflare offers, making it an optimal candidate for an active/active approach.
 
 Leverage Cloudflare’s API and rapid deployment capabilities wherever possible. Since Cloudflare offers every feature API first, and config changes typically are visible in a few seconds, this makes it easy for teams to test and deploy changes in a programmatic fashion without having to wait for long deployment times.
 
@@ -126,7 +126,7 @@ One note on a stacked approach is that in certain cases for particular point sol
 
 While Cloudflare and many providers maintain a high degree of availability and a robust fault tolerant architecture, some customers have a further desire to reduce dependency and respectively single vendor point of failures. It’s important to plan for a worst case scenario where some or all of a vendor's services are down and how to work around that in a short timeframe. Customers must consider how to have redundancy across DNS providers, networks, and origin connectivity to eliminate the risk of  a single vendor/component failure cascading into a widespread outage.
 
-While the specifics may vary widely depending on the vendor and business case, the technical considerations for a multi-vendor deployment can be bucketed into three areas: routing logic, configuration management and origin connectivity. 
+While the specifics may vary widely depending on the vendor and business case, the technical considerations for a multi-vendor deployment can be bucketed into three areas: routing logic, configuration management and origin connectivity.
 
 ### Routing
 
@@ -205,7 +205,7 @@ Once traffic is routed to the security and performance service provider via DNS,
 
 ### Multi-vendor active-active security with multi-vendor DNS from same providers
 
-The below example describes a setup where the DNS providers are also the security proxy vendors, and DNS records are kept in sync via zone transfers. A multi-vendor DNS solution is recommended as the preferred and most resilient solution. 
+The below example describes a setup where the DNS providers are also the security proxy vendors, and DNS records are kept in sync via zone transfers. A multi-vendor DNS solution is recommended as the preferred and most resilient solution.
 
 here are different setups possible between the different DNS vendors and these are discussed in more detail in the ‘Multi-vendor DNS setup’ section of this document with advantages/disadvantages of each.
 
@@ -280,7 +280,7 @@ In a hidden primary setup, users establish an unlisted primary server to store a
 
 Although the secondary servers essentially fulfill the function of a primary server, the hidden setup allows users to hide their origin IP and shield it from attacks. Additionally, the primary can be taken offline for maintenance without causing DNS service to be disrupted.
 
-This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact. 
+This setup is recommended for customers who desire simplicity offered by a secondary DNS and provider for maintaining synchronization. This solution also provides for flexibility in taking the primary offline as needed with less impact.
 
 Pros:
 * Allows customers to maintain DNS record management on their infrastructure and use standard to keep DNS synced automatically via Zone Transfers.
@@ -310,7 +310,7 @@ The below diagram describes the default connectivity to origins as requests flow
 
 ![Figure 12: Connectivity from Cloudflare to origin server(s) via Internet](/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png "Figure 12")
 
-Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend whitelisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
+Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
 
 Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is configured, the Cloudflare global network will announce a customer’s own IP prefixes and the prefixes can be used with the respective Cloudflare Layer 7 services.
 
@@ -318,7 +318,7 @@ Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is con
 
 Another option is to have a private tunnel/connection over the Internet for additional security. Some vendors offer private connectivity via tunnels or VPNs which can be encrypted or unencrypted; these vary in complexity/management and require additional security/firewall updates to allow for connectivity. A traditional VPN setup is also limited via a centralized vendor location back to the origin.
 
-Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages Anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
+Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
 
 When you run a tunnel, a lightweight daemon in your infrastructure, cloudflared, establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers providing robust resiliency. It is possible to install many cloudflared instances to increase resilience between your origin servers and the Cloudflare network.
 
@@ -330,7 +330,7 @@ The firewall and security posture is hardened by locking down all origin server 
 
 The above diagram describes the connectivity model through Cloudflare Tunnel. Note, this option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.
 
-### Direct connection 
+### Direct connection
 
 Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet Exchanges (IXs) where Internet Service Providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.
 

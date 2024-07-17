@@ -69,13 +69,13 @@ To configure how Cloudflare responds to preflight requests:
 
    For example, if you have configured `api.mysite.com`to return the following headers:
 
-   ```
+   ```txt
    headers: {
-       'Access-Control-Allow-Origin': 'https://example.com',
-       'Access-Control-Allow-Credentials' : true,
-       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-       'Access-Control-Allow-Headers': 'office',
-       'Content-Type': 'application/json',
+     'Access-Control-Allow-Origin': 'https://example.com',
+     'Access-Control-Allow-Credentials' : true,
+     'Access-Control-Allow-Methods': 'GET, OPTIONS',
+     'Access-Control-Allow-Headers': 'office',
+     'Content-Type': 'application/json',
    }
    ```
 
@@ -86,15 +86,15 @@ To configure how Cloudflare responds to preflight requests:
 
 6. (Optional) You can check your configuration by sending an OPTIONS request to the origin with `curl`. For example,
 
-   ```bash
-   curl -I -XOPTIONS https://api.mysite.com \
-       -H 'origin: https://example.com' \
-       -H 'access-control-request-method: GET'
-   ```
+    ```bash
+    curl --head --request OPTIONS https://api.mysite.com \
+    --header 'origin: https://example.com' \
+    --header 'access-control-request-method: GET'
+    ```
 
    should return a response similar to:
 
-   ```bash
+   ```txt
    HTTP/2 200
    date: Tue, 24 May 2022 21:51:21 GMT
    vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers

@@ -53,7 +53,7 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_content-categories.md" withParameters=" ">}}
+{{<render file="gateway/selectors/_content-categories.md">}}
 
 ### DNS Resolver IP
 

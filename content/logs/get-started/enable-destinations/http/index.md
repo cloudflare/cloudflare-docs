@@ -10,6 +10,28 @@ Cloudflare Logpush now supports the ability to send logs to configurable HTTP en
 
 Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may specify a secret token in the URL or an HTTP header of the Logpush destination.
 
+## Manage via the Cloudflare dashboard
+
+{{<render file="_enable-logpush-job.md">}}
+
+5. In **Select a destination**, choose **HTTP destination**.
+
+6. Enter the **HTTP endpoint** where you want to send the logs to, and select **Continue**.
+
+7. Select the dataset to push to the storage service.
+
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
+
 ## Manage via API
 
 To create a Logpush job, make a `POST` request to the [Logpush job creation endpoint URL](/logs/get-started/api-configuration/) with the appropriate parameters.

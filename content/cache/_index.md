@@ -56,7 +56,7 @@ Clear cached files to force Cloudflare to fetch a fresh version of those files f
 ## Related products
 
 {{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
-Cloudflare Load Balancing distributes traffic across your servers, reducing server strain and latency and improving the end users experience.
+Cloudflare Load Balancing distributes traffic across your {{<glossary-tooltip term_id="endpoint">}}endpoints{{</glossary-tooltip>}}, reducing endpoint strain and latency and improving the end users experience.
 {{</related>}}
 
 {{<related header="Images" href="/images/" product="images">}}
@@ -69,6 +69,18 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 {{<related header="Rules" href="/rules/" product="rules">}}
 Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{</related>}}
+
+{{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
+Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
+{{</related>}}
+
+{{<related header="R2" href="/r2/" product="r2">}}
+Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+{{</related>}}
+
+{{<related header="Aegis" href="/aegis/" product="aegis">}}
+Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) for your layer 7 WAF and CDN services.
 {{</related>}}
 
 ---

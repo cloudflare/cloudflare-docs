@@ -4,13 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
+tags: [Hono]
 ---
 
 # Create a serverless, globally distributed REST API with Fauna
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna](https://fauna.com/) as its data layer.
 
@@ -32,6 +31,8 @@ Fauna is a document-based database with a flexible schema. This allows you to de
 Documents are stored in a [collection](https://docs.fauna.com/fauna/current/reference/schema_entities/collection/). Collections in document databases are groups of related documents.
 
 For this tutorial, all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna](https://fauna.com/blog/choosing-an-authentication-strategy-with-fauna) for more information on authenticating users to your applications with Fauna.
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Set up Fauna
 

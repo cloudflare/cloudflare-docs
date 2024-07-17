@@ -10,7 +10,11 @@ meta:
 
 # Cloudflare API Shield
 
-Cloudflare offers a range of products to help identify and address API vulnerabilities.
+{{<description>}} 
+Identify and address your API vulnerabilities.
+{{</description>}}
+
+{{<plan type="ent-add-on">}}
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
@@ -22,10 +26,13 @@ Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 
 ## Features
 
-Cloudflare offers the following features to help secure your APIs:
+{{<feature header="Security features" href="/api-shield/security/">}}
+Secure your APIs using API Shield's security features.
+{{</feature>}}
 
-- [Security](/api-shield/security/)
-- [Management, Monitoring, and more](/api-shield/api-gateway/)
+{{<feature header="Management, monitoring, and more" href="/api-shield/api-gateway/">}}
+A package of features that will do everything for your APIs.
+{{</feature>}}
 
 ## Availability
 

@@ -12,27 +12,32 @@ Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare d
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Splunk via the dashboard.
-
-To enable the Cloudflare Logpush service:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **Splunk**.
+5.  In **Select a destination**, choose **Splunk**.
 
-8. Enter or select the following destination information:
-
+6. Enter or select the following destination information:
     - **Splunk raw HTTP Event Collector URL**
-    - **Channel ID**
+    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](http://guidgenerator.com/).
     - **Auth Token**
-    - **Source Type**
-    - **Use insecure skip verify option**
+    - **Source Type** - For example, `cloudflare:json`.
+    - **Use insecure skip verify option** (not recommended).
 
-9. Select **Validate access**.
+When you are done entering the destination details, select **Continue**.
 
-10. Select **Save and Start Pushing** to finish enabling Logpush.
+7. Select the dataset to push to the storage service.
 
-Once connected, Cloudflare lists Splunk as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

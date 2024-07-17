@@ -69,13 +69,13 @@ $ netcat -zv [your-server’s-ip-address] 443
 
 If your server is still responding on those ports, you will see:
 
-```bash
+```txt
 [ip-address] 80 (http) open
 ```
 
 If your server is correctly locked down, you will see:
 
-```bash
+```txt
 [ip-address] 443 (https): Connection refused
 ```
 
@@ -87,7 +87,7 @@ If your server is correctly locked down, you will see:
 
 {{<faq-answer>}}
 
-Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancer origins, which also point to `<UUID>.cfargotunnel.com`.
+Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancing endpoints, which also point to `<UUID>.cfargotunnel.com`.
 
 {{</faq-answer>}}
 {{</faq-item>}}

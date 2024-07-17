@@ -57,6 +57,21 @@ The Rules language supports these transformation functions:
 
   - For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
 
+- <code id="function-decode_base64">{{<name>}}decode_base64{{</name>}}(source{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+
+  - Decodes a Base64-encoded String specified in `source`.
+
+  - `source` must be a field, that is, it cannot be a literal String.
+
+  - <em>Example:</em>
+  <br/>
+  With the following HTTP request header: `client_id: MTIzYWJj`,<br/>
+  `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
+
+{{<Aside type="warning">}}
+You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
 - <code id="function-ends_with">{{<name>}}ends_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
   - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
@@ -178,7 +193,7 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
 
   - Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
-  - The `end` index must be greater than the `start` index. The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
+  - The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
   - *Examples:*
 
@@ -188,6 +203,7 @@ You can only use the `regex_replace()` function in rewrite expressions of [Trans
     substring(http.request.body.raw, 2, 5)   will return "dfg"
     substring(http.request.body.raw, 2)      will return "dfghjk"
     substring(http.request.body.raw, -2)     will return "jk"
+    substring(http.request.body.raw, 0, -2)  will return "asdfgh"
     ```
 
 - <code id="function-to_string">{{<name>}}to_string{{</name>}}({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}

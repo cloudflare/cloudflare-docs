@@ -5,41 +5,23 @@ title: Tutorial
 
 # Tutorial
 
-## Purpose
+{{<glossary-definition term_id="tutorial">}}
 
-The purpose of a tutorial is to connect products to real-world scenarios to meet a user's goal.
+## Template
 
-## Tone
+We have a [pre-built template](https://github.com/cloudflare/cloudflare-docs/blob/production/archetypes/tutorial.md) that helps you follow our general structure and content guidelines.
 
-Guiding, straightforward, educational, authoritative
+You can copy the file directly or - if you have [Hugo](https://github.com/cloudflare/cloudflare-docs?tab=readme-ov-file#setup) installed on your local machine - you can run the following command:
 
-## content_type
+```sh
+$ hugo new content --kind tutorial {new_file_location}
+```
 
-`tutorial`
+In practice, that might look like:
 
-## Structure
-
-### Required components
-
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
-
-**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they'll accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to [Context](/style-guide/documentation-content-strategy/component-attributes/context/) for more information.
-
-**Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
-
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): Numbered steps that complete a task. Refer to [Steps/tasks/procedures](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/) for more information.
-
-### Optional components
-
-[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
-
-**Screenshots**
-
-[**Links**](/style-guide/documentation-content-strategy/component-attributes/links/)
-
-**Boundaries**
+```sh
+$ hugo new content --kind tutorial content/workers/tutorials/new-tutorial.md
+```
 
 ## Guidelines
 
@@ -61,62 +43,37 @@ Guiding, straightforward, educational, authoritative
 + A dumping ground for screenshots
 + Content with no end goal or job-to-be-done
 
-## Template
+### Tone
 
-We have a pre-built set of tutorial shortcodes that help organize and format tutorials:
+Guiding, straightforward, educational, authoritative
 
-- Wrap the entire process within a [`tutorial`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial.html) shortcode.
-- Include a [`tutorial-prereqs`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial-prereqs.html) shortcode to wrap around any steps someone needs to take before getting started, which has a few input parameters defined in shortcode definition.
-- Wrap individual steps in a [`tutorial-step`](https://github.com/cloudflare/cloudflare-docs/blob/production/layouts/shortcodes/tutorial-step.html) shortcode, which has a few input parameters defined in shortcode definition.
+### content_type
 
-```
----
-header: Tutorial example
----
+`tutorial`
 
----
-pcx_content_type: tutorial
-updated: 2023-06-30
----
+### Structure
 
-# Second-person imperative verb phrase that reflects user goal or job-to-be-done
+#### Required components
 
-Context for tutorial, intended audience (optional)
+[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
 
-{{</*tutorial*/>}}
+**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they will accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to [Context](/style-guide/documentation-content-strategy/component-attributes/context/) for more information.
 
-{{</*tutorial-prereqs*/>}}
+**Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
 
-Various pre-reqs
+[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
 
-{{</*/tutorial-prereqs*/>}}
+#### Optional components
 
-{{</*tutorial-step title="Step 1"*/>}}
+[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 
-Step 1 content
+[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
 
-{{</*/tutorial-step*/>}}
+**Screenshots**
 
-{{</*tutorial-step title="Step 2 content" optional=true */>}}
+[**Links**](/style-guide/documentation-content-strategy/component-attributes/links/)
 
-Step 2 content
-
-{{</*/tutorial-step*/>}}
-
-{{</*tutorial-step title="Step 3 content"*/>}}
-
-Step 3 content
-
-{{</*/tutorial-step*/>}}
-
-{{</*tutorial-step title="Step 4"*/>}}
-
-Step 4 content
-
-{{</*/tutorial-step*/>}}
-
-{{</*/tutorial*/>}}
-```
+**Boundaries**
 
 ## Examples
 

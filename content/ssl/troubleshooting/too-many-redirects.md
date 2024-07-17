@@ -164,7 +164,7 @@ end
 ```
 <br/>
 
-To solve this issue, review your various [redirect rules](/rules/url-forwarding/) and [Page Rules](/rules/page-rules/) (deprecated) to make sure no rules are not in conflict with each other.
+To solve this issue, review your various [redirect rules](/rules/url-forwarding/) and [Page Rules](/rules/page-rules/) to make sure no rules are not in conflict with each other.
 
 {{<Aside type="note">}}
 

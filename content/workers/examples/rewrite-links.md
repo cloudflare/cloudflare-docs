@@ -8,13 +8,13 @@ languages:
   - JavaScript
   - TypeScript
   - Python
-pcx_content_type: configuration
+pcx_content_type: example
 title: Rewrite links
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -96,6 +96,38 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from pyodide.ffi import create_proxy
+from js import HTMLRewriter, fetch
+
+async def on_fetch(request):
+    old_url = "developer.mozilla.org"
+    new_url = "mynewdomain.com"
+
+    class AttributeRewriter:
+        def __init__(self, attr_name):
+            self.attr_name = attr_name
+        def element(self, element):
+            attr = element.getAttribute(self.attr_name)
+            if attr:
+                element.setAttribute(self.attr_name, attr.replace(old_url, new_url))
+
+    href = create_proxy(AttributeRewriter("href"))
+    src = create_proxy(AttributeRewriter("src"))
+    rewriter = HTMLRewriter.new().on("a", href).on("img", src)
+    res = await fetch(request)
+    content_type = res.headers["Content-Type"]
+
+    # If the response is HTML, it can be transformed with
+    # HTMLRewriter -- otherwise, it should pass through
+    if content_type.startswith("text/html"):
+        return rewriter.transform(res)
+    return res
 ```
 
 {{</tab>}}

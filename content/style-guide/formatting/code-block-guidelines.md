@@ -7,8 +7,8 @@ title: Code block guidelines
 
 You can create code blocks by:
 
-+ Using triple-acute characters as a "fence" around the code block. (Recommended)
-+ Indenting lines by four spaces or one tab.
+- Using triple-acute characters as a "fence" around the code block. (Recommended)
+- Indenting lines by four spaces or one tab.
 
 To define the syntax highlighting language used for the code block, enter a language name after the first fence. Refer to the [List of languages used in Cloudflare developer documentation](#list-of-languages-used-in-cloudflare-developer-documentation) for a list of supported languages.
 
@@ -46,7 +46,7 @@ The rendered output looks like this:
 
 - Use the `bash` language for other **Linux/macOS/generic commands**. For example:
     - Commands that span multiple lines (usually each line ends with a `\`) and may include one or more lines of JSON content.
-    - Commands for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually `#`).
+    - Commands for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually `%`).
 
 - Use the `powershell` language for Windows PowerShell commands.
 
@@ -60,23 +60,15 @@ Use "**`$`** "(dollar sign, space) or "**FOLDER_NAME $** " (folder name, space, 
 
 Examples:
 
-+ **`$`** command-to-run
-+ **~/my-folder `$`** command-to-run (where `~` means the home folder of the current user).
+- **`$`** command-to-run
+- **~/my-folder `$`** command-to-run (where `~` means the home folder of the current user).
 
 ### For "bash" blocks
 
 Blocks containing **Linux/macOS/generic** commands:
-
-+ Use the same prefixes as for `sh`, even if they are not mandatory — "**`$`** " (dollar sign, space) or "**FOLDER_NAME `$`** " (folder name, space, dollar sign, space).
-
-Blocks containing **zsh** commands:
-
-+ Use "**#** " (hash sign, space) or "**FOLDER_NAME #** " (folder name, space, hash sign, space). Very similar to `sh` blocks but with a hash sign instead of a dollar sign.
-
-  Examples:
-
-  + **#** command
-  + **~/my-folder #** command (where `~` means the home folder of the current user).
+- If a code block contains only one (multi-line) command, do not include a `$` prefix so that the user can run the command immediately after copying and pasting without having to remove the prefix.
+- If a code block includes several commands or it includes output, consider including a prefix before each command to help differentiate between commands and their output. Use the same prefixes as described for `sh` blocks.
+- For zsh-specific instructions you can use a `%` command prefix instead of `$`.
 
 ### For "powershell" blocks
 
@@ -84,8 +76,8 @@ Use "**PS FOLDER_NAME>** " (the `>` is part of the prompt, and there is a space 
 
 Examples:
 
-+ **PS C:\\>** command-to-run.exe
-+ **PS C:\\Users\\JohnDoe>** command-to-run.exe
+- **PS C:\\>** command-to-run.exe
+- **PS C:\\Users\\JohnDoe>** command-to-run.exe
 
 ### For Windows console ("txt") blocks
 
@@ -95,9 +87,9 @@ Alternatively, do not include any prompt and start the line with the command the
 
 Examples:
 
-+ <b>C:\\></b>command-to-run.exe
-+ <b>C:\\Program Files></b>command-to-run.exe
-+ <b>C:\\Users\\JohnDoe></b>command-to-run.exe
+- <b>C:\\></b>command-to-run.exe
+- <b>C:\\Program Files></b>command-to-run.exe
+- <b>C:\\Users\\JohnDoe></b>command-to-run.exe
 
 ---
 
@@ -112,30 +104,30 @@ Multi-line curl commands with a JSON body should use `bash` syntax highlighting,
 
 ## List of languages used in Cloudflare developer documentation
 
-+ `bash` (alias: `curl`)
-+ `c`
-+ `diff`
-+ `go`
-+ `graphql`
-+ `hcl` (alias: `tf`)
-+ `html`
-+ `ini`
-+ `java`
-+ `js` (alias: `javascript`)
-+ `json`
-+ `kotlin`
-+ `php`
-+ `powershell`
-+ `python` (alias: `py`)
-+ `ruby` (alias: `rb`)
-+ `rust` (alias: `rs`)
-+ `sh` (alias: `shell`)
-+ `sql`
-+ `swift`
-+ `toml`
-+ `ts` (alias: `typescript`)
-+ `txt` (aliases: `text`, `plaintext`)
-+ `xml`
-+ `yaml` (alias: `yml`)
+- `bash` (alias: `curl`)
+- `c`
+- `diff`
+- `go`
+- `graphql`
+- `hcl` (alias: `tf`)
+- `html`
+- `ini`
+- `java`
+- `js` (alias: `javascript`)
+- `json`
+- `kotlin`
+- `php`
+- `powershell`
+- `python` (alias: `py`)
+- `ruby` (alias: `rb`)
+- `rust` (alias: `rs`)
+- `sh` (alias: `shell`)
+- `sql`
+- `swift`
+- `toml`
+- `ts` (alias: `typescript`)
+- `txt` (aliases: `text`, `plaintext`)
+- `xml`
+- `yaml` (alias: `yml`)
 
 Different capitalizations of these languages are also supported (but not recommended). For example, `JavaScript` will use the `javascript` language, and `HTML` will use the `html` language.

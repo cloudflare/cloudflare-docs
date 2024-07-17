@@ -12,12 +12,12 @@ To add additional TLS requirements for emails coming from certain domains, you c
 
 To require that email from a specific domain passes SSL/TLS inspection:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Domains & Routing** > **Partner Domains TLS**.
 4. Select **New Partner Domain**.
-4. Enter a **Domain** and any **Notes**.
-5. Select **Save**.
+5. Enter a **Domain** and any **Notes**.
+6. Select **Save**.
 
 ## Exempt TLS inspection
 

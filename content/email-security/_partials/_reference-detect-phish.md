@@ -5,9 +5,24 @@ _build:
   list: never
 ---
 
-Area 1 uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaign (marked with a `Malicious` {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}}) or other common campaigns (for example, `Spam`).
+Cloud Email Security (formerly Area 1) uses a variety of factors to determine whether a given email message, a web domain or URL, or specific network traffic is part of a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaign (marked with a `Malicious` {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}}) or other common campaigns (for example, `Spam`).
 
 These small pattern assessments are dynamic in nature and — in many cases — no single one in and of itself will determine the final verdict. Instead, our automated systems use a combination of factors and non-factors to clearly distinguish between a valid phishing campaign and benign traffic.
+
+## ActiveSensors
+
+ActiveSensors is a proprietary sensor network that discovers emergent campaign infrastructure, and aggregates attack data from relay points that actors use to launch their threat campaign. Cloudflare's [Network](/products/?product-group=Network+security) and [Application Security](/products/?product-group=Application+security) provide early detection on phishing attacks, malware, URLs, domains, IPs, and ASNs from across the Internet.
+
+ActiveSensors does the following:
+
+* Infrastructure monitoring, clustering and correlation.
+* User and target impersonation-based crawls.
+* Machine learning based link analysis and content detection.
+* Payload analysis, in-the-wild sandboxing, content denotation, and reconstruction.
+
+## SPARSE (Small Pattern Analytics Engine)
+
+SPARSE is a proprietary analytics engine which determines targeted attacks. SPARSE uses the ActiveSensors network, our 8+ petabyte data warehouse, and AI and ML models to make effective detections with a limited data set.
 
 ## IP reputation
 

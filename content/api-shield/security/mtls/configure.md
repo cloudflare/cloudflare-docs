@@ -50,5 +50,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 ```
 
 {{<Aside type="warning">}}
-This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca-api-shield/).
+This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
 {{</Aside>}}

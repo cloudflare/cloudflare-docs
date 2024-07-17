@@ -66,7 +66,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Run an inference task in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/), to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/), to answer a question.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
@@ -77,12 +77,12 @@ filename: "src/index.ts"
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
   // replace "AI" with the variable name you defined.
-  AI: any;
+  AI: Ai;
 }
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
+    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );
@@ -131,7 +131,7 @@ $ npx wrangler deploy
 
 Your Worker will be deployed to your custom [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain. You can now visit the URL to run your AI Worker.
 
-By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 2 model.
+By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 3 model.
 
 ## Related resources
 

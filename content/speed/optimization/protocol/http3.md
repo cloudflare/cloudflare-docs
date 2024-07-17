@@ -36,7 +36,7 @@ To enable **HTTP/3** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **HTTP/3** with the API, send a [`PATCH`](/api/operations/zone-settings-change-h-t-t-p-3-setting) request with the `value` parameter set to `"on"`.
+To enable **HTTP/3** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `http3` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

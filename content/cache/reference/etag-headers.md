@@ -46,7 +46,7 @@ The Cloudflare network will take the following actions, depending on the visitor
 
 {{</table-wrap>}}
 
-Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, Automatic HTTPS Rewrites, Mirage, and Server-side Excludes (deprecated).
+Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, Automatic HTTPS Rewrites, and Mirage.
 
 ### Behavior with Respect Strong ETags disabled
 

@@ -40,6 +40,8 @@ curl --request POST \
 
 Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to validate that malicious content objects are being detected correctly.
 
+You can use the [EICAR anti-malware test file](https://www.eicar.org/download-anti-malware-testfile/) to test content scanning (select the ZIP format).
+
 Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
 
 ## 3. Create a WAF custom rule

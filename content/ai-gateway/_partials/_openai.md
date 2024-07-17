@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`
 
-When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai`.
+When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
 
 ```bash
@@ -15,16 +15,16 @@ When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL y
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai/chat/completions -X POST \
-  --header 'Authorization: Bearer $TOKEN' \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {openai_token}' \
   --header 'Content-Type: application/json' \
   --data ' {
    		 "model": "gpt-3.5-turbo",
    		 "messages": [
-   			 {
-   				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
-   			 }
+        {
+          "role": "user",
+          "content": "What is Cloudflare"
+        }
    		 ]
    	 }
 '
@@ -41,7 +41,21 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
 	apiKey: 'my api key', // defaults to process.env["OPENAI_API_KEY"]
-	baseURL: "https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/openai"
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
 });
+
+try {
+  const chatCompletion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-0613",
+    messages: [{ role: "user", content: "What is a neuron?" }],
+    max_tokens: 100,
+  });
+
+  const response = chatCompletion.choices[0].message;
+
+  return new Response(JSON.stringify(response));
+} catch (e) {
+  return new Response(e);
+}
 
 ```

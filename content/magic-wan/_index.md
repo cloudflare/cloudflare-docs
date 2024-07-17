@@ -17,7 +17,9 @@ Magic WAN provides secure, performant connectivity and routing for your entire c
 
 With Magic WAN, you can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
-Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps{{</glossary-tooltip>}} including {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, [Cloudflare Network Interconnect](/network-interconnect/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [WARP](/cloudflare-one/connections/connect-devices/warp/), and a variety of Network On-ramp Partners. If you prefer to set up your sites automatically, you can purchase [Magic WAN Connector](/magic-wan/configuration/connector/), a lightweight software package you can install in corporate network locations to automatically connect, steer, and shape any IP traffic.
+Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps{{</glossary-tooltip>}} including any device that supports {{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels. To make it easier to onboard your cloud properties, you can use [Magic Cloud Networking](/magic-wan/configuration/magic-cloud-networking/), which automates the process of creating on-ramps from your cloud networks.
+
+Refer to [On-ramps](/magic-wan/on-ramps/) for a full list of supported on-ramps.
 
 ---
 
@@ -35,8 +37,8 @@ Magic WAN is compatible with a host of third-party devices. If you do not have M
 Magic WAN sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
-{{<feature header="Traffic steering" href="/magic-wan/reference/traffic-steering/" cta="Learn about traffic steering">}}
-Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
+{{<feature header="Automatic cloud on-ramps" href="/magic-wan/configuration/magic-cloud-networking/" cta="Automate your cloud on-ramps">}}
+Automate resource discovery, and reduce management burden when connecting to your public cloud.
 {{</feature>}}
 
 {{<feature header="Network analytics" href="/magic-wan/analytics/">}}
@@ -55,6 +57,14 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, and scalable protection.
 {{</related>}}
 
+{{<related header="Magic Cloud Networking" href="/magic-cloud-networking/" product="magic-cloud-networking">}}
+Simplify and automate cloud resource discovery, and reduce your management burden when connecting to your public cloud.
+{{</related>}}
+
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
+{{</related>}}
+
+{{<related header="Load Balancing" href="/load-balancing/" product="load-balancing">}}
+Cloudflare Load Balancing distributes traffic across your endpoints, which reduces endpoint strain and latency and improves the experience for end users.
 {{</related>}}

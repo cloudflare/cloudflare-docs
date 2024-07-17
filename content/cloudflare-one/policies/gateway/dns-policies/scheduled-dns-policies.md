@@ -21,24 +21,24 @@ If you [do not specify a time zone](#example-users-time-zone), Gateway will enab
 The following command creates a DNS policy to block `facebook.com` only on weekdays from 8:00 AM - 12:30 PM and 1:30 PM - 5:00 PM in the Chicago, USA time zone.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/rules" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
-     --data '{
-        "name": "office-no-facebook-policy",
-        "action": "block",
-        "traffic": "dns.fqdn == \"facebook.com\"",
-        "enabled": true,
-        "schedule": {
-                "time_zone": "America/Chicago",
-                "mon":  "08:00-12:30,13:30-17:00",
-                "tue":  "08:00-12:30,13:30-17:00",
-                "wed":  "08:00-12:30,13:30-17:00",
-                "thu":  "08:00-12:30,13:30-17:00",
-                "fri":  "08:00-12:30,13:30-17:00"
-        }
-    }'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "office-no-facebook-policy",
+  "action": "block",
+  "traffic": "dns.fqdn == \"facebook.com\"",
+  "enabled": true,
+  "schedule": {
+    "time_zone": "America/Chicago",
+    "mon":  "08:00-12:30,13:30-17:00",
+    "tue":  "08:00-12:30,13:30-17:00",
+    "wed":  "08:00-12:30,13:30-17:00",
+    "thu":  "08:00-12:30,13:30-17:00",
+    "fri":  "08:00-12:30,13:30-17:00"
+  }
+}'
 ```
 
 Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zones.
@@ -48,20 +48,20 @@ Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zon
 The following command creates a DNS policy to block `clockin.com` only on weekends, in the time zone where the user is currently located.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/rules" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <API_KEY>" \
-     -H "Content-Type: application/json" \
-     --data '{
-        "name": "clock-in-policy",
-        "action": "block",
-        "traffic": "dns.fqdn == \"clockin.com\"",
-        "enabled": true,
-        "schedule": {
-            "sat":  "00:00-24:00",
-            "sun":  "00:00-24:00"
-        }
-    }'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "clock-in-policy",
+  "action": "block",
+  "traffic": "dns.fqdn == \"clockin.com\"",
+  "enabled": true,
+  "schedule": {
+    "sat":  "00:00-24:00",
+    "sun":  "00:00-24:00"
+  }
+}'
 ```
 
 {{<Aside type="note">}}

@@ -8,7 +8,8 @@ export function init() {
     .querySelectorAll<HTMLButtonElement>('.DocsSidebar--nav-expand-collapse-button')
     .forEach(btn => {
       let item = btn.parentNode; // .DocsSidebar--nav-item
-      if (item) btn.addEventListener('click', toggle);
+      if (!item) return;
+      btn.addEventListener('click', toggle);
 
       let div = item.querySelector('div'); // .DocsSidebar--nav-item-collapse-container
       if (div && div.hasAttribute('is-expanded')) div.style.height = 'auto';
@@ -16,14 +17,14 @@ export function init() {
 }
 
 type ListItem = HTMLLIElement & {
-  timer?: NodeJS.Timeout | void;
+  timer?: ReturnType<typeof setTimeout>
 };
 
 function toggle(ev: Event) {
   let attr = 'is-expanded';
 
   let item: ListItem = (ev.target as HTMLLIElement).closest('li')!;
-  if (item.timer) item.timer = clearTimeout(item.timer);
+  if (item.timer) clearTimeout(item.timer);
 
   let isExpanded = item.hasAttribute(attr);
   let aria = item.querySelector('span[is-visually-hidden]');

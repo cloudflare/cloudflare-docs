@@ -8,34 +8,43 @@ weight: 2
 
 When you create a DNS location, Gateway assigns IPv4/IPv6 addresses and DoT/DoH hostnames to that location. These are the IP addresses and hostnames you send your DNS queries to for Gateway to resolve.
 
-To view the DNS resolver IPs for a DNS location, go to **Gateway** > **DNS Locations** and expand its location card.
+To view the resolver endpoint IP addresses and hostnames for a DNS location:
 
-![View IP addresses and hostnames assigned to a DNS location](/images/cloudflare-one/policies/location-ips.png)
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **DNS Locations**.
+2. Locate the DNS location, then select **Configure**.
+3. Go to **Setup instructions**. The addresses and hostnames will appear in **Your configuration**.
 
-## How Gateway matches queries to DNS locations
+## DNS query location matching
 
-Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
+Gateway uses different methods to match a DNS query to DNS locations depending on the type of request and network:
 
-![Flowchart for how Gateway determines the location of a DNS query. See below for discussion.](/images/cloudflare-one/policies/gateway-determine-location-dns.png)
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: How Gateway matches queries to DNS locations
+    accDescr: Flowchart describing the order of checks Cloudflare Gateway performs to determine the DNS location of a DNS query.
 
-**Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
+    %% Flowchart
+    router(["Router"])-->gateway["Cloudflare Gateway"]
 
-**Step 2**: If the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.
+    gateway-->query{{"Is the DNS query sent over HTTPS?"}}
 
-**Step 3**: If the query was not sent over IPv4, it means it was sent over IPv6. Gateway will look up the DNS location associated with the query based on the unique DNS resolver IPv6 address.
+    query--Yes-->hostname["Look up location by<br />unique hostname"]
+    query--"No"-->ipv4{{"Is it over IPv4?"}}
+
+    ipv4--Yes-->source["Look up location by<br />source IPv4 address"]
+    ipv4--"No"-->destination["Look up location by<br />destination IPv6 address"]
+```
+
+1. First, Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
+2. Next, if the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.
+3. Last, if the query was not sent over IPv4, it means it was sent over IPv6. Gateway will look up the DNS location associated with the query based on the unique DNS resolver IPv6 address.
 
 ## IPv6 address
 
-When you create a DNS location, your location will receive a unique DNS resolver IPv6 address.
-This IPv6 address is how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
+When you create a DNS location, your location will receive a unique DNS resolver IPv6 address. This IPv6 address is how Gateway will match DNS queries to locations and apply the appropriate filtering rules.
 
 ## IPv4 address
-
-### DNS resolver IP
-
-For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Zero Trust account.
-
-If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
 
 ### Source IP
 
@@ -44,6 +53,14 @@ Gateway uses the public source IPv4 address of your network to identify your DNS
 When creating a DNS location, Zero Trust automatically identifies the source IP address of the network you are on.
 
 If you are on the Enterprise plan, you have the option of manually entering one or more source IP addresses of your choice. This enables you to create Gateway DNS locations even if you are not connecting from any of those networks' IP addresses.
+
+### DNS resolver IP
+
+For queries over IPv4, the default DNS resolver IP addresses are anycast IP addresses, and they are shared across every Cloudflare Zero Trust account.
+
+If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4 address to be provisioned for a DNS location in lieu of the default anycast addresses. Like IPv6, queries forwarded to that address will be identified using the dedicated DNS resolver IPv4 address.
+
+Resolver IP addresses you will only be assigned to the Zero Trust account you request. For more information on requesting dedicated DNS resolver IPv4 addresses, contact your account team.
 
 ## DNS over TLS
 
@@ -57,11 +74,7 @@ Each DNS location is assigned a unique hostname for DNS over HTTPS (DoH). Gatewa
 
 Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings.
 
-In the example below, the DoH subdomain is: `65y9p2vm1u`.
-
-| DNS over HTTPS hostname                               | DoH subdomain |
-| ----------------------------------------------------- | ------------- |
-| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u`  |
+For example, for the DoH hostname `https://65y9p2vm1u.cloudflare-gateway.com/dns-query`, the DoH subdomain is `65y9p2vm1u`.
 
 ## Send specific queries to Gateway
 

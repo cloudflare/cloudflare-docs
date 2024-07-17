@@ -57,6 +57,10 @@ Version Management does not currently support or have limited support for the fo
 - [Network Error Logging](/network-error-logging/) configurations are not cloned when a new version is created.
 {{</details>}}
 
+{{<details header="Page Shield">}}
+- [Page Shield](/page-shield/) is not available for versioning and is only configurable under your Global Configuration.
+{{</details>}}
+
 {{<details header="Security Insights">}}
 - [Security Insights](/security-center/security-insights/) are not shown when Zone Versioning is enabled and the first version is deployed to production.
 {{</details>}}
