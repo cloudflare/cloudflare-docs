@@ -876,6 +876,7 @@
 /rules/transform/request-header-modification/examples/ /rules/transform/examples/?operation=Request+modification 301
 /rules/transform/url-rewrite/examples/ /rules/transform/examples/?operation=Rewrite+URL 301
 /rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
+/rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
 # spectrum
