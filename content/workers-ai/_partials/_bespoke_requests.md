@@ -5,8 +5,8 @@ _build:
   list: never
 ---
 
-{{<Aside type="info" header="Bespoke requests">}}
+{{<Aside type="note" header="Custom requirements">}}
 
-If you have bespoke requests or need higher limits, complete the [Bespoke Needs Form](https://forms.gle/axnnpGDb6xrmR31T6). Cloudflare will contact you with next steps.
+If you have custom requirements requests like private custom models or higher limits, complete the [Bespoke Needs Form](https://forms.gle/axnnpGDb6xrmR31T6). Cloudflare will contact you with next steps.
 
 {{</Aside>}}
