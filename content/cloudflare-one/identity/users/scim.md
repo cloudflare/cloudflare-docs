@@ -12,8 +12,7 @@ System for Cross-domain Identity Management (SCIM) is an open standard protocol 
 
 Cloudflare Access currently supports SCIM provisioning using the following identity providers:
 
-- [Microsoft Entra ID](/cloudflare-one/identity/idp-integration/azuread/) (formerly known as Azure AD)
-- [Okta](/cloudflare-one/identity/idp-integration/okta/)
+{{<render file="access/_scim-supported-idps.md">}}
 
 ## Sync users and groups in Zero Trust policies
 
