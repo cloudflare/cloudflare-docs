@@ -98,11 +98,11 @@ This step is essential so that Cloudflare can keep the proxy status of the recor
 dig example.com @<YOUR_NEW_NAMESERVER_NAMES>.secondary.cloudflare.com
 ```
 
-4. At your registrar, [update your nameservers](/dns/nameservers/update-nameservers/) to point to the Cloudflare nameservers.
+4. At your registrar, [update your nameservers](/dns/nameservers/update-nameservers/) to point to the Cloudflare nameservers. You can find your nameservers in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
 
-    At this point, the zone should work as if it was in a full setup.
+At this point, the zone should work as if it was in a full setup.
 
-## 3. Configure your external provider
+## 3. Configure the zone transfers
 
 {{<Aside type="note" header="If you are also changing your primary provider">}}
 If you are also migrating to a new primary DNS provider, import the same zone file you prepared in [Step 1](#1-prepare-a-zone-file) onto your new primary zone. Make sure there are no records that still refer `cdn.cloudflare.net`. Otherwise, HTTP traffic for these hostnames will break.
