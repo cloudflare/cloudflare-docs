@@ -19,6 +19,7 @@ The Cloudflare China Network provides:
 * A single solution for both performance improvement and security services such as [WAF](/waf/), [DDoS](/ddos-protection/), and [bot management](/bots/).
 * An unified experience for managing network traffic and security posture. You can manage all configurations on the same dashboard.
 * The same customer support capabilities as Cloudflare’s global network. You may also have access to premium service and local language support.
+* Partner offering: [China Express](/china-network/concepts/china-express/) to improve dynamic caching stability and Cloudflare One's use
 
 ## Availability
 
