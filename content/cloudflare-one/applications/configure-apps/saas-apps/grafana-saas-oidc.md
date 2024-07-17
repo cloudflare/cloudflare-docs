@@ -10,7 +10,7 @@ This guide covers how to configure [Grafana](https://grafana.com/docs/grafana/la
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Grafana account
 
 {{<Aside type="note">}}
