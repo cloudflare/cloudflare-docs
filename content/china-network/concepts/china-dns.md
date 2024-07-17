@@ -32,7 +32,7 @@ Default vs. In-China Nameserver
 
 After you [enable the Cloudflare China Network service](/china-network/get-started/), do the following:
 
-1. You will need to reach out your Cloudflare sales team or submit a ticket to support team to enable the feature. Temporarily the feature can't be enabled from the Cloudflare dashboard.
+1. You will need to reach out to your Cloudflare sales team to enable the feature. Temporarily the feature can't be enabled from the Cloudflare dashboard.
 
     The current China Network supports both a [full setup](/dns/zone-setups/full-setup/) and a [partial setup](/dns/zone-setups/partial-setup/). 
 2. Update your domain registrar with the assigned in-China nameservers. 
@@ -45,7 +45,7 @@ After you [enable the Cloudflare China Network service](/china-network/get-start
             You have a zone named samplezone.cn. In this zone, you have 2 DNS records: www and media pointing to 2 different Origins. Your Authoratative DNS server needs to set
 
             CNAME www.samplezone.cn to www.samplezone.cn.cdn.cloudflarecn.net
-            CNAME media.samplezone.cn to media.samplezone.cn.cdn.cloudflare.net
+            CNAME media.samplezone.cn to media.samplezone.cn.cdn.cloudflarecn.net
 
 3. Test your configuration by checking if the domain resolves correctly.
 
