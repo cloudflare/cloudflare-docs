@@ -29,7 +29,7 @@ This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/graf
 12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 13. Select **Done**.
 
-## 2. Add a SAML SSO provider to Grafana Cloud
+## 2. Add a SSO provider to Grafana Cloud
 
 1. In Grafana Cloud, select the **menu** icon > **Administration** > **Authentication** > **Generic OAuth**.
 2. (Optional) For **Display name**, enter a new display name (for example, `Cloudflare Access`). Users will select **Sign in with (display name)** when signing in via SSO.
@@ -43,4 +43,4 @@ This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/graf
 
 ## 3. Test the integration
 
-Open an incognito window and paste `https://<your-grafana-domain>/login`. Select **Sign in with (display name)**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
+Open an incognito browser window and go to your Grafana domain (`https://<your-grafana-domain>/login`). Select **Sign in with (display name)**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.

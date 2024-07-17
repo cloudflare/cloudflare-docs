@@ -15,7 +15,7 @@ This guide covers how to configure [Grafana](https://grafana.com/docs/grafana/la
 
 {{<Aside type="note">}}
 
-You can also configure OIDC SSO for Grafana using the [configuration file](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#configure-generic-oauth-authentication-client-using-the-grafana-configuration-file), instead of using the user interface (UI) that is documented here.
+You can also configure OIDC SSO for Grafana using a [configuration file](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#configure-generic-oauth-authentication-client-using-the-grafana-configuration-file) instead of using Grafana's user interface (UI), as documented in this guide.
 
 {{</Aside>}}
 
@@ -35,7 +35,7 @@ You can also configure OIDC SSO for Grafana using the [configuration file](https
 12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 13. Select **Done**.
 
-## 2. Add a SAML SSO provider to Grafana
+## 2. Add a SSO provider to Grafana
 
 1. In Grafana, select the **menu** icon > **Administration** > **Authentication** > **Generic OAuth**.
 2. (Optional) For **Display name**, enter a new display name (for example, `Cloudflare Access`). Users will select **Sign in with (display name)** when signing in via SSO.
