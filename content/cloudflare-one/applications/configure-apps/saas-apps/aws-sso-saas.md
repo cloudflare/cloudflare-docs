@@ -10,7 +10,7 @@ This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesigno
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/index/) configured in Cloudflare Zero Trust
 - Admin access to an AWS account
 
 ## 1. Get AWS URLs

@@ -10,7 +10,7 @@ weight: 2
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/identity/idp-integration/index) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/index/) configured in Cloudflare Zero Trust
 - Admin access to your Area 1 account
 - Your user's email in Area 1 matches their email in Zero Trust
 
