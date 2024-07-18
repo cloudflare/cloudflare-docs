@@ -234,8 +234,8 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
 {{</Aside>}}
 
 {{<Aside type="note" header="Note on iptables">}}
-If you are setting up WARP Connector on a host with iptables enabled, you have to make sure that iptables FORWARD chain policy is set to accept the desired traffic.
-For testing/troubleshooting purposes you can set default policy to ACCEPT
+If you are setting up WARP Connector on a host with iptables enabled, you have to make sure that iptables FORWARD chain includes the rules to accept the desired traffic.
+For testing/troubleshooting purposes you can set default policy of the chain to ACCEPT
 ```sh
 iptables --policy FORWARD ACCEPT
 ```
