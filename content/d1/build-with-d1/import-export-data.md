@@ -71,7 +71,7 @@ From here, you can now query our new table from our Worker [using the D1 client 
 
 ### Known limitations
 
-- For imports, `wrangler d1 execute --file` is limited to 5GiB files, the same as the [R2 upload limit](/r2/reference/limits). For imports larger than 5GiB, we recommend splitting the data into multiple files.
+- For imports, `wrangler d1 execute --file` is limited to 5GiB files, the same as the [R2 upload limit](/r2/platform/limits/). For imports larger than 5GiB, we recommend splitting the data into multiple files.
 
 ### Convert SQLite database files
 
