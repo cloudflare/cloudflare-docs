@@ -871,7 +871,14 @@
 /registrar/get-started/transfer-uk-domain/ /registrar/top-level-domains/uk-domains/ 301
 
 # rules
+/rules/configuration-rules/terraform-example/ /rules/configuration-rules/examples/define-single-configuration-terraform/ 301
+/rules/origin-rules/terraform-example/ /rules/origin-rules/examples/define-single-origin-terraform/ 301
 /rules/transform/create-header-modification-rule/ /rules/transform/request-header-modification/create-dashboard/ 301
+/rules/transform/response-header-modification/examples/ /rules/transform/examples/?operation=Response+modification 301
+/rules/transform/request-header-modification/examples/ /rules/transform/examples/?operation=Request+modification 301
+/rules/transform/url-rewrite/examples/ /rules/transform/examples/?operation=Rewrite+URL 301
+/rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
+/rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
 # spectrum
@@ -898,7 +905,7 @@
 /speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
-/speed/optimization/other/mobile-redirect/ /rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects 301
+/speed/optimization/other/mobile-redirect/ /rules/url-forwarding/examples/perform-mobile-redirects/ 301
 /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ /speed/optimization/other/ 301
 /speed/optimization/other/troubleshooting/ /speed/optimization/other/ 301
 
