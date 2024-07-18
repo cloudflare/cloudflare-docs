@@ -34,7 +34,6 @@ The first step is to gain visibility into the attacks taking place against the s
 
 The above diagram shows how Cloudflare monitors service provider traffic and, upon detecting a possible volumetric DDoS attack, automatically advertises the most specific protected prefix from the Cloudflare global network to the Internet. This ensures that all traffic to this protected prefix is rerouted through the Cloudflare network, where malicious traffic is mitigated.
 
-
 1. Upon detecting a possible volumetric DDoS attack, Cloudflare automatically generates an alert. Service providers can receive the alert notifications via email and/or webhook. Additionally, the alert can trigger [automatic prefix announcement](/magic-network-monitoring/magic-transit-integration/#activate-ip-auto-advertisement) from the Cloudflare network to the Internet, as per the Magic Transit configuration by the service provider.
 2. Cloudflare advertises the protected prefix from all Cloudflare points-of-presence. Since Cloudflare advertises a more specific prefix, only the traffic destined for the attacked prefix is rerouted through the Cloudflare network.
 3. Cloudflare's network mitigates the attack traffic while letting legitimate traffic through to the service provider network. Service providers receive the original packets with an MTU of 1500 Bytes when using [Cloudflare Network Interconnect](/network-interconnect/) (CNI).
