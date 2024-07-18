@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GitHub Enterprise Cloud
-weight: 24
+weight: 9
 ---
 
 
@@ -11,19 +11,25 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - A GitHub Enterprise Cloud subscription
-- Access to a GitHub account which is Organization owner
+- Access to a GitHub account as an organization owner
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **Add an application** > **SaaS**.
-3. For **Application**, select _GitHub_.
+2. Select **Add an application** > **SaaS** > **Select**.
+3. For **Application**, select _Github_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
-7. Copy the **Access Entity ID or Issuer**, **Public key**, and **SSO endpoint**.
-8. Keep this window open without selecting **Select configuration**. You will finish this configuration in step [4. Finish adding a SaaS application to Cloudflare Zero Trust](#4-finish-adding-a-saas-application-to-cloudflare-zero-trust).
+6. Fill in the following fields:
+    - **Entity ID**: `https://github.com/orgs/<your-organization>`
+    - **Assertion Consumer Service URL**: `https://github.com/orgs/<your-organization>/saml/consume`
+    - **Name ID format**: _Email_
+7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
+8. Select **Save configuration**.
+9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+10. Select **Done**.
 
 ## 2. Create a x.509 certificate
 
@@ -31,25 +37,17 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
 ## 3. Configure an identity provider and SAML SSO in GitHub Enterprise Cloud
-1. When you are on your organization page, go to **Settings** > **Authentication security**.
-2. In the section **SAML single sign-on**, click on the checkbox **Enable SAML authentication**.
+1. In your Github organization page, go to **Settings** > **Authentication security**.
+2. Under **SAML single sign-on**, turn on **Enable SAML authentication**.
 3. Fill in the following fields:
     - **Sign on URL**:  SSO endpoint from application configuration in Cloudflare Zero Trust.
     - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
     - **Public certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 4. Copy the **Service provider entity URL** and **Service provider assertion consumer service URL**.
 
-## 4. Finish adding a SaaS application to Cloudflare Zero Trust
-1. In your open Zero Trust window, fill in the following fields:
-    - **Entity ID**: Service provider entity URL from GitHub Enterprise Cloud SAML SSO set-up. ` https://github.com/orgs/YOUR_ORGANIZATION`
-    - **Assertion Consumer Service URL**: Service provider assertion comsumer service URL from GitHub Enterprise Cloud SAML SSO set-up. ` https://github.com/orgs/YOUR_ORGANIZATION/saml/consume`
-    - **Name ID format**: _Email_
-2. Select **Save configuration**.
-3. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-4. Select **Done**.
 
-## 5. Test the integration
+## 4. Test the integration
 
 
-Click on **Test SAML configuration**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. 
-When this is successful, you can turn on **Require SAML SSO authentication for all members of your organization** if you want to enforce the SSO with Cloudflare Access.
+Select **Test SAML configuration**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. 
+When this is successful, you can turn on **Require SAML SSO authentication for all members of your organization** if you want to enforce SSO login with Cloudflare Access.
