@@ -104,7 +104,7 @@ For each saved endpoint, customers can view:
 * **Request count**: The total number of requests to the endpoint over time.
 * **Rate limiting recommendation**: per 10 minutes. This is guided by the request count.
 * **Latency**: The average origin response time in milliseconds (ms). This metric shows how long it takes from the moment a visitor makes a request to the moment the visitor gets a response back from the origin.
-* **Error rate** vs. overall traffic: grouped by `4xx`, `5xx`, and their sum.
+* **Error rate** vs. overall traffic: grouped by 4xx, 5xx, and their sum.
 * **Response size**: The average size of the response (in bytes) returned to the request.
 
 {{<Aside type="note">}}
