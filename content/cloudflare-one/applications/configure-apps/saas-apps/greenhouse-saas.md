@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Greenhouse Recruiting
-weight: 11
+weight: 12
 ---
 
 # Connect to Greenhouse Recruiting through Access

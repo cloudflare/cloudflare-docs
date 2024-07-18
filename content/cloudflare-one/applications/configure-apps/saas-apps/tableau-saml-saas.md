@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Tableau Cloud
-weight: 20
+weight: 22
 ---
 
 # Connect to Tableau Cloud through Access

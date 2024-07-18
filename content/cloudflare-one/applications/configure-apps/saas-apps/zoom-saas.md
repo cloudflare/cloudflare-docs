@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Zoom
-weight: 23
+weight: 25
 ---
 
 # Connect to Zoom through Access
