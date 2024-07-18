@@ -54,6 +54,7 @@ export class Batcher {
     });
   }
 
+  // Docs: https://developers.cloudflare.com/durable-objects/examples/alarms-api/
   async alarm() {
     let vals = await this.storage.list();
     await fetch("http://example.com/some-upstream-service", {
@@ -66,4 +67,11 @@ export class Batcher {
 }
 ```
 
-The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+Specifically:
+
+* The `alarm()` handler will be called once every 10 seconds.
+* The alarm is only set when a new request is made to the Durable Object. If the `alarm()` handler runs and no more requests are made to the Durable Object, the alarm will remain unset. Alarms must be explicitly set to run at a future interval with [`setAlarm()`](/durable-objects/examples/alarms-api/).
+* If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
+
+Refer to the [Alarms API documentation](/durable-objects/examples/alarms-api/) to learn more about how to set and manage alarms within a Durable Object.
+
