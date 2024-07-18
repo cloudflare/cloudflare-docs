@@ -16,7 +16,6 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [Enom](https://help.enom.com/hc/en-us/articles/115001028212)
 - [Gandi](https://wiki.gandi.net/en/domains/dnssec)
 - [GoDaddy](https://ph.godaddy.com/help/add-a-ds-record-23865)
-- [Google Domains](https://support.google.com/domains/answer/6387342?hl=en)
 - [Hostinger](https://support.hostinger.com/articles/3667267)
 - [Hover](https://help.hover.com/hc/en-us/articles/217281647)
 - [InMotion Hosting](https://www.inmotionhosting.com/support/edu/cpanel/enable-dnssec-cloudflare/)

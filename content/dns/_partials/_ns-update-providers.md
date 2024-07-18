@@ -25,7 +25,6 @@ _build:
 - [FlokiNET](https://billing.flokinet.is/index.php?rp%3D/knowledgebase/57/Nameserver-changes.html)
 - [Gandi](https://wiki.gandi.net/dns/change)
 - [GoDaddy](https://www.godaddy.com/help/change-nameservers-for-your-domain-names-664)
-- [Google Domains](https://support.google.com/domains/answer/3290309?hl%3Den)
 - [HostGator](http://support.hostgator.com/articles/hosting-guide/lets-get-started/dns-name-servers/how-do-i-change-my-dns-or-name-servers)
 - [Hostico](https://hostico.ro/docs/setarea-nameserverelor-din-contul-de-client-hostico/)
 - [HostMonster](https://my.hostmonster.com/cgi/help/222)
