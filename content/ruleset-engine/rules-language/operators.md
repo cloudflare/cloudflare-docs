@@ -139,6 +139,17 @@ The Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
+      <td>Matches<br /> wildcard pattern (case sensitive)</td>
+      <td><code class="InlineCode">strict wildcard</code></td>
+      <td></td>
+      <td>&#x2705;</td>
+      <td>&#10060;</td>
+      <td>&#10060;</td>
+      <td>
+         <code class="InlineCode">http.request.uri.path <strong>strict wildcard</strong> "/admin/*"</code>
+      </td>
+    </tr>
+    <tr>
       <td>Matches<br />regex*</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
@@ -192,74 +203,68 @@ lower(http.request.uri.path) contains "/wp-login.php"
 ```
 
 {{<Aside type="warning">}}
-Wildcard matching is only supported with the `wildcard` operator, and regular expression matching is only supported with the `matches` operator.
+Wildcard matching is only supported with the `wildcard` and `strict wildcard` operators, and regular expression matching is only supported with the `matches` operator.
 {{</Aside>}}
 
 ### Wildcard matching
 
-The `wildcard` operator matches a field value with a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters.
+The `wildcard` operator performs a case-insensitive match between a field value and a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters. The `strict wildcard` operator performs a similar match, but is case sensitive.
 
-When using the `wildcard` operator, the entire field value must match the literal string with wildcards (the literal after the `wildcard` operator). This operator uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
+When using the `wildcard`/`strict wildcard` operator, the entire field value must match the literal string with wildcards (the literal after the operator).
 
 ```sql
 ---
 header: Example A
 ---
 # The following expression:
-http.request.full_uri wildcard "example.com/a/*"
+http.request.full_uri wildcard "https://example.com/a/*"
 
 # Would match the following URIs:
-# - example.com/a/           (the '*' matches zero characters)
-# - example.com/a/page.html
-# - example.com/a/sub/folder/?name=value
+# - https://example.com/a/           (the '*' matches zero characters)
+# - https://example.com/a/page.html
+# - https://example.com/a/sub/folder/?name=value
 
 # Would NOT match the following URIs:
-# - example.com/ab/
-# - example.com/b/page.htm
-# - sub.example.com/a/       (the full field value does not match)
+# - https://example.com/ab/
+# - https://example.com/b/page.htm
+# - https://sub.example.com/a/
 ```
 
 {{<details header="Example B">}}
-
 ```sql
 # The following expression:
-http.request.full_uri wildcard "*.example.com/*/page.htm"
+http.request.full_uri wildcard "*.example.com/*/page.html"
 
 # Would match the following URIs:
-# - sub.example.com/folder/page.htm
-# - admin.example.com/team/page.html
+# - http://sub.example.com/folder/page.html
+# - https://admin.example.com/team/page.html
+# - https://admin.example.com/team/subteam/page.html
 
 # Would NOT match the following URIs:
-# - example.com/ab/page.htm                   ('*.example.com' matches only subdomains)
-# - sub.example.com/folder2/page.htm?s=value  (http.request.full_uri includes the query string and its full value does not match)
-# - sub.example.com/my/path/page.htm          (the shortest possible string for `*` is `my`, not `my/path`)
-# - sub.example.com/a/                        (since 'page.htm' is missing, there is no match)
+# - https://example.com/ab/page.html                   ('*.example.com' matches only subdomains)
+# - https://sub.example.com/folder2/page.html?s=value  (http.request.full_uri includes the query string and its full value does not match)
+# - https://sub.example.com/a/                         ('page.html' is missing)
 ```
 {{</details>}}
 
 {{<details header="Example C">}}
-
 ```sql
 # The following expression:
 http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildcard "example.com/*"
 
 # Would match the following URIs:
-# - example.com/folder/list.htm
-# - admin.example.com/folder/team/app1/
-# - admin.example.com/folder/team/app1/?s=foobar
+# - https://example.com/folder/list.htm
+# - https://admin.example.com/folder/team/app1/
+# - https://admin.example.com/folder/team/app1/?s=foobar
 ```
-
 {{</details>}}
 
-The matching algorithm is case insensitive by default. However, the [`wildcard_replace()`](#) function supports case-sensitive wildcard matching using an optional parameter.
+The matching algorithm used by the `wildcard` operator is case insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
 
-To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used.
+To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. To avoid having to double-escape wildcards, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
 
-{{<Aside type="note" header="Differences between wildcard matching and regex matching">}}
-
-- The `wildcard` operator uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string. On the other hand, the [`matches` operator](#regular-expression-matching) uses greedy matching.
-
-- The `wildcard` operator always considers the entire field value (first parameter) when determining if there is a match. The `matches` operator can match a partial value.
+{{<Aside type="note" header="Wildcard matching versus regex matching">}}
+- The `wildcard`/`strict wildcard` operators always consider the entire field value (first parameter) when determining if there is a match. The `matches` operator can match a partial value.
 
 {{</Aside>}}
 

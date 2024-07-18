@@ -273,7 +273,7 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
     - Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
     - The `source` must be a field (it cannot be a literal string). Additionally, the entire `source` value must match the `wildcard_pattern` parameter (it cannot match only part of the field value).
     - Use `$$` to add a literal `$` character in the `replacement` parameter.
-    - To use case-sensitive wildcard matching, set the `flags` parameter to `"s"`. Currently the only supported values are `""` (empty string) and `"s"`.
+    - To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
     - If there is no match, the function will return `source` unchanged.
     - This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
 
