@@ -33,7 +33,7 @@ meta:
 Rules can be further customized by using the **Edit expression** option. You can find more information in [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 {{</Aside>}}
 
-7. Under **Then**, in the **Cache eligibility** section, select **[Bypass cache](/cache/how-to/cache-rules/settings/#bypass-cache)** if you want matching requests to not be cacheable, or **Eligible for cache** if you want Cloudflare to attempt to cache them. Note that [cache-control headers](/cache/concepts/cache-control/) can also impact cache eligibility.
+7. Under **Then**, in the **Cache eligibility** section, select [**Bypass cache**](/cache/how-to/cache-rules/settings/#bypass-cache) if you want matching requests to not be cacheable, or **Eligible for cache** if you want Cloudflare to attempt to cache them. Note that [cache-control headers](/cache/concepts/cache-control/) can also impact cache eligibility.
 
 8. If you selected **Eligible for cache** in the previous step, you can customize the options described in the [Available settings](/cache/how-to/cache-rules/settings/) section.
 
