@@ -42,7 +42,7 @@ When migrating a Page Rule you will need to write a filter expression equivalent
 
 Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-Strings in filter expressions do not support wildcards yet. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise and Business customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
+You will need to adapt your Page Rules URLs when migrating them to modern rules. In the Rules language, use the `wildcard` operator for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching). Enterprise and Business customers can use regular expressions, but it will also require adapting the original URLs in your Page Rules to regular expressions.
 
 The following table lists the most common Page Rule URLs and their equivalent filters:
 
