@@ -1,12 +1,16 @@
 ---
-updated: 2024-06-17
+updated: 2024-07-18
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Store and retrieve static assets with Workers KV
+products: [Workers]
 ---
 
 # Store and retrieve static assets with Workers KV
+
+
+{{<tutorial-date-info>}}
 
 This tutorial will teach you how to store and retrieve static assets using KV, and use them to generate your Workers response.
 
@@ -20,14 +24,20 @@ This tutorial demonstrates how to access data and assets from KV and use them to
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## 1. Create a new Worker application 
+## 1. Create a new Worker application
 
 {{<render file="_tutorials-create-worker-application.md" withParameters="tutorial-kv-assets">}}
+
+Then, move into your newly created application
+
+```sh
+$ cd tutorial-kv-assets
+```
 
 We'll also install the dependencies we will need for this project.
 
 ```sh
-$ npm install mimes accept-language-parser 
+$ npm install mimes accept-language-parser
 $ npm install --save-dev @types/accept-language-parser
 ```
 
@@ -42,13 +52,13 @@ To create a KV store via Wrangler:
 1. Open your terminal and run the following command:
 
 ```sh
-$ wrangler kv namespace create assets
+$ npx wrangler kv namespace create assets
 ```
 
 The `wrangler kv namespace create assets` subcommand creates a KV namespace by concatenating your Worker's name and the value provided for `assets`. An `id` will be randomly generated for the KV namespace.
- 
+
 ```sh
-$ wrangler kv namespace create assets
+$ npx wrangler kv namespace create assets
 
 🌀 Creating namespace with title "tutorial-kv-assets-assets"
 ✨ Success!
@@ -76,13 +86,13 @@ We'll also create a preview KV namespace. It is recommended to create a separate
 3. In your terminal, run the following command:
 
 ```sh
-$ wrangler kv namespace create assets --preview
+$ npx wrangler kv namespace create assets --preview
 ```
 
 This command will create a special KV namespace that will be used only when developing with Wrangler against remote resources using `wrangler dev --remote`.
 
 ```sh
-$ wrangler kv namespace create assets --preview
+$ npx wrangler kv namespace create assets --preview
 
 🌀 Creating namespace with title "tutorial-kv-assets-assets_preview"
 ✨ Success!
@@ -110,7 +120,7 @@ We now have one KV binding that will use the production KV namespace when deploy
 
 ## 3. Store static assets in KV using Wrangler
 
-To store static assets in KV, you can use the Wrangler CLI, the KV binding from a Worker application, or the KV REST API. We'll demonstrate how to use the Wrangler CLI. 
+To store static assets in KV, you can use the Wrangler CLI, the KV binding from a Worker application, or the KV REST API. We'll demonstrate how to use the Wrangler CLI.
 
 For this scenario, we'll be storing a sample HTML file within our KV store. Create a new file `index.html` in the root of project with the following content:
 
@@ -121,14 +131,14 @@ filename: index.html
 Hello World!
 ```
 
-We can then use the following Wrangler commands to create a KV pair for this file within our production and preview namespaces: 
+We can then use the following Wrangler commands to create a KV pair for this file within our production and preview namespaces:
 
 ```sh
-$ wrangler kv key put index.html --path index.html --binding assets
-$ wrangler kv key put index.html --path index.html --binding assets --preview
+$ npx wrangler kv key put index.html --path index.html --binding assets --preview false
+$ npx wrangler kv key put index.html --path index.html --binding assets --preview
 ```
 
-This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your `wrangler.toml` file. 
+This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your `wrangler.toml` file.
 
 
 ## 4. Serve static assets from KV from your Worker application
@@ -152,7 +162,7 @@ export default {
 		if(request.method !== 'GET'){
 			return new Response('Method Not Allowed', {
 				status: 405,
-			}) 
+			})
 		}
 
 		//get the key from the url & return error if key missing
@@ -188,18 +198,18 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-This code will use the path within the URL and find the file associated to the path within the KV store. It also sets the proper MIME type in the response to indicate to the browser how to handle the response. To retrieve the value from the KV store, this code uses `arrayBuffer` to properly handle binary data such as images, document files, video and audio files, etc. 
+This code will use the path within the URL and find the file associated to the path within the KV store. It also sets the proper MIME type in the response to indicate to the browser how to handle the response. To retrieve the value from the KV store, this code uses `arrayBuffer` to properly handle binary data such as images, document files, video and audio files, etc.
 
 To start the Worker, run the following within a terminal:
 
 ```sh
-$ wrangler dev --remote
+$ npx wrangler dev --remote
 ```
 
 This will run you Worker code against your remote resources, specifically using the preview KV namespace as configured.
 
 ```sh
-$ wrangler dev --remote
+$ npx wrangler dev --remote
 
 Your worker has access to the following bindings:
 - KV Namespaces:
@@ -259,8 +269,8 @@ filename: hello-world.json
 Open a terminal and enter the following KV command to create a KV entry for the translations file:
 
 ```sh
-$ wrangler kv key put hello-world.json --path hello-world.json --binding assets
-$ wrangler kv key put hello-world.json --path hello-world.json --binding assets --preview
+$ npx wrangler kv key put hello-world.json --path hello-world.json --binding assets --preview false
+$ npx wrangler kv key put hello-world.json --path hello-world.json --binding assets --preview
 ```
 
 Update your Workers code to add logic to serve a translated HTML file based on the language of the Accept-Language header of the request:
@@ -283,7 +293,7 @@ export default {
 		if(request.method !== 'GET'){
 			return new Response('Method Not Allowed', {
 				status: 405,
-			}) 
+			})
 		}
 
 		//get the key from the url & return error if key missing
@@ -314,7 +324,7 @@ export default {
 			let selectedTranslation = translations.find(item => item.language_code === languageCode)
 			if(!selectedTranslation) selectedTranslation = translations.find(item => item.language_code === "en")
 			const helloWorldTranslated = selectedTranslation!['message'];
-			
+
 			//generate and return the translated html
 			const html = `<!DOCTYPE html>
 			<html>
@@ -325,8 +335,8 @@ export default {
 					<h1>${helloWorldTranslated}</h1>
 				</body>
 			</html>
-			`	
-			return new Response(html, {  
+			`
+			return new Response(html, {
 				status: 200,
 				headers: {
 					'Content-Type': 'text/html; charset=utf-8'
@@ -358,15 +368,25 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-This new code provides a specific endpoint, `/hello-world`, which will provide translated responses. When this URL is accessed, our Worker code will first retrieve the language that is requested by the client in the `Accept-Language` request header and the translations from our KV store for the `hello-world.json` key. It then gets the translated message and returns the generated HTML. 
+This new code provides a specific endpoint, `/hello-world`, which will provide translated responses. When this URL is accessed, our Worker code will first retrieve the language that is requested by the client in the `Accept-Language` request header and the translations from our KV store for the `hello-world.json` key. It then gets the translated message and returns the generated HTML.
+
+```sh
+$ npx wrangler dev
+```
 
 With the Worker code running, we can notice that our application is now returning the properly translated "Hello World" message. From your browser's developer console, change the locale language (on Chromium browsers, Run `Show Sensors` to get a dropdown selection for locales).
 
 ## 6. Deploy your project
 
-Run `wrangler deploy` to deploy your Workers project to Cloudflare with the binding to the KV namespace. Wrangler will automatically set your KV binding to use the production KV namespace set in our `wrangler.toml` file with the KV namespace id. Throughout this tutorial, we uploaded our assets to both the preview and the production KV namespaces.
+Run `wrangler deploy` to deploy your Workers project to Cloudflare with the binding to the KV namespace.
 
-We can now verify that our project is properly working by accessing our Workers default hostname and accessing `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/index.html` or `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/hello-world` to see our deployed Worker in action, generating responses from the values in our KV store. 
+```sh
+$ npx wrangler deploy
+```
+
+Wrangler will automatically set your KV binding to use the production KV namespace set in our `wrangler.toml` file with the KV namespace id. Throughout this tutorial, we uploaded our assets to both the preview and the production KV namespaces.
+
+We can now verify that our project is properly working by accessing our Workers default hostname and accessing `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/index.html` or `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/hello-world` to see our deployed Worker in action, generating responses from the values in our KV store.
 
 ## Related resources
 
