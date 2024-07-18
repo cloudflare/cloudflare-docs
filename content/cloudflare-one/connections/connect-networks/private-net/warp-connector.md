@@ -233,6 +233,14 @@ Run the following commands on the machine where you installed WARP Connector. Yo
 If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
 
+{{<Aside type="note" header="IP forwarding on VPC">}}
+If you are setting up WARP Connector on a host with iptables enabled, you have to make sure that iptables FORWARD chain policy is set to accept the desired traffic.
+For testing/troubleshooting purposes you can set default policy to ACCEPT
+```sh
+iptables --policy FORWARD ACCEPT
+```
+{{</Aside>}}
+
 2. WARP's [virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) has a [maximum transmission unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) of 1280 bytes, whereas the standard Ethernet MTU is 1500 bytes. To avoid dropping packets that exceed 1280 bytes, clamp the [maximum segment size (MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) of the host machine so that incoming payloads are less than the MTU of WARP:
 
     ```sh
