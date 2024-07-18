@@ -4,6 +4,6 @@ pcx_content_type: get-started
 layout: wide
 ---
 
-# Amazon Bedrock
+{{<heading-pill style="beta">}}Amazon Bedrock{{</heading-pill>}}
 
 {{<render file="_bedrock.md">}}

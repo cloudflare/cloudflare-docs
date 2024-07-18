@@ -26,7 +26,7 @@ Cloudflare recommends not performing redirects at your origin web server, as thi
 To redirect traffic for all subdomains and hosts in your application, you can enable **Always Use HTTPS**.
 
 {{<Aside type="note">}}
-If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** and use a [dynamic redirect](/rules/url-forwarding/single-redirects/) to selectively perform the redirect to HTTPS. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/single-redirects/examples/#redirect-admin-area-requests-to-https) for an example.
+If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** and use a [dynamic redirect](/rules/url-forwarding/single-redirects/) to selectively perform the redirect to HTTPS. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/examples/redirect-admin-https/) for an example.
 {{</Aside>}}
 
 {{<tabs labels="Dashboard | API">}}

@@ -10,7 +10,7 @@ This guide covers how to configure [Greenhouse Recruiting](https://support.green
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to an Advanced or Expert Greenhouse Recruiting site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
