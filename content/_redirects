@@ -195,9 +195,11 @@
 /cache/reference/wildcard-matching/ /rules/page-rules/reference/wildcard-matching/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
 /support/caching/configuration/understanding-query-string-sort/ /cache/advanced-configuration/query-string-sort/ 301
-/support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
+/support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/how-to/cache-rules/examples/ 301
+/cache/troubleshooting/customize-caching/ /cache/how-to/cache-rules/examples/ 301
 /support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
-/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
+/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
+/cache/troubleshooting/cache-everything-ignore-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
 
 # china network
