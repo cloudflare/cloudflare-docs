@@ -1,12 +1,12 @@
 ---
 pcx_content_type: concept
-title: Local traffic management
+title: Load balancing
 weight: 3
 ---
 
-# Local traffic management
+# Load balancing with private IPs
 
-With Cloudflare Local Traffic Management (LTM), you can distribute traffic across private endpoints connected via Cloudflare Tunnel. Common use cases include:
+You can use Cloudflare Local Traffic Management (LTM) to distribute traffic across private endpoints connected via Cloudflare Tunnel. Common use cases include:
 
 - Load balancing internal employee traffic to internal applications
 - Geosteering WARP traffic to internal applications
