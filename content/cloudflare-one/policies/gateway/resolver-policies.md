@@ -26,11 +26,17 @@ Resolver policies support TCP and UDP connections. Custom resolvers can point to
 
 You can protect your authoritative nameservers from DDoS attacks by enabling [DNS Firewall](/dns/dns-firewall/).
 
-{{<Aside type="note">}}
-To enable connections to a private resolver connected to Cloudflare via [Magic WAN](/magic-wan/), contact your account team.
-{{</Aside>}}
+### Cloudflare Tunnel
 
-### Available endpoints
+To enable connections to a private resolver connected to Cloudflare via [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), use `cloudflared` version 2023.10 or newer. To ensure `cloudflared` can route UDP traffic to your resolver, connect your tunnel via [QUIC](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#protocol).
+
+For more information on connecting a private DNS resolver to Cloudflare with Cloudflare Tunnel, refer to [Private DNS](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/).
+
+### Magic WAN
+
+To enable connections to a private resolver connected to Cloudflare via [Magic WAN](/magic-wan/), contact your account team.
+
+### Available DNS endpoints
 
 Resolver policies can route queries for resolution from the following DNS endpoints:
 
