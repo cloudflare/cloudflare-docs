@@ -233,7 +233,7 @@ Run the following commands on the machine where you installed WARP Connector. Yo
 If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud/), you may need to enable IP forwarding on the VM instance.
 {{</Aside>}}
 
-{{<Aside type="note" header="IP forwarding on VPC">}}
+{{<Aside type="note" header="Note on iptables">}}
 If you are setting up WARP Connector on a host with iptables enabled, you have to make sure that iptables FORWARD chain policy is set to accept the desired traffic.
 For testing/troubleshooting purposes you can set default policy to ACCEPT
 ```sh
