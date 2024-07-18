@@ -43,6 +43,6 @@ The above diagram shows how Cloudflare monitors service provider traffic and, up
 
 ## Related resources
 
-- [Magic Transit Reference Architecture](https://developers.cloudflare.com/reference-architecture/architectures/magic-transit/)
-- [Cloudflare Network Interconnect](https://developers.cloudflare.com/reference-architecture/architectures/magic-transit/)
+- [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+- [Cloudflare Network Interconnect](/reference-architecture/architectures/magic-transit/)
 - [Flow-based monitoring for Magic Transit](https://blog.cloudflare.com/flow-based-monitoring-for-magic-transit)
