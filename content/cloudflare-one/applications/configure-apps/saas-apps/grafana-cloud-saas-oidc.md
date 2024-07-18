@@ -10,7 +10,7 @@ This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/graf
 
 ## Prerequisites
 
-- An [identity provider](An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Grafana Cloud account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
