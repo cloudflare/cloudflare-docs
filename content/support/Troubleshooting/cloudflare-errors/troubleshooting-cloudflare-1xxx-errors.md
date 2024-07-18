@@ -333,6 +333,7 @@ Common causes for Error 1016 are:
 -   The origin hostnames (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
 -   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/get-started/#create-a-spectrum-application-using-a-cname-record) for more details
 -   There is no DNS record for the hostname in the Cloudflare for SaaS target zone
+-   There is no DNS record for the hostname in the target [Partial (CNAME) setup zone](/dns/zone-setups/partial-setup/) of a Workers subrequest ([Fetch API](/workers/runtime-apis/fetch/))
 
 ### Resolution
 
@@ -340,6 +341,7 @@ To resolve error 1016:
 
 1.  Verify your Cloudflare DNS settings include an _A record_ that points to a valid IP address that resolves via a [DNS lookup tool](https://dnschecker.org/).
 2.  For a CNAME record pointing to a different domain, ensure that the target domain resolves via a [DNS lookup tool](https://dnschecker.org/).
+3.  For a Workers subrequest to a Partial (CNAME) setup zone, ensure that the hostname exists on the Cloudflare zone (and not only at the authoritative DNS) 
 
 ___
 
