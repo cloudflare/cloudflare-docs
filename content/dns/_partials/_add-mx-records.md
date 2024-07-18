@@ -28,15 +28,15 @@ To route emails through Cloudflare and to your mail server:
      <details>
       <summary>API example</summary>
       <div>
-      
-      ```json
+
+      ```bash
       ---
       header: Request
       ---
-      curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-      -H "x-auth-email: <EMAIL>" \
-      -H "x-auth-key: <API_KEY>" \
-      -H "Content-Type: application/json" \
+      curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+      --header "x-auth-email: <EMAIL>" \
+      --header "x-auth-key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
         "type":"A",
         "name":"www.example.com",
@@ -82,7 +82,7 @@ To route emails through Cloudflare and to your mail server:
       </div>
       </details>
 
-3.  [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
+3. [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
       | **Type** | **Name** | **Mail server**    | **TTL** |
       | -------- | -------- | ------------------ | ------- |
@@ -91,15 +91,15 @@ To route emails through Cloudflare and to your mail server:
       <details>
       <summary>API example</summary>
       <div>
-      
+
       ```bash
       ---
       header: Request
       ---
-      curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-      -H 'x-auth-email: <EMAIL>' \
-      -H 'x-auth-key: <API_KEY>' \
-      -H "Content-Type: application/json" \
+      curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+      --header "x-auth-email: <EMAIL>" \
+      --header "x-auth-key: <API_KEY>" \
+      --header "Content-Type: application/json" \
       --data '{
         "type":"MX",
         "name":"example.com",

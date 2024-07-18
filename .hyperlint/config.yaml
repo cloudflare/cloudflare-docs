@@ -3,5 +3,6 @@ authorized_users:
   - kodster28
   - KianNH
   - pedrosousa
-vale:
+style_guide:
   enabled: true
+  unmanaged_vale: true

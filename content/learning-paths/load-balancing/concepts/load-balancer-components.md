@@ -7,7 +7,7 @@ layout: learning-unit
 
 At it's most basic, load balancing is made up of three components:
 
-- **Endpoint pools**: Which contain one or more endpoints.
+- **Pools**: Which contain one or more endpoints.
 - **Endpoints**: Which respond to individual requests.
 - **A load balancer**: Which decides which traffic goes to each pool.
 

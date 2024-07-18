@@ -10,11 +10,11 @@ Before you can begin using Magic Transit, verify that you meet Cloudflare's onbo
 
 ## Verify router compatibility
 
-Magic Transit relies on {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} tunnels to transmit {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} from Cloudflare’s global network to your origin network.
+Magic Transit relies on {{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} tunnels to transmit {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} from Cloudflare’s global network to your origin network.
 
 The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
-- Support Anycast tunneling.
+- Support anycast tunneling.
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support {{<glossary-tooltip term_id="maximum segment size (MSS)">}}maximum segment size (MSS){{</glossary-tooltip>}} clamping.
 

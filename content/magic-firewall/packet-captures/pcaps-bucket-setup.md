@@ -62,11 +62,11 @@ The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` 
 header: Ownership challenge request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
 --data '{
-       "destination_conf": "'${bucket}'"
+  "destination_conf": "'${bucket}'"
 }'
 ```
 
@@ -98,9 +98,9 @@ Validate the bucket by inserting the copied text in the `ownership_text` below:
 header: Bucket validation example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
 --data '{
   "destination_conf": "'${bucket}'",
   "ownership_challenge": "'${ownership_text}'"
@@ -159,8 +159,7 @@ The list of buckets associated with your account displays.
 header: Bucket list request example
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
--H 'Content-Type: application/json' \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
@@ -210,11 +209,11 @@ Create your initial request to R2:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <EMAIL>' \
-  --header 'X-Auth-Key: <API_KEY>' \
-  --data '{
-    "destination_conf": "r2://<BUCKET_NAME>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "destination_conf": "r2://<BUCKET_NAME>?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>"
 }'
 ```
 

@@ -53,12 +53,11 @@ echo '{ "query":
     "datetimeEnd": "2022-09-22T14:36:38Z"
 }
 }' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-key: <API_KEY>" \
-  -s \
-  -d @- \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --silent \
+  --data @- \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
 ```
 

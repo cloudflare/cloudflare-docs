@@ -116,10 +116,6 @@ To find your Account ID, refer to [Find your zone and account ID](/fundamentals/
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 
-[Cloudflare Load Balancing](/load-balancing/) will not work without the host header set.
-To create a new [Pool](/load-balancing/pools/) with a Pages project as target do the following:
+[Cloudflare Load Balancing](/load-balancing/) will not work without the host header set. To use a Pages project as target, make sure to select **Add host header** when [creating a pool](/load-balancing/pools/create-pool/#create-a-pool), and set both the host header value and the endpoint address to your `pages.dev` domain.
 
-1. Follow the instructions [Create a Pool](/load-balancing/pools/create-pool/#create-a-pool) and set the origin server address to your `pages.dev` domain.
-2. Select **Add host header**.
-3. Set the host header value to your `pages.dev` domain, same as the origin server address.
-4. Select **Save**.
+Refer to [Use Cloudflare Pages as origin](/load-balancing/pools/cloudflare-pages-origin/) for a complete tutorial.

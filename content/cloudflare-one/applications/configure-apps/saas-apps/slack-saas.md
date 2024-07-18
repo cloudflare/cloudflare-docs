@@ -1,21 +1,22 @@
 ---
 pcx_content_type: how-to
 title: Slack
-weight: 10
+weight: 16
 ---
 
 # Connect to Slack through Access
 
-This guide covers how to configure Slack in Cloudflare Zero Trust.
+This guide covers how to configure [Slack](https://slack.com/help/articles/203772216-SAML-single-sign-on) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- Slack Business+ or Enterprise Grid plan
+- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- Admin access to a Slack Business+ or Enterprise Grid plan account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **Add an application** > **SaaS** > **Select**.
+2. Select **Add an application** > **SaaS**.
 3. For **Application**, select _Slack_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
@@ -40,27 +41,36 @@ This guide covers how to configure Slack in Cloudflare Zero Trust.
 
 1. In Slack, go to **Settings & administrations** > **Workspace settings** > **Authentication**.
 2. Select **Configure**.
-3. Enable **Test**. Configuration changes will not apply until **Configuration** is turned on.
+3. Turn on **Test**. Configuration changes will not apply until **Configure** is turned on.
 4. Fill in the following fields:
+    - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
     - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
     - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-    - **Public Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
-5. Under **Settings**, choose whether SSO is _required_, _partially required_, or _optional_ for workspace members.
-6. (Optional) Under **Customize**, enter a **Sign in Button Label**.
-7. Test your set-up. If all works well, turn **Test** to **Configure**.
+    - **Public Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
+4. Under **Advanced Options**, select **Expand**.
+5. For **AuthnContextClassRef**, ensure _urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport_ is selected.
+6. Ensure **Sign the AuthnRequest** is turned off.
+7. For **SAML Response Signing**, turn on **Sign the Response** and **Sign the Assertion**.
+8. In the main configuration page under **Settings**, choose whether SSO is _required_, _partially required_, or _optional_ for workspace members.
+9. (Optional) Under **Customize**, enter a **Sign in Button Label**.
+10. Test your set-up. If all works well, turn **Test** to **Configure**.
 
 {{</tab>}}
 
 {{<tab label="enterprise grid plan" no-code="true">}}
 
-1. In Slack, go to **Settings & administration** > **Organization settings** > **Security**.
-2. Select **SSO Settings**.
+1. In Slack, go to **Settings & administration** > **Organization settings** > **Security** > **SSO Settings**.
+2. For **SSO name**, enter your desired name.
 3. Fill in the following fields:
-    - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-    - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-    - **Public Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
-4. Select **Test Configuration**.
-5. If all works well, select **Turn on SSO** or **Add SSO**.
+    - **SAML 2.0 Endpoint URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
+    - **Identity Provider Issuer URL**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+    - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
+    - **x.509 Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
+4. For **AuthnContextClassRef**, ensure _urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport_ is selected.
+5. Ensure **Sign the AuthnRequest** is turned off.
+6. For **SAML Response Signing**, turn on **Sign the Response** and **Sign the Assertion**.
+7. Select **Test Configuration**.
+8. If all works well, select **Turn on SSO** or **Add SSO**.
 
 {{</tab>}}
 {{</tabs>}}

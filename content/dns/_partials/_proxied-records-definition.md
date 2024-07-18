@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-When you proxy specific DNS records through Cloudflare - specifically `A`, `AAAA`, or `CNAME` records  — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
+When you proxy specific DNS records through Cloudflare - specifically `A`, `AAAA`, or `CNAME` records  — DNS queries for these will resolve to Cloudflare anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
 
 ```mermaid
 flowchart LR
@@ -18,7 +18,7 @@ This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/
 
 Because requests to proxied hostnames go through Cloudflare before reaching your origin server, all requests will appear to be coming from Cloudflare's IP addresses (and could potentially be blocked or rate limited). If you use proxied records, you may need to adjust your server configuration to [allow Cloudflare IPs](/fundamentals/concepts/cloudflare-ip-addresses/).
 
-Cloudflare Anycast IPs used to proxy traffic on your domain are assigned automatically. These IPs might change at any time for operational reasons.
-If you need to allowlist Cloudflare IPs on your infrastructure or hosting provider, include the full list of [Cloudflare Anycast IPs](https://www.cloudflare.com/ips/).
+Cloudflare anycast IPs used to proxy traffic on your domain are assigned automatically. These IPs might change at any time for operational reasons.
+If you need to allowlist Cloudflare IPs on your infrastructure or hosting provider, include the full list of [Cloudflare anycast IPs](https://www.cloudflare.com/ips/).
 
 As an Enterprise customer, you have the option to get [static IPs](/spectrum/about/static-ip/) or [bring your own IPs (BYOIP)](/byoip/).

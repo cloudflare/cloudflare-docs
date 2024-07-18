@@ -5,10 +5,10 @@ pcx_content_type: overview
 weight: 1
 layout: overview
 meta:
-  title: Cloudflare Queues
+  title: Cloudflare Queues (beta)
 ---
 
-# Cloudflare Queues
+# {{<heading-pill style="beta">}}Cloudflare Queues{{</heading-pill>}}
 
 {{<description>}}
 

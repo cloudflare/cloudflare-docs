@@ -69,13 +69,13 @@ $ netcat -zv [your-server’s-ip-address] 443
 
 If your server is still responding on those ports, you will see:
 
-```bash
+```txt
 [ip-address] 80 (http) open
 ```
 
 If your server is correctly locked down, you will see:
 
-```bash
+```txt
 [ip-address] 443 (https): Connection refused
 ```
 

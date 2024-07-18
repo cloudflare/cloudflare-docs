@@ -13,6 +13,8 @@ _build:
     | -------- | -------- | ---------------------- |
     | Host     | in       | `internal.example.com` |
 
+    Make sure your destination is not subject to [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#manage-local-domains).
+
 4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
 5. Enter the IP addresses of your custom DNS resolver.
 6. In **Network**, choose whether to route queries publicly (to the Internet) or privately (to a private network service).

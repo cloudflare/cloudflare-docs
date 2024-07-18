@@ -84,8 +84,10 @@ We are using a custom averaging function to take [sampling](/analytics/analytics
 
 You can run this query by making an HTTP request to the SQL API:
 
-```curl
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engine/sql" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
 ```
 
 Refer to the [Workers Analytics Engine SQL Reference](/analytics/analytics-engine/sql-reference/) for a full list of supported SQL functionality.

@@ -1,7 +1,7 @@
 
 ## Response
 
-Automatic speech recognition responses return both a single string `text` property with the audio transciption and an optional array of `words` with start and end timestamps if the model supports that.
+Automatic speech recognition responses return both a single string `text` property with the audio transcription and an optional array of `words` with start and end timestamps if the model supports that.
 
 Here's an example of the output from the `@cf/openai/whisper` model:
 

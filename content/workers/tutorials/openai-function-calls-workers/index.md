@@ -42,10 +42,11 @@ $ npm create cloudflare@latest
 
 For setup, select the following options:
 
-- For `Where do you want to create your application?`, indicate `openai-function-calling-workers`.
-- For `What type of application do you want to create?`, choose `"Hello World" script`.
-- For `Do you want to use TypeScript?`, choose `no`.
-- For `Do you want to deploy your application?`, choose `yes`.
+- For `In which directory do you want to create your application?`, indicate `openai-function-calling-workers`.
+- For `What type of application do you want to create?`, choose `"Hello World" Worker`.
+- For `Do you want to use TypeScript?`, choose `No`.
+- For `Do you want to use git for version control?`, choose `Yes`.
+- For `Do you want to deploy your application?`, choose `Yes`.
 
 Go to your new `openai-function-calling-workers` Worker project:
 
@@ -115,7 +116,7 @@ $ npx wrangler secret put <OPENAI_API_KEY>
 
 For local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 
-```
+```txt
 OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY>"
 ```
 
