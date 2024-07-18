@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Jamf Pro
-weight: 11
+weight: 13
 ---
 
 # Connect to Jamf Pro through Access
@@ -10,7 +10,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Jamf Pro account
 
 ## 1. Collect Jamf Pro information
@@ -24,7 +24,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, type `Jamf`  or `Jamf Pro` and select the textbox that appears below.
+3. For **Application**, enter `Jamf`  or `Jamf Pro` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:

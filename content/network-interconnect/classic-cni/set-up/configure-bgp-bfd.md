@@ -35,7 +35,7 @@ If you have a virtual link via Megaport, the IP provisioning may fail if you hav
 
 After you provision the IPs and the ping tests confirm the connection, accept the routes from the BGP session Cloudflare configured. Configuring the BGP session on both the Cloudflare and user sides requires a BGP call and an approximately two hour maintenance window that you provide to Cloudflare.
 
-Cloudflare advertises all of its anycast prefixes including [BYOP](/byoip/) prefixes over CNI, but the process occurs over a private link from Cloudflare to the customer data center.
+Cloudflare advertises all of its anycast prefixes including [BYOIP](/byoip/) prefixes over CNI, but the process occurs over a private link from Cloudflare to the customer data center.
 
 {{<Aside type="note">}}
 Your CNI needs to accept all of Cloudflare's prefixes to ensure it is fully utilized, and traffic routed from the data centers back to the CNI is secure, fast, and reliable.

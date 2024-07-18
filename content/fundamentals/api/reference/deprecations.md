@@ -162,7 +162,7 @@ Modified API:
 ## Mobile Redirect
 **End of life date: June 30th, 2024**
 
-This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/examples/perform-mobile-redirects/) to migrate Mobile Redirect to Redirect Rules.
 
 Deprecated API:
  - GET /zones/:zone_identifier/settings/mobile_redirect
