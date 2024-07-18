@@ -328,10 +328,10 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
   - Path to the SQL file for your export.
 - `--table` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the table within a D1 database to export.
-- `--no-data` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database data.
-- `--no-schema` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database schema.
+- `--no-data` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+- `--no-schema` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
 {{</definitions>}}
 
