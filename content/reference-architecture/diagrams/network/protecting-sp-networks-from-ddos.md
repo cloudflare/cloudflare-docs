@@ -1,12 +1,12 @@
 ---
-title: Protecting ISP and telecommunications networks from DDoS
+title: Protecting ISP and telecommunications networks from DDoS attacks
 pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
-  title: "Protecting ISP and telecommunications networks from DDoS"
+  title: "Protecting ISP and telecommunications networks from DDoS attacks"
 ---
 
-# Protecting ISP and telecommunications networks from DDoS
+# Protecting ISP and telecommunications networks from DDoS attacks
 
 ## Introduction
 
