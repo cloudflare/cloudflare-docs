@@ -98,4 +98,4 @@ The `logs` and `exceptions` fields have the following limits in place.
 
 * Message size: Maximum of 2056 characters per log line
 * Array limit: 20 elements
-* Log message array: A nested array with a limit of three elements
+* Log message array: A nested array with a limit of 20 elements

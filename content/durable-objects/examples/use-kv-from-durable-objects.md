@@ -48,8 +48,8 @@ export default {
     // Assume each Durable Object is mapped to a roomId in a query parameter
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
-    let url = new URL(req.url)
-    let roomIdParam = url.searchParams.get("roomId")
+    let url = new URL(req.url);
+    let roomIdParam = url.searchParams.get("roomId");
 
     if (roomIdParam) {
       // Create (or get) a Durable Object based on that roomId.
@@ -73,11 +73,10 @@ export default {
 
 export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
-      this.state = state;
-      // Ensure you pass your bindings and environmental variables into
-      // each Durable Object when it is initialized
-      this.env = env;
-    }
+    this.state = state;
+    // Ensure you pass your bindings and environmental variables into
+    // each Durable Object when it is initialized
+    this.env = env;
   }
 
   async fetch(request: Request) {
@@ -88,8 +87,8 @@ export class YourDurableObject implements DurableObject {
     // Fetch from KV
     let val = await this.env.YOUR_KV_NAMESPACE.get("some-other-key");
 
-    return Response.json(val)
+    return Response.json(val);
   }
+}
 ```
-
 

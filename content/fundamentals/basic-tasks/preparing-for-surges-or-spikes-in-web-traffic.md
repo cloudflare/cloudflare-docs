@@ -21,8 +21,6 @@ By default, Cloudflare [caches static content](/cache/concepts/default-cache-be
 
 5. You can then monitor the effectiveness of your cache settings using [Cache Analytics](/cache/performance-review/cache-analytics/) and update your configuration according to our [Cache performance guide](/cache/performance-review/cache-performance/).
 
-Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information (such as credentialed information). For more information, refer to [Cache HTML selectively](/cache/troubleshooting/customize-caching/#cache-html-selectively-business-and-enterprise-domains).
-
 ### Advanced cache optimizations
 
 - [Custom Cache Keys](/cache/how-to/cache-keys/) allows you to precisely set the cacheability setting for any resource.

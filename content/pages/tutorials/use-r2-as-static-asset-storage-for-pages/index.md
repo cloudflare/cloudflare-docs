@@ -1,6 +1,6 @@
 ---
 updated: 2024-07-15
-difficulty: Beginner
+difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use R2 As static asset storage for your Pages app

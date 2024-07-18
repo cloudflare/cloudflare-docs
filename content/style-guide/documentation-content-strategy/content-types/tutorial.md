@@ -77,8 +77,4 @@ Guiding, straightforward, educational, authoritative
 
 ## Examples
 
-[Tutorials](/tutorials/)
-
-## Additional information
-
-We have a tool that pulls together everything labeled with `<pcx_content_type: tutorial>`: [Tutorials](/tutorials/)
+[Workers Tutorials](/workers/tutorials)
