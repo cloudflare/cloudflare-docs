@@ -22,6 +22,11 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
+{{<Aside type="note" header="Unsupported IPs">}}
+Cloudflare Tunnel does not support routing public IP addresses such as `0.0.0.0/0` or `::/0`.
+This configuration will break Zero Trust features such as [WARP re-authentication](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/), which expects WARP traffic to come from a Cloudflare IP rather than the public IP of the server where `cloudflared` is installed. If you need a static IP address to identity WARP traffic, we recommend using [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
+{{</Aside>}}
+
 ## 2. Set up the client
 
 {{<render file="tunnel/_warp-to-tunnel-client.md">}}
