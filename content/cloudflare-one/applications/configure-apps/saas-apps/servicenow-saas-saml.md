@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: ServiceNow (SAML)
-weight: 16
+weight: 17
 ---
 
 # Connect to ServiceNow through Access (SAML)
