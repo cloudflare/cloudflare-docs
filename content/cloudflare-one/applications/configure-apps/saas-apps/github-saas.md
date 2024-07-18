@@ -45,9 +45,7 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
     - **Public certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 4. Copy the **Service provider entity URL** and **Service provider assertion consumer service URL**.
 
-
 ## 4. Test the integration
-
 
 Select **Test SAML configuration**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. 
 When this is successful, you can turn on **Require SAML SSO authentication for all members of your organization** if you want to enforce SSO login with Cloudflare Access.
