@@ -13,6 +13,8 @@ Durable Objects alarms allow you to schedule the Durable Object to be woken up a
 Notably: 
 
 * Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`.
+* Once an alarm runs, you will need to call `setAlarm()` to schedule an alarm.
+* Alarms do not automatically run on a recurring basis as they are set to run at a specific instance in time (milliseconds since the UNIX epoch).
 * Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
 * Retries are performed using exponential backoff starting at a two second delay from the first failure with up to six retries allowed.
 
@@ -108,8 +110,11 @@ export class AlarmExample {
   }
   async alarm() {
     // The alarm handler will be invoked whenever an alarm fires.
-    // You can use this to do work, read from the Transactional Storage API, make HTTP calls
-    // and set future alarms to run using this.storage.setAlarm() from within this handler.
+    // You can use this to do work, read from the Transactional Storage API or make HTTP calls
+
+    // Use this.storage.setAlarm() from within this handler to set another alarm to run in the
+    // future: alarms do not run on a schedule, but (only) at the specific instance in time
+    // you set.
   }
 }
 ```
