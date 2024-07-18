@@ -35,12 +35,12 @@ Below is an example of an audit log entry showing the creation of a new gateway:
      "type": "create"
  },
  "actor": {
-     "email": "joaolenon@cloudflare.com",
-     "id": "2be807ba1b409c0b61f8b5b46c270756",
-     "ip": "2a09:bac1:5e20:8::6b:90",
+     "email": "<ACTOR_EMAIL>",
+     "id": "3f7b730e625b975bc1231234cfbec091",
+     "ip": "fe32:43ed:12b5:526::1d2:13",
      "type": "user"
  },
- "id": "2d82eb0e-1f97-46f8-a925-935296bad963",
+ "id": "5eaeb6be-1234-406a-87ab-1971adc1234c",
  "interface": "UI",
  "metadata": {},
  "newValue": "",
@@ -48,7 +48,7 @@ Below is an example of an audit log entry showing the creation of a new gateway:
      "cache_invalidate_on_update": false,
      "cache_ttl": 0,
      "collect_logs": true,
-     "id": "test-lenon",
+     "id": "test",
      "rate_limiting_interval": 0,
      "rate_limiting_limit": 0,
      "rate_limiting_technique": "fixed"
@@ -56,11 +56,11 @@ Below is an example of an audit log entry showing the creation of a new gateway:
  "oldValue": "",
  "oldValueJson": {},
  "owner": {
-     "id": "0d37909e38d3e99c29fa2cd343ac421a"
+     "id": "1234d848c0b9e484dfc37ec392b5fa8a"
  },
  "resource": {
-     "id": "80303df8-0771-4cfa-a0f8-0bd893e831ca",
-     "type": "ai_gateway.gateway_config"
+     "id": "89303df8-1234-4cfa-a0f8-0bd848e831ca",
+     "type": "ai_gateway.gateway"
  },
  "when": "2024-07-17T14:06:11.425Z"
 }
