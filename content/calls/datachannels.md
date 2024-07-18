@@ -8,6 +8,6 @@ weight: 8
 
 Since Cloudflare Calls is basically a pub/sub server for WebRTC that can scale up to many subscribers per publisher, it's fit for arbitrary data besides media too.
 
-# Example
+## Example
 
 An example of DataChannels in action can be found in the [Calls Examples github repo](https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels).

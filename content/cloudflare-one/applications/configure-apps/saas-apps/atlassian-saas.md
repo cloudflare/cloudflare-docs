@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Atlassian Cloud
-weight: 2
+weight: 4
 ---
 
 # Connect to Atlassian Cloud through Access
@@ -31,6 +31,7 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
 ## 3. Configure an identity provider and SAML SSO in Atlassian Cloud
+
 1. In Atlassian Cloud, go to **Security** > **Identity providers**.
 2. Select **Other provider** > **Choose**.
 3. For **Directory name**, enter your desired name. For example, you could enter `Cloudflare Access`.
@@ -53,6 +54,7 @@ This screen will advise you to create an authentication policy before proceeding
 10. Select **Next** > **Stop and save SAML**.
 
 ## 4. Finish adding a SaaS application to Cloudflare Zero Trust
+
 1. In your open Zero Trust window, fill in the following fields:
     - **Entity ID**: Service provider entity URL from Atlassian Cloud SAML SSO set-up.
     - **Assertion Consumer Service URL**: Service provider assertion comsumer service URL from Atlassian Cloud SAML SSO set-up.

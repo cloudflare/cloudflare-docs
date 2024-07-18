@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Tableau Cloud (SAML)
+title: Tableau Cloud
 weight: 20
 ---
 

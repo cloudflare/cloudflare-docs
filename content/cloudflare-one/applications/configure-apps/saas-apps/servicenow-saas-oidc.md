@@ -17,7 +17,7 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **SaaS**.
-3. For **Application**, type `ServiceNow` and select the textbox that appears below.
+3. For **Application**, enter `ServiceNow` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **OIDC**.
 5. Select **Add application**.
 6. In **Scopes**, select the attributes that you want Access to send in the ID token.

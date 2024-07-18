@@ -35,17 +35,15 @@ Once the endpoint and virtual network (VNet) tunnel association is configured, C
 
 Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/local-traffic-management/ltm-tunnels-setup/) for a detailed guide.
 
+### Magic WAN 
+
+LTM supports off-ramping traffic for Magic WAN tunnels, such as GRE, IPSec or CNI tunnels. For more information refer to the [Set up LTM with Magic Wan](/load-balancing/local-traffic-management/ltm-magic-wan/).
+
 ---
 
 ## On-ramps
 
-LTM on-ramps, on the other hand, refer to secure paths between the end-user request and the Cloudflare network. Cloudflare Load Balancing already supports using [Spectrum](/spectrum/) as an on-ramp and will add [WARP](/cloudflare-one/connections/connect-devices/warp/) support in the future.
-
-### Spectrum
-
-Cloudflare Spectrum extends the LTM load balancing capabilities to applications running TCP or UDP protocols - such as gaming, video streaming, or video conferences.
-
-Refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/) for more details on how to set this up.
+LTM on-ramps, on the other hand, refer to secure paths between the end-user request and the Cloudflare network. Cloudflare Load Balancing supports traffic from [CDN](/cache/), [Spectrum](/spectrum/), [WARP](/cloudflare-one/connections/connect-devices/warp/) and [Magic WAN](/magic-wan/) and forward that traffic to a load balancer, and then egress to an endpoint behind any off-ramp (CDN/CNI/IPSec/GRE/Tunnel). Your traffic can ingress and egress by any on-ramp/off-ramp combination. 
 
 ---
 
