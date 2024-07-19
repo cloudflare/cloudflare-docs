@@ -9,7 +9,7 @@ pcx_content_type: concept
 
 To view audit logs for AI Gateway:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account > Audit Log**.
+2. Go to **Manage Account** > **Audit Log**.
 
 For more information on how to access and use audit logs, refer to [review audit logs documentation](https://developers.cloudflare.com/fundamentals/setup/account/account-security/review-audit-logs/).
 
