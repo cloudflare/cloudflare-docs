@@ -34,6 +34,7 @@ This guide covers how to configure [Ironclad](https://support.ironcladapp.com/hc
 6. Select **Save**.
 
 ## 3. Finish adding a SaaS application to Cloudflare Zero Trust
+
 1. In your open Zero Trust window, fill in the following fields:
     - **Entity ID**: `ironcladapp.com`
     - **Assertion Consumer Service URL**: Callback from Ironclad SAML SSO set-up.
