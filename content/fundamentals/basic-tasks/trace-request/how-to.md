@@ -3,11 +3,11 @@ pcx_content_type: reference
 title: How to
 weight: 2
 meta:
-  title: How to - Cloudflare Trace
+  title: How to - Cloudflare Trace (beta)
   description: Learn how to use Cloudflare Trace in the dashboard and with the API.
 ---
 
-# Use Cloudflare Trace
+{{<heading-pill style="beta">}}Use Cloudflare Trace{{</heading-pill>}}
 
 ## Use Trace in the dashboard
 
