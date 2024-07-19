@@ -59,7 +59,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 - **name** (optional) - Use your domain name as the job name.
 
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/reference/log-output-options/).
 
    {{<Aside type="note" header="Note">}}
    To query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
@@ -87,7 +87,10 @@ Example request using cURL:
 curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POST -d '
 {
   "name": "<DOMAIN_NAME>",
-  "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=unix",
+  "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "unix"
+  },
   "destination_conf": "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
   "max_upload_bytes": 5000000,
   "dataset": "http_requests",
@@ -113,7 +116,10 @@ Response:
       "kind" : "",
       "last_complete" : null,
       "last_error" : null,
-      "logpull_options" : "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=unix",
+      "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "unix"
+      },
       "logstream" : true,
       "max_upload_bytes" : 5000000,
       "name" : "<DOMAIN_NAME>"
@@ -151,7 +157,10 @@ Response:
       "kind" : "",
       "last_complete" : "null",
       "last_error" : null,
-      "logpull_options" : "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=unix",
+      "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "unix"
+      },
       "logstream" : true,
       "max_upload_bytes" : 5000000,
       "name" : "<DOMAIN_NAME>"
