@@ -4,6 +4,6 @@ title: Reference
 weight: 10
 ---
 
-# Reference
+# Platform
 
 {{<directory-listing>}}
