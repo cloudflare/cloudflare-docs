@@ -52,22 +52,6 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 | Object Read & Write | Allows the ability to read, write, and list objects in specific buckets. |
 | Object Read only | Allows the ability to read and list objects in specific buckets. |
 
-## Temporary access credentials
-
-If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/operations/r2-create-temp-access-credentials) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
-
-```
-AWS_ACCESS_KEY_ID = <accessKeyId>
-AWS_SECRET_ACCESS_KEY = <secretAccessKey>
-AWS_SESSION_TOKEN = <sessionToken>
-```
-
-{{<Aside type="note">}}
-
-The temporary access key cannot have a permission that is higher than the parent access key. e.g. if the parent key is set to `Object Read Write`, the temporary access key could only have `Object Read Write` or `Object Read Only` permissions.
-
-{{</Aside>}}
-
 ## Create API tokens via API
 
 You can create API tokens via the API and use them to generate corresponding Access Key ID and Secret Access Key values. To get started, refer to [Create API tokens via the API](/fundamentals/api/how-to/create-via-api/). Below are the specifics for R2.
@@ -192,3 +176,19 @@ Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#perm
 You can get the Access Key ID and Secret Access Key values from the response of the [Create Token](/api/operations/user-api-tokens-create-token) API:
 - Access Key ID: The `id` of the API token.
 - Secret Access Key: The SHA-256 hash of the API token `value`.
+
+## Temporary access credentials
+
+If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/operations/r2-create-temp-access-credentials) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
+
+```
+AWS_ACCESS_KEY_ID = <accessKeyId>
+AWS_SECRET_ACCESS_KEY = <secretAccessKey>
+AWS_SESSION_TOKEN = <sessionToken>
+```
+
+{{<Aside type="note">}}
+
+The temporary access key cannot have a permission that is higher than the parent access key. e.g. if the parent key is set to `Object Read Write`, the temporary access key could only have `Object Read Write` or `Object Read Only` permissions.
+
+{{</Aside>}}
