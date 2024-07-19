@@ -1,5 +1,5 @@
 ---
-pcx_content_type: Reference
+pcx_content_type: navigation
 title: Platform
 weight: 10
 ---
