@@ -5,6 +5,11 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-19'
+  description: |-
+    - Updated v8 to version 12.7.
+    - Added a new truncated flag to tail worker events to indicate when the event buffer is full and events are being dropped.
+    - In the crypto.subtle.deriveBits(...) API, the length argument is now optional and will be defaulted if the selected algorithm supports a default-length. If the length is omitted and the algorithm requires a length, an error will be thrown.
 - publish_date: '2024-07-11'
   description: |-
     -  Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
