@@ -160,7 +160,7 @@ async def on_fetch(request):
     """
 
 
-    headers = Headers.new({"content-type": "text/htmlcharset=UTF-8"}.items())
+    headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
     return Response.new(html, headers=headers)
 ```
 
