@@ -78,17 +78,13 @@ An Access Policy specifies what resources the token can access and the permissio
 
 #### Resources
 
-There are two relevant resource types for R2: `Account` and `Bucket`.
-
-##### Account
-
-For more information on the Account resource type, refer to [Account](/fundamentals/api/how-to/create-via-api/#account).
+There are two relevant resource types for R2: `Account` and `Bucket`. For more information on the Account resource type, refer to [Account](/fundamentals/api/how-to/create-via-api/#account).
 
 ##### Bucket
 
 Include a set of R2 buckets or all buckets in an account.
 
-A specific buckets is represented as:
+A specific bucket is represented as:
 
 ```json
 "com.cloudflare.edge.r2.bucket.<ACCOUNT_ID>_<JURISDICTION>_<BUCKET_NAME>": "*"
@@ -98,7 +94,7 @@ A specific buckets is represented as:
 - `JURISDICTION`: The [jurisdiction](/r2/reference/data-location/#available-jurisdictions) where the R2 bucket lives. For buckets not created in a specific jurisdiction this value will be `default`.
 - `BUCKET_NAME`: The name of the bucket your Access Policy applies to.
 
-All buckets in an account is represented as:
+All buckets in an account are represented as:
 
 ```json
 "com.cloudflare.api.account.<ACCOUNT_ID>": {
@@ -112,12 +108,13 @@ All buckets in an account is represented as:
 
 Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#permission-groups) should be applied. There are four relevant permission groups for R2.
 
-##### Account permissions
-
 <table>
   <tbody>
     <th colspan="5" rowspan="1">
       Permission group
+    </th>
+    <th colspan="5" rowspan="1">
+      Resource
     </th>
     <th colspan="5" rowspan="1">
       Permission
@@ -125,6 +122,9 @@ Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#perm
     <tr>
       <td colspan="5" rowspan="1">
         <code>Workers R2 Storage Write</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        Account
       </td>
       <td colspan="5" rowspan="1">
         Admin Read & Write
@@ -135,25 +135,18 @@ Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#perm
         <code>Workers R2 Storage Read</code>
       </td>
       <td colspan="5" rowspan="1">
+        Account
+      </td>
+      <td colspan="5" rowspan="1">
         Admin Read only
       </td>
     </tr>
-  </tbody>
-</table>
-
-##### Bucket permissions
-
-<table>
-  <tbody>
-    <th colspan="5" rowspan="1">
-      Permission group
-    </th>
-    <th colspan="5" rowspan="1">
-      Permission
-    </th>
     <tr>
       <td colspan="5" rowspan="1">
         <code>Workers R2 Storage Bucket Item Write</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        Bucket
       </td>
       <td colspan="5" rowspan="1">
         Object Read & Write
@@ -162,6 +155,9 @@ Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#perm
     <tr>
       <td colspan="5" rowspan="1">
         <code>Workers R2 Storage Bucket Item Read</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        Bucket
       </td>
       <td colspan="5" rowspan="1">
         Object Read only
