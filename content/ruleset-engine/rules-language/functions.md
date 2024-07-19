@@ -271,10 +271,11 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
 - <code id="function-wildcard_replace">{{<name>}}wildcard_replace{{</name>}}(source{{<param-type>}}Bytes{{</param-type>}}, wildcard_pattern{{<param-type>}}Bytes{{</param-type>}}, replacement{{<param-type>}}Bytes{{</param-type>}} [, flags{{<param-type>}}Bytes{{</param-type>}}])</code> {{<type>}}String{{</type>}}
 
     - Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
-    - The `source` must be a field (it cannot be a literal string). Additionally, the entire `source` value must match the `wildcard_pattern` parameter (it cannot match only part of the field value).
-    - Use `$$` to add a literal `$` character in the `replacement` parameter.
-    - To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
     - If there is no match, the function will return `source` unchanged.
+    - The `source` parameter must be a field (it cannot be a literal string). Additionally, the entire `source` value must match the `wildcard_pattern` parameter (it cannot match only part of the field value).
+    - To enter a literal `*` character in the `wildcard_pattern` parameter you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in this parameter are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) for the `wildcard_pattern` parameter.
+    - To enter a literal `$` character in the `replacement` parameter, you must escape it using `$$`.
+    - To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
     - This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
 
     - _Examples:_
@@ -295,10 +296,7 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
       `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}", "s")` will return `/Apps/calendar` (unchanged value) because there is no case-sensitive match.
 
       If the URI path is `/apps/calendar/login`,<br />
-      `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login` (`*` matches the shortest possible string).
-
-      If the URI path is `/apps/calendar/team/1/overview`,<br />
-      `wildcard_replace(http.request.uri.path, "/apps/*/overview", "/${1}/overview")` will return `/apps/calendar/team/1/login` (unchanged value, since there is no match – `*` always matches the shortest possible string, which in this case it is `calendar`).
+      `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login`.
 
       For more examples of wildcard matching, refer to [Wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching).
 

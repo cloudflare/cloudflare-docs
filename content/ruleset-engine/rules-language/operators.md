@@ -261,7 +261,7 @@ http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildca
 
 The matching algorithm used by the `wildcard` operator is case insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
 
-To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. To avoid having to double-escape wildcards, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
+To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
 
 {{<Aside type="note" header="Wildcard matching versus regex matching">}}
 - The `wildcard`/`strict wildcard` operators always consider the entire field value (first parameter) when determining if there is a match. The `matches` operator can match a partial value.
