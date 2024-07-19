@@ -23,3 +23,8 @@ layout: wide
     - **Cache eligibility**: Eligible for cache
 
 {{</example>}}
+
+{{<Aside type="warning">}}
+This option caches all HTML regardless of the presence of dynamic content. If you use this approach to cache pages containing dynamic content, visitors may receive information not intended for them. To avoid caching dynamic content, you can add a condition to check for the presence of a cookie. For more information, refer to [Bypass Cache on Cookie](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/).
+{{</Aside>}}
+
