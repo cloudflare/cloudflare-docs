@@ -25,6 +25,7 @@ When a Worker running in production has an error that prevents it from returning
 | `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
 | `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
+| `10013`    | Unknown error                                                                                                     |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
