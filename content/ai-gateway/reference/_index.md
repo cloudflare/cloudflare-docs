@@ -1,6 +1,6 @@
 ---
 pcx_content_type: Reference
-title: Reference
+title: Platform
 weight: 10
 ---
 
