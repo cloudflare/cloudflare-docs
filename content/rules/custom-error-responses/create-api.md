@@ -113,7 +113,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
 {{<Aside type="warning">}}
-The `cf.response.1xxx_code` field will only work for Cloudflare-generated errors like [52X](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+The `cf.response.1xxx_code` field will only work for Cloudflare-generated errors like [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 {{</Aside>}}
 
 ---
