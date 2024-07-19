@@ -3,7 +3,7 @@ title: audit logs
 pcx_content_type: concept
 ---
 
-[Audit logs]( https://developers.cloudflare.com/fundamentals/setup/account/account-security/review-audit-logs/) provide a comprehensive summary of changes made within your Cloudflare account, including those made to gateways in AI Gateway. This functionality is available on all plan types, free of charge, and is enabled by default.
+[Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/) provide a comprehensive summary of changes made within your Cloudflare account, including those made to gateways in AI Gateway. This functionality is available on all plan types, free of charge, and is enabled by default.
 
 ## Viewing Audit Logs
 
