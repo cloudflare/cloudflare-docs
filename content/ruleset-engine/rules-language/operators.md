@@ -226,7 +226,7 @@ http.request.full_uri wildcard "https://example.com/a/*"
 
 # Would NOT match the following URIs:
 # - https://example.com/ab/
-# - https://example.com/b/page.htm
+# - https://example.com/b/page.html
 # - https://sub.example.com/a/
 ```
 
