@@ -31,9 +31,9 @@ Follow this workflow to create a custom error response rule for a given zone via
 
 ## Example API calls
 
-### Custom JSON response for all 5XX errors
+### Custom JSON response for all 5xx errors
 
-This example configures a custom JSON error response for all 5XX errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
+This example configures a custom JSON error response for all 5xx errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
 
 ```bash
 curl --request PUT \
