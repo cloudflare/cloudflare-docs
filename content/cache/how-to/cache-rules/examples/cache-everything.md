@@ -26,7 +26,7 @@ layout: wide
 
 {{<Aside type="warning">}}
 This option caches all HTML regardless of the presence of dynamic content. 
-If you use this approach to cache pages that contain dynamic content, it is likely that visitors will get information that is not intended for them.
-You can add a condition to check the presence of Cookie to avoid caching dynamic content, refer to [Bypass Cache on Cookie](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/).
+ If you use this approach to cache pages containing dynamic content, visitors may receive information not intended for them.
+To avoid caching dynamic content, you can add a condition to check for the presence of a cookie. For more information, refer to [Bypass Cache on Cookie](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/).
 {{</Aside>}}
 
