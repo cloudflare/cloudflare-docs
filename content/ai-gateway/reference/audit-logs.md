@@ -1,5 +1,5 @@
 ---
-title: audit logs
+title: Audit logs
 pcx_content_type: concept
 ---
 
