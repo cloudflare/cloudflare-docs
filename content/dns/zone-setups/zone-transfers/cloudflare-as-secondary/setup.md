@@ -120,7 +120,7 @@ To create a secondary zone using the API, send a [POST](/api/operations/secondar
 
 ## 4. Update registrar
 
-At your registrar, add the secondary nameservers [specified in the Cloudflare dashboard](/dns/zone-setups/full-setup/setup/#get-nameserver-names).
+At your registrar, add (instead of replacing) the secondary nameservers [specified in the Cloudflare dashboard](/dns/zone-setups/full-setup/setup/#get-nameserver-names).
 
 When you have added them, go into your new secondary zone and click **Done, check nameservers**.
 
