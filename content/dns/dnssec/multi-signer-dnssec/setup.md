@@ -41,7 +41,8 @@ curl --request PATCH \
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+curl --request POST \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -61,7 +62,8 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 3. Add your external provider(s) nameservers as NS records on your zone apex.
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+curl --request POST \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
