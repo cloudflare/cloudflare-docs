@@ -11,8 +11,6 @@ meta:
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
-{{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
-
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
 
 ## 1. Create a Worker project
