@@ -252,7 +252,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 -H 'Content-Type: application/json' \
 -d '{
 "name": "workers-logpush",
-"logpull_options": "fields=Event,EventTimestampMs,Outcome,Exceptions,Logs,ScriptName,ScriptVersion",
+"output_options": {
+    "field_names": ["Event", "EventTimestampMs", "Outcome", "Logs", "ScriptName", "ScriptVersion"],
+},
 "destination_conf": "<DESTINATION_URL>",
 "dataset": "workers_trace_events",
 "enabled": true
