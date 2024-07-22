@@ -375,7 +375,20 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 Create a Worker to serve the image you uploaded to Images by running:
 
 ```sh
-$ npx wrangler init thumbnail-image
+$ npx create cloudflare thumbnail-image
+```
+
+In your terminal, you will be asked a series of questions related to your project:
+
+- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
+- For the `Do you want to use TypeScript?` prompt, choose `No`.
+- For the `Do you want to use git for version control?` prompt, choose `No`.
+- For the `Do you want to deploy your application?` prompt, choose `No`.
+
+To start developing your Worker, `cd` into your new project directory:
+
+```sh
+$ cd thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:
