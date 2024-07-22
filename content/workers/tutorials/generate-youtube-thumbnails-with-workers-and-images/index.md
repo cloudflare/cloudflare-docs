@@ -375,7 +375,7 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 Create a Worker to serve the image you uploaded to Images by running:
 
 ```sh
-$ npx create cloudflare thumbnail-image
+$ npm create cloudflare thumbnail-image
 ```
 
 In your terminal, you will be asked a series of questions related to your project:
