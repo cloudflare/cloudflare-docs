@@ -84,8 +84,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 -d '{
 "name": "<DOMAIN_NAME>",
 "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
 },
 "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
 "dataset": "http_requests",

@@ -97,8 +97,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 "name":"<DOMAIN_NAME>",
 "destination_conf":"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>", 
 "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
     }, 
 "dataset": "http_requests"}' | jq .
 ```

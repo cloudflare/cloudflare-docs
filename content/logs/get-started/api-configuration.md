@@ -151,8 +151,8 @@ curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/lo
  "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
  "dataset": "http_requests",
  "output_options": {
-        "field_names": ["ClientIP", "ClientRequesrHost", "ClientRequestMethod", " ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp","RayID"],
-        "timestamp_format": "rfc3339"
+     "field_names": ["ClientIP", "ClientRequesrHost", "ClientRequestMethod", " ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp","RayID"],
+      "timestamp_format": "rfc3339"
   },
  "kind":"edge"
 }' | jq .

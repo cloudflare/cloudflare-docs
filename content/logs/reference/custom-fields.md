@@ -182,8 +182,8 @@ curl -X POST \
   "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
   "dataset": "http_requests",
   "output_options": {
-        "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
+      "timestamp_format": "rfc3339"
     },
   "ownership_challenge":"00000000000000000000"
 }'

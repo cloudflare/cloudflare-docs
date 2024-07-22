@@ -88,8 +88,8 @@ curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POS
 {
   "name": "<DOMAIN_NAME>",
   "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "unix"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "unix"
   },
   "destination_conf": "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
   "max_upload_bytes": 5000000,
@@ -117,8 +117,8 @@ Response:
       "last_complete" : null,
       "last_error" : null,
       "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "unix"
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "unix"
       },
       "logstream" : true,
       "max_upload_bytes" : 5000000,
@@ -158,8 +158,8 @@ Response:
       "last_complete" : "null",
       "last_error" : null,
       "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "unix"
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "unix"
       },
       "logstream" : true,
       "max_upload_bytes" : 5000000,

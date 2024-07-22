@@ -65,8 +65,8 @@ $ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X P
 {
   "name": "theburritobot.com-https",
   "output_options": {
-        "field_names": ["EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
   },
   "destination_conf": "https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
   "max_upload_bytes": 5000000,

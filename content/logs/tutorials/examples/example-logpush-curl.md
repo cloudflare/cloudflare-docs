@@ -68,8 +68,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2", 
 "dataset": "http_requests",
 "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
 },
 "ownership_challenge":"00000000000000000000"}' | jq .
 ```
@@ -102,8 +102,8 @@ In the response, you get a newly-created job ID. For example:
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
@@ -135,8 +135,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
@@ -175,8 +175,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
@@ -212,8 +212,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2018-08-09T21:26:00Z",
@@ -265,8 +265,8 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "enabled": true,
       "name": "<DOMAIN_NAME>",
       "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "rfc3339"
       },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": null,
@@ -297,7 +297,7 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "enabled": true,
       "name": "<DOMAIN_NAME>",
       "output_options": {
-        "field_names": ["Application", "ClientAsn", "ClientIP", "ColoCode", "Event", "OriginIP", "Status"],
+          "field_names": ["Application", "ClientAsn", "ClientIP", "ColoCode", "Event", "OriginIP", "Status"],
       },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": "2019-10-01T00:25:00Z",
@@ -310,8 +310,8 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "enabled": false,
       "name": "<DOMAIN_NAME>",
       "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "rfc3339"
       },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": "2019-09-24T21:15:00Z",
@@ -349,7 +349,7 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
     "output_options": {
         "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
         "timestamp_format": "rfc3339"
-      },
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2021-12-14T19:56:49Z",
     "last_error": null,
@@ -369,7 +369,7 @@ curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
     "output_options": {
         "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
         "timestamp_format": "rfc3339"
-      },
+    },
 ```
 
 Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.

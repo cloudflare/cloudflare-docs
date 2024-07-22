@@ -246,10 +246,10 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 -d '{
 "name":"static-assets",
 "output_options": {
-        "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
-        "sample_rate": 0.1,
-        "timestamp_format": "rfc3339"
-        "CVE-2021-44228": "true"
+    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+    "sample_rate": 0.1,
+    "timestamp_format": "rfc3339"
+    "CVE-2021-44228": "true"
 },
 "dataset": "http_requests",
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",

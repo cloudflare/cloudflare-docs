@@ -111,8 +111,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 "name":"<DOMAIN_NAME>",
 "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", 
 "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
 },
 "dataset": "http_requests"}' | jq .
 ```
