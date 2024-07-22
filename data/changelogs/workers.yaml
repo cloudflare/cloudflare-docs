@@ -7,7 +7,7 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 - publish_date: '2024-07-19'
   description: |-
-    -  Added [mTLS](/workers/runtime-apis/bindings/mtls/) support for [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+    -  Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
 - publish_date: '2024-07-11'
   description: |-
     -  Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
