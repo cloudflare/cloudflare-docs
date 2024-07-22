@@ -168,7 +168,7 @@ Perform the following steps to create the rule:
 
 ### 2. Include the custom fields in your Logpush job
 
-Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `logpull_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
+Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `output_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
 
 For example, consider the following request that creates a job that includes custom fields:
 
@@ -181,7 +181,10 @@ curl -X POST \
   "name":"<DOMAIN_NAME>",
   "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
   "dataset": "http_requests",
-  "logpull_options":"fields=RayID,EdgeStartTimestamp,Cookies,RequestHeaders,ResponseHeaders&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
+      "timestamp_format": "rfc3339"
+    },
   "ownership_challenge":"00000000000000000000"
 }'
 ```
