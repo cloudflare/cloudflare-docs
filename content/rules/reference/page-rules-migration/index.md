@@ -228,6 +228,8 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -315,6 +317,8 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -360,6 +364,8 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -404,6 +410,8 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -447,6 +455,8 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -489,6 +499,8 @@ You configured a Page Rule turning on caching for responses that contained cooki
         - **Cache eligibility**: Eligible for cache
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -540,6 +552,8 @@ You configured a Page Rule turning on caching of every response with status code
                 - **Duration**: _1 day_
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -583,6 +597,8 @@ You configured a Page Rule setting a custom cache key for all query string param
         - **Setting**: Cache key
             - **Query string**: All query string parameters
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -802,6 +818,8 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
             - Ignore cache-control header and use this TTL
             - **Input time-to-live (TTL)**: _1 day_
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1149,6 +1167,8 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1193,6 +1213,8 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
             - **Use Origin error page pass-thru**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1284,6 +1306,8 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1371,6 +1395,8 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
             - **Use strong ETag headers**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1558,6 +1584,12 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 All other Page Rules settings will be migrated during 2025.
+
+## Behavior change in Cache Rules
+
+There is a behavior change between Page Rules and Cache Rules: when you select **Eligible for cache** in a cache rule, the Cache Everything feature is now enabled by default.
+
+If you need to keep the exact same behavior you had with Page Rules, you will need to make some additional configurations. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
 
 ## More resources
 
