@@ -92,7 +92,8 @@ Example request using cURL:
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--d '{"name":"<DOMAIN_NAME>",
+-d '{
+"name":"<DOMAIN_NAME>",
 "destination_conf":"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
 "output_options": {
         "field_names": ["ClientIP", "ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI","EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
