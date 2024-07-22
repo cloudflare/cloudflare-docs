@@ -1589,7 +1589,7 @@ All other Page Rules settings will be migrated during 2025.
 
 There is a behavior change between Page Rules and Cache Rules: when you select **Eligible for cache** in a cache rule, the Cache Everything feature is now enabled by default.
 
-You will need to make some additional configurations to obtain the same behavior you had with Page Rules. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
+If you need to keep the exact same behavior you had with Page Rules, you will need to make some additional configurations. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
 
 ## More resources
 
