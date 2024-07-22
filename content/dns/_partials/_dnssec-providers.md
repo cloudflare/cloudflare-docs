@@ -31,4 +31,4 @@ This is not an exhaustive list of how to update DS records in other providers, b
 - [Porkbun](https://kb.porkbun.com/article/93-how-to-install-dnssec) (do not fill out **keyData**)
 - [TransIP](https://www.transip.eu/knowledgebase/entry/150-secure-domains-custom-nameservers-dnssec/)
 
-{{</details>}}N
+{{</details>}}
