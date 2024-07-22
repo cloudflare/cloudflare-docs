@@ -95,15 +95,18 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
 ```sh
-$ npm create cloudflare worker-turso-ts
+$ npx wrangler init worker-turso-ts
 ```
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 
-- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
-- For the `Do you want to use TypeScript?` prompt, choose `Yes`.
-- For the `Do you want to use git for version control?` prompt, choose `No`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
+```txt
+✔ Would you like to use git to manage this Worker? … no
+✔ No package.json found. Would you like to create one? … yes
+✔ Would you like to use TypeScript? … yes
+✔ Would you like to create a Worker at worker-turso-ts/src/index.ts? › Fetch handler
+✔ Would you like us to write your first test with Vitest? … no
+```
 
 To start developing your Worker, `cd` into your new project directory:
 
@@ -111,12 +114,12 @@ To start developing your Worker, `cd` into your new project directory:
 $ cd worker-turso-ts
 ```
 
-In your project directory, you now have the following files:
+In your project directory, `wrangler init` has generated the following files:
 
 * `wrangler.toml`: Your Wrangler configuration file.
 * `src/index.ts`: A minimal Hello World Worker written in TypeScript
-* `package.json`: A minimal Node dependencies configuration file.
-* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated.
+* `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
+* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated in `wrangler init` command.
 
 For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
 

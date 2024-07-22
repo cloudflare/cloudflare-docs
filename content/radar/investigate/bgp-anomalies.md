@@ -170,26 +170,15 @@ For the app, we would like it to do the following things:
 
 ### Worker app setup
 
-We will start with setting up a Cloudflare Worker app.
+We will start with setting up a Cloudflare Worker app using `wrangler`.
 
 First, create a new Workers app in a local directory:
 
-```sh
-$ npm create cloudflare hijack-alerts
+```bash
+wrangler init hijack-alerts
 ```
 
-In your terminal, you will be asked a series of questions related to your project:
-
-- For the `What type of application do you want to create?` prompt, choose `Scheduled Worker (Cron Trigger)`.
-- For the `Do you want to use TypeScript?` prompt, choose `No`.
-- For the `Do you want to use git for version control?` prompt, choose `No`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
-
-To start developing your Worker, `cd` into your new project directory:
-
-```sh
-$ cd hijack-alerts
-```
+When prompted to select a type of Worker, choose ` Scheduled handler`.
 
 In your `wrangler.toml` file, change the default checking frequency (once per hour) to what you like. Here is an example
 of configuring the workers to run the script five minutes.
@@ -235,7 +224,6 @@ async function apiFetch (env, paramsStr) {
   return await (res).json()
 }
 ```
-
 The `env` parameter is passed in from the caller, and we do not need to worry about construct it. The `paramsStr` is a
 string variable that holds the query parameters in a query URL.
 

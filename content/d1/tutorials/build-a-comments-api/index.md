@@ -19,22 +19,12 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 Use [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
-$ npm create cloudflare d1-example
+$ npx wrangler init d1-example
 ```
 
-In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
-
-- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
-- For the `Do you want to use TypeScript?` prompt, choose `No`.
-- For the `Do you want to use git for version control?` prompt, choose `No`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
-
-To start developing your Worker, `cd` into your new project directory:
-
-```sh
-$ cd d1-example
-```
-
+{{<Aside type="note">}}
+During the initialization process, Wrangler will ask you "What type of application do you want to create?". Choose "Hello World" script for this tutorial.
+{{</Aside>}}
 
 ## 1. Install Hono
 
@@ -77,7 +67,7 @@ export default app
 You will now create a D1 database. In Wrangler v2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
 
 ```sh
-$ npx wrangler d1 create d1-example
+$ wrangler d1 create d1-example
 ```
 
 Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
@@ -99,7 +89,7 @@ With your binding configured in your `wrangler.toml` file, you can interact with
 Interact with D1 by issuing direct SQL commands using `wrangler d1 execute`:
 
 ```sh
-$ npx wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+$ wrangler d1 execute d1-example --remote --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 
 Executing on d1-example:
 
@@ -133,7 +123,7 @@ CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
+$ wrangler d1 execute d1-example --remote --file schemas/schema.sql
 ```
 
 ## 5. Execute SQL
@@ -208,13 +198,7 @@ database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_UUID>"
 ```
 
-Now, run `npx wrangler deploy` to deploy your project to Cloudflare.
-
-```sh
-$ npx wrangler deploy
-```
-
-When it has successfully deployed, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
+Now, run `npx wrangler deploy` to deploy your project to Cloudflare. When it has successfully deployed, test the API by making a `GET` request to retrieve comments for an associated post. Since you have no posts yet, this response will be empty, but it will still make a request to the D1 database regardless, which you can use to confirm that the application has deployed correctly:
 
 ```sh
 # Note: Your workers.dev deployment URL may be different
