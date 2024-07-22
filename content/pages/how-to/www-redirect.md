@@ -33,7 +33,7 @@ To redirect your `www` subdomain to your domain apex:
 
   | Type | Name  | IPv4 address | Proxy status |
   | ---- | ----- | ------------ | ------------ |
-  | `A`    | `www` | `192.0.2.1`  | Proxied      |
+  | `AAAA`    | `www` | `100::`  | Proxied      |
 
   {{</example>}}
 
