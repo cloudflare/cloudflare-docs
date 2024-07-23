@@ -8,7 +8,7 @@ meta:
 
 # Changes to Universal certificates
 
-In the latter half of 2023, Cloudflare started offboarding DigiCert as a certificate authority. This change does not affect existing Universal certificates, but will apply to new certificate orders and renewals.
+In the second half of 2023, Cloudflare started offboarding DigiCert as a certificate authority. This change does not affect existing Universal certificates, but will apply to new certificate orders and renewals.
 
 {{<Aside type="warning">}}
 For [Universal certificates](/ssl/edge-certificates/universal-ssl/), it is expected that DigiCert continues to be used until the end of 2024.
