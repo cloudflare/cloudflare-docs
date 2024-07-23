@@ -7,7 +7,7 @@ _build:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. In the top navigation bar, select **Add site**.
-3. Enter your website’s Here's a {{<glossary-tooltip term_id="apex domain">}}apex domain{{</glossary-tooltip>}} (`example.com`) and then select **Add Site**.
+3. Enter your website’s {{<glossary-tooltip term_id="apex domain">}}apex domain{{</glossary-tooltip>}} (`example.com`) and then select **Continue**.
 
     {{<Aside type="note">}}
 If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
@@ -26,6 +26,4 @@ Additionally, Cloudflare requires your `apex domain` to be one level below a val
 
     2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
     3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
-    4. Click **Continue**.
-
-6. Go through the **Quick Start Guide** and when you have finished, select **Finish**.
+    4. Select **Continue**.
