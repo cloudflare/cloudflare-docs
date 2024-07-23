@@ -1918,6 +1918,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Path to a custom certificate.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Specify directory to use for local persistence, defaults to `.wrangler/state`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify logging level.
 
 {{</definitions>}}
 
