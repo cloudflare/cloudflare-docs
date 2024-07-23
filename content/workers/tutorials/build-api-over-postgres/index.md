@@ -1,14 +1,14 @@
 ---
-type: example
-summary: Connect Hyperdrive to Exograph.
+updated: 2024-07-23
+difficulty: Intermediate
+content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Connect to Exograph
-weight: 12
+title: Automatically generate APIs from your Postgres data models with Exograph
 ---
 
 # Connect to Exograph
 
-This example shows you how to use [Exograph](https://exograph.dev) to build an API server that connects to a Postgres database through Hyperdrive.
+This tutorial shows you how to use [Exograph](https://exograph.dev) to build a secure and performant GraphQL API server that runs on Cloudflare Worker. It also shows how to use Hyperdrive to lower latency.
 
 ## Create a new Exograph project
 
@@ -21,7 +21,7 @@ exo new todo
 cd todo
 ```
 
-If you wish, you can launch this project locally by running (requires that you have a local Postgres database or Docker installed):
+If you wish, you can launch this project locally by running (requires that you have a local Postgres database _or_ Docker installed):
 
 ```sh
 exo yolo
