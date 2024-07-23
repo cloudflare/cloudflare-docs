@@ -63,4 +63,4 @@ The following location hints are currently supported:
 
 ## To check the region of your database in D1
 
-You can use API to ([get d1 database](/api/operations/cloudflare-d1-get-database)) and check field `running_in_region` in the output. 
+You can use the [D1 REST API](/api/operations/cloudflare-d1-get-database) to get your D1 database and check the field `running_in_region` in the output to view the region of your database in D1.
