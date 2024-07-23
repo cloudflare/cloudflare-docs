@@ -54,7 +54,7 @@ This table assumes zones that are in an [active status](/dns/zone-setups/referen
 ---
 ## How to
 
-{{<directory-list>}}
+{{<directory-listing>}}
 
 Although the how-to guides in this documentation are focused on both parent domains and subdomains existing in Cloudflare, it is also possible to achieve a subdomain setup in Cloudflare while the parent domain exists in a different DNS provider.
 
