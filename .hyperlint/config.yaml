@@ -1,0 +1,8 @@
+content_dir: /content
+authorized_users:
+  - kodster28
+  - KianNH
+  - pedrosousa
+style_guide:
+  enabled: true
+  unmanaged_vale: true

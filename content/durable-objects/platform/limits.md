@@ -14,8 +14,8 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 |  Number of Objects                         | Unlimited (within an account or of a given class) |
 |  Maximum Durable Object namespaces         | 500 (identical to the [script limit](/workers/platform/limits/)) |
 |  Storage per account                       | 50 GB (can be raised by contacting Cloudflare) <sup>1</sup>   |
-|  Storage per class                         | unlimited                                         |
-|  Storage per Object                        | unlimited                                         |
+|  Storage per class                         | Unlimited                                         |
+|  Storage per Object                        | Unlimited                                         |
 |  Key size                                  | 2 KiB(2048 bytes)                                 |
 |  Value size                                | 128 KiB (131072 bytes)                            |
 |  WebSocket message size                    | 1 MiB (only for received messages)                |

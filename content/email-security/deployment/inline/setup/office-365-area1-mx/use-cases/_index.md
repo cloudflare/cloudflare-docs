@@ -8,9 +8,9 @@ meta:
 
 # Office 365 use cases
 
-Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation), before setting up Office 365.
+Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Cloud Email Security dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation), before setting up Office 365.
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -29,7 +29,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         3. Select **Save Disposition Actions**.
 
-    1. If you are an **Enterprise** customer:
+    2. If you are an **Enterprise** customer:
         1. Enable **Email Link Isolation**.
 
         <div class="large-img">
@@ -38,11 +38,11 @@ Before following our use case tutorials, read through this how-to guide related 
 
         </div>
 
-6. Under **Email Policies**, select **Text add-Ons**.
+5. Under **Email Policies**, select **Text add-Ons**.
 
-7. Select **Edit**.
+6. Select **Edit**.
 
-8. Enable the following options under **Add Prefix To Subject**:
+7. Enable the following options under **Add Prefix To Subject**:
     - **Malicious** - Enabled.
     - **Suspicious** - Enabled.
     - **Spam** - Enabled.
@@ -58,7 +58,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
     </div>
 
-9. In the same window, scroll down and enable the following options under **Add Prefix To Body**:
+8. In the same window, scroll down and enable the following options under **Add Prefix To Body**:
     - **Malicious** - Enabled.
     - **Suspicious** - Enabled.
     - **Spam** - Disabled.
@@ -73,7 +73,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
     </div>
 
-10. Select **Update Text Add-Ons**.
+9.  Select **Update Text Add-Ons**.
 
 ### Use cases
 

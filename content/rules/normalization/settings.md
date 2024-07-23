@@ -24,7 +24,7 @@ The Cloudflare dashboard provides the following settings to manage URL normaliza
 
   - Configures the URLs of all incoming traffic to Cloudflare:
 
-    - When enabled, all incoming URLs are normalized before they pass to subsequent Cloudflare features that can receive a URL as input, such as Page Rules (deprecated), WAF custom rules, Workers, and Access.
+    - When enabled, all incoming URLs are normalized before they pass to subsequent Cloudflare features that can receive a URL as input, such as Page Rules, WAF custom rules, Workers, and Access.
     - When disabled, incoming URLs are not normalized before passing to subsequent Cloudflare features.
 
 - **Normalize URLs to origin** {{<prop-meta>}}(default: _Off_){{</prop-meta>}}
@@ -38,4 +38,4 @@ The Cloudflare dashboard provides the following settings to manage URL normaliza
 
 {{</definitions>}}
 
-For examples of how these settings affect URL normalization, refer to [URL normalization examples](/rules/normalization/examples/).
+For examples of how these settings affect URL normalization, refer to the [URL normalization examples](/rules/normalization/examples/).

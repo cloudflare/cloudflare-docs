@@ -34,7 +34,7 @@ A content object is any request payload detected by heuristics that does not mat
 
 - Executable files (for example, `.exe`, `.bat`, `.dll`, and `.wasm`)
 - Documents (for example, `.doc`, `.docx`, `.pdf`, `.ppt`, and `.xls`)
-- Compressed files (for example, `.7z`, `.gz`, `.zip`, and `.rar`)
+- Compressed files (for example, `.gz`, `.zip`, and `.rar`)
 - Image files (for example, `.jpg`, `.png`, `.gif`, `.webp`, and `.tif`)
 - Video and audio files
 

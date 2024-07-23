@@ -37,7 +37,7 @@ As an exception to Structured Clone, application-defined classes (or objects wit
 The RPC system also supports a number of types that are not Structured Cloneable, including:
 
 - Functions, which are replaced by stubs that call back to the sender.
-- Application-define classes that extend `RpcTarget`, which are similarly replaced by stubs.
+- Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
 - [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
 - [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
 - RPC stubs themselves, even if the stub was received from a third Worker.
@@ -201,7 +201,7 @@ filename: client.js
 ---
 export default {
   async fetch(request, env) {
-    using foo = await env.MY_SERVICE.foo();
+    using foo = env.MY_SERVICE.foo();
     let baz = await foo.bar.baz();
     return new Response(baz);
   }

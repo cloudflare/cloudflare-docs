@@ -8,7 +8,7 @@ meta:
 
 # DNS resolution in partial zones
 
-When you have a [partial zone](/dns/zone-setups/partial-setup/)[^1], Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
+When you have a {{<glossary-tooltip term_id="partial setup" link="/dns/zone-setups/partial-setup/">}}partial zone{{</glossary-tooltip>}}, Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
 ## Records within the same zone
 
@@ -81,5 +81,3 @@ In this case, Cloudflare will always resolve the `CNAME` target based on the val
       C
       end
 ```
-
-[^1]: {{<render file="_partial-setup-definition.md">}}

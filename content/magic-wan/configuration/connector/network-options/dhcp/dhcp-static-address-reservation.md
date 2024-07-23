@@ -21,16 +21,16 @@ If you configure your Connector to be a DHCP server, you can also assign IP addr
 
 {{<render file="connector/_account-id-api-key" >}}
 
-Create a [`PUT` request](/api/operations/magic-wan-connectors-lans-update-lan) to update the LAN where you want to reserve addresses:
+Create a [`PUT` request](/api/operations/magic-site-lans-update-lan) to update the LAN where you want to reserve addresses:
 
 Example:
 
 ```bash
 curl --request PUT \
---url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "lan": {
     "static_addressing": {

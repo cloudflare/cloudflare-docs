@@ -30,7 +30,7 @@ As new versions of Pyodide and additional Python packages become available in Wo
 
 ## Supported Packages
 
-As of April 2, 2024, the following Python packages are provided directly by the Workers runtime:
+A subset of the [Python packages that Pyodide supports](https://pyodide.org/en/latest/usage/packages-in-pyodide.html) are provided directly by the Workers runtime:
 
 - aiohttp: 3.9.3
 - aiohttp-tests: 3.9.3

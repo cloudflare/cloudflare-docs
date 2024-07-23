@@ -1,9 +1,21 @@
 ---
 link: "/zaraz/changelog/"
 productName: Zaraz
+productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-06-21'
+  title:
+  description: |-
+    * **Dashboard**: Add an option to disable the automatic `Pageview` event
+- publish_date: '2024-06-18'
+  title:
+  description: |-
+    * **Amplitude Managed Component**: Allow users to choose data center
+    * **Bing Managed Component**: Fix e-commerce events handling
+    * **Google Analytics 4 Managed Component**: Mark e-commerce events as conversions
+    * **Consent Management**: Fix IAB Consent Mode tools not showing with purposes
 - publish_date: '2024-05-03'
   title:
   description: |-
@@ -11,7 +23,7 @@ entries:
     * **Bugfix**: Cookie values are now decoded
     * **Bugfix**: Ensure context enricher worker can access the `context.system.consent` object
     * **Google Ads Managed Component**: Add conversion linker on pageviews without sending a pageview event
-    * **Pinterest Conversion Api Managed Component**: Bugfix handling of partial e-commerce event payloads
+    * **Pinterest Conversion API Managed Component**: Bugfix handling of partial e-commerce event payloads
 - publish_date: '2024-04-19'
   title:
   description: |-
@@ -70,7 +82,7 @@ entries:
   title:
   description: |-
     * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
-    * **Dashboard**: Improved welcome screen for new Zaraz users".
+    * **Dashboard**: Improved welcome screen for new Zaraz users.
 - publish_date: '2023-10-03'
   title:
   description: |-

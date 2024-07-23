@@ -4,9 +4,12 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use Workers KV directly from Rust
+products: [KV]
 ---
 
 # Use Workers KV directly from Rust
+
+{{<tutorial-date-info>}}
 
 This tutorial will teach you how to read and write to KV directly from Rust
 using [workers-rs](https://github.com/cloudflare/workers-rs).

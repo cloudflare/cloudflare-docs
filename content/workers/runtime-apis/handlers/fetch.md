@@ -9,7 +9,7 @@ title: Fetch Handler
 
 Incoming HTTP requests to a Worker are passed to the `fetch()` handler as a [`Request`](/workers/runtime-apis/request/) object. To respond to the request with a response, return a [`Response`](/workers/runtime-apis/response/) object:
 
-```ts
+```js
 export default {
 	async fetch(request, env, ctx) {
 		return new Response('Hello World!');

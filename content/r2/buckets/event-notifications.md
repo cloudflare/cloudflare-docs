@@ -89,12 +89,17 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 ```json
 {
   "account": "3f4b7e3dcab231cbfdaa90a6a28bd548",
-  "action": "PutObject",
+  "action": "CopyObject",
   "bucket": "my-bucket",
   "object": {
     "key": "my-new-object",
     "size": 65536,
     "eTag": "c846ff7a18f28c2e262116d6e8719ef0"
+  },
+  "eventTime": "2024-05-24T19:36:44.379Z",
+  "copySource": {
+    "bucket": "my-bucket",
+    "object": "my-original-object"
   }
 }
 ```
@@ -187,6 +192,50 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
       </td>
       <td>
         The entity tag (eTag) of the object. Note: not present for object-delete events.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>eventTime</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The time when the action that triggered the event occurred.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource</code>
+      </td>
+      <td>
+        Object
+      </td>
+      <td>
+        A nested object containing details about the source of a copied object. Note: only present for events triggered by <code>CopyObject</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource.bucket</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The bucket that contained the source object.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>copySource.object</code>
+      </td>
+      <td>
+        String
+      </td>
+      <td>
+        The name of the source object.
       </td>
     </tr>
   </tbody>

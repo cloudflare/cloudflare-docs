@@ -55,7 +55,7 @@ With any bindings that are not supported locally, you will need to use the `--re
 
 ## Work with local data
 
-When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources. 
+When running `wrangler dev`, resources such as KV, Durable Objects, D1, and R2 will be stored and persisted locally and not affect the production resources.
 
 ### Use bindings in `wrangler.toml`
 
@@ -84,7 +84,7 @@ The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` 
 | Command                                    |
 | ----------------------------------------------------|
 | [`d1 execute`](/workers/wrangler/commands/#execute) |
-| [`kv:key](/workers/wrangler/commands/#kvkey) |
+| [`kv:key`](/workers/wrangler/commands/#kvkey) |
 | [`kv:bulk`](/workers/wrangler/commands/#kvbulk) |
 | [`r2 object`](/workers/wrangler/commands/#r2-object) |
 
@@ -101,6 +101,18 @@ Running `wrangler kv:key put` will create a new key `test` with a value of `1234
 If you need to clear local storage entirely, delete the `.wrangler/state` folder. You can also be more fine-grained and delete specific resource folders within `.wrangler/state`.
 
 Any deleted folders will be created automatically the next time you run `wrangler dev`.
+
+## Local-only environment variables
+
+When running `wrangler dev`, variables in `wrangler.toml` are automatically overridden by values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
+
+```shell
+---
+filename: .dev.vars
+---
+API_HOST = "localhost:4000"
+API_ACCOUNT_ID = "local_example_user"
+```
 
 ## Develop using remote resources and bindings
 

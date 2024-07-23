@@ -12,12 +12,12 @@ Cloudflare makes customer websites faster by storing a copy of the website's con
 
 Cloudflare caches static content based on the following factors:
 
-* Cache level set at a zone or [page rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/)
+* [Caching levels](/cache/how-to/set-caching-levels/)
 * [File extension](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
 * Presence of [query strings](/cache/advanced-configuration/query-string-sort/)
 * [Origin cache-control headers](/cache/concepts/cache-control/)
 * Origin headers that indicate {{<glossary-tooltip term_id="dynamic content">}}dynamic content{{</glossary-tooltip>}}
-* Page rules (deprecated) that [bypass cache on cookie](/support/third-party-software/content-management-system-cms/caching-html-with-drupal/#set-bypass-cache-on-cookie)
+* Cache rules that bypass cache on cookie
 
 Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) DNS records.
 
@@ -33,7 +33,7 @@ Discover the benefits of caching with Cloudflare's CDN and understand the defaul
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
-- [Customize Caching with Cloudflare Rules](/cache/troubleshooting/customize-caching/)
+- [Customize Caching with Cache Rules](/cache/how-to/cache-rules/)
 - [Specify which resources to cache](/cache/concepts/customize-cache/)
 - [Understand Origin Cache Control](/cache/concepts/cache-control/)
 - [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)

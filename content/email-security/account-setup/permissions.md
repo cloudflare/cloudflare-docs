@@ -6,6 +6,12 @@ weight: 5
 
 # Permissions
 
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
 When you [create a user](/email-security/account-setup/manage-account-members/#add-user), the available options for permissions depend on whether your account is a **parent** account or a **child** account.
 
 ## Parent accounts
@@ -23,7 +29,7 @@ If your account has [parent permissions](/email-security/account-setup/manage-pa
 
 ## Child accounts
 
-Child accounts control settings and services associated with an Area 1 instance.
+Child accounts control settings and services associated with an Cloud Email Security instance.
 
 ### Child users
 

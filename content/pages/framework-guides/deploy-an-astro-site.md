@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Astro site
+title: Astro
 ---
 
-# Deploy an Astro site
+# Astro
 
 [Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
 
@@ -137,7 +137,7 @@ highlight: [3, 4, 5]
 ---
 import type { APIContext } from "astro";
 
-export async function get({locals}: APIContext) => {
+export async function get({locals}: APIContext) {
   // the type KVNamespace comes from the @cloudflare/workers-types package
   const { MY_KV } = locals.runtime.env;
 

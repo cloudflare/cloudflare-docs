@@ -21,7 +21,7 @@ Workers AI allows you to run machine learning models, on the Cloudflare network,
 
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to its global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
 
-{{<render file="_billing-announcement.md">}}
+{{<render file="_custom_requirements.md">}}
 
 {{<render file="_file_issues.md">}}
 
@@ -37,6 +37,12 @@ Workers AI comes with a curated set of popular open-source models that enable yo
 ---
 
 ## Related products
+
+{{<related header="AI Gateway" href="/ai-gateway/" product="ai-gateway">}}
+
+Observe and control your AI applications with caching, rate limiting, request retries, model fallback, and more.
+
+{{</related>}}
 
 {{<related header="Vectorize" href="/vectorize/" product="vectorize">}}
 
@@ -88,16 +94,16 @@ Create a global, low-latency, key-value data storage.
 
 {{<resource header="Get started" href="/workers-ai/get-started/workers-wrangler/" icon="learning-center-book">}}Build and deploy your first Workers AI application.{{</resource>}}
 
-{{<resource header="Learning Path" href="/learning-paths/workers/" icon="reference-architecture">}}New to Workers? Get started with the Workers Learning Path.{{</resource>}}
-
 {{<resource header="Plans" href="/workers-ai/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
 
 {{<resource header="Limits" href="/workers-ai/platform/limits/" icon="documentation-clipboard">}}Learn about Workers AI limits.{{</resource>}}
+
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
 
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="learning-center-book">}}Learn which storage option is best for your project.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{</resource-group>}}

@@ -8,6 +8,8 @@ title: Connect to a PostgreSQL database with Cloudflare Workers
 
 # Connect to a PostgreSQL database with Cloudflare Workers
 
+{{<tutorial-date-info>}}
+
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
 ## Prerequisites

@@ -22,10 +22,9 @@ The default security level is _Medium_.
 
 To update the security level for your entire zone:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Security** > **Settings**.
-4. For **Security Level**, select an option.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
+2. Go to **Security** > **Settings**.
+3. For **Security Level**, select an option.
 
 ### Update selectively
 

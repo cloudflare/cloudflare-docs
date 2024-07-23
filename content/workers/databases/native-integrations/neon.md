@@ -54,7 +54,7 @@ To set up an integration with Neon:
 5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:
 
     ```sh
-    npm install @neondatabase/serverless
+    $ npm install @neondatabase/serverless
     ```
 
 6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration.

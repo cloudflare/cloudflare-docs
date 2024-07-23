@@ -44,7 +44,7 @@ For security and regulatory reasons, you may want to only allow connections from
 
 {{<details header="Restrict cipher suites for zone">}}
 
-Refer to [change ciphers setting on a zone](/api/operations/zone-settings-change-ciphers-setting).
+Refer to [Edit zone setting](/api/operations/zone-settings-edit-single-setting) and use `ciphers` as the setting name in the URI path.
 
 {{</details>}}
 
@@ -55,3 +55,11 @@ Refer to [SSL properties of a custom hostname](/api/operations/custom-hostname-f
 {{<render file="_edit-custom-hostname-api.md" withParameters="When making the request," >}}
 
 {{</details>}}
+
+## Alerts for mutual TLS certificates
+
+You can configure alerts to receive notifications before your mutual TLS certificates expire.
+
+{{<available-notifications product="SSL/TLS" notificationName="Access mTLS Certificate Expiration Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

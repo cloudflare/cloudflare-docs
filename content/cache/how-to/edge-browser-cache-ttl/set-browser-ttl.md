@@ -13,13 +13,13 @@ By default, Cloudflare honors the cache expiration set in your `Expires` and `Ca
 - The value of the `Cache-Control` header from the origin web server is less than the **Browser Cache TTL** setting. This means that **Browser cache TTL** value needs to be higher than origin `max-age`.
 - The origin web server does not send a `Cache-Control` or an `Expires` header.
 
-Unless specifically set in a [Page Rule](/cache/how-to/edge-browser-cache-ttl/create-page-rules/), Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**. 
+Unless specifically set in a [Cache Rule](/cache/how-to/cache-rules/), Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**. 
 
-Nevertheless, the value you set via Page Rule will be ignored if `Cache-Control: max-age` is higher. In other words, you can override to make browsers cache longer than Cloudflare's edge but not less.
+Nevertheless, the value you set via Cache Rule will be ignored if `Cache-Control: max-age` is higher. In other words, you can override to make browsers cache longer than Cloudflare's edge but not less.
 
 ## Set Browser Cache TTL
 
-The Cloudflare UI and API both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
+The Cloudflare UI and [API](/api/operations/zone-settings-edit-single-setting) both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
 
 {{<Aside type="note" header="Note">}}
 
@@ -35,6 +35,6 @@ The **Respect Existing Headers** option tells Cloudflare to honor the settings i
 
 {{<Aside type="note" header="Respect Existing Headers Availability">}}
 
-For all plan types, you can set Browser Cache TTL to Respect Existing Headers at a zone level (zone setting) or you can use a Cache Rule. Setting Browser Cache TTL to Respect Existing Headers via Page Rule is currently an Enterprise-only zone feature. 
+For all plan types, you can set Browser Cache TTL to Respect Existing Headers at a zone level (zone setting) or you can use a Cache Rule.
   
 {{</Aside>}}

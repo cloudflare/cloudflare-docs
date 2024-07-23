@@ -24,7 +24,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 - **Other setups**:
 
-  - [Page rules](/rules/page-rules/) (deprecated) that redirect traffic to HTTPS
+  - [Page rules](/rules/page-rules/) that redirect traffic to HTTPS
   - HTTP to HTTPS redirects at your origin web server
 
 ## Disable Universal SSL certificate

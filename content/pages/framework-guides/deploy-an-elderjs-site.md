@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Elder.js site
+title: Elder.js
 ---
 
-# Deploy an Elder.js site
+# Elder.js
 
 [Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](/pages/framework-guides/deploy-a-svelte-site/).
 

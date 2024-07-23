@@ -16,7 +16,7 @@
 
 ```ts
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
@@ -90,7 +90,7 @@ export default {
 
 ```ts
 export interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export default {
@@ -134,7 +134,7 @@ response = requests.post(
     }
 )
 result = response.json()
-return result.response
+print(result)
 ```
 
 </details>

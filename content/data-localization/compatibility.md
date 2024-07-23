@@ -75,11 +75,11 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- |
 | Argo Smart Routing | ✅ | ✘{{<fnref num="9">}} | ✘{{<fnref num="10">}} |
-| BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
-| Magic Firewall | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| Static IP/BYOIP | ⚫️ | ✅{{<fnref num="26">}} | ⚫️ |
+| Magic Firewall | ⚫️ | ⚫️ | ✅ |
 | Magic Transit | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Magic WAN | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
-| Spectrum | ✅ | ✅ | 🚧{{<fnref num="1">}} |
+| Magic WAN | ⚫️ | ⚫️ | ✅ |
+| Spectrum | ✅ | ✅ | ✅ |
 
 ---
 
@@ -107,7 +107,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnsection>}}
 {{<fnentry num="1">}}Logs / Analytics not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="2">}}Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.{{</fnentry>}}
-{{<fnentry num="3">}}Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.{{</fnentry>}}
+{{<fnentry num="3">}}Adaptive DDoS Protection is only supported for US CMB.{{</fnentry>}}
 {{<fnentry num="4">}}API shield will not yet work with Customer Metadata Boundary enabled outside of US region.{{</fnentry>}}
 {{<fnentry num="5">}}Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.{{</fnentry>}}
 {{<fnentry num="7">}}[Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).{{</fnentry>}}
@@ -126,9 +126,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
 {{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
-{{<fnentry num="26">}}BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
+{{<fnentry num="26">}}Static IP/BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}
-{{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/reference/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
+{{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{<fnentry num="29">}}You cannot yet specify region location for object storage itself.{{</fnentry>}}
 {{<fnentry num="30">}}Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.{{</fnentry>}}
 {{<fnentry num="31">}}DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}

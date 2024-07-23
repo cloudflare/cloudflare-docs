@@ -70,12 +70,12 @@ When creating a Bypass Waiting Room Rule via API, make sure you:
 Create a waiting room rule by appending the following endpoint in the Waiting Room API to the Cloudflare API base URL. New waiting room rules will be added after any existing rules.
 
 ```txt
-POST zones/:zone_identifier/waiting_rooms/:waiting_room_id/rules
+POST zones/{zone_id}/waiting_rooms/{room_id}/rules
 ```
 
 Configure your bypass rule with the following required and optional parameters:
 
-- **Description** (optional) - Give your rule a description to help keep a record of the purpose of this bypass rule.  
+- **Description** (optional) - Give your rule a description to help keep a record of the purpose of this bypass rule.
 - **Expression** (required) - Define the rule expression indicating which traffic to apply the bypass rule to.
 - **Action** (required) - Define the action to take when expression evaluates to true. Set this to `bypass_waiting_room`.
 - **Enabled** (optional) - This will default to true. If you do not wish to deploy your rule, you must set this to false.
@@ -86,14 +86,13 @@ Configure your bypass rule with the following required and optional parameters:
 
 If your waiting room is configured at `example.com/` and you would like all traffic visiting `example.com/bypassme` and all of its subpaths. In this example, we also want to ensure any subrequests of `js`, `css`, or `png` from also bypass the waiting room to ensure all assets are loaded properly on the paths being bypassed. Note that in this example, all requests ending in `js`, `css` or `png` will bypass the waiting room regardless of the subpath. If this is not your intended use case, please alter the expression to suit your specific requirements and site architecture.
 
-```json
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waiting_rooms/<ROOM_ID>/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
-        "description": "subpath bypass",
-        "expression": "starts_with(http.request.uri.path, \"/bypassme\") or ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\")",
-        "action": "bypass_waiting_room"
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/{room_id}/rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "description": "subpath bypass",
+  "expression": "starts_with(http.request.uri.path, \"/bypassme\") or ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\")",
+  "action": "bypass_waiting_room"
 }'
 ```
 
@@ -101,15 +100,14 @@ curl -X POST \
 
 {{<details header="Allow a defined list of IPs to bypass the waiting room">}}
 
-```json
-curl -X POST \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/waiting_rooms/<ROOM_ID>/rules" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
-        "description": "ip list bypass",
-        "expression": "ip.src in $bypass_ip_list",
-        "action": "bypass_waiting_room"
-}'  
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/{room_id}/rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{
+  "description": "ip list bypass",
+  "expression": "ip.src in $bypass_ip_list",
+  "action": "bypass_waiting_room"
+}'
 ```
 
 {{</details>}}

@@ -34,7 +34,7 @@ When you run C3 to create your project, C3 will install the latest version of Wr
 
 ## Source of truth
 
-If you are building your Worker on the Cloudflare dashboard, you will set up your project configuration (such as environemnt variables, bindings, and routes) through the dashboard. If you are building your project programmatically using C3 and Wrangler, you will rely on a [`wrangler.toml`](/workers/wrangler/configuration/) file to configure your Worker.
+If you are building your Worker on the Cloudflare dashboard, you will set up your project configuration (such as environment variables, bindings, and routes) through the dashboard. If you are building your project programmatically using C3 and Wrangler, you will rely on a [`wrangler.toml`](/workers/wrangler/configuration/) file to configure your Worker.
 
 Cloudflare recommends choosing and using one [source of truth](/workers/wrangler/configuration/#source-of-truth), the dashboard or `wrangler.toml`, to avoid errors in your project.
 

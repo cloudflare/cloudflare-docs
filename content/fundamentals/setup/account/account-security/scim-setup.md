@@ -10,8 +10,6 @@ By connecting a System for Cross-domain Identity Management (SCIM) provider, you
 
 Currently, we only provide SCIM support for Enterprise customers, and for Microsoft Entra and Okta. If you are interested in setting up SCIM support, contact your account team and ask for dashboard SCIM.
 
-For more information about SCIM support, refer to the [Announcing SCIM support for Cloudflare Access & Gateway](https://blog.cloudflare.com/access-and-gateway-with-scim/) blog post.
-
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.

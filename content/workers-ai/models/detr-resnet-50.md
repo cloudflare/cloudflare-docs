@@ -8,8 +8,7 @@ model:
     id: "9c178979-90d9-49d8-9e2c-0f1cf01815d4"
     name: "Object Detection"
     description: "Object detection models can detect instances of objects like persons, faces, license plates, or others in an image. This task takes an image as input and returns a list of detected objects, each one containing a label, a probability score, and its surrounding box coordinates."
-  tags:
-    - "object-detection"
+  tags: []
   properties:
     - property_id: "beta"
       value: "true"

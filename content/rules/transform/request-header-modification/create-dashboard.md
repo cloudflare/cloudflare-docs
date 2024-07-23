@@ -8,7 +8,7 @@ meta:
 
 # Create an HTTP request header modification rule in the dashboard
 
-Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
+Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Request+modification) for examples of rule definitions.
 
 To create a rule:
 
@@ -18,7 +18,7 @@ To create a rule:
 
 3. Go to the **Modify Request Header** tab.
 
-4. Select **Create rule**.
+4. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
     ![The HTTP request header modification rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-request-header-modification-rule.png)
 

@@ -67,7 +67,7 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with image transformations. Cache Rules will not be applied to image transformation requests. Page Rules are supported, but they are now deprecated.
+If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly.
 {{</Aside>}}
 
 #### Edge TTL
@@ -169,11 +169,11 @@ Cache keys refer to the criteria that Cloudflare uses to determine how to store 
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/), customizing the following options:
 
-* You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
+* You can switch on or off [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
 
 Enterprise customers have these additional options for custom cache keys:
 
-* In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
+* In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
 * In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
 * In the **Cookie** section, you can include cookie names and their values, and check for the presence of another cookie.
 * In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**.

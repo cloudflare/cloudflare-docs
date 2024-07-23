@@ -13,10 +13,10 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons to migrate your Workers to the ES modules format:
 
-1.  Many products within Cloudflare's Developer Platform, such as [Durable Objects](/durable-objects/), and other features of Cloudflare Workers, require the ES modules format.
-2.  Workers using ES modules format do not rely on any global bindings. This means the Workers runtime does not need to set up fresh execution contexts, making Workers safer and faster to run.
-3.  Workers using ES modules format can be shared and published to `npm`. Workers using ES modules format can be imported by and composed within other Workers that use ES modules format.
-4.  You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
+1.  [Durable Objects](/durable-objects/), [D1](/d1/), [Workers AI](/workers-ai/), [Vectorize](/vectorize/) and other bindings can only be used from Workers that use ES modules.
+2.  Your Worker will run faster. With service workers, bindings are exposed as globals. This means that for every request, the Workers runtime must create a new JavaScript execution context, which adds overhead and time. Workers written using ES modules can reuse the same execution context across multiple requests.
+3.  You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
+4.  You can easily publish Workers using ES modules to `npm`, allowing you to import and reuse Workers within your codebase.
 
 ## Migrate a Worker
 
@@ -44,10 +44,11 @@ Workers using ES modules format replace the `addEventListener` syntax with an ob
 ```js
 export default {
   fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
-    const destination = new URL(request.url, base);
+    const source = new URL(request.url);
+    const destination = new URL(source.pathname, base);
     return Response.redirect(destination.toString(), statusCode);
   },
 };

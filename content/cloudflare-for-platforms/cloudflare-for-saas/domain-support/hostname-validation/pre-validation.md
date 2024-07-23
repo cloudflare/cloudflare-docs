@@ -81,27 +81,26 @@ To get and use the `ownership_verification` record:
     highlight: [8-9]
     ---
     {
-    "result": [
+      "result": [
         {
-        "id": "24c8c68e-bec2-49b6-868e-f06373780630",
-        "hostname": "app.example.com",
-        // ...
-        "ownership_verification_http": {
-            "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
-            "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
-        },
-        "created_at": "2020-03-04T20:06:04.117122Z"
+          "id": "24c8c68e-bec2-49b6-868e-f06373780630",
+          "hostname": "app.example.com",
+          // ...
+          "ownership_verification_http": {
+              "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
+              "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
+          },
+          "created_at": "2020-03-04T20:06:04.117122Z"
         }
-    ]
+      ]
     }
     ```
 
 3.  Have your customer place the `http_url` and `http_body` on their origin web server.
 
-    ```bash
+    ```txt
     ---
     header: Example response (truncated)
-    highlight: [7-10]
     ---
     location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
         return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";

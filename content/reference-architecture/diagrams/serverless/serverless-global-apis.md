@@ -22,7 +22,7 @@ Most cloud serverless implementations have a single region where your code is ex
 
 ![Figure 1: Traditional single-region architecture](/images/reference-architecture/serverless-global-apis/single-region.png "Figure 1:  Traditional single-region architecture")
 
-Cloudlare follows a different, global-first approach. Globally-deployed architectures enable lower latency and high availability for users accessing the API from different parts of the world. In order to realize performance gains, not only the compute needs to be distributed, but ideally the data as well. Different solutions such as a caching as well as global replication can enable this.
+Cloudflare follows a different, global-first approach. Globally-deployed architectures enable lower latency and high availability for users accessing the API from different parts of the world. In order to realize performance gains, not only the compute needs to be distributed, but ideally the data as well. Different solutions such as a caching as well as global replication can enable this.
 
 ![Figure 2: Region Earth](/images/reference-architecture/serverless-global-apis/region-earth.png "Figure 2:  Region Earth")
 

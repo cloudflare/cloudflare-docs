@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Eleventy site
+title: Eleventy
 ---
 
-# Deploy an Eleventy site
+# Eleventy
 
 [Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 

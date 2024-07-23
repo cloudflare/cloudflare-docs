@@ -44,6 +44,10 @@ entries:
   general_definition: |-
     a physical location where servers run and other IT operations are hosted.
 
+- term: demo application
+  general_definition: |-
+    a demo application is a functional application in GitHub that you can clone and deploy on your own.
+
 - term: denial-of-service (DoS) attack
   general_definition: |-
     a DoS attack is a type of cyber attack in which an attacker aims to render a computer or other device unavailable to its intended users by interrupting the device's normal functioning.
@@ -62,6 +66,10 @@ entries:
 - term: edge response status code
   general_definition: |-
     HTTP response code sent from Cloudflare to the client (end user). The Cloudflare dashboard **Analytics** app uses the edge response status code.
+
+- term: code example
+  general_definition: |-
+    a code example illustrates how to use a programming element to implement specific functionality
 
 - term: feature
   general_definition: |-
@@ -117,6 +125,12 @@ entries:
   general_definition: |-
     traffic is the data sent and received by visitors to a website. Cloudflare serves and protects this data as it passes through the Cloudflare network.
 
+- term: tutorial
+  general_definition: |-
+    a tutorial is a practical lesson that takes you from a clear starting to ending point.
+
+    The goal is to connect products to real-world scenarios to meet a user’s goal.
+
 - term: two-factor authentication (2FA)
   general_definition: |-
     Two-factor authentication (2FA) is a security process in which a user provides two different authentication factors to verify their identity. In addition to something you know, typically your password, 2FA adds an extra layer of security to user logins by requiring users to also present something they have, such as Yubikey or a one-time login code, or something you are, such as a fingerprint.
@@ -141,28 +155,28 @@ entries:
 
 - term: TCP Keep-Alive
   general_definition: |-
-    a TCP keep-alive is used to maintain a connection between two endpoints by sending packets to check if the connection is still active. This helps prevent idle connections from being prematurely closed. If a response is not received after a defined period, the connection is terminated. 
+    a TCP keep-alive is used to maintain a connection between two endpoints by sending packets to check if the connection is still active. This helps prevent idle connections from being prematurely closed. If a response is not received after a defined period, the connection is terminated.
 
-- term: TCP RST (reset) 
+- term: TCP RST (reset)
   general_definition: |-
      a TCP Reset (RST) packet is used by a TCP sender to close a connection.
 
 - term: TCP Fast Open (TFO)
-  general_definition: |-  
+  general_definition: |-
     TCP Fast Open (TFO) is a protocol extension that can significantly improve the speed of establishing TCP connections by allowing data to be sent in the initial SYN packet, rather than requiring a separate handshake before data transmission begins.
 
 - term: TCP three-way handshake
-  general_definition: |-  
+  general_definition: |-
     TCP uses a three-way handshake to establish a reliable connection (SYN, SYN-ACK, ACK) over an IP based connection. SYN is short for synchronize, and ACK is short for acknowledgement.
 
 - term: idle connection
-  general_definition: |-  
+  general_definition: |-
     when a TCP connection is in an idle state, it means that the connection has been established, but neither endpoint is sending any data. In the context of HTTP, an idle connection is when an established connection between a client and a server is not currently transmitting any HTTP requests or responses.
 
 - term: proxy read timeout
-  general_definition: |-  
+  general_definition: |-
     a proxy read timeout is the maximum amount of time a proxy server waits for a response from the origin server before terminating the connection.
 
 - term: proxy write timeout
-  general_definition: |-  
+  general_definition: |-
     a proxy write timeout is the maximum amount of time a proxy server allows for sending data to the client before terminating the connection.

@@ -43,7 +43,7 @@ The following table highlights the performance and consistency characteristics o
 | Feature                           | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
 | --------------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
 | Maximum storage per account       | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 250GiB <sup>3</sup>                                 |
-| Storage grouping name<sup>2</sup> | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
+| Storage grouping name             | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
 | Maximum size per value            | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GiB per database <sup>4</sup>                    |
 | Consistency model                 | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>5</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
 | Supported APIs                    | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
@@ -52,7 +52,7 @@ The following table highlights the performance and consistency characteristics o
 
 <sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
 
-<sup>2</sup> Free accounts are limited to 10 GiB of R2 storage.
+<sup>2</sup> Free accounts are limited to 10 GB of R2 storage.
 
 <sup>3</sup> Free accounts are limited to 5 GiB of database storage.
 
@@ -93,7 +93,7 @@ It is ideal for projects that require:
 To get started with R2:
 
 - Read the [Get started guide](/r2/get-started/).
-- Learn about R2 [Limits](/r2/reference/limits/).
+- Learn about R2 [Limits](/r2/platform/limits/).
 - Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 ## Durable Objects

@@ -20,13 +20,13 @@ For example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name":"iplist",
-    "description":"This contains IPs that should be allowed.",
-    "kind":"ip"
+  "name": "iplist",
+  "description": "This contains IPs that should be allowed.",
+  "kind": "ip"
 }'
 ```
 
@@ -36,12 +36,12 @@ Next, [create list items](/api/operations/lists-create-list-items). This will ad
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/{list_id}/items \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '[
-    {"ip":"10.0.0.1"},
-    {"ip":"10.10.0.0/24"}
+  {"ip":"10.0.0.1"},
+  {"ip":"10.10.0.0/24"}
 ]'
 ```
 
@@ -51,17 +51,17 @@ Finally, add a Magic Firewall rule referencing the list into an existing ruleset
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "action": "skip",
-    "action_parameters": {
-        "ruleset": "current"
-    },
-    "expression": "ip.src in $iplist",
-    "description": "Allowed IPs from iplist",
-    "enabled": true
+  "action": "skip",
+  "action_parameters": {
+    "ruleset": "current"
+  },
+  "expression": "ip.src in $iplist",
+  "description": "Allowed IPs from iplist",
+  "enabled": true
 }'
 ```
 

@@ -1,12 +1,12 @@
 ---
 pcx_content_type: navigation
-title: Steering policies
+title: Global traffic steering
 weight: 1
 meta:
-  title: Traffic steering policies
+  title: Global traffic steering policies
 ---
 
-# Traffic steering policies
+# Global traffic steering
 
 {{<render file="_traffic-steering-definition.md">}}
 <br/>

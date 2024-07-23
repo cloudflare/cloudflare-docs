@@ -3,14 +3,14 @@ pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/206190798-Using-Resolve-Override-in-Page-Rules
 title: Override URL or IP address
 meta:
-    title: Override URL or IP address | Page Rules (deprecated)
+    title: Override URL or IP address | Page Rules
 ---
 
 # Override URL or IP address
 
 Cloudflare Page Rules allows you to override the URL or IP address of a request. This feature is currently available for domains on the Enterprise plan.
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 A common use case for this functionality is when you are serving an application from a particular URI (`mydomain.com/app`). In this case, the app may live on another server and may even be hosted by a third party. Requests to this endpoint must be directed to the server for that third party application. You can specify a `CNAME` host, as long as the `CNAME` record exists within the Cloudflare DNS.
 

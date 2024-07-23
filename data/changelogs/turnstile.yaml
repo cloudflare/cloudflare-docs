@@ -1,6 +1,7 @@
 ---
 link: "/turnstile/changelog/"
 productName: Turnstile
+productLink: "/turnstile/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:

@@ -5,16 +5,16 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`
 
-When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq`.
+When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`.
 
 ```bash
 ---
 header: Example fetch request
 ---
 
-curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/completions \
   --header 'Authorization: Bearer {groq_api_key}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -38,7 +38,7 @@ import Groq from 'groq-sdk';
 
 const groq = new Groq({
   apiKey: env.GROQ_API_KEY,
-	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/groq"
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq"
 });
 
 const chatCompletion = await groq.chat.completions.create({

@@ -27,7 +27,25 @@ To put your entire zone in **I'm Under Attack Mode**:
 
 To enable **I'm Under Attack Mode** for specific pages or sections of your site, use a [Configuration Rule](/rules/configuration-rules/) to adjust the **Security Level**.
 
-To enable it for specific ASNs (hosts/ISPs that own IP addresses), countries, or IP ranges, use [IP Access Rules](/waf/tools/ip-access-rules/).
+{{<example>}}
+
+**When incoming requests match**
+
+* **Field:** _URI Path_
+* **Operator:** _starts with_
+* **Value:** `/admin`
+
+If you are using the Expression Editor, enter the following expression:<br>
+`(starts_with(http.request.uri.path, "/admin"))`
+
+**Then the settings are**
+
+1. For **I'm Under Attack**, select **Add**.
+2. Switch the toggle to **On**.
+
+{{</example>}}
+
+To turn it on for specific ASNs (hosts/ISPs that own IP addresses), countries, or IP ranges, use [IP Access Rules](/waf/tools/ip-access-rules/).
 
 ---
 

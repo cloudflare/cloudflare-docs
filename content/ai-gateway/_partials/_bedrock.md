@@ -5,16 +5,16 @@ _build:
   list: never
 ---
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/aws-bedrock`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock`
 
-When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east-1.amazonaws.com/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/aws-bedrock/bedrock-runtime/us-east-1/`, then add the model you want to run at the end of the URL.
+When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east-1.amazonaws.com/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/`, then add the model you want to run at the end of the URL.
 
 With Bedrock, you will need to sign the URL before you make requests to AI Gateway. You can try using the [`aws4fetch`](https://github.com/mhart/aws4fetch) SDK. For example:
 
 ```typescript
 import { AwsClient } from 'aws4fetch'
 
-inferface Env {
+interface Env {
   accessKey: string;
   secretAccessKey: string;
 }
@@ -24,7 +24,7 @@ export default {
 
     // replace with your configuration
     const cfAccountId = "{account_id}";
-    const gatewayName = "{gateway_slug}";
+    const gatewayName = "{gateway_id}";
     const region = 'us-east-1';
 
     // added as secrets (https://developers.cloudflare.com/workers/configuration/secrets/)

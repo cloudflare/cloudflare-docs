@@ -36,7 +36,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
 3. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#3-create-a-tunnel-and-give-it-a-name).
 
     ```sh
-    cloudflared tunnel create <TUNNEL-NAME>
+    $ cloudflared tunnel create <TUNNEL-NAME>
     ```
 
 4. [Route traffic](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your tunnel to create routes that your tunnel will serve.
@@ -44,13 +44,13 @@ To migrate your legacy tunnels to the named tunnels architecture:
     - If your legacy tunnel was serving `tunnel.example.com`, run this command to configure your named tunnel to also serve `tunnel.example.com`. For more information, refer to the [DNS Record routing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) section.
 
       ```sh
-      cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
+      $ cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
       ```
 
     - If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) section.
 
       ```sh
-      cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
+      $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
       ```
 
 5. Next, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if in the past you used to run `cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000`, you should add an equivalent ingress rule to your configuration file:

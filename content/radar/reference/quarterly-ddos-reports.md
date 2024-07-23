@@ -39,6 +39,10 @@ For both application-layer and network-layer DDoS attacks, attacks and traffic a
 
 For both source and target insights, Cloudflare looks at the total volume of attack traffic compared to all traffic as one data point. Additionally, Cloudflare also takes into account the percentage of attack traffic towards or from a specific country, to a specific country or to a specific industry. This gives us an "attack activity rate" for a given country/industry which is normalized by their total traffic levels. This helps us remove biases of a country or industry that normally receives a lot of traffic and therefore, a lot of attack traffic as well.
 
+#### Ranking
+
+For source, target, and industry insights, Cloudflare may calculate a "Rank" for each dimension. The calculation takes into consideration HTTP DDoS attacks, network-layer DDoS attacks, and the total volume and the percentage of DDoS attack traffic out of the total traffic for each attack type. The Ranking system lets Cloudflare provide a simple single score that means how much a certain industry is being attacked, for example. In the graphs, the Rank values are displayed in an inverted way (a longer bar in the chart means a higher rank and more attacks).
+
 ### How we calculate attack characteristics
 
 To calculate the attack size, duration, attack vectors, and emerging threats, Cloudflare buckets attacks and then provides the share of each bucket out of the total amount for each dimension.

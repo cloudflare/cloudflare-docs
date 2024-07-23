@@ -8,7 +8,7 @@ meta:
 
 # Least Outstanding Requests steering
 
-**Least Outstanding Requests steering** allows you to route traffic to pools that currently have the fewest number of outstanding requests.
+**Least Outstanding Requests steering** allows you to route traffic to pools that currently have the lowest number of outstanding requests.
 
 This steering policy selects a pool by taking into consideration `random_steering` weights, as well as each pool's number of in-flight requests. Pools with more pending requests are weighted proportionately less in relation to others.
 
@@ -28,11 +28,11 @@ header: Load Balancers
 Refer to the [API documentation](/api/operations/load-balancers-update-load-balancer) for more information on the load balancer configuration.
 
 {{<Aside type="note">}}
-Least Outstanding Requests steering can also be configured on a pool as an [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/), taking into account outstanding request counts and weights for origins within the pool.
+Least Outstanding Requests steering can also be configured on a pool as a [local traffic steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/least-outstanding-requests-pools/), taking into account outstanding request counts and weights for endpoints within the pool.
 {{</Aside>}}
 
 ## Limitations
 
-Least Outstanding Requests steering can be configured for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation, dummy form. For DNS-only load balancers, all pool outstanding request counts are considered to be zero, meaning traffic is served solely based on `random_steering` weights.
+Least Outstanding Requests steering can be configured for [DNS-only load balancers](/load-balancing/understand-basics/proxy-modes/#dns-only-load-balancing), but is only supported in a no-operation form. For DNS-only load balancers, all pool outstanding request counts are considered to be zero, meaning traffic is served solely based on `random_steering` weights.
 
 Although it is configurable, it is not recommended to use Least Outstanding Requests steering for DNS-only load balancers due to its partial support.

@@ -21,7 +21,7 @@ export default {
 
     const msg = createMimeMessage();
     msg.setHeader("In-Reply-To", message.headers.get("Message-ID"));
-    msg.setSender({ name: "Thank you for you contact", addr: "<SENDER>@example.com" });
+    msg.setSender({ name: "Thank you for your contact", addr: "<SENDER>@example.com" });
     msg.setRecipient(message.from);
     msg.setSubject("Email Routing Auto-reply");
     msg.addMessage({

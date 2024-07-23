@@ -39,7 +39,7 @@ Learn how to create your first Vectorize database, upload vector embeddings, and
 
 {{<feature header="Vector embeddings using Workers AI" href="/vectorize/get-started/embeddings/" cta="Create vector embeddings using Workers AI">}}
 
-Learn how to use Vectorize to generate vector embeddings using Workers AI. 
+Learn how to use Vectorize to generate vector embeddings using Workers AI.
 
 {{</feature>}}
 
@@ -67,10 +67,12 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 {{<resource header="Limits" href="/vectorize/platform/limits/" icon="documentation-clipboard">}}Learn about what limits Vectorize has during the open beta and how to work within them.{{</resource>}}
 
+{{<resource header="Use cases" href="/use-cases/ai/" icon="documentation-clipboard">}}Learn how you can build and deploy ambitious AI applications to Cloudflare's global network.{{</resource>}}
+
 {{<resource header="Storage options" href="/workers/platform/storage-options/" icon="documentation-clipboard">}}Learn more about the storage and database options you can build on with Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, join the `#vectorize-open-beta` channel to show what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.{{</resource>}}
 
 {{</resource-group>}}

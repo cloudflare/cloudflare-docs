@@ -26,7 +26,7 @@ To know the reason behind these nameserver names, refer to [our blog](https://bl
 
 ### Advanced nameservers
 
-If you are on an Enterprise plan, you can have [Foundation DNS](/dns/foundation-dns/), which includes access to advanced nameservers.
+Enterprise accounts on [Foundation DNS](/dns/foundation-dns/) have access to advanced nameservers.
 
 [Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) are hosted on `foundationdns.com`, `foundationdns.net`, and `foundationdns.org`.
 

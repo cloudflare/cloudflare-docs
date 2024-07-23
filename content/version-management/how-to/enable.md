@@ -47,7 +47,7 @@ To disable Zone Versioning:
 3. Using the `ref` of those environments, send a `DELETE` request to the `/zones/{zone_id}/environments/{ref}` endpoint for each environment.
 
     ```bash
-    curl -X 'DELETE' "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments/{ref}" \
+    curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/environments/{ref}" \
     --header "X-Auth-Email: <EMAIL>" \
     --header "X-Auth-Key: <API_KEY>"
     ```
