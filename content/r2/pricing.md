@@ -54,7 +54,7 @@ For example:
 
 - Storing 1 GB constantly for 30 days will be charged as 1 GB-month.
 - Storing 3 GB constantly for 30 days will be charged as 3 GB-month.
-- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1GB * 5/30 month + 3GB * 25/30 month = 2.66 GB-month`
+- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1 GB * 5/30 month + 3 GB * 25/30 month = 2.66 GB-month`
 
 For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted or moved before the duration specified.
 
