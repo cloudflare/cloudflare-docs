@@ -13,12 +13,12 @@ pcx_content_type: get-started
 
 ## What you need
 
-When making requests to Google AI Studio , you will need:
+When making requests to Google AI Studio, you will need:
 
 - AI Gateway account ID
 - AI Gateway gateway name
 - Google AI Studio API key
-- Google AI Studio mdoel name
+- Google AI Studio model name
 
 ## URL structure
 
