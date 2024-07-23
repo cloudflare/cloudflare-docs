@@ -289,7 +289,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 ### Enhanced file detection
 
-Enhanced file detection is an optional feature to extract more file information from HTTP traffic. When enabled, Gateway will read file information from the HTTP body rather than the HTTP headers to provide greater accuracy and reliability. This feature may have a minor impact on performance for file-heavy organizations.
+Enhanced file detection is an optional feature to extract more file information from HTTP traffic. When turned on, Gateway will read file information from the HTTP body rather than the HTTP headers to provide greater accuracy and reliability. This feature may have a minor impact on performance for file-heavy organizations.
 
 To turn on enhanced file detection:
 
