@@ -13,6 +13,36 @@ head:
 
 TypeScript is a first-class language on Cloudflare Workers. Cloudflare publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`). All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
 
+### Generate types that match your Worker's configuration (experimental)
+
+Cloudflare continuously improves [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+Some updates change the TypeScript types that APIs return. For example, the [`urlsearchparams_delete_has_value_arg`](/workers/configuration/compatibility-dates/#urlsearchparams-delete-and-has-value-argument) compatibility flag adds optional arguments to some methods, in order to support new additions to the WHATWG URL standard API.
+
+This means the correct TypeScript types for your Worker depend on:
+
+1. Your Worker's [Compatibility Date](/workers/configuration/compatibility-dates/).
+2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-dates/#compatibility-flags).
+
+For example, if you have `compatibility_flags = ["nodejs_als"]` in your `wrangler.toml`, then the runtime will allow you to use the [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
+
+In order to solve this issue, and to ensure that your type definitions are always up-to-date with your compatibility settings, you can dynamically generate the runtime types (as of `wrangler 3.66.0`):
+
+```bash
+wrangler types --experimental-include-runtime
+```
+
+This will generate a `d.ts` file and (by default) save it to `.wrangler/types/runtime.d.ts`. You will be prompted in the command's output to add that file to your `tsconfig.json`'s `compilerOptions.types` array.
+
+If you would like to commit the file to git, you can provide a custom path. Here, for instance, the `runtime.d.ts` file will be saved to the root of your project:
+
+```bash
+wrangler types --experimental-include-runtime="./runtime.d.ts"
+```
+
+Note that the `--experimental-include-runtime` command replaces the need for the `@cloudflare/workers-types` package, so if you do have that package installed, you should remove it to avoid any potential for conflict.
+
+See [the full list of available flags](/workers/wrangler/commands/#types) for more details.
+
 ### Known issues
 
 #### Transitive loading of `@types/node` overrides `@cloudflare/workers-types`

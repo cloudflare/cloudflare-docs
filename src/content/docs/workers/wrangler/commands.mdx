@@ -298,6 +298,7 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 - `--no-schema` boolean (default: false) optional
   - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
+
 ### `time-travel restore`
 
 Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
@@ -2155,7 +2156,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2272,7 +2273,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2592,13 +2593,36 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
-- `PATH` string (default: `worker-configuration.d.ts`)
+{{<Aside type="warning">}}
 
-  - The path to where the declaration file for your Worker will be written.
-  - The path to the declaration file must have a `d.ts` extension.
+The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
+
+It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package should be uninstalled to avoid any potential conflict.
+
+After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
+
+You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
+
+The minimum required Wrangler version to use this command is 3.66.1.
+
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `./worker-configuration.d.ts`){{</prop-meta>}}
+  - The path to where **the `Env` types** for your Worker will be written.
+  - The path must have a `d.ts` extension.
 
 - `--env-interface` string (default: `Env`)
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-{/* <!--TODO Add examples of DTS generated output --> */}
+- `--experimental-include-runtime` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: `./.wrangler/types/runtime.d.ts`){{</prop-meta>}}
+  - The path to where the  **runtime types** file will be written.
+  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
+  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
+  - A custom path must have a `d.ts` extension.
+
+{{</definitions>}}
+
+<!--TODO Add examples of DTS generated output -->
