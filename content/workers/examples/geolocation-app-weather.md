@@ -159,7 +159,6 @@ async def on_fetch(request):
       </body>
     """
 
-retrigger CI
     headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
     return Response.new(html, headers=headers)
 ```
