@@ -2009,7 +2009,7 @@
     },
     "enhanced_http2_prioritization": {
       "title": "Enhanced HTTP/2 Prioritization",
-      "link": "https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/",
+      "link": "/speed/optimization/protocol/enhanced-http2-prioritization/",
       "properties": {
         "availability": {
           "title": "Availability",
