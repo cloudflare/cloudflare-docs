@@ -5,7 +5,7 @@ title: Enable Web Analytics
 
 # Enable Web Analytics
 
-{{<render file="_web-analytics-definition.md" productFolder="analytics">}}
+{{<render file="_web-analytics-definition.md" productFolder="web-analytics">}}
 
 ## Enable on Pages project
 
@@ -25,4 +25,4 @@ For more details about how to use Web Analytics, refer to the [Web Analytics doc
 
 ## Troubleshooting
 
-{{<render file="_web-analytics-troubleshooting.md" productFolder="analytics">}}
+{{<render file="_web-analytics-troubleshooting.md" productFolder="web-analytics">}}

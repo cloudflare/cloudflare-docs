@@ -13,13 +13,13 @@ Cloudflare offers two ways to improve the privacy and performance of the way you
 
 If you want analytics without using third-party tools, check out [Cloudflare Web Analytics](/web-analytics/).
 
-{{<render file="_web-analytics-definition.md" productFolder="analytics">}}
+{{<render file="_web-analytics-definition.md" productFolder="web-analytics">}}
 
 ### Setup
 
 So long as your traffic is [proxied through Cloudflare](/learning-paths/get-started-free/performance/default-improvements/), setting up Web Analytics only involves a few steps:
 
-{{<render file="_web-analytics-proxied-setup.md" productFolder="analytics">}}
+{{<render file="_web-analytics-proxied-setup.md" productFolder="web-analytics">}}
 
 ### Access
 
@@ -32,7 +32,7 @@ Once you have enabled Web Analytics, you can review analytics at any time:
 
 ### Notifications
 
-{{<render file="_web-analytics-notifications.md" productFolder="analytics">}}
+{{<render file="_web-analytics-notifications.md" productFolder="web-analytics">}}
 
 ---
 
