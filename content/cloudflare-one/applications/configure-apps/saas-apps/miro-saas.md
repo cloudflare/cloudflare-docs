@@ -12,7 +12,7 @@ This guide covers how to configure [Miro](https://help.miro.com/hc/articles/3600
 
 - An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Miro Business or Enterprise plan account
-- A [domain verified](https://help.miro.com/hc/articles/360034831793-Domain-control) in your Miro account (Enterprise plan), or be prepared to do so during SSO configuration (Business or Enterprise plan)
+- A [verified domain](https://help.miro.com/hc/articles/360034831793-Domain-control) added to your Miro account (Enterprise plan), or be prepared to do so during SSO configuration (Business or Enterprise plan)
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
