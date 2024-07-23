@@ -105,15 +105,17 @@ Once the time to live (TTL) of previous `NS` records is expired and this informa
 
 ## 3. Configure the zone transfers
 
-{{<Aside type="note" header="If you are also changing your primary provider">}}
-If you are also migrating to a new primary DNS provider, import the same zone file you prepared in [Step 1](#1-prepare-a-zone-file) onto your new primary zone. Make sure there are no records that still refer `cdn.cloudflare.net`. Otherwise, HTTP traffic for these hostnames will break.
+1. Remove all references to `cdn.cloudflare.net` from your primary DNS provider. You can do this by importing the same zone file you prepared in [Step 1](#1-prepare-a-zone-file) onto your primary zone.
+
+{{<Aside type="warning">}}
+If you keep any DNS records that still refer `cdn.cloudflare.net`, HTTP traffic for the respective hostnames will break.
 {{</Aside>}}
 
-1. Enable outgoing zone transfers at your primary provider and create a peer DNS server on your Cloudflare account.
+2. Enable outgoing zone transfers at your primary provider and create a peer DNS server on your Cloudflare account.
 
 {{<render file="_create-peer-server.md">}}
 
-2. Link your Cloudflare zone to the peer DNS server you just created.
+3. Link your Cloudflare zone to the peer DNS server you just created.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -134,4 +136,4 @@ Use the [Update Secondary Zone Configuration endpoint](/api/operations/secondary
 {{</tab>}}
 {{</tabs>}}
 
-3. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/operations/secondary-dns-(-secondary-zone)-force-axfr).
+4. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/operations/secondary-dns-(-secondary-zone)-force-axfr).
