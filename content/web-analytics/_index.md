@@ -8,6 +8,12 @@ meta:
 
 # Cloudflare Web Analytics
 
+{{<description>}}
+Get vital web analytics for your website without compromising user privacy.
+{{</description>}}
+
+{{<plan type="all">}}
+
 Cloudflare Web Analytics helps you understand the performance of your web pages as experienced by your site visitors.
 
 ---
