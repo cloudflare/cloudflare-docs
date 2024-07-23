@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Dimensions
-weight: 8
+weight: 4
 ---
 
 # Dimensions
@@ -20,4 +20,4 @@ Below you will find a list of the different dimensions you can use to filter Web
 - _Site_: The website's domain name. Used for high-level segmentation of data. For example, you can use it for a particular zone or gray-clouded website.
 - _Exclude Bots_: Exclude bot traffic from the dataset. With this dimension set to `Yes`, the resulting dataset will be a closer representation of real user traffic.
 
-![Web Analytics dimensions page](/images/analytics/web-analytics/dash-web_analytics-dimensions.png)
+![Web Analytics dimensions page](/images/web-analytics/dash-web_analytics-dimensions.png)

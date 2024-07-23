@@ -1,7 +1,9 @@
 ---
-title: Web analytics
-pcx_content_type: reference
-weight: 3
+title: About
+pcx_content_type: navigation
+weight: 2
+meta:
+    title: Cloudflare Web Analytics
 ---
 
 # Cloudflare Web Analytics
@@ -16,5 +18,5 @@ Cloudflare Web Analytics does not collect or use your visitors’ personal data.
 
 {{<button-group>}}
 {{<button type="primary" href="http://dash.cloudflare.com/sign-up/web-analytics" target="_blank">}}Get started{{</button>}}
-{{<button type="secondary" href="/analytics/web-analytics/understanding-web-analytics/">}}Learn more{{</button>}}
+{{<button type="secondary" href="/web-analytics/data-metrics/">}}Learn more{{</button>}}
 {{</button-group>}}

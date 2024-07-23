@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Limits
-weight: 11
+weight: 6
 meta:
     title: Web Analytics - Limits
 ---

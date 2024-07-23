@@ -98,7 +98,23 @@
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
-/analytics/web-analytics/about/ /analytics/web-analytics/ 301
+/analytics/web-analytics/about/ /web-analytics/about 301
+/analytics/web-analytics/ /web-analytics/ 301
+/analytics/web-analytics/getting-started/ /web-analytics/get-started/ 301
+/analytics/web-analytics/getting-started/web-analytics-spa/ /web-analytics/get-started/web-analytics-spa/ 301
+/analytics/web-analytics/getting-started/notifications/ /web-analytics/get-started/notifications/ 301
+/analytics/web-analytics/configuring-web-analytics/ /web-analytics/configuration-options/ 301
+/analytics/web-analytics/configuring-web-analytics/filters/ /web-analytics/configuration-options/filters/ 301
+/analytics/web-analytics/configuring-web-analytics/rules/ /web-analytics/configuration-options/rules/ 301
+/analytics/web-analytics/understanding-web-analytics/ /web-analytics/data-metrics/ 301
+/analytics/web-analytics/understanding-web-analytics/core-web-vitals/ /web-analytics/data-metrics/core-web-vitals/ 301
+/analytics/web-analytics/understanding-web-analytics/high-level-metrics/ /web-analytics/data-metrics/high-level-metrics/ 301
+/analytics/web-analytics/understanding-web-analytics/page-load-time-summary/ /web-analytics/data-metrics/page-load-time-summary/ 301
+/analytics/web-analytics/understanding-web-analytics/dimensions/ /web-analytics/data-metrics/dimensions/ 301
+/analytics/web-analytics/understanding-web-analytics/data-origin-and-collection/ /web-analytics/data-metrics/data-origin-and-collection/ 301
+/analytics/web-analytics/understanding-web-analytics/limits/ /web-analytics/limits/ 301
+/analytics/faq/web-analytics/ /web-analytics/faq/ 301
+/analytics/web-analytics/changelog/ /web-analytics/changelog/ 301
 /support/analytics/ /analytics/ 301
 /support/analytics/essentials/ /analytics/ 301
 /support/analytics/essentials/understanding-cloudflare-account-analytics-beta/ /analytics/account-and-zone-analytics/account-analytics/ 301

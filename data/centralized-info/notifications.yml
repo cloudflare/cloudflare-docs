@@ -579,7 +579,7 @@ entries:
     These thresholds cannot be configured. Z-score is used to determine the threshold.
 
 - name: Weekly summary
-  audience: Customers using [Web Analytics](/analytics/web-analytics/) to monitor their website's performance.
+  audience: Customers using [Web Analytics](/web-analytics/) to monitor their website's performance.
   availability: All Cloudflare plans.
   associatedProducts: Web Analytics
   nextSteps: No action is needed. This notification is a weekly summary with reports from your Web Analytics account. Refer to [Notifications](https://dash.cloudflare.com/?to=/:account/notifications) in the Cloudflare dashboard to refine your notifications settings.

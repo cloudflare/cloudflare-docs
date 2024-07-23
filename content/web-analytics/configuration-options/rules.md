@@ -7,7 +7,7 @@ title: Rules
 
 Use **Rules** to configure whether to track Web Analytics for specific websites or paths. By default, Web Analytics automatically creates a single rule for the zone that injects the JavaScript (JS) snippet for all pages.
 
-Rules are only available for sites proxied through Cloudflare. For more information, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
+Rules are only available for sites proxied through Cloudflare. For more information, refer to [Limits](/web-analytics/limits/).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select the **Analytics & Logs** drop-down and choose **Web Analytics**.

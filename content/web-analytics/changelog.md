@@ -1,7 +1,7 @@
 ---
 title: Changelog
 pcx_content_type: changelog
-weight: 7
+weight: 8
     - rss
 layout: changelog
 changelog_file_name: [beacon-min-js]
