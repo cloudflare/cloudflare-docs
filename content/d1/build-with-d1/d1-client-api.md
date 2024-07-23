@@ -199,13 +199,12 @@ When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-clie
 
 ### await stmt.run()
 
-Runs the query (or queries) and returns results. Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type.
+Runs the query (or queries) and returns results. Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type. For write operations like UPDATE, DELETE or INSERT, `results` will be empty.
 
 Run is functionally equivalent to `stmt.all()` and can be treated as an alias.
 
 ```js
-const stmt = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)')
-                    .bind( "John", 42 )
+const stmt = await db.prepare('SELECT name, age FROM users LIMIT 3')
 const { results } = await stmt.run();
 console.log(results);
 /*
