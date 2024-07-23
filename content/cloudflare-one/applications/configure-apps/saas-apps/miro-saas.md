@@ -36,13 +36,13 @@ This guide covers how to configure [Miro](https://help.miro.com/hc/articles/3600
 {{<tabs labels="Business plan | Enterprise plan">}}
 {{<tab label="business plan" no-code="true">}}
 
-{{<render file="access/saas-apps/_miro-sso.md" withParameters="**Security**;; Enter">}}
+{{<render file="access/saas-apps/_miro-sso.md" withParameters="**Security**;;Enter">}}
 
 {{</tab>}}
 
 {{<tab label="enterprise plan" no-code="true">}}
 
-{{<render file="access/saas-apps/_miro-sso.md" withParameters="**Security and Compliance** > **Authentication** > **Single sign-on**;; If you have not previously [verified the domain](https://help.miro.com/hc/articles/360034831793-Domain-control), enter">}}
+{{<render file="access/saas-apps/_miro-sso.md" withParameters="**Security and Compliance** > **Authentication** > **Single sign-on**;;If you have not previously [verified the domain](https://help.miro.com/hc/articles/360034831793-Domain-control), enter">}}
 
 {{</tab>}}
 {{</tabs>}}
