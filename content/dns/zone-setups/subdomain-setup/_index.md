@@ -14,7 +14,7 @@ This is different from simply creating a subdomain for a site you already have i
 
 ![Screenshot showing a zone with a parent domain and a child subdomain](/images/dns/subdomain-zone.png)
 
-You might use this when you want to share **access** to a specific subdomain's settings with different teams, but have stricter controls on your apex domain. For example, this setup could allow your documentation team to manage the Cloudflare configuration for `docs.example.com`, while preventing them from adjusting any settings on `example.com`.
+You might use this setup when you want to share access to a specific subdomain's settings with different teams, but have stricter controls on your apex domain. For example, a subdomain setup could allow your documentation team to manage the Cloudflare configuration for `docs.example.com`, while preventing them from adjusting any settings on `example.com`.
 
 Subdomain setups are also useful when different subdomains require entirely different settings. For example, you may have different requirements for `docs.example.com`, `blog.example.com`, and `community.example.com`.
 
