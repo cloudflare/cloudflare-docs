@@ -43,6 +43,7 @@ Currently, the list of onboarded prefixes is shared with Advanced TCP Protection
 8. Under **Set scope**, select a [scope](/ddos-protection/tcp-protection/rule-settings/#scope) to determine the range of packets that will be affected by the rule. 
 9. Under **Sensitivity**, define the [burst sensitivity](/ddos-protection/tcp-protection/rule-settings/#burst-sensitivity), [rate sensitivity](/ddos-protection/tcp-protection/rule-settings/#rate-sensitivity), and [profile sensitivity](/ddos-protection/tcp-protection/rule-settings/#profile-sensitivity) to determine when to initiate mitigation. 
 10. Select **Deploy**.
+
 ---
 
 ## Troubleshooting
