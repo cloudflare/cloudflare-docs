@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-  inputParameters: param1;;param2
+inputParameters: param1;;param2
 ---
 
 1. In Miro, select your profile picture > **Settings** > $1.
