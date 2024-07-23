@@ -10,6 +10,8 @@ title: How to
 
 The purpose of a how to is to explain how to complete a task within the product.
 
+{{<render file="_howto-vs-tutorial.md">}}
+
 ## Tone
 
 instructional, straightforward
