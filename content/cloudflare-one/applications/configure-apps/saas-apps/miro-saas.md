@@ -30,7 +30,6 @@ This guide covers how to configure [Miro](https://help.miro.com/hc/articles/3600
 9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 10. Select **Done**.
 
-
 ## 2. Add a SAML SSO provider to Miro
 
 {{<tabs labels="Business plan | Enterprise plan">}}
@@ -49,10 +48,10 @@ This guide covers how to configure [Miro](https://help.miro.com/hc/articles/3600
 
 ## 3. Test the integration
 
-In the Miro SAML/SSO configuration page, select **Test SSO Configuration**.  You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. If login is successful, you will receive a **SSO configuration test was successful** message.
+In the Miro SAML/SSO configuration page, select **Test SSO Configuration**.  You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. If the login is successful, you will receive a **SSO configuration test was successful** message.
 
 {{<Aside type="note">}}
 
-When testing the integration, you do not have to use an email from a domain you've configured for SSO or a user configured in Miro. The test user just has to be already configured in your identity provider.
+When testing the integration, you do not have to use an email from a domain you have configured for SSO or a user configured in Miro. The only requirement is that the user is already configured in your identity provider.
 
 {{</Aside>}}
