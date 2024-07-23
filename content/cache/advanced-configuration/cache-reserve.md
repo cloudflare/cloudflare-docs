@@ -19,13 +19,22 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or [via API](/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
+A paid Cache Reserve Plan is required for the enablement.
 
-To enable Cache Reserve through the dashboard:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2.  Go to **Caching** > **Cache Reserve**.
 3.  Select **Enable storage sync**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Refer to the [Change Cache Reserve setting API](/api/operations/zone-cache-settings-change-cache-reserve-setting) for more information.
+
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
 
