@@ -59,3 +59,12 @@ The rate sensitivity is the rule's sensitivity to the sustained packet rate:
 * A high sensitivity means that lower sustained packet rates may trigger a mitigation action. A high sensitivity offers increased protection, but you may get more false positives (that is, mitigated packets that belong to legitimate traffic).
 
 The default rate sensitivity is _Medium_.
+
+## Profile sensitivity
+
+The sensitivity to DNS queries that have not been recently seen.
+
+* A higher sensitivity level means that the mitigation system will begin mitigating faster. 
+* A lower sensitivity provides more tolerance for potentially suspicious DNS queries.
+
+The default rate sensitivity is _Medium_.
