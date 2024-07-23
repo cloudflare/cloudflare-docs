@@ -1890,8 +1890,6 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 
 - `DIRECTORY` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The directory of static assets to serve.
-- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Run on your local machine.
 - `--ip` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - IP address to listen on, defaults to `localhost`.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
@@ -1919,7 +1917,7 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 - `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to a custom certificate.
 - `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Specify directory to use for local persistence (for use in combination with `--local`).
+  - Specify directory to use for local persistence, defaults to `.wrangler/state`.
 
 {{</definitions>}}
 
