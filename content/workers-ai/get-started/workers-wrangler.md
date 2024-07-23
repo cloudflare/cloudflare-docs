@@ -64,7 +64,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Run an inference task in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/), to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/), to answer a question.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
@@ -80,7 +80,7 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );
