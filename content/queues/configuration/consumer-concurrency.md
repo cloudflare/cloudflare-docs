@@ -42,7 +42,7 @@ In this scenario, Queues will notice the growing backlog and will scale the numb
 If your consumers are not autoscaling, there are a few likely causes:
 
 - `max_concurrency` has been set to 1.
-- Your consumer worker is returning errors rather than processing messages. Inspect your consumer to make sure it is healthy.
+- Your consumer Worker is returning errors rather than processing messages. Inspect your consumer to make sure it is healthy.
 - A batch of messages is being processed. Queues checks if it should autoscale consumers only after processing an entire batch of messages, so it will not autoscale while a batch is being processed. Consider reducing batch sizes or refactoring your consumer to process messages faster.
 
 ## Limit concurrency
