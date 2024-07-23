@@ -6,7 +6,7 @@ weight: 2
 
 # DigiCert update
 
-In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a Certificate Authority available for a variety of certificates:
+In the latter half of 2023, Cloudflare will begin deprecating DigiCert as a certificate authority available for a variety of certificates:
 
 {{<directory-listing>}}
 
@@ -28,7 +28,7 @@ Consider each specific migration guide for actions you might have to take and re
 
 {{<Aside type="warning" header="Not affected">}}
 
-Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudflare [mTLS client certificates](https://developers.cloudflare.com/ssl/client-certificates/) and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
+Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/), Cloudflare [mTLS client certificates](/ssl/client-certificates/), and [custom certificates](/ssl/edge-certificates/custom-certificates/) **are not** in the scope and thus not affected by this migration.
 
 {{</Aside>}}
 
