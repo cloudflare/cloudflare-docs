@@ -1918,6 +1918,8 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - Path to a custom certificate key.
 - `--https-cert-path` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Path to a custom certificate.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory to use for local persistence (for use in combination with `--local`).
 
 {{</definitions>}}
 
