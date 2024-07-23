@@ -61,6 +61,6 @@ The following location hints are currently supported:
 | eeur          | Eastern Europe        |
 | apac          | Asia-Pacific          |
 
-## To check the region of your database in D1
+## Check the region of your database in D1
 
 You can use the [D1 REST API](/api/operations/cloudflare-d1-get-database) to get your D1 database and check the field `running_in_region` in the output to view the region of your database in D1.
