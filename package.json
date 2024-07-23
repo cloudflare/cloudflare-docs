@@ -20,6 +20,7 @@
     "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.15.0",
     "algoliasearch": "^4.24.0",
     "fromnow": "3.0.1",
     "instantsearch.js": "^4.73.0",
