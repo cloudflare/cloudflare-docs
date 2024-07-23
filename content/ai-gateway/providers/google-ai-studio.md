@@ -22,9 +22,9 @@ When making requests to Google AI Studio, you will need:
 
 ## URL structure
 
-Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1/`.
+Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/`.
 
-Then you can append the endpoint you want to hit, for example: `/models/{model}:{generative_ai_rest_resource}`
+Then you can append the endpoint you want to hit, for example: `v1/models/{model}:{generative_ai_rest_resource}`
 
 So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1//models/{model}:{generative_ai_rest_resource}`.
 
