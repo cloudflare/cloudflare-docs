@@ -21,7 +21,7 @@ To view the metrics associated with your Pages project:
 2. From Account Home, select **Analytics & Logs** > **Web Analytics**.
 3. Select the analytics associated with your Pages project.
 
-For more details about how to use Web Analytics, refer to the [Web Analytics documentation](/analytics/web-analytics/understanding-web-analytics/).
+For more details about how to use Web Analytics, refer to the [Web Analytics documentation](/web-analytics/data-metrics/).
 
 ## Troubleshooting
 

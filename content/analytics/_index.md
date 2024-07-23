@@ -19,10 +19,6 @@ Cloudflare visualizes the metadata collected by our products in the Cloudflare d
 Send unlimited-cardinality data from your Worker to a time-series database. Query it with SQL.
 {{</feature>}}
 
-{{<feature header="Cloudflare Web Analytics" href="/analytics/web-analytics/">}}
-Provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
-{{</feature>}}
-
 {{<feature header="Account and zone analytics" href="/analytics/account-and-zone-analytics/">}}
 Provides details about the requests and traffic related to your Cloudflare accounts and zones.
 {{</feature>}}
