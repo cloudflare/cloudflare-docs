@@ -105,7 +105,9 @@ ___
 
 ## Account Payment Method Preauthorization
 
-For Services subject to usage-based billing, Cloudflare may initiate a preauthorization on your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. Failure to pass preauthorization may result in suspension or termination of your account and/or access to the Services until your payment method can be validated.
+For services subject to usage-based billing, Cloudflare may preauthorize your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. If your payment method succeeds, service will continue normally.
+
+If your payment method fails, we will remove access to any usage-based billing services that use preauthorization (for example, R2). To regain access, you must settle any outstanding balances and pass preauthorization with a new, valid payment method. For assistance, [contact support](/support/contacting-cloudflare-support).
 
 ___
 
