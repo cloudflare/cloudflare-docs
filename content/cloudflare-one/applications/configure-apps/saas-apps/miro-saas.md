@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Miro
-weight: 16
+weight: 17
 ---
 
 # Connect to Miro through Access
