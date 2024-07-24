@@ -18,7 +18,7 @@ Certificates issued before that date will continue to be trusted until their exp
 
 As explained in [Google's announcement](https://security.googleblog.com/2024/06/sustaining-digital-certificate-security.html), this approach relies on a feature of Chrome versions 127 or later that can remove default trust based on Signed Certificate Timestamp (SCT) data.
 
-Refer to the announcement for a full list of roots that will be removed from Chrome's trust store and for details on how to test impact for your website.
+Refer to the announcement for a full list of roots that will be distrusted by Chrome and for details on how to test impact for your website.
 
 Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for custom certificates. Throughout the Chrome update, Clouflare will continue to serve any custom certificates that meet the [custom certificates requirements](/ssl/edge-certificates/custom-certificates/uploading/#certificate-requirements). However, note that Entrust or AffirmTrust certificates issued on November 1, 2024 or after will not be trusted by Google Chrome.
 
