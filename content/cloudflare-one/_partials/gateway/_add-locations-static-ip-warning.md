@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-{{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="Captive portal limitation">}}
 
 Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. If users are experiencing connectivity issues related to captive portals, they should:
 

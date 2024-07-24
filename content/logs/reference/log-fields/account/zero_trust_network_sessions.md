@@ -56,7 +56,7 @@ TLS protocol version used in the connection between the client and Cloudflare.
 
 Type: string
 
-The reason for closing the connection, only applicable for TCP. <br />Possible values are <em>CLIENT_CLOSED</em> \| <em>CLIENT_IDLE_TIMEOUT</em> \| <em>CLIENT_TLS_ERROR</em> \| <em>CLIENT_ERROR</em> \| <em>ORIGIN_CLOSED</em> \| <em>ORIGIN_TLS_ERROR</em> \| <em>ORIGIN_ERROR</em> \| <em>ORIGIN_UNREACHABLE</em> \| <em>PROXY_CONN_REFUSED</em> \| <em>UNKNOWN</em> \| <em>MISMATCHED_IP_VERSIONS</em>.
+The reason for closing the connection, only applicable for TCP. <br />Possible values are <em>CLIENT_CLOSED</em> \| <em>CLIENT_IDLE_TIMEOUT</em> \| <em>CLIENT_TLS_ERROR</em> \| <em>CLIENT_ERROR</em> \| <em>ORIGIN_CLOSED</em> \| <em>ORIGIN_TLS_ERROR</em> \| <em>ORIGIN_ERROR</em> \| <em>ORIGIN_UNREACHABLE</em> \| <em>ORIGIN_UNROUTABLE</em> \| <em>PROXY_CONN_REFUSED</em> \| <em>UNKNOWN</em> \| <em>MISMATCHED_IP_VERSIONS</em> \| <em>TOO_MANY_ACTIVE_SESSIONS_FOR_ACCOUNT</em> \| <em>TOO_MANY_ACTIVE_SESSIONS_FOR_USER</em> \| <em>TOO_MANY_NEW_SESSIONS_FOR_ACCOUNT</em> \| <em>TOO_MANY_NEW_SESSIONS_FOR_USER</em>.
 
 ## ConnectionReuse
 

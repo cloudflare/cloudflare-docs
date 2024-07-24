@@ -38,18 +38,18 @@ Note right of C: Egress <br> traffic
 
 ## ​​Anycast
 
-$1 uses {{<glossary-tooltip term_id="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">}}Anycast{{</glossary-tooltip>}} IP addresses for Cloudflare’s tunnel endpoints. In the Anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
+$1 uses {{<glossary-tooltip term_id="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">}}anycast{{</glossary-tooltip>}} IP addresses for Cloudflare’s tunnel endpoints. In the anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
 This works with {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} tunnels because the GRE protocol is stateless. Each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
 For {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnels, the customer's router negotiates the creation of an IPsec tunnel with Cloudflare using the {{<glossary-tooltip term_id="Internet key exchange (IKE)">}}Internet Key Exchange (IKE){{</glossary-tooltip>}} protocol. Next, the Cloudflare server that handled that negotiation will propagate the details of that newly created IPsec tunnel (traffic selectors, keys, etc.) across Cloudflare's data centers. The result is that any Cloudflare server can then handle traffic for that IPsec tunnel, even though only one Cloudflare server actually negotiated the setup of that tunnel.
 
-Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
+Cloudflare’s anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
 
 ```mermaid
 flowchart LR
 accTitle: Anycast tunnel
-accDescr: Multiple servers in data center preparing packets to send through Anycast tunnel.
+accDescr: Multiple servers in data center preparing packets to send through anycast tunnel.
 
 a(User)
 
@@ -74,9 +74,9 @@ x("Acme router <br> 198.51.100.1")
 z("FTP server <br> (203.0.113.100)")
 end
 
-a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
+a --> 1== Cloudflare anycast GRE <br> single endpoint ==>i --> j
 
-1== Cloudflare Anycast IPsec <br> single endpoint ==>x --> z
+1== Cloudflare anycast IPsec <br> single endpoint ==>x --> z
 ```
 
 ## IPsec tunnels

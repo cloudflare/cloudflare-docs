@@ -42,7 +42,7 @@ When migrating a Page Rule you will need to write a filter expression equivalent
 
 Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-Strings in filter expressions do not support wildcards yet. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise and Business customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
+You will need to adapt your Page Rules URLs when migrating them to modern rules. In the Rules language, use the `wildcard`/`strict wildcard` operators for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching). Enterprise and Business customers can use regular expressions, but it will also require adapting the original URLs in your Page Rules to regular expressions.
 
 The following table lists the most common Page Rule URLs and their equivalent filters:
 
@@ -105,7 +105,6 @@ Response Buffering          | N/A (deprecated)                     | N/A
 Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)
 Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)
 True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)
-Server Side Excludes        | N/A (deprecated)                     | N/A
 SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)
 Web Application Firewall    | N/A (deprecated)                     | N/A
 
@@ -229,6 +228,8 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -316,6 +317,8 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -361,6 +364,8 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -405,6 +410,8 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -448,6 +455,8 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -490,6 +499,8 @@ You configured a Page Rule turning on caching for responses that contained cooki
         - **Cache eligibility**: Eligible for cache
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -541,6 +552,8 @@ You configured a Page Rule turning on caching of every response with status code
                 - **Duration**: _1 day_
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -584,6 +597,8 @@ You configured a Page Rule setting a custom cache key for all query string param
         - **Setting**: Cache key
             - **Query string**: All query string parameters
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -696,7 +711,7 @@ Page Rules configuration | Migrate to a configuration rule
 The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
+This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
 
 {{<tabs labels="Dashboard">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -708,14 +723,13 @@ You configured a Page Rule with **Disable Security** (deprecated) for all subdom
 - **URL**: `*example.com/*`
 - **Setting**: _Disable Security_
 
-This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, Server Side Excludes, URL (Zone) Lockdown, and WAF managed rules (previous version).
+This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
 **How to replace**:
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
     - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
-    - Server Side Excludes, now deprecated (part of Cloudflare Scrape Shield)
     - Hotlink Protection (part of Cloudflare Scrape Shield)
 
 2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
@@ -804,6 +818,8 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
             - Ignore cache-control header and use this TTL
             - **Input time-to-live (TTL)**: _1 day_
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1151,6 +1167,8 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1195,6 +1213,8 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
             - **Use Origin error page pass-thru**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1286,6 +1306,8 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1373,6 +1395,8 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
             - **Use strong ETag headers**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1557,10 +1581,15 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
 - **Disable Security** (this setting is deprecated)
 - **Response Buffering** (this setting is deprecated)
-- **Server Side Excludes** (this setting is deprecated, since Server-side Excludes is deprecated)
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 All other Page Rules settings will be migrated during 2025.
+
+## Behavior change in Cache Rules
+
+There is a behavior change between Page Rules and Cache Rules: when you select **Eligible for cache** in a cache rule, the Cache Everything feature is now enabled by default.
+
+If you need to keep the exact same behavior you had with Page Rules, you will need to make some additional configurations. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
 
 ## More resources
 

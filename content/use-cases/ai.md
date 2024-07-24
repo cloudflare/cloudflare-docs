@@ -20,7 +20,7 @@ Diagrams, design patterns, and detailed best practices to help you generate solu
 
 ## Demo apps
 
-{{<external-resources-by-tag resource_type="apps" tags="AI">}}
+{{<external-resources resource_type="apps" tags="AI">}}
 
 ## Tutorials
 

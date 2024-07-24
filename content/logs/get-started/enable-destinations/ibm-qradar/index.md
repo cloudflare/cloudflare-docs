@@ -21,7 +21,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Key: <API_KEY>" \
 --data '{
   "name": "<name>",
-  "logpull_options": "fields=Action,ClientIP,ClientASN,ClientASNDescription,ClientCountry,ClientIPClass,ClientRefererHost,ClientRefererPath,ClientRefererQuery,ClientRefererScheme,ClientRequestHost,ClientRequestMethod,ClientRequestPath,ClientRequestProtocol,ClientRequestQuery,ClientRequestScheme,ClientRequestUserAgent,EdgeColoCode,EdgeResponseStatus,Kind,MatchIndex,Metadata,OriginResponseStatus,OriginatorRayID,RayID,RuleID,Source,Datetime&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["Action", "ClientIP", "ClientASN", "ClientASNDescription", "ClientCountry", "ClientIPClass","ClientRefererHost", "ClientRefererPath", "ClientRefererQuery", "ClientRefererScheme", "ClientRequestHost","ClientRequestMethod", "ClientRequestPath", "ClientRequestProtocol", "ClientRequestQuery", "ClientRequestScheme","ClientRequestUserAgent", "EdgeColoCode", "EdgeResponseStatus", "Kind", "MatchIndex", "Metadata","OriginResponseStatus", "OriginatorRayID", "RayID", "RuleID", "Source", "Datetime"],
+      "timestamp_format": "rfc3339"
+  },
   "destination_conf": "<QRadar_URL:LogSource_Port>",
   "max_upload_bytes": 5000000,
   "max_upload_records": 1000,
@@ -38,7 +41,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Key: <API_KEY>" \
 --data '{
   "name": "<name>",
-  "logpull_options": "fields=ClientRequestMethod,EdgeResponseStatus,ClientIP,ClientSrcPort,CacheCacheStatus,ClientCountry,ClientDeviceType,ClientIPClass,ClientMTLSAuthCertFingerprint,ClientMTLSAuthStatus,ClientRegionCode,ClientRequestBytes,ClientRequestHost,ClientRequestPath,ClientRequestProtocol,ClientRequestReferer,ClientRequestScheme,ClientRequestSource,ClientRequestURI,ClientRequestUserAgent,ClientSSLCipher,ClientSSLProtocol,ClientXRequestedWith,EdgeEndTimestamp,EdgeRequestHost,EdgeResponseBodyBytes,EdgeResponseBytes,EdgeServerIP,EdgeStartTimestamp,SecurityActions,SecurityRuleIDs,SecuritySources,OriginIP,OriginResponseStatus,OriginSSLProtocol,ParentRayID,RayID,SecurityAction,WAFAttackScore,SecurityRuleID,SecurityRuleDescription,WAFSQLiAttackScore,WAFXSSAttackScore,EdgeStartTimestamp&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["ClientRequestMethod", "EdgeResponseStatus", "ClientIP", "ClientSrcPort", "CacheCacheStatus","ClientCountry", "ClientDeviceType", "ClientIPClass", "ClientMTLSAuthCertFingerprint", "ClientMTLSAuthStatus","ClientRegionCode", "ClientRequestBytes", "ClientRequestHost", "ClientRequestPath", "ClientRequestProtocol","ClientRequestReferer", "ClientRequestScheme", "ClientRequestSource", "ClientRequestURI", "ClientRequestUserAgent","ClientSSLCipher", "ClientSSLProtocol", "ClientXRequestedWith", "EdgeEndTimestamp", "EdgeRequestHost","EdgeResponseBodyBytes", "EdgeResponseBytes", "EdgeServerIP", "EdgeStartTimestamp", "SecurityActions","SecurityRuleIDs", "SecuritySources", "OriginIP", "OriginResponseStatus", "OriginSSLProtocol", "ParentRayID", "RayID", "SecurityAction", "WAFAttackScore", "SecurityRuleID", "SecurityRuleDescription", "WAFSQLiAttackScore","WAFXSSAttackScore", "EdgeStartTimestamp"],
+      "timestamp_format": "rfc3339"
+  },
   "destination_conf": "<QRadar_URL:LogSource_Port>", "max_upload_bytes": 5000000,
   "max_upload_records": 1000,
   "dataset": "http_requests",

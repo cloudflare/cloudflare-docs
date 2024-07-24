@@ -68,7 +68,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 - {{<code>}}alarm(){{</code>}} : {{<type>}}void{{</type>}}
 
-  - Called by the system when when a scheduled alarm time is reached.
+  - Called by the system when a scheduled alarm time is reached.
 
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
 

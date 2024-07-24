@@ -10,6 +10,28 @@ Cloudflare Logpush now supports the ability to send logs to configurable HTTP en
 
 Note that when using Logpush to HTTP endpoints, Cloudflare customers are expected to perform their own authentication of the pushed logs. For example, customers may specify a secret token in the URL or an HTTP header of the Logpush destination.
 
+## Manage via the Cloudflare dashboard
+
+{{<render file="_enable-logpush-job.md">}}
+
+5. In **Select a destination**, choose **HTTP destination**.
+
+6. Enter the **HTTP endpoint** where you want to send the logs to, and select **Continue**.
+
+7. Select the dataset to push to the storage service.
+
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
+
 ## Manage via API
 
 To create a Logpush job, make a `POST` request to the [Logpush job creation endpoint URL](/logs/get-started/api-configuration/) with the appropriate parameters.
@@ -19,7 +41,7 @@ The supported parameters are as follows:
 - Fields that are unchanged from other sources:
     - **dataset** (required): For example, `http_requests`.
     - **name** (optional): We suggest using your domain name as the job name.
-    - **logpull_options** (optional): Refer to [API configuration options](/logs/get-started/api-configuration/#options) to configure fields, sample rate, and timestamp format.
+    - **output_options** (optional): Refer to [Log Output Options](/logs/reference/log-output-options/) to configure fields, sample rate, and timestamp format.
 - Unique fields:
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
         - Any `"header_*"` URL parameters will be used to set request headers.
@@ -42,7 +64,10 @@ The `ownership_challenge` parameter is not required to create a Logpush job to a
 $ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X POST -d '
 {
   "name": "theburritobot.com-https",
-  "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+  },
   "destination_conf": "https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
   "max_upload_bytes": 5000000,
   "max_upload_records": 1000,

@@ -5,7 +5,9 @@ title: Tutorial
 
 # Tutorial
 
-A tutorial connects products to real-world scenarios to meet a user's goal.
+{{<glossary-definition term_id="tutorial">}}
+
+{{<render file="_howto-vs-tutorial.md">}}
 
 ## Template
 
@@ -77,8 +79,4 @@ Guiding, straightforward, educational, authoritative
 
 ## Examples
 
-[Tutorials](/tutorials/)
-
-## Additional information
-
-We have a tool that pulls together everything labeled with `<pcx_content_type: tutorial>`: [Tutorials](/tutorials/)
+[Workers Tutorials](/workers/tutorials)

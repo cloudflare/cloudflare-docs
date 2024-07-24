@@ -48,6 +48,43 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 
 There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.
 
+When Connector acts like the WAN router for your site, deployment will be something like this:
+
+```mermaid
+flowchart LR
+accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
+    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,c orange
+```
+<br>
+
+In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.
+
+<br>
+
+```mermaid
+flowchart LR
+accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
+    a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    g(LAN 3) --> b
+    h(LAN 4) --> b
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,i orange
+```
+
 #### Firewall settings required
 
 If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow the following traffic:
@@ -57,7 +94,7 @@ Protocol/port | Destination IP/URL | Purpose
 `UDP/53` | DNS destination IP `1.1.1.1` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API endpoints.
 `TCP/443` | - | The Connector will open outbound HTTPS connections over this port for control plane operations.
 `UDP/4500` | Destination IP `162.159.64.1` | Needed for Connector's initialization and discovery traffic through outbound connections.
-`UDP/4500` | Destination IP - Cloudflare Anycast IPs | Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}Anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
+`UDP/4500` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare {{<glossary-tooltip term_id="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">}}anycast IPs{{</glossary-tooltip>}} assigned to your account for tunnel outbound connections. This traffic is tunnel traffic.
 `TCP/7844`, `UDP/7844` | Outbound connections | This is for debugging facilities in the Connector.
 `UDP/123` | `http://time.cloudflare.com/` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services.
 
@@ -90,10 +127,10 @@ Because Connectors in high availability configurations share a single site, you 
 
 Make sure all IPs are part of the same subnet.
 
-{{<Aside type="note" header="Limitations">}}
-The high availability (HA) feature is being rolled out in phases. The present version has the following limitations:
-- Only node failure is detected as a failure condition to trigger a failover. Other failure conditions, such as link status and tunnel health, are not yet enabled to trigger failovers.
-- HA is run in preempt mode, which means the primary node always comes up as the active node.
+{{<Aside type="note">}}
+- Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
+- High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
+- In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
 {{</Aside>}}
 
 ### ​​Create a high availability configuration

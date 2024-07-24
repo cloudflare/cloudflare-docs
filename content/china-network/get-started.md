@@ -27,7 +27,7 @@ Contact your sales team for more information on these steps.
     * Customer and company name.
     * Domain name.
     * ICP license/filing number.
-    * A general description of the content of each domain.
+    * A general description of the content of each domain (for example, `Marketing website`).
     * A signed Self Attestation letter (provided by your sales team).
 
 ## Step 3 — Onboard your domains to the Cloudflare China Network

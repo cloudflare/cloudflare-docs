@@ -51,14 +51,16 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 -H 'Content-Type: application/json' \
 -d '{
 "name": "workers-logpush",
-"logpull_options": "fields=Event,EventTimestampMs,Outcome,Exceptions,Logs,ScriptName",
+"output_options": {
+  "field_names": ["Event", "EventTimestampMs", "Outcome", "Exceptions", "Logs", "ScriptName"],
+},
 "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
 "dataset": "workers_trace_events",
 "enabled": true
 }'| jq .
 ```
 
-In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for requests that did not result in an exception, add the following `filter` JSON property below `logpull_options`:
+In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for requests that did not result in an exception, add the following `filter` JSON property below `output_options`:
  
 `"filter":"{\"where\": {\"key\":\"Outcome\",\"operator\":\"!eq\",\"value\":\"exception\"}}"`
 
@@ -98,4 +100,4 @@ The `logs` and `exceptions` fields have the following limits in place.
 
 * Message size: Maximum of 2056 characters per log line
 * Array limit: 20 elements
-* Log message array: A nested array with a limit of three elements
+* Log message array: A nested array with a limit of 20 elements

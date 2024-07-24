@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-06-17"
+    title: HTTP API now returns a HTTP 429 error for overloaded D1 databases
+    description: |-
+      Previously, D1's [HTTP API](/api/operations/cloudflare-d1-query-database) returned a HTTP `500 Internal Server` error for queries that came in while a D1 database was overloaded. These requests now correctly return a `HTTP 429 Too Many Requests` error.
+
+      D1's [Workers API](/d1/build-with-d1/d1-client-api/) is unaffected by this change.
+
   - publish_date: "2024-04-30"
     title: D1 alpha databases will stop accepting live SQL queries on August 15, 2024
     description: |-
