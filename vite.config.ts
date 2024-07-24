@@ -139,19 +139,34 @@ const renderCodeBlock = (): PluginOption => {
                 decoded = decoded.split("---")[2]
               }
 
-              const [tomlSnippet] = decoded.split("# or\n"); // Some TOML snippets showcase multiple TOML syntaxes. Only take the first
-              const json = JSON.stringify(TOML.parse(tomlSnippet), null, 2)
-              const code = `// For Wrangler to read a JSON configuration file, you must add the \`-j\` flag\n// e.g. \`wrangler -j dev\`\n` + json + "\n";
-              element.replace(
-                await highlight(
-                  code,
-                  "json",
-                  ""
-                ),
-                {
-                  html: true,
-                }
-              );
+              try {
+                const [tomlSnippet] = decoded.split("# or\n"); // Some TOML snippets showcase multiple TOML syntaxes. Only take the first
+                const json = JSON.stringify(TOML.parse(tomlSnippet), null, 2)
+                const code = `// For Wrangler to read a JSON configuration file, you must add the \`-j\` flag\n// e.g. \`wrangler -j dev\`\n` + json + "\n";
+                element.replace(
+                  await highlight(
+                    code,
+                    "json",
+                    ""
+                  ),
+                  {
+                    html: true,
+                  }
+                );
+              } catch(e) {
+                console.error(e)
+                element.replace(
+                  await highlight(
+                    "Invalid TOML",
+                    "json",
+                    ""
+                  ),
+                  {
+                    html: true,
+                  }
+                );
+              }
+              
             },
           },
         ],

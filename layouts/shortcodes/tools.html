@@ -18,7 +18,7 @@
 
 <div class="tabs-wrapper" tab-wrapper-id="{{ $unique_id }}">
   <nav role="navigation" class="tabs">
-    <ul class="tab-active" block-id="{{ $unique_id }}">
+    <ul class="tab-active">
       {{ range $idx, $file := $files }}
       <li class="tab-label-wrapper">
         <a class="tab-label noCodeLabel" href="#" data-link="tab-{{ lower $file.name }}"
