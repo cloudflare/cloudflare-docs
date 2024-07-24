@@ -8,9 +8,11 @@ meta:
 
 # Web Analytics for Single Page Applications (SPAs)
 
-Cloudflare Web Analytics enables measuring SPAs automatically by overriding the History API's `pushState` function and listening to the `onpopstate`. Hash-based router is not supported.
+Cloudflare Web Analytics can automatically track user interactions on Single Page Applications (SPAs) by overriding the History API's `pushState` function and listening to the `onpopstate` event. Note that hash-based routers are not supported.
 
-To disable measuring SPAs, add the `spa` option with a value of `false` in the data attribute, as shown below.
+## Disable SPA measurement
+
+If you want to disable the automatic tracking for SPAs, you can do so by adding the `spa` option with a value of `false` in the data attribute of the script tag, as shown below:
 
 ```html
 <script
@@ -20,7 +22,9 @@ To disable measuring SPAs, add the `spa` option with a value of `false` in the d
 ></script>
 ```
 
-If you are using Google Tag Manager (GTM), use the query string to pass the spa option instead.
+### Google Tag Manager (GTM)
+
+If you are using Google Tag Manager (GTM), you can disable SPA tracking by passing the spa option via the query string in the script URL:
 
 ```html
 <script

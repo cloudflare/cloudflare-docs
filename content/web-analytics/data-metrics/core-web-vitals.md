@@ -48,23 +48,42 @@ Web Analytics uses its lightweight JavaScript beacon to collect the information 
 
 ### Common data collected for all Core Web Vitals metrics
 
-- **Element**: A CSS selector representing the DOM node. With this string, you can use `document.querySelector(<element_name>)` in the dev console of your browser to find out which DOM node has a negative impact on your scores/values.
-- **Path**: The URL path at the time the Core Web Vitals are captured.
-- **Value**: [The metric value](https://web.dev/cls/#layout-shift-score) for each Core Web Vitals. This value is in milliseconds for LCP or FID and a score for CLS.
+#### Element
+
+ A CSS selector representing the DOM node. With this string, you can use `document.querySelector(<element_name>)` in the dev console of your browser to find out which DOM node has a negative impact on your scores/values.
+
+#### Path
+
+The URL path at the time the Core Web Vitals are captured.
+
+#### Value
+
+[The metric value](https://web.dev/cls/#layout-shift-score) for each Core Web Vitals. This value is in milliseconds for LCP or FID and a score for CLS.
 
 ### Additional data collected for Largest Contentful Paint
 
-- **URL**: The source URL (such as image, text, web fonts).
-- **Size**: The source object's size in bytes.
+#### URL
+
+The source URL (such as image, text, web fonts).
+
+#### Size
+
+The source object's size in bytes.
 
 ### Additional data collected for First Input Delay
 
-- **Name**: The type of event captured (such as mousedown, keydown, pointerdown).
+#### Name
+
+The type of event captured (such as `mousedown`, `keydown`, `pointerdown`).
 
 ### Additional data collected for Cumulative Layout Shift
 
 Layout information is a JSON value that includes width, height, x axis position, y axis position, left, right, top, and bottom. These values represent the layout shifts that happen on the page.
 
-- **CurrentRect**: Captures the layout information of the DOM element with the largest area, after the shift in the page has occurred. This JSON value is shown as **Current** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Current** is presented.
+#### CurrentRect
 
-- **PreviousRect**: Captures the layout information of the DOM element with the largest area, before the shift in the page has occurred. This JSON value is shown as **Previous** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Previous** is presented.
+Captures the layout information of the DOM element with the largest area, after the shift in the page has occurred. This JSON value is shown as **Current** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Current** is presented.
+
+#### PreviousRect
+
+Captures the layout information of the DOM element with the largest area, before the shift in the page has occurred. This JSON value is shown as **Previous** in the **Debug View** section. To access it, scroll to the **Cumulative Layout Shifts (CLS)** graphic > **Debug View**. Select any element from that table to access the **Layout Shifts** section, where **Previous** is presented.
