@@ -106,12 +106,14 @@ export default {
           });
         }
 
-        const plainAuth = atob(encoded)
-        const credentials = plainAuth.split(":")
+        const plainAuth = atob(encoded);
+        const credentials = plainAuth.split(":");
+        const user = credentials[0];
+        const pass = credentials[1];
 
         if (
-          !timingSafeEqual(BASIC_USER, credentials[0]) ||
-          !timingSafeEqual(BASIC_PASS, credentials[1])
+          !timingSafeEqual(BASIC_USER, user) ||
+          !timingSafeEqual(BASIC_PASS, pass)
         ) {
           return new Response("You need to login.", {
             status: 401,
@@ -211,12 +213,14 @@ export default {
           });
         }
 
-        const plainAuth = atob(encoded)
-        const credentials = plainAuth.split(":")
+        const plainAuth = atob(encoded);
+        const credentials = plainAuth.split(":");
+        const user = credentials[0];
+        const pass = credentials[1];
 
         if (
-          !timingSafeEqual(BASIC_USER, credentials[0]) ||
-          !timingSafeEqual(BASIC_PASS, credentials[1])
+          !timingSafeEqual(BASIC_USER, user) ||
+          !timingSafeEqual(BASIC_PASS, pass)
         ) {
           return new Response("You need to login.", {
             status: 401,
