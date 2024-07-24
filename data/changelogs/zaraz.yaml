@@ -5,7 +5,7 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-- publish_date: '2024-07-24'
+- publish_date: '2024-07-23'
   title:
   description: |-
     * **Embeds**: Add support for server-side rendering of X (Twitter) and Instagram embeds
