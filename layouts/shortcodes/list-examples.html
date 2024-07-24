@@ -12,7 +12,7 @@
 
 {{- range $index, $page := $pages.ByWeight -}}
   {{- $x := $page.RelPermalink -}}
-  {{- $isExample := (strings.HasPrefix $x $target) -}}
+  {{- $isExample := (strings.Contains $page.Params.pcx_content_type "example") -}}
   {{- if and (ne $x $target) $isExample -}}
   {{- $examplePages = $examplePages | append . -}}
   {{- end -}}
@@ -62,6 +62,8 @@
     </div>
 
     <div class="DocsCodeExamplesOverview--example-description">
+      <strong>Product</strong>: <em>{{ (index $page.Params.product 0) | .Page.RenderString }}</em>
+      <br/>
       {{ $page.Params.summary | .Page.RenderString }}
     </div>
   </li>
