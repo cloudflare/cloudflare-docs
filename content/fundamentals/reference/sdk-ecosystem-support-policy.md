@@ -56,4 +56,7 @@ Where possible, Cloudflare provides an automated approach to performing major ve
 
 Alongside the automatic migration approach, we provide documentation on the changes that have taken place in case you need to make the changes manually.
 
-[semantic versioning]: https://semver.org/
+## Related resources
+
+- [Semantic versioning definitions](https://semver.org/)
+- [Cloudflare's Terraform documentation](https://developers.cloudflare.com/terraform/)
