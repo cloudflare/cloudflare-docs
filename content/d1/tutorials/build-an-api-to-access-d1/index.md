@@ -12,7 +12,7 @@ tags: [Hono]
 
 {{<tutorial-date-info>}}
 
-In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database. This is useful if you want to access a D1 database outside of a Worker or Pages project. While you can query a D1 database via the [REST API](https://developers.cloudflare.com/api/operations/cloudflare-d1-create-database), this approach is not recommende due to rate limits and high latency.
+In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database. This is useful if you want to access a D1 database outside of a Worker or Pages project. While you can query a D1 database via the [REST API](/api/operations/cloudflare-d1-create-database), this approach is not recommende due to rate limits and high latency.
 
 To access a D1 database outside of a Worker project, you need to create an API using a Worker. Your application can then securely interact with this API to run D1 queries.
 
@@ -24,15 +24,11 @@ The tutorial does not cover how to sanitize SQL queries. Please ensure that you 
 
 ## Prerequisites
 
-- Ensure that you have [`Node.js`](https://nodejs.org/en/) installed on your machine. If not, use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions.
-
-Note: [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-
-- Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 ## 1. Create a new project
 
-Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
+Use [C3](/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
 $ npm create cloudflare d1-http
@@ -134,7 +130,7 @@ $ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/a
 
 You should get the following output
 
-```sh
+```txt
 /api/all endpoint
 ```
 
@@ -150,7 +146,7 @@ $ npx wrangler d1 create d1-http-example
 
 You might be asked to login to your Cloudflare. Once logged in, the command will create a new D1 database. You should see a similar output in your terminal.
 
-```sh
+```txt
 ✅ Successfully created DB 'd1-http-example' in region EEUR
 Created your new D1 database.
 
@@ -164,7 +160,7 @@ Make a note of the displayed `database_name` and `database_id`. You will use thi
 
 Open the `wrangler.toml` file, Wrangler's configuration file. Add the following binding in the file. Make sure that the `database_name` and the `database_id` are correct.
 
-```yml
+```toml
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "d1-http-example"
@@ -280,21 +276,24 @@ $ npm run dev
 
 In a new terminal window, execute the following cURL commands. Make sure to replace `YOUR_SECRET_TOKEN` with the correct token.
 
-`/api/all`
-
 ```sh
+---
+header: /api/all
+---
 $ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"query": "SELECT title FROM posts WHERE id=?", "params":1}'
 ```
 
-`/api/batch`
-
 ```sh
+---
+header: /api/batch
+---
 $ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"batch": [ {"query": "SELECT title FROM posts WHERE id=?", "params":1},{"query": "SELECT id FROM posts"}]}'
 ```
 
-`/api/exec`
-
 ```sh
+---
+header: /api/exec
+---
 $ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"query": "INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api')" }'
 ```
 
