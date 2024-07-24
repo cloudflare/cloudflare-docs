@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Let's Encrypt chain update
-weight: 1
+weight: 3
 meta:
   description: Review notes on the expiration of ISRG Root X1 cross-signed with DST Root CA X3, and how it may affect Cloudflare customers that use Let’s Encrypt.
 ---
