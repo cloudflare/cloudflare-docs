@@ -5,6 +5,17 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-24'
+  title:
+  description: |-
+    * **Embeds**: Add support for server-side rendering of X (Twitter) and Instagram embeds
+    * **CSP Compliance**: Remove `eval` dependency
+    * **Google Analytics 4 Managed Component**: Allow customizing the document title and client ID fields
+    * **Custom HTML Managed Component**: Scripts included in a Custom HTML will preserve their running order
+    * **Google Ads Managed Component**: Allow linking data with Google Analytics 4 instances
+    * **TikTok Managed Component**: Use the new TikTok Events API v2 
+    * **Bugfix**: Cookie life-time cannot exceed one year anymore
+    * **Bugfix**: Zaraz Debugger UI does not break when presenting really long lines of information
 - publish_date: '2024-06-21'
   title:
   description: |-
