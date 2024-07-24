@@ -14,6 +14,8 @@ entries:
     * **Custom HTML Managed Component**: Scripts included in a Custom HTML will preserve their running order
     * **Google Ads Managed Component**: Allow linking data with Google Analytics 4 instances
     * **TikTok Managed Component**: Use the new TikTok Events API v2 
+    * **Reddit Managed Component**: Support custom events
+    * **Twitter Managed Component**: Support setting the `event_id`, using custom fields, and improve conversion tracking
     * **Bugfix**: Cookie life-time cannot exceed one year anymore
     * **Bugfix**: Zaraz Debugger UI does not break when presenting really long lines of information
 - publish_date: '2024-06-21'
