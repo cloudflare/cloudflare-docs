@@ -51,6 +51,39 @@ The Rules language supports these transformation functions:
 
     `all(http.request.headers["content-type"][*] == "application/json")`
 
+- <code id="function-cidr">{{<name>}}cidr{{</name>}}(address{{<param-type>}}IP address{{</param-type>}}, ipv4_network_bits{{<param-type>}}Integer{{</param-type>}}, ipv6_network_bits{{<param-type>}}Integer{{</param-type>}})</code> {{<type>}}IP address{{</type>}}
+
+  - Returns the network address corresponding to an IP address (IPv4 or IPv6), given the provided IPv4 and IPv6 network bits (which determine the corresponding netmasks).
+  - The `address` parameter must be a field, that is, it cannot be a literal String.
+  - The `ipv4_network_bits` value must be between 1 and 32, and the `ipv6_network_bits` value must be between 1 and 128.
+  - <em>Examples:</em>
+    <br />
+    A) If `ip.src` is `113.10.0.2`,<br/>
+    `cidr(ip.src, 24, 24)` will return `113.10.0.0`.<br/><br/>
+    B) If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`,<br/>
+    `cidr(ip.src, 24, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.
+
+{{<Aside type="warning">}}
+You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
+- <code id="function-cidr6">{{<name>}}cidr6{{</name>}}(address{{<param-type>}}IP address{{</param-type>}}, ipv6_network_bits{{<param-type>}}Integer{{</param-type>}})</code> {{<type>}}IP address{{</type>}}
+
+  - Returns the IPv6 network address corresponding to an IPv6 address, given the provided network bits (which determine the netmask). If you provide an IPv4 address in the first parameter, it will be returned unchanged.
+  - The `address` parameter must be a field, that is, it cannot be a literal String.
+  - The `ipv6_network_bits` value must be between 1 and 128.
+  - This function is equivalent to: `cidr(<address>, 32, <ipv6_network_bits>)`.
+  - <em>Examples:</em>
+    <br />
+    A) If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`,<br/>
+    `cidr6(ip.src, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.<br/><br/>
+    B) If `ip.src` is `113.10.0.2`,<br/>
+    `cidr6(ip.src, 24)` will return `113.10.0.2` (unchanged).
+
+{{<Aside type="warning">}}
+You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
 - <code id="function-concat">{{<name>}}concat{{</name>}}({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Takes a comma-separated list of values. Concatenates the argument values into a single String.
