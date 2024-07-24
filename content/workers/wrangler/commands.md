@@ -53,7 +53,7 @@ The following global flags work on every command, with some exceptions for `page
 - `--config` {{<type>}}string{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
   - Path to `.toml` configuration file.
 - `--experimental-json-config` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(not supported by Pages){{</prop-meta>}}
-  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` or `wrangler.jsonc` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
 
@@ -1683,7 +1683,7 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 ## `secret`
 
-Manage the secret variables for a Worker. 
+Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
