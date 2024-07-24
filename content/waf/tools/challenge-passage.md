@@ -28,4 +28,4 @@ To update the Challenge Passage (and the value of the `cf_clearance` cookie):
 
 ## Limitations
 
-The Challenge Passage does not apply to challenges issued by WAF managed rules. Also, Challenge Passage does not apply to rate limiting rules unless the rate limit is configured to issue a challenge.
+The Challenge Passage does not apply to challenges issued by WAF managed rules. Also, Challenge Passage does not apply to rate limiting rules.
