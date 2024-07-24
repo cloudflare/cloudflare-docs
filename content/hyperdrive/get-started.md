@@ -83,7 +83,7 @@ To enable Node.js compatibility, add the `nodejs_compat` compatibility flag in y
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```

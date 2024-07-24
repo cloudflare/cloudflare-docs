@@ -59,7 +59,7 @@ If you choose to deploy, you will be asked to authenticate (if not logged in alr
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 node_compat = true
 ```

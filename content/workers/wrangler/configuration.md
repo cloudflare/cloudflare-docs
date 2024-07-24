@@ -231,7 +231,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 route = { pattern = "example.com", custom_domain = true }
 
@@ -264,7 +264,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
@@ -289,7 +289,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
@@ -304,7 +304,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 route = "example.com/*"
 ```
@@ -323,7 +323,7 @@ Cloudflare Workers accounts come with a `workers.dev` subdomain that is configur
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 workers_dev = false
 ```
@@ -346,7 +346,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [triggers]
 crons = ["* * * * *"]
@@ -376,7 +376,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [build]
 command = "npm run build"
@@ -404,7 +404,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [limits]
 cpu_ms = 100
@@ -430,7 +430,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 browser = { binding = "<BINDING_NAME>" }
 
@@ -478,7 +478,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 d1_databases = [
   { binding = "<BINDING_NAME>", database_name = "<DATABASE_NAME>", database_id = "<DATABASE_ID>" }
@@ -516,7 +516,7 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[dispatch_namespaces]]
 binding = "<BINDING_NAME>"
@@ -555,7 +555,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 durable_objects.bindings = [
   { name = "<BINDING_NAME>", class_name = "<CLASS_NAME>" }
@@ -597,7 +597,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[migrations]]
 tag = "v1" # Should be unique for each entry
@@ -660,7 +660,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 
 node_compat = true # required for database drivers to function
@@ -703,7 +703,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 kv_namespaces = [
   { binding = "<BINDING_NAME1>", id = "<NAMESPACE_ID1>" },
@@ -747,7 +747,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[queues.producers]]
   binding = "<BINDING_NAME>"
@@ -796,7 +796,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[queues.consumers]]
   queue = "my-queue"
@@ -844,7 +844,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 r2_buckets  = [
   { binding = "<BINDING_NAME1>", bucket_name = "<BUCKET_NAME1>"},
@@ -884,7 +884,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 vectorize  = [
   { binding = "<BINDING_NAME>", index_name = "<INDEX_NAME>"}
@@ -922,7 +922,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 services = [
   { binding = "<BINDING_NAME>", service = "<WORKER_NAME>", entrypoint = "<ENTRYPOINT_NAME>" }
@@ -991,7 +991,7 @@ Example of a `wrangler.toml` configuration that includes an mTLS certificate bin
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 mtls_certificates = [
     { binding = "<BINDING_NAME1>", certificate_id = "<CERTIFICATE_ID1>" },
@@ -1066,7 +1066,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 rules = [
   { type = "Text", globs = ["**/*.md"], fallthrough = true }
@@ -1123,7 +1123,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [dev]
 ip = "192.168.1.1"
@@ -1147,7 +1147,7 @@ A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available 
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
@@ -1158,7 +1158,7 @@ Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_co
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 node_compat = true
 ```
@@ -1184,7 +1184,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 upload_source_maps = true
 
@@ -1218,7 +1218,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [site]
 bucket = "./public"

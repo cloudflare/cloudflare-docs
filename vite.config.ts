@@ -4,7 +4,7 @@ import { defineConfig, type PluginOption } from "vite";
 import { globSync } from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
-
+import TOML from "@iarna/toml"
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -122,6 +122,40 @@ const renderCodeBlock = (): PluginOption => {
 
       return await rewrite(html, [
         [
+          "toml-to-json",
+          {
+            element: async (element) => {
+              const encodedToml = element
+                .getAttribute("data-toml")!
+                // Hugo's url encoding is ...odd
+                .replaceAll("&#43;", " ");
+
+              if (encodedToml.includes("&#")) {
+                throw new Error("Unexpected HTML entity: " + encodedToml);
+              }
+              let decoded = decodeURIComponent(encodedToml);
+              if(decoded.includes("---" )) {
+                // Remove TOML frontmatter
+                decoded = decoded.split("---")[2]
+              }
+
+              const [tomlSnippet] = decoded.split("# or\n"); // Some TOML snippets showcase multiple TOML syntaxes. Only take the first
+              const json = JSON.stringify(TOML.parse(tomlSnippet), null, 2)
+              const code = `// For Wrangler to read a JSON configuration file, you must add the \`-j\` flag\n// e.g. \`wrangler -j dev\`\n` + json + "\n";
+              element.replace(
+                await highlight(
+                  code,
+                  "json",
+                  ""
+                ),
+                {
+                  html: true,
+                }
+              );
+            },
+          },
+        ],
+        [
           "unparsed-codeblock",
           {
             element: async (element) => {
@@ -148,6 +182,7 @@ const renderCodeBlock = (): PluginOption => {
             },
           },
         ],
+        
       ]);
     },
   };

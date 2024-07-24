@@ -1,0 +1,41 @@
+{{ if (strings.Contains .Inner "filename: wrangler.toml") }}
+{{- $text := "wrangler.toml | wrangler.json" -}}
+{{- $labels := split $text " | " -}}
+{{- $unique_id := lower (substr (md5 .Inner) 0 16) -}}
+
+<div class="tabs-wrapper" tab-wrapper-id="{{$unique_id}}">
+    <nav role="navigation" class="tabs">
+        <ul class="tab-active" block-id="{{$unique_id}}">
+            {{ range $idx, $txt := $labels }}
+            {{- $link := replace $txt "/" "-" -}}
+            {{- $dataLink := printf "tab-%s" (lower $link) }}
+            <li class="tab-label-wrapper">
+                <a class="tab-label noCodeLabel" href="#" data-link="{{$dataLink}}" data-id="{{$unique_id}}">
+                    {{$link}}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </nav>
+
+    <div class="tab tab-default" id="tab-wrangler.toml-{{ $unique_id }}">
+        <div class="code-container">
+            <unparsed-codeblock data-language="{{ .Type }}" data-code="{{ urlquery (strings.Replace .Inner "filename: wrangler.toml" "") }}"></unparsed-codeblock>
+            <vue-component name="CodeCopy"></vue-component>
+        </div>
+    </div>
+
+    <div class="tab" id="tab-wrangler.json-{{ $unique_id }}">
+        <div class="code-container">
+            <toml-to-json data-toml="{{ urlquery .Inner }}"/></toml-to-json>
+            <vue-component name="CodeCopy"></vue-component>
+        </div>
+    </div>
+
+</div>
+{{ else }}
+<div class="code-container">
+    <unparsed-codeblock data-language="{{ .Type }}" data-code="{{ urlquery .Inner }}"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div>
+{{ end }}

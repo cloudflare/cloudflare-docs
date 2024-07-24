@@ -209,7 +209,7 @@ Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configurati
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[queues.producers]]
   binding = "<BINDING_NAME>"

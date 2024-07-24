@@ -37,7 +37,7 @@ Example:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [build]
 command = "npm run build"

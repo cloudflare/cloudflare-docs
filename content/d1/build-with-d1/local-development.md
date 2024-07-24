@@ -49,7 +49,7 @@ In this example, the Worker has access to local-only D1 database. The correspond
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [[d1_databases]]
 binding = "DB"

@@ -30,7 +30,7 @@ Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-com
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
@@ -62,7 +62,7 @@ To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compati
 
 ```toml
 ---
-header:wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_als" ]
 ```

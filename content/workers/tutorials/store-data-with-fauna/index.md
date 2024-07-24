@@ -138,7 +138,7 @@ Next, go to your Worker project directory and update the `wrangler.toml` file to
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 name = "fauna-workers"
 ```

@@ -15,7 +15,7 @@ To use the version metadata binding, update your Worker's `wrangler.toml` file:
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 [version_metadata]
 binding = "CF_VERSION_METADATA"

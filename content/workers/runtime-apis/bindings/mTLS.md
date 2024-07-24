@@ -35,7 +35,7 @@ Then, update your Worker project's `wrangler.toml` file to create an mTLS certif
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "<CERTIFICATE_ID>" }

@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240620.0",
+    "@iarna/toml": "^2.2.5",
     "@tsconfig/node20": "^20.1.4",
     "@types/glob": "^8.1.0",
     "@types/node": "^20.14.10",

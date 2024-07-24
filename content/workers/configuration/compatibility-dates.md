@@ -89,7 +89,7 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
@@ -100,7 +100,7 @@ The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers
 
 ```toml
 ---
-header: wrangler.toml
+filename: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_als" ]
 ```
