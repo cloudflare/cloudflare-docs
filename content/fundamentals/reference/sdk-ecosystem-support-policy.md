@@ -59,4 +59,4 @@ Alongside the automatic migration approach, we provide documentation on the chan
 ## Related resources
 
 - [Semantic versioning definitions](https://semver.org/)
-- [Cloudflare's Terraform documentation](https://developers.cloudflare.com/terraform/)
+- [Cloudflare's Terraform documentation](/terraform/)
