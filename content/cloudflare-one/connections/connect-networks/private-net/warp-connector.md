@@ -12,7 +12,7 @@ meta:
 
 | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | -- | -- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+| Gateway with WARP | All plans  |
 
 | System   | Availability |
 | ---------| -------------|
