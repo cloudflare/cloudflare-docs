@@ -74,7 +74,7 @@ The source object's size in bytes.
 
 #### Name
 
-The type of event captured (such as mousedown, keydown, pointerdown).
+The type of event captured (such as `mousedown`, `keydown`, `pointerdown`).
 
 ### Additional data collected for Cumulative Layout Shift
 
