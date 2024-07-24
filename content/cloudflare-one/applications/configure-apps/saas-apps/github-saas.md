@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GitHub Enterprise Cloud
-weight: 9
+weight: 10
 ---
 
 
@@ -47,5 +47,5 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 
 ## 4. Test the integration
 
-Select **Test SAML configuration**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider. 
+Select **Test SAML configuration**. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
 When this is successful, you can turn on **Require SAML SSO authentication for all members of your organization** if you want to enforce SSO login with Cloudflare Access.

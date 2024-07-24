@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PagerDuty
-weight: 16
+weight: 18
 ---
 
 # Connect to PagerDuty through Access

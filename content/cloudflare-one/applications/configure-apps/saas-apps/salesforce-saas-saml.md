@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (SAML)
-weight: 18
+weight: 20
 ---
 
 # Connect to Salesforce through Access (SAML)
