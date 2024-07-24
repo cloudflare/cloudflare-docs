@@ -33,7 +33,7 @@ This guide covers how to configure [Coupa](https://compass.coupa.com/en-us/produ
 
 ## 2. Download the metadata file
 
-1. Paste the SAML Metadata endpoint from application configuration in Cloudflare Zero Trust in a web browser.
+1. Paste the SAML metadata endpoint from application configuration in Cloudflare Zero Trust in a web browser.
 2. Follow your browser-specific steps to download the URL's contents as an `.xml` file.
 
 ## 3. Add a SAML SSO provider in Coupa
@@ -42,7 +42,7 @@ This guide covers how to configure [Coupa](https://compass.coupa.com/en-us/produ
 2. Under **Sign in using SAML**, turn on **Sign in using SAML**.
 3. In **Upload IdP metadata**, select **Choose File**, and upload the `.xml` file you downloaded in step [2. Download the metadata file](#2-download-the-metadata-file).
 4. Turn on **Advanced Options**.
-5. For **Sign in page URL** and **Timeout URL**, enter `https://sso-stg1.coupahost.com/sp/startSSO.ping?PartnerIdpId=<access-entity-id-or-issuer>&TARGET=https://<your-subdomain>.coupahost.com/sessions/saml_post`, using the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+5. For **Sign in page URL** and **Timeout URL**, enter `https://sso-stg1.coupahost.com/sp/startSSO.ping?PartnerIdpId=<access-entity-id-or-issuer>&TARGET=https://<your-subdomain>.coupahost.com/sessions/saml_post` using the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
 5. Select **Save**.
 
 ## 3. Create a test user and test the integration
