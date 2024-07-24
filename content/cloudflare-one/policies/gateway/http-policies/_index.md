@@ -32,6 +32,43 @@ Actions in HTTP policies allow you to choose what to do with a given set of elem
 
 API value: `allow`
 
+{{<details header="Available selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [DLP Profile](#dlp-profile)
+- [Domain](#domain)
+- [Download File Types](#download-and-upload-file-types)
+- [Download Mime Type](#download-and-upload-mime-type)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [HTTP Response](#http-response)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Upload File Types](#download-and-upload-file-types)
+- [Upload Mime Type](#download-and-upload-mime-type)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 The Allow action allows outbound traffic to reach destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration allows traffic to reach all websites we categorize as belonging to the Education content category:
 
 | Selector           | Operator | Value       | Action |
@@ -58,6 +95,43 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 
 API value: `block`
 
+{{<details header="Available selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [DLP Profile](#dlp-profile)
+- [Domain](#domain)
+- [Download File Types](#download-and-upload-file-types)
+- [Download Mime Type](#download-and-upload-mime-type)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [HTTP Response](#http-response)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Upload File Types](#download-and-upload-file-types)
+- [Upload Mime Type](#download-and-upload-mime-type)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
 
 | Selector         | Operator      | Value          | Logic | Action |
@@ -73,6 +147,32 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 API value: `isolate`
 
+{{<details header="Available selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
 {{<Aside type="warning">}}
@@ -85,25 +185,39 @@ The [Destination Continent](#destination-continent), [Destination Country](#dest
 
 API value: `noisolate`
 
+{{<details header="Available selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Inspect
 
 API value: `off`
 
-{{<Aside type="warning" header="Visibility limitation">}}
-
-When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
-
-Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. For more information, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
-
-{{</Aside>}}
-
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
-
-All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
-
-{{<details header="Supported selectors">}}
+{{<details header="Available selectors">}}
 
 - [Application](#application)
 - [Content Categories](#content-categories)
@@ -119,12 +233,62 @@ All Do Not Inspect rules are evaluated first, before any Allow or Block rules, t
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Virtual Network](#virtual-network)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
+
+{{<Aside type="warning" header="Visibility limitation">}}
+
+When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+
+Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. For more information, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+
+{{</Aside>}}
+
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
+
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
 
 ### Do Not Scan
 
 API value: `noscan`
+
+{{<details header="Available selectors">}}
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
