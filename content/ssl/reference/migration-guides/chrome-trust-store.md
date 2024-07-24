@@ -12,7 +12,7 @@ Since these are not within the [certificate authorities](/ssl/reference/certific
 
 ## Impact
 
-New Entrust or AffirmTrust certificates, issued on **November 1, 2024 or after**, will not be trusted on Google Chrome by default. This means that visitors trying to access websites or applications serving these certificates will encounter a full page interstitial, stating that their connection is not properly secured.
+New Entrust or AffirmTrust certificates, issued on **November 1, 2024 or after**, will not be trusted on Google Chrome by default. This means that visitors trying to access websites or applications serving these certificates will encounter a full page warning, stating that their connection is not properly secured.
 
 Certificates issued before that date will continue to be trusted until their expiry.
 
