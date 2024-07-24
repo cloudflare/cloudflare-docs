@@ -5,91 +5,40 @@ title: Hono
 
 # Hono
 
-[Hono](https://honojs.dev/) is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.
+[Hono](https://honojs.dev/) is a small, simple, ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create and deploy a new Hono application using Cloudflare Pages.
 
 ## Create a new project
 
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to create a new project. C3 will create a new project directory, initiate Hono's official setup tool, and provide the option to deploy instantly.
+Use the [`create-hono`](https://www.npmjs.com/package/create-hono) CLI to create a new project.
 
-To use `create-cloudflare` to create a new Hono project, run the following command:
+To use `create-hono` to create a new Hono project, run the following command:
 
 ```sh
-$ npm create cloudflare@latest my-hono-app -- --framework=hono
+$ npm create hono@latest my-hono-app
 ```
 
-Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
+Hono will ask:
 
-```javascript
+1. Which template do you want to use? Select `cloudflare-pages`
+2. Do you want to install project dependencies? Choose yes (y)
+3. Which package manager do you want to use? Select your choice of package manager
+
+In your project open the `src/index.tsx` file, and you should see the following
+
+```ts
 import { Hono } from "hono";
+import { renderer } from "./renderer";
+
 const app = new Hono();
 
-app.get("/", (ctx) => ctx.text("Hello world, this is Hono!!"));
+app.use(renderer);
+
+app.get("/", (c) => {
+  return c.render(<h1>Hello!</h1>);
+});
 
 export default app;
 ```
-
-To serve static files like CSS, image or JavaScript files, add the following to your `src/server.js/ts` file:
-
-```javascript
-app.get("/public/*", async (ctx) => {
-  return await ctx.env.ASSETS.fetch(ctx.req.raw);
-});
-```
-
-This will cause all the files in the `public` folder within `dist` to be served in your application.
-
-{{<Aside type="note">}}
-
-The `dist` directory is created and used during the bundling process. You will need to create a `public` directory in the `dist` directory. Having `public` inside `dist` is not generally wanted as `dist` is not a directory to commit to your repository whilst `public` is.
-
-There are different alternatives to fix this issue. For example, you can configure your `.gitignore` file to include the `dist` directory, but ignore all its context except the `public` directory. Alternatively, you can create a `public` directory somewhere else and copy it inside `dist` as part of the bundling process.
-
-{{</Aside>}}
-
-Open your `package.json` file and update the `scripts` section:
-
-{{<tabs labels="js | ts">}}
-{{<tab label="js" default="true">}}
-
-```json
----
-filename: package.json
----
-    "scripts": {
-        "dev": "run-p dev:*",
-        "dev:wrangler": "wrangler pages dev dist --live-reload",
-        "dev:esbuild": "esbuild --bundle src/server.js --format=esm --watch --outfile=dist/_worker.js",
-        "build": "esbuild --bundle src/server.js --format=esm --outfile=dist/_worker.js",
-        "deploy": "wrangler pages publish dist"
-    },
-```
-
-{{</tab>}}
-{{<tab label="ts">}}
-
-```json
----
-filename: package.json
----
-    "scripts": {
-        "dev": "run-p dev:*",
-        "dev:wrangler": "wrangler pages dev dist --live-reload",
-        "dev:esbuild": "esbuild --bundle src/server.ts --format=esm --watch --outfile=dist/_worker.js",
-        "build": "esbuild --bundle src/server.ts --format=esm --outfile=dist/_worker.js",
-        "deploy": "wrangler pages publish dist"
-    },
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-Then, run the following command.
-
-```sh
-$ npm install npm-run-all --save-dev
-```
-
-Installing `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
 
 ## Run in local dev
 
@@ -99,7 +48,7 @@ Start your dev workflow by running:
 $ npm run dev
 ```
 
-You should be able to review your generated web application at `http://localhost:8788`.
+You should be able to review your generated web application at `http://localhost:5174`.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -107,7 +56,13 @@ You should be able to review your generated web application at `http://localhost
 
 ## Deploy with Cloudflare Pages
 
-{{<render file="_deploy-via-c3.md" withParameters="Hono">}}
+### Deploy via npm command
+
+In package.json, `$npm_execpath` needs to be changed to your package manager of choice. Then run:
+
+```shell
+$ npm run deploy
+```
 
 ### Deploy via the Cloudflare dashboard
 
