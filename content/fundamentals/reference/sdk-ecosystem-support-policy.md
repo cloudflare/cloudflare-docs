@@ -8,7 +8,7 @@ weight: 5
 
 ## Lifecycle
 
-Unless otherwise stated in the code repository, we only provide active support for the latest major version of a library or tool. The exception to this policy is for critical security fixes, which will be reviewed on a case-by-case basis and take the vulnerability, impact, and mitigation required into consideration.
+Unless otherwise stated in the code repository, Cloudflare only provides active support for the latest major version of a library or tool. The exception to this policy is for critical security fixes, which will be reviewed on a case-by-case basis and take the vulnerability, impact, and mitigation required into consideration.
 
 We provide three primary stages of development: early access, active support, and end of life.
 
