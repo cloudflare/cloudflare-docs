@@ -107,9 +107,7 @@ export default {
         }
 
         const plainAuth = atob(encoded);
-        const credentials = plainAuth.split(":");
-        const user = credentials[0];
-        const pass = credentials[1];
+        const [user, pass] = plainAuth.split(":");
 
         if (
           !timingSafeEqual(BASIC_USER, user) ||
@@ -214,9 +212,7 @@ export default {
         }
 
         const plainAuth = atob(encoded);
-        const credentials = plainAuth.split(":");
-        const user = credentials[0];
-        const pass = credentials[1];
+        const [user, pass] = plainAuth.split(":");
 
         if (
           !timingSafeEqual(BASIC_USER, user) ||
