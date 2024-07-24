@@ -13,7 +13,7 @@ You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magi
 
 ## HTTPS Filtering
 
-In order to inspect HTTPS traffic, you need to install the Cloudflare root certificate on any client machines. You can use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to [automatically install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) on supported devices. If your device or application does not support certificate installation via WARP, you can [manually install the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/). The certificate is required for Cloudflare to terminate TLS.
+In order to inspect HTTPS traffic, you need to install the Cloudflare root certificate on each client machine. You can use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to [automatically install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) on supported devices. If your device or application does not support certificate installation via WARP, you can [manually install the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/). The certificate is required for Cloudflare to terminate TLS.
 
 If you cannot or do not want to install the certificate, you can create [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policies to exempt Magic WAN traffic or disable TLS decryption entirely. For example:
 
