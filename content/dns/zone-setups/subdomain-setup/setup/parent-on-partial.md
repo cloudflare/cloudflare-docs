@@ -17,7 +17,7 @@ If you have not yet created a DNS record covering your subdomain in the parent z
 {{<tabs labels="Child is full or secondary | Child is partial">}}
 {{<tab label="child is full or secondary" no-code="true">}}
 
-1. Add the subdomain to a Cloudflare account. It can be the same account where the parent zone exists or a different one.
+1. Add the subdomain to a Cloudflare account as a new zone. It can be the same account where the parent zone exists or a different one.
 2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. After creating the DNS records on the child zone, add the Cloudflare nameservers as `NS` records at your external DNS provider.
 4. Within a short period of time, the child zone should be active.
@@ -25,7 +25,7 @@ If you have not yet created a DNS record covering your subdomain in the parent z
 {{</tab>}}
 {{<tab label="child is partial" no-code="true">}}
 
-1. Add the subdomain to a Cloudflare account. It can be the same account where the parent zone exists or a different one.
+1. Add the subdomain to a Cloudflare account as a new zone. It can be the same account where the parent zone exists or a different one.
 2. Select either Business or Enterprise as your zone plan and complete the onboarding flow according to your needs.
 3. On the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone), select **Convert to CNAME DNS Setup**.
 4. Confirm that you have created all the [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child zone.
@@ -70,7 +70,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 {{<tabs labels="Child is full or secondary | Child is partial">}}
 {{<tab label="child is full or secondary" no-code="true">}}
 
-1. Add the subdomain to a Cloudflare account. It can be the same account where the parent zone exists or a different one.
+1. Add the subdomain to a Cloudflare account as a new zone. It can be the same account where the parent zone exists or a different one.
 2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 3. In your child zone, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your subdomain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
@@ -86,7 +86,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 {{</tab>}}
 {{<tab label="child is partial" no-code="true">}}
 
-1. Add the subdomain to a Cloudflare account. It can be the same account where the parent zone exists or a different one.
+1. Add the subdomain to a Cloudflare account as a new zone. It can be the same account where the parent zone exists or a different one.
 2. Select either Business or Enterprise as your zone plan and complete the onboarding flow according to your needs.
 3. On the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone), select **Convert to CNAME DNS Setup**.
 4. In your child zone, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your subdomain. This includes all DNS records deeper than the subdomain you used to create the zone - if you are creating a zone for `www.example.com`, you should also move over records for `api.www.example.com`.
