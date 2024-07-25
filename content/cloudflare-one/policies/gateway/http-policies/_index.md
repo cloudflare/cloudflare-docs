@@ -34,6 +34,8 @@ API value: `allow`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -59,12 +61,18 @@ API value: `allow`
 - [URL Path & Query](#url-path-and-query)
 - [URL Query](#url-query)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -97,6 +105,8 @@ API value: `block`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -122,12 +132,18 @@ API value: `block`
 - [URL Path & Query](#url-path-and-query)
 - [URL Query](#url-query)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -149,6 +165,8 @@ API value: `isolate`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Domain](#domain)
@@ -161,12 +179,18 @@ API value: `isolate`
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
 - [URL Query](#url-query)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -179,6 +203,8 @@ API value: `noisolate`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Domain](#domain)
@@ -191,12 +217,18 @@ API value: `noisolate`
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
 - [URL Query](#url-query)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -208,6 +240,8 @@ The Do Not Isolate action turns off browser isolation for matched traffic. For m
 API value: `off`
 
 {{<details header="Available selectors">}}
+
+**Traffic**
 
 - [Application](#application)
 - [Content Categories](#content-categories)
@@ -223,12 +257,18 @@ API value: `off`
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -251,6 +291,8 @@ API value: `noscan`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -270,12 +312,18 @@ API value: `noscan`
 - [URL Path & Query](#url-path-and-query)
 - [URL Query](#url-query)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}

@@ -34,6 +34,8 @@ API value: `allow`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
@@ -50,12 +52,18 @@ API value: `allow`
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -73,6 +81,8 @@ API value: `audit_ssh`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
@@ -83,12 +93,18 @@ API value: `audit_ssh`
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -109,6 +125,8 @@ API value: `block`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
@@ -125,12 +143,18 @@ API value: `block`
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}
@@ -151,6 +175,8 @@ API value: `l4_override`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
 - [Destination IP](#destination-ip)
@@ -164,12 +190,18 @@ API value: `l4_override`
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
 - [Virtual Network](#virtual-network)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
 - [User Group IDs](#users)
 - [User Group Names](#users)
 - [User Name](#users)
+
+**Device Posture**
+
 - [Passed Device Posture Checks](#device-posture)
 
 {{</details>}}

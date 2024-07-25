@@ -38,6 +38,8 @@ API value: `allow`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Authoritative Nameserver IP](#authoritative-nameserver-ip)
 - [Content Categories](#content-categories)
@@ -59,6 +61,9 @@ API value: `allow`
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source IP](#source-ip)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
@@ -84,6 +89,8 @@ API value: `block`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Authoritative Nameserver IP](#authoritative-nameserver-ip)
 - [Content Categories](#content-categories)
@@ -105,6 +112,9 @@ API value: `block`
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source IP](#source-ip)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
@@ -136,6 +146,8 @@ API value: `override`
 
 The Override action cannot be used with selectors evaluated during or after DNS resolution.
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [DNS Resolver IP](#dns-resolver-ip)
@@ -150,6 +162,9 @@ The Override action cannot be used with selectors evaluated during or after DNS 
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source IP](#source-ip)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
@@ -171,6 +186,8 @@ API value: `safesearch`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [DNS Resolver IP](#dns-resolver-ip)
@@ -185,6 +202,9 @@ API value: `safesearch`
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source IP](#source-ip)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
@@ -208,6 +228,8 @@ API value: `ytrestricted`
 
 {{<details header="Available selectors">}}
 
+**Traffic**
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [DNS Resolver IP](#dns-resolver-ip)
@@ -222,6 +244,9 @@ API value: `ytrestricted`
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source IP](#source-ip)
+
+**Identity**
+
 - [SAML Attributes](#users)
 - [User Email](#users)
 - [User Group Emails](#users)
