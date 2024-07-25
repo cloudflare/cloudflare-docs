@@ -16,7 +16,7 @@ Magic WAN is an Enterprise-only product. [Contact Cloudflare](https://www.cloudf
 
 The preferred way to onboard your network locations to Cloudflare One is through [Magic WAN Connector](/magic-wan/configuration/connector/). The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device.
 
-## Use compatible tunnel endpoint routers
+### Use compatible tunnel endpoint routers
 
 Magic WAN relies on {{<glossary-tooltip term_id="GRE tunnel" link="/magic-wan/reference/tunnels/">}}GRE{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="IPsec tunnel" link="/magic-wan/reference/tunnels/#ipsec-tunnels">}}IPsec tunnels{{</glossary-tooltip>}} to transmit packets from Cloudflare’s global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
 
