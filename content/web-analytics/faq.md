@@ -55,9 +55,9 @@ Every route change that occurs in the single-page app will send the measurement 
 
 {{<faq-answer>}}
 
-Unless you are using Rules to control which pages to be measured, using [automatic setup] will inject the JS snippet on all pages (sub-domains) under the zone.
+Unless you are using Rules to control which pages to be measured, using [automatic setup](/web-analytics/get-started/#sites-proxied-through-cloudflare) will inject the JS snippet on all pages (sub-domains) under the zone.
 
-If you used a [manual setup] instead, only those pages that render the JS snippet will be reported.
+If you used a [manual setup](/web-analytics/get-started/#sites-not-proxied-through-cloudflare) instead, only those pages that render the JS snippet will be reported.
 
 {{<Aside type="note">}}
 
@@ -91,7 +91,7 @@ You can, but you do not have to. Cloudflare Web Analytics is designed primarily 
 
 Existing Cloudflare customers can access analytics collected from our edge on the **Analytics** tab of the dashboard. You can also enable Web Analytics to measure performance using JavaScript.
 
-Using a domain proxied through Cloudflare with [automatic setup] will report stats back to your own domain's `/cdn-cgi/rum` endpoint. If you have installed JS snippet yourself (a [manual setup]), it will report back to `cloudflareinsights.com/cdn-cgi/rum` endpoint.
+Using a domain proxied through Cloudflare with [automatic setup](/web-analytics/get-started/#sites-proxied-through-cloudflare) will report stats back to your own domain's `/cdn-cgi/rum` endpoint. If you have installed JS snippet yourself (a [manual setup](/web-analytics/get-started/#sites-not-proxied-through-cloudflare)), it will report back to `cloudflareinsights.com/cdn-cgi/rum` endpoint.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -131,9 +131,9 @@ No. However, if the apex domain (also known as "root domain" or "naked domain") 
 
 {{<faq-answer>}}
 
-No, you can only use the [automatic setup] with JS snippet injection if traffic to your domain is proxied through Cloudflare (orange-clouded).
+No, you can only use the [automatic setup](/web-analytics/get-started/#sites-proxied-through-cloudflare) with JS snippet injection if traffic to your domain is proxied through Cloudflare (orange-clouded).
 
-If you have a DNS-only domain, you will have to do a [manual setup] instead.
+If you have a DNS-only domain, you will have to do a [manual setup](/web-analytics/get-started/#sites-not-proxied-through-cloudflare) instead.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -221,9 +221,6 @@ Yes. Right now there is a soft limit of ten sites per account, but that can be a
 {{<faq-answer>}}
 
 For traditional websites, not Single Page Applications (SPAs), the Web Analytics beacon reports to the `/cdn-cgi/rum/` endpoint when the page has finished loading (load event) and when the user leaves the page. For Single Page Applications, additional metrics are sent for every route change to capture the page load event.
-
-[manual setup]: /web-analytics/get-started/#sites-not-proxied-through-cloudflare
-[automatic setup]: /web-analytics/get-started/#sites-proxied-through-cloudflare
 
 {{</faq-answer>}}
 {{</faq-item>}}
