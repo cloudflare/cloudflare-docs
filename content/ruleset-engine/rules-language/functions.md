@@ -51,11 +51,59 @@ The Rules language supports these transformation functions:
 
     `all(http.request.headers["content-type"][*] == "application/json")`
 
+- <code id="function-cidr">{{<name>}}cidr{{</name>}}(address{{<param-type>}}IP address{{</param-type>}}, ipv4_network_bits{{<param-type>}}Integer{{</param-type>}}, ipv6_network_bits{{<param-type>}}Integer{{</param-type>}})</code> {{<type>}}IP address{{</type>}}
+
+  - Returns the network address corresponding to an IP address (IPv4 or IPv6), given the provided IPv4 and IPv6 network bits (which determine the corresponding netmasks).
+  - The `address` parameter must be a field, that is, it cannot be a literal String.
+  - The `ipv4_network_bits` value must be between 1 and 32, and the `ipv6_network_bits` value must be between 1 and 128.
+  - <em>Examples:</em>
+    <br />
+    A) If `ip.src` is `113.10.0.2`,<br/>
+    `cidr(ip.src, 24, 24)` will return `113.10.0.0`.<br/><br/>
+    B) If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`,<br/>
+    `cidr(ip.src, 24, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.
+
+{{<Aside type="warning">}}
+You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
+- <code id="function-cidr6">{{<name>}}cidr6{{</name>}}(address{{<param-type>}}IP address{{</param-type>}}, ipv6_network_bits{{<param-type>}}Integer{{</param-type>}})</code> {{<type>}}IP address{{</type>}}
+
+  - Returns the IPv6 network address corresponding to an IPv6 address, given the provided network bits (which determine the netmask). If you provide an IPv4 address in the first parameter, it will be returned unchanged.
+  - The `address` parameter must be a field, that is, it cannot be a literal String.
+  - The `ipv6_network_bits` value must be between 1 and 128.
+  - This function is equivalent to: `cidr(<address>, 32, <ipv6_network_bits>)`.
+  - <em>Examples:</em>
+    <br />
+    A) If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`,<br/>
+    `cidr6(ip.src, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.<br/><br/>
+    B) If `ip.src` is `113.10.0.2`,<br/>
+    `cidr6(ip.src, 24)` will return `113.10.0.2` (unchanged).
+
+{{<Aside type="warning">}}
+You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
+
 - <code id="function-concat">{{<name>}}concat{{</name>}}({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
   - Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
   - For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
+
+- <code id="function-decode_base64">{{<name>}}decode_base64{{</name>}}(source{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+
+  - Decodes a Base64-encoded String specified in `source`.
+
+  - `source` must be a field, that is, it cannot be a literal String.
+
+  - <em>Example:</em>
+  <br/>
+  With the following HTTP request header: `client_id: MTIzYWJj`,<br/>
+  `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
+
+{{<Aside type="warning">}}
+You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+{{</Aside>}}
 
 - <code id="function-ends_with">{{<name>}}ends_with{{</name>}}(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
@@ -251,6 +299,40 @@ You can only use the `to_string()` function in rewrite expressions of [Transform
 
 {{<Aside type="warning">}}
 You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+{{</Aside>}}
+
+- <code id="function-wildcard_replace">{{<name>}}wildcard_replace{{</name>}}(source{{<param-type>}}Bytes{{</param-type>}}, wildcard_pattern{{<param-type>}}Bytes{{</param-type>}}, replacement{{<param-type>}}Bytes{{</param-type>}} [, flags{{<param-type>}}Bytes{{</param-type>}}])</code> {{<type>}}String{{</type>}}
+
+    - Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
+    - If there is no match, the function will return `source` unchanged.
+    - The `source` parameter must be a field (it cannot be a literal string). Additionally, the entire `source` value must match the `wildcard_pattern` parameter (it cannot match only part of the field value).
+    - To enter a literal `*` character in the `wildcard_pattern` parameter, you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in this parameter are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) for the `wildcard_pattern` parameter.
+    - To enter a literal `$` character in the `replacement` parameter, you must escape it using `$$`.
+    - To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
+    - This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
+
+    - _Examples:_
+
+      If the full URI is `https://apps.example.com/calendar/admin?expand=true`,<br />
+      `wildcard_replace(http.request.full_uri, "https://*.example.com/*/*", "https://example.com/${1}/${2}/${3}")` will return `https://example.com/apps/calendar/admin?expand=true`
+
+      If the full URI is `https://example.com/applications/app1`,<br />
+      `wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged URI value, since there is no match for the full value).
+
+      If the URI path is `/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/*", "/apps/${1}")` will return `/apps/calendar`.
+
+      If the URI path is `/Apps/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}")` will return `/calendar` (case-insensitive match by default).
+
+      If the URI path is `/Apps/calendar`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}", "s")` will return `/Apps/calendar` (unchanged value) because there is no case-sensitive match.
+
+      If the URI path is `/apps/calendar/login`,<br />
+      `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login`.
+
+{{<Aside type="warning">}}
+Currently, you can only use the `wildcard_replace()` function in target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 {{</Aside>}}
 
 {{</definitions>}}

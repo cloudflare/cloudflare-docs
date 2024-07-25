@@ -30,7 +30,7 @@ const openai = new OpenAI({
 
 const chatCompletion = await openai.chat.completions.create({
   messages: [{ role: "user", content: "Make some robot noises" }],
-  model: "@cf/meta/llama-3-8b-instruct",
+  model: "@cf/meta/llama-3.1-8b-instruct",
  });
 
 const embeddings = await openai.embeddings.create({
@@ -50,7 +50,7 @@ curl --request POST \
   --header "Content-Type: application/json" \
   --data '
     {
-      "model": "@cf/meta/llama-3-8b-instruct",
+      "model": "@cf/meta/llama-3.1-8b-instruct",
       "messages": [
         {
           "role": "user",

@@ -34,6 +34,13 @@ Pages uploads each file on your site to Cloudflare's globally distributed networ
 
 The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
 
+{{<Aside type="note" header="Larger Files">}}
+
+To serve larger files, consider uploading them to [R2](/r2/) and utilizing the [public bucket](/r2/buckets/public-buckets/) feature. You can also use [custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain), such as `static.example.com`, for serving these files.
+
+
+{{</Aside>}}
+
 ## Headers
 
 A `_headers` file can have a maximum of 100 header rules.

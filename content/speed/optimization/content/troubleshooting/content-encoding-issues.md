@@ -14,7 +14,6 @@ Alternatively, you can use a [Configuration Rule](/rules/configuration-rules/) t
 You also have the option to turn off these features site-wide within the dashboard:
 
 * [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/), located in the **Scrape Shield** section.
-* [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (deprecated), located in the **Scrape Shield** section.
 * [Rocket Loader](/speed/optimization/content/rocket-loader/), located in **Speed** > **Optimization** > **Content Optimization** section.
 * [HTML Minification](/speed/optimization/content/auto-minify/) (deprecated), located in the **Speed** > **Optimization** > **Content Optimization** section.
 * [Mirage](/speed/optimization/images/mirage/#cloudflare-mirage), located in **Speed** > **Optimization** > **Image Optimization**. section.

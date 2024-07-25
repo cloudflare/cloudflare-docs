@@ -2,12 +2,12 @@
 type: overview
 pcx_content_type: navigation
 title: Examples
-weight: 8
+weight: 7
 layout: wide
 ---
 
 # Examples
 
-Learn how to use different SDKs and tools with R2.
+Explore the following {{<glossary-tooltip term_id="code example">}}examples{{</glossary-tooltip>}} of how to use SDKs and other tools with R2.
 
 {{<directory-listing>}}

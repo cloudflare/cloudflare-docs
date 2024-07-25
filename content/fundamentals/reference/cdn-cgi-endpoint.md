@@ -15,7 +15,7 @@ A few examples include (but are not limited to):
 * [JavaScript detection](/bots/reference/javascript-detections/) used by Cloudflare bot products (`example.com/cdn-cgi/challenge-platform/`)
 * [Image transformations](/images/transform-images) in the new URLs you would use for images (`example.com/cdn-cgi/image/`)
 * [Email address obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) used to hide email addresses from malicious bots (`example.com/cdn-cgi/l/email-protection`)
-* [Web analytics](/analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`). This endpoint returns a `204` HTTP status code.
+* [Web analytics](/web-analytics/get-started/#sites-proxied-through-cloudflare) for a website proxied through Cloudflare (`example.com/cdn-cgi/rum`). This endpoint returns a `204` HTTP status code.
 
 
 ## Recommended exclusions

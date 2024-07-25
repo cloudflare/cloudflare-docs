@@ -118,7 +118,9 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_content-categories.md" withParameters="When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).">}}
+{{<render file="gateway/selectors/_content-categories.md">}}
+
+{{<render file="gateway/selectors/_category-options.md">}}
 
 ### DNS CNAME Record
 
@@ -220,6 +222,8 @@ Use this selector to filter based on the IP addresses that the query resolves to
 ### Security Categories
 
 {{<render file="gateway/selectors/_security-categories.md">}}
+
+{{<render file="gateway/selectors/_category-options.md">}}
 
 ### Source Continent
 

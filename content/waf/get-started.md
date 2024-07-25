@@ -8,20 +8,13 @@ weight: 2
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and API requests and filters undesired traffic based on sets of rules called rulesets.
 
-This page will guide you through some basic concepts and the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
+This page will guide you through the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
 
+Refer to [Concepts](/waf/about/) for more information on WAF concepts, main components, and roles.
+
+{{<Aside type="note">}}
 This guide focuses on configuring WAF for individual domains, known as {{<glossary-tooltip term_id="zone">}}zones{{</glossary-tooltip>}}. The WAF configuration is also available at the account level for Enterprise customers with a paid add-on.
-
-## Basic WAF concepts
-
-A [rule](/ruleset-engine/about/rules/) includes a filter (which defines the scope) and an action to perform on the incoming requests that match the filter.
-
-The Cloudflare WAF includes:
-- Signature-based rules (for example, the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)) created by Cloudflare that provide immediate protection against known attacks.
-- [Traffic detections](/waf/about/#available-traffic-detections) (for example, bot score and attack score) that enrich requests with metadata.
-- User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and {{<glossary-tooltip term_id="rate limiting" link="/waf/rate-limiting-rules/">}}rate limiting rules{{</glossary-tooltip>}}.
-
-Detections do not take any action on incoming traffic – they only add relevant information about each request that you can use in the rules you create. For more information on the detection and mitigation roles of the WAF, refer to [Detection versus mitigation](/waf/about/#detection-versus-mitigation).
+{{</Aside>}}
 
 ---
 

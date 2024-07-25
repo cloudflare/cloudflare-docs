@@ -33,7 +33,7 @@ Discover the benefits of caching with Cloudflare's CDN and understand the defaul
 
 Configure your settings to cache static HTML or cache anonymous page views of dynamic content.
 
-- [Customize Caching with Cloudflare Rules](/cache/troubleshooting/customize-caching/)
+- [Customize Caching with Cache Rules](/cache/how-to/cache-rules/)
 - [Specify which resources to cache](/cache/concepts/customize-cache/)
 - [Understand Origin Cache Control](/cache/concepts/cache-control/)
 - [Cache by device type (Enterprise only)](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-by-device-type-enterprise-only)

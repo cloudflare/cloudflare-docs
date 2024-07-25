@@ -190,6 +190,8 @@ Customers on Business and Enterprise plans have access to the `matches` operator
 
 If you are using a regular expression, you can test it using a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk/).
 
+For more information on regular expressions, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
+
 ## Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
@@ -309,7 +311,7 @@ You can nest expressions grouped by parentheses inside other groups to create ve
 ```sql
 (
  (http.host eq "api.example.com" and http.request.uri.path eq "/api/v2/auth") or
- (http.host matches "^(www|store|blog)\.example.com" and http.request.uri.path contains "wp-login.php") or
+ (http.host matches "^(www|store|blog)\.example\.com" and http.request.uri.path contains "wp-login.php") or
  ip.geoip.country in {"CN" "TH" "US" "ID" "KR" "MY" "IT" "SG" "GB"} or ip.geoip.asnum in {12345 54321 11111}
 ) and not ip.src in {11.22.33.0/24}
 ```

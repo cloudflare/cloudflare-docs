@@ -1192,6 +1192,13 @@
           "biz": 50,
           "ent": 125
         },
+        "p_wildcard_support": {
+          "title": "Wildcard support",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
         "regex_support": {
           "title": "Regex support",
           "free": "No",
@@ -1862,20 +1869,6 @@
           "ent": "Yes"
         }
       }
-    },
-    "server_side_excludes": {
-      "title": "Server-side Excludes (deprecated)",
-      "link": "/waf/tools/scrape-shield/server-side-excludes/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
     }
   },
   "spectrum": {
@@ -2023,7 +2016,7 @@
     },
     "enhanced_http2_prioritization": {
       "title": "Enhanced HTTP/2 Prioritization",
-      "link": "https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/",
+      "link": "/speed/optimization/protocol/enhanced-http2-prioritization/",
       "properties": {
         "availability": {
           "title": "Availability",

@@ -11,8 +11,6 @@ meta:
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
-{{<render file="/_workers-learning-path.md" productFolder="/workers/" >}}
-
 {{<render file="_prereqs.md" productFolder="/workers/" >}}
 
 ## 1. Create a Worker project
@@ -66,7 +64,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 ## 3. Run an inference task in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/), to answer a question.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/), to answer a question.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
@@ -82,7 +80,7 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const response = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
         prompt: "What is the origin of the phrase Hello, World"
       }
     );
@@ -131,7 +129,7 @@ $ npx wrangler deploy
 
 Your Worker will be deployed to your custom [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain. You can now visit the URL to run your AI Worker.
 
-By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 2 model.
+By finishing this tutorial, you have created a Worker, connected it to Workers AI through an AI binding, and ran an inference task from the Llama 3 model.
 
 ## Related resources
 

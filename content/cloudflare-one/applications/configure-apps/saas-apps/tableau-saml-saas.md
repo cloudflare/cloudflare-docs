@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
-title: Tableau Cloud (SAML)
-weight: 14
+title: Tableau Cloud
+weight: 22
 ---
 
-# Connect to Atlassian Cloud through Access
+# Connect to Tableau Cloud through Access
 
 This guide covers how to configure [Tableau Cloud](https://help.tableau.com/current/online/en-us/saml_config_site.htm) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Tableau Cloud site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
@@ -25,7 +25,7 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 
 ## 2. Download the metadata file
 
-1. Paste the **SAML Metadata endpoint** in a web browser.
+1. Paste the SAML Metadata endpoint from application configuration in Cloudflare Zero Trust in a web browser.
 2. Follow your browser-specific steps to download the URL's contents as an `.xml` file.
 
 ## 3. Add a SAML SSO provider to Tableau Cloud
@@ -47,7 +47,7 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 3. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 4. Select **Done**.
 
-## 5. Test the Integration and set default authentication type
+## 5. Test the integration and set default authentication type
 1. In Tableau Cloud, go to **Settings** > **Authentication**.
 2. Under **7. Test Configuration**, select **Test Configuration**.
 3. Sign in. If your sign-in is successful, **You are now signed in as (username)** will appear at the top of the page.

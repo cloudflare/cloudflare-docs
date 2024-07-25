@@ -46,7 +46,10 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/zones/<ZONE
     "name":"<public domain>",
     "destination_conf": "https://<public domain>:<public port>?header_<secret_header>=<secret_value>",
     "dataset": "http_requests",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339"
+    "output_options": {
+        "field_names": ["RayID","EdgeStartTimestamp"],
+        "timestamp_format": "rfc3339"
+    },
 }'
 ```
 

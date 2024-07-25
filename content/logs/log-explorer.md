@@ -209,6 +209,8 @@ All fields listed in the datasets [Log Fields](/logs/reference/log-fields/) are 
 
 Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.
 
+If your query times out with an HTTP status of 524 (Gateway Timeout), consider using one of the [streaming output formats](/logs/log-explorer/#output-formats), such as `application/x-ndjson`.
+
 ### My query returned an error. How do I figure out what went wrong?
 
 We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), make sure you have included a date and a limit, and that the field you are filtering is not a key-value pair. If the query still fails it is likely timing out. Try refining your filters. 

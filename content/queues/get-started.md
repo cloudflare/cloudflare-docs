@@ -77,7 +77,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-$ npx wrangler queues create <MY_FIRST_QUEUE>
+$ npx wrangler queues create <MY-QUEUE-NAME>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`.
@@ -97,11 +97,11 @@ To create a binding, open your newly generated `wrangler.toml` configuration fil
 filename: wrangler.toml
 ---
 [[queues.producers]]
- queue = "YOUR_QUEUE_NAME"
+ queue = "MY-QUEUE-NAME"
  binding = "MY_QUEUE"
 ```
 
-Replace `YOUR_QUEUE_NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
+Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
 ### Write your producer Worker
 
@@ -226,14 +226,14 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
 filename: wrangler.toml
 ---
 [[queues.consumers]]
- queue = "<YOUR_QUEUE_NAME>"
+ queue = "<MY-QUEUE-NAME>"
  # Required: this should match the name of the queue you created in step 3.
  # If you misspell the name, you will receive an error when attempting to publish your Worker.
  max_batch_size = 10 # optional: defaults to 10
  max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
 
-Replace `YOUR_QUEUE_NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
+Replace `MY-QUEUE-NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
 
 In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first.
 

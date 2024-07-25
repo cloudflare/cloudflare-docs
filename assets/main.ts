@@ -6,7 +6,6 @@ import * as navs from "./navlinks";
 declare global {
   interface Window {
     docsearch: any;
-    Coveo?: any;
     zaraz: any;
   }
 }
@@ -19,7 +18,6 @@ declare global {
   events.mobile();
   events.dropdowns();
   contents.toc();
-  events.toggleSidebar();
   events.activeTab();
   events.tabs();
   events.zarazTrackDocEvents();

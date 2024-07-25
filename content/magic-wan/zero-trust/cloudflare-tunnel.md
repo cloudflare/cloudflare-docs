@@ -20,3 +20,5 @@ For example, imagine you have a Cloudflare Tunnel set up with a private network 
 As mentioned above, if you have overlapping routes in your Magic WAN and Cloudflare Tunnel routing configurations, Cloudflare Tunnel will take precedence. This happens whenever a `cloudflared` tunnel CIDR matches a packet, regardless of prefix length. For example, a `cloudflared` tunnel with prefix `10.1.2.0/24` will take precedence over a static route configured to `10.1.2.4/32`, sending packets over a GRE tunnel.
 
 For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+
+{{<render file="_traceroute.md">}}

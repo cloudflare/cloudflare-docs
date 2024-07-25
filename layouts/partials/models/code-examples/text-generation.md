@@ -134,7 +134,7 @@ response = requests.post(
     }
 )
 result = response.json()
-return result.response
+print(result)
 ```
 
 </details>
