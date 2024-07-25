@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Smartsheet
-weight: 21
+weight: 22
 ---
 
 # Connect to Smartsheet through Access
