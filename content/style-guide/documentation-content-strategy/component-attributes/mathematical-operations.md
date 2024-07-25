@@ -16,7 +16,7 @@ Expressions that show how to make a particular calculation.
 
 ## Structure
 
-If an operation occurs inside of a code block, use the formatting associated with that programming language. If an operation occurs in text, either leave the equation in plain text with spaces between operators for readability or use math typsesetting.
+If an operation occurs inside of a code block, use the formatting associated with that programming language. If an operation occurs in text, either leave the equation in plain text with spaces between operators for readability or use math typesetting.
 
 ## Example
 
