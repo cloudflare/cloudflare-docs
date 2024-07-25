@@ -90,6 +90,12 @@ You can use the [root CAs list](https://pki.goog/faq/#faq-27) for checking compa
 * Supports [validity periods](/ssl/reference/certificate-validity-periods/) of 14, 30, and 90 days. Enterprise customers using [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) can also choose a validity period of one year.
 * [DCV tokens](/ssl/edge-certificates/changing-dcv-method/) are valid for (TBD).
 
+#### Limitations
+
+SSL.com DCV tokens are specific for RSA certificates and ECDSA certificates. This means that, for cases where you have to [manually perform DCV](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required), you will have to place two validation tokens per certificate order.
+
+To avoid management overhead, consider using a [full setup](/ssl/edge-certificates/changing-dcv-method/#full-dns-setup---no-action-required), or setting up [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+
 #### Browser compatibility
 
 {{<Aside type="warning">}}
