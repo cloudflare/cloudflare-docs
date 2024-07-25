@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
 title: Custom metadata
-weight: 3
+weight: 5
+meta:
+  description: Configure per-hostname settings such as URL rewriting and custom headers.
 ---
 
 # Custom metadata
@@ -27,18 +29,18 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 ## Submitting custom metadata
 
-You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a `PATCH` request to the specific hostname ID to set metadata for that hostname, for example:
+You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to the specific hostname ID to set metadata for that hostname, for example:
 
 ```bash
-$ curl -sXPATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/<HOSTNAME_ID>" \
--H "X-Auth-Email: {email}" \
--H "X-Auth-Key: {key}" \
--H "Content-Type: application/json" \
--d '{
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "ssl": {
     "method": "http",
-    "type":"dv"
+    "type": "dv"
   },
   "custom_metadata": {
     "customer_id": "12345",
@@ -56,7 +58,7 @@ Changes to metadata will propagate across Cloudflare’s edge within 30 seconds.
 
 The metadata object will be accessible on each request using the `request.cf.hostMetadata` property. You can then read the data, and customize any behavior on it using the Worker.
 
-In the example below we will user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
+In the example below we will use the user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
 
 ```js
 addEventListener('fetch', event => {
@@ -114,4 +116,10 @@ There are some limitations to the metadata that can be provided to Cloudflare:
 - It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
 - Custom metadata cannot be set on custom hostnames that contain wildcards.
 
-You should not modify the schema — which includes adding/removing keys or changing possible values — without notifying Cloudflare. Changing the shape of the data will typically cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
+{{<Aside type="note">}}
+Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
+{{</Aside>}}
+
+### Terraform support
+
+[Terraform](/terraform/) only allows maps of a single type, so Cloudflare's Terraform support for custom metadata for custom hostnames is limited to string keys and values.

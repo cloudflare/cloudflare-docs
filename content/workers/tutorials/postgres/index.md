@@ -1,386 +1,311 @@
 ---
-updated: 2021-06-10
+updated: 2023-06-12
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Build data-driven applications with Workers and PostgreSQL
-layout: single
+title: Connect to a PostgreSQL database with Cloudflare Workers
 ---
 
-# Build data-driven applications with Workers and PostgreSQL
+# Connect to a PostgreSQL database with Cloudflare Workers
 
-## Overview
+{{<tutorial-date-info>}}
 
-Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a back-end server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and an improvement to the PostgreSQL developer experience — [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.
-
-In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
+In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
 ## Prerequisites
 
-To effectively learn from this tutorial, you should have an instance of PostgreSQL configured. In addition, you will need to install PostgREST, a separate service that provides REST API access to your Postgres database.
+To continue:
 
-If you want a quick way to get up and running with these tools, refer to [postgres-postgrest-cloudflared-example](https://github.com/signalnerve/postgres-postgrest-cloudflared-example/), an example project that uses `docker-compose` to set up a PostgreSQL database, PostgREST, and `cloudflared`, which exposes the PostgREST endpoint to the Internet for use in your Workers function.
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+4. Make sure you have access to a PostgreSQL database.
 
-In order to continue with the tutorial, ensure that you have a publicly accessible URL for your PostgREST endpoint.
+## 1. Create a Worker application
 
-## Create a Workers function
+First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
 
-Begin by creating a new Workers function, running `wrangler init`:
+{{<tabs labels="NPM | Yarn">}}
+{{<tab label="npm" no-code="true">}}
 
 ```sh
----
-header: Create a Workers function
----
-$ wrangler init postgrest-example
-$ cd postgrest-example
+$ npm create cloudflare@latest
 ```
 
-Inside your Worker, configure your `wrangler.toml` file with your account ID. Change the `type` value to webpack to use `webpack` for bundling the Worker:
+{{</tab>}}
+{{<tab label="yarn" no-code="true">}}
+
+```sh
+$ yarn create cloudflare
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
+
+To continue with this guide:
+
+1. Give your new Worker application a name.
+2. Select `"Hello World" Worker` for the type of application.
+3. Choose `Yes` to using TypeScript.
+4. Select `No` to deploying your application.
+
+If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+### Enable Node.js compatibility
+
+[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
+## 2. Add the PostgreSQL connection library
+
+To connect to a PostgreSQL database, you will need the `pg` library. In your Worker application directory, run the following command to install the library:
+
+```sh
+$ npm install pg
+```
+
+Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earlier versions do not support the Cloudflare Workers [TCP Sockets API](/workers/runtime-apis/tcp-sockets/).
+
+## 3. Configure the connection to the PostgreSQL database
+
+Choose one of the two methods to connect to your PostgreSQL database:
+
+1. [Use a connection string](#use-a-connection-string).
+2. [Set explicit parameters](#set-explicit-parameters).
+
+### Use a connection string
+
+A connection string contains all the information needed to connect to a database. It is a URL that contains the following information:
+
+```
+postgresql://username:password@host:port/database
+```
+
+Replace `username`, `password`, `host`, `port`, and `database` with the appropriate values for your PostgreSQL database.
+
+Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
+
+```sh
+$ npx wrangler secret put DB_URL
+➜  wrangler secret put DB_URL
+-------------------------------------------------------
+? Enter a secret value: › ********************
+✨ Success! Uploaded secret DB_URL
+```
+
+### Set explicit parameters
+
+Configure each database parameter as an [environment variable](/workers/configuration/environment-variables/) via the [Cloudflare dashboard](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard) or in your `wrangler.toml` file. Refer to an example of a`wrangler.toml` file configuration:
 
 ```toml
 ---
 filename: wrangler.toml
-highlight: [2, 3, 4]
 ---
-name = "postgrest-worker-example"
-type = "webpack"
 
-account_id = "yourAccountId"
+[vars]
+DB_USERNAME = "postgres"
+# Set your password by creating a secret so it is not stored as plain text
+DB_HOST = "ep-aged-sound-175961.us-east-2.aws.neon.tech"
+DB_PORT = "5432"
+DB_NAME = "productsdb"
 ```
 
-## Build an API using postgrest-js
-
-PostgREST provides a consistent REST API structure for use in your applications. Each table in your PostgreSQL database has a separate path as `/:table_name`. Query parameters are used to do lookups in your database. For example, to find all users with an ID of `1`, one sends a `GET` request to `/users?id=eq.1`.
-
-The URL structure makes it great for exploration, but in an application, it would be better to have something easier to use. [postgrest-js](https://github.com/supabase/postgrest-js/) is an open-source package that wraps PostgREST in an expressive JavaScript API. You will use it in your project to build a few endpoints to work with your PostgreSQL database in a Workers function.
-
-Begin by installing `postgrest-js`:
+To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
----
-header: Installing postgrest-js
----
-$ npm install @supabase/postgrest-js
+$ npx wrangler secret put DB_PASSWORD
+-------------------------------------------------------
+? Enter a secret value: › ********************
+✨ Success! Uploaded secret DB_PASSWORD
 ```
 
-Before beginning to work with `postgrest-js` in your application, you must patch `cross-fetch`, the internal library that `postgrest-js` uses for making HTTP requests, with Workers' built-in `fetch` API. Do this by creating a custom Webpack configuration and updating the `wrangler.toml` file to use it. Create a `webpack.config.js` with the below configuration:
+## 4. Connect to the PostgreSQL database in the Worker
 
-```js
+Open your Worker's main file (for example, `worker.ts`) and import the `Client` class from the `pg` library:
+
+```typescript
 ---
-filename: webpack.config.js
+filename: worker.ts
 ---
-module.exports = {
-  target: "webworker",
-  entry: "./index.js",
-  externals: [
-    { 'cross-fetch': 'fetch' }
-  ]
+import { Client } from "pg";
+```
+
+In the `fetch` event handler, connect to the PostgreSQL database using your chosen method, either the connection string or the explicit parameters.
+
+### Use a connection string
+
+```typescript
+---
+filename: worker.ts
+---
+const client = new Client(env.DB_URL);
+await client.connect();
+```
+
+### Set explicit parameters
+
+```typescript
+---
+filename: worker.ts
+---
+const client = new Client({
+  user: env.DB_USERNAME,
+  password: env.DB_PASSWORD,
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+  database: env.DB_NAME
+});
+await client.connect();
+```
+
+## 5. Interact with the products database
+
+To demonstrate how to interact with the products database, you will fetch data from the `products` table by querying the table when a request is received.
+
+{{<Aside type="note">}}
+
+If you are following along in your own PostgreSQL instance, set up the `products` using the following SQL `CREATE TABLE` statement. This statement defines the columns and their respective data types for the `products` table:
+
+```sql
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price DECIMAL(10, 2) NOT NULL
+);
+```
+
+{{</Aside>}}
+
+Replace the existing code in your `worker.ts` file with the following code:
+
+```typescript
+---
+filename: worker.ts
+---
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const client = new Client(env.DB_URL);
+    await client.connect();
+
+    // Query the products table
+    const result = await client.query("SELECT * FROM products");
+
+    // Return the result as JSON
+    const resp = new Response(JSON.stringify(result.rows), {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    // Clean up the client
+    ctx.waitUntil(client.end());
+    return resp;
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+This code establishes a connection to the PostgreSQL database within your Worker application and queries the `products` table, returning the results as a JSON response.
+
+## 6. Deploy your Worker
+
+Run the following command to deploy your Worker:
+
+```sh
+$ npx wrangler deploy
+```
+
+Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+
+After deploying, you can interact with your PostgreSQL products database using your Cloudflare Worker. Whenever a request is made to your Worker's URL, it will fetch data from the `products` table and return it as a JSON response. You can modify the query as needed to retrieve the desired data from your products database.
+
+## 7. Insert a new row into the products database
+
+To insert a new row into the `products` table, create a new API endpoint in your Worker that handles a `POST` request. When a `POST` request is received with a JSON payload, the Worker will insert a new row into the `products` table with the provided data.
+
+Assume the `products` table has the following columns: `id`, `name`, `description`, and `price`.
+
+Add the following code snippet inside the `fetch` event handler in your `worker.ts` file, before the existing query code:
+
+```typescript
+---
+filename: worker.ts
+---
+const url = new URL(request.url);
+if (request.method === "POST" && url.pathname === "/products") {
+  // Parse the request's JSON payload
+  const productData = await request.json();
+
+  // Insert the new product into the database
+  const insertQuery = `
+    INSERT INTO products (name, description, price)
+    VALUES ($1, $2, $3)
+    RETURNING *
+  `;
+  const values = [productData.name, productData.description, productData.price];
+  const insertResult = await client.query(insertQuery, values);
+
+  // Return the inserted row as JSON
+  const insertResp = new Response(JSON.stringify(insertResult.rows[0]), {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  // Clean up the client
+  ctx.waitUntil(client.end());
+  return insertResp;
 }
 ```
 
-In `wrangler.toml`, define the `webpack_config` key, and use your new file as the value:
+This code snippet does the following:
 
-```toml
+1. Checks if the request is a `POST` request and the URL path is `/products`.
+2. Parses the JSON payload from the request.
+3. Constructs an `INSERT` SQL query using the provided product data.
+4. Executes the query, inserting the new row into the `products` table.
+5. Returns the inserted row as a JSON response.
+
+Now, when you send a `POST` request to your Worker's URL with the `/products` path and a JSON payload, the Worker will insert a new row into the `products` table with the provided data.
+
+Modify your existing Worker code to accommodate the new feature:
+
+```typescript
 ---
-filename: wrangler.toml
-highlight: [3]
+filename: worker.ts
 ---
-name = "postgrest-worker-example"
-type = "webpack"
-webpack_config = "webpack.config.js"
-
-account_id = "yourAccountId"
-```
-
-With the Webpack build configured, `postgrest-js` is ready to be used inside of your new Workers function. In `index.js`, import the package, and set up a new instance of `PostgrestClient`. Note that the `POSTGREST_ENDPOINT` is a placeholder for the publicly accessible PostgREST endpoint mentioned earlier in this tutorial:
-
-```js
----
-filename: index.js
-highlight: [1, 2]
----
-import { PostgrestClient } from '@supabase/postgrest-js'
-const client = new PostgrestClient(POSTGREST_ENDPOINT)
-
-addEventListener('fetch', event => {
-// ... Rest of code
-```
-
-With a new client set up, you will make your first request from inside the Workers function to your PostgREST endpoint. To do this, you will select data from a table inside of your database, using the `from` and `select` functions in `postgrest-js`. The below example uses the `users` table, and selects everything inside of it, though if you are bringing your own PostgreSQL setup to this tutorial, adjust the code accordingly. Replace the default code in `handleRequest` with the below code:
-
-```js
----
-filename: index.js
----
-// ... Rest of code
-
-async function handleRequest(request) {
-  const { data, error } = await client
-    .from('users')
-    .select()
-
-  if (error) throw error
-
-  return new Response(JSON.stringify(data), {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  })
+if (request.method === "POST" && url.pathname === "/products") {
+  // (Insert a new row as detailed in the code snippet above)
+} else if (request.method === "GET" && url.pathname === "/products") {
+  // (Fetch data from the products table as detailed in Step 5)
 }
 ```
 
-This code is identical to making a `GET` request to `/users` on your PostgREST endpoint. In this example, the function returns the `data` object back from `postgrest-js` to the client, as JSON.
-
-To publish this function, run `wrangler publish`:
+After making these changes, deploy the Worker again by running:
 
 ```sh
----
-header: Publish the Workers function
----
-$ wrangler publish
-✨  Built successfully, built project size is 3 KiB.
-✨  Successfully published your script to
- https://postgrest-worker-example.signalnerve.workers.dev
+$ npx wrangler deploy
 ```
 
-To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/workers/platform/environment-variables/#adding-secrets-via-wrangler):
-
-```sh
-$ wrangler secret put POSTGREST_ENDPOINT
-Enter the secret text you'd like assigned to the variable POSTGREST_ENDPOINT on the script named postgrest-worker-example:
-**************
-🌀  Creating the secret for script name postgrest-worker-example
-✨  Success! Uploaded secret POSTGREST_ENDPOINT.
-```
-
-Visit the Workers function in browser (such as `https://postgrest-worker-example.signalnerve.workers.dev`). It returns a simple JSON array of your PostgreSQL data:
+You can now use your Cloudflare Worker to insert new rows into the `products` table. To test this functionality, send a `POST` request to your Worker's URL with the `/products` path, along with a JSON payload containing the new product data:
 
 ```json
----
-header: JSON array returning from PostgREST in a Workers function
----
-[{"id":1,"name":"Kristian"}]
-```
-
-### Adding a router
-
-To increase the functionality of this project, you can add a router to handle multiple potential paths in the application. The application will have one path which returns all users, a path that returns a single user based on ID, and a path that accepts data and creates a user. The URL structure will look like this:
-
-| Route            | Action                    |
-| ---------------- | ------------------------- |
-| `GET /users`     | Get all users             |
-| `GET /users/:id` | Get one user, based on ID |
-| `POST /users`    | Create a new user         |
-
-To build this, you will integrate [`itty-router`](https://github.com/kwhitley/itty-router), a small router built in JavaScript, into the project. Begin by installing the package:
-
-```sh
----
-header: Install itty-router
----
-$ npm install itty-router
-```
-
-With `itty-router` installed, import the package into `index.js` and instantiate a new router at the top of your serverless function:
-
-```js
----
-filename: index.js
-highlight: [2, 5]
----
-import { PostgrestClient } from '@supabase/postgrest-js'
-import { Router } from 'itty-router'
-
-const client = new PostgrestClient(POSTGREST_ENDPOINT)
-const router = Router()
-```
-
-As with most routers, `itty-router` works by adding routes to your `router`, based on the HTTP method clients will access them by. In this case, the router will have three routes: `GET /users`, `GET /users/:id`, and `POST /users`. To begin using the `router`, take the current code, which retrieves all the users in your database, and port it into a `GET /users` route. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
-
-```js
----
-filename: index.js
----
-router.get('/users', async () => {
-  const { data, error } = await client.from('users').select()
-  if (error) throw error
-
-  return new Response(JSON.stringify({ users: data }), {
-    headers: { 'content-type': 'application/json' },
-  })
-})
-```
-
-With the first route configured, the Workers function needs to pass requests off to the `router`. To do this, remove the `handleRequest` function and call `router.handle` in the `fetch` event listener directly:
-
-```js
----
-filename: index.js
-highlight: [4, 11, 12, 13, 14]
----
-const router = Router()
-
-addEventListener('fetch', event => {
-  event.respondWith(router.handle(event.request))
-})
-
-router.get("/users", () => {
-  // PostgREST code
-})
-
-// Delete the below function in your code entirely
-async function handleRequest(request) {
-  // Old PostgREST code
+{
+  "name": "Sample Product",
+  "description": "This is a sample product",
+  "price": 19.99
 }
 ```
 
-Deploy the new version of the function with `wrangler publish`. The previous code now runs at `/users` and returns a JSON array of users:
 
-```json
----
-header: Updated JSON object returning users in a Workers function
----
-{"users":[{"id":1,"name":"Kristian"}]}
-```
+You have successfully created a Cloudflare Worker that connects to a PostgreSQL database and handles fetching data and inserting new rows into a products table.
 
-Notice that the original path at `/` – or the root – now has nothing configured. A client visiting this URL causes the function to throw an exception. To fix this, use `itty-router`'s `all` method, which acts as a catch-all for any routes not explicitly handled by other route handlers. Return a new `404 Not Found` response for any route not recognized:
+## Next steps
 
-```js
----
-filename: index.js
-highlight: [5]
----
-router.get('/users', async () => {
-  // Existing code
-})
+To build more with databases and Workers, refer to [Tutorials](/workers/tutorials) and explore the [Databases documentation](/workers/databases).
 
-router.all('*', () => new Response("Not Found", { status: 404 }))
-```
-
-The second planned route is `GET /users/:id`, which returns a single user based on their ID. Configure another route, which will use parameters to capture part of the URL and make it available as part of the route handler as an object `params`:
-
-```js
----
-filename: index.js
----
-router.get('/users/:id', async ({ params } => {
-  const { id } = params
-  console.log(id) // for example, 5, if the requested URL is /users/5
-})
-```
-
-With the ID captured as the `id` variable, `postgrest-js` can select from the `users` table again, now with an added filter that requires any returned users have a matching ID. This limits the response to a single user, such as a user with an ID of 1. There are a number of filters available for use in `postgrest-js`: `gt` (greater than), `lt` (less than), and `eq` (equal to). These filters can be added to the query chain:
-
-```js
----
-filename: index.js
-highlight: [3, 4, 5, 6]
----
-router.get('/users/:id', async ({ params }) => {
-  const { id } = params
-  const { data, error } = await client
-    .from('users')
-    .select()
-    .eq('id', id)
-})
-```
-
-By implementing this, you will get a JSON array of users back, but since it will be filtering based on ID, it can either be an empty array (when no user is found), or an array with a single item (a user was found). Complete the route handler by returning a JSON object with a key `user`, which is either `null`, or the object returned from PostgREST for the found user:
-
-```js
----
-filename: index.js
-highlight: [8, 9, 10, 11, 12, 13, 14, 15]
----
-router.get('/users/:id', async ({ params }) => {
-  const { id } = params
-  const { data, error } = await client
-    .from('users')
-    .select()
-    .eq('id', id)
-
-  if (error) throw error
-
-  const user = data.length ? data[0] : null
-
-  return new Response(JSON.stringify({ user }), {
-    headers: { 'content-type': 'application/json' },
-    status: user ? 200 : 404
-  })
-})
-```
-
-Deploy the function again with `wrangler publish` to allow looking up users based on their ID, such as `/users/1`. If there is a user in the database with that given ID, you will get a JSON response (with a status of `200 OK`) containing the user data, otherwise the JSON response will be a `null` value (with a status of `404 Not Found`):
-
-```json
----
-header: JSON object for a found user based on ID
----
-{"user":{"id":1,"name":"Kristian"}}
-```
-
-```json
----
-header: Empty JSON object when no user is found
----
-{"user":null}
-```
-
-### Creating new users
-
-To complete the function, create a third endpoint, which creates users from your Workers + PostgREST API. The route will accept `POST` requests to `/users`, with a JSON payload containing the data to save in your database. For example, if the `users` table contains a `name` value, sending a JSON payload to the PostgREST API with the format `{"name":"Kristian"}` will create a new user with a name of **Kristian**.
-
-In the Workers function, implement this by setting up a new `post` handler, and parsing the request body (the data being sent as part of the request) as JSON inside of that handler:
-
-```js
----
-filename: index.js
----
-router.post('/users', async request => {
-  const userData = await request.json()
-})
-```
-
-With that data available as `userData`, use the `insert` function to create a new user in your database. `postgrest-js` returns the new user back from PostgREST, which can be returned as the JSON response back to the client:
-
-```js
----
-filename: index.js
-highlight: [3, 4, 5, 6, 7, 8, 9, 10, 11]
----
-router.post('/users', async request => {
-  const userData = await request.json()
-  const { data: user, error } = await client
-    .from('users')
-    .insert([userData])
-
-  if (error) throw error
-
-  return new Response(JSON.stringify({ user }), {
-    headers: { 'content-type': 'application/json' },
-  })
-})
-```
-
-Deploy the updated function using the command `wrangler publish`. To test this new endpoint, use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique `*.workers.dev` deployment. This command sends JSON data to your new endpoint as a `POST` request, which is parsed by the Workers function and used to create a new user in your database. The response back should be the new user you have created:
-
-```sh
----
-header: Creating a new user using cURL
----
-$ curl https://postgrest-worker-example.signalnerve.workers.dev/users -X POST -H "Content-type: application/json" -d '{"name": "Dog"}'
-{"user":{"id":2,"name":"Dog"}}
-```
-
-## Conclusion
-
-In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely scaling and secure approach to interfacing between your databases and your front-end applications, while still retaining the control and flexibility of avoiding lock-in to Database-as-a-Service tools and other complicated SDKs for data management.
-
-## Related resources
-
-If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
-
-<!-- *   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
-
-- [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
-- [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.

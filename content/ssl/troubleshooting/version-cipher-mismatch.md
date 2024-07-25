@@ -2,17 +2,38 @@
 title: ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 pcx_content_type: troubleshooting
 weight: 1
+meta:
+    title: Fix VERSION_OR_CIPHER_MISMATCH
+    description: Learn how to troubleshoot ERR_SSL_VERSION_OR_CIPHER_MISMATCH when using Cloudflare SSL/TLS.
 ---
 
 # ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 
-After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) errors.
+After you [add a new domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
+- `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome)
+- `Unsupported protocol The client and server don’t support a common SSL protocol version or cipher suite` (Chrome)
+- `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox)
 
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 
 - A [delay in certificate activation](#certificate-activation).
-- An [expired Custom certificate](#certificate-expiration)
+- An [unproxied domain or subdomain DNS record](#proxied-dns-records).
+- An [expired Custom certificate](#certificate-expiration).
 - A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
+
+## Decision tree
+
+```mermaid
+flowchart TD
+accTitle: Troubleshooting ERR_SSL_VERSION_OR_CIPHER_MISMATCH decision tree
+A>Is your certificate active?] -- Yes --> B>Is the DNS record proxied?]
+A -- No --> C[Wait for certificate to activate or pause Cloudflare]
+B -- No --> D[Proxy the DNS record]
+B -- Yes --> E>Are you using a custom certificate?]
+E -- Yes --> F[Custom certificate may be expired]
+E -- No --> G>Are you accessing a multi-level subdomain?]
+G -- Yes --> H[Get an advanced or custom certificate]
+```
 
 ---
 
@@ -34,11 +55,21 @@ If the **Status** is anything other than **Active**, you can either wait a bit l
 
 ### Solutions
 
-If you need to immediately resolve this error, [temporarily pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+If you need to immediately resolve this error, [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 
 Since Universal certificates can take up to 24 hours to be issued, wait and [monitor the certificate's status](/ssl/reference/certificate-statuses/#ssltls). Once your certificate becomes **Active**, unpause Cloudflare using whichever method you used previously.
 
 If your certificate is still not **Active** after 24 hours, try the various troubleshooting steps used to [resolve timeout issues](/ssl/edge-certificates/universal-ssl/troubleshooting/#resolve-a-timed-out-state). If these methods are successful (and your certificate becomes **Active**), unpause Cloudflare using whichever method you used previously.
+
+---
+
+## Proxied DNS records
+
+Cloudflare Universal and Advanced certificates only cover the domains and subdomains you have [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+If the **Proxy status** of `A`, `AAAA`, or `CNAME` records for a hostname are **DNS-only**, you will need to change it to **Proxied**.
+
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/images/dns/proxy-status-screenshot.png)
 
 ---
 
@@ -52,18 +83,8 @@ If it is expired, [upload a replacement certificate](/ssl/edge-certificates/cust
 
 ## Multi-level subdomains
 
-Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) only cover your root domain and one level of subdomain.
-
-| Hostname | Covered by Universal certificate? |
-| --- | --- |
-| `example.com` | Yes |
-| `www.example.com` | Yes |
-| `docs.example.com` | Yes |
-| `dev.docs.example.com` | No |
-| `test.dev.api.example.com` | No |
+{{<render file="_ussl-limitations-table.md">}}
 
 This means that you might experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) on multi-level subdomains.
 
-In order to cover these subdomains, either [order an Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a Custom Certificate](/ssl/edge-certificates/custom-certificates/).
-
-If you purchase an advanced certificate, also enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/), which automatically issues new certificates to covered any proxied hostnames not covered by a Universal certificate.
+{{<render file="_ussl-limitations-solutions.md">}}

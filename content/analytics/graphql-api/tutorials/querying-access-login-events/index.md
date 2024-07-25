@@ -53,13 +53,12 @@ echo '{ "query":
     "datetimeEnd": "2022-09-22T14:36:38Z"
 }
 }' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-key: <API_KEY>" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq.
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --silent \
+  --data @- \
+  https://api.cloudflare.com/client/v4/graphql/ | jq .
 ```
 
 {{<Aside type="note">}}
@@ -104,4 +103,4 @@ Rather than filter by `cfRayId`, you may also [filter](/analytics/graphql-api/fe
 }
 ```
 
-You can compare the query results to your Access policies to see why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.
+You can compare the query results to your Access policies to understand why a user was blocked. For example, if your application requires a valid mTLS certificate, Access blocked the request shown above because `mtlsStatus`, `mtlsCommonName`, and `mtlsCertSerialId` are empty.

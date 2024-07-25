@@ -1,11 +1,11 @@
 ---
-title: Understanding Network Analytics
-pcx_content_type: concept
+title: About
+pcx_content_type: navigation
 weight: 3
 meta:
-  title: Understanding Cloudflare Network Analytics v2
+  title: Understand Cloudflare Network Analytics
 ---
 
-# Understanding Cloudflare Network Analytics
+# Understand Cloudflare Network Analytics
 
 {{<directory-listing>}}

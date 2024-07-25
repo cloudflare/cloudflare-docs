@@ -30,19 +30,19 @@ Spectrum is able to protect servers serving FTP traffic in _passive mode only_. 
 
 Passive mode in combination with EPSV works out of the box with no origin-side configuration required. Note that the client must also support EPSV for this to work. Traditional passive mode with PASV is possible with minimal origin-side configuration (see below, Protecting an FTP server with Spectrum)
 
-## Protecting an FTP Server with Spectrum
+## Protect an FTP Server with Spectrum
 
 Configuring Spectrum to protect your FTP server requires creating a set of Spectrum applications that point to your origin and some configuration on the FTP server.
 
-### Protecting the Control Port
+### Protect the Control Port
 
 The control plane runs on port 21 by default, and there is nothing special that needs to be to protect this part of the FTP server. In the example below, replace 198.51.100.1 with the IP of the origin server.
 
-![Add an application dialog with IP address and port set to 21](/spectrum/img/ftp/ftp-control-plane-app.png)
+![Add an application dialog with IP address and port set to 21](/images/spectrum/ftp-control-plane-app.png)
 
 This configuration proxies incoming connections to the origin. However, if clients issue a PASV command, they will still receive the IP of the actual origin for the data connection. This is not preferred, as this exposes the origin's IP to the client instead of being masked behind Spectrum. Steps to prevent this are documented in sections below.
 
-### Protecting Data Ports
+### Protect Data Ports
 
 Most FTP servers allow configuration of the port range that the server will use to open data connections. It is recommended to specify a port range to prevent accidentally exposing other ports on the server. For each port in the range, create a corresponding Spectrum application that maps to that port.
 
@@ -65,10 +65,27 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
+### Spectrum FTPS (ProFTPD) instructions
+
+To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, the following example configuration is recommended:
+
+- **Control Port**: Port 21
+- **Data Ports**: Port ranges 50000-50500
+
+On the ProFTPD server side use the following example configuration:
+
+- `MasqueradeAddress`: `www.example.com`
+- `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](https://developers.cloudflare.com/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/).
+- `PassivePorts`: `50000-50500`
+
+For more details, refer to the [ProFTPD documentation](http://www.proftpd.org/docs/modules/mod_core.html). 
+
 ## SFTP
 
 Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration. When setting up a Spectrum application for SSH, select port 22 and TCP.
 
-## Related
+## Microsoft Windows IIS FTP
 
-- [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)
+Refer to the [Microsoft Windows IIS documentation](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service) to configure a static data port range and external IP matching your Spectrum application.
+
+Additionally, IIS requires that the source IP for both, FTP control and data connections are the same. However, when using Spectrum, this requirement may not be met, as both connections often terminate on different servers with their own unique egress IPs. To ensure proper functionality, also set `dataChannelSecurity/matchClientAddressForPasv = false`. Refer to [Microsoft Windows IIS FTP Official Guide](https://learn.microsoft.com/en-us/iis/configuration/system.applicationhost/sites/site/ftpserver/security/datachannelsecurity) for further details.

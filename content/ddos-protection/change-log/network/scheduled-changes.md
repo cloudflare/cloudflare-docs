@@ -2,7 +2,9 @@
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
+meta:
+    title: Scheduled changes — Network-layer DDoS
 ---
 
 # Scheduled changes

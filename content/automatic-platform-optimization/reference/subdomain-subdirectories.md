@@ -15,7 +15,7 @@ After you enable APO, you configure it to run on the subdomain that uses WordPre
 3.  Enable APO. The subdomain displays in the list of hostnames in the card.
 4.  Repeat the process for each subdomain to enable APO.
 
-By default, APO runs on the root domain. If you choose to run APO on a subdomain, the root domain is automatically disabled. To run APO on a subdomain and root domain, upgrade the WordPress plugin to version 4.4.0 or later on the root domain and re-enable APO.
+By default, APO runs on the apex domain (also known as "root domain" or "naked domain"). If you choose to run APO on a subdomain, the apex domain is automatically disabled. To run APO on a subdomain and the apex domain, upgrade the WordPress plugin to version 4.4.0 or later on the apex domain and re-enable APO.
 
 ## Run APO on a subdirectory
 
@@ -56,6 +56,6 @@ async function handleRequest(request) {
 }
 ```
 
-### Use Page Rules
+### Use Cache Rules
 
-Use Page Rules to exclude non-WordPress portions of the site from caching using **Cache Level: Bypass**. This option disables all caching, including static assets for those paths. As a result, we recommend disabling APO via the response header.
+Create a [cache rule](/cache/how-to/cache-rules/) to exclude non-WordPress portions of the site from caching using **Cache eligibility: Bypass cache**. This option disables all caching, including static assets for those paths. As a result, we recommend disabling APO via the response header.

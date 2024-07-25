@@ -2,13 +2,13 @@
 pcx_content_type: navigation
 type: overview
 title: Security
-weight: 1
-layout: list
+weight: 3
+layout: wide
 ---
 
 # Security
 
-Cloudflare offers the following features to help secure your APIs: 
+Cloudflare offers the following features to help secure your APIs:
 
 {{<directory-listing>}}
 
@@ -20,19 +20,21 @@ The following table provides examples of how you might match Cloudflare products
 
 | OWASP issue | Example Cloudflare solution |
 | ----------- | ------------------- |
-| Broken Object Level Authorization | [Schema Validation] |
-| Broken User Authentication | [mTLS](/api-shield/security/mtls/), [Anomaly Detection], [Rate Limiting], [Leaked Credential Checks](/waf/exposed-credentials-check/) |
-| Excessive Data Exposure | [Schema Validation], [Sensitive Data Detection (Beta)] |
-| Lack of Resources & Rate Limiting | [Anomaly Detection], [Rate Limiting], [DDoS Protection](/ddos-protection/) |
-| Broken Function Level Authorization| [Schema Validation] |
-| Mass Assignment| [Schema Validation], [Anomaly Detection], [Rate Limiting] |
-| Security Misconfiguration| [Schema Validation], [Sensitive Data Detection (Beta)] |
-| Injection| [Schema Validation], [WAF Rulesets](/waf/managed-rulesets/) |
-| Improper Assets Management| [Discovery](/api-shield/security/api-discovery/) |
-| Insufficient Logging & Monitoring| [Discovery SIEM integration](/logs/get-started/enable-destinations/), [Management and Monitoring](/api-shield/management-and-monitoring/)|
-
+| Broken Object Level Authorization | [Sequence Mitigation], [Schema Validation], [JWT Validation], [Rate Limiting] |
+| Broken Authentication | [mTLS](/api-shield/security/mtls/), [JWT Validation], [Exposed Credential Checks](/waf/managed-rules/check-for-exposed-credentials/), [Bot Management] |
+| Broken Object Property Level Authorization | [Schema Validation], [JWT Validation] |
+| Unrestricted Resource Consumption | [Rate Limiting], [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
+| Broken Function Level Authorization | [Schema Validation], [JWT Validation] |
+| Unrestricted Access to Sensitive Business Flows | [Sequence Mitigation], [Bot Management], [GraphQL Query Protection] |
+| Server Side Request Forgery | [Schema Validation], [WAF Managed Rules], [WAF Custom Rules](/waf/custom-rules/)
+| Security Misconfiguration | [Sequence Mitigation], [Schema Validation], [WAF Managed Rules], [GraphQL Query Protection]
+| Improper Inventory Management | [Discovery](/api-shield/security/api-discovery/), [Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning) |
+| Unsafe Consumption of APIs | [JWT Validation], [WAF Managed Rules] |
 
 [Schema Validation]: /api-shield/security/schema-validation/
-[Anomaly Detection]: /api-shield/security/sequential-abuse-detection/
-[Sensitive Data Detection (Beta)]: https://blog.cloudflare.com/data-loss-prevention/
+[Sequence Mitigation]: /api-shield/security/sequence-mitigation/
+[JWT Validation]: /api-shield/security/jwt-validation/
+[GraphQL Query Protection]: /api-shield/security/graphql-protection/
+[Bot Management]: /bots/
 [Rate Limiting]: /waf/rate-limiting-rules/
+[WAF Managed Rules]: /waf/managed-rules/

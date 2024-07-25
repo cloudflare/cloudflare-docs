@@ -6,6 +6,12 @@ weight: 5
 
 # Permissions
 
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
 When you [create a user](/email-security/account-setup/manage-account-members/#add-user), the available options for permissions depend on whether your account is a **parent** account or a **child** account.
 
 ## Parent accounts
@@ -23,7 +29,7 @@ If your account has [parent permissions](/email-security/account-setup/manage-pa
 
 ## Child accounts
 
-Child accounts control settings and services associated with an Area 1 instance.
+Child accounts control settings and services associated with an Cloud Email Security instance.
 
 ### Child users
 
@@ -31,8 +37,8 @@ Users created at child level will only have access to the assigned child account
 
 - **Super Admin**: Has full access to the account and can make any configuration changes. Can access **Settings** (the gear icon).
 - **Configuration Admin**: Can make configuration changes and manage users, except for Super Admin. Has no ability to review messages.
-- **SOC Analyst**: Can search, review and retract messages. Has no admin capabilites or access to **Settings** (the gear icon).
-- **Viewer**: Only has access to metrics withing the system. No access to **Settings** (the gear icon).
+- **SOC Analyst**: Can search, review and retract messages. Has no admin capabilities or access to **Settings** (the gear icon).
+- **Viewer**: Only has access to metrics within the system. No access to **Settings** (the gear icon).
 
 {{<table-wrap>}}
 

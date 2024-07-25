@@ -1,13 +1,14 @@
 ---
 type: overview
-hideChildren: true
 pcx_content_type: navigation
 title: Tutorials
-weight: 4
-
-layout: table
-column_text: Type
-column_param: content_type
+weight: 7
+layout: wide
+hideChildren: true
 ---
 
 # Tutorials
+
+View {{<glossary-tooltip term_id="tutorial">}}tutorials{{</glossary-tooltip>}} to help you get started with D1.
+
+{{<tutorial-listing>}}

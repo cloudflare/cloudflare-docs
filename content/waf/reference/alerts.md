@@ -1,8 +1,7 @@
 ---
 title: Alerts
 pcx_content_type: reference
-weight: 2
-layout: single
+weight: 1
 ---
 
 # WAF alerts
@@ -14,11 +13,11 @@ The WAF provides two types of alerts that inform you of any spikes in security e
 
 For details on alert types and their availability, refer to [Alert types](#alert-types).
 
-To receive WAF alerts, you must configure a [notification](/fundamentals/notifications/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
+To receive WAF alerts, you must configure a [notification](/notifications/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
 
 ## Set up a notification for WAF alerts
 
-For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/fundamentals/notifications/create-notifications/).
+For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/notifications/get-started/#create-a-notification).
 
 ---
 
@@ -28,14 +27,4 @@ WAF alerts use a static threshold together with a [z-score](https://en.wikipedia
 
 ## Alert types
 
-### Security Events Alert
-
-Available for zones on Business and Enterprise plans. The mean time to detection is two hours.
-
-This alert will look for spikes across all services that generate log entries in [security/firewall events](/logs/reference/log-fields/zone/firewall_events/).
-
-### Advanced Security Events Alert
-
-Only available for zones on Enterprise plans. The mean time to detection is five minutes.
-
-When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
+{{<available-notifications product="Web Application Firewall (WAF)">}}

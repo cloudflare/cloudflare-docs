@@ -10,9 +10,20 @@ meta:
 
 URL normalization modifies separators, encoded elements, and literal bytes in incoming URLs so that they conform to a consistent formatting standard.
 
-For example, consider a firewall rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element — `www.example.com/%68ello`. Normalizing incoming URLs at the edge helps simplify Cloudflare firewall rules expressions that use URLs.
+For example, consider a WAF custom rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element — `www.example.com/%68ello`. Normalizing incoming URLs on the Cloudflare global network helps simplify rules expressions containing URLs.
 
-The URL normalization performed according to [RFC-3986](https://www.ietf.org/rfc/rfc3986.txt) is as follows:
+The two available types of URL normalization are:
+
+* [RFC 3986 normalization](#rfc-3986-normalization)
+* [Cloudflare normalization](#cloudflare-normalization)
+
+The location where URL normalization will occur depends on the [configured settings](/rules/normalization/settings/).
+
+For examples of the different settings and their impact on request URLs, refer to the [URL normalization examples](/rules/normalization/examples/).
+
+## RFC 3986 normalization
+
+The URL normalization performed according to [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt) is as follows:
 
 * The following unreserved characters are [percent decoded](https://tools.ietf.org/html/rfc3986#section-2.1):
     * Alphabetical characters: `a`-`z`, `A`-`Z` (decoded from `%41`-`%5A` and `%61`-`%7A`)
@@ -23,24 +34,10 @@ The URL normalization performed according to [RFC-3986](https://www.ietf.org/rfc
 * Percent encoded representations are converted to upper case.
 * URL paths are normalized according to the [Remove Dot Segments](https://tools.ietf.org/html/rfc3986#section-5.2.4) protocol.
 
-In addition to the rules defined in RFC-3986, Cloudflare can apply the following extra normalization techniques:
+## Cloudflare normalization
 
-* Normalize back slashes (`\`) into forward slashes (`/`).
-* Merge successive forward slashes (for example, `//` will be normalized to `/`).
+When using the Cloudflare URL normalization, some extra normalization techniques will be applied to URLs of incoming requests, in the following order:
 
-The performed URL normalization varies according to the configured settings. For more information, refer to [URL normalization settings](/rules/normalization/settings/).
-
-## URL normalization examples
-
-The following table shows some examples of URL normalization when using the _Cloudflare_ [normalization type](/rules/normalization/settings/):
-
-{{<table-wrap>}}
-
-URL                            | Normalized URL
--------------------------------|------------------------------
-`example.com/en/hello/`        | `example.com/en/hello/`
-`example.com/en//%68ello\path` | `example.com/en/hello/path`
-`example.com\hello`            | `example.com/hello`
-`example.com/./en//hello./`    | `example.com/en/hello./`
-
-{{</table-wrap>}}
+1. Normalize back slashes (`\`) into forward slashes (`/`).
+2. Merge successive forward slashes (for example, `//` will be normalized to `/`).
+3. Perform [RFC 3986 normalization](#rfc-3986-normalization) of the resulting URL.

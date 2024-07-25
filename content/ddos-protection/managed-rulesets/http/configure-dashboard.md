@@ -8,49 +8,61 @@ meta:
 
 # Configure HTTP DDoS Attack Protection in the dashboard
 
-You can customize the **action** and **sensitivity** of the rules in the HTTP DDoS Attack Protection Managed Ruleset in the following ways:
+Configure the HTTP DDoS Attack Protection managed ruleset by defining [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Cloudflare dashboard. DDoS overrides allow you to customize the **action** and **sensitivity** of one or more rules in the managed ruleset.
 
-- [Configure all the rules in the ruleset](#configure-all-the-rules-in-the-ruleset)
-- [Configure one or more rules](#configure-one-or-more-rules)
+For more information on the available parameters and allowed values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
-Tag and rule configurations have greater priority than ruleset configurations.
+{{<Aside type="note" header="Number of available overrides">}}
+If you are an Enterprise customer with the Advanced DDoS Protection subscription, you can define up to 10 overrides. These overrides can have a custom expression so that the override only applies to a subset of incoming requests. If you do not have the Advanced DDoS Protection subscription, you can only deploy one override which will always apply to all incoming requests.
 
-For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
-
-{{<Aside type="warning" header="Important note for API users">}}
-{{<render file="_ddos-custom-expressions-api-only.md">}}
+If you cannot deploy any additional overrides, consider editing an existing override to adjust rule configuration.
 {{</Aside>}}
 
-## Configure all the rules in the ruleset
+## Create a DDoS override
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Go to **Security** > **DDoS**.
+2. Go to **Security** > **DDoS**.
 
-1. Next to **HTTP DDoS attack protection**, select **Configure**.
+3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
 
-1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
+4. Enter a descriptive name for the override in **Override name**.
 
-    ![Configuring the action and sensitivity of all the rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
+5. If you are an Enterprise customer with the Advanced DDoS Protection subscription:
 
-1. Select **Save**.
+    1. Under **Override scope**, review the scope of the override — by default, all incoming requests for the current zone.
+    2. If necessary, select **Edit scope** and configure the [custom filter expression](/ddos-protection/managed-rulesets/http/override-expressions/) that will determine the override scope.
 
-## Configure one or more rules
+6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+    {{<details header="Configure all the rules in the ruleset (ruleset override)">}}
 
-1. Go to **Security** > **DDoS**.
+1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
+2. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 
-1. Next to **HTTP DDoS attack protection**, select **Configure**.
+    {{</details>}}
 
-1. In **Rule configuration**, select **Browse rules**.
+    {{<details header="Configure one or more rules">}}
 
-1. Search for the rules you wish to configure using the available filters. You can search for tags.
+1. Under **Rule configuration**, select **Browse rules**.
 
-    ![Configuring the action and sensitivity of specific rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-rules.png)
+2. Search for the rules you wish to configure using the available filters. You can search by [tag](/ddos-protection/managed-rulesets/http/rule-categories/) (also known as category).
 
-1. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
+3. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-1. Select **Next** and then select **Save**.
+4. Select **Next**.
+
+    {{</details>}}
+
+    {{<Aside type="note" header="Notes">}}
+
+* Tag and rule overrides have priority over ruleset overrides.
+* {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+
+    {{</Aside>}}
+
+7. Select **Save**.
+
+{{<render file="managed-rulesets/_delete-override.md" withParameters="select your account and website;;**Security** > **DDoS**">}}

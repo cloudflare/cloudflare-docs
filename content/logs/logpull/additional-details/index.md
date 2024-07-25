@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Additional details
 weight: 19
-layout: single
 ---
 
 # Additional details
@@ -25,7 +24,7 @@ $ ls -lh sample.log
 -rw-r--r-- 1 mik mik 25K Dec 17 15:49 sample.log
 ```
 
-Based on this information, the approximate number of messages/day is 19,920 (83*10*24), and the byte size is 6MB (25K*10*24). The size estimate is based on the default response field set. Changing the response field set (refer to [Fields](/logs/logpull/requesting-logs/#fields)) will change the response size.
+Based on this information, the approximate number of messages/day is 19,920 (83 × 10 × 24), and the byte size is 6MB (25K × 10 × 24). The size estimate is based on the default response field set. Changing the response field set (refer to [Fields](/logs/logpull/requesting-logs/#fields)) will change the response size.
 
 To get a good estimate of daily traffic, it is best to get at least 30 log lines in your hourly sample. If the response size is too small (or too large), adjust the sample value, not the time range.
 

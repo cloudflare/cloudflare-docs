@@ -4,7 +4,7 @@ type: overview
 hideChildren: true
 pcx_content_type: navigation
 weight: 4
-layout: list
+layout: wide
 meta:
   title: Cloudflare bot plans
 ---

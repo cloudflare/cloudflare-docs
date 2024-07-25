@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: SAML | Jumpcloud
-weight: 5
+title: Jumpcloud (SAML)
+weight: 14
 ---
 
 # SAML | Jumpcloud
@@ -14,7 +14,7 @@ These steps focus on requirements specific to Cloudflare Zero Trust.
 
 To set up JumpCloud SAML as your identity provider:
 
-1.  Generate a SAML certificate.
+1. Generate a SAML certificate.
 
     **Tip:** JumpCloud requires that you provide your own certificates for signing SAML assertions. Self-signed certificates are acceptable.
 
@@ -30,7 +30,7 @@ To set up JumpCloud SAML as your identity provider:
 
     When asked to enter a Distinguished Name or a DN to incorporate into your certificate request, you can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
 
-    ```bash
+    ```txt
     -----
     Country Name (2 letter code) [AU]:.
     State or Province Name (full name) [Some-State]:.
@@ -41,51 +41,53 @@ To set up JumpCloud SAML as your identity provider:
     Email Address []:
     ```
 
-1.  In JumpCloud, select **Applications** in the left-side menu.
+2. In JumpCloud, select **Applications** in the left-side menu.
 
-1.  Click the + icon at the top-left of the screen to add an application.
+3. Select the + icon at the top-left of the screen to add an application.
 
-1.  Choose the **SAML** option in **Application Types**.
+4. Choose the **SAML** option in **Application Types**.
 
-1.  Enter an application name in **Display Label**.
+5. Enter an application name in **Display Label**.
 
-1.  Enter an IdP entity in the **IDP IDENTITY ID** field.The IdP entity can be anything, but must be unique. We suggest you reference something easily identified, such as your Cloudflare team domain, for example `https://<your-team-name>.cloudflareaccess.com/`.
+6. Enter an IdP entity in the **IDP IDENTITY ID** field.The IdP entity can be anything, but must be unique. We suggest you reference something identifiable, such as your Cloudflare team domain (`https://<your-team-name>.cloudflareaccess.com/`).
 
-1.  At the prompt, enter the IdP private key and IdP certificate you previously generated.
+7. At the prompt, enter the IdP private key and IdP certificate you previously generated.
 
-1.  Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `<your-team-name>` is your Cloudflare [team name](/cloudflare-one/glossary/#team-name):
+8. Set both the **SP entity ID** and **ACS URL** to the following callback URL:
 
-    ```text
+    ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Under **SAML SUBJECT NAMEID**, choose **email**.
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-1.  Set the **SAML SUBJECT NAMEID FORMAT** to:
+9. Under **SAML SUBJECT NAMEID**, choose **email**.
+
+10. Set the **SAML SUBJECT NAMEID FORMAT** to:
 
     ```text
     urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
     ```
 
-1.  Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
+11. Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
 
-1.  Leave other settings at default.
+12. Leave other settings at default.
 
-1.  Click **save**. Remember to assign this application to users or groups.
+13. Select **save**. Remember to assign this application to users or groups.
 
-    ![JumpCloud Application dialog with group added to application](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
+    ![JumpCloud Application dialog with group added to application](/images/cloudflare-one/identity/jumpcloud/jumpcloud-saml-2.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+14. In Zero Trust, go to **Settings** > **Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+15. Under **Login methods**, select **Add new**.
 
-1.  Select **SAML**.
+16. Select **SAML**.
 
-1.  Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
+17. Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
 
-1.  Click **Save**.
+18. Select **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
 ## Example API configuration
 

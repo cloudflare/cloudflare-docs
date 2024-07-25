@@ -10,7 +10,7 @@ meta:
 
 ## Using a third-party CDN in front of Cloudflare
 
-Some Cloudflare customers choose to use a Content Delivery Network (CDN) in front of Cloudflare to cache and serve their resources.
+Some Cloudflare customers choose to use a {{<glossary-tooltip term_id="content delivery network (CDN)">}}Content Delivery Network (CDN){{</glossary-tooltip>}} in front of Cloudflare to cache and serve their resources.
 
 Cloudflare recommends that you **do not use a third-party CDN in front of Cloudflare**. Some CDN providers may introduce subtleties into HTTP requests that deviate from protocol standards and/or protocol best practices. Additionally, because traffic to Cloudflare will originate from a limited set of IP addresses of the third-party CDN, in rare occasions — such as when using the Akamai CDN in front of Cloudflare — it may appear as if the CDN is launching a DDoS attack against Cloudflare due to the amount of traffic from these limited IP addresses.
 
@@ -23,16 +23,16 @@ Note that, if you are using a third-party CDN in front of Cloudflare and Cloudfl
 
 ### Recommended DDoS configuration adjustments
 
-If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named **HTTP requests with unusual HTTP headers or URI path (signature #1)** with rule ID `0b1e17bd25c74e38834f19043486aee1`:
+If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named `HTTP requests with unusual HTTP headers or URI path (signature #1)` with rule ID {{<rule-id>}}0b1e17bd25c74e38834f19043486aee1{{</rule-id>}}:
 
 - Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
 - Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
 
-For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
+For more information, refer to [HTTP DDoS Attack Protection managed ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
 
 ## Using VPNs, NATs, and other third-party services
 
-Some Cloudflare Magic Transit customers operate Virtual Private Networks (VPN) so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
+Some Cloudflare Magic Transit customers operate {{<glossary-tooltip term_id="Virtual Private Network (VPN)">}}Virtual Private Networks (VPN){{</glossary-tooltip>}} so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
 
 Cloudflare Magic Transit customers may also use third-party services such as Zoom, Webex, Microsoft Teams, and others for their internal organization communication. Because traffic to Cloudflare will be originating from a limited set of IP addresses belonging to these third-party services, it may appear as if the services are launching a DDoS attack against Cloudflare due to the amount of traffic from limited IP addresses.
 
@@ -42,7 +42,7 @@ Additionally, since this traffic may also be targeting a limited set of destinat
 
 If your organization uses VPNs, NATs, or third-party services at high rates of over 100 Mbps, it is recommended that you one of the following:
 
-- Change the **Sensitivity Level** of the relevant rules to a lower level. Changing the level to _Essentially Off_ will prevent the rules from being triggered. Refer to [HTTP DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/http/) and [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/) for more information on the available adjustments per ruleset and how to perform them.
+- Change the **Sensitivity Level** of the relevant rules to a lower level. Changing the level to _Essentially Off_ will prevent the rules from being triggered. Refer to [HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/) and [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/) for more information on the available adjustments per ruleset and how to perform them.
 
 - Exclude the desired traffic from the Managed DDoS rule using expression filters. You can exclude a combination of source ports, source IP addresses, destination ports, destination IP addresses, and protocol. For more information, refer to [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/).
 

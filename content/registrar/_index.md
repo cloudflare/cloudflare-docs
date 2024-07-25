@@ -18,10 +18,10 @@ Buy and renew your domain at cost with Cloudflare Registrar.
 Buy and manage your domain with Cloudflare Registrar, and add an additional layer of security to your DNS records for free. Cloudflare Registrar also offers redacted WHOIS information by default and will only charge you what is paid to the registry for your domain. No markup. No surprise fees.
 
 ---
- 
+
 ## Features
 
-{{<feature header="DNSSEC" href="/registrar/account-options/enable-dnssec/">}}
+{{<feature header="DNSSEC" href="/registrar/get-started/enable-dnssec/">}}
 Cloudflare Registrar offers one-click DNSSEC activation. DNSSEC secures DNS records with cryptographic signatures, and is free to all Cloudflare customers.
 {{</feature>}}
 
@@ -30,9 +30,9 @@ Buy and renew domains through Cloudflare Registrar at cost, without markup fees.
 {{</feature>}}
 
 ---
- 
+
 ## Related products
- 
+
 {{<related header="DNS" href="/dns/" product="dns">}}
-When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global Anycast network. This network delivers performance and global availability.
+When you use Cloudflare DNS, all DNS queries for your domain are answered by Cloudflare’s global anycast network. This network delivers performance and global availability.
 {{</related>}}

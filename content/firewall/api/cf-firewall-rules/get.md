@@ -2,22 +2,23 @@
 title: GET examples
 pcx_content_type: reference
 weight: 4
+meta:
+  title: GET examples - Firewall rules
 ---
 
 # GET examples
 
 ## Get all rules
 
-This example returns all the firewall rules in the zone with ID `<ZONE_ID>`.
+This example returns all the firewall rules in the zone with ID `{zone_id}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X GET \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -94,16 +95,15 @@ header: Response
 
 ## Get rule by ID
 
-This example returns the firewall rule with ID `<RULE_ID>`.
+This example returns the firewall rule with ID `{rule_id}`.
 
 ```bash
 ---
 header: Request
 ---
-curl -X GET \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules/{rule_id}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

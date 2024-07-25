@@ -1,17 +1,16 @@
 ---
 pcx_content_type: concept
 title: Custom error responses
-weight: 8
-layout: single
+weight: 12
 meta:
   title: Custom error responses (beta)
 ---
 
-{{<beta>}} Custom error responses {{</beta>}}
+{{<heading-pill style="beta">}} Custom error responses {{</heading-pill>}}
 
 Custom error responses, powered by the [Ruleset Engine](/ruleset-engine/), allow you to define custom responses for errors returned by an origin server or by a Cloudflare product (including Workers). Custom error responses will apply to responses whose HTTP status code is greater than or equal to 400 that match the expression of the custom error response rule.
 
-To configure a custom error response, create a custom error response rule at the zone level. Custom error response rules will override [Custom Pages](https://support.cloudflare.com/hc/articles/200172706) at the zone or account level.
+To configure a custom error response, create a custom error response rule at the zone level. Custom error response rules will override [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) at the zone or account level.
 
 {{<Aside type="note" header="Notes about the beta">}}
 

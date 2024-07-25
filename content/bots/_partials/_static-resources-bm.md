@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Static resources are protected by default when you create **firewall rules** using `cf.bot_management.score`. To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your firewall rule.
+Static resources are protected by default when you create [custom rules](/waf/custom-rules/) using `cf.bot_management.score`.

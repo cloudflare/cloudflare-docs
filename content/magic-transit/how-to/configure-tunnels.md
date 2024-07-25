@@ -2,68 +2,42 @@
 pcx_content_type: how-to
 title: Configure tunnel endpoints
 weight: 1
+meta:
+    description: Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Learn how to configure IPsec or GRE tunnels.
 ---
 
 # Configure tunnel endpoints
 
-Cloudflare recommends two tunnels for each ISP and data center router combination, one per Cloudflare endpoint. Cloudflare will assign two Cloudflare endpoint addresses shortly after your onboarding kickoff call that you can use as the tunnel destinations on your data center routers/endpoints.
+{{<render file="tunnel-endpoints/_tunnel-endpoints.md" withParameters="`169.254.240.0/20`">}}
 
-To configure the tunnel(s) between Cloudflare and your data centers, you must provide the following data for each tunnel:
+## Ways to onboard traffic to Cloudflare
 
-- **Tunnel name** — A valid Linux interface name with 15 or less characters. The tunnel name cannot contain spaces or special characters, and the name cannot be shared with other tunnels.
-- **Customer endpoint** — A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them.
-- **Interface address** — A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
-  - 10.0.0.0–10.255.255.255
-  - 172.16.0.0–172.31.255.255
-  - 192.168.0.0–192.168.255.255
-  - 169.254.244.0/20
-- **TTL** — Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
-- **MTU** — Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
+### GRE and IPsec tunnels
 
-<details>
-  <summary>Edge routing configuration example</summary>
-  
-| Tunnel          | Customer endpoint       | Interface address      |
-| --------------- | ----------------------- | ---------------------- |
-| TUNNEL_1_IAD       | 104.18.112.75           | 10.10.10.100/31        |
-| TUNNEL_2_IAD       | 104.18.112.75           | 10.10.10.102/31        |
-| TUNNEL_3_ATL       | 104.40.112.125          | 10.10.10.104/31        |
-| TUNNEL_4_ATL       | 104.40.112.125          | 10.10.10.106/31        |
+{{<render file="tunnel-endpoints/_gre-ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels/;;/magic-transit/reference/tunnels/#supported-configuration-parameters">}}
 
-</details>
+#### Anti-replay protection
 
-### Add tunnels
+{{<render file="tunnel-endpoints/_anti-replay.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/">}}
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2.  From **Manage Magic Transit configuration**, click **Configure**.
+### Network Interconnect (CNI)
 
-{{<render file="_tunnel-configuration.md">}}
+{{<render file="tunnel-endpoints/_cni.md" withParameters="Magic Transit;;[Network Interconnect and Magic Transit](/magic-transit/network-interconnect/)">}}
 
-## Network Address Translation
+## Add tunnels
 
-After adding your tunnels, you can use Network Address Translation (NAT) to translate your private IP to your server’s IP address. NAT works by modifying network address information in a packet’s IP header as it moves across a router, which can help with load balancing and connecting private IP networks with non-registered IP addresses to the Internet.
+{{<render file="tunnel-endpoints/_add-tunnels.md" withParameters="Magic Transit;;**Magic Transit** > **Configuration**;;/magic-transit/how-to/tunnel-health-checks/;;/magic-transit/reference/tunnel-health-checks/;;/magic-transit/reference/anti-replay-protection/;;unidirectional;;/magic-transit/how-to/check-tunnel-health-dashboard/">}}
 
-### Configure Network Address Translation
+## Bidirectional vs unidirectional health checks
 
-1.  On the router, configure NAT from your private IP address to your server’s current IP address.
+{{<render file="tunnel-endpoints/_bi-uni-health-checks.md" withParameters="/magic-transit/reference/tunnel-health-checks/">}}
 
-```txt
-Router(config)# ip nat inside source static <LOCAL_IP> <GLOBAL_IP>
-```
+{{<render file="tunnel-endpoints/_mt-egress.md">}}
 
-2.  On the router, specify which interfaces connect inside and outside of the network.
+### Legacy health checks system
 
-```txt
-Router(config)# interface Tunnel A
-Router(config)# ip nat outside
-Router(config)# interface 0/0  /* WAN interface */
-Router(config)# ip nat outside
-Router(config)# interface 0/0  /* LAN interface - to the server */
-Router(config)# ip nat inside
-```
+{{<render file="_legacy-hc-system.md" >}}
 
-3.  When you are finished, end the configuration.
+## Next steps
 
-```txt
-Router(config)# end
-```
+Now that you have set up your tunnel endpoints, you need to configure {{<glossary-tooltip term_id="static route" link="/magic-transit/how-to/configure-static-routes/">}}static routes{{</glossary-tooltip>}} to route your traffic through Cloudflare.

@@ -1,192 +1,220 @@
 ---
-title: Guide
+title: CLI
 pcx_content_type: get-started
 weight: 1
 meta:
-  title: Get started guide
+  title: Get started - CLI
 ---
 
-# Get started guide
+# Get started with the CLI
 
-This guide will instruct you through setting up a Cloudflare account to deploying your first Worker. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, [sign up](https://dash.cloudflare.com/sign-up/workers) before continuing.
+Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
 
-{{<Aside type="note" header="Try the Playground">}}
+This guide will instruct you through setting up and deploying your first Worker.
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is a simple, instant way to preview and test a Workers script directly in the browser against any site.
+## Prerequisites
 
-{{</Aside>}}
+{{<render file="_prereqs.md" productFolder="workers">}}
 
-## 1. Install Wrangler (Workers CLI)
+## 1. Create a new Worker project
 
-Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
+[C3 (`create-cloudflare-cli`)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+Open a terminal window and run C3 to create your Worker project:
+
+{{<render file="_c3-run-command.md" productFolder="workers">}}
+
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
+
+For this guide:
+
+- For the `In which directory do you want to create your application?` prompt, enter `my-first-worker`.
+- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
+- For the `Do you want to use TypeScript?` prompt, choose `No`.
+- For the `Do you want to use git for version control?` prompt, choose `Yes`.
+- For the `Do you want to deploy your application?` prompt, choose `No`.
+
+Now, you have a new project set up. Move into that project folder.
 
 ```sh
-$ npm install -g wrangler
+$ cd my-first-worker
 ```
 
-or install with `yarn`:
+{{<details header="What files did C3 create?">}}
+
+In your project directory, C3 will have generated the following:
+
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
+3. `package.json`: A minimal Node dependencies configuration file.
+4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
+5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+
+{{</details>}}
+
+{{<details header="What if I already have a project in a git repository?">}}
+
+In addition to creating new projects from C3 templates, C3 also supports creating new projects from Git repositories. To create a new project from a Git repository, open your terminal and run:
 
 ```sh
-$ yarn global add wrangler
+$ npm create cloudflare@latest -- --template <SOURCE>
 ```
 
-## 2. Authenticate Wrangler
+`<SOURCE>` may be any of the following:
 
-To authenticate Wrangler, run `wrangler login`: 
+- `user/repo` (GitHub)
+- `git@github.com:user/repo`
+- `https://github.com/user/repo`
+- `user/repo/some-template` (subdirectories)
+- `user/repo#canary` (branches)
+- `user/repo#1234abcd` (commit hash)
+- `bitbucket:user/repo` (Bitbucket)
+- `gitlab:user/repo` (GitLab)
+
+At a minimum, template folders must contain the following:
+
+- `package.json`
+- `wrangler.toml`
+- `src/` containing a worker script referenced from `wrangler.toml`
+
+{{</details>}}
+
+## 2. Develop with Wrangler CLI
+
+The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-update/), allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects. C3 will install Wrangler in projects by default.
+
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to preview your Worker locally during development.
 
 ```sh
-$ wrangler login
+$ npx wrangler dev
 ```
 
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
-## 3. Start a new project
+Go to [http://localhost:8787](http://localhost:8787) to view your Worker.
 
-With Wrangler installed, you are ready to create your Worker project.
+{{<details header="Browser issues?">}}
 
-Run `wrangler init` followed by your project name:
+If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation.
 
-```sh
-$ wrangler init <YOUR_WORKER>
-```
+{{</details>}}
 
-In your terminal, you will be asked a series of questions related to your project.
+## 3. Write code
 
-{{<Aside type="note" header="TypeScript">}}
+With your new project generated and running, you can begin to write and edit your code.
 
-`wrangler init` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. 
-
-{{</Aside>}}
-
-You can also use one of [Cloudflare's templates](https://github.com/cloudflare/templates#usage) to start a new project.
-
-After you have created your new Worker, `cd` into your new project directory:
-
-```sh
-$ cd <YOUR_WORKER>
-``` 
-
-In your project directory, `wrangler init` has generated the following files:
-
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
-2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax.
-3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
-4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
-
----
-
-## 4. Run your development server
-
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development. 
-
-```sh
-$ wrangler dev
-```
-
----
-
-## 5. Write code
-
-With your new project generated, you can begin to write your code.
-
-After running the `wrangler init` command to generate your Worker, the `index.js` file will be populated with the code below:
+Find the `src/index.js` file. `index.js` will be populated with the code below:
 
 ```js
+---
+header: Original index.js
+---
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     return new Response("Hello World!");
   },
 };
 ```
 
-This code block consists of four parts:
+{{<details header="Code explanation">}}
 
-1. The `export` statement: `export default`
-
-`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). `export default` lets the Workers runtime know that this is a Worker object as opposed to another Cloudflare product. Refer to [MDN documentation for more information on default exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
-
-2. The event handler: `async fetch(request)`
-
-The event handler indicates what events the Worker should listen to, such as [`fetch`](/workers/runtime-apis/fetch-event/) or [`scheduled`](/workers/runtime-apis/scheduled-event/). 
-
-3. Parameters: `request`, `env`, `context`
-
-The event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you would like to interact with these parameters, you will have to accept the parameters as variables by indicating them in your code. You can choose which parameters to use. They must always be written in order (`request`, `env`, `context`). In this example, `request` is indicated and your Worker can now interact with the `Request` object.
-
-4. The `Response` object: `return new Response("Hello World!");`
-
-The Workers runtime expects `fetch` events to return a `Response` object. In this example, you will return a new Response with the string `"Hello World!"`.
-
-To review code changes in real time, rewrite the `"Hello World!"` string to `"Hello Worker!"` and, with `wrangler dev` running, save your changes.
-
-To experiment with more premade Workers, refer to [Workers Examples](/workers/examples/).
-
-
-## 6. Write test
-
-We recommend writing tests against your worker, one way to do this is with the [unstable_dev](/workers/wrangler/api/#unstable_dev) API in wrangler which is used for writing unit and end-to-end tests.
-
-One of the prompts from running the `wrangler init` command is a question asking `will you like to write your first test`, and `which test runner you will like to use?`. If you indicate yes and select either vitest or jest as your test runner,  an `index.test.js` file will be created with the following block of code included in the file: 
+This code block consists of a few different parts.
 
 ```js
-const { unstable_dev } = require("wrangler");
-
-describe("Worker", () => {
-	let worker;
-
-	beforeAll(async () => {
-		worker = await unstable_dev(
-			"src/index.js",
-			{},
-			{ disableExperimentalWarning: true }
-		);
-	});
-
-	afterAll(async () => {
-		await worker.stop();
-	});
-
-	it("should return Hello World", async () => {
-		const resp = await worker.fetch();
-		if (resp) {
-			const text = await resp.text();
-			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-		}
-	});
-});
+---
+header: Updated index.js
+highlight: [1]
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello World!");
+  },
+};
 ```
 
-The code block consists of 4 parts:
+`export default` is JavaScript syntax required for defining [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports). Your Worker has to have a default export of an object, with properties corresponding to the events your Worker should handle.
 
-1. The import statement `const { unstable_dev } = require("wrangler");`, this initializes the `unstable_dev` API so it can be used in the test suite. The `unstable_dev` function accepts three parameters - `await unstable_dev(script, options, apiOptions)`.
+```js
+---
+header: index.js
+highlight: [2]
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello World!");
+  },
+};
+```
 
-2. The `beforeAll()` function for initializing `unstable_dev()`, this helps minimize the overhead required to start the dev server for each individual test, running the dev server for each test will take a longer time to resolve which can end up slowing down the tests.
+This [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) will be called when your Worker receives an HTTP request. You can define additional event handlers in the exported object to respond to different types of events. For example, add a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) to respond to Worker invocations via a [Cron Trigger](/workers/configuration/cron-triggers/).
 
-3. The `afterAll()` function, which calls `await worker.stop()` for stopping the dev server after it runs the test suite.
+Additionally, the `fetch` handler will always be passed three parameters: [`request`, `env` and `context`](/workers/runtime-apis/handlers/fetch/).
 
-4. The `await worker.fetch()` function, for checking the response received corresponds with what you were expecting. 
+```js
+---
+header: index.js
+highlight: [3]
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello World!");
+  },
+};
+```
 
-## 7. Publish your project
+The Workers runtime expects `fetch` handlers to return a `Response` object or a Promise which resolves with a `Response` object. In this example, you will return a new `Response` with the string `"Hello World!"`.
 
-With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers** > **Your subdomain** > **Change**.
+{{</details>}}
+
+Replace the content in your current `index.js` file with the content below, which changes the text output.
+
+```js
+---
+header: index.js
+highlight: [3]
+---
+export default {
+  async fetch(request, env, ctx) {
+    return new Response("Hello Worker!");
+  },
+};
+```
+
+Then, save the file and reload the page. Your Worker's output will have changed to the new text.
+
+{{<details header="No visible changes?">}}
+
+If the output for your Worker does not change, make sure that:
+
+1. You saved the changes to `index.js`.
+2. You have `wrangler dev` running.
+3. You reloaded your browser.
+
+{{</details>}}
+
+## 4. Deploy your project
+
+Deploy your Worker via Wrangler to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
 ```sh
----
-header: Publish to workers.dev
----
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-You can preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
-{{<Aside type="note" header="Note">}}
+Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
+{{<details header="Encountering errors?">}}
 
-{{</Aside>}}
+When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
+
+{{</details>}}
 
 ## Next steps
 
-To do more with Workers, explore the [Tutorials](/workers/tutorials/) and [Examples](/workers/examples/).
+To do more:
+
+- Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
+- Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
+- Learn how to [test and debug](/workers/testing/) your Workers.
+- Read about [Workers limits and pricing](/workers/platform/).

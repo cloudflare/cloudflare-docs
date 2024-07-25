@@ -14,7 +14,7 @@ This tutorial uses [Azure Dedicated HSM](https://azure.microsoft.com/en-us/servi
 
 Make sure you have:
 
-- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using Powershell
+- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using PowerShell
 - Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---
@@ -127,7 +127,7 @@ Using "CKM_SHA256_RSA_PKCS" Mechanism
 
 ## 3. Obtain and upload a signed certificate from your Certificate Authority (CA)
 
-Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/ssl/keyless-ssl/configuration/#step-2--upload-keyless-ssl-certificates).
+Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/ssl/keyless-ssl/configuration/cloudflare-tunnel/#step-3---upload-keyless-ssl-certificates).
 
 ---
 

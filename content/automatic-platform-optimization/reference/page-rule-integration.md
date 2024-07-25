@@ -6,7 +6,11 @@ weight: 12
 
 # Page Rule integration with APO
 
-The following Page rules can control APO. Any changes to Caching page rules require purging the cache for the changes to take effect.
+The following Page Rules can control APO. Any changes to Caching page rules require purging the cache for the changes to take effect.
+
+{{<Aside type="warning">}}
+Consider using [Cache Rules](/cache/how-to/cache-rules/) instead to control APO due to their enhanced configurability.
+{{</Aside>}}
 
 - **Cache Level: Bypass** — APO bypasses pages with response header `cf-apo-via: origin,page-rules`
 
@@ -26,4 +30,4 @@ Automatic page purge via the WordPress plugin won’t clean all cached pages, on
 
 - **Browser Cache TTL** — APO applies custom Browser TTL.
 
-- `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` – Enables users to have detailed control over cache TTLs without using a page rule. For more information on the `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` headers, refer to [CDN-Cache-Control](/cache/about/cdn-cache-control/).
+- `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` – Enables users to have detailed control over cache TTLs without using a page rule. For more information on the `CDN-Cache-Control` and `Cloudflare-CDN-Cache-Control` headers, refer to [CDN-Cache-Control](/cache/concepts/cache-control/).

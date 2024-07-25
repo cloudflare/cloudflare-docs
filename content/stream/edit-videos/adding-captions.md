@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how to
+pcx_content_type: how-to
 title: Add captions
 weight: 5
 ---
@@ -9,6 +9,9 @@ weight: 5
 Adding captions and subtitles to your video library.
 
 ## Add or modify a caption
+
+There are two ways to add captions to a video: generating via AI or uploading a
+caption file.
 
 To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
 
@@ -30,11 +33,73 @@ Suppress-Script: Latn
 ```
 
 The `Subtag` code indicates a value of `tr`. This is the value you should send
-as the `language` at the end of the PUT request shown above.
+as the `language` at the end of the HTTP request.
 
 A label is generated from the provided language. The label will be visible for
 user selection in the player. For example, if sent `tr`, the label `Türkçe` will
 be created; if sent `de`, the label `Deutsch` will be created.
+
+### Generate a caption
+
+Generated captions use artificial intelligence based speech-to-text technology
+to generate closed captions for your videos.
+
+A video must be uploaded and in a ready state before captions can be generated.
+In the following example URLs, the video’s UID is referenced as <VIDEO_UID>.
+To receive webhooks when a video transitions to ready after upload, follow the
+instructions provided [here](/stream/manage-video-library/using-webhooks/).
+
+Only English language caption generation is currently supported.
+
+Videos may include several language captions, but each language must be unique.
+For example, a video may have English, French, and German captions associated
+with it, but it cannot have two English captions. If you have already uploaded
+an English language caption for a video, you must first delete it in order to
+create an English generated caption. Instructions on how to delete a caption can be found below.
+
+The <LANGUAGE_TAG> must adhere to the BCP 47 format. The tag for English is `en`.
+You may specify a region in the tag, such as `en-GB`, which will render a label
+that shows `British English` for the caption.
+
+```bash
+curl -X POST \
+-H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>/generate
+```
+
+Example response:
+
+```json
+{
+  "result": {
+    "language": "en",
+    "label": "English (auto-generated)",
+    "generated": true,
+    "status": "inprogress"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+The result will provide a `status` denoting the progress of the caption generation.  
+There are three statuses: inprogress, ready, and error. Note that
+(auto-generated) is applied to the label.
+
+Once the generated caption is ready, it will automatically appear in the video
+player and video manifest.
+
+If the caption enters an error state, you may attempt to re-generate it by
+first deleting it and then using the endpoint listed above.
+Instructions on deletion are provided below.
+
+### Upload a file
+
+Note two changes if you edit a generated caption: the generated field will
+change to `false` and the (auto-generated) portion of the label will be removed.
+
+To create or replace a caption file:
 
 ```bash
 curl -X PUT \
@@ -49,7 +114,9 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 {
   "result": {
     "language": "en",
-    "label": "English"
+    "label": "English",
+    "generated": false,
+    "status": "ready"
   },
   "success": true,
   "errors": [],
@@ -59,7 +126,9 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 
 ## List the captions associated with a video
 
-To view captions associated with a video:
+To view captions associated with a video.
+Note this results list will also include generated captions that are `inprogress`
+and `error` status:
 
 ```bash
 curl -H 'Authorization: Bearer <API_TOKEN>' \
@@ -73,11 +142,15 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
   "result": [
     {
       "language": "en",
-      "label": "English"
+      "label": "English (auto-generated)",
+      "generated": true,
+      "status": "inprogress"
     },
     {
       "language": "de",
-      "label": "Deutsch"
+      "label": "Deutsch",
+      "generated": false,
+      "status": "ready"
     }
   ],
   "success": true,
@@ -86,11 +159,29 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 }
 ```
 
-## Directly access captions
+## Fetch a caption file
 
-To directly access the captions for your video, use the following URI and add in your video's UID and language tag:
+To view the WebVTT caption file, you may make a GET request:
 
-`https://customer-{CODE}.cloudflarestream.com/<VIDEO_UID>/caption/<LANGUAGE_TAG>`
+```bash
+curl \
+-H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>/vtt
+```
+
+### Example response to get the caption file for a video
+
+```bash
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:01.560
+This is an example of
+
+2
+00:00:01.560 --> 00:00:03.880
+a WebVTT caption response.
+```
 
 ## Delete the captions
 
@@ -121,13 +212,13 @@ deleted.
 - A video must be uploaded before a caption can be attached to it. In the following
   example URLs, the video's ID is referenced as `media_id`.
 - Stream only supports [WebVTT](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
-  formatted caption files. If you have a differently formatted caption file, please
+  formatted caption files. If you have a differently formatted caption file,
   use [a tool to convert your file to WebVTT](https://subtitletools.com/convert-to-vtt-online)
   prior to uploading it.
 - Videos may include several language captions, but each language must be unique.
   For example, a video may have English, French, and German captions associated
   with it, but it cannot have two French captions.
-- Each caption file is limited to 10 MB in size. Please [contact support](https://support.cloudflare.com/hc/articles/200172476)
+- Each caption file is limited to 10 MB in size. [Contact support](/support/contacting-cloudflare-support/)
   if you need to upload a larger file.
 
 ## Most common language codes

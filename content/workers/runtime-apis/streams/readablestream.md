@@ -7,8 +7,7 @@ title: ReadableStream
 
 ## Background
 
-A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `ReadableStream`
-cannot be created directly using the `ReadableStream` constructor.
+A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers ecosystem, `ReadableStream` cannot be created directly using the `ReadableStream` constructor.
 
 ## Properties
 
@@ -23,11 +22,11 @@ cannot be created directly using the `ReadableStream` constructor.
 
 {{<definitions>}}
 
-- {{<code>}}pipeTo(destination{{<param-type>}}WritableStream{{</param-type>}}, options{{<param-type>}}PipeToOptions{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+- {{<code>}}pipeTo(destination{{<param-type>}}WritableStream{{</param-type>}}, options{{<param-type>}}PipeToOptions{{</param-type>}}){{</code>}} : {{<type>}}Promise\<void>{{</type>}}
 
   - Pipes the readable stream to a given writable stream `destination` and returns a promise that is fulfilled when the `write` operation succeeds or rejects it if the operation fails.
 
-- {{<code>}}getReader(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type-link href="/runtime-apis/streams/readablestreamdefaultreader">}}ReadableStreamDefaultReader{{</type-link>}}
+- {{<code>}}getReader(options{{<param-type>}}Object{{</param-type>}}){{</code>}} : {{<type-link href="/runtime-apis/streams/readablestreamdefaultreader">}}ReadableStreamDefaultReader{{</type-link>}}
 
   - Gets an instance of `ReadableStreamDefaultReader` and locks the `ReadableStream` to that reader instance. This method accepts an object argument indicating options. The only supported option is `mode`, which can be set to `byob` to create a [`ReadableStreamBYOBReader`](/workers/runtime-apis/streams/readablestreambyobreader/), as shown here:
 
@@ -51,8 +50,10 @@ let reader = readable.getReader({ mode: 'byob' });
 
 {{</definitions>}}
 
+---
+
 ## Related resources
 
-- [Using Streams](/workers/learning/using-streams/)
+- [Streams](/workers/runtime-apis/streams/)
 - [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
-- [MDN’s ReadableStream documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)
+- [MDN’s `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)

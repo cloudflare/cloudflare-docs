@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Staging environment (Beta)
-weight: 6
+weight: 8
 ---
 
 # Staging environment (Beta)
@@ -24,8 +24,8 @@ Use your certificate staging environment to test new custom (modern) certificate
 
 To upload custom (modern) certificates to your staging environment:
 
-1.  Navigate to **SSL/TLS** > **Staging Certificates**.
-2.  Click **Upload Custom Staging Certificate**.
+1.  Go to **SSL/TLS** > **Staging Certificates**.
+2.  Select **Upload Custom Staging Certificate**.
 3.  Upload your custom (modern) certificate ([detailed instructions](/ssl/edge-certificates/custom-certificates/uploading/)).
 4.  Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
 
@@ -47,20 +47,20 @@ You should confirm whether:
 
 Assuming there are no issues, push your custom (modern) certificate to your production environment:
 
-1.  Navigate to **SSL/TLS** > **Staging Certificates**.
-2.  Click a custom certificate.
-3.  Click **Push to Production**.
+1.  Go to **SSL/TLS** > **Staging Certificates**.
+2.  Select a custom certificate.
+3.  Select **Push to Production**.
 
-If there were issues with your certificate, you can keep it in your staging environment or click **Deactivate** on the certificate itself.
+If there were issues with your certificate, you can keep it in your staging environment or select **Deactivate** on the certificate itself.
 
 ### Step 4 (optional) — Push certificate back to staging
 
 If you roll out a custom (modern) certificate to production and encounter issues, you can deactivate that certificate to delete the certificate from the edge and then push the certificate back to your staging environment for additional testing:
 
-1.  Navigate to **SSL/TLS** > **Edge Certificates**.
-2.  Click a custom certificate.
-3.  Click **Deactivate**.
-4.  Click **Push to Staging**.
+1.  Go to **SSL/TLS** > **Edge Certificates**.
+2.  Select a custom certificate.
+3.  Select **Deactivate**.
+4.  Select **Push to Staging**.
 
 ---
 

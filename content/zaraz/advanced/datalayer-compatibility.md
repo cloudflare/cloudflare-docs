@@ -9,7 +9,7 @@ weight: 3
 Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. This way you can keep your current implementation and Cloudflare Zaraz will automatically collect your events.
 
 To keep the Zaraz script as small and fast as possible, the data layer compatibility mode is disabled by default. To enable it:
-1. Go to [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**. 
+1. Go to [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
 2. Enable the **Data layer compatibility mode** toggle. Refer to [Zaraz settings](/zaraz/reference/settings/) for more information.
 
 ## Using the data layer with Zaraz
@@ -33,12 +33,8 @@ Cloudflare Zaraz then translates the `dataLayer.push()` call to a `zaraz.track()
 
 Because Zaraz converts the `dataLayer.push()` call to `zaraz.track()`, creating a trigger based on `dataLayer.push()` calls is the same as creating triggers for `zaraz.track()`. As an example, the trigger below will match the above `dataLayer.push()` call because it matches the event with `purchase`.
 
-{{<table-wrap>}}
-
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_                | _Equals_        | `purchase`   |
+| _Match rule_ | _Event Name_                | _Equals_        | `purchase`   |
 
-{{</table-wrap>}}
-
-We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaras has this automatic translation layer that converts it to `zaraz.track()`.
+We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaraz has this automatic translation layer that converts it to `zaraz.track()`.

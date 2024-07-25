@@ -8,6 +8,8 @@ weight: 2
 
 {{<render file="_partial-setup-definition.md">}}
 
+Once you are on a partial setup, the actual resolution of your records to Cloudflare depends on `CNAME` records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
+
 ## How to
 
 *   [Set up a partial domain](/dns/zone-setups/partial-setup/setup/)
@@ -25,6 +27,10 @@ With a partial zone, Cloudflare resolves [DNS records differently](/dns/zone-set
 
 ### CNAME flattening
 
-A partial (`CNAME`) setup requires the proxied hostname to be pointed to Cloudflare via a `CNAME` record. Since [`CNAME` records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [`CNAME` Flattening](/dns/additional-options/cname-flattening/).
+A partial (`CNAME`) setup requires the proxied hostname to be pointed to Cloudflare via a `CNAME` record. Since [`CNAME` records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [`CNAME` Flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/).
 
-If your authoritative DNS provider does not support CNAME Flattening, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare.
+If your authoritative DNS provider does not support CNAME Flattening, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare. Alternatively, you can use [static IPs or BYOIPs](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses).
+
+### DDoS protection
+
+[DDoS protection](/ddos-protection/) for attacks against DNS infrastructure is only available for domains on [full setup](/dns/zone-setups/full-setup/). Domains on the partial setup are not using Cloudflare authoritative nameservers.

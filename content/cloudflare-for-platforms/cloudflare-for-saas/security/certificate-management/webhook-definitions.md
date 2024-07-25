@@ -6,15 +6,17 @@ weight: 5
 
 # Webhook data definitions
 
-When you [create a webhook notification](/fundamentals/notifications/create-notifications/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
+When you [create a webhook notification](/notifications/get-started/configure-webhooks/) for **SSL for SaaS Custom Hostnames**, you may want to automate responses to specific events (certificate issuance, failed validation, etc.).
 
 The following section details the data Cloudflare sends to a webhook destination.
 
 ## Certificate validation
 
-Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#validate-certificates).
+Before a Certificate Authority will issue a certificate for a domain, the requester must prove they have control over that domain. This process is known as [domain control validation (DCV)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/).
 
 ### Validation succeeded
+
+Cloudflare sends this alert when certificates move from a status of `pending_validation` to `pending_issuance`.
 
 ```json
 {
@@ -54,6 +56,8 @@ Before a Certificate Authority will issue a certificate for a domain, the reques
 ```
 
 ### Validation failed
+
+Cloudflare sends this alert each time a certificate remains in a `pending_validation` status during [DCV retries](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 ```json
 {
@@ -107,6 +111,8 @@ Once validated, certificates are issued by Cloudflare in conjunction with your c
 
 ### Issuance succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_validation` or `pending_issuance` to `pending_deployment`.
+
 ```json
 {
   "metadata": {
@@ -145,6 +151,8 @@ Once validated, certificates are issued by Cloudflare in conjunction with your c
 ```
 
 ### Issuance failed
+
+Cloudflare sends this alert each time a certificate remains in a status of `pending_issuance` during [DCV retries](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 ```json
 {
@@ -198,6 +206,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 ### Deployment succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_deployment` to `active`.
+
 ```json
 {
   "metadata": {
@@ -236,6 +246,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 ```
 
 ### Deployment failed
+
+Cloudflare sends this alert each time a certificate remains in a status of `pending_deployment` during [DCV retries](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 ```json
 {
@@ -280,6 +292,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 ### Deletion succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_deletion` to `deleted`.
+
 ```json
 {
   "metadata": {
@@ -314,6 +328,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 ```
 
 ### Deletion failed
+
+Cloudflare sends this alert each time a certificate remains in status of `pending_deletion` during [DCV retries](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
 
 ```json
 {
@@ -354,7 +370,7 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 Once issued, certificates are valid for a period of time depending on the [certificate authority](/ssl/reference/certificate-validity-periods/).
 
-The actions that you need to perform to renew certificates depend on your [validation method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#renew-certificates-issued-by-dcv).
+The actions that you need to perform to renew certificates depend on your [validation method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
 
 ### Upcoming renewal
 
@@ -402,6 +418,8 @@ The actions that you need to perform to renew certificates depend on your [valid
 
 ### Renewal succeeded
 
+Cloudflare sends this alert when certificates move from a status of `active` to `pending_deployment`.
+
 ```json
 {
   "metadata": {
@@ -440,6 +458,8 @@ The actions that you need to perform to renew certificates depend on your [valid
 ```
 
 ### Renewal failed
+
+Cloudflare sends this alert when certificates move from a status of `active` to `pending_issuance`.
 
 ```json
 {
@@ -490,3 +510,11 @@ The actions that you need to perform to renew certificates depend on your [valid
 Occasionally, you may see webhook notifications that do not include a corresponding `<<CUSTOM_HOSTNAME_ID>>` and `hostname` values.
 
 This behavior is because each custom hostname can only have one certificate attached to it. Previously attached certificates can still emit webhook events but will not include the associated hostname and ID values.
+
+## Alerts
+
+You can configure alerts to receive notifications for changes in your custom hostname certificates.
+
+{{<available-notifications product="SSL/TLS" notificationName="SSL for SaaS Custom Hostnames Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

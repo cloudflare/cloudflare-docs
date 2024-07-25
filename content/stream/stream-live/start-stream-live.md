@@ -2,23 +2,28 @@
 pcx_content_type: tutorial
 title: Start a live stream
 weight: 1
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Start a live stream
 
-You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
+After you subscribe to Stream, you can create Live Inputs in Dash or via the API. Broadcast to your new Live Input using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
 {{<render file="_srt-supported-modes.md">}}
+
+**First time live streaming?** You will need software to send your video to Cloudflare. [Learn how to go live on Stream using OBS Studio](/stream/examples/obs-from-scratch/).
 
 ## Use the dashboard
 
 **Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create).
 
-![Create live input field from dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+![Create live input field from dashboard](/images/stream/create-live-input-from-stream-dashboard.png)
 
 **Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
 
-![Example of RTMPS URL field](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+![Example of RTMPS URL field](/images/stream/copy-rtmps-url-from-stream-dashboard.png)
 
 **Step 3:** Go live and preview your live stream in the Stream Dashboard
 
@@ -33,9 +38,9 @@ To start a live stream programmatically, make a `POST` request to the `/live_inp
 header: Request
 ---
 curl -X POST \
--H "Authorization: Bearer <API_TOKEN>" \
--D '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 ```
 
 ```json
@@ -64,13 +69,17 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
+[API Reference Docs for `/live_inputs`](/api/operations/stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 
 - `mode` {{<type>}}string{{</type>}} {{<prop-meta>}}default: `off`{{</prop-meta>}}
 
   - When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
+
+- `preferLowLatency` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}} {{<inline-pill style="beta">}}
+
+  - When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. (Recording `mode` property must also be set to `automatic`.)
 
 - `timeoutSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `0`{{</prop-meta>}}
 
@@ -79,6 +88,14 @@ header: Response
 - `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: `false`{{</prop-meta>}}
 
   - The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+
+- `deleteRecordingAfterDays` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
+
+  - Specifies a date and time when the recording, not the input, will be deleted. This property applies from the time the recording is made available and ready to stream. After the recording is deleted, it is no longer viewable and no longer counts towards storage for billing. Minimum value is `30`, maximum value is `1096`.
+
+    When the stream ends, a `scheduledDeletion` timestamp is calculated using the `deleteRecordingAfterDays` value if present.
+
+    Note that if the value is added to a live input while a stream is live, the property will only apply to future streams.
 
 - `allowedOrigins` {{<type>}}integer{{</type>}} {{<prop-meta>}}default: `null` (any){{</prop-meta>}}
 
@@ -90,25 +107,25 @@ header: Response
 
 You can update live inputs by making a `PUT` request:
 
-```sh
+```bash
 ---
 header: Request
 ---
-$ curl -X PUT \
--H "Authorization: Bearer <API_TOKEN>" \
--D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+$ curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
 ```
 
 Delete a live input by making a `DELETE` request:
 
-```sh
+```bash
 ---
 header: Request
 ---
-$ curl -X DELETE \
--H "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+$ curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Recommendations, requirements and limitations
@@ -116,7 +133,14 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 ### Recommendations
 
 - Your creators should use an appropriate bitrate for their live streams, typically well under 12Mbps (12000Kbps). High motion, high frame rate content typically should use a higher bitrate, while low motion content like slide presentations should use a lower bitrate.
-- Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 10 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream. 
+- Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 8 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
+- When possible, select CBR (constant bitrate) instead of VBR (variable bitrate) as CBR helps to ensure a stable streaming experience while preventing buffering and interruptions.
+
+{{<heading-pill heading="h4" style="beta">}}Low-Latency HLS broadcast recommendations{{</heading-pill>}}
+
+- For lowest latency, use a GOP size (keyframe interval) of 1 or 2 seconds.
+- Broadcast to the RTMP endpoint if possible.
+- If using OBS, select the "ultra low" latency profile.
 
 ### Requirements
 
@@ -127,4 +151,4 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 ### Limitations
 
 - Watermarks cannot yet be used with live videos.
-- If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.
+- If a live video exceeds seven days in length, the recording will be truncated to seven days. Only the first seven days of live video content will be recorded.

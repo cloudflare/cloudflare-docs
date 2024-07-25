@@ -74,9 +74,7 @@ function NSLookup(type, domain) {
 
 When you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
-<details>
-<summary>Supported DNS record types</summary>
-<div>
+{{<details header="Supported DNS record types">}}
 
 * `A`
 * `AAAA`
@@ -92,8 +90,7 @@ When you feed the function `NSLookup` a record type and a domain, you will get a
 * `SOA`
 * `TXT`
 
-</div>
-</details>
+{{</details>}}
 
 For example, typing:
 
@@ -101,9 +98,15 @@ For example, typing:
 NSLookup(B1, B2)
 ```
 
+Or - depending on your regional settings - you may have to use this formula:
+
+```txt
+NSLookup(B1; B2)
+```
+
 <div class="medium-img">
 
-![Google sheets function](/1.1.1.1/static/google-sheet-function.png)
+![Google sheets function](/images/1.1.1.1/google-sheet-function.png)
 
 </div>
 
@@ -117,6 +120,6 @@ Returns
 
 <div class="medium-img">
 
-![Google sheets function](/1.1.1.1/static/google-sheet-result.png)
+![Google sheets function](/images/1.1.1.1/google-sheet-result.png)
 
 </div>

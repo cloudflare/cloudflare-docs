@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{- $type := default "overview" .Params.type -}}
   <div class="DocsPage">
     {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
@@ -10,11 +11,18 @@
     </div>
 
     <main class="DocsBody">
+      {{- with .Params.changelog_product_area_name -}}
+      <!-- empty block to avoid rendering -->
+      {{- else -}}
       {{ partial "sidebar.toc" . }}
+      {{- $type = "document" -}}
+      {{- end -}}
 
       <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- partial "breadcrumbs" . -}}
 
-      <div class="DocsContent" id="main" page-type="document">
+      <div class="DocsContent" id="main" page-type="{{$type}}">
+
         <article class="DocsMarkdown">
           {{- .Content -}}
         </article>

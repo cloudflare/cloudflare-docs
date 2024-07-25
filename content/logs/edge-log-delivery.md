@@ -6,9 +6,7 @@ weight: 22
 
 # Edge Log Delivery
 
-Edge Log Delivery allows customers to send logs directly from Cloudflare’s edge to their destination of choice. Logs are delivered in under 10 seconds. Compared to Logpush, Edge Log Delivery sends logs with lower latency, more frequently and in smaller batches.
-
-For [Data Localization Suite](https://www.cloudflare.com/data-localization/) customers, Edge Log Delivery can be configured to deliver logs directly to your destination without first flowing through either of our US or EU core data centers. This means that your logs are delivered from data centers inside your selected region to your destination — for example, an Azure storage bucket in your preferred region, or an instance of Splunk that runs in an on-premise data center.
+Edge Log Delivery allows customers to send logs directly from Cloudflare’s edge to their destination of choice. You can configure the maximum interval for your log batches between 30 seconds and five minutes. However, you cannot specify a minimum interval for log batches, meaning that log files may be sent in shorter intervals than the maximum specified. Compared to Logpush, Edge Log Delivery sends logs with lower latency, more frequently, and in smaller batches.
 
 Edge Log Delivery is only available for HTTP request logs. Refer to the [API configuration](/logs/get-started/api-configuration/#kind) page for steps on how to configure a job to use Edge Log Delivery.
 

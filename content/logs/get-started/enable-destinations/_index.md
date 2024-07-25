@@ -6,7 +6,7 @@ weight: 44
 
 # Enable destinations
 
-Enable pushing logs to your storage service, SIEM, or log management provider. 
+Enable pushing logs to your storage service, {{<glossary-tooltip term_id="SIEM">}}SIEM solution{{</glossary-tooltip>}}, or log management provider.
 
 {{<Aside type="note">}}
 

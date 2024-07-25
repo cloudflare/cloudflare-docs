@@ -5,6 +5,7 @@ product:
   title: Automatic Platform Optimization
   url: /automatic-platform-optimization/
   wrap: true
+  group: Application performance
 
 meta:
   title: Cloudflare Automatic Platform Optimization docs
@@ -12,7 +13,6 @@ meta:
     site from our edge network, ensuring customers see improved performance when
     visiting your site.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
@@ -21,3 +21,8 @@ externals:
     url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
   - title: 'Blog: APO Post-launch report'
     url: https://blog.cloudflare.com/apo-post-launch-report/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: automatic-platform-optimization

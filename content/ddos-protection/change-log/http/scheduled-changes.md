@@ -2,7 +2,9 @@
 pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
-layout: list
+layout: wide
+meta:
+    title: Scheduled changes — HTTP DDoS
 ---
 
 # Scheduled changes
@@ -22,13 +24,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-12-06</td>
-      <td>2022-12-19</td>
-      <td>...cd1b2ec7</td>
-      <td>BETA - HTTP requests causing a high request rate to authentication endpoints.</td>
-      <td>log</td>
-      <td>block</td>
-      <td>Improve the accuracy of the rule to detect more attacks</td>
+      <td>2024-04-19</td>
+      <td>2024-04-29</td>
+      <td>{{<rule-id>}}0a07c24f3cd44a57a5c19b73d2f294d7{{</rule-id>}}</td>
+      <td>HTTP requests trying to impersonate browsers.</td>
+      <td>ddos_dynamic</td>
+      <td>ddos_dynamic</td>
+      <td>Expand rule to catch more attacks</td>
     </tr>
   </tbody>
 </table>

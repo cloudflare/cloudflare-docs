@@ -2,7 +2,6 @@
 pcx_content_type: get-started
 title: Get started
 weight: 2
-layout: single
 ---
 
 # Get started
@@ -13,7 +12,7 @@ layout: single
 
 Before you start this tutorial, make sure you have:
 
-- Completed the [prerequisites](/waiting-room/#prerequisites).
+- Completed the [prerequisites](/waiting-room/about/#prerequisites).
 - Reviewed your [rate limiting rules](/waf/rate-limiting-rules/) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
 ---
@@ -28,6 +27,8 @@ Which page will you cover with a waiting room? You can only have one waiting roo
 
 Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/waiting-room/reference/configuration-settings/).
 
+Advanced Waiting Room customers can also [specify multiple hostname and path combinations](/waiting-room/how-to/place-waiting-room/) for the same zone.
+
 ### Access method
 
 You can direct visitors to your high-traffic page:
@@ -39,15 +40,15 @@ You can direct visitors to your high-traffic page:
 
 When you [activate your waiting room](#step-3--activate-your-waiting-room), choose whether:
 
-- [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event
-- Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`
+- [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event.
+- Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`.
 
 ## Step 2 — Create your waiting room
 
 Create your waiting room by:
 
-- Using the [dashboard](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/).
-- Using the [API](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-via-the-api/).
+- Using the [dashboard](/waiting-room/how-to/create-waiting-room/).
+- Using the [API](/waiting-room/how-to/create-waiting-room/).
 
 ### Appearance (optional)
 
@@ -57,7 +58,7 @@ If you have this ability, think about how you want the page to appear.
 
 ### Prepare your waiting room for mobile application traffic
 
-If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints. Please note that if you have a mobile app or web app that depends on resources that would be protected by a waiting room, you will need to update those clients to handle Waiting Room appropriately.
+If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints. Note that if you have a mobile app or web app that depends on resources that would be protected by a waiting room, you will need to update those clients to handle Waiting Room appropriately.
 
 ## Step 3 — Activate your waiting room
 
@@ -77,4 +78,4 @@ After you have created and deployed your first waiting room, you might also want
 
 - [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before it goes live.
 - [Monitor your traffic](/waiting-room/how-to/monitor-waiting-room/) in real time.
-- [Troubleshoot](https://support.cloudflare.com/hc/articles/360061431012) potential issues.
+- [Troubleshoot](/waiting-room/troubleshooting/) potential issues.

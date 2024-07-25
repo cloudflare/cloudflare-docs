@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 5
 meta:
   title: Configure WAF custom rules with Terraform
-layout: list
 ---
 
 # Configure WAF custom rules
@@ -21,6 +20,18 @@ This page provides examples of creating WAF custom rules in a zone or account us
     * [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
+
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### Import or delete existing rulesets
+
+{{<render file="_import-delete-existing-rulesets.md">}}
+
+---
 
 ## Zone-level configurations
 
@@ -44,6 +55,9 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="custom rule">}}
+<br/>
 
 ## Account-level configurations
 
@@ -74,6 +88,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
 }
 ```
 
+{{<render file="_add-new-rule.md" withParameters="custom rule in the custom ruleset">}}
+<br/>
+
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
 
 ```tf
@@ -102,7 +119,7 @@ For more information on configuring and deploying custom rulesets, refer to [Wor
 
 ### Add a custom rule checking for exposed credentials
 
-The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
+The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
 
 {{<Aside type="warning">}}
 You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).
@@ -135,6 +152,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   }
 }
 ```
+
+{{<render file="_add-new-rule.md" withParameters="rule">}}
+<br/>
 
 The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
 

@@ -8,8 +8,6 @@ meta:
 
 # About Ruleset Engine
 
-{{<content-column>}}
-
 The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is defined by the [Rules language](/ruleset-engine/rules-language/). Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
@@ -24,8 +22,6 @@ There are several elements involved in the configuration and use of the Ruleset 
 
 To view existing rulesets and their properties, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-For more information on deploying Managed Rulesets and defining overrides, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
+For more information on deploying managed rulesets and defining overrides, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
 
 For more information on creating and deploying custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
-
-{{</content-column>}}

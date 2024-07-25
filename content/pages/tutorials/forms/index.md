@@ -3,11 +3,13 @@ updated: 2022-07-28
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Create an HTML form
-layout: single
+title: Create a HTML form
+tags: [Forms]
 ---
 
-# Create an HTML form
+# Create a HTML form
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
@@ -17,7 +19,7 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 {{</Aside>}}
 
-This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
+This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
 ## Overview
 
@@ -28,7 +30,7 @@ Each input should be named – using the [`name`](https://developer.mozilla.org/
 Below is an example HTML5 form with a few inputs and their validation rules defined:
 
 ```html
-<form method="POST" action="/submit">
+<form method="POST" action="/api/submit">
   <input type="text" name="fullname" pattern="[A-Za-z]+" required />
   <input type="email" name="email" required />
   <input type="number" name="age" min="18" required />
@@ -44,7 +46,7 @@ Form elements may also have a [`<label>`](https://developer.mozilla.org/en-US/do
 To enable this, you must create a `<label>` element for each input and assign each `<input>` element and unique `id` attribute value. The `<label>` must also possess a [`for`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attr-for) attribute that reflects its input's unique `id` value. Amending the previous snippet should produce the following:
 
 ```html
-<form method="POST" action="/submit">
+<form method="POST" action="/api/submit">
   <label for="i-fullname">Full Name</label>
   <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 
@@ -69,7 +71,7 @@ When this `<form>` is submitted with valid data, its data contents are sent to t
 By default, HTML forms send their contents in the `application/x-www-form-urlencoded` MIME type. This value will be reflected in the `Content-Type` HTTP header, which the receiving server must read to determine how to parse the data contents. You may customize the MIME type through the [`enctype`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-enctype) attribute. For example, to accept files (via `type=file`), you must change the `enctype` to the `multipart/form-data` value:
 
 ```html
-<form method="POST" action="/submit" enctype="multipart/form-data">
+<form method="POST" action="/api/submit" enctype="multipart/form-data">
   <label for="i-fullname">Full Name</label>
   <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 
@@ -92,7 +94,7 @@ Because the `enctype` changed, the browser changes how it sends data to the serv
 
 The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
-{{<Aside type="info" header="GitHub Repository">}}
+{{<Aside type="note" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
@@ -199,9 +201,9 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
 
-Cloudflare Pages offers a [Functions](/pages/platform/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
+Cloudflare Pages offers a [Functions](/pages/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
-Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/#functions-routing) documentation for more information.
+Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/functions/routing/) documentation for more information.
 
 To define a handler for `/api/submit`, you must create a `functions/api/submit.js` file. This means that your `functions` and `public` directories should be siblings, with a total project structure similar to the following:
 
@@ -329,5 +331,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
 - [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

@@ -11,8 +11,6 @@ pcx_content_type: overview
 Cloudflare's offering for SaaS businesses. 
 {{</description>}}
 
-{{<plan type="<type>">}}
-
 Extend Cloudflare's security, reliability, and performance services to your customers with Cloudflare for Platforms. Together with Cloudflare for SaaS and Workers for Platforms, your customers can build custom logic to meet their needs right into your application.
 
 ---

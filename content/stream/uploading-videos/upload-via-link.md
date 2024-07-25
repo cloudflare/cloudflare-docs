@@ -6,7 +6,7 @@ weight: 2
 
 # Upload via link
 
-If you have videos stored in a cloud storage bucket, you can simply pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
+If you have videos stored in a cloud storage bucket, you can pass a HTTP link for the file. Stream will fetch the file and make it available for streaming.
 
 By using [webhooks](/stream/manage-video-library/using-webhooks/) you can receive a notification when the video is ready to be played or if it errors.
 
@@ -25,8 +25,8 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
 ```json
 {
   "result": {
-    "uid": "b236bde30eb07b9d01318940e5fc3eda",
-    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
+    "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
+    "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
     "thumbnailTimestampPct": 0,
     "readyToStream": false,
     "status": {
@@ -39,7 +39,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
     "created": "2020-10-16T20:20:17.872170843Z",
     "modified": "2020-10-16T20:20:17.872170843Z",
     "size": 9032701,
-    "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+    "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
     "allowedOrigins": [],
     "requireSignedURLs": false,
     "uploaded": "2020-10-16T20:20:17.872170843Z",
@@ -52,8 +52,8 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
       "height": -1
     },
     "playback": {
-      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
-      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
+      "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+      "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
     },
     "watermark": null
   },
@@ -79,16 +79,16 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 -->
 
 <figure data-type="stream">
-  <div className="AspectRatio" style={{ '--aspect-ratio': 'calc(16 / 9)' }}>
+  <div class="AspectRatio" style="--aspect-ratio: calc(16 / 9)">
     <iframe
-      className="AspectRatio--content"
+      class="AspectRatio--content"
       src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?mute=true"
       title="Example Stream video"
-      frameBorder="0"
+      frame-border="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
+      allow-full-screen
+    ></iframe>
   </div>
 </figure>
 
-<p>{{<button type="primary" href="https://developers.cloudflare.com/api/operations/stream-videos-upload-a-video-from-a-url">}}View detailed API reference{{</button>}}</p>
+<p>{{<button type="primary" href="/api/operations/stream-videos-upload-videos-from-a-url">}}View detailed API reference{{</button>}}</p>

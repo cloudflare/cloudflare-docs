@@ -31,3 +31,11 @@ Custom error responses have the following parameters:
   * The status code must be between `400` and `999`.
 
 {{</definitions>}}
+
+{{<Aside type="warning">}}
+
+If you create an HTML error response, make sure the `referrer` meta tag is not present in the HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/):
+
+`<meta name="referrer" (...) />`
+
+{{</Aside>}}

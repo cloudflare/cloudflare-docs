@@ -1,4 +1,5 @@
 {{ $DATA := (index $.Site.Data .Section) }}
+{{- $page := . -}}
 
 <footer class="DocsFooter">
   <div class="DocsFooter--content">
@@ -12,7 +13,7 @@
 
       {{ with $DATA.resources.discord }}
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := default "https://discord.gg/cloudflaredev" $DATA.resources.discord -}} {{- partial
+        {{- $url := "https://discord.cloudflare.com" -}} {{- partial
         "external.link" (dict "text" "Discord" "url" $url) }}
       </span>
 
@@ -27,31 +28,49 @@
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
+        {{- with $page.Params.learning_center -}}
+        {{- partial "external.link" (dict "text" .title "url" .link ) }}
+        {{- else -}}
         {{- $url := default "https://www.cloudflare.com/learning/" $DATA.resources.learning_center -}} {{- partial
         "external.link" (dict "text" "Learning Center" "url" $url) }}
+        {{- end -}}
       </span>
 
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-additional-wrapper">
-        {{- $url := "https://dash.cloudflare.com/?to=/:account/support" -}} {{- partial
+        {{- $url := "/support/contacting-cloudflare-support/" -}} {{- partial
         "external.link" (dict "text" "Support Portal" "url" $url) }}
       </span>
 
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        <!-- OneTrust Cookies Settings button start -->
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        <!-- OneTrust Cookies Settings button end -->
+      </span>
     </div>
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">
         {{- with .File -}} {{- $url := (printf
         "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s"
-        .Path) -}} {{- partial "external.link" (dict "text" "Edit on GitHub"
+        (replace .Path "\\" "/")) -}} {{- partial "external.link" (dict "text" "Edit on GitHub"
         "url" $url) }} {{- end -}}
       </span>
+
+      {{- with .Params.pcx_content_type -}}
+      {{- if ne . "changelog" -}}
 
       <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
 
       <span class="DocsFooter--content-time">
-        Updated {{ partial "datetime" .Lastmod }}
+        Updated {{ partial "datetime" $page.Lastmod }}
       </span>
+      {{- end -}}
+      {{- end -}}
     </div>
   </div>
+  {{- partial "script" (dict "src" "lightbox.js" "defer" true) -}}
+  <link rel="stylesheet" href="/lightbox.css">
 </footer>

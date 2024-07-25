@@ -22,7 +22,7 @@ The application type determines the protocol by which data travels from the edge
 
 When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address, or you can provision the application to be IPv6 only. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
 
-The addresses are Anycasted from all Cloudflare data centers, with the exception of data centers in China.
+The addresses are anycasted from all Cloudflare data centers, with the exception of data centers in China. Spectrum is not available in China, but users have the option to use Cloudflare's partner JD Cloud's solution [Starshield](https://www.jdcloud.com/cn/products/starshield).
 
 ## SMTP
 
@@ -87,6 +87,10 @@ For example, in the configurations above, a connection to `range.example.com:100
 
 If IP Access rules are enabled for a Spectrum application, Cloudflare will respect the IP Access rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
+## Argo Smart Routing
+
+Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
+
 ## Edge TLS Termination
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.
@@ -98,6 +102,14 @@ Spectrum offers three modes of TLS termination: 'Flexible', 'Full', and 'Full (S
 'Full' specifies that traffic from Cloudflare to the origin will also be encrypted but without certificate validation. When set to 'Full (Strict)', traffic from Cloudflare to the origin will also be encrypted with strict validation of the origin certificate.
 
 TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
+
+You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/operations/spectrum-applications-update-spectrum-application-configuration-using-a-name-for-the-origin).
+
+{{<Aside type="note" header="Note">}}
+
+If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
+
+{{</Aside>}}
 
 ## Origin TLS Termination
 

@@ -10,28 +10,39 @@ meta:
 # Cloudflare Image Optimization
 
 {{<description>}}
-Choose between Cloudflare Images, Cloudflare Image Resizing, and Polish, three products tailored to your different needs.
+Store, transform, optimize, and deliver images at scale
 {{</description>}}
 
-Clouflare Image Optimization is a suite of products tailored to your image-processing needs. For more information about the differences between each product, refer to the [Frequently Asked Questions section](/images/faq/#what-is-the-difference-between-cloudflare-images-and-image-resizing-products).
+Cloudflare Images provides an end-to-end solution to build and maintain your image infrastructure from one API.
+
+Images runs on [Cloudflare’s global network](https://www.cloudflare.com/network/).
+
+{{<Aside type="note" header="Image Resizing is now available as transformations">}}
+All Image Resizing features are now available as part of the Cloudflare Images product. You can optimize and transform any publicly available image on the Internet. With our new pricing model, you will be billed only once per 30 days for each unique transformation. Read our [Birthday Week 2023 announcement](https://blog.cloudflare.com/merging-images-and-image-resizing/) to learn more about why we made these changes.
+
+If you are using a legacy plan with Image Resizing, visit the [dashboard](https://dash.cloudflare.com/) to switch to the new plan.
+
+{{</Aside>}}
 
 ---
 
 ## Features
 
-{{<feature header="Cloudflare Images" href="/images/cloudflare-images/">}}
-{{<plan type="all">}}
-With Cloudflare Images you can build a scalable image pipeline on Cloudflare servers, to store, resize, optimize, and deliver images in a fast and secure manner.
+{{<feature header="Storage" href="/images/upload-images/">}}
+Use Cloudflare’s edge network to store your images.
+
 {{</feature>}}
 
-{{<feature header="Cloudflare Image Resizing" href="/images/image-resizing/">}}
-{{<plan type="pro">}}
-With Image Resizing you can use Cloudflare’s edge platform to resize, adjust quality, and convert images to WebP or AVIF format on demand, independently of where they are stored.
+{{<feature header="Direct creator upload" href="/images/upload-images/direct-creator-upload/">}}
+Accept uploads directly and securely from your users by generating a one-time token.
 {{</feature>}}
 
-{{<feature header="Cloudflare Polish" href="/images/polish/">}}
-{{<plan type="pro">}}
-Cloudflare Polish is a one-click image optimization product that automatically optimizes images in your site.
+{{<feature header="Variants" href="/images/transform-images" cta="Create variants by transforming images">}}
+Add up to 100 variants to specify how images should be resized for various use cases.
+{{</feature>}}
+
+{{<feature header="Signed URLs" href="/images/manage-images/serve-images/serve-private-images" cta="Serve private images">}}
+Control access to your images by using signed URL tokens.
 {{</feature>}}
 
 ---

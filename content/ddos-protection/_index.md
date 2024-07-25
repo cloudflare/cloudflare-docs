@@ -1,7 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
-layout: single
+layout: overview
 weight: 1
 meta:
   title: Cloudflare DDoS Protection
@@ -9,31 +9,58 @@ meta:
 
 # Cloudflare DDoS Protection
 
-Cloudflare automatically detects and mitigates [Distributed Denial of Service](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) (DDoS) attacks using its Autonomous Edge.
+{{<description>}}
+Detect and mitigate distributed denial-of-service (DDoS) attacks automatically.
+{{</description>}}
 
-The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Protection Managed Rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
+{{<plan type="all">}}
 
-{{<button-group>}}
-  {{<button type="primary" href="/ddos-protection/about/">}}Learn more{{</button>}}
-  {{<button type="secondary" href="/ddos-protection/managed-rulesets/">}}Managed Rulesets{{</button>}}
-{{</button-group>}}
+Cloudflare automatically detects and mitigates {{<glossary-tooltip term_id="distributed denial-of-service (DDoS) attack" link="https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/">}}distributed denial-of-service (DDoS) attacks{{</glossary-tooltip>}} via our autonomous DDoS systems.
 
-***
+These systems include multiple dynamic mitigation rules exposed as [DDoS attack protection managed rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
+
+---
+
+## Features
+
+{{<feature header="Managed rulesets" href="/ddos-protection/managed-rulesets/">}}
+Protect against a variety of DDoS attacks across layers 3/4 (network layer) and layer 7 (application layer) of the OSI model.
+{{</feature>}}
+
+{{<feature header="Adaptive DDoS protection" href="/ddos-protection/managed-rulesets/adaptive-protection/">}}
+Get increased protection against sophisticated DDoS attacks on layer 7 and layers 3/4.
+{{</feature>}}
+
+{{<feature header="Advanced TCP protection" href="/ddos-protection/tcp-protection/">}}
+Detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, or SYN and SYN-ACK floods.
+{{</feature>}}
+
+{{<feature header="Advanced DNS protection (beta)" href="/ddos-protection/dns-protection/">}}
+Protect against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as random prefix attacks.
+{{</feature>}}
+
+---
 
 ## Availability
 
-* **HTTP DDoS attack protection**. Included in all Cloudflare plans for zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/) (zones with their traffic routed through the Cloudflare network).
+<div style="font-size:87%">
 
-* **Network-layer (L3/4) DDoS attack protection**. Included in all Cloudflare plans for:
+{{<feature-table id="security.ddos">}}
 
-    *   Zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/) (zones with their traffic routed through the Cloudflare network)
-    *   IP applications onboarded to [Spectrum](/spectrum/)
-    *   IP Prefixes onboarded to [Magic Transit](/magic-transit/)
+</div>
 
-    Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
+---
 
-* **Advanced TCP Protection**. Available to all [Magic Transit](/magic-transit/) customers.
+## Related products
 
-## Related resources
+{{<related header="Spectrum" href="/spectrum/" product="spectrum">}}
+Provides security and acceleration for any TCP or UDP based application.
+{{</related>}}
 
-* [How to prepare and respond to DDoS attacks](https://support.cloudflare.com/hc/sections/360007347692)
+{{<related header="Magic Transit" href="/magic-transit/" product="magic-transit">}}
+A network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+{{</related>}}
+
+{{<related header="Web Application Firewall (WAF)" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}

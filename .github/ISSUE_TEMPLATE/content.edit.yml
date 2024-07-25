@@ -2,103 +2,27 @@ name: Request content update
 description: Request documentation content edits and/or clarifications.
 labels: ["documentation", "content:edit"]
 body:
-  - type: dropdown
-    id: products
-    validations:
-      required: true
-    attributes:
-      label: Which Cloudflare product does this pertain to?
-      options:
-        - "1.1.1.1"
-        - Analytics
-        - API
-        - API Shield
-        - Argo Smart Routing
-        - Automatic Platform Optimization
-        - Bots
-        - BYOIP
-        - Cache
-        - China Network
-        - Client IP Geolocation
-        - Cloudflare for Platforms
-        - DDoS Protection
-        - DNS
-        - Email Routing
-        - Email Security
-        - Firewall
-        - Fundamentals
-        - HTTP Applications
-        - Image Optimization
-        - Load Balancing
-        - Logs
-        - Magic Firewall
-        - Magic Network Monitoring
-        - Magic Transit
-        - Magic WAN
-        - Network Error Logging
-        - Network Interconnect
-        - Page Shield
-        - Pages
-        - Pub/Sub
-        - Queues
-        - R2
-        - Railgun
-        - Randomness Beacon
-        - Reference Architecture
-        - Registrar
-        - Rules
-        - Ruleset Engine
-        - Security Center
-        - Spectrum
-        - SSL
-        - Stream
-        - Tenant
-        - Terraform
-        - Time Services
-        - Turnstile
-        - WAF
-        - Waiting Room
-        - WARP Client
-        - Web3
-        - Workers
-        - Zaraz
-        - Zero Trust
-
   - type: textarea
     id: location-urls
     validations:
       required: true
     attributes:
       label: Existing documentation URL(s)
-      description: Please provide links to existing `https://developers.cloudflare.com/` pages.
+      description: Provide links to existing `https://developers.cloudflare.com/` pages.
       placeholder: |
         - https://developers.cloudflare.com/...
         - https://developers.cloudflare.com/...
-
-  - type: textarea
-    id: location-section
-    validations:
-      required: true
-    attributes:
-      label: Section that requires update
-      description: Please specify which section requires the update.
-      placeholder: Please name or describe the section as not all page sections have header-links and section IDs may change over time.
 
   - type: textarea
     id: subject-what
     validations:
       required: true
     attributes:
-      label: What needs to change?
-      description: Explain the issue with the content, including any confusion it may be causing.
-
-  - type: textarea
-    id: subject-how
-    validations:
-      required: true
-    attributes:
-      label: How should it change?
-      description: For content clarification requests, please propose a way forward that would have helped you avoid any confusion.
+      label: What changes are you suggesting?
+      description: |
+        - Give as much detail as you can to help us understand the change you want to see.
+        - Why should the docs be changed? What use cases does it support?
+        - What is the expected outcome?
 
   - type: textarea
     id: extra

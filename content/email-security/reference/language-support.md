@@ -1,23 +1,32 @@
 ---
 title: Language support
 pcx_content_type: reference
-weight: 2
+weight: 6
 ---
 
 # Language support
 
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
 ## Email evaluation
 
-The scanning service and verdict engines used by Area 1 are language agnostic. We provide support for Double Byte Character sets (DBCS) and UTF-8, UTF-16, and UTF-32 encoding.
+The scanning service and verdict engines used by Cloud Email Security are language agnostic. We provide support for Double Byte Character sets (DBCS) and UTF-8, UTF-16, and UTF-32 encoding.
 
 ## Dashboard
 
-The Area 1 email dashboard is localized to English and Japanese. 
+The Cloud Email Security email dashboard is localized to several languages. To update your language settings:
 
-To update your language settings:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. At the bottom of the page, select the language icon.
 
-    ![Select the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
+    <div class="medium-img">
+
+    ![Select the language icon to toggle your dashboard between English and Japanese.](/images/email-security/language-switcher.png)
+
+    </div>
+
 3. Select your preferred language.

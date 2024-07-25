@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Certificate and hostname priority
 weight: 4
+meta:
+    description: Learn about how Cloudflare decides which certificate (and the associated SSL/TLS settings) apply to individual hostnames.
 ---
 
 # Certificate and hostname priority
@@ -12,7 +14,7 @@ When a new certificate is created, Cloudflare first deploys the certificate and 
 
 ## Certificate deployment
 
-For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
+For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) to apply to that hostname:
 
 1.  **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
 
@@ -22,14 +24,15 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
     | Priority | Certificate Type                                                 |
     | -------- | ---------------------------------------------------------------- |
-    | 1        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
-    | 2        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)   |
-    | 3        | [Custom Hostname (SSL for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/)             |
-    | 4        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
-    | 5        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
-    | 6        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
+    | 1        | [Keyless SSL](/ssl/keyless-ssl/)                                 |
+    | 2        | [Custom Legacy](/ssl/edge-certificates/custom-certificates/)     |
+    | 3        | [Custom Modern](/ssl/edge-certificates/custom-certificates/)     |
+    | 4        | [Custom Hostname (Cloudflare for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) |
+    | 5        | [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) |
+    | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
+    | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
 
-4.  **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued or renewed certificate.
+4.  **Certificate expiration**: If the hostname and certificate type are the same, Cloudflare deploys the certificate with the latest expiration date.
 
 {{<Aside type="warning">}}
 
@@ -51,34 +54,34 @@ Cloudflare uses the following order to determine the certificate and settings us
 
 ---
 
-## Hostname priority (SSL for SaaS)
+## Hostname priority (Cloudflare for SaaS)
 
-When multiple proxied DNS records exist for a zone — usually with SSL for SaaS — only one record can control the zone settings and associated origin server.
+When multiple proxied DNS records exist for a zone — usually with Cloudflare for SaaS — only one record can control the zone settings and associated origin server.
 
 Cloudflare determines this priority in the following order (assuming each record exists and is proxied (orange-clouded)):
 
 1.  **Exact hostname match**:
 
-    1.  [New Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) (Belonging to a SaaS Provider)
-    2.  [Legacy Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/) (Belonging to a SaaS Provider)
+    1.  [New custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) (belonging to a SaaS provider)
+    2.  [Legacy custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/) (belonging to a SaaS provider)
     3.  [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (Belonging to the logical DNS zone)
 
 2.  **Wildcard hostname match**:
 
     1.  DNS (Belonging to the logical DNS zone)
-    2.  New Custom Hostname (Belonging to a SaaS Provider)
+    2.  New custom hostname (belonging to a SaaS provider)
 
-If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudflare, that zone’s settings are not applied and any settings configured at the associated origin are applied instead. This origin could be another zone on Cloudflare or any other server.
+If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudflare, that zone's settings are not applied and any settings configured at the associated origin are applied instead. This origin could be another zone on Cloudflare or any other server.
 
 ### Example scenarios
 
 #### Scenario 1
 
-Customer1 uses Cloudflare for authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/) `shop.*example.com*`. Afterward, traffic starts routing over Customer2’s zone:
+Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.example.com`. Afterward, traffic starts routing over Customer2's zone:
 
-- If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another possibility is to stop proxying (gray-cloud) the record.
-- If Customer1 is already proxying a new Custom Hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2’s zone. Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a _moved_ status.
-- If Customer1 is already proxying a legacy Custom Hostname for `www.example.com` and Customer2 creates and verifies a new wildcard Custom Hostname for `*.example.com`, traffic is routed to Customer1’s zone while the `www.example.com` CNAME points to Customer1.
+- If Customer1 wants to regain control of their zone, Customer1 contacts Customer2 and requests them to delete the custom hostname record. Another possibility is to stop proxying (gray-cloud) the record.
+- If Customer1 is already proxying a new custom hostname for `www.example.com`, Customer2 creates and verifies `www.example.com` so traffic starts routing over Customer2's zone. Since this new custom hostname is the last one validated, the new custom hostname on Customer1's zone enters a _moved_ status.
+- If Customer1 is already proxying a legacy custom hostname for `www.example.com` and Customer2 creates and verifies a new wildcard custom hostname for `*.example.com`, traffic is routed to Customer1's zone while the `www.example.com` CNAME points to Customer1.
 
 #### Scenario 2
 
@@ -86,4 +89,4 @@ A customer has a [proxied](/dns/manage-dns-records/reference/proxied-dns-records
 
 This customer is also using a SaaS provider that utilizes Cloudflare for SaaS. The SaaS provider is using a Cloudflare Enterprise plan.
 
-If the SaaS provider is using a wildcard custom hostname, then the original customer's plan limits will take precedence over the SaaS provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/) record or the SaaS provider would need to use an exact hostname match.
+If the provider is using a wildcard custom hostname, then the original customer's plan limits will take precedence over the provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/) record or the SaaS provider would need to use an exact hostname match.

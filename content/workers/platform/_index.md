@@ -1,9 +1,11 @@
 ---
 pcx_content_type: navigation
 title: Platform
-weight: 6
+weight: 11
 ---
 
 # Platform
 
-{{<directory-listing>}}
+Pricing, limits and other information about the Workers platform.
+
+{{<directory-listing showDescriptions="true">}}

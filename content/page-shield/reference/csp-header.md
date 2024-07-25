@@ -3,12 +3,11 @@ pcx_content_type: reference
 type: overview
 title: CSP HTTP header format
 weight: 4
-layout: list
 ---
 
 # CSP HTTP header format
 
-The format of the Content Security Policy (CSP) report-only HTTP header added by Page Shield is the following:
+The format of the {{<glossary-tooltip term_id="content security policy (CSP)">}}Content Security Policy (CSP){{</glossary-tooltip>}} report-only HTTP header added by Page Shield is the following:
 
 ```txt
 content-security-policy-report-only: script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?<QUERY_STRING>
@@ -19,6 +18,12 @@ If you [configured the CSP reporting endpoint](/page-shield/reference/settings/#
 ```txt
 content-security-policy-report-only: script-src 'none'; connect-src 'none'; report-uri <YOUR_HOSTNAME>/cdn-cgi/script_monitor/report?<QUERY_STRING>
 ```
+
+{{<Aside type="note" header="Notes">}}
+Cloudflare adds the CSP report-only HTTP header used to monitor webpages resources to a sample of sent responses.
+
+Configuring [log policies](/page-shield/policies/) will add other CSP report-only headers to responses. Cloudflare will not perform any sampling for these report-only headers related to customer-defined policies.
+{{</Aside>}}
 
 ## Related resources
 

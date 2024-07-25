@@ -8,25 +8,24 @@ meta:
 
 # Use tag overrides to set WordPress rules to Block
 
-Follow the steps below to create a rule that executes a Managed Ruleset and defines an override for rules with a specific tag.
+Follow the steps below to create a rule that executes a managed ruleset and defines an override for rules with a specific tag.
 
-1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a Managed Ruleset.
-2.  [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets a specified action for all rules with a given tag.
+1. [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a managed ruleset.
+2. [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets a specified action for all rules with a given tag.
 
 The example below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to perform the two steps in a single `PUT` request.
 
-*   Add a rule to the ruleset of the `http_request_firewall_managed` phase that applies the **Cloudflare Managed Ruleset**.
-*   Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
+* Add a rule to the ruleset of the `http_request_firewall_managed` phase that applies the **Cloudflare Managed Ruleset**.
+* Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
 
-<details>
-<summary>Example: Use tag overrides to set WordPress rules to Block at the zone level</summary>
-<div>
+{{<details header="Example: Use tag overrides to set WordPress rules to Block at the zone level">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -47,22 +46,20 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}
 
-<details>
-<summary>Example: Use tag overrides to set WordPress rules to Block at the account level</summary>
-<div>
+{{<details header="Example: Use tag overrides to set WordPress rules to Block at the account level">}}
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"",
+      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
@@ -79,5 +76,4 @@ curl -X PUT \
 }'
 ```
 
-</div>
-</details>
+{{</details>}}

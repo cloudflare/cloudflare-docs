@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 5
 ---
@@ -12,7 +12,7 @@ Ensure the token has been verified by running the following `curl` command and c
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
--H "Authorization: Bearer <API_TOKEN"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

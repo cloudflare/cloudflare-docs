@@ -4,13 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m13.5
 product:
   title: Magic Firewall
   url: /magic-firewall/
+  group: Cloudflare One
+  additional_groups: [Network security]
 
 meta:
   title: Cloudflare Magic Firewall docs
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
   author: '@cloudflare'
-  image: /zt-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall
@@ -23,3 +24,8 @@ externals:
     url: https://blog.cloudflare.com/introducing-magic-firewall/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: magic-firewall

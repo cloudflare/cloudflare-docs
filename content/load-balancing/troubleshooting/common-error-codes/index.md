@@ -1,25 +1,24 @@
 ---
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 title: Common error codes
 weight: 51
-layout: single
 ---
 
 # Common error codes
 
-The Cloudflare Load Balancing API adds global health to each pool and origin server. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and origin health status. The quorum is taken from PoPs responsible for running health checks in a region, and the majority result is used.
+The Cloudflare Load Balancing API adds global health to each pool and endpoint. It also gives you a view into what our network sees at a wider level. Cloudflare uses a quorum system to determine pool and endpoint health status. The quorum is taken from PoPs responsible for running health monitor requests in a region, and the majority result is used.
 
-When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Check Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
+When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Monitor Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
 
-You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Check Events command:
+You can get a per-data center breakdown of the health of your endpoints from the Cloudflare API from the List Health Monitor Events command:
 
 ```txt
 GET user/load_balancing_analytics/events
 ```
 
-If a health check fails, the breakdown will include the reason.
+If a health monitor request fails, the breakdown will include the reason.
 
-For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](https://developers.cloudflare.com/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
+For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Monitor Events](/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
 
 Common troubleshooting causes and solutions are listed below.
 
@@ -29,11 +28,11 @@ Common troubleshooting causes and solutions are listed below.
 
 ### Cause
 
-Our health checks failed to establish a TCP connection to your origin server.
+Our health monitor requests failed to establish a TCP connection to your endpoint.
 
 ### Solution
 
-This typically occurs when there is a network failure between Cloudflare and your origin, and/or a firewall refused to allow our connection. Ensure your network and firewall configurations are not interfering with load balancing traffic.
+This typically occurs when there is a network failure between Cloudflare and your endpoint, and/or a firewall refused to allow our connection. Ensure your network and firewall configurations are not interfering with load balancing traffic.
 
 ---
 
@@ -41,11 +40,11 @@ This typically occurs when there is a network failure between Cloudflare and you
 
 ### Cause
 
-The origin failed to return an HTTP response within the timeout configured. This happens if you have the timeout set to a low number — 1 or 2 seconds, for instance.
+The endpoint failed to return an HTTP response within the timeout configured. This happens if you have the timeout set to a low number — 1 or 2 seconds, for instance.
 
 ### Solution
 
-We recommend increasing the HTTP response timeout to allow the origin server to respond.
+We recommend increasing the HTTP response timeout to allow the endpoint to respond.
 
 ---
 
@@ -61,7 +60,7 @@ Response codes must match the `expected_codes`. Use the List Monitors API comman
 
 ### Alternate cause
 
-You may also see this issue if you have a monitor configured to use HTTP connections and your origin server is redirecting to HTTPS. In this case, the response code will often be 301, 302, or 303.
+You may also see this issue if you have a monitor configured to use HTTP connections and your endpoint is redirecting to HTTPS. In this case, the response code will often be 301, 302, or 303.
 
 ### Solution
 
@@ -73,9 +72,9 @@ Either change your Cloudflare monitor configuration to use HTTPS, or set the val
 
 ### Cause
 
-The response body returns from your origin server and does not include the (case-insensitive) value of `expected_body` configured in your monitor.
+The response body returns from your endpoint and does not include the (case-insensitive) value of `expected_body` configured in your monitor.
 
-Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health check will fail.
+Note that we only read the first 10 KB of the response. If you return a larger response, and the expected_body is not in the first 10 KB, the health monitor request will fail.
 
 ### Solution
 
@@ -99,7 +98,7 @@ If you're using a self-signed certificate, we recommend either using a publicly 
 
 ### Cause
 
-Our health check (client) was not able to match a name on the server certificate to the hostname of the request.
+Our health monitor (client) was not able to match a name on the server certificate to the hostname of the request.
 
 ### Solution
 
@@ -111,11 +110,11 @@ Use the List Monitors command to confirm that the `header` value set in the Clou
 
 ### Cause
 
-This error can occur if you’re using an older version of TLS or your origin server is not configured for HTTPS.
+This error can occur if you’re using an older version of TLS or your endpoint is not configured for HTTPS.
 
 ### Solution
 
-Ensure that your origin server supports TLS 1.0 or greater and is configured for HTTPS.
+Ensure that your endpoint supports TLS 1.0 or greater and is configured for HTTPS.
 
 ---
 
@@ -147,7 +146,7 @@ Make sure IP is accurate, and if it is check if there is an ISP or hosting provi
 
 ### Cause
 
-You will receive this error if you attempt to create more objects (monitors, pools, or origins) than are included in your plan.
+You will receive this error if you attempt to create more objects (monitors, pools, or endpoints) than are included in your plan.
 
 If using the dashboard, you will not be able to create additional objects.
 
@@ -155,8 +154,8 @@ If you're using the **Cloudflare API**, you will receive an error message.
 
 ### Solution
 
-- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their account team to discuss this issue.
-- Self-service customers upgrade their Load Balancing subscription with more origin servers to increase load balancing capacity.
+- Enterprise customers who need to create more objects (load balancers, pools, endpoints, or monitors) should reach out to their account team to discuss this issue.
+- Self-service customers can upgrade their Load Balancing subscription with more endpoints to increase load balancing capacity.
 
 ---
 
@@ -168,7 +167,7 @@ Data transmission was not acknowledged and retransmit of data did not succeed.
 
 ### Solution
 
-Confirm whether the SYN-ACK for the handshake takes place at your origin and _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
+Confirm whether the SYN-ACK for the handshake takes place at your endpoint and [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ---
 
@@ -188,11 +187,11 @@ Change wifi networks, connect to a wired network, or verify the network connecti
 
 ### Cause
 
-Cloudflare cannot connect to the origin web server due to network unavailability. This is usually caused by a network issue or incorrect origin IP.
+Cloudflare cannot connect to the endpoint due to network unavailability. This is usually caused by a network issue or incorrect IP.
 
 ### Solution
 
-Check either the IP entered for the origin in Cloudflare's Load Balancer configuration or the IP returned via DNS for the origin hostname.
+Check either the IP entered for the endpoint in Cloudflare's Load Balancer configuration or the IP returned via DNS for the endpoint hostname.
 
 ---
 
@@ -204,7 +203,7 @@ Usually caused by an HTTP 502 error or bad gateway.
 
 ### Solution
 
-Ensure the origin web server responds to requests and that no applications have crashed or are under high load.
+Ensure the endpoint responds to requests and that no applications have crashed or are under high load.
 
 ---
 
@@ -212,11 +211,11 @@ Ensure the origin web server responds to requests and that no applications have 
 
 ### Cause
 
-The origin web server hostname does not exist.
+The endpoint hostname does not exist.
 
 ### Solution
 
-Confirm the origin web server resolves to an IP address.
+Confirm the endpoint resolves to an IP address.
 
 ---
 
@@ -224,11 +223,11 @@ Confirm the origin web server resolves to an IP address.
 
 ### Cause
 
-A network error occurred while the client received data from the origin web server.
+A network error occurred while the client received data from the endpoint.
 
 ### Solution
 
-Confirm whether the origin web server is experiencing a high amount of traffic or an error.
+Confirm whether the endpoint is experiencing a high amount of traffic or an error.
 
 ---
 
@@ -236,11 +235,11 @@ Confirm whether the origin web server is experiencing a high amount of traffic o
 
 ### Cause
 
-There was a configuration error in the monitor and no checks are run against the pool origins.
+There was a configuration error in the monitor and no checks are run against the pool endpoints.
 
 ### Solution
 
-Review your monitor configuration to ensure it matches an expected request to your origin.
+Review your monitor configuration to ensure it matches an expected request to your endpoint.
 
 ---
 
@@ -248,11 +247,11 @@ Review your monitor configuration to ensure it matches an expected request to yo
 
 ### Cause
 
-The origin web server's hostname resolves to an internal or orange-clouded IP address. No checks are run against the pool origins.
+The endpoint's hostname resolves to an internal or orange-clouded IP address. No checks are run against the pool endpoints.
 
 ### Solution
 
-Cloudflare does not allow use of an origin web server hostname that is proxied by Cloudflare.
+Cloudflare does not allow use of an endpoint hostname that is proxied by Cloudflare.
 
 ---
 
@@ -264,7 +263,7 @@ Load Balancing is not enabled for your account or zone.
 
 ### Solution
 
-For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/how-to/enable-load-balancing/).
+For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, and Business customers should [Enable Load Balancing](/load-balancing/get-started/enable-load-balancing/).
 
 ---
 
@@ -272,11 +271,11 @@ For Enterprise customers, reach out to your Cloudflare Account Team. Free, Pro, 
 
 ### Cause
 
-You will receive an error if you try to set the host header value while configuring a load balancer origin.
+You will receive an error if you try to set the host header value while configuring a load balancer endpoint.
 
 ### Solution
 
-Cloudflare now restricts configured [origin host headers](/load-balancing/additional-options/override-http-host-headers/) to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
+Cloudflare now restricts configured [endpoint host headers](/load-balancing/additional-options/override-http-host-headers/) to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but pools may be used across multiple Load balancers.
 
 ---
 
@@ -284,11 +283,11 @@ Cloudflare now restricts configured [origin host headers](/load-balancing/additi
 
 ### Cause
 
-You will receive this error when you attempt to delete an origin pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region.
+You will receive this error when you attempt to delete a pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region.
 
 ### Solution
 
-Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [reenable geosteering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
 
 ---
 
@@ -300,6 +299,4 @@ If the failure cannot be classified as any other type of failure mentioned above
 
 ### Solution
 
-_[Contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
-
----
+[Contact Cloudflare Support](/support/contacting-cloudflare-support/).

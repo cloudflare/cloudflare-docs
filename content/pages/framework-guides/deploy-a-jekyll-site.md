@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Jekyll site
+title: Jekyll
 ---
 
-# Deploy a Jekyll site
+# Jekyll
 
 [Jekyll](https://jekyllrb.com/) is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
 
@@ -17,10 +17,10 @@ If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migrat
 
 Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.
 
-To install Ruby on your computer, follow the [`rbenv` installation instructions](https://github.com/rbenv/rbenv#installation) and select a recent version of Ruby by running the `rbenv` command in your terminal:
+To install Ruby on your computer, follow the [`rbenv` installation instructions](https://github.com/rbenv/rbenv#installation) and select a recent version of Ruby by running the `rbenv` command in your terminal. The Ruby version you install will also be used to configure the Pages deployment for your application.
 
 ```sh
-$ rbenv install 2.7.2
+$ rbenv install <RUBY_VERSION> # For example, 3.1.3
 ```
 
 With Ruby installed, you can install the `jekyll` Ruby gem:
@@ -56,31 +56,25 @@ Optionally, you may use a theme with your new Jekyll site if you would like to s
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="/_framework-guides/_create-github-repository_no_init.md">}}
 
 If you are migrating an existing Jekyll project to Pages, confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+To deploy your site to Pages:
 
-<div>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-| Configuration option | Value          |
+{{<pages-build-preset framework="jekyll">}}
+
+Add an [environment variable](/pages/configuration/language-support-and-tools/) that matches the Ruby version that you are using locally. Set this as `RUBY_VERSION` on both your preview and production deployments. Below, `3.1.3` is used as an example:
+
+| Environment variable | Value          |
 | -------------------- | -------------- |
-| Production branch    | `main`         |
-| Build command        | `jekyll build` |
-| Build directory      | `_site`        |
-
-</div>
+| `RUBY_VERSION`       | `3.1.3`        |
 
 After configuring your site, you can begin your first deployment. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site before deploying it.
 
@@ -91,8 +85,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Jekyll site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Jekyll">}}

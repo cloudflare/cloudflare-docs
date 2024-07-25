@@ -2,16 +2,23 @@
 pcx_content_type: how-to
 title: CrowdStrike
 weight: 4
-layout: single
 ---
 
 # CrowdStrike
 
-Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the integration.
+{{<render file="posture/_service-provider-intro.md" withParameters="Crowdstrike">}}
+
+## Prerequisites
+
+Device posture with Crowdstrike requires:
+
+- Falcon Enterprise plan or above
+- Crowdstrike agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## Set up CrowdStrike as a service provider
 
-### 1. Get CrowdStrike settings
+### 1. Obtain CrowdStrike settings
 
 The following CrowdStrike values are needed to set up the CrowdStrike posture check:
 
@@ -31,46 +38,42 @@ To retrieve those values:
 7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
 8. Get an auth token from your CrowdStrike API endpoint:
 
-    ```curl
-    curl -X POST "<BASE_URL>/oauth2/token" \
-        -H "accept: application/json" \
-        -H "Content-Type: application/x-www-form-urlencoded" \
-        -d "client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>"
-    ```
+   ```curl
+   curl -X POST "<BASE_URL>/oauth2/token" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/x-www-form-urlencoded" \
+       -d "client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>"
+   ```
 
-    This POST request authorizes Cloudflare Zero Trust to [add CrowdStrike as a service provider](#2-add-crowdstrike-as-a-service-provider). For more information, refer to the Crowdstrike [auth token documentation](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis).
+   This POST request authorizes Cloudflare Zero Trust to [add CrowdStrike as a service provider](#2-add-crowdstrike-as-a-service-provider). For more information, refer to the Crowdstrike [auth token documentation](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis).
 
 ### 2. Add CrowdStrike as a service provider
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Device posture providers** and select **Add new**.
 3. Select **CrowdStrike**.
 4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
 5. Enter the **Client ID** and **Client secret** you noted down above.
 6. Enter your **Rest API URL**.
 7. Enter your **Customer ID**.
-8. Choose a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
+8. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
 9. Select **Save**.
 
-To ensure the values have been entered correctly, select **Test**.
+{{<render file="posture/_test-posture-provider.md">}}
 
 ### 3. Configure the posture check
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
-2. Select **Add new**.
-3. Select the CrowdStrike provider.
-4. Configure a [device posture check](#crowdstrike-device-posture-attributes) and enter any name.
-5. Select **Save**.
+{{<render file="posture/_configure-posture-check.md" withParameters="Crowdstrike">}}
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
-
-## Crowdstrike device posture attributes
+## Device posture attributes
 
 Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis). To learn more about how scores are calculated, refer to the [CrowdStrike Zero Trust Assessment](https://falcon.us-2.crowdstrike.com/documentation/138/zero-trust-assessment) documentation.
 
-| Selector      | Description          | Value    |
-| ------------- | ---------------------|----------|
-| OS            | OS signal score      | `1` to `100` |
-| Overall       | Overall ZTA score    | `1` to `100` |
-| Sensor config | Sensor signal score  | `1` to `100` |
-| Version       | ZTA score version    | `2.1.0`      |
+| Selector      | Description         | Value        |
+| ------------- | ------------------- | ------------ |
+| OS            | OS signal score     | `1` to `100` |
+| Overall       | Overall ZTA score   | `1` to `100` |
+| Sensor config | Sensor signal score | `1` to `100` |
+| Version       | ZTA score version   | `2.1.0`      |
+| State         | Current online status of the device | _Online_, _Offline_, or _Unknown_ |
+| Last seen     | Elapsed time since the device was last seen. Only returned if its state is `online` or `unknown`. | Less than 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days|

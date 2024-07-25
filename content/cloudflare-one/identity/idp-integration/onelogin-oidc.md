@@ -1,64 +1,56 @@
 ---
 pcx_content_type: how-to
-title: OneLogin OIDC
-weight: 12
+title: OneLogin
+weight: 19
 ---
 
-# OneLogin OIDC
+# OneLogin
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC identity provider.
 
-## Set up OneLogin OIDC
+## Set up OneLogin as an OIDC provider
 
-To set up OneLogin as your identity provider:
+1. Log in to your OneLogin admin portal.
 
-1.  Log in to your OneLogin admin portal.
+2. Go to **Applications** > **Applications** and select **Add App**.
 
-1.  Select **Apps > Custom Connectors**. The _Custom Connectors_ card displays.
+3. Search for `OIDC` and select **OpenId Connect (OIDC)** by OneLogin, Inc.
 
-1.  Click **New Connector**.
+4. In **Display Name**, enter any name for your application. Select **Save**.
 
-1.  Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
-
-1.  In **Sign-On Method**, select the **OpenID Connect** option.
-
-1.  In the **Redirect URI** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5. Next, go to **Configuration**. In the **Redirect URI** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![OneLogin OIDC Application Basic Configuration page with example Redirect URI](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-3.png)
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-1.  Click **Save**.
+6. Select **Save**.
 
-1.  Select **More Actions > Add App to Connector**.
+7. Go to **Access** and choose the **Roles** that can access this application. Select **Save**.
 
-1.  In the **Portal** section, enter a name for your application in the **Display Name** field.
+8. Go to **SSO** and select **Show client secret**.
 
-1.  Click **Save**.
+9. Copy the **Client ID** and **Client Secret**.
 
-1.  Select the **Access** tab.
+10. In [Zero Trust](https://one.dash.cloudflare.com),, go to **Settings** > **Authentication**.
 
-1.  Add the **Roles** that can access this application.
+11. Under **Login methods**, select **Add new**.
 
-1.  Select the **SSO** tab.
+12. Select **OneLogin**.
 
-1.  Click **Show client secret**.
+13. Fill in the following information:
+    - **Name**: Name your identity provider.
+    - **App ID**: Enter your OneLogin client ID.
+    - **Client secret**: Enter your OneLogin client secret.
+    - **OneLogin account URL**: Enter your OneLogin domain, for example `https://<your-domain>.onelogin.com`.
 
-1.  Copy both the **Client ID** and **Client Secret**.
+14. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+15. Select **Save**.
 
-1.  Under **Login methods**, click **Add new**.
-
-1.  Select OneLogin as your IdP.
-
-1.  Paste in your copied **Client ID** and **Client secret**.
-
-1.  Click **Save**.
-
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
+To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to OneLogin.
 
 ## Example API Config
 

@@ -4,18 +4,25 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 
 product:
   title: R2
   url: /r2/
+  group: Developer platform
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare R2 docs
   description: Store large amounts of unstructured data without egress fees.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
   dashboard_link: https://dash.cloudflare.com/?to=/:account/r2
   discord: https://discord.com/channels/595317990191398933/940663374377783388
+  learning_center: https://www.cloudflare.com/learning/cloud/what-is-object-storage/
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: r2

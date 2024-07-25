@@ -1,50 +1,48 @@
 ---
 pcx_content_type: concept
-title: Cloudflare Load Balancer
+title: Cloudflare Load Balancing
 weight: 0
 ---
 
-# Cloudflare Load Balancer
+# Cloudflare Load Balancing
 
-You can configure Spectrum and Cloudflare's Load Balancing to provide TCP healthchecks, failover, and traffic steering to bring resiliency to your Spectrum applications. To prevent issues with DNS resolution for a Spectrum application, do not use the same Spectrum hostname as a current Load Balancing hostname.
+You can configure Spectrum with Cloudflare [Load Balancing](/load-balancing/) to provide TCP healthchecks, failover, and traffic steering, bringing resiliency to your Spectrum applications.
 
-{{<Aside type="note" header="Note">}}
-
-This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
-
-{{</Aside>}}
+For an overview of how Cloudflare Load Balancing works refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/). For setup guidance refer to [Add load balancing to Spectrum applications](/load-balancing/additional-options/spectrum/).
 
 ## TCP health checks
 
-You can configure Cloudflare's Load Balancer to probe any TCP port for an accepted connection, which is in addition to HTTP and HTTPS probing capabilities.
+You can configure a Cloudflare load balancer to probe any TCP port for an accepted connection, which is in addition to HTTP and HTTPS probing capabilities.
 
-Health Checks are optional within a Load Balancer. However, without a health check, the load balancer will distribute traffic to all origins in the first pool. With the Health Checks enabled, hosts that have gone into an error state will not receive traffic maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools.
+Health checks are optional within a load balancer. However, without a health check, the load balancer will distribute traffic to all endpoints in the first pool. With the health checks enabled, hosts that have gone into an error state will not receive traffic, maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools.
 
 The example below shows a TCP health check configuration for an application running on port 2408 with a refresh rate every 30 seconds. You can configure TCP health checks through the dashboard or through Cloudflare's API.
 
-<details>
-<summary>
-  TCP health check - Dashboard example
-</summary>
-<div class="special-class" markdown="1">
+{{<details header="TCP health check - Dashboard example">}}
 
-![Manage monitors dialog with TCP health check running on port 2408 and a 30 second refresh rate](/spectrum/img/load-balancing/spectrum-tcp-check.png)
+| Field            | Value     |
+|------------------|-----------|
+| Type             | TCP       |
+| Port             | 2408      |
 
-</div>
-</details>
+Under **Advanced health check settings**:
 
-<details>
-<summary>
-  TCP health check - API example
-</summary>
-  <div class="special-class" markdown="1">
+| Field            | Value     |
+|------------------|-----------|
+| Interval         | 30        |
+| Timeout          | 5 seconds |
+| Retries          | 2         |
+
+{{</details>}}
+
+{{<details header="TCP health check - API example">}}
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers/monitors'  \
--H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
--X POST --data '{"description":"Spectrum Health Check","type":"tcp","port":2048,"interval":30,"retries":2,"timeout":5,"method":"connection_established"}'
+curl 'https://api.cloudflare.com/client/v4/organizations/{organization_id}/load_balancers/monitors'  \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"description":"Spectrum Health Check","type":"tcp","port":2048,"interval":30,"retries":2,"timeout":5,"method":"connection_established"}'
 ```
 
 ```json
@@ -59,26 +57,19 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 }
 ```
 
-</div>
-</details>
+{{</details>}}
+
+## Traffic steering
+
+All traffic steering policies are available for transport load balancing through Spectrum. Refer to the Load Balancing documentation to learn more about the available [global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) options.
 
 ## Weights
 
-[Origin Weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have origins without the same capacity or allow you to split traffic amongst hosts for any other reason.
+[Endpoint weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) allow you to have endpoints with different capacity or to split traffic amongst hosts for any other reason.
 
-Weight configured within a load balancer pool will be honored with load balancing through Spectrum. If configured, Cloudflare will distribute traffic amongst the available origins within a pool according to the relative weights assigned to each origin.
+Weight configured within a load balancer pool will be honored with load balancing through Spectrum.
 
-## Traffic steering policies
+## Requirements and limitations
 
-All pool steering modes are available for transport load balancing through Spectrum:
-
-- [Standard failover](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#off---failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
-- [Dynamic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/): Traffic goes to the fastest pool for a given user.
-- [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
-- [Proximity steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/): Traffic goes to the closest physical data center.
-
-## Load balancing rules
-
-Currently, you cannot use [load balancing custom rules](/load-balancing/additional-options/load-balancing-rules/) with Cloudflare Spectrum.
-
-For more information about how to use Load Balancer with Spectrum, refer to [Create a Load Balance](/spectrum/get-started//#create-a-spectrum-application-using-a-load-balancer).
+{{<render file="_spectrum-lb-limitations.md" productFolder="load-balancing">}}
+* This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.

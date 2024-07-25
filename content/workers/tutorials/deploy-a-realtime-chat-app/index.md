@@ -1,20 +1,23 @@
 ---
-updated: 2022-07-21
+updated: 2023-09-13
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a real-time chat application
+products: [Durable Objects]
 ---
 
 # Deploy a real-time chat application
 
-In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/workers/learning/using-durable-objects/). 
+{{<tutorial-date-info>}}
+
+In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
-To continue with this tutorial, you must:
-1. Install [Wrangler 2](/workers/wrangler/install-and-update/).
-2. Purchase the Workers Paid plan and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > **Resources** > **Durable Objects**.
+To continue with this tutorial, you must purchase the [Workers Paid plan](/workers/platform/pricing/#workers) and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > select your Worker > **Durable Objects**.
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Clone the chat application repository
 
@@ -29,18 +32,18 @@ $ git clone https://github.com/cloudflare/workers-chat-demo.git
 After you have cloned the repository, authenticate Wrangler by running:
 
 ```sh
-$ wrangler login
+$ npx wrangler login
 ```
 
-## Publish your project
+## Deploy your project
 
 When you are ready to deploy your application, run:
 
 ```sh
-$ wrangler publish
+$ npx wrangler deploy
 ```
 
-Your application will be deployed to your `*.workers.dev` subdomain. 
+Your application will be deployed to your `*.workers.dev` subdomain.
 
 To deploy your application to a custom domain within the Cloudflare dashboard, go to your Worker > **Triggers** > **Add Custom Domain**.
 
@@ -66,7 +69,7 @@ routes = [
 
 To test your live application:
 
-1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > your Worker > **Resources** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
+1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > your Worker > **Triggers** >  **Routes** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
 2. Enter a name in the **your name** field.
 3. Choose whether to enter a public room or create a private room.
 4. Send the link to other participants. You will be able to view room participants on the right side of the screen.
@@ -90,9 +93,14 @@ tag = "v2"
 deleted_classes = ["ChatRoom", "RateLimiter"]
 ```
 
-Then run `wrangler publish`.
+Then run `npx wrangler deploy`.
 
-To delete your Worker, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > your Worker > **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
+To delete your Worker:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker.
+4. Select **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
 
 By completing this tutorial, you have deployed a real-time chat application with Durable Objects and Cloudflare Workers.
 

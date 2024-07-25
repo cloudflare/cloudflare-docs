@@ -2,11 +2,16 @@
 pcx_content_type: tutorial
 title: Watch a live stream
 weight: 3
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Watch a live stream
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
+
+{{<render file="_chromecast_limitations.md">}}
 
 ## Use the API
 
@@ -33,8 +38,8 @@ highlight: [4,7,21,28,32,46]
 {
   "result": [
     {
-      "uid": "6b6972f427f51793099c6b427783398e",
-      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/thumbnails/thumbnail.jpg",
+      "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
+      "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
       
       "status": {
         "state": "live-inprogress",
@@ -47,18 +52,18 @@ highlight: [4,7,21,28,32,46]
       "created": "2021-09-23T05:44:30.453838Z",
       "modified": "2021-09-23T05:44:30.453838Z",
       "size": 0,
-      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/watch",
+      "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
       ...
 
       "playback": {
-        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.m3u8",
-        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/manifest/video.mpd"
+        "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+        "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
       },
       ...
     },
     {
-      "uid": "b236bde30eb07b9d01318940e5fc3eda",
-      "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
+      "uid": "6b9e68b07dfee8cc2d116e4c51d6a957",
+      "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
       "thumbnailTimestampPct": 0,
       "readyToStream": true,
       "status": {
@@ -73,11 +78,11 @@ highlight: [4,7,21,28,32,46]
       "created": "2021-09-22T22:12:53.587306Z",
       "modified": "2021-09-23T00:14:05.591333Z",
       "size": 0,
-      "preview": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/watch",
+      "preview": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/watch",
       ...
       "playback": {
-        "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
-        "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
+        "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+        "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
       },
     }
   ],
@@ -112,7 +117,7 @@ header: Request
 ---
 curl -X GET \
 -H "Authorization: Bearer <API_TOKEN>" \
-https://customer-m033z5x00ks6nunl.cloudflarestream.com/6b6972f427f51793099c6b427783398e/lifecycle
+https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/lifecycle
 ```
 
 In the example below, the response indicates the `ID` is for an input with an active `videoUID`. The `live` status value indicates the input is actively streaming.

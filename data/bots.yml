@@ -4,13 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M40.4
 product:
   title: Bots
   url: /bots/
+  group: Application security
+  preview_tryout: true
 
 meta:
   title: Cloudflare bot solutions docs
   description: Cloudflare’s bot solutions identify and mitigate automated traffic
     to protect your domain from bad bots.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -20,3 +21,8 @@ resources:
 externals:
   - title: Bot Management home
     url: https://www.cloudflare.com/products/bot-management
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: bots

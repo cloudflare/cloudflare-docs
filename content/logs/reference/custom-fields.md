@@ -168,20 +168,23 @@ Perform the following steps to create the rule:
 
 ### 2. Include the custom fields in your Logpush job
 
-Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `logpull_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
+Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `output_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
 
 For example, consider the following request that creates a job that includes custom fields:
 
 ```json
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs" \
--H "X-Auth-Email: <EMAIL>" \ 
+-H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
 -d '{
   "name":"<DOMAIN_NAME>",
   "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
   "dataset": "http_requests",
-  "logpull_options":"fields=RayID,EdgeStartTimestamp,Cookies,RequestHeaders,ResponseHeaders&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
+      "timestamp_format": "rfc3339"
+    },
   "ownership_challenge":"00000000000000000000"
 }'
 ```
@@ -192,16 +195,18 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 {{</Aside>}}
 
-## Enable custom rules via dashboard
+## Enable custom fields via dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
-2. Go to **Analytics** > **Logs**.
+2. Go to **Analytics & Logs** > **Logpush**.
 3. In the **Custom Fields** section, select **Edit Custom Fields**.
-4. Select **Set new Custom Field**. 
-5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**. 
+4. Select **Set new Custom Field**.
+5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
 6. When you are done, select **Save**.
 
-## Final remarks
+## Limitations
 
 * You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
-* The maximum length of custom field data is 8 KB. Any data over this limit will be truncated.
+* The maximum length of custom field data for HTTP request headers, Cookies, and HTTP response headers combined is 8 KB. Any data over this limit will be truncated.
+* For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
+* Currently, Cloudflare only logs original request/response headers. Headers that were modified earlier in the request lifecycle with [Transform Rules](/rules/transform/) will not be logged.

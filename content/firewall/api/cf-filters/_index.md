@@ -2,12 +2,13 @@
 pcx_content_type: reference
 title: Cloudflare Filters API
 weight: 2
-layout: single
 ---
 
 # Cloudflare Filters API
 
 **Cloudflare Filters** is an API-only component of firewall rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
+
+{{<render file="_deprecation-notice.md">}}
 
 For example, a filter matching:
 
@@ -17,7 +18,7 @@ For example, a filter matching:
 
 Associate a filter with a firewall rule to define the scope of that rule.
 
-Use IP Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/firewall/api/cf-lists/) for more information.
+Use IP lists within a filter to refer collectively to a group of IP addresses. Refer to the [Lists API](/waf/tools/lists/lists-api/) for more information.
 
 Before getting started with the Cloudflare Filters API, familiarize yourself with rule [expressions](/ruleset-engine/rules-language/expressions/). For a complete reference, refer to [Rules language](/ruleset-engine/rules-language/).
 

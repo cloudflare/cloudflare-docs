@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "@tsconfig/node20/tsconfig.json",
+    "@vue/tsconfig/tsconfig.json"
+  ],
+  "include": ["vite.config.*", "bin/**.ts"],
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "composite": true,
+    "types": ["node"],
+    "noEmit": false
+  }
+}

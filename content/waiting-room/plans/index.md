@@ -3,7 +3,7 @@ title: Plans
 pcx_content_type: reference
 type: overview
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Features by plan type
 ---
@@ -13,6 +13,8 @@ meta:
 The features available for a waiting room depend on your plan type. You can only have **one plan** per zone.
 
 {{<feature-table id="traffic.waiting_room">}}
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## How do I get started?
 

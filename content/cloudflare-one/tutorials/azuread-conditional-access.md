@@ -1,82 +1,96 @@
 ---
-updated: 2020-11-28
-category: 🔐 Zero Trust
+updated: 2024-01-12
+category: 🔐 Access
 pcx_content_type: tutorial
-title: Use multiple Azure AD Conditional Access Policies with Access
+title: Use Azure AD Conditional Access policies in Cloudflare Access
 ---
 
-# Use multiple Azure AD Conditional Access Policies with Access
+# Use Azure AD Conditional Access policies in Cloudflare Access
 
-With Azure Active Directory (AD)'s Conditional Access, administrators can enforce policies on applications and users directly in Azure AD. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
+With Azure Active Directory (AD)'s [Conditional Access](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/overview), administrators can enforce policies on applications and users directly in Azure AD. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
 
-## Prerequisites
+{{<tutorial>}}
 
-To complete this tutorial, you will need:
+{{<tutorial-prereqs>}}
 
-- Admin Access to a Cloudflare Access account
+Make sure you have:
+
 - Global admin rights to an Azure AD account
 - Configured users in the Azure AD account
-- A non-Cloudflare Azure AD account to use for testing.
 
-## Setup
+{{</tutorial-prereqs>}}
 
-1. Open the Azure Active Directory Admin Center and select **Enterprise applications**.
-2. Select **Create your own application**. 
+{{<tutorial-step title="Set up an identity provider for your application">}}
 
-![Azure Active Directory's Enterprise applications page](/cloudflare-one/static/zero-trust-security/azuread-access-policies/create-app.png)
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider) for Azure AD.
 
-3. From **Create your own application**, select **Integrate any other application you don't find in the gallery (Non-gallery)**.
-4. From **Register an application**, select **Accounts in this organization directory only** and add the **Redirect URI**.
+{{</tutorial-step>}}
 
-![Register an application dialog with supported account types and the redirect URI](/cloudflare-one/static/zero-trust-security/azuread-access-policies/register-app-redirects.png)
+{{<tutorial-step title="Add API permission in Azure AD">}}
 
-5. Navigate and select the new application from the **Enterprise Applications** menu.
-6. Locate the **Application ID** field and select the **Copy** button. Select **Save**.
+Once the base IdP integration is tested and working, grant permission for Cloudflare to read Conditional Access policies from Azure AD.
 
-![Application properties with the Application ID indicating a copied field](/cloudflare-one/static/zero-trust-security/azuread-access-policies/application-id.png)
+1. In Azure Active Directory, go to **App registrations**.
 
-7. From the **Azure Active Directory Overview**, copy the **Tenant ID**.
+2. Select the application you created for the IdP integration.
 
-![Azure Active Directory Overview displaying the Tenant ID field](/cloudflare-one/static/zero-trust-security/azuread-access-policies/tenant-id.png)
+3. Go to **API permissions** and select **Add a permission**.
 
-8. Select **App registrations** > your new application > **Certificates and secrets**.
-9. Create a new client secret and copy the secret value. Note that you can only access this information from **App registrations** and not **Enterprise Applications**.
+4. Select **Microsoft Graph**.
 
-![Certificate and secrets page with the Client secrets tab selected](/cloudflare-one/static/zero-trust-security/azuread-access-policies/certificates-secrets.png)
+5. Select **Application permissions** and add `Policy.Read.ConditionalAccess`.
 
-## Cloudflare Access Identity provider configuration and Application creation
+6. Select **Grant admin consent**.
 
-In this section, you will create an Access Idenetify Provider per Application or Application Group that you would like to assign different Conditional Access Policies.
+{{</tutorial-step>}}
 
-1. After copying the three values – the Application ID, Tenant ID, and the Application Secret – from the steps above, navigate to the Cloudflare Zero Trust Dashboard and create a new AzureAD integration. Name it after your target application.
+{{<tutorial-step title="Configure Conditional Access in Azure AD">}}
 
-![Edit Azure AD dialog with the three copied values](/cloudflare-one/static/zero-trust-security/azuread-access-policies/edit-azuread-values.png)
+1. In Azure Active Directory, go to **Enterprise applications** > **Conditional Access**.
+2. Go to **Authentication Contexts**.
+3. [Create an authentication context](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-cloud-apps#authentication-context) to reference in your Cloudflare Access policies. Give the authentication context a descriptive name (for example, `Require compliant devices`).
+4. Next, go to **Policies**.
+5. [Create a new Conditional Access policy](https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-policies) or select an existing policy.
+6. Assign the conditional access policy to an authentication context:
+    1. In the policy builder, select **Target resources**.
+    2. In the **Select what this policy applies to** dropdown, select _Authentication context_.
+    3. Select the authentication context that will use this policy.
+    4. Save the policy.
 
-2. Test the authentication. You should receive a **Your connection works!** message.
-3. Create an Access Application with the target URL of the protected application. 
+{{</tutorial-step>}}
 
-![Edit Customer Management view with a target URL example](/cloudflare-one/static/zero-trust-security/azuread-access-policies/access-app-target-url.png)
+{{<tutorial-step title="Sync Conditional Access with Zero Trust">}}
 
-4. Select the corresponding IdP that was just configured for this specific Conditional Access Policy. 
+To import your Conditional Access policies into Cloudflare Access:
 
-![List of identity providers highlighting the Azure AD option](/cloudflare-one/static/zero-trust-security/azuread-access-policies/access-app-idp.png)
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+2. Find your Azure AD integration and select **Edit**.
+3. Enable **Azure AD Policy Sync**.
+4. Select **Save**.
 
-Repeat the two sections above for each individual application or group of applications. 
+{{</tutorial-step>}}
 
-## Azure AD and Conditional Access configuration
+{{<tutorial-step title="Create an Access application">}}
 
-1. From the **Azure Active Directory admin center**, update the application's visibility setting so it shows up in the Microsoft App Launcher.
+To enforce your Conditional Access policies on a Cloudflare Access application:
 
-![List of identity providers highlighting the Azure AD option](/cloudflare-one/static/zero-trust-security/azuread-access-policies/app-visibility.png)
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Set the **Home page URL** for the application to be the hostname of the application. Note that this value can only be set from **App Registrations** under **Branding & Properties**.
+2. Create a new [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/).
 
-![Customer Management portal fields and home page URL](/cloudflare-one/static/zero-trust-security/azuread-access-policies/homepage-url.png)
+3. In **Application domain**, enter the target URL of the protected application.
 
-3. For confirmation, check whether the app shows up under [**My apps**](https://myapplications.microsoft.com/).
-4. Navigate to **Conditional Access** and select your policy from under **Policy Name**.
-5. Create a new policy and assign your user and application. 
+4. For **Identity providers**, select your Azure AD integration.
 
-![Customer Management portal fields and home page URL](/cloudflare-one/static/zero-trust-security/azuread-access-policies/new-policy.png)
+5. Finally, create an [Access policy](/cloudflare-one/policies/access/) using the _Azure AD - Auth context_ selector. For example:
 
-6. Create any additional policies for each target application or application group.
+   | Action | Rule type | Selector         | Value                                              |
+   | ------ | --------- | ---------------- | -------------------------------------------------- |
+   | Allow  | Include   | Emails ending in | `@example.com`                                     |
+   |        | Require   | Azure AD - Auth context     | `Require compliant devices` |
+
+Users will only be allowed access if they pass the Azure AD Conditional Access policies associated with this authentication context.
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

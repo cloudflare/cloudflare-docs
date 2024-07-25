@@ -1,7 +1,7 @@
 ---
 title: Create tokens via API
 pcx_content_type: how-to
-weight: 12
+weight: 3
 ---
 
 # Create API tokens via the API
@@ -10,22 +10,19 @@ Generate new API tokens on the fly via the API. Before you can do this, you must
 
 ## Generating the initial token
 
-Before you can create tokens via the API, you need to generate the initial token via the Cloudflare dashboard.
+Before you can create tokens via the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard.
 
-1. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select **Create Token**.
-2. Select the `Create Additional Tokens` template. This template contains the user permission for creating API tokens. This allows you to mimic the exact behavior presented in the dashboard from the API.
+{{<render file="_new-token-warning.md">}}
 
-{{<Aside type="note">}}
+### Recommendations
 
 Cloudflare highly recommends that you do not grant other permissions to the token when using this template. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
-
-{{</Aside>}}
 
 Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
 ## Creating API tokens with the API
 
-Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://developers.cloudflare.com/api/operations/user-api-tokens-create-token) for more information.
+Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](/api/operations/user-api-tokens-create-token) for more information.
 
 To create a token:
 
@@ -75,8 +72,8 @@ Each token can contain multiple policies.
 API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
- 
-Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://developers.cloudflare.com/api/operations/user-user-details), [Account](https://developers.cloudflare.com/api/operations/accounts-list-accounts), and [Zone](https://developers.cloudflare.com/api/operations/zone-list-zones) documentation for more details.
+
+Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](/api/operations/user-user-details), [Account](/api/operations/accounts-list-accounts), and [Zone](/api/operations/zones-get) documentation for more details.
   {{</Aside>}}
 
 ##### Account
@@ -100,7 +97,7 @@ For user resources, you can only reference yourself, which is denoted as:`"com.c
 
 #### Permission groups
 
-Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/fundamentals/api/reference/permissions/) or fetch the permission groups [via the API](https://developers.cloudflare.com/api/operations/permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/fundamentals/api/reference/permissions/) or fetch the permission groups [via the API](/api/operations/permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### 2. Define the restrictions
 
@@ -131,13 +128,11 @@ Each parameter in the `in` and `not_in` objects must be in CIDR notation. For ex
 
 Combine the previous information to create a token as in the following example:
 
-```json
-$ curl -X POST 
-"https://api.cloudflare.com/client/v4/user/tokens" \
-     -H "Authorization: Bearer <api token secret>" \
-     -H "Content-Type: application/json" \
-     --data '
- {
+```bash
+curl "https://api.cloudflare.com/client/v4/user/tokens" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "readonly token",
   "policies": [
     {

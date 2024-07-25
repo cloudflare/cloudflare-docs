@@ -2,8 +2,9 @@
 type: overview
 pcx_content_type: navigation
 title: Framework guides
-layout: table
-weight: 4
+weight: 3
 ---
 
 # Framework guides
+
+{{<directory-listing>}}

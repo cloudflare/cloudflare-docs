@@ -1,13 +1,21 @@
 ---
 pcx_content_type: configuration
 title: WebSockets
+meta:
+  description: Communicate in real time with your Cloudflare Workers.
 ---
 
 # WebSockets
 
 ## Background
 
-WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. For a complete example, refer to [Using the WebSockets API](/workers/examples/websockets/).
+
+{{<Aside type="note">}}
+
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/api/websockets/).
+
+{{</Aside>}}
 
 ## Constructor
 
@@ -32,7 +40,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 - {{<code>}}accept(){{</code>}}
 
-  - Accepts the Websocket connection and begins terminating requests for the WebSocket at Cloudflare's edge. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
 {{</definitions>}}
 
@@ -54,7 +62,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
   - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
-- {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}) {{<type>}}Function{{</type>}}{{</code>}}
+- {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}){{</code>}} {{<type>}}Function{{</type>}}
 
   - A function to be called when the WebSocket responds to a specific event.
 
@@ -62,9 +70,13 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### close
 
+{{<definitions>}}
+
 - {{<code>}}close(code{{<param-type>}}number{{</param-type>}}, reason{{<param-type>}}string{{</param-type>}}){{</code>}}
 
-  Close the WebSocket connection.
+  - Close the WebSocket connection.
+
+{{</definitions>}}
 
 #### Parameters
 
@@ -82,9 +94,13 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### send
 
+{{<definitions>}}
+
 - {{<code>}}send(message{{<param-type>}}string{{</param-type>}} | {{<param-type>}}ArrayBuffer{{</param-type>}} | {{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}}
 
-  Send a message to the other WebSocket in this WebSocket pair.
+  - Send a message to the other WebSocket in this WebSocket pair.
+
+{{</definitions>}}
 
 #### Parameters
 
@@ -96,19 +112,28 @@ let [client, server] = Object.values(new WebSocketPair());
 
 {{</definitions>}}
 
+---
+
 ## Events
 
-- `close`
+{{<definitions>}}
 
-An event indicating the WebSocket has closed.
+- {{<code>}}close{{</code>}}
+  - An event indicating the WebSocket has closed.
 
-- `error`
+- {{<code>}}error{{</code>}}
+  - An event indicating there was an error with the WebSocket.
 
-An event indicating there was an error with the WebSocket.
+- {{<code>}}message{{</code>}}
+  - An event indicating a new message received from the client, including the data passed by the client.
 
-- `message`
+{{</definitions>}}
 
-An event indicating a new message received from the client, including the data passed by the client.
+{{<Aside type="note">}}
+
+WebSocket messages received by a Worker have a size limit of 1 MiB (1048576).  If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
+
+{{</Aside>}}
 
 ## Types
 
@@ -120,6 +145,8 @@ An event indicating a new message received from the client, including the data p
 - `type` {{<type>}}string{{</type>}} - Defaults to `message`.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 

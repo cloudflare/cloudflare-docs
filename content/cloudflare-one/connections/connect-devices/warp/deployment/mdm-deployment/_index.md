@@ -1,19 +1,18 @@
 ---
 pcx_content_type: how-to
 title: Managed deployment
-layout: single
 weight: 1
 ---
 
 # Managed deployment
 
-Organizations can deploy WARP automatically to their fleet of devices in a single operation. The WARP client is compatible with the vast majority of managed deployment workflows, including [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) such as Intune or JAMF, or by executing an `.msi` file on desktop machines.
+{{<render file="warp/_mdm-intro.md">}}
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 {{<Aside type="warning">}}
 
-Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in the Zero Trust Dashboard.
+{{<render file="warp/_mdm-dash-conflict.md">}}
 
 {{</Aside>}}
 
@@ -21,24 +20,36 @@ Settings you specify in a local policy file and deploy with your management soft
 
 Visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
 
-## Install WARP on Windows
+## Windows
 
 The WARP Client for Windows allows for an automated install via tools like Intune, AD, or any script or management tool that can execute a `.msi` file.
 
+### Install WARP
+
 To install the WARP client, run the following command:
 
-```txt
-msiexec /i "Cloudflare_WARP_Release-x64.msi" /qn ORGANIZATION="exampleorg" SUPPORT_URL="http://support.example.com"
+```bash
+msiexec /i "Cloudflare_WARP_<VERSION>.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
 
 ### Uninstall WARP
 
-To uninstall the WARP client, run the following command:
+To uninstall the WARP client:
 
-```txt
-msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
+1. First, locate the `.msi` package with the following PowerShell command:
+```powershell
+PS C:\Users\JohnDoe> Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+
+IdentifyingNumber                      Name            LocalPackage
+-----------------                      ----            ------------
+{5RA4DJWK-13D8-2NSX-QRF8-UANLODWD6D90} Cloudflare WARP C:\WINDOWS\Installer\3f476db.msi
+```
+
+2. You can then use the LocalPackage output in the uninstall command. For example,
+```bash
+msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 
 ### Update the configuration
@@ -48,7 +59,7 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 ```xml
 <dict>
   <key>organization</key>
-  <string>yourorganization</string>
+  <string>your-team-name</string>
 	<key>onboarding</key>
 	<false/>
 </dict>
@@ -62,42 +73,41 @@ By default WARP will use the user’s default browser to perform registration. Y
 
 To use an embedded browser:
 
-1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
+1. Download and install WebView2 by following the [Microsoft instructions](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
 2. Add a registry key with the following command:
-    ```txt
-    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
-    ```
+   ```txt
+   REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
+   ```
 
 The WARP client will now launch WebView2 when the user is registering their device with Zero Trust.
 
-## Install WARP on macOS
+## macOS
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
 ### Create `plist` file
 
-1. [Download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
+1. [Download](/cloudflare-one/static/mdm/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
 
 2. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-3. If you want to manually place the file in `/Library/Managed Preferences` (rather than use a management tool), first convert the `plist` into binary format:
+3. (Optional) If you want to manually place the file in `/Library/Managed Preferences` (rather than use a management tool), convert the `plist` into binary format:
 
-    1. Open a Terminal window.
-    2. Run the following command:
+```sh
+$ plutil -convert binary1 com.cloudflare.warp.plist
+```
 
-        ```txt
-        % plutil -convert binary1 com.cloudflare.warp.plist
-        ```
+The plist must be pushed by an MDM tool in order to persist after reboot. Manually-placed files will be automatically deleted by the OS.
 
 ### Create `mobileconfig` file
 
-1. [Download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
+1. [Download](/cloudflare-one/static/mdm/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
 
 2. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
 
 3. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-## Install WARP on Linux
+## Linux
 
 The WARP Client for Linux allows for an automated install via the presence of an `mdm.xml` file in `/var/lib/cloudflare-warp`.
 
@@ -106,25 +116,29 @@ The format of `/var/lib/cloudflare-warp/mdm.xml` is as follows:
 ```xml
 <dict>
   <key>organization</key>
-  <string>yourorganization</string>
+  <string>your-team-name</string>
 </dict>
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a list of accepted arguments.
 
-## Install WARP on iOS
+## iOS
 
-The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
 ```xml
 <dict>
     <key>organization</key>
-    <string>yourorganization</string>
-    <key>auto_connect</key> 
+    <string>your-team-name</string>
+    <key>auto_connect</key>
     <integer>1</integer>
-    <key>switch_locked</key> 
+    <key>switch_locked</key>
     <false />
     <key>service_mode</key>
     <string>warp</string>
@@ -135,15 +149,19 @@ To proceed with the installation, here is an example of the XML code you will ne
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
 
-## Install WARP on Android
+## Android
 
-The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en_US&gl=US) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
+{{<Aside type="note" header="Migrate from 1.1.1.1">}}
+The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP Android client, known in the Google Play store as [Cloudflare One Agent](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent), allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
 ```xml
 <key>organization</key>
-<string>yourorganization</string>
+<string>your-team-name</string>
 <key>enable</key>
 <true />
 <key>gateway_unique_id</key>
@@ -152,6 +170,19 @@ To proceed with the installation, here is an example of the XML code you will ne
 <string>warp</string>
 <key>support_url</key>
 <string>https://support.example.com</string>
+```
+If your MDM tool does not support XML, you may need to convert the XML to JSON. Here is an example below:
+
+```json
+{
+  "organization": "your-team-name",
+  "gateway_unique_id": "your_gateway_doh_subdomain",
+  "onboarding": true,
+  "switch_locked": true,
+  "auto_connect": 0,
+  "service_mode": "warp",
+  "support_url": "https://support.example.com"
+}
 ```
 
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.

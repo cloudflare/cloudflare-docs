@@ -6,7 +6,7 @@ weight: 2
 
 # Create a custom ruleset
 
-Use the [Create account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset) API operation to create a custom ruleset, making sure that you:
+Use the [Create an account ruleset](/api/operations/createAccountRuleset) operation to create a custom ruleset, making sure that you:
 
 * Set the `kind` field to `custom`.
 * Specify the name of the phase where you want to create the custom ruleset in the `phase` field.
@@ -15,13 +15,14 @@ Use the [Create account ruleset](https://developers.cloudflare.com/api/operation
 
 The following request creates a new custom ruleset:
 
-```json
+```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "Custom Ruleset 1",
   "description": "My First Custom Ruleset",
   "kind": "custom",

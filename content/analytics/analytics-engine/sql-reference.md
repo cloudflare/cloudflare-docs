@@ -10,7 +10,7 @@ meta:
 
 ## SHOW TABLES statement
 
-`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker.
+`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](/analytics/analytics-engine/get-started/), for more information). The table is automatically created when you write event data in your worker.
 
 ```SQL
 SHOW TABLES
@@ -52,7 +52,7 @@ SELECT <expression_list>
 [FORMAT <format>]
 ```
 
-Below you can find the syntax of each clause. Refer to the [SQL API docs](../sql-api/) for some example queries.
+Below you can find the syntax of each clause. Refer to the [SQL API docs](/analytics/analytics-engine/sql-api/) for some example queries.
 
 ### SELECT clause
 
@@ -173,8 +173,7 @@ FROM temperature_readings
 GROUP BY probe_name
 ```
 
-In the usual case the `<expression>` can just be a column name but it is also possible to suppy a complex expression here.
-Multiple expressions or column names can be supplied separated by commas.
+In the usual case the `<expression>` can just be a column name but it is also possible to supply a complex expression here. Multiple expressions or column names can be supplied separated by commas.
 
 ### ORDER BY clause
 
@@ -279,7 +278,7 @@ Data is returned with a separate JSON object per row. Rows are newline separated
 
 Data is returned with newline separated rows. Columns are separated with tabs. There is no header.
 
-```TSV
+```txt
 column 1 value  column 2 value
 column 1 value  column 2 value
 ...
@@ -382,7 +381,7 @@ Usage:
 quantileWeighted(q, column_name, weight_column_name)
 ```
 
-`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
+`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](/analytics/analytics-engine/sql-api/#sampling), for more information).
 
 Example:
 ```SQL
@@ -666,7 +665,7 @@ GROUP BY hour
 ORDER BY hour ASC
 ```
 
-## extract
+### extract
 
 Usage:
 ```SQL
@@ -688,8 +687,6 @@ The following operators are supported:
 
 ### Arithmetic operators
 
-{{<table-wrap>}}
-
 | Operator  | Description         |
 |-----|----------|
 | `+` | addition |
@@ -698,12 +695,8 @@ The following operators are supported:
 | `/` | division |
 | `%` | modulus |
 
-{{</table-wrap>}}
-
 
 ### Comparison operators
-
-{{<table-wrap>}}
 
 | Operator  | Description |
 |-----|----------|
@@ -716,13 +709,9 @@ The following operators are supported:
 | `IN` | true if the preceding expression's value is in the list<br>`column IN ('a', 'list', 'of', 'values')` |
 | `NOT IN` | true if the preceding expression's value is not in the list<br>`column NOT IN ('a', 'list', 'of', 'values')` |
 
-{{</table-wrap>}}
-
 We also support the `BETWEEN` operator for checking a value is in an inclusive range: `a [NOT] BETWEEN b AND c`.
 
 ### Boolean operators
-
-{{<table-wrap>}}
 
 | Operator  | Description |
 |-----|----------|
@@ -730,22 +719,14 @@ We also support the `BETWEEN` operator for checking a value is in an inclusive r
 | `OR` | boolean "OR" (true if either side or both sides are true) |
 | `NOT` | boolean "NOT" (true if following expression is false and visa-versa) |
 
-{{</table-wrap>}}
-
 ### Unary operators
-
-{{<table-wrap>}}
 
 | Operator  | Description |
 |-----|----------|
-| `-` | negation operator (e.g. `-42`) |
-
-{{</table-wrap>}}
+| `-` | negation operator (for example, `-42`) |
 
 
 ## Literals
-
-{{<table-wrap>}}
 
 | Type | Syntax |
 |------|---------------|
@@ -754,8 +735,3 @@ We also support the `BETWEEN` operator for checking a value is in an inclusive r
 | string | `'so long and thanks for all the fish'` |
 | boolean | `true` or `false` |
 | time interval | `INTERVAL '42' DAY`<br>Intervals of `YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE` and `SECOND` are supported |
-
-{{</table-wrap>}}
-
-
-

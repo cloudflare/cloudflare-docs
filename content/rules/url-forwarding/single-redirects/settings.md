@@ -22,9 +22,7 @@ A static URL redirect has the following configuration parameters:
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 The full syntax of the `"action_parameters"` field for a redirect rule performing a static URL redirect is the following:
 
@@ -44,8 +42,7 @@ The only required parameter is `<STATIC_URL_VALUE>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}
 
 ## Dynamic URL redirect
 
@@ -53,15 +50,13 @@ Performs a dynamic URL redirect, where the target URL is determined by an expres
 
 A dynamic URL redirect has the following configuration parameters:
 
-* **Expression**: An expression that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response.
+* **Expression**: An [expression](/ruleset-engine/rules-language/expressions/) that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response. Refer to the [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) you can use in expressions.
 
 * **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
 
 * **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
-<details>
-<summary>API information</summary>
-<div>
+{{<details header="API information">}}
 
 The full syntax of the `"action_parameters"` field for a redirect rule performing a dynamic URL redirect is the following:
 
@@ -81,5 +76,4 @@ The only required parameter is `<DYNAMIC_URL_EXPRESSION>`.
 
 {{<render file="url-forwarding/_optional-parameters.md">}}
 
-</div>
-</details>
+{{</details>}}

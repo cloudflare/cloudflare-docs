@@ -10,18 +10,56 @@ weight: 21
 
 The descriptions below detail the fields available for `dns_logs`.
 
-{{<table-wrap>}}
+## ColoCode
 
-| Field | Value | Type |
-| -- | -- | -- |
-| ColoCode | IATA airport code of data center that received the request. | string |
-| EDNSSubnet | EDNS Client Subnet (IPv4 or IPv6). For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | string |
-| EDNSSubnetLength | EDNS Client Subnet length. For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | int |
-| QueryName | Name of the query that was sent. | string |
-| QueryType | Integer value of query type. For more information refer to [Query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4). | int |
-| ResponseCached | Whether the response was cached or not. | bool |
-| ResponseCode | Integer value of response code. For more information refer to  [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6). | int |
-| SourceIP | IP address of the client (IPv4 or IPv6). | string |
-| Timestamp | Timestamp at which the query occurred. | int or string |
+Type: string
 
-{{</table-wrap>}}
+IATA airport code of data center that received the request.
+
+## EDNSSubnet
+
+Type: string
+
+IPv4 or IPv6 address information corresponding to the [EDNS Client Subnet (ECS)](/glossary/?term=ecs) forwarded by recursive resolvers. Not all resolvers send this information.
+
+## EDNSSubnetLength
+
+Type: int
+
+Size of the [EDNS Client Subnet (ECS)](/glossary/?term=ecs) in bits. For example, if the last octet of an IPv4 address is omitted (`192.0.2.x.`), the subnet length will be 24.
+
+## QueryName
+
+Type: string
+
+Name of the query that was sent.
+
+## QueryType
+
+Type: int
+
+Integer value of query type. For more information refer to [Query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4).
+
+## ResponseCached
+
+Type: bool
+
+Whether the response was cached or not.
+
+## ResponseCode
+
+Type: int
+
+Integer value of response code. For more information refer to  [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6).
+
+## SourceIP
+
+Type: string
+
+IP address of the client (IPv4 or IPv6).
+
+## Timestamp
+
+Type: int or string
+
+Timestamp at which the query occurred.

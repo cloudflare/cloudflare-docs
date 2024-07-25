@@ -12,7 +12,7 @@ It is best to redirect this traffic over HTTPS, as well as ensure other resource
 
 ## Prerequisites
 
-Before trying to enforce HTTPS connections, make sure that your application has an active [edge certificate](/ssl/get-started/#step-1--choose-an-edge-certificate). Otherwise, visitors will not be able to access your application at all.
+Before trying to enforce HTTPS connections, make sure that your application has an active [edge certificate](/ssl/get-started/#choose-an-edge-certificate). Otherwise, visitors will not be able to access your application at all.
 
 Also, make sure that your [SSL encryption mode](/ssl/origin-configuration/ssl-modes/) is not set to **Off**. Otherwise, Cloudflare will redirect all visitor connections automatically to HTTP.
 
@@ -26,7 +26,7 @@ Make sure that your redirects within Cloudflare are not forwarding traffic to UR
 
 ## Step 2 — Rewrite HTTP URLs
 
-If your application contains links or references to HTTP URLs, your visitors might see [mixed content errors](https://support.cloudflare.com/hc/articles/200170476) when accessing an HTTPS page.
+If your application contains links or references to HTTP URLs, your visitors might see [mixed content errors](/ssl/troubleshooting/mixed-content-errors/) when accessing an HTTPS page.
 
 To avoid these issues, enable [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) and pay attention to which HTTP requests are still reaching your origin server.
 
@@ -34,4 +34,4 @@ To avoid these issues, enable [Automatic HTTPS Rewrites](/ssl/edge-certificates/
 
 If your entire application can support HTTPS traffic, enable [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/#encrypt-all-visitor-traffic).
 
-If only some parts of your application can support HTTPS traffic, set up [Forwarding Rules](/ssl/edge-certificates/additional-options/always-use-https/#encrypt-some-visitor-traffic) to redirect specific subfolders or subdomains to HTTPS.
+If only some parts of your application can support HTTPS traffic, do not enable **Always Use HTTPS** and use a [dynamic redirect](/rules/url-forwarding/single-redirects/) to selectively perform the redirect to HTTPS. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/examples/redirect-admin-https/) for an example.

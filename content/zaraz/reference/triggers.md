@@ -19,51 +19,31 @@ Zaraz matches the variable you input in **Variable name** with the text under **
 
 **Trigger example: Match `zaraz.track("purchase")`**
 
-{{<table-wrap>}}
-
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `purchase`   |
-
-{{</table-wrap>}}
+| _Match rule_ | _Event Name_  | _Equals_        | `purchase`   |
 
 If you create a trigger with match rules using variables from Page Properties, Cookies, Device Properties, or Miscellaneous categories, you will often want to add a second rule that matches `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [Create a trigger](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
 **Trigger example: All pages under `/blog`**
 
-{{<table-wrap>}}
-
 | Rule type    | Variable name  | Match operation | Match string |
 | ------------ | -------------- | --------------- | ------------ |
 | _Match rule_ | _URL pathname_ | _Starts with_   | `/blog`      |
 
-{{</table-wrap>}}
-
-{{<table-wrap>}}
-
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `Pageview`   |
-
-{{</table-wrap>}}
+| _Match rule_ | _Event Name_  | _Equals_        | `Pageview`   |
 
 **Trigger example: All logged in users**
-
-{{<table-wrap>}}
 
 | Rule type    | Variable name                | Match operation | Match string |
 | ------------ | ---------------------------- | --------------- | ------------ |
 | _Match rule_ | _Cookie: name:_ `isLoggedIn` | _Equals_        | `true`       |
 
-{{</table-wrap>}}
-
-{{<table-wrap>}}
-
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
-| _Match rule_ | _Track Name_  | _Equals_        | `Pageview`   |
-
-{{</table-wrap>}}
+| _Match rule_ | _Event Name_  | _Equals_        | `Pageview`   |
 
 Refer to [Properties reference](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
 
@@ -77,41 +57,26 @@ When using CSS type rules in triggers, you have to include the CSS selector — 
 
 **Trigger example for CSS selector:**
 
-{{<table-wrap>}}
-
 | Rule type        | Type  | Selector     | Wait for actions |
 | ---------------- | ----- | ------------ | --------------- |
 | _Click listener_ | _CSS_ | `#my-button` | `500`           |
 
-{{</table-wrap>}}
-
 To improve the performance of the web page, you can limit a click listener to a specific URL, by combining it with a Match rule. For example, to track button clicks on a specific page you can set up the following rules in a trigger:
-
-{{<table-wrap>}}
 
 | Rule type        | Type  | Selector    | Wait for actions |
 | ---------------- | ----- | ----------- | --------------- |
 | _Click listener_ | _CSS_ | `#myButton` | `500`           |
 
-{{</table-wrap>}}
-
-{{<table-wrap>}}
-
 | Rule type    | Variable name  | Match operation | Match string    |
 | -------------| -------------- | --------------- | --------------- |
 | _Match rule_ | _URL pathname_ | _Equals_        | `/my-page-path` |
 
-{{</table-wrap>}}
-
 If you need to track a link of an element using CSS selectors - for example, on a clickable button - you have to create a listener for the `href` attribute of the `<a>` tag:
-
-{{<table-wrap>}}
 
 | Rule type        | Type  | Selector                         | Wait for actions |
 | ---------------- | ----- | -------------------------------- | ---------------- |
 | _Click listener_ | _CSS_ | `a[href$='/#my-css-selector']`   | `500`            |
 
-{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one rule to a trigger.
 
@@ -119,25 +84,17 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 
 **Trigger example for XPath:**
 
-{{<table-wrap>}}
-
 | Rule type        | Type    | Selector                                         | Wait for actions |
 | ---------------- | ------- | ------------------------------------------------ | ---------------- |
 | _Click listener_ | _XPath_ | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`            |
-
-{{</table-wrap>}}
 
 ### Element Visibility
 
 Triggers an action when a CSS selector becomes visible in the screen.
 
-{{<table-wrap>}}
-
 | Rule type            | CSS Selector |
 | -------------------- | ------------ |
 | _Element Visibility_ | `#my-id` |
-
-{{</table-wrap>}}
 
 ### Scroll depth
 
@@ -145,25 +102,17 @@ Triggers an action when the users scrolls a predetermined amount of pixels. This
 
 **Example with pixels**
 
-{{<table-wrap>}}
-
 | Rule type            | CSS Selector |
 | -------------------- | ------------ |
 | _Scroll Depth_ | `100px` |
-
-{{</table-wrap>}}
 
 ---
 
 **Example with a percentage of the screen**
 
-{{<table-wrap>}}
-
 | Rule type            | CSS Selector |
 | -------------------- | ------------ |
 | _Scroll Depth_ | `45%` |
-
-{{</table-wrap>}}
 
 ### Form submission
 
@@ -171,31 +120,19 @@ Tracks form submissions using CSS selectors. Select the **Validate** toggle butt
 
 **Trigger example:**
 
-{{<table-wrap>}}
-
 | Rule type         | CSS Selector | Validate         |
 | ----------------- | ------------ | ---------------- |
 | _Form submission_ | `#my-form`   | Toggle on or off |
-
-{{</table-wrap>}}
 
 To improve the performance of the web page, you can limit a Form submission trigger to a specific URL, by combining it with a Match rule. For example, to track a form on a specific page you can set up the following rules in a trigger:
 
-{{<table-wrap>}}
-
 | Rule type         | CSS Selector | Validate         |
 | ----------------- | ------------ | ---------------- |
 | _Form submission_ | `#my-form`   | Toggle on or off |
-
-{{</table-wrap>}}
-
-{{<table-wrap>}}
 
 | Rule type    | Variable name  | Match operation | Match string    |
 | ------------ | -------------- | --------------- | --------------- |
 | _Match rule_ | _URL pathname_ | _Equals_        | `/my-page-path` |
-
-{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
@@ -205,30 +142,18 @@ Set up a timer that will fire the trigger after each **Interval**. Set your inte
 
 **Trigger example:**
 
-{{<table-wrap>}}
-
 | Rule type | Interval | Limit |
 | --------- | -------- | ----- |
 | _Timer_   | `5000`   | `1`   |
-
-{{</table-wrap>}}
 
 The above Timer will fire once, after five seconds. To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
-{{<table-wrap>}}
-
 | Rule type | Interval | Limit |
 | --------- | -------- | ----- |
 | _Timer_   | `5000`   | `1`   |
-
-{{</table-wrap>}}
-
-{{<table-wrap>}}
 
 | Rule type    | Variable name  | Match operation | Match string    |
 | ------------ | -------------- | --------------- | --------------- |
 | _Match rule_ | _URL pathname_ | _Equals_        | `/my-page-path` |
-
-{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.

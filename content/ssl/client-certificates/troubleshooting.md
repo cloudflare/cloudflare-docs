@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
-pcx_content_type: faq
-weight: 7
+pcx_content_type: troubleshooting
+weight: 9
 meta:
   title: Troubleshooting client certificates
 ---
@@ -17,7 +17,7 @@ If your query returns an error even after configuring and embedding a client SSL
 On your terminal, use the following command to check whether an SSL/TLS connection can be established successfully between the client and the API endpoint.
 
 ```sh
-$ curl -v --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
+$ curl --verbose --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
 ```
 
 If the SSL/TLS handshake cannot be completed, check whether the certificate and the private key are correct.
@@ -34,15 +34,15 @@ Check whether [mTLS has been enabled](/ssl/client-certificates/enable-mtls/) for
 
 To review mTLS rules:
 
-1.  Click **Security** > **WAF** > **Firewall rules**.
-2.  On a specific rule, click **Edit**.
+1.  Select **Security** > **WAF** > **Custom rules**.
+2.  On a specific rule, select **Edit**.
 3.  On that rule, check whether:
 
     - The Expression Preview is correct.
-    - The hostname matches your API endpoint. For example, for the API endpoint `api.trackers.ninja/time`, the rule should look like:
+    - The hostname, if defined, matches your API endpoint. For example, for the API endpoint `api.trackers.ninja/time`, the rule should look like:
 
       ```txt
       (http.host in {"api.trackers.ninja"} and not cf.tls_client_auth.cert_verified)
       ```
 
-4.  To edit the rule, either use the user interface or click **Edit expression**.
+4.  To edit the rule, either use the user interface or select **Edit expression**.

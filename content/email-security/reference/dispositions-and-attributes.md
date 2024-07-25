@@ -6,13 +6,19 @@ weight: 2
 
 # Dispositions and attributes
 
-Area 1 uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a phishing campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
+{{<Aside type="warning" header="Area 1 has been renamed">}}
 
-Based on these patterns, Area 1 may add `X-Headers` to each email message that passes through our system.
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
+Cloud Email Security uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
+
+Based on these patterns, Cloud Email Security may add `X-Headers` to each email message that passes through our system.
 
 ## Dispositions
 
-Any traffic that flows through Area 1 is given a final **Disposition**, which represents our evaluation of that specific message. Each message will only receive one disposition header so your organization can take clear and specific actions on different message types.
+Any traffic that flows through Cloud Email Security is given a final disposition, which represents our evaluation of that specific message. Each message will only receive one disposition header so your organization can take clear and specific actions on different message types.
 
 You can use disposition values when [creating your quarantine policy](/email-security/email-configuration/domains-and-routing/domains/) or [setting up auto-retract](/email-security/email-configuration/retract-settings/).
 
@@ -28,7 +34,7 @@ You can use disposition values when [creating your quarantine policy](/email-sec
 
 ### Header structure
 
-When Area 1 adds a disposition header to an email message, that header matches the following format:
+When Cloud Email Security adds a disposition header to an email message, that header matches the following format:
 
 ```txt
 X-Area1Security-Disposition: [Value]
@@ -42,7 +48,7 @@ X-Area1Security-Disposition: UCE
 
 ## Attributes
 
-Traffic that flows through Area 1 can also receive one or more **Attributes**, which indicate that a specific condition has been met.
+Traffic that flows through Cloud Email Security can also receive one or more **Attributes**, which indicate that a specific condition has been met.
 
 ### Available values
 
@@ -57,7 +63,7 @@ Traffic that flows through Area 1 can also receive one or more **Attributes**, w
 
 ### Header structure
 
-When Area 1 adds a disposition header to an email message, that header matches the following format.
+When Cloud Email Security adds a disposition header to an email message, that header matches the following format.
 
 ```txt
 X-Area1Security-Attribute: [Value]

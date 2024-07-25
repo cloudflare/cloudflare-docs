@@ -10,7 +10,7 @@ Many GraphQL clients are support browsing GraphQL schema by taking care of
 [introspection][1]. In this page, we will cover GraphiQL and Altair clients.
 
 [GraphiQL][2] and [Altair][3] are open-source GraphQL clients that provide a
-descent tool to compose a query, execute it, and inspect the results. And as a
+tool to compose a query, execute it, and inspect the results. And as a
 bonus, they also allow you to browse GraphQL schema.
 
 ## Prerequisites
@@ -24,7 +24,7 @@ instructions to explore the schema.
 
 ## Open the Documentation Explorer
 
-To open the GraphiQL Documentation Explorer, click the **Docs** link in the
+To open the GraphiQL Documentation Explorer, select the **Docs** link in the
 header of the response pane:
 
 ![Clicking GraphiQL Docs link to open Documentation Explorer][5]
@@ -35,7 +35,7 @@ The **Documentation Explorer** opens and displays a list of available objects:
 
 Objects in the **Documentation Explorer** use this syntax:
 
-```code
+```txt
   object-name: object-type-definition
 ```
 
@@ -54,13 +54,13 @@ definition.
 Click on the **type definition** of a node to view the fields that it provides.
 The **Documentation Explorer** also displays descriptions of the nodes.
 
-For example, click the **Query** type definition. The **Documentation Explorer**
+For example, select the **Query** type definition. The **Documentation Explorer**
 displays the fields that `Query` provides. In this example, the fields are
 `cost` and `viewer`:
 
 ![Documentation Explorer displaying cost and viewer fields][8]
 
-To explore the schema, click the names of objects and definitions. You can also
+To explore the schema, select the names of objects and definitions. You can also
 use the search input (magnifying glass icon) and breadcrumb links in the header.
 
 ## Find the arguments associated with a field
@@ -75,12 +75,12 @@ The `accounts` and `zones` nodes take arguments to specify which dataset to
 query.
 
 For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an
-argument. To view the fields available to filter, click
+argument. To view the fields available to filter, select
 **ZoneFilter_InputObject**.
 
 ## Find the datasets available for a zone
 
-To view a list of the datasets available to query, click the **zone** type
+To view a list of the datasets available to query, select the **zone** type
 definition (gold text):
 
 ![Clicking zone type definition][10]
@@ -95,7 +95,7 @@ Use the search input (magnifying glass icon) to find specific datasets:
 
 ![Searching a dataset in the Documentation Explorer][12]
 
-To select a dataset, click its name.
+To select a dataset, select its name.
 
 The definition for the dataset displays. This example shows the
 `firewallEventsAdaptive` dataset:
@@ -104,10 +104,10 @@ The definition for the dataset displays. This example shows the
 
 ## Find the fields available for a dataset
 
-To view the fields available for a particular dataset, click on its type
+To view the fields available for a particular dataset, select on its type
 definition (gold text).
 
-For example, click the **ZoneFirewallEventsAdaptive** type definition to view
+For example, select the **ZoneFirewallEventsAdaptive** type definition to view
 the fields available for the `firewallEventsAdaptive` dataset:
 
 ![Clicking type definition to visualize fields available for a dataset][14]
@@ -122,15 +122,15 @@ For more information on using GraphiQL, please visit this [guide][16].
 [2]: <https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme>
 [3]: <https://altairgraphql.dev/#download>
 [4]: </analytics/graphql-api/getting-started/authentication/graphql-client-headers/>
-[5]: </analytics/static/images/graphiql-docs-link.png>
-[6]: </analytics/static/images/graphiql-doc-explorer.png>
-[7]: </analytics/static/images/graphiql-doc-explorer-query-mutations.png>
-[8]: </analytics/static/images/graphiql-doc-explorer-view-cost.png>
-[9]: </analytics/static/images/graphiql-doc-explorer-viewer-fields.png>
-[10]: </analytics/static/images/graphiql-doc-explorer-zones.png>
-[11]: </analytics/static/images/graphiql-doc-explorer-zone-fields.png>
-[12]: </analytics/static/images/graphiql-doc-explorer-find-firewall.png>
-[13]: </analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png>
-[14]: </analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png>
-[15]: </analytics/static/images/graphiql-doc-explorer-firewall-fields.png>
+[5]: </images/analytics/graphiql-docs-link.png>
+[6]: </images/analytics/graphiql-doc-explorer.png>
+[7]: </images/analytics/graphiql-doc-explorer-query-mutations.png>
+[8]: </images/analytics/graphiql-doc-explorer-view-cost.png>
+[9]: </images/analytics/graphiql-doc-explorer-viewer-fields.png>
+[10]: </images/analytics/graphiql-doc-explorer-zones.png>
+[11]: </images/analytics/graphiql-doc-explorer-zone-fields.png>
+[12]: </images/analytics/graphiql-doc-explorer-find-firewall.png>
+[13]: </images/analytics/graphiql-doc-explorer-firewallevents-definition.png>
+[14]: </images/analytics/graphiql-doc-explorer-firewall-type-definition.png>
+[15]: </images/analytics/graphiql-doc-explorer-firewall-fields.png>
 [16]: </analytics/graphql-api/getting-started/compose-graphql-query/>

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Rinkeby deprecation
 weight: 5
-layout: list
+layout: wide
 ---
 
 # Rinkeby deprecation
@@ -13,25 +13,25 @@ Cloudflare will be deprecating support for Rinkeby on January 30, 2023.
 
 ## Migration
 
-To avoid any issues with your Web3 development or debugging, you should switch over to the [Sepolia or Goerli testnets](/web3/ethereum-gateway/reference/supported-networks/), which are fully supported with your Ethereum Gateway.
+To avoid any issues with your Web3 development or debugging, you should switch over to the [Sepolia testnet](/web3/ethereum-gateway/reference/supported-networks/), which is fully supported with your Ethereum Gateway.
 
 To migrate, you should update the endpoints you use when [reading from or writing to](/web3/how-to/use-ethereum-gateway/) the Ethereum network.
 
 For example, you might have been using the previous endpoints to interact with your Ethereum Gateway.
 
-```sh
+```bash
 ---
 header: Previous curl
 highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
--H 'Content-Type: application/json' \
+curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
+--header 'Content-Type: application/json' \
 --data '{
-    "jsonrpc":"2.0",
-    "method":"eth_getBlockByNumber",
-    "params":["0x2244", true],
-    "id":1
-    }'
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
 ```
 
 ```js
@@ -59,19 +59,19 @@ await fetch(
 
 To migrate away from Rinkeby, change the end of your endpoint to use another testnet.
 
-```sh
+```bash
 ---
 header: New curl
 highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/goerli \
--H 'Content-Type: application/json' \
+curl https://web3-trial.cloudflare-eth.com/v1/sepolia \
+--header 'Content-Type: application/json' \
 --data '{
-    "jsonrpc":"2.0",
-    "method":"eth_getBlockByNumber",
-    "params":["0x2244", true],
-    "id":1
-    }'
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
 ```
 
 ```js

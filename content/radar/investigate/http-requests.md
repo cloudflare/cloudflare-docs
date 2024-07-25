@@ -29,8 +29,8 @@ These endpoints can be broadly split into:
 In this example, we will request traffic by device type globally, with and without [bot traffic](/radar/concepts/bot-classes/). Parameters for the `human` series are `name=human&botClass=LIKELY_HUMAN&dateRange=1d`. For the `bot` series, the parameters are `name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d`:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/timeseries/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/timeseries/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Here is the abbreviated response:
@@ -69,7 +69,7 @@ Mobile devices tend to be considerably more present when examining human generat
 Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
 {{</Aside>}}
 
-For more information refer to [Get time series of device types](https://developers.cloudflare.com/api/operations/radar_get_TimeseriesDeviceType).
+For more information refer to [Get device types time series](/api/operations/radar-get-http-timeseries-group-by-device-type).
 
 ### Summary
 
@@ -78,8 +78,8 @@ For more information refer to [Get time series of device types](https://develope
 We can also look at the same information asking for a summary of the device type breakdown over the entire period, instead of a per hour breakdown like in the example before.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Here is the abbreviated response:
@@ -97,15 +97,15 @@ Here is the abbreviated response:
 }
 ```
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_SummaryDeviceType) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-http-summary-by-device-type) for this endpoint.
 
 #### Example: breakdown by IP version and human/bot traffic
 
 In the following example, we will examine global breakdown of traffic by IP version, with and without bots:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/ip_version?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/summary/ip_version?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 This returns the following:
@@ -123,7 +123,7 @@ This returns the following:
 
 Bots tend to use more IPv4 addresses.
 
-It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_SummaryIpVersion) for other parameters.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](/api/operations/radar-get-http-summary-by-ip-version) for other parameters.
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
@@ -134,8 +134,8 @@ If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflar
 In the following example, we will find which locations had a higher adoption of [IPv6](https://en.wikipedia.org/wiki/IPv6) in the last 28 days.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_version/IPv6?name=ipv6&botClass=LIKELY_HUMAN&dateRange=28d&format=json&limit=5" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_version/IPv6?name=ipv6&botClass=LIKELY_HUMAN&dateRange=28d&format=json&limit=5" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -166,7 +166,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_ve
 
 According to the returned data, India is leading in IPv6 adoption.
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_HttpTopLocationsByIpVersion) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-http-top-locations-by-ip-version) for this endpoint.
 
 ## Next steps
 

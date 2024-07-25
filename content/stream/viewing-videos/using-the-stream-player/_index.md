@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Use the Stream Player
 weight: 2
-layout: single
 ---
 
 # Use the Stream Player
@@ -24,8 +23,6 @@ To add the Stream Player to a web page, you can either:
   allowfullscreen="true"
 ></iframe>
 ```
-
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/stream-player) 
 
 Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
@@ -75,7 +72,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
   - If the autoplay flag is included as a querystring parameter, the player will attempt to autoplay the video. If you don't want the video to autoplay, don't include the autoplay flag at all (instead of setting it to `autoplay=false`.) Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
     {{<Aside>}}
-Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, refer to [New `<video>` Policies for iOS](https://webkit.org/blog/6784/new-video-policies-for-ios/).
     {{</Aside>}}
 
 - `controls` {{<prop-meta>}}default: `true`{{</prop-meta>}}
@@ -126,7 +123,7 @@ The `<video>` element does not force the browser to follow the value of this opt
 
     {{<Aside type="note">}}
 
-**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg?time=1s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fcustomer-m033z5x00ks6nunl.cloudflarestream.com%2Fb236bde30eb07b9d01318940e5fc3eda%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D1s%26height%3D600`.
+**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg?time=1s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fcustomer-f33zs165nr7gyfy4.cloudflarestream.com%2F6b9e68b07dfee8cc2d116e4c51d6a957%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D1s%26height%3D600`.
 
         {{</Aside>}}
 
@@ -163,6 +160,10 @@ The Stream player Debug menu can be shown and hidden using the key combination `
 After a live stream ends, a recording is automatically generated and available within 60 seconds. To ensure successful video viewing and playback, keep the following in mind:
 
 - If a live stream ends while a viewer is watching, viewers should wait 60 seconds and then reload the player to view the recording of the live stream.
-- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.  
+- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.
 
 While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.
+
+{{<heading-pill heading="h2" style="beta">}}Low-Latency HLS playback{{</heading-pill>}}
+
+If a Live Inputs is enabled for the Low-Latency HLS beta, the Stream player will automatically play in low-latency mode if possible. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.

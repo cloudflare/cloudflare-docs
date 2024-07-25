@@ -12,7 +12,7 @@ A fully populated ruleset object has the following JSON structure.
 
 ```json
 {
-  "id": "ruleset-id",
+  "id": "6a359df138c442b385d20140d4d96919",
   "name": "Example Ruleset",
   "description": "Description of Example Ruleset",
   "kind": "custom",
@@ -20,14 +20,14 @@ A fully populated ruleset object has the following JSON structure.
   "phase": "http_request_firewall_custom",
   "rules": [
     {
-      "id": "rule-id",
+      "id": "fdb0dd271f3f40b19679cc5d91396024",
       "version": "2",
       "action": "block",
       "expression": "cf.zone.name eq \"example.com\" ",
-      "last_updated": "2020-07-20T10:44:29.124515Z"
+      "last_updated": "2022-07-20T10:44:29.124515Z"
     }
   ],
-  "last_updated": "2020-07-20T10:44:29.124515Z"
+  "last_updated": "2022-07-20T10:44:29.124515Z"
 }
 ```
 
@@ -114,7 +114,7 @@ The table lists the properties of a ruleset object.
       <td>
         <code>phase</code>
       </td>
-      <td>The phase to which the ruleset belongs.</td>
+      <td>The <a href="/ruleset-engine/about/phases/">phase</a> to which the ruleset belongs.</td>
       <td>String</td>
       <td>
         <code>phase</code> is immutable.
@@ -147,12 +147,12 @@ A fully populated rule JSON object has the following structure:
 
 ```json
 {
-  "id": "rule-id",
+  "id": "fdb0dd271f3f40b19679cc5d91396024",
   "version": "2",
   "action": "block",
   "categories": ["wordpress"],
   "expression": "cf.zone.name eq \"example.com\"",
-  "last_updated": "2020-07-20T10:44:29.124515Z",
+  "last_updated": "2022-07-20T10:44:29.124515Z",
   "enabled": true
 }
 ```
@@ -194,7 +194,7 @@ The JSON object properties for a rule are defined as follows:
       </td>
       <td>Defines what happens when there’s a match for the rule expression.</td>
       <td>String</td>
-      <td>The available actions depend on the phase where the rule's ruleset is executed.</td>
+      <td>The available actions depend on the <a href="/ruleset-engine/about/phases/">phase</a> where the rule's ruleset is executed.</td>
     </tr>
     <tr>
       <td>
@@ -205,7 +205,7 @@ The JSON object properties for a rule are defined as follows:
         given tag.
       </td>
       <td>Array of strings</td>
-      <td>Read-only. Only available in rules of Managed Rulesets.</td>
+      <td>Read-only. Only available in <a href="/waf/managed-rules/">WAF Managed Rules</a>.</td>
     </tr>
     <tr>
       <td>

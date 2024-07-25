@@ -1,73 +1,71 @@
 ---
-updated: 2020-03-09
+updated: 2024-05-14
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Build a todo list JAMstack application
-layout: single
+title: Build a todo list Jamstack application
+products: [KV]
 ---
 
-# Build a todo list JAMstack application
+# Build a todo list Jamstack application
 
-{{<render file="_tutorials-before-you-start.md">}}
+{{<tutorial-date-info>}}
 
-## Overview
+In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
-In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
-
-![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](./media/finished.png)
+![Preview of a finished todo list. Continue reading for instructions on how to set up a todo list.](/images/workers/tutorials/jamstack/finished.png)
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
-1.  How building with Workers makes it easy to focus on writing code and ship finished products.
+1.  How building with Workers makes allows you to focus on writing code and ship finished products.
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
-If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
+If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/lauragift21/cloudflare-workers-todos) and refer to the [live demo](https://todos.examples.workers.dev/) to review what you will be building.
 
-## Init
+{{<render file="_tutorials-before-you-start.md">}}
 
-Cloudflare offers a collection of pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to create a Workers project.
+## 1. Create a new Workers project
 
-In your terminal, create a Worker project with your desired project name; for example, `todos`:
+First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
 ```sh
 ---
-header: Generate a project
+header: Create a new project with C3
 ---
-$ wrangler init todos
-$ cd todos
+$ npm create cloudflare@latest todos
 ```
 
-Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates/).
+To configure your Worker:
 
-Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
+- Choose `"Hello World" Worker` for the type of application you would like to create.
+- Answer `No` to using TypeScript.
+- Answer `Yes` to using Git for version control.
+- Answer `No` to deploying your application.
 
-All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. When that request occurs, your constructed response will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
+Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
+
+All incoming HTTP requests to a Worker are passed to the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) as a [request](/workers/runtime-apis/request/) object. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 
 ```js
 ---
 filename: index.js
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-/**
- * Fetch and log a request
- * @param {Request} request
- */
-async function handleRequest(request) {
-  return new Response('Hello worker!', { status: 200 });
-}
+export default {
+  async fetch(request, env, ctx) {
+    return new Response('Hello World!');
+  },
+};
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network).
+In your default `index.js` file, you can see that request/response pattern in action. The `fetch` constructs a new `Response` with the body text `'Hello World!'`.
 
-If you compare this with more traditional architectures, where an origin server would accept requests and return responses, Cloudflare Workers allows you to do the same work without managing hardware and closer to the client, resulting in reduced cost and latencies.
+When a Worker receives a `request`, the Worker returns the newly constructed response to the client. Your Worker will serve new responses directly from [Cloudflare's global network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond by constructing responses directly on the Cloudflare global network.
 
-## Build
+## 2. Review project details
 
-The code provided by the default Wrangler template generates a simple text response and returns it to the client. In this tutorial, you will build off of that approach by reading data from KV and using it to populate an HTML response to send to the client.
+Any project you deploy to Cloudflare Workers can make use of modern JavaScript tooling like [ES modules](/workers/reference/migrate-to-module-workers/), `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing Workers, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
+
+In this tutorial, you will build a todo list application running on Workers that allows reading data from a [KV](/kv/) store and using the data to populate an HTML response to send to the client.
 
 The work needed to create this application is split into three tasks:
 
@@ -77,52 +75,53 @@ The work needed to create this application is split into three tasks:
 
 For the remainder of this tutorial you will complete each task, iterating on your application, and then publish it to your own domain.
 
-### Writing data to KV
+## 3. Write data to KV
 
-To begin, you need to understand how to populate your todo list with actual data. To do this, use Cloudflare Workers KV — a key-value store that you can access inside of your Worker script to read and write data.
+To begin, you need to understand how to populate your todo list with actual data. To do this, use [Cloudflare Workers KV](/kv/) — a key-value store that you can access inside of your Worker to read and write data.
 
-To get started with KV, set up a namespace. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID by running the following command in your terminal:
+To get started with KV, set up a namespace. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the Worker with a predefined variable. Use Wrangler to create a new namespace called `TODOS` with the [`kv:namespace create` command](/workers/wrangler/commands/#create-3) and get the associated namespace ID by running the following command in your terminal:
 
 ```sh
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS" --preview
+$ npx wrangler kv:namespace create "TODOS" --preview
 ```
 
-Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
+The associated namespace can be combined with a `--preview` flag to interact with a preview namespace instead of a production namespace. Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
 
 ```toml
 ---
 filename: wrangler.toml
 ---
 kv_namespaces = [
-  {binding = "TODOS", id = "abcdef123"}
+  {binding = "TODOS", id = "<YOUR_ID>", preview_id = "<YOUR_PREVIEW_ID>"}
 ]
 ```
 
-The defined namespace, `TODOS`, will now be available inside of your codebase. With that, it is time to understand the KV API. A KV namespace has three primary methods you can use to interface with your cache: `get`, `put`, and `delete`.
+The defined namespace, `TODOS`, will now be available inside of your codebase. With that, it is time to understand the [KV API](/kv/api/). A KV namespace has three primary methods you can use to interface with your cache: `get`, `put`, and `delete`.
 
-Start storing data by defining an initial set of data, which you will put inside of the cache using the `put` method. The following example defines a `defaultData` object instead of a simple array of todos. You may want to store metadata and other information inside of this cache object later on. Given that data object, use `JSON.stringify` to put a string into the cache:
+Start storing data by defining an initial set of data, which you will put inside of the cache using the `put` method. The following example defines a `defaultData` object instead of an array of todo items. You may want to store metadata and other information inside of this cache object later on. Given that data object, use `JSON.stringify` to add a string into the cache:
 
 ```js
 ---
 filename: index.js
 ---
-async function handleRequest(request) {
-  const defaultData = {
-    todos: [
-      {
-        id: 1,
-        name: 'Finish the Cloudflare Workers blog post',
-        completed: false,
-      },
-    ],
-  };
-  TODOS.put('data', JSON.stringify(defaultData));
-
-  // ...previous code
-}
+export default {
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    await env.TODOS.put('data', JSON.stringify(defaultData));
+    return new Response('Hello World!');
+  },
+};
 ```
 
 Workers KV is an eventually consistent, global datastore. Any writes within a region are immediately reflected within that same region but will not be immediately available in other regions. However, those writes will eventually be available everywhere and, at that point, Workers KV guarantees that data within each region will be consistent.
@@ -134,38 +133,40 @@ Given the presence of data in the cache and the assumption that your cache is ev
 filename: index.js
 lines: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
-const defaultData = {
-  todos: [
-    {
-      id: 1,
-      name: 'Finish the Cloudflare Workers blog post',
-      completed: false,
-    },
-  ],
+export default {
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = data => env.TODOS.put('data', data);
+    const getCache = () => env.TODOS.get('data');
+
+    let data;
+
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
+
+    return new Response(JSON.stringify(data));
+  },
 };
-
-const setCache = data => TODOS.put('data', data);
-const getCache = () => TODOS.get('data');
-
-async function getTodos(request) {
-  // ... previous code
-
-  let data;
-  const cache = await getCache();
-  if (!cache) {
-    await setCache(JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
-}
 ```
 
-### Rendering data from KV
+## Render data from KV
 
 Given the presence of data in your code, which is the cached data object for your application, you should take this data and render it in a user interface.
 
-To do this, make a new `html` variable in your Workers script and use it to build up a static HTML template that you can serve to the client. In `handleRequest`, construct a new `Response` with a `Content-Type: text/html` header and serve it to the client:
+To do this, make a new `html` variable in your Workers script and use it to build up a static HTML template that you can serve to the client. In `fetch`, construct a new `Response` with a `Content-Type: text/html` header and serve it to the client:
 
 ```js
 ---
@@ -184,11 +185,13 @@ const html = `<!DOCTYPE html>
 </html>
 `;
 
-async function handleRequest(request) {
-  const response = new Response(html, {
-    headers: { 'Content-Type': 'text/html' },
-  });
-  return response;
+async fetch (request, env, ctx) {
+  // previous code
+  return new Response(html, {
+      headers: {
+        'Content-Type': 'text/html'
+      }
+    });
 }
 ```
 
@@ -219,7 +222,7 @@ Add a `<script>` element at the end of the body content that takes a `todos` arr
 ```js
 ---
 filename: index.js
-highlight: [11, 12, 13, 14, 15, 16, 17, 18, 19]
+highlight: [12, 13, 14, 15, 16, 17, 18, 19, 20]
 ---
 const html = `<!DOCTYPE html>
 <html>
@@ -231,16 +234,16 @@ const html = `<!DOCTYPE html>
   <body>
     <h1>Todos</h1>
     <div id="todos"></div>
-    <script>
-      window.todos = []
-      var todoContainer = document.querySelector("#todos")
-      window.todos.forEach(todo => {
-        var el = document.createElement("div")
-        el.textContent = todo.name
-        todoContainer.appendChild(el)
-      })
-    </script>
   </body>
+  <script>
+    window.todos = []
+    var todoContainer = document.querySelector("#todos")
+    window.todos.forEach(todo => {
+      var el = document.createElement("div")
+      el.textContent = todo.name
+      todoContainer.appendChild(el)
+    })
+  </script>
 </html>
 `;
 ```
@@ -267,60 +270,51 @@ const html = todos => `
 `;
 ```
 
-In `handleRequest`, use the retrieved KV data to call the `html` function and generate a `Response` based on it:
+In `fetch`, use the retrieved KV data to call the `html` function and generate a `Response` based on it:
 
 ```js
 ---
 filename: index.js
 highlight: [2]
 ---
-async function handleRequest(request) {
+async fetch (request, env, ctx) {
   const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
-  const response = new Response(body, {
+  return new Response(body, {
     headers: { 'Content-Type': 'text/html' },
   });
-  return response;
 }
 ```
 
-### Adding todos from the UI
+## 4. Add todos from the user interface (UI)
 
-At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the application UI. You can add todos using the KV API — update the cache by running `TODOS.put(newData)`.
+At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the application UI. You can add todos using the KV API — update the cache by running `env.TODOS.put(newData)`.
 
 To update a todo item, you will add a second handler in your Workers script, designed to watch for `PUT` requests to `/`. When a request body is received at that URL, the Worker will send the new todo data to your KV store.
 
-Add this new functionality in `handleRequest`: if the request method is a PUT, it will take the request body and update the cache.
+Add this new functionality in `fetch`: if the request method is a PUT, it will take the request body and update the cache.
 
 ```js
 ---
 filename: index.js
-highlight: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+highlight: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+export default {
+  async fetch(request, env, ctx) {
+    const setCache = data => env.TODOS.put('data', data);
 
-const setCache = data => TODOS.put('data', data);
-
-async function updateTodos(request) {
-  const body = await request.text();
-  try {
-    JSON.parse(body);
-    await setCache(body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
-}
-
-async function handleRequest(request) {
-  if (request.method === 'PUT') {
-    return updateTodos(request);
-  } else {
-    // Defined in previous code block
-    return getTodos(request);
-  }
-}
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }
+    // previous code
+  },
+};
 ```
 
 Check that the request is a `PUT` and wrap the remainder of the code in a `try/catch` block. First, parse the body of the request coming in, ensuring that it is JSON, before you update the cache with the new data and return it to the user. If anything goes wrong, return a `500` status code. If the route is hit with an HTTP method other than `PUT` — for example, `POST` or `DELETE` — return a `404` error.
@@ -380,7 +374,7 @@ const html = todos => `
 `;
 ```
 
-This code updates the cache. Remember that the KV cache is eventually consistent — even if you were to update your Worker to read from the cache and return it, you have no guarantees it will actually be up to date. Instead, update the list of todos locally, by taking your original code for rendering the todo list, making it a re-usable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
+This code updates the cache. Remember that the KV cache is eventually consistent — even if you were to update your Worker to read from the cache and return it, you have no guarantees it will actually be up to date. Instead, update the list of todos locally, by taking your original code for rendering the todo list, making it a reusable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
 
 ```js
 ---
@@ -428,7 +422,7 @@ const html = todos => `
 
 With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list.
 
-### Updating todos from the application UI
+## 5. Update todos from the application UI
 
 For the final piece of your todo list, you need to be able to update todos — specifically, marking them as completed.
 
@@ -461,7 +455,7 @@ const html = todos => `
 `;
 ```
 
-You have designed the client-side part of this code to handle an array of todos and render a list of simple HTML elements. There is a number of things that you have been doing that you have not quite had a use for yet – specifically, the inclusion of IDs and updating the todo's completed state. These things work well together to actually support updating todos in the application UI.
+You have designed the client-side part of this code to handle an array of todos and render a list of HTML elements. There is a number of things that you have been doing that you have not quite had a use for yet – specifically, the inclusion of IDs and updating the todo's completed state. These things work well together to actually support updating todos in the application UI.
 
 To start, it would be useful to attach the ID of each todo in the HTML. By doing this, you can then refer to the element later in order to correspond it to the todo in the JavaScript part of your code. Data attributes and the corresponding `dataset` method in JavaScript are a perfect way to implement this. When you generate your `div` element for each todo, you can attach a data attribute called todo to each `div`:
 
@@ -566,9 +560,9 @@ const html = todos => `
 
 The final result of your code is a system that checks the `todos` variable, updates your Cloudflare KV cache with that value, and then does a re-render of the UI based on the data it has locally.
 
-## Conclusions and next steps
+## 6. Conclusion and next steps
 
-By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's edge network.
+By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's global network.
 
 If you would like to keep improving on your project, you can implement a better design (you can refer to a live version available at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/)), or make additional improvements to security and speed.
 
@@ -577,40 +571,58 @@ You may also want to add user-specific caching. Right now, the cache key is alwa
 ```js
 ---
 filename: index.js
-highlight: [2, 3, 5, 20, 21, 24]
+highlight: [15, 16, 22, 33]
 ---
-async function getTodos(request) {
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  let data;
-  const cache = await getCache(myKey);
-  if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
-  return new Response(body, {
-    headers: { 'Content-Type': 'text/html' },
-  });
-}
+export default {
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = (key, data) => env.TODOS.put(key, data);
+    const getCache = key => env.TODOS.get(key);
 
-async function updateTodos(request) {
-  const body = await request.text();
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  try {
-    JSON.parse(body);
-    await setCache(myKey, body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
-}
+    const ip = request.headers.get('CF-Connecting-IP');
+    const myKey = `data-${ip}`;
+
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(myKey, body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }
+
+    let data;
+
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(myKey, JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
+
+    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
+  },
+};
 ```
 
-After making these changes and deploying the Worker one more time, your todo list application now includes per-user functionality while still taking full advantage of Cloudflare's edge network.
+After making these changes and deploying the Worker one more time, your todo list application now includes per-user functionality while still taking full advantage of Cloudflare's global network.
 
 The final version of your Worker script should look like this:
 
@@ -700,52 +712,53 @@ const html = todos => `
 </html>
 `;
 
-const defaultData = { todos: [] };
+export default {
+  async fetch(request, env, ctx) {
+    const defaultData = {
+      todos: [
+        {
+          id: 1,
+          name: 'Finish the Cloudflare Workers blog post',
+          completed: false,
+        },
+      ],
+    };
+    const setCache = (key, data) => env.TODOS.put(key, data);
+    const getCache = key => env.TODOS.get(key);
 
-const setCache = (key, data) => TODOS.put(key, data);
-const getCache = key => TODOS.get(key);
+    const ip = request.headers.get('CF-Connecting-IP');
+    const myKey = `data-${ip}`;
 
-async function getTodos(request) {
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  let data;
-  const cache = await getCache(myKey);
-  if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData));
-    data = defaultData;
-  } else {
-    data = JSON.parse(cache);
-  }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
-  return new Response(body, {
-    headers: { 'Content-Type': 'text/html' },
-  });
-}
+    if (request.method === 'PUT') {
+      const body = await request.text();
+      try {
+        JSON.parse(body);
+        await setCache(myKey, body);
+        return new Response(body, { status: 200 });
+      } catch (err) {
+        return new Response(err, { status: 500 });
+      }
+    }
 
-async function updateTodos(request) {
-  const body = await request.text();
-  const ip = request.headers.get('CF-Connecting-IP');
-  const myKey = `data-${ip}`;
-  try {
-    JSON.parse(body);
-    await setCache(myKey, body);
-    return new Response(body, { status: 200 });
-  } catch (err) {
-    return new Response(err, { status: 500 });
-  }
-}
+    let data;
 
-async function handleRequest(request) {
-  if (request.method === 'PUT') {
-    return updateTodos(request);
-  } else {
-    return getTodos(request);
-  }
-}
+    const cache = await getCache();
+    if (!cache) {
+      await setCache(myKey, JSON.stringify(defaultData));
+      data = defaultData;
+    } else {
+      data = JSON.parse(cache);
+    }
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+    const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
+
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
+  },
+};
 ```
 
-You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos).
+You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/lauragift21/cloudflare-workers-todos).

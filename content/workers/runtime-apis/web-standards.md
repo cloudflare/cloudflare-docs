@@ -3,27 +3,31 @@ title: Web standards
 pcx_content_type: configuration
 meta:
   title: JavaScript and web standards
+  description: Standardized APIs for use by Workers running on Cloudflare's global network.
 ---
 
 # JavaScript and web standards
-
-The Workers runtime provides the following standardized APIs for use by Workers running at the edge.
 
 ---
 
 ## JavaScript standards
 
-Cloudflare Workers uses the V8 JavaScript engine from Google Chrome. The Workers runtime is updated at least once a week, to at least the version that is currently used by Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
+The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAssembly engine](/workers/reference/how-workers-works/). The Workers runtime is updated at least once a week, to at least the version of V8 that is currently used by Google Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
-- `eval()` is not allowed for security reasons.
-- `new Function` is not allowed for security reasons.
+- For security reasons, the following are not allowed:
+  - `eval()`
+  - `new Function`
+  - [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compile_static)
+  - [`WebAssembly.compileStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compileStreaming_static)
+  - `WebAssembly.instantiate` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
+  - [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
 ---
 
-## Web global APIs
+## Web standards and global APIs
 
 The following methods are available per the [Worker Global Scope](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope):
 
@@ -69,11 +73,21 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 {{</Aside>}}
 
-### EventTarget and Event
+### `performance.timeOrigin` and `performance.now()`
+
+- {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin">}}performance.timeOrigin{{</type-link>}}
+
+  - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
+
+- {{<type-link href="">}}performance.now(){{</type-link>}}
+
+  - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
+
+### `EventTarget` and `Event`
 
 The [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) API allow objects to publish and subscribe to events.
 
-### AbortController and AbortSignal
+### `AbortController` and `AbortSignal`
 
 The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) and [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) APIs provide a common model for canceling asynchronous operations.
 
@@ -107,7 +121,7 @@ The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextE
 
 ## URL API
 
-The URL API supports URLs conforming to HTTP and HTTPs schemes.
+The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
@@ -115,9 +129,7 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 The default URL class behavior differs from the URL Spec documented above.
 
-A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
-
-If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/wrangler/cli-wrangler/webpack/#shimming-globals).
+A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-dates/#compatibility-flags).
 
 {{</Aside>}}
 
@@ -125,16 +137,68 @@ If you would like to use another URL implementation, you can [shim the URL class
 
 ## Compression Streams
 
-The `CompressionStream` and `DecompressionStream` classes support gzip and deflate compression methods.
+The `CompressionStream` and `DecompressionStream` classes support the deflate, deflate-raw and gzip compression methods.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
+---
+
 ## URLPattern API
 
-The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.
+The `URLPattern` API provides a mechanism for matching URLs based on a convenient pattern syntax.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
 
+---
+
+## `Intl`
+
+The `Intl` API allows you to format dates, times, numbers, and more to the format that is used by a provided locale (language and region).
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
+
+---
+
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+
+## Unhandled promise rejections
+
+The [`unhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/Window/unhandledrejection_event) event is emitted by the global scope when a JavaScript promise is rejected without a rejection handler attached.
+
+The [`rejectionhandled`](https://developer.mozilla.org/en-US/docs/Web/API/Window/rejectionhandled_event) event is emitted by the global scope when a JavaScript promise rejection is handled late (after a rejection handler is attached to the promise after an `unhandledrejection` event has already been emitted).
+
+```js
+---
+header: worker.js
+---
+addEventListener('unhandledrejection', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+
+addEventListener('rejectionhandled', (event) => {
+  console.log(event.promise);  // The promise that was rejected.
+  console.log(event.reason);  // The value or Error with which the promise was rejected.
+});
+```
+
+---
+
+## `navigator.sendBeacon(url[, data])`
+
+When the [`global_navigator`](/workers/configuration/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.sendBeacon(...)`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) API is available to send an HTTP `POST` request containing a small amount of data to a web server. This API is intended as a means of transmitting analytics or diagnostics information asynchronously on a best-effort basis.
+
+For example, you can replace:
+
+```js
+const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+ctx.waitUntil(promise);
+```
+
+with `navigator.sendBeacon(...)`:
+
+```js
+navigator.sendBeacon('https://example.com', 'hello world');
+```

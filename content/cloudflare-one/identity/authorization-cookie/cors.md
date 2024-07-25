@@ -12,7 +12,7 @@ For a CORS request to reach a site protected by Access, the request must include
 
 - [Simple requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) are sent directly to the origin, without triggering a preflight request. For configuration instructions, refer to [Allow simple requests](#allow-simple-requests).
 
-- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin. For configuration instructions, refer to [Allow preflighted requests](#allow-preflighted-requests). 
+- [Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests) cause the browser to send an OPTIONS request before sending the actual request. The OPTIONS request checks which methods and headers are allowed by the origin. For configuration instructions, refer to [Allow preflighted requests](#allow-preflighted-requests).
 
 {{<Aside type="warning" header="Important">}}
 
@@ -39,10 +39,22 @@ If you make a simple CORS request to an Access-protected domain and have not yet
 
 If you make a preflighted cross-origin request to an Access-protected domain, the OPTIONS request will return a `403` error. This error occurs regardless of whether you have logged in to the domain. This is because the browser never includes cookies with OPTIONS requests, by design. Cloudflare will therefore block the preflight request, causing the CORS exchange to fail.
 
-There are two ways you can resolve this error:
+There are three ways you can resolve this error:
 
-- **Option 1** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-request).
-- **Option 2** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+- **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
+- **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
+- **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
+
+### Bypass OPTIONS requests to origin
+
+You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
+3. In the **Settings** tab, scroll down to **CORS settings**.
+4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
+
+It is still important to enforce CORS for the Access JWT -- this option should only be used if you have CORS enforcement established in your origin server.
 
 ### Configure response to preflight requests
 
@@ -50,51 +62,51 @@ You can configure Cloudflare to respond to the OPTIONS request on your behalf. T
 
 To configure how Cloudflare responds to preflight requests:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
-2. Locate the origin that will be receiving OPTIONS requests and click **Edit**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
 3. In the **Settings** tab, scroll down to **CORS settings**.
 4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
-    For example, if you have configured `api.mysite.com`to return the following headers:
+   For example, if you have configured `api.mysite.com`to return the following headers:
 
-    ```
-    headers: {
-        'Access-Control-Allow-Origin': 'https://example.com',
-        'Access-Control-Allow-Credentials' : true,
-        'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'office',
-        'Content-Type': 'application/json',
-    }
-    ```
+   ```txt
+   headers: {
+     'Access-Control-Allow-Origin': 'https://example.com',
+     'Access-Control-Allow-Credentials' : true,
+     'Access-Control-Allow-Methods': 'GET, OPTIONS',
+     'Access-Control-Allow-Headers': 'office',
+     'Content-Type': 'application/json',
+   }
+   ```
 
-    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
-    ![Example CORS settings configuration on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/CORS-settings.png)
+   then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
+   ![Example CORS settings configuration in Zero Trust](/images/cloudflare-one/policies/CORS-settings.png)
 
-5. Click **Save application**.
+5. Select **Save application**.
 
 6. (Optional) You can check your configuration by sending an OPTIONS request to the origin with `curl`. For example,
 
     ```bash
-    curl -I -XOPTIONS https://api.mysite.com \
-        -H 'origin: https://example.com' \
-        -H 'access-control-request-method: GET'
+    curl --head --request OPTIONS https://api.mysite.com \
+    --header 'origin: https://example.com' \
+    --header 'access-control-request-method: GET'
     ```
 
-    should return a response similar to:
+   should return a response similar to:
 
-    ```bash
-    HTTP/2 200 
-    date: Tue, 24 May 2022 21:51:21 GMT
-    vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
-    access-control-allow-origin: https://example.com
-    access-control-allow-methods: GET
-    access-control-allow-credentials: true
-    expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-    report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=A%2FbOOWJio%2B%2FjuJv5NC%2FE3%2Bo1zBl2UdjzJssw8gJLC4lE1lzIUPQKqJoLRTaVtFd21JK1d4g%2BnlEGNpx0mGtsR6jerNfr2H5mlQdO6u2RdOaJ6n%2F%2BS%2BF9%2Fa12UromVLcHsSA5Y%2Fj72tM%3D"}],"group":"cf-nel","max_age":604800}
-    nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
-    server: cloudflare
-    cf-ray: 7109408e6b84efe4-EWR
-    ```
+   ```txt
+   HTTP/2 200
+   date: Tue, 24 May 2022 21:51:21 GMT
+   vary: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+   access-control-allow-origin: https://example.com
+   access-control-allow-methods: GET
+   access-control-allow-credentials: true
+   expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+   report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=A%2FbOOWJio%2B%2FjuJv5NC%2FE3%2Bo1zBl2UdjzJssw8gJLC4lE1lzIUPQKqJoLRTaVtFd21JK1d4g%2BnlEGNpx0mGtsR6jerNfr2H5mlQdO6u2RdOaJ6n%2F%2BS%2BF9%2Fa12UromVLcHsSA5Y%2Fj72tM%3D"}],"group":"cf-nel","max_age":604800}
+   nel: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+   server: cloudflare
+   cf-ray: 7109408e6b84efe4-EWR
+   ```
 
 ## Send authentication token with Cloudflare Worker
 
@@ -114,125 +126,103 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 2. Add a Service Auth policy
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-2. Find your `api.mysite.com` application and click **Edit**.
+2. Find your `api.mysite.com` application and select **Edit**.
 
-3. Click the **Policies** tab.
+3. Select the **Policies** tab.
 
 4. Add the following policy:
-| Action        | Rule type | Selector      |
-| ------------- | --------- | ------------- |
-| Service Auth  | Include   | Service Token |
+   | Action | Rule type | Selector |
+   | ------------- | --------- | ------------- |
+   | Service Auth | Include | Service Token |
 
 ### 3. Create a new Worker
 
-1. Open a terminal and create a new Workers project.
+1. Open a terminal and run the following command:
 
-    ```sh
-    $ wrangler generate redirect-worker
-    ```
+   ```sh
+   $ npm create cloudflare@latest
+   ```
 
-2. Navigate to the project directory.
+   This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
 
-    ```sh
-    $ cd redirect-worker
-    ```
+2. In the guided setup flow:
+    1. Name your project directory.
+    2. Select `"Hello World" Worker` as the type of application.
+    3. Select _No_ to using TypeScript.
+    4. Answer `Yes` or `No` to using `git` for version control.
+    5. Select `No` to deploying the Worker.
 
-3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
+3. Go to your project directory and open `/src/index.js`. Delete the existing code and paste in the following example:
 
-    ```txt
-    ---
-    filename: wrangler.toml
-    ---
-    name = "redirect-worker"
-    type = "javascript"
-
-    account_id = "123abc456654abc123"
-    workers_dev = true
-    route = ""
-    zone_id = ""
-    compatibility_date = "2022-05-16"
-    ```
-
-4. Open `index.js` and copy in the following example code.
-
-    ```js
-    ---
-    filename: index.js
-    ---
+   ```js
+   ---
+   filename: index.js
+   ---
     // The hostname where your API lives
-    const originalAPIHostname = 'api.mysite.com'
+    const originalAPIHostname = "api.mysite.com";
 
-    async function handleRequest(request) {
+    export default {
+      async fetch(request) {
+        // Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
+        const url = new URL(request.url);
+        url.hostname = originalAPIHostname;
 
-    /** Change just the host. 
-    If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
-    **/
-    const url = new URL(request.url)
-    url.hostname = originalAPIHostname
+        // If your API is located on api.mysite.com/anyname (without "api/" in the path),
+        // remove the "api/" part of example.com/api/name
 
-    /** If your API is located on api.mysite.com/anyname (without "api/" in the path),
-    remove the "api/" part of example.com/api/name
-    **/
+        // url.pathname = url.pathname.substring(4)
 
-    // url.pathname = url.pathname.substring(4)
+        // Best practice is to always use the original request to construct the new request
+        // to clone all the attributes. Applying the URL also requires a constructor
+        // since once a Request has been constructed, its URL is immutable.
+        const newRequest = new Request(url.toString(), request);
 
-    /** Best practice is to always use the original request to construct the new request
-    to clone all the attributes. Applying the URL also requires a constructor
-    since once a Request has been constructed, its URL is immutable.
-    **/
+        newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
+        newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
+        try {
+          const response = await fetch(newRequest);
 
-    const newRequest = new Request(
-        url.toString(),
-        request,
-    )
+          // Copy over the response
+          const modifiedResponse = new Response(response.body, response);
 
-    newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID)
-    newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET)
-    try {
-        const response = await fetch(newRequest);     
+          // Delete the set-cookie from the response so it doesn't override existing cookies
+          modifiedResponse.headers.delete("set-cookie");
 
-        // Copy over the response   
-        const modifiedResponse = new Response(response.body, response);
+          return modifiedResponse;
+        } catch (e) {
+          return new Response(JSON.stringify({ error: e.message }), {
+            status: 500,
+          });
+        }
+      },
+    };
+   ```
 
-        // Delete the set-cookie from the response so it doesn't override existing cookies
-        modifiedResponse.headers.delete("set-cookie")
+4. Deploy the Worker to your Cloudflare account:
 
-        return  modifiedResponse;
-    } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), { status: 500 })
-    }
-    }
-
-    addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
-    })
-    ```
-
-5. Publish the Worker to your account.
-
-    ```sh
-    $ wrangler publish
-    ```
+   ```sh
+   $ npx wrangler@latest deploy
+   ```
 
 ### 4. Configure the Worker
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to the **Workers** tab.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and go to **Workers & Pages**.
 
-2. Click your newly created Worker. In this example, the Worker is called `redirect-worker`.
+2. Select your newly created Worker.
 
-3. In the **Triggers** tab, scroll down to **Routes** and add `example.com/api/*`. The Worker is placed on a subpath of `example.com` to avoid making a cross-origin request.
+3. In the **Triggers** tab, go to **Routes** and add `example.com/api/*`. The Worker is placed on a subpath of `example.com` to avoid making a cross-origin request.
 
-4. In the **Settings** tab, click **Variables**.
+4. In the **Settings** tab, select **Variables**.
 
-5. Under **Environment Variables**, add the following [secret variables](/workers/platform/environment-variables/#environment-variables-via-the-dashboard):
-    - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
-    - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
+5. Under **Environment Variables**, add the following [secret variables](/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard):
+   - `CF_ACCESS_CLIENT_ID` = `<service token Client ID>`
+   - `CF_ACCESS_CLIENT_SECRET` = `<service token Client Secret>`
 
 The Client ID and Client Secret are copied from your [service token](#1-generate-a-service-token).
 
-6. Enable the **Encrypt** option for each variable and click **Save**.
+6. Enable the **Encrypt** option for each variable and select **Save**.
 
 ### 5. Update HTTP request URLs
 

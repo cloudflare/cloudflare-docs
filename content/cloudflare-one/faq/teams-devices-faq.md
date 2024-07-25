@@ -2,19 +2,24 @@
 pcx_content_type: faq
 title: Devices
 weight: 6
+meta:
+    description: Review frequently asked questions about devices in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Devices
 
+## Why does my Windows device appear to switch from Wi-Fi to Ethernet when I enable WARP?
+
+As the WARP client has replaced WinDivert with WinTun architecture, all Windows machines using WinTun will show as being connected using a virtual adapter. Windows, by default, shows virtual adapter connections with a wired Ethernet connection icon, even if the device is connected over wireless. This is by design and should have no impact on connectivity.
+
 ## Why is my device not connecting to a closer Cloudflare data center?
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-- Sometimes your nearest colo might be having problems, although we work hard to prevent it. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
+- Sometimes your nearest colo may be undergoing maintenance or having problems. Check the [Cloudflare Status page](https://www.cloudflarestatus.com/) for system status.
 - Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
-- Not all Cloudflare data centers are WARP-enabled. We are constantly evaluating performance and how users are connecting, bringing more colos online with WARP all the time.
 
 ## Why is my public IP address sometimes visible?
 
@@ -23,89 +28,28 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 ## Why has my throughput dropped while using WARP?
 
-Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encryps all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
+Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encrypts all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
-## Firefox is showing a network protocol violation when I use the WARP client.
+## Why is my device not connecting to a public Wi-Fi?
 
-If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
+The Wi-Fi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily turn off WARP. After you login to the captive portal through your browser, you can turn WARP back on to access corporate resources.
 
-## Why is my device not connecting to the Internet after I deploy WARP?
+For more information, refer to [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/).
 
-Deploying new software can come with unexpected issues. This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client.
+## Why is my device not connecting to the Internet?
 
-### Is the Cloudflare root certificate installed in all the places?
+A third-party service or ISP may be blocking WARP, or Zero Trust settings may be misconfigured. For a list of common issues and steps to resolve, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/).
 
-Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
+## Why is my device not connecting to the corporate Wi-Fi?
 
-In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
-
-If you ever see an error like _Certificate not trusted_ or _Not trusted identity_ or _SSL Error_, it is likely related to our root certificates.
-
-As a last resort, add the application to a **Do Not Inspect** policy in Gateway.
-
-### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
-
-You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Inspect applications](/cloudflare-one/policies/filtering/application-app-types/#do-not-inspect-applications).
-
-### Do you, your ISP, or your country have policies in place that would block the WARP client?
-
-Ensure that you do not have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
-
-In particular, Microsoft Intune’s default security policy creates a firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
-
-Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
-
-### Are you running another VPN, firewall, or security product that may be trying to inspect traffic, interfere with routing or enforce DNS policy?
-
-Running VPNs or firewalls alongside the WARP client may interfere with some of its functionalities. Please refer to the following documentation on how to use WARP alongside a VPN, or on how to exclude traffic from the WARP client:
-
-[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/#use-warp-alongside-a-vpn)
-
-[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/)
-
-The most common places we see interference with WARP from these products are:
-
-- **Control of the routing table:** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
-
-- **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
-
-- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
-
-### As a last resort, does WARP or your configuration work on a clean machine?
-
-To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
+An [OS firewall rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall) on the device may be blocking the EAP/Radius server that allows users to join the Wi-Fi network. If your corporate Wi-Fi uses a Radius server for network authentication, add the Radius server to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list.
 
 ## Why is my device not connecting to my private network?
 
-If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/):
+If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/):
 
-- Verify that the WARP client is [properly configured](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#device-configuration) on the device.
+- Verify that the WARP client is [properly configured](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#device-configuration) on the device.
 - Verify that the user is allowed through by your Access and Gateway policies.
-- Verify that the [local LAN settings](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#router-configuration) for the device do not overlap with the CIDR range of your private network.
+- Verify that the [local LAN settings](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#router-configuration) for the device do not overlap with the CIDR range of your private network.
 
-When contacting Cloudflare support, ensure that you include [WARP Client logs](#how-do-i-retrieve-warp-client-logs) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
-
-## How do I retrieve WARP client logs?
-
-### macOS
-
-In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and press **Enter**. This will place a `warp-debugging-info.zip` on your Desktop.
-
-### Windows
-
-1. Open `C:\Program Files\Cloudflare\Cloudflare WARP` in Explorer.
-2. Double-click on `warp-diag.exe`. This will place a `warp-debugging-info.zip` on your Desktop.
-
-### Linux
-
-In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
-
-### iOS
-
-1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
-2. Send the Extension Logs and Application Logs to Cloudflare support.
-
-### Android/ChromeOS
-
-1. Open **App** and navigate to **Settings** > **Advanced** > **Diagnostics**.
-2. Send the Console Logs and Boringtun Logs to Cloudflare support.
+When contacting Cloudflare support, ensure that you include [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.

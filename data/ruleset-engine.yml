@@ -4,13 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M29.9
 product:
   title: Ruleset Engine
   url: /ruleset-engine/
+  group: Cloudflare essentials
+  additional_groups: [Application performance, Application security, Network security]
 
 meta:
   title: Cloudflare Ruleset Engine docs
   description: Create and deploy rules and rulesets in different Cloudflare
     products using the same basic syntax.
   author: '@cloudflare'
-  image: /core-services.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets
@@ -18,3 +19,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: ruleset-engine

@@ -1,32 +1,34 @@
 {{ define "main" }}
-  {{- $type := default "overview" .Params.type -}}
+{{- $type := default "overview" .Params.type -}}
 
-  <div class="DocsPage">
-    {{- partial "skipcontent" . -}}
-    {{- partial "topbar.mobile" . -}}
-    {{- partial "sidebar.nav" . -}}
+<div class="DocsPage">
+  {{- partial "skipcontent" . -}}
+  {{- partial "topbar.mobile" . -}}
+  {{- partial "sidebar.nav" . -}}
 
-    <div class="DocsToolbar">
-      {{- partial "topbar.search" . -}}
-      {{- partial "topbar.tools" . -}}
-    </div>
-
-    <main class="DocsBody">
-      <div id="docs-content" data-reach-skip-nav-content></div>
-
-      <div class="DocsContent" id="main" page-type="{{ $type }}">
-        <article class="DocsMarkdown">
-          <h1>{{ .Title }}</h1>
-
-          <div class="DocsMarkdown--content-column">
-            {{- .Params.Summary -}}
-          </div>
-
-          {{- .Content -}}
-        </article>
-      </div>
-    </main>
-
-    {{ partial "footer" . }}
+  <div class="DocsToolbar">
+    {{- partial "topbar.search" . -}}
+    {{- partial "topbar.tools" . -}}
   </div>
+
+  <main class="DocsBody">
+    <div id="docs-content" data-reach-skip-nav-content></div>
+    {{- partial "breadcrumbs" . -}}
+
+    <div class="DocsContent" id="main" page-type="{{ $type }}">
+      <article class="DocsMarkdown">
+        <h1>{{ .Title }}</h1>
+
+        <workers-playground-link></workers-playground-link>
+        <div class="DocsMarkdown--content-column">
+          {{- .Params.Summary | .Page.RenderString -}}
+        </div>
+
+        {{- .Content -}}
+      </article>
+    </div>
+  </main>
+
+  {{ partial "footer" . }}
+</div>
 {{ end }}

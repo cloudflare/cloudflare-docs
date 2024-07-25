@@ -26,7 +26,7 @@ For best practices when configuring your security policy, refer to [Best practic
 
 ## Magic Firewall rules and Magic Transit endpoint health checks
 
-Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
+Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's {{<glossary-tooltip term_id="tunnel health-check" link="/magic-transit/reference/tunnel-health-checks/#endpoint-health-checks">}}endpoint health checks{{</glossary-tooltip>}}. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
 
 For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudflare.com/ips/).
 
@@ -47,4 +47,4 @@ Managed phase rulesets are updated and maintained by Cloudflare, and Cloudflare 
 Cloudflare maintains the expressions and order of execution for rules in the Managed phase. Rules
 can be enabled, disabled, or made to log matching packets.
 
-Refer to [Enable Managed Rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.
+Refer to [Enable managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.

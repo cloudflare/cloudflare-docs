@@ -1,9 +1,9 @@
 ---
-title: Add records
+title: Records with the same name
 pcx_content_type: troubleshooting
 weight: 11
 meta:
-  title: Troubleshooting — Cannot add DNS records with the same name
+  title: Cannot add DNS records with the same name
 ---
 
 # Cannot add DNS records with the same name
@@ -29,7 +29,7 @@ Review your existing DNS records to find the matching value in the **Name** fiel
 
 {{<Aside type="note">}}
 
-`CNAME` records are the only IP resolution record with this type of limitation. You can have more than one `A`/`AAAA` record per hostname, which is a way some domains do [simple load balancing](/dns/manage-dns-records/how-to/dns-load-balancing/) for incoming requests.
+`CNAME` records are the only IP resolution record with this type of limitation. You can have more than one `A`/`AAAA` record per hostname, which is a way some domains do [simple load balancing](/dns/manage-dns-records/how-to/round-robin-dns/) for incoming requests.
 
 {{</Aside>}}
 

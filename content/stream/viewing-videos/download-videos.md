@@ -1,6 +1,7 @@
 ---
 title: Download videos
 weight: 6
+pcx_content_type: how-to
 ---
 
 # Download videos
@@ -86,6 +87,8 @@ In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the
 `
 https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp4
 `
+
+The `filename` can be a maximum of 120 characters long and composed of `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_` characters. The extension (.mp4) is appended automatically.
 
 ## Retrieve downloads
 

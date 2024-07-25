@@ -4,13 +4,15 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path fill-rul
 product:
   title: Waiting Room
   url: /waiting-room/
+  group: Application performance
+  additional_groups: [Developer platform]
+  preview_tryout: true
 
 meta:
   title: Cloudflare Waiting Room docs
   description: Cloudflare Waiting Room redirects visitors to virtual waiting rooms
     when they are trying to access web pages that have high volumes of traffic.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/waiting-rooms
@@ -18,3 +20,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: waiting-room

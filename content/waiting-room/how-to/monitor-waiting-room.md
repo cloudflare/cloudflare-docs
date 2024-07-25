@@ -10,15 +10,15 @@ You can monitor the status of your waiting rooms using the [dashboard](#status-i
 
 Note that the **Total active users** and **Queued users** shown in the dashboard, as well as through API endpoints are estimates. That data corresponding to each of these metrics is cached for around 30 seconds after the time it takes to be synced from all data centers globally. Therefore, the status will range between 20-50 seconds in the past, depending on the exact moment the data was queried, aggregated, as well as the age of the cache.
 
-{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Room.{{</Aside>}}
+Refer to [Waiting Room Analytics](/waiting-room/waiting-room-analytics/) for more details about the traffic going through your waiting room.
 
 ## Status in the dashboard
 
-Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
+Open the **Waiting Room** dashboard to view the list of your waiting rooms.
 
 The **Status** column displays the current state of the waiting room:
 
-- **Not Queueing**:
+- **Not queueing**:
   - Waiting room enabled, but has not reached traffic threshold to send visitors to waiting room.
   - Shows estimated number of users in the application.
 - **Queueing**:
@@ -26,13 +26,13 @@ The **Status** column displays the current state of the waiting room:
   - Shows estimated number of users in the queue.
   - On hover, shows maximum wait time expected for users.
 - **Disabled**: The waiting room is suspended.
-- **Queue All**:
+- **Queue-all**:
   - Forces all traffic to queue in the waiting room.
   - On hover, shows estimated number of users in the queue.
 
 ## Status in the API
 
-[Check whether traffic is queueing in a configured waiting room](https://developers.cloudflare.com/api/operations/waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
+[Check whether traffic is queueing in a configured waiting room](/api/operations/waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
 
 ```bash
 GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
@@ -49,8 +49,9 @@ To check whether a configured waiting room is suspended or whether the traffic i
 GET zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
-The endpoint above [fetches all settings](https://developers.cloudflare.com/api/operations/waiting-room-waiting-room-details) for a configured waiting room:
+The endpoint above [fetches all settings](/api/operations/waiting-room-waiting-room-details) for a configured waiting room:
 
+```bash
       "success": true,
       "errors": [],
       "messages": [],
@@ -76,6 +77,7 @@ The endpoint above [fetches all settings](https://developers.cloudflare.com/api/
         },
         "custom_page_html": "{{#waitTimeKnown}} {{waitTime}} mins {{/waitTimeKnown}} {{^waitTimeKnown}} Queue all enabled {{/waitTimeKnown}}"
       }
+```
 
 The value of `suspended` indicates whether a waiting room is activated or suspended:
 
@@ -91,8 +93,12 @@ The value of `queue_all` indicates whether all traffic is forced to queue in the
 
 Waiting Room queues traffic at the data-center level to increase scalability, letting each data center make decisions independently.
 
-Because of this design, a waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
+Because of this design, the configured traffic limits of a waiting room are target values which your waiting room will work to keep your traffic volumes near. A waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
 
 Waiting Room also continuously monitors the rate of users entering throughout each minute, and not just at the end of the minute. Therefore, if at the beginning of your minute, a large fraction of your set `new_users_per_minute` value already joined, we may start queueing users, even if the overall `new_users_per_minute` value that is reached for that minute is not hit.
 
-To help prevent a waiting room from active queueing, increase the values for `new_users_per_minute` and/or `total_active_users`.
+To help prevent a waiting room from active queueing, increase the values for `new_users_per_minute` and/or `total_active_users`. For more information about how Waiting Room makes queueing decisions, review our [blogpost](https://blog.cloudflare.com/how-waiting-room-queues).
+
+{{<Aside type="note">}}
+Note that Waiting Room is designed to handle legitimate traffic. If you notice frequent or abnormal queueing behavior, ensure that you are properly handling malicious and automated traffic using Cloudflare security products.
+{{</Aside>}}

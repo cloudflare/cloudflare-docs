@@ -4,15 +4,21 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 
 product:
   title: Queues
   url: /queues/
+  group: Developer platform
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare Queues
   description: Reliably send and receive messages without the egress fees.
   author: "@cloudflare"
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
   discord: https://discord.com/channels/595317990191398933/1008691665688604783
   # Coming Soon:
   # dashboard_link: https://dash.cloudflare.com/?to=/:account/queues
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: queues

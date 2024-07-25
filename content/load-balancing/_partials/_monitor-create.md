@@ -5,45 +5,20 @@ _build:
   list: never
 ---
 
-You can create a monitor within the [load balancer workflow](/load-balancing/how-to/create-load-balancer/) or in the **Monitors** section of the dashboard:
+You can create a monitor within the [load balancer workflow](/load-balancing/load-balancers/create-load-balancer/) or in the **Monitors** section of the dashboard:
 
 1.  Go to **Traffic** > **Load Balancing**.
 
-2.  Click **Manage Monitors**.
+2.  Select **Manage Monitors**.
 
-3.  Click **Create**.
+3.  Select **Create**.
 
 4.  Add the following information:
-    *   **Type**: The protocol to use for health checks
-        *   *Non-enterprise customers*: Choose **HTTP**, **HTTPS**, or **TCP**.
-        *   *Enterprise customers*: Choose **HTTP**, **HTTPS**, **TCP**, **UDP ICMP**, **ICMP Ping**, or **SMTP**.
-    *   **Path**: The endpoint path to run health checks against
-    *   **Port**: The destination port for health checks
+    {{<render file=_monitor-settings-basic.md productFolder="load-balancing">}}
 
-5.  For additional settings, select **Advanced health check settings**:
+5.  For additional settings, select **Advanced health monitor settings**:
+    {{<render file=_monitor-settings-advanced.md productFolder="load-balancing">}}
 
-    *   **Interval**:
-        *   By increasing the default, you can improve failover time, but you may also increase load on your servers.
-        *   Minimum time in seconds is 60 (Pro), 15 (Business), and 10 (Enterprise).
-    *   **Timeout** and **Retries**:
-        *   The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
-    *   **Expected Code(s)**: The expected HTTP response codes listed individually (200, 302) or as a range (2xx, 3xx).
-    *   **Response Body**:
-        *   Looks for a case-insensitive substring in the response body.
-        *   Make sure that the value is relatively static and within the first 100,000 KB of the HTML page.
-    *   **Simulate Zone**:
-        *   Pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.
-        *   Ensures health checks are compatible with features like [authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Argo Smart Routing](/argo-smart-routing/).
-    *   **Follow Redirects**:
-        *   Instead of reporting a `301` or `302` code as unhealthy, the health check follows redirects to the final endpoint.
-    *   **Configure Request Header(s)**:
-        *   Useful if your servers are expecting specific incoming headers.
-    *   **Header**:
-        *   The HTTP request headers to send in the health check. It is recommended that you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.
 6.  Select **Save**.
 
-{{<Aside type="note" header="Note:">}}
-
-To increase confidence in pool status, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this health check the consecutive number of times specified in these parameters.
-
-{{</Aside>}}
+{{<render file=_monitor-settings-consecutive.md productFolder="load-balancing">}}

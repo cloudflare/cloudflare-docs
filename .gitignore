@@ -1,9 +1,11 @@
 .DS_Store
 node_modules
-*-lock.*
 *.lock
 *.log
 *.backup
 
+/dist
 /public
 /assets/jsconfig.json
+/resources/_gen/images
+/assets/secrets

@@ -1,26 +1,25 @@
 ---
 pcx_content_type: concept
 title: Custom rules
-weight: 3
-layout: single
+weight: 4
 ---
 
 # Custom rules
 
-Custom rules allow you to control incoming traffic by filtering requests to a zone. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
+Custom rules allow you to control incoming traffic by filtering requests to a zone. You can perform actions like *Block* or *Managed Challenge* on incoming requests according to rules you define.
 
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/custom-rulesets/).
+Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), custom rules have the following basic parameters:
 
-{{<Aside type="note">}}
+* An [expression](/ruleset-engine/rules-language/expressions/) that specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
+* An [action](/ruleset-engine/rules-language/actions/) that specifies what to perform when there is a match for the rule.
 
-This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
+Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
 
+{{<Aside type="note" header="Did you migrate from Cloudflare Firewall Rules?">}}
+Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/#main-differences) to learn more about the differences between firewall rules and custom rules.
 {{</Aside>}}
 
-Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), custom rules have an **expression** and an **action**:
-
-* The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
-* The **action** specifies what to perform when there is a match for the rule.
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/custom-rules/custom-rulesets/), which require an Enterprise plan with a paid add-on.
 
 ---
 

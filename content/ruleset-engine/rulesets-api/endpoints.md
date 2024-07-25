@@ -11,13 +11,13 @@ For some operations, you can use specific endpoints provided by the Rulesets API
 For example, instead of using the following endpoint:
 
 ```txt
-PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>
+PUT /zones/{zone_id}/rulesets/{ruleset_id}
 ```
 
 You can use the following endpoint:
 
 ```txt
-PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint
+PUT /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint
 ```
 
 To invoke a Rulesets API operation, append the endpoint to the Cloudflare API base URL:
@@ -32,11 +32,11 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 {{<Aside>}}
 
-The Rulesets API endpoints require a value for `<ACCOUNT_ID>` or `<ZONE_ID>`.
+The Rulesets API endpoints require a value for `{account_id}` or `{zone_id}`.
 
-To retrieve a list of accounts you have access to, use the [List Accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
+To retrieve a list of accounts you have access to, use the [List Accounts](/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
 
-To retrieve a list of zones you have access to, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation. Note the IDs of the zones you want to manage.
+To retrieve a list of zones you have access to, use the [List Zones](/api/operations/zones-get) operation. Note the IDs of the zones you want to manage.
 
 {{</Aside>}}
 
@@ -104,14 +104,14 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     <tr>
       <td>
         <a href="/ruleset-engine/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
-          List rules in a Managed Ruleset with a specific tag
+          List rules in a managed ruleset with a specific tag
         </a>
       </td>
       <td>
         <code>GET</code>
       </td>
       <td>
-        <p>Returns a list of all the rules in a Managed Ruleset with a specific tag.</p>
+        <p>Returns a list of all the rules in a managed ruleset with a specific tag.</p>
       </td>
     </tr>
   </tbody>
@@ -164,7 +164,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
         <p>
           Updates the basic properties of a ruleset and the list of rules in the ruleset.
           <br />
-          Allows you to configure the execution of Managed Rulesets.
+          Allows you to configure the execution of managed rulesets.
         </p>
       </td>
     </tr>

@@ -14,12 +14,12 @@ The purpose justification screen will show for any new sessions of an applicatio
 
 Configuring a purpose justification screen is done as part of configuring an Access policy.
 
-1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications**.
-1.  Select an application and click **Edit**.
+1.  In Zero Trust, go to **Access** > **Applications**.
+1.  Select an application and select **Edit**.
 1.  Select the policy you want to configure with purpose justification.
 1.  Open **Optional Configurations**.
 1.  Enable purpose justification.
 1.  (Optional) set a custom purpose justification message. This will appear on the purpose justification screen and will be visible to the user.
 1.  Once configured, a user will see the following screen:
 
-![Finalized purpose justification screen displaying custom message.](/cloudflare-one/static/documentation/policies/purpose-justification.png)
+![Finalized purpose justification screen displaying custom message.](/images/cloudflare-one/policies/purpose-justification.png)

@@ -17,7 +17,7 @@ The maximum length of all parameter values in a URL rewrite (combined) is 4,096 
 
 ### Static URL rewrites
 
-The full syntax of the `action_parameters` field for a static URL Rewrite Rule that rewrites both the URI path and the query string is the following:
+The full syntax of the `action_parameters` field for a static rewrite URL rule that rewrites both the URI path and the query string is the following:
 
 ```json
 "action_parameters": {
@@ -36,7 +36,7 @@ If you are only rewriting the URI path or the query string, omit the `query` or 
 
 ### Dynamic URL rewrites
 
-The full syntax of the `action_parameters` field for a dynamic URL Rewrite Rule that rewrites both the URI path and the query string is the following:
+The full syntax of the `action_parameters` field for a dynamic rewrite URL rule that rewrites both the URI path and the query string is the following:
 
 ```json
 "action_parameters": {

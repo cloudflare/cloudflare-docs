@@ -36,11 +36,11 @@ This node provides information about DDoS attacks detected and mitigated by Clou
 
 Each row represents an attack event. Each attack has a unique ID.
 
-The sample rate is 1/10,000 packets.
+The sample rate is dynamic and based on the volume of packets, ranging from 1/100 to 1/10,000 packets.
 
 {{<Aside type="note" header="Adjusting attack mitigation">}}
 
-To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
+To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
 {{</Aside>}}
 
@@ -54,6 +54,9 @@ This node complements the information in the `dosdAttackAnalyticsGroups` node. P
 - `tcpSequenceNumber`
 - `tcpChecksum`
 - `icmpCode`
+- `ruleId`
+- `ruleName`
+- `attackVector`
 
 Each row represents a packet sample. The sample rate is 1/10,000 packets.
 
@@ -63,7 +66,7 @@ This node is only available to Magic Transit customers. Provides metadata about 
 
 `flowtrackd` does not use the following ID fields: attack ID, rule ID, and ruleset ID.
 
-The sample rate is dynamic and based on the volume of packets, ranging from 1/100 to 1/10,000 packets.
+The sample rate is 1/10,000 packets.
 
 ### `magicFirewallNetworkAnalyticsAdaptiveGroups`
 

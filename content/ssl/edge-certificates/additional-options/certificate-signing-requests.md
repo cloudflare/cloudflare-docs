@@ -6,10 +6,7 @@ weight: 11
 
 # Certificate Signing Requests (CSRs)
 
-{{<render file="_csr-definition.md">}}
-<br/>
-
-A CSR contains information about your domain: your organization name and address, the common name (domain name), and Subject Alternative Names (SANs).
+{{<render file="_csr-definition.md">}} 
 
 ## Availability
 
@@ -27,16 +24,16 @@ You can create two types of CSRs:
 To create a CSR:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and an application.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
-3.  On **Certificate Signing Request (CSR)**, click **Generate**.
-4.  Choose a **Scope** (only [certain customers](#types-of-csrs) can choose **Account**.
-5.  Enter relevant information on the form and click **Create**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
+3.  On **Certificate Signing Request (CSR)**, select **Generate**.
+4.  Choose a **Scope** (only [certain customers](#types-of-csrs) can choose **Account**).
+5.  Enter relevant information on the form and select **Create**.
 
 To use a CSR:
 
-1.  Navigate to **SSL/TLS** > **Edge Certificates**.
+1.  Go to **SSL/TLS** > **Edge Certificates**.
 2.  On **Certificate Signing Request (CSR)**, select the record you just created.
-3.  Copy (or click **Click to copy**) the value for **Certificate Signing Request**.
+3.  Copy (or select **Click to copy**) the value for **Certificate Signing Request**.
 4.  Obtain a certificate from the Certificate Authority (CA) of your choice using your CSR.
 5.  When you [upload the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/) to Cloudflare, select an **Encoding mode** of **Certificate Signing Request (CSR)** and enter the associated value.
 

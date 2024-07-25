@@ -4,20 +4,28 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 8
 product:
   title: Cloudflare Image Optimization
   url: /images/
+  group: Developer platform
+  additional_groups: [Media]
   wrap: true
+  preview_tryout: true
 
 meta:
   title: Cloudflare Image Optimization docs
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
     products tailored to your different needs.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/images
   dashboard_link: https://dash.cloudflare.com/?to=/:account/images
+  learning_center: https://www.cloudflare.com/learning/performance/glossary/what-is-image-compression/
   discord: https://discord.com/channels/595317990191398933/973591562615390228
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: images

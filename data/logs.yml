@@ -4,6 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 2
 product:
   title: Logs
   url: /logs/
+  group: Cloudflare essentials
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Logs docs
@@ -11,7 +13,6 @@ meta:
     processed by our network. Find out about the connecting client, Cloudflare's
     actions, and the response from the origin server
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs
@@ -19,3 +20,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: logs

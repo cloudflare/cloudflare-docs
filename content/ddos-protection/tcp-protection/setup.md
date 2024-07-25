@@ -8,7 +8,7 @@ weight: 3
 
 Follow the steps described in the following sections to get started with Advanced TCP Protection.
 
-## Step 1 – Request initial configuration
+## 1. Request initial configuration
 
 When you get access to Advanced TCP Protection, there are no configured thresholds in your account.
 
@@ -18,23 +18,25 @@ Ask your Implementation Manager to configure initial threshold values.
 
 Once thresholds are configured, the Implementation Manager will let you know that Advanced TCP Protection has been initialized and can be configured and enabled.
 
-## Step 2 – Add prefixes
+## 2. Add prefixes
 
 [Add the prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) you would like to use with Advanced TCP Protection. You will be able to register prefixes that you previously [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/) or a subset of these prefixes.
 
 You cannot add unapproved prefixes to Advanced TCP Protection. Contact your account team to get help with prefix approvals.
 
-## Step 3 – (optional) Add IP addresses or prefixes to the allowlist
+## 3. (Optional) Add IP addresses or prefixes to the allowlist
 
 [Add prefixes to the allowlist](/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/) if their traffic should bypass Advanced TCP Protection rules.
 
-The allowlist only applies to source IPs — it does not apply to your own IPs or prefixes. To exclude a subset of an onboarded prefix from Advanced TCP Protection, refer to [Exclude a prefix or a prefix subset](/ddos-protection/tcp-protection/how-to/exclude-prefix/).
+The {{<glossary-tooltip term_id="allowlist">}}allowlist{{</glossary-tooltip>}} only applies to source IPs — it does not apply to your own IPs or prefixes. To exclude a subset of an onboarded prefix from Advanced TCP Protection, refer to [Exclude a prefix or a prefix subset](/ddos-protection/tcp-protection/how-to/exclude-prefix/).
 
-## Step 4 – Create a global configuration
+## 4. Create a global configuration
 
-[Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received packets.
+[Create a rule](/ddos-protection/tcp-protection/how-to/create-rule/) for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}}.
 
-## Step 5 – Enable Advanced TCP Protection
+Optionally, you can create [filters](/ddos-protection/tcp-protection/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). {{<render file="_atp-filter-definition.md">}}
 
-1. In the Cloudflare dashboard, go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
+## 5. Enable Advanced TCP Protection
+
+1. In the Cloudflare dashboard, go to Account Home > **L3/4 DDoS** > **Advanced TCP Protection**.
 2. Under **General settings**, toggle the feature status to **Enabled**.

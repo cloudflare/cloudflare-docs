@@ -6,58 +6,73 @@ weight: 3
 
 # Manage user sessions
 
+A user session determines how long a user can access an Access application without re-authenticating.
+
 ## Session duration
 
-When users log in to an application protected by Access, Access generates two session tokens:
+When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
 {{<table-wrap>}}
-
-| Token                    | Description                                                        | Storage                                                              |
-| ------------------------ | ------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| **Global session token** | Establishes the maximum amount of time for a user’s Access session | Your Cloudflare [team domain](/cloudflare-one/glossary/#team-domain) |
-| **Application token**    | Establishes a session for a specific application                   | The hostname of the application protected                            |
-
+| Token  | Description  | Expiration | Storage   |
+| --------| ---------- | ----------- |---------  |
+| Global session token | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#set-global-session-duration) | Your Cloudflare {{<glossary-tooltip term_id="team domain">}}team domain{{</glossary-tooltip>}} |
+| [Application token](/cloudflare-one/identity/authorization-cookie/application-token/)   | Allows the user to access a specific Access application.  | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application     |
 {{</table-wrap>}}
 
-When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
+The user can access the application for the entire duration of the application token’s lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
-If the global session duration is shorter than an application’s session length, users will be required to re-authenticate each time the global session time elapses. This can be helpful to establish a maximum session duration across all applications.
-
-If the global session duration is longer than an application’s session length, a user’s application session will be automatically refreshed until the global session expires. This provides a more secure way to allow for longer user sessions, since the global session cookie cannot be used to directly access an application.
+The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
 ### Set global session duration
 
 You can set a global session duration between 15 minutes and 1 month.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 2. Under **Global session timeout**, select **Edit**,
 3. Select the desired timeout duration from the dropdown menu.
 
+The user will be required to re-authenticate with the IdP after this period of time.
+
 ### Set application session duration
 
-You can set an application session duration ranging from immediate timeout to 1 month.
+You can set an application session duration for self-hosted and private Access applications. Available session durations range from immediate timeout to 1 month. The default is 24 hours.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the application you want to configure and select **Edit**.
 3. In the **Overview** tab, select a **Session Duration** from the dropdown menu.
+
+The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
+
+#### SaaS application sessions
+
+Access session durations only control the front door to a SaaS app; Access does not control how long the user can stay in the SaaS app itself. For example, if the user logs out of the SaaS app and then comes back to it, a valid Access application token allows them to re-authenticate without another login. The SaaS app issues its own authorization cookie that manages the user's session within the app.
+
+### Set policy session duration
+
+You can set a policy session duration ranging from immediate timeout to one month. The policy session duration takes precedence over the application session duration.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the application you want to configure and select **Edit**.
+3. Go to the **Policies** tab and select **Configure** for any policy.
+4. Select a **Session Duration** from the dropdown menu.
+
+Users who match this policy will be issued an application token with this expiration time.
 
 ## Revoke user sessions
 
 Access provides two options for revoking user sessions: per-application and per-user.
 
-The authentication process involves Cloudflare Access issuing a signed JSON Web Token (JWT) when a user authenticates and meets the criteria defined in your Access application policy. The token is valid for the duration configured in the application (default is 24 hours). The user can access the application for the entire duration of that token’s lifecycle without re-authenticating until the session expires.
-
 ### Per-Application
 
 To immediately terminate all active sessions for a specific application:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Locate the application for which you would like to revoke active sessions and select **Edit**.
 
 3. In the **Overview** tab, select **Revoke existing tokens**.
 
-Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
+Unless there are changes to rules in the policy, users can start a new session if their profile in your identity provider is still active.
 
 ### Per-User
 
@@ -67,11 +82,11 @@ If you want to permanently revoke a user's access:
 
 1. Disable their account in your identity provider so that they cannot authenticate.
 
-2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Users**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Users**.
 
-3. Search for and select the user you want to revoke.
+3. Select the checkbox next to the user you want to revoke.
 
-4. Select **Update Status** > **Revoke access**.
+4. Select **Action** > **Revoke access**.
 
 The user will no longer be able to log in to any application protected by Access. The user will still count towards your seat subscription until you [remove the user](/cloudflare-one/identity/users/seat-management) from your account.
 

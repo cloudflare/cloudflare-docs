@@ -2,7 +2,6 @@
 title: Enable Google Cloud Storage
 pcx_content_type: how-to
 weight: 61
-layout: single
 meta:
   title: Enable Logpush to Google Cloud Storage
 ---
@@ -13,50 +12,47 @@ Cloudflare Logpush supports pushing logs directly to Google Cloud Storage (GCS) 
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Google Cloud Storage via the dashboard.
+{{<render file="_enable-logpush-job.md">}}
 
-To enable the Cloudflare Logpush service:
+5. In **Select a destination**, choose **Google Cloud Storage**. 
 
-1.  Log in to the Cloudflare dashboard.
+6. Enter or select the following destination details:
+    - **Bucket** - GCS bucket name
+    - **Path** - bucket location within the storage container
+    - **Organize logs into daily subfolders** (recommended) 
+    - For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare’s IAM as a user with a [Storage Object Admin role](https://cloud.google.com/storage/docs/access-control/iam-roles).
 
-2.  Select the Enterprise domain you want to use with Logpush.
+When you are done entering the destination details, select **Continue**.
 
-3.  Go to **Analytics** > **Logs**.
+7. To prove ownership, Cloudflare will send a file to your designated destination. To find the token, select the **Open** button in the **Overview** tab of the ownership challenge file, then paste it into the Cloudflare dashboard to verify your access to the bucket. Enter the **Ownership Token** and select **Continue**. 
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+8. Select the dataset to push to the storage service.
 
-5.  Select the dataset you want to push to a storage service.
+9. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+10. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-7.  Select **Google Cloud Storage**.
+11. Select **Submit** once you are done configuring your logpush job.
 
-8.  Enter or select the following destination information:
-
-    - **Bucket path**
-    - **Daily subfolders**
-    - For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare's IAM as a user (if you did not add it already).
-
-9.  Click **Validate access**.
-
-10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and click **Prove ownership**. To find the ownership token, click the **Open** button in the **Overview** tab of the ownership challenge file.
-
-11. Click **Save and Start Pushing** to finish enabling Logpush.
-
-Once connected, Cloudflare lists Google Cloud Storage as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
-
-## Manage via API
+## Create and get access to a GCS bucket
 
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
 {{<render file="_enable-read-permissions.md">}}
+<br/>
 
 To enable Logpush to GCS:
 
-1.  Create a GCS bucket. Refer to [instructions from GCS](https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-console).
+1. Create a GCS bucket. Refer to [instructions from GCS](https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-console).
 
-2.  In **Storage** > **Browser** > **Bucket** > **Permissions**, add the member `logpush@cloudflare-data.iam.gserviceaccount.com` with `Storage Object Admin` permission.
+2. In **Storage** > **Browser** > **Bucket** > **Permissions**, add the member `logpush@cloudflare-data.iam.gserviceaccount.com` with `Storage Object Admin` permission.
 
 {{<Aside type="note" header="Note">}}
-To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/fundamentals/data-products/analytics-integrations/google-cloud/).
+To analyze your Cloudflare Logs data using the Google Cloud Platform (GCP), follow the steps in the [Google Cloud Analytics integration page](/analytics/analytics-integrations/google-cloud/).
 {{</Aside>}}

@@ -9,15 +9,13 @@ weight: 7
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/shaka-player) 
-
 First, create a video element, using the poster attribute to set a preview thumbnail image. Refer to [Display thumbnails](/stream/viewing-videos/displaying-thumbnails/) for instructions on how to generate a thumbnail image using Cloudflare Stream.
 
 ```html
 <video
 	id="video"
 	width="640"
-	poster="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg"
+	poster="https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg"
 	controls
 	autoplay
 ></video>
@@ -28,11 +26,11 @@ Then listen for `DOMContentLoaded` event, create a new instance of Shaka Player,
 ```javascript
 // Replace the manifest URI with an HLS or DASH manifest from Cloudflare Stream
 const manifestUri =
-	'https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd';
+	'https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd';
 
 document.addEventListener('DOMContentLoaded', () => {
-	const player = new shaka.Player(video);
 	const video = document.getElementById('video');
+  const player = new shaka.Player(video);
 	await player.load(manifestUri);
 });
 ```

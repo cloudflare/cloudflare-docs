@@ -6,9 +6,13 @@ weight: 1
 
 # Manage DNS records
 
-{{<render file="_import-scan-info.md">}}
+{{<render file="_dns-scan-intro.md">}} <br />
 
-If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/manage-dns-records/how-to/import-and-export/#import-records).
+{{<render file="_dns-scan-note.md">}}
+
+{{<render file="_dns-scan-procedure.md">}}
+
+If you want more control over which DNS records are imported and how, [import a zone file](/dns/manage-dns-records/how-to/import-and-export/#import-records).
 
 {{<Aside type="note">}}
 
@@ -28,15 +32,19 @@ To create a DNS record in the dashboard:
 3.  Click **Add record**.
 4.  Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
 5.  Complete the required fields, which vary per record. Particularly important fields (for some records) include:
-    - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+    - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is {{<glossary-tooltip term_id="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">}}proxied through Cloudflare{{</glossary-tooltip>}}.
     - **TTL**: Short for [*Time to Live*](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+    - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
+
 6.  Click **Save**.
 
 {{</tab>}}
 
 {{<tab label="api" no-code="true">}}
 
-To create records with the API, use a [POST request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
+To create records with the API, use a [POST request](/api/operations/dns-records-for-a-zone-create-dns-record). For field definitions, select a record type under the request body specification.
+
+For specific API examples, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
 
 {{</tab>}}
 {{</tabs>}}
@@ -60,7 +68,7 @@ To edit DNS records in the dashboard:
 
 {{<tab label="api" no-code="true">}}
 
-To update part of a record with the API, use a [PATCH request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record).
+To update part of a record with the API, use a [PATCH request](/api/operations/dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](/api/operations/dns-records-for-a-zone-update-dns-record).
 
 {{</tab>}}
 {{</tabs>}}
@@ -84,7 +92,7 @@ To delete DNS records in the dashboard:
 
 {{<tab label="api" no-code="true">}}
 
-To delete records with the API, use a [DELETE request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record).
+To delete records with the API, use a [DELETE request](/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 {{</tab>}}
 {{</tabs>}}

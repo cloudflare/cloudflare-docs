@@ -6,11 +6,9 @@ weight: 86
 
 # Parse Cloudflare Logs JSON data
 
-## Overview
-
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
-In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://stedolan.github.io/jq/).
+In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://jqlang.github.io/jq/).
 
 {{<Aside type="note" header="Note">}}
 
@@ -18,7 +16,7 @@ _jq_ is a powerful command line for parsing JSON data and performing certain typ
 
 {{</Aside>}}
 
-## Aggregating fields
+## Aggregate fields
 
 To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several _jq_ commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
 
@@ -58,7 +56,7 @@ $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 77 null
 ```
 
-## Filtering fields
+## Filter fields
 
 Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like _Which URLs saw the most 502 errors?_ For example:
 
@@ -75,11 +73,11 @@ $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort
 To find out the top IP addresses blocked by the Cloudflare WAF, use the following query:
 
 ```sh
-$ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
+$ jq -r 'select(.SecurityAction == "block") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
 1 127.0.0.1
 ```
 
-## Showing cached requests
+## Show cached requests
 
 To retrieve your cache ratios, try the following query:
 
@@ -93,7 +91,7 @@ $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 81 unknown
 ```
 
-## Showing TLS versions
+## Show TLS versions
 
 To find out which TLS versions your visitors are using — for example, to decide if you can disable TLS versions that are older than 1.2 — use the following query:
 

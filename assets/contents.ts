@@ -7,30 +7,33 @@ export function toc() {
   let target = document.querySelector('ul.DocsTableOfContents');
   let article = target && document.querySelector('article.DocsMarkdown');
 
-  if (article) {
+  if (article && target) {
     let headers = article.querySelectorAll('h2,h3,h4');
-    let i = 0,
-      tmp: Element,
-      last: ListItem,
-      container = target;
+
+    let i = 0;
+    let tmp;
+    let last;
+    let container = target;
     if (!headers.length) return; // exit & leave hidden
 
     for (; i < headers.length; i++) {
       tmp = headers[i];
-
       if (tmp.nodeName === 'H2') {
         container = target;
       } else if (last && tmp.nodeName > last.h) {
         // eg; "H4" > "H2" ==> true
         container = last.appendChild(document.createElement('ul'));
       } else if (last && tmp.nodeName < last.h) {
-        container = container.parentElement || target;
+        container = container?.parentElement || target;
       }
 
       last = document.createElement('li') as ListItem;
-      let text = tmp.lastElementChild.textContent.trim();
-      last.innerHTML = `<a class="DocsTableOfContents-link" href="#${tmp.id}">${text}</a>`;
-      container.appendChild(last);
+      let a = document.createElement('a');
+      a.classList.add('DocsTableOfContents-link');
+      a.href = '#' + tmp.id;
+      a.textContent = tmp?.lastElementChild?.textContent?.trim() ?? '';
+      last.append(a);
+      container?.appendChild(last);
       last.h = tmp.nodeName;
     }
 
@@ -78,7 +81,7 @@ export function toc() {
         }
         return;
       }
-      const topMostVisibleLink = [...tocLinks][topVisibleIndex];
+      const topMostVisibleLink = [...tocLinks][topVisibleIndex ?? 0];
 
       // find a new link to highlight
       const highlightLink = [...tocLinks].find(

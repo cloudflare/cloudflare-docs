@@ -6,7 +6,12 @@ weight: 4
 
 # Workspace ONE
 
-Device posture with Workspace ONE requires the Workspace ONE agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the posture check.
+{{<render file="posture/_service-provider-intro.md" withParameters="Workspace ONE">}}
+
+## Prerequisites
+
+- Workspace ONE agent is deployed on the device.
+- {{<render file="posture/_prereqs-warp-is-deployed.md" withParameters="[Service providers](/cloudflare-one/identity/devices/service-providers/)">}}
 
 ## 1. Obtain Workspace ONE Settings
 
@@ -20,7 +25,7 @@ The following Workspace ONE values are needed to set up the Workspace ONE postur
 To retrieve those values:
 
 1. Log in to your Workspace ONE dashboard.
-1. Navigate to **Groups & Settings** > **Configurations**.
+1. Go to **Groups & Settings** > **Configurations**.
 1. Enter `OAuth` in the search bar labeled **Enter a name or category**.
 1. Select **OAuth Client Management** in the results. The OAuth Client Management screen displays.
 1. Select **Add**.
@@ -29,11 +34,11 @@ To retrieve those values:
 1. Select **Save**.
 1. Copy the **Client ID** and **Client Secret** to a safe place.
 1. To obtain your REST API URL, gp tp **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
-1. To retrieve the correct Region-Specific Token URL, refer to the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
+1. Retrieve the Region-Specific Token URL from Workspace ONE and copy it to a safe place.
 
 ## 2. Add Workspace ONE as a service provider
 
-1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+1. Go to **Settings** > **Devices** > **Device posture providers** and select **Add new**.
 1. Select **Workspace ONE**.
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
 1. Enter the **Client ID** and **Client secret** you noted down above.
@@ -41,17 +46,12 @@ To retrieve those values:
 1. Enter the **Region-specific token URL** and **REST API URL** you noted down above.
 1. Select **Save**.
 
-To ensure the values have been entered correctly, select **Test**.
+{{<render file="/posture/_test-posture-provider.md">}}
 
 ## 3. Configure the posture check
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
-1. Select **Add new**.
-1. Select the Workspace ONE provider.
-1. Configure the _Compliance status_ check.
+{{<render file="posture/_configure-posture-check.md" withParameters="Workspace ONE">}}
 
-    Workspace ONE posture checks work with the [Compliance flags](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_Managing_Devices/GUID-CompliancePolicies.html) in Workspace ONE. All compliance tests must pass for the device to be considered compliant.
+## Device posture attributes
 
-1. Select **Save**.
-
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
+Workspace ONE posture checks work with the [Compliance flags](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_Managing_Devices/GUID-CompliancePolicies.html) in Workspace ONE. All compliance tests must pass for the device to be considered compliant.

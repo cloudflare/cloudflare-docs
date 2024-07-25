@@ -1,17 +1,22 @@
 ---
-title: Reference Architecture
+title: Architectures
+pcx_content_type: overview
 weight: 1
 layout: overview
-pcx_content_type: overview
 ---
  
-# Cloudflare Reference Architecture
- 
+# Cloudflare Technical Architecture Content
+
 {{<description>}}
-Diagrams, design patterns and detailed best practices to help you generate solutions with Cloudflare products.
+All the documents in this section are designed to help you understand how Cloudflare and its products are designed and architected. These documents help you understand how you can leverage our platform to create solutions based on your business needs.
 {{</description>}}
- 
-Reference architecture documents and diagrams are designed to provide a foundational knowledge of Cloudflare solutioning for a variety of products. Building on the information in these documents, you can architect software solutions based on your specific context and needs.
+
+{{<render file="_description-of-ref-architectures.md" productFolder="reference-architecture">}}
+<br><br>
+We start with high level overviews of the Cloudflare network and platform, and further reference architectures focus on specific technology areas such as Secure Access Service Edge (SASE) or Content Delivery Networks (CDN).
+
+{{<render file="_description-of-design-guides.md" productFolder="reference-architecture">}}
+<br/>
  
 ---
  

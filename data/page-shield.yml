@@ -4,12 +4,12 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M9.9 
 product:
   title: Page Shield
   url: /page-shield/
+  group: Application security
 
 meta:
   title: Cloudflare Page Shield docs
   description: Provide client-side protection as part of your domain's firewall
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/page-shield
@@ -17,3 +17,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: page-shield

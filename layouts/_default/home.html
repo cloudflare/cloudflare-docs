@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-site-page is-docs-page>
-  <head>
-    {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-    <link rel="stylesheet preconnect" href="/home.css" />
-    {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
-    <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
-    {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
+<head>
+  {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
+  {{- partial "onetrust" -}}
+  {{- end -}}
+  {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-    {{ if gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0 }}
-    {{- partial "vue" -}}
-    {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
-    {{ end }}
+  <link rel="stylesheet preconnect" href="/codeBlock.css" />
 
-    {{ if eq .Page.RelPermalink "/dashboard-landing/" }}
-    {{- partial "vue" -}}
-    {{- partial "script" (dict "src" "dashboard-landing.js" "defer" true) -}}
-    {{ end }}
-    
-  </head>
-  <body>
-    <div class="DocsPage">
-      <div class="SiteHeader">
+  <link rel="stylesheet preconnect" href="/home.css" />
+  {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
+  <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
+  {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
+  {{- if eq (os.Getenv "CF_PAGES_BRANCH") "production" -}}
+  <script src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin" async></script>
+  {{- end -}}
+</head>
+
+<body>
+  <div class="DocsPage">
+    <div class="SiteHeader">
+      <div class="SiteHeader--container">
         <div class="SiteHeader--logo-section">
           <a aria-current="page" class="SiteHeader--cloudflare-logo-link Link Link-without-underline" href="/">
             <div class="DocsNavLogoLockup">
@@ -30,70 +30,67 @@
           </a>
         </div>
         {{- if eq .Page.RelPermalink "/search/" -}}
-        <div class="SiteHeader--search CoveoSearchInterface">
+        <!-- Empty div b/c we're generating a new searchbox using Algolia -->
+        <div class="SiteHeader--search">
           <div class="SiteSearch">
             <div class="SiteSearch--input-wrapper">
-              <input type="text" id="SiteSearch--input"
-                class="SiteSearch--input ds-input CoveoCustomSearchBox" spellcheck="false" autocomplete="off" placeholder="Search docs..."
-                role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="search input"
-                aria-owns="algolia-autocomplete-listbox-0" dir="auto"
-              />
-
-              <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
-
-              <div class="SiteSearch--input-icon">
-                <svg viewBox="0 0 16 16" fill="currentColor" role="img"
-                  aria-labelledby="title-6713060681049814" xmlns="http://www.w3.org/2000/svg">
-                  <title id="title-6713060681049814">Search icon (depiction of a magnifying glass)</title>
-                  <path
-                    d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
-                  </path>
-                </svg>
-              </div>
             </div>
           </div>
         </div>
         {{- else -}}
         {{- partial "topbar.search" . -}}
         {{- end -}}
-
         <div class="SiteHeader--nav">
-          <a class="SiteHeader--nav-link" href="/products/"><span>Products</span></a>
+          <a class="SiteHeader--nav-link" href="/products/"><span>Product directory</span></a>
           <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
-          <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
           <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
-          <a class="SiteHeader--nav-link" href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
+          <a class="SiteHeader--nav-link"
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
+          <a class="SiteHeader--nav-link"
+          href="https://dash.cloudflare.com"><span>Log in</span></a>
         </div>
-
         <div class="SiteHeader--theme-toggle">
+          {{- if eq .Page.RelPermalink "/search/" -}}
+
+          {{- else -}}
+          <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+            <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+              <path
+                d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+              </path>
+            </svg>
+          </button>
+          {{- end -}}
+
           {{- partialCached "topbar.theme" . -}}
         </div>
       </div>
-
-      {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
-      {{ else }}
-      <div class="SiteHeader---shadow"></div>
-      <div class="SiteHeader---shadow-cover"></div>
-      {{ end }}
-
-      <main class="DocsBody">
-        {{ if .IsHome }}
-        <div class="HeroImage">
-        {{ else if eq .Page.RelPermalink "/zero-trust/" }}
-        <div class="ZTHeroImage">
-        {{ end }}
-        <div id="docs-content" data-reach-skip-nav-content></div>
-        <div class="DocsContent" page-type="developers-site">
-          <article class="DocsMarkdown">
-            {{- .Content -}}
-          </article>
-        </div>
-      {{ if or (.IsHome) (eq .Page.RelPermalink "/zero-trust/") }}
-      </div>
-      {{ end }}
-      </main>
     </div>
 
-    {{- partial "gtag" -}}
-  </body>
+    {{ if .IsHome }}
+    {{ else }}
+    <div class="SiteHeader---shadow"></div>
+    <div class="SiteHeader---shadow-cover"></div>
+    {{ end }}
+
+    <main class="DocsBody">
+      {{ if .IsHome }}
+      <div class="HeroImage">
+      {{ end }}
+          <div id="docs-content" data-reach-skip-nav-content></div>
+          <div class="DocsContent" page-type="developers-site">
+            <article class="DocsMarkdown">
+              {{- .Content -}}
+            </article>
+          </div>
+          {{ if .IsHome }}
+        </div>
+        {{ end }}
+    </main>
+    {{- partial "home.footer" -}}
+  </div>
+</body>
+
 </html>

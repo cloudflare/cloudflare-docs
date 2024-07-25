@@ -3,37 +3,44 @@ title: Network-layer DDoS Attack Protection
 pcx_content_type: concept
 weight: 4
 meta:
-  title: Network-layer DDoS Attack Protection Managed Ruleset
-layout: single
+  title: Network-layer DDoS Attack Protection managed ruleset
 ---
 
-# Network-layer DDoS Attack Protection Managed Ruleset
+# Network-layer DDoS Attack Protection managed ruleset
 
-The Cloudflare Network-layer DDoS Attack Protection Managed Ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
+The Cloudflare Network-layer DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model.
 
-The Network-layer DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
+Cloudflare updates the list of rules in the managed ruleset on a regular basis. Refer to the [changelog](/ddos-protection/change-log/network/) for more information on recent and upcoming changes.
+
+The Network-layer DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
 ## Ruleset configuration
 
 You may need to adjust the behavior of specific rules in case of false positives or due to specific traffic patterns.
 
-Adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
+Adjust the behavior of the rules in the managed ruleset by modifying the following parameters:
 
-*   The performed **action** when an attack is detected
-*   The **sensitivity level** of attack detection mechanisms
+* The performed **action** when an attack is detected
+* The **sensitivity level** of attack detection mechanisms
 
-To adjust rule behavior, do one of the following:
+To adjust rule behavior, use one of the following methods:
 
-*   [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
-*   [Configure Network-layer DDoS Attack Protection Managed Ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
+* [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
+* [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/configure-api/).
+* [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-network).
 
-You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
+You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
-Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
+Overrides can apply to all {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
 
 ## Availability
 
-The Network-layer DDoS Attack Protection Managed Ruleset protects Cloudflare customers on all plans. However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the Managed Ruleset.
+The Network-layer DDoS Attack Protection managed ruleset is available in all Cloudflare plans for:
+* Zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/) (zones with their traffic routed through the Cloudflare network)
+* IP applications onboarded to [Spectrum](/spectrum/)
+* IP prefixes onboarded to [Magic Transit](/magic-transit/)
+
+However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the managed ruleset.
 
 ## Related Cloudflare products
 

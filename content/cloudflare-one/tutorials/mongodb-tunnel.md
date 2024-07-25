@@ -29,28 +29,27 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-1.  Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
+1. Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-2.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 
-3.  Click **Add an application** and choose `Self-hosted`.
+3. Select **Add an application** and choose `Self-hosted`.
 
-4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+4. Create an application for a subdomain where users will connect to your deployment. Select **Next**.
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
+    ![MongoDB screen that shows how to add an application](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-5.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
+5. Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/identity/users/groups/).
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+    ![MongoDB screen that shows how to configure a rule](/images/cloudflare-one/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
-6.  Click **Next** again and add the application.
+6. Select **Next** again and add the application.
 
 ## Configure the Kubernetes deployment
 
 To be accessible over SSH, the Kubernetes deployment should manage both the MongoDB standalone service and an SSH proxy service. The configuration below will deploy 1 replica of the database service, available at port 27017, as well as an SSH proxy available at port 22.
 
-<details>
-    <summary> StatefulSet Configuration</summary>
+{{<details header=" StatefulSet Configuration">}}
 
 ```yaml
 apiVersion: apps/v1
@@ -73,8 +72,8 @@ spec:
       containers:
         - name: mongodb-standalone
           image: mongo
-          command: ['mongod']
-          args: ['--config=/config/mongod.conf']
+          command: ["mongod"]
+          args: ["--config=/config/mongod.conf"]
           ports:
             - containerPort: 27017
               protocol: TCP
@@ -91,7 +90,7 @@ spec:
               mountPath: /socket
         - name: ssh-proxy
           image: ubuntu:20.04
-          command: ['/scripts/entrypoint.sh']
+          command: ["/scripts/entrypoint.sh"]
           ports:
             - containerPort: 22
               protocol: TCP
@@ -140,12 +139,11 @@ spec:
                 mode: 0400
 ```
 
-</details>
+{{</details>}}
 
-The corresponding service definition should also specify the the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
+The corresponding service definition should also specify the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
 
-<details>
-    <summary>Service Definition</summary>
+{{<details header="Service Definition">}}
 
 ```yaml
 apiVersion: v1
@@ -180,7 +178,7 @@ spec:
       targetPort: 22
 ```
 
-</details>
+{{</details>}}
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
 
@@ -200,7 +198,7 @@ done;
 
 ## Configure Cloudflare Tunnel
 
-Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) the Cloudflare Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
@@ -210,17 +208,15 @@ $ cloudflared login
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
-
-Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
+Once you select one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Certificate](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Certificate](/images/cloudflare-one/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -228,13 +224,13 @@ Run the following command to create a Tunnel. You can replace `mongodb` with any
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](/images/cloudflare-one/secure-origin-connections/share-new-site/create.png)
 
 ### Delete the `cert.pem` file
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem).
 
 Store the `JSON` file as a Kubernetes secret.
 
@@ -244,8 +240,7 @@ The previous setps used `cloudflared` to generate a credentials file for your Cl
 
 The configuration below will run a single replica of `cloudflared` as an ingress point alongside the MongoDB and SSH proxy services. `cloudflared` will proxy traffic to the SSH proxy service. The `cloudflared` instance will run as its own deployment in a different namespace and, if network policy allows, ingress to any service in the Kubernetes node.
 
-<details>
-    <summary>`cloudflared` Configuration</summary>
+{{<details header="`cloudflared` Configuration">}}
 
 ```yaml
 apiVersion: apps/v1
@@ -269,8 +264,8 @@ spec:
         - name: dashboard-tunnel
           # Image from https://hub.docker.com/r/cloudflare/cloudflared
           image: cloudflare/cloudflared:2020.11.11
-          command: ['cloudflared', 'tunnel']
-          args: ['--config', '/etc/tunnel/config.yaml', 'run']
+          command: ["cloudflared", "tunnel"]
+          args: ["--config", "/etc/tunnel/config.yaml", "run"]
           ports:
             - containerPort: 5000
           livenessProbe:
@@ -310,7 +305,7 @@ data:
     - service: http_status:404
 ```
 
-</details>
+{{</details>}}
 
 ## Connect from a client
 

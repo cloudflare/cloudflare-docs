@@ -5,8 +5,8 @@ _build:
   list: never
 ---
 
-{{<Aside type="warning" header="Important">}}
-You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each account.
+{{<Aside type="warning">}}
+By default, API Shield mTLS uses client certificates issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each account.
 
-If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) to upload your own CA.
+If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
 {{</Aside>}}

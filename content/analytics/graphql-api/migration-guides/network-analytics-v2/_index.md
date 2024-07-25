@@ -3,12 +3,15 @@ type: overview
 pcx_content_type: reference
 title: Network Analytics v1 to Network Analytics v2
 weight: 14
-layout: single
 ---
 
 # Network Analytics v1 to Network Analytics v2
 
-In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version was made available on September 13th, 2021. Users should only use the newer version, Network Analytics v2 (NAv2). Network Analytics v1 (NAv1) is planned to be deprecated on March 31st, 2022.
+In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version (Network Analytics v2) was made available on 2021-09-13.
+
+{{<Aside type="warning">}}
+{{<render file="_network-analytics-v1-deprecation.md">}}
+{{</Aside>}}
 
 ## Before you start
 
@@ -104,7 +107,7 @@ The following example queries the top 20 logs of traffic dropped by mitigation s
 
 The `mitigationSystem` field can take one the following values:
 
-* `dosd` for [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/) (Network-layer DDoS Attack Protection or HTTP DDoS Attack Protection).
+* `dosd` for [DDoS managed rulesets](/ddos-protection/managed-rulesets/) (Network-layer DDoS Attack Protection or HTTP DDoS Attack Protection).
 * `flowtrackd` for [Advanced TCP Protection](/ddos-protection/tcp-protection/).
 * `magic-firewall` for [Magic Firewall](/magic-firewall/).
 * Empty string for unmitigated traffic.

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Preact site
+title: Preact
 ---
 
-# Deploy a Preact site
+# Preact
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 
@@ -21,27 +21,14 @@ $ cd your-project-name
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
+{{<render file="/_framework-guides/_create-github-repository.md">}}
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+## Deploy with Cloudflare Pages
 
-```sh
-# Setup the local repository
-$ git init
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
+To deploy your site to Pages:
 
-# Commit all initial files
-$ git add -A
-$ git commit -m "initial commit"
-
-# Send commit to new GitHub repo
-$ git push -u origin main
-```
-
-## Deploying with Cloudflare Pages
-
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -73,7 +60,7 @@ After you have deployed your site, you will receive a unique subdomain for your 
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 {{<Aside type="note">}}
 
@@ -81,6 +68,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Preact site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Preact">}}

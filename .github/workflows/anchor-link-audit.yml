@@ -1,0 +1,64 @@
+name: Anchor link audit
+
+# **What it does**: Regularly audits our documentation for broken internal anchor links.
+# **Why we have it**: B/c checking on the individual commit push level is too granular, but we want to address broken headers periodically.
+# **Who does it impact**: PCX team
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: Compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.125.6'
+          extended: true
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+
+      - run: make build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+
+      - name: Install dependencies
+        run: curl https://htmltest.wjdp.uk | bash
+
+      - name: Check - Broken header links
+        id: header-link-check
+        run: ./bin/htmltest -c ./bin/.htmltest.yml
+
+      - name: Create issue on failure
+        if: ${{ failure() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+        run: |
+          echo "Specific header links in the [Workflow Run]($WORKFLOW_LINK).\n\nGenerally, we expect you to address at least 10-15 links before closing this out." > issue_body.txt
+          curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
+            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"

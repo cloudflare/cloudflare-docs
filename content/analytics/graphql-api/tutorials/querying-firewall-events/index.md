@@ -7,7 +7,7 @@ title: Querying Firewall Events with GraphQL
 
 In this example, we are going to use the GraphQL Analytics API to query for Firewall Events over a specified time period.
 
-The following API call will request Firewall Events over a one hour period, and output the requested fields. Be sure to replace `CLOUDFLARE_ZONE_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
+The following API call will request Firewall Events over a one hour period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ZONE_ID>`, `<EMAIL>`, and `<API_KEY>` with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
 
 ## API Call
 
@@ -35,33 +35,32 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "zoneTag": "CLOUDFLARE_ZONE_ID",
+    "zoneTag": "<CLOUDFLARE_ZONE_ID>",
     "filter": {
       "datetime_geq": "2022-07-24T11:00:00Z",
       "datetime_leq": "2022-07-24T12:00:00Z"
     }
   }
 }' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --silent \
+  --data @- \
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
-The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
+The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, for example:
 
 ```bash
 ... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --silent \
+  --data @- \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
+
 #=> {
 #=>   "data": {
 #=>     "viewer": {

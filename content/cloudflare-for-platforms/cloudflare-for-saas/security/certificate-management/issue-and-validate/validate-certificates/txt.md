@@ -1,26 +1,33 @@
 ---
 pcx_content_type: reference
 title: TXT
-weight: 1
+weight: 2
 meta:
     title: TXT domain control validation (DCV)
 ---
 
 # TXT domain control validation (DCV)
 
-{{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
+{{<render file="_txt-validation-definition.md" productFolder="ssl" >}}
+<br/>
 
-## Non-wildcard custom hostnames
+## When to use
+
+Generally, you should use TXT-based DCV when you cannot use [HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) or [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/).
+
+### Non-wildcard custom hostnames
 
 If your custom hostname does not include a wildcard, Cloudflare will always and automatically attempt to complete DCV through [HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-automatic), even if you have selected **TXT** for your validation method.
 
-This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/reference/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
+This HTTP validation should succeed as long as your customer is pointing to your custom hostname and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
 
-## Wildcard custom hostnames
+### Wildcard custom hostnames
 
 {{<render file="_wildcard-hostname-reqs.md">}}
 
 This means that - if you choose to use wildcard custom hostnames - you will need a way to share these DCV tokens with your customer.
+
+---
 
 ### Step 1 - Get TXT tokens
  

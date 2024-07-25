@@ -12,13 +12,13 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ### Channel and Alliance partner account setup
 
-Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
+Before using the Tenant API, you need to [create an account](/fundamentals/setup/account/create-account/), [verify your email address](/fundamentals/setup/account/verify-email-address/), and [add your billing information](/fundamentals/subscriptions-and-billing/create-billing-profile/).
 
 After you sign your partner agreement with Cloudflare, Cloudflare will add [certain entitlements](/tenant/structure/) to your account that allow you to provision and manage custom accounts. If you have signed your partner agreement and your account has not yet been enabled, contact `partners@cloudflare.com`.
 
 ### API access
 
-You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) to authenticate your requests to the Tenant API.
 
 For more details on using the Cloudflare API, refer to our [API overview](/fundamentals/api/).
 
@@ -26,7 +26,18 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 {{<render file="_account-preamble.md">}}
 
-{{<render file="_create-account.md">}}
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="_create-account-dash.md">}}
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+{{<render file="_create-account-api.md">}}
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Step 2 - Grant user access
 
@@ -40,7 +51,7 @@ When you grant user access to an account, Cloudflare will send an invitation to 
 
 #### Using the dashboard
 
-If you want to give customers access to their individual accounts, it is the same as if you were [inviting a teammate](/fundamentals/account-and-billing/account-setup/manage-account-members/#add-account-members) to help manage your account.
+If you want to give customers access to their individual accounts, it is the same as if you were [inviting a teammate](/fundamentals/setup/manage-members/manage/#add-account-members) to help manage your account.
 
 #### Using the API
 
@@ -50,19 +61,19 @@ You can also grant access to the Cloudflare dashboard by using the API.
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID>/members' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<customer-email>", 
-    "roles": ["<user-role>"] 
-    }'
+curl 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID>/members' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "email": "<CUSTOMER_EMAIL>",
+  "roles": ["<USER_ROLE>"]
+}'
 ```
 
-In most cases, you will want to create new users with a role of `Administrator` which always has the id `05784afa30c1afe1440e79d9351c7430`.
+In most cases, you will want to create new users with a role of `Administrator` which always has the ID `05784afa30c1afe1440e79d9351c7430`.
 
-If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://developers.cloudflare.com/api/operations/account-roles-list-roles) request to the API.
+If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](/api/operations/account-roles-list-roles) request to the API.
 
 ### Option 2 - Access via an interface
 
@@ -72,7 +83,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 {{<Aside type="note">}}
 
-This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).
+This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 {{</Aside>}}
 
@@ -82,13 +93,13 @@ To grant access via an interface, you need to create a service user, as no one w
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/users' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{ 
-    "email": "<ID@youremaildomain.com>" 
-    }'
+curl 'https://api.cloudflare.com/client/v4/users' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "email": "<ID@example.com>"
+}'
 ```
 
 ```json
@@ -98,7 +109,7 @@ header: Response
 {
   "result": {
     "id": "60758bd48392a06215ae817bc35084b6",
-    "email": "<identifier>@youremaildomain.com>",
+    "email": "<ID@example.com>",
     "first_name": null,
     "last_name": null,
     "username": "17bd2796b374cec14976ac3bced85c05",
@@ -122,21 +133,21 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [`POST`](https://developers.cloudflare.com/api/operations/zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```bash
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/zones' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-   "name": "example.com",
-   "account": {
-      "id": "<CUSTOMER_ACCOUNT_ID>"
-   }
+curl 'https://api.cloudflare.com/client/v4/zones' \
+--header "x-auth-email: <EMAIL>" \
+--header "x-auth-key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "example.com",
+  "account": {
+    "id": "<CUSTOMER_ACCOUNT_ID>"
+  }
 }'
 ```
 

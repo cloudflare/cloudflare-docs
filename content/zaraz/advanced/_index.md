@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Advanced options
-weight: 7
+weight: 8
 ---
 
 # Advanced options

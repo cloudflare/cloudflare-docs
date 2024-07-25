@@ -18,30 +18,35 @@ Polish may not be applied to origin responses that contain a `Vary` header. The 
 
 ### Off
 
-Polish is disabled and no compression is applied.
+Polish is disabled and no compression is applied. Disabling Polish does not revert previously polished images to original, until they expire or are purged from the cache.
 
 ### Lossless
 
-The Lossless option attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, lossless compression reduces file size by 21 percent.
+The Lossless option attempts to reduce file sizes without changing any of the image pixels, keeping images identical to the original. It removes most metadata, like EXIF data, and losslessly recompresses image data. JPEG images may be converted to progressive format. On average, lossless compression reduces file sizes by 21 percent compared to unoptimized image files.
 
-This option attempts to remove EXIF data from GIF, PNG, and JPEG files. However, it only applies lossless compression to GIF and PNG files, as JPEG files are inherently lossy.
-
+The Lossless option prevents conversion of JPEG to WebP, because this is always a lossy operation.
 
 ### Lossy
 
-The Lossy option attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48 percent.
+The Lossy option applies significantly better compression to images than the Lossless option, at a cost of small quality loss. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file sizes by 48 percent.
 
-Although this option tries to remove EXIF data from GIF, PNG, and JPEG files, it only applies compression to JPEG files. Lossy has the same effect as Lossless when applied to PNG.
+This option also removes metadata from images. The Lossy option mainly affects JPEG images, but PNG images may also be compressed in a lossy way, or converted to JPEG when this improves compression.
 
 ### WebP
 
-WebP provides superior savings in file size when compared to PNG or JPEG. WebP lossless images are approximately 26 percent smaller than PNGs, while lossy images are around 17 percent smaller than JPEG files. WebP is supported in all browsers except for Internet Explorer and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
+When enabled, in addition to other optimizations, Polish creates versions of images converted to the WebP format.
 
-Polish creates and caches a WebP version of the image and delivers it to the browser if the `Accept` header from the browser includes WebP, and the compressed image is significantly smaller than the lossy or lossless compression:
+WebP compression is quite effective on PNG images, reducing file sizes by approximately 26 percent.
+It may reduce file sizes of JPEG images by around 17 percent, but this [depends on several factors](/images/polish/no-webp/).
+WebP is supported in all browsers except for Internet Explorer and KaiOS. You can learn more in our [blog post](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/).
+
+The WebP version is served only when the `Accept` header from the browser includes WebP, and the WebP image is significantly smaller than the lossy or lossless recompression of the original format:
 
 ```txt
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
+
+Polish only converts standard image formats <em>to</em> the WebP format. If the origin server serves WebP images, Polish will not convert them, and will not optimize them.
 
 #### File size, image quality, and WebP
 
@@ -59,4 +64,4 @@ If your server or Content Management System (CMS) has a built-in image converter
 
 ## Polish interaction with Image optimization
 
-Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use the `format=auto` option to allow use of WebP and AVIF formats.
+Polish will not be applied to URLs using image transformations. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use the `format=auto` option to allow use of WebP and AVIF formats.

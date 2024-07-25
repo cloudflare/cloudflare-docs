@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 1
 meta:
   title: Firewall rules actions
-layout: list
+layout: wide
 ---
 
 # Firewall rules actions
@@ -12,6 +12,8 @@ layout: list
 {{<content-column>}}
 
 The action of a firewall rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
+
+{{<render file="_deprecation-notice.md">}}
 
 ## Supported actions
 
@@ -69,18 +71,18 @@ For reference information on rule actions available for Cloudflare products powe
             <li>
               <p>Matching requests exempt from evaluation by a user-defined list containing one or more of the following Cloudflare security features:</p>
               <ul>
-                <li>User-agent Blocking</li>
-                <li>Browser Integrity Check</li>
-                <li>Hotlinking Protection</li>
-                <li>Security Level (IP Reputation)</li>
-                <li>Rate Limiting (previous version)</li>
-                <li>Zone Lockdown (PRO, BIZ, ENT)</li>
-                <li>WAF managed rules (previous version; PRO, BIZ, ENT)</li>
+                <li><a href="/waf/tools/user-agent-blocking/">User Agent Blocking</a></li>
+                <li><a href="/waf/tools/browser-integrity-check/">Browser Integrity Check</a></li>
+                <li><a href="/waf/tools/scrape-shield/hotlink-protection/">Hotlink Protection</a></li>
+                <li><a href="/waf/tools/security-level/">Security Level (IP Reputation)</a></li>
+                <li><a href="/waf/reference/legacy/old-rate-limiting/">Rate Limiting</a> (previous version, deprecated)</li>
+                <li><a href="/waf/tools/zone-lockdown/">Zone Lockdown</a></li>
+                <li><a href="/waf/reference/legacy/old-waf-managed-rules/">WAF managed rules</a> (previous version, deprecated)</li>
               </ul>
               <p><strong>Notes:</strong></p>
               <ul>
-                <li>Currently, you cannot bypass Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
-                <li>You cannot bypass the new <a href="/waf/">Cloudflare WAF</a>, only its previous version (<a href="https://support.cloudflare.com/hc/articles/200172016">WAF managed rules</a>).</li>
+                <li>Currently, you cannot bypass Bot Fight Mode. For more information on this product, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
+                <li>You cannot bypass the new <a href="/waf/managed-rules/">WAF managed rules</a> using this action, only the previous version of WAF managed rules. To skip one or more managed rules in the new WAF for specific requests, <a href="/waf/managed-rules/waf-exceptions/">create an exception</a>.</li>
               </ul>
               <p></p>
             </li>
@@ -98,14 +100,14 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              Matching requests are exempt from challenge and block actions
-              triggered by other firewall rules content.
+              Matching requests are exempt from <em>Bypass</em>, <em>Block</em>, and challenge actions
+              triggered by other firewall rules.
             </li>
             <li>
               The scope of the <em>Allow</em> action is limited to firewall
               rules; matching requests are <strong>not</strong> exempt from
               action by other Cloudflare security products such as Bot Fight Mode, IP Access
-              Rules, and Managed Rulesets.
+              Rules, and WAF Managed Rules.
             </li>
             <li>
               Matched requests will be mitigated if they are part of a DDoS
@@ -116,7 +118,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>3</td>
       </tr>
       <tr>
-        <td><strong>Legacy CAPTCHA</strong><br/>
+        <td><strong>Interactive Challenge</strong><br/>
           <br/>
           API value:<br/>
           <code class="InlineCode">challenge</code>
@@ -124,10 +126,10 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues CAPTCHAs only when necessary.
+              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues interactive challenges to visitors only when necessary.
             </li>
             <li>
-              The client that made the request must pass a CAPTCHA challenge.
+              The client that made the request must pass an interactive challenge.
             </li>
             <li>
               If successful, Cloudflare accepts the matched request; otherwise,
@@ -147,7 +149,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
+              Helps reduce the lifetimes of human time spent solving interactive challenges across the Internet.
             </li>
             <li>
               Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
@@ -156,13 +158,7 @@ For reference information on rule actions available for Cloudflare products powe
                   Show a non-interactive challenge page (similar to the current JS Challenge).
                 </li>
                 <li>
-                  Present an invisible proof of work challenge to the browser.
-                </li>
-                <li>
-                  Show a custom interactive challenge (such as click a button).
-                </li>
-                <li>
-                  Show a CAPTCHA challenge.
+                  Show an interactive challenge (such as requiring the visitor to click a button or to perform a task).
                 </li>
               </ul>
             </li>
@@ -213,7 +209,7 @@ For reference information on rule actions available for Cloudflare products powe
 
 ## Notes about challenge actions
 
-When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Legacy CAPTCHA_ — and a request matches the rule, one of two things can happen:
+When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Interactive Challenge_ — and a request matches the rule, one of two things can happen:
 
 * The request is blocked if the visitor fails the challenge
 * The request is allowed if the visitor passes the challenge

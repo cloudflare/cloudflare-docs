@@ -10,14 +10,13 @@ weight: 1
 
 * Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
 * Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
-
-{{<render file="_email-verification.md">}}
+* You must have a [verified account email address](/fundamentals/setup/account/verify-email-address/), to transfer or register domains.
 
 ---
 
 ## How to register a new domain
 
-{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains-supported/#additional-requirements-for-us-domains) before proceeding.{{</Aside>}}
+{{<Aside type="note">}}If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/) before proceeding.{{</Aside>}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
 
@@ -49,7 +48,7 @@ It is important that you provide complete and accurate contact information. If y
 
 {{</Aside>}}
 
-7. In **Payment**, select which type of payment you which to use. If you already have a billing profile, Cloudflare uses this information to automatically fill the form. If there is no billing profile, you need to enter your payment information.
+7. In **Payment**, select which type of payment you want to use. If you already have a billing profile, Cloudflare uses this information to automatically fill the form. If there is no billing profile, you need to enter your payment information.
 
 8. Review the terms and conditions, including the Domain Registration Agreement, Self-serve Subscription Agreement, and the Privacy Policy. 
 
@@ -80,8 +79,8 @@ At this time, you can only use ASCII characters for contact data. If the default
 
 {{</table-wrap>}}
 
-When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/get-started/whois-redaction/) for more information. 
+When you register a domain with Cloudflare, your personal information is redacted when permitted by the registry. Refer to [WHOIS redaction](/registrar/account-options/whois-redaction/) for more information. 
 
 ## Next steps
 
-To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/account-options/enable-dnssec/) to create a secure layer with a cryptographic signature.
+To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/get-started/enable-dnssec/) to create a secure layer with a cryptographic signature.

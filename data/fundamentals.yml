@@ -5,16 +5,21 @@ product:
   title: Cloudflare Fundamentals
   url: /fundamentals/
   wrap: true
+  group: Cloudflare essentials
 
 meta:
   title: Cloudflare Fundamentals docs
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: How Cloudflare works
-    url: /fundamentals/get-started/concepts/how-cloudflare-works/
+    url: /fundamentals/concepts/how-cloudflare-works/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: fundamentals

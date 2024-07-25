@@ -1,13 +1,12 @@
 import * as events from "./events";
 import * as contents from "./contents";
 import * as timeago from "./timeago";
-import * as mermaid from "./mermaid-diagrams";
 import * as navs from "./navlinks";
 
 declare global {
   interface Window {
-    // algolia; @see search.ts
-    Coveo?: any;
+    docsearch: any;
+    zaraz: any;
   }
 }
 
@@ -18,11 +17,8 @@ declare global {
   events.focus();
   events.mobile();
   events.dropdowns();
-  events.clipboardButton();
-  events.copy();
   contents.toc();
-  events.toggleSidebar();
   events.activeTab();
   events.tabs();
-  mermaid.init();
+  events.zarazTrackDocEvents();
 })();

@@ -1,11 +1,13 @@
 ---
 title: Wrangler
 pcx_content_type: navigation
-weight: 8
+weight: 10
 meta:
-  title: Wrangler (command line)
+  title: Wrangler
 ---
 
-# Wrangler (command line)
+# Wrangler
 
-{{<directory-listing>}}
+Wrangler, the Cloudflare Developer Platform command-line interface (CLI), allows you to manage Worker projects.
+
+{{<directory-listing showDescriptions="true">}}

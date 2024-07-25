@@ -4,6 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M27.6
 product:
   title: Tenant
   url: /tenant/
+  group: Cloudflare essentials
+  additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare Tenant docs
@@ -12,8 +14,12 @@ meta:
     new set of APIs built into our Client v4 API library make a streamlined
     onboarding and setup experience
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: tenant

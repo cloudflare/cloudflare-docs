@@ -2,53 +2,51 @@
 type: example
 summary: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
-tags:
-  - Originless
-pcx_content_type: configuration
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
 title: Fetch HTML
 weight: 3
 layout: example
+updated: 2024-01-11
 ---
 
-```js
-/**
- * Example someHost at URL is set up to respond with HTML
- * Replace URL with the host you wish to send requests to
- */
-const someHost = 'https://examples.cloudflareworkers.com/demos';
-const url = someHost + '/static/html';
+{{<tabs labels="js | ts | py">}}
+{{<tab label="js" default="true">}}
 
-/**
- * gatherResponse awaits and returns a response body as a string.
- * Use await gatherResponse(..) in an async function to get the response body
- * @param {Response} response
- */
-async function gatherResponse(response) {
-  const { headers } = response;
-  const contentType = headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
-    return JSON.stringify(await response.json());
-  } else if (contentType.includes('application/text')) {
-    return response.text();
-  } else if (contentType.includes('text/html')) {
-    return response.text();
-  } else {
-    return response.text();
-  }
-}
+{{<render file="_fetch-html-example-js.md">}}
 
-async function handleRequest() {
-  const init = {
-    headers: {
-      'content-type': 'text/html;charset=UTF-8',
-    },
-  };
-  const response = await fetch(url, init);
-  const results = await gatherResponse(response);
-  return new Response(results, init);
-}
+{{</tab>}}
+{{<tab label="ts">}}
 
-addEventListener('fetch', event => {
-  return event.respondWith(handleRequest());
-});
+```ts
+export default {
+  async fetch(request: Request): Promise<Response> {
+    /**
+     * Replace `remote` with the host you wish to send requests to
+     */
+    const remote = "https://example.com";
+
+    return await fetch(remote, request);
+  },
+};
 ```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from js import fetch
+
+async def on_fetch(request):
+    # Replace `remote` with the host you wish to send requests to
+    remote = "https://example.com"
+    return await fetch(remote, request)
+```
+
+{{</tab>}}
+{{</tabs>}}

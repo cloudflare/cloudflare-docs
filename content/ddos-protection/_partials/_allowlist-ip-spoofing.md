@@ -7,8 +7,6 @@ _build:
 
 {{<Aside type="warning" header="Important">}}
 
-Prefixes in the allowlist will be vulnerable to IP spoofing [^1] attacks. If an attacker can guess the source IP addresses you have allowlisted, their packets will be allowlisted.
-
-[^1]: IP spoofing is the creation of Internet Protocol (IP) packets which have a modified source address to hide the identity of the sender, impersonate another computer system, or both.
+Prefixes in the allowlist will be vulnerable to {{<glossary-tooltip term_id="IP spoofing">}}IP spoofing{{</glossary-tooltip>}} attacks. If an attacker can guess the source IP addresses you have allowlisted, their packets will be allowlisted.
 
 {{</Aside>}}

@@ -4,7 +4,9 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="m30.2
 product:
   title: Cloudflare Zero Trust
   url: /cloudflare-one/
+  group: Cloudflare One
   wrap: true
+  preview_tryout: true
 
 meta:
   title: Cloudflare Zero Trust docs
@@ -15,17 +17,21 @@ meta:
     and endpoint security providers. These docs contain step-by-step, use case
     driven, tutorials to use Cloudflare One products.
   author: '@cloudflare'
-  image: /zt-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/security/access/51
-  dashboard_link: https://dash.teams.cloudflare.com/
+  dashboard_link: https://one.dash.cloudflare.com/
   learning_center: https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/
 
 externals:
   - title: 'Blog: Introducing Cloudflare One'
     url: https://blog.cloudflare.com/introducing-cloudflare-one/
-  - title: Cloudflare for Teams pricing
-    url: https://www.cloudflare.com/teams-pricing/
+  - title: Zero Trust and SASE plans and pricing
+    url: https://www.cloudflare.com/plans/zero-trust-services/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: cloudflare-one

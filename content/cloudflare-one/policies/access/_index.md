@@ -1,7 +1,6 @@
 ---
 pcx_content_type: configuration
 title: Access
-layout: single
 weight: 2
 meta:
   title: Access policies
@@ -14,7 +13,7 @@ Cloudflare Access determines who can reach your application by applying the Acce
 An Access policy consists of an **Action** as well as rules which determine the scope of the action. To build a rule, you need to choose a **Rule type**, **Selector**, and a **Value** for the selector.
 
 - [Actions](#actions)
-- [Rule types](#rules)
+- [Rule types](#rule-types)
 - [Selectors](#selectors)
 
 ## Actions
@@ -31,7 +30,7 @@ The following example lets any user with an `@example.com` email address, as val
 | ------ | --------- | ----------------- | ------ |
 | Allow  | Include   | Emails Ending In: | `@example.com` |
 
-You can add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application. 
+You can add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application.
 
 For example, this second configuration lets any user from Portugal with a `@team.com` email address, as validated against an IdP, reach the application, except for `user-1` and `user-2`:
 
@@ -52,35 +51,25 @@ For example, this configuration blocks every request to the application, except 
 | Block  | Include   | Everyone | `Everyone` |
 |        | Exclude   | Email    | `user-1@team.com`|
 
-{{<Aside type="warning">}}
+### Bypass
 
-An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
+{{<Aside type="warning" header="Warning">}}
+
+Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
 
 {{</Aside>}}
 
-### Bypass
-
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
-
-A Bypass policy based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field:
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public. For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
 
 | Action | Rule type  | Selector  | Value             |
 |--------| ------- | --------- | ----------------- |
-| Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
+| Bypass  | Include | Everyone | `Everyone` |
 
-This means Access won’t be enforced on the set of IP addresses you have specified. To complete the setup, you need an additional rule to ensure that anyone asking to access your application from a different IP address will only be granted access if they only meet certain criteria, like email addresses ending with a given domain.
-
-To do so, set up an additional Allow policy like the following:
-
-| Action | Rule    | Selector       | Value                              |
-| ------- | ------- | ---------------- | ---------------------------------- |
-| Allow | Include | Emails ending in | `@contractors.com`, `@company.com` |
-
-This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
+As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
 
 {{<Aside type="note">}}
 
-When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured Page Rules. If **Always use HTTPS** is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If **Always use HTTPS** is disabled, traffic is HTTP.
 
 {{</Aside>}}
 
@@ -94,13 +83,13 @@ Service Auth rules enforce authentication flows that do not require an identity 
 
 ## Rule types
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each policy needs at least an Include rule; you can set as many rules as you need.
-
-These are the rule types you can choose from:
+Rules work like logical operators. They help you define which categories of users your policy will affect.
 
 | Include | Exclude | Require |
 | ------- | ------- | ------- |
 | The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+
+All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
 
 ### Requiring multiple conditions
 
@@ -128,17 +117,17 @@ Next, you can create a policy for your application that requires the group, and 
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.  
+When you add a rule to your policy, you will be asked to specify the criteria/attributes you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications.
 
-These criteria are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications. Identity-based attributes are only checked when a user authenticates, whereas other attributes are polled continuously for changes during the session.
+Identity-based attributes are only checked when a user authenticates to Access, whereas non-identity attributes are polled continuously for changes during the [user session](/cloudflare-one/identity/users/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/identity/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
 
 {{<table-wrap>}}
-| Selector | Description  | Checked at login | Checked continuously |
+| Selector | Description  | Checked at login| Checked continuously<sup>1</sup>  |
 | -------- | ------------ | ---------------- | -------------------- |
 | Emails   | `you@company.com`  | ✅ | ❌ |
 | Emails ending in | `@company.com`| ✅ | ❌ |
 | External Evaluation | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API. | ✅ | ❌ |
-| IP ranges | `192.168.100.14` (supports IPv4 and IPv6). | ✅ | ✅ |
+| IP ranges | `192.168.100.1/24` (supports IPv4/IPv6 addresses and CIDR ranges) | ✅ | ✅ |
 | Country | Uses the IP address to determine country. | ✅ | ✅ |
 | Everyone | Allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
 | Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |
@@ -147,11 +136,16 @@ These criteria are available for all Access application types, including [SaaS](
 | Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. |✅ | ✅ |
 | Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
 | Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
-| Identity provider group| Checks the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.| ✅ | ❌ |
+| Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, GitHub, Google, or Okta as your IdP.  | ✅ | ❌ |
+| SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider. | ✅ | ❌ |
+| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider. | ✅ | ❌ |
 | Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
 {{</table-wrap>}}
+
+<sup>1</sup> For SaaS applications, Access can only enforce policies at the time of initial sign on and when reissuing the SaaS session. Once the user has authenticated to the SaaS app, session management falls solely within the purview of the SaaS app.
+
 ## Order of execution
 
 Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first, from top to bottom as shown in the UI. Then, Block and Allow policies are evaluated based on their order.
@@ -164,8 +158,4 @@ For example, if you have a list of policies arranged as follows:
 - Bypass D
 - Allow E
 
-The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
-
-{{<Aside type="warning">}}
-  Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application.
-{{</Aside>}}
+The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.

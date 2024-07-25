@@ -2,7 +2,9 @@
 pcx_content_type: reference
 title: Endpoints
 weight: 3
-layout: list
+layout: wide
+meta:
+  title: Endpoints - Filters
 ---
 
 # Endpoints
@@ -23,7 +25,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 The Filters API endpoints require a value for `<ZONE_ID>`.
 
-To retrieve a list of zones associated with your account, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation and note the Zone ID associated with the domain for which you want to manage filters.
+To retrieve a list of zones associated with your account, use the [List Zones](/api/operations/zones-get) operation and note the Zone ID associated with the domain for which you want to manage filters.
 
 {{</Aside>}}
 
@@ -42,7 +44,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
   <tbody>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-create-filters">Create filters</a>
+        <a href="/api/operations/filters-create-filters">Create filters</a>
       </td>
       <td>
         <code class="InlineCode">POST zones/&lt;ZONE_ID&gt;/filters</code>
@@ -51,7 +53,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-list-filters">Get filters</a>
+        <a href="/api/operations/filters-list-filters">Get filters</a>
       </td>
       <td>
         <code class="InlineCode">GET zones/&lt;ZONE_ID&gt;/filters</code>
@@ -63,7 +65,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-get-a-filter">Get a filter</a>
+        <a href="/api/operations/filters-get-a-filter">Get a filter</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -74,7 +76,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-update-filters">Update filters</a>
+        <a href="/api/operations/filters-update-filters">Update filters</a>
       </td>
       <td>
         <code class="InlineCode">PUT zones/&lt;ZONE_ID&gt;/filters</code>
@@ -86,7 +88,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-update-individual-filter">Update a filter</a>
+        <a href="/api/operations/filters-update-a-filter">Update a filter</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -97,7 +99,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-delete-filters">Delete filters</a>
+        <a href="/api/operations/filters-delete-filters">Delete filters</a>
       </td>
       <td>
         <code class="InlineCode">DELETE zones/&lt;ZONE_ID&gt;/filters</code>
@@ -112,7 +114,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-delete-a-filter">Delete a filter</a>
+        <a href="/api/operations/filters-delete-a-filter">Delete a filter</a>
       </td>
       <td>
         <code class="InlineCode">

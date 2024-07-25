@@ -1,23 +1,32 @@
 ---
-title: Work with Managed Rulesets
+title: Work with managed rulesets
 pcx_content_type: navigation
 type: overview
 weight: 6
-layout: list
 ---
 
-# Work with Managed Rulesets
+# Work with managed rulesets
 
-Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
+Managed rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
 
-The rules in a Managed Ruleset have a default configuration. However, you can define overrides that change this default configuration.
+The rules in a managed ruleset have a default configuration. However, you can define [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that change this default configuration.
 
-There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
+Several Cloudflare products include managed rulesets:
+
+- [Web Application Firewall (WAF)](/waf/managed-rules/)
+- [DDoS Protection](/ddos-protection/managed-rulesets/)
+- [Magic Firewall](/magic-firewall/how-to/enable-managed-rulesets/)
+
+ Check each product's documentation for details on the available managed rulesets.
 
 ## Get started
 
-To view available Managed Rulesets, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
+To view available managed rulesets, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-To deploy a Managed Ruleset to a phase, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
+To deploy a managed ruleset to a phase, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-You cannot edit the rules in a Managed Ruleset, but you can customize the Managed Ruleset behavior by using overrides. Refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for more information.
+To adjust the behavior of a managed ruleset, do one of the following:
+- Customize the behavior of one or more rules by using [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
+- Skip one or more managed rules by adding [exceptions](/ruleset-engine/managed-rulesets/create-exception/).
+
+Exceptions (only supported by the WAF) have priority over overrides.

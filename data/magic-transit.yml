@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m10.7
 product:
   title: Magic Transit
   url: /magic-transit/
+  group: Network security
 
 meta:
   title: Cloudflare Magic Transit docs
@@ -11,7 +12,6 @@ meta:
     protection, traffic acceleration, and much more from every Cloudflare data
     center—for on-premise, cloud-hosted, and hybrid networks.
   author: '@cloudflare'
-  image: /zt-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-transit
@@ -26,3 +26,8 @@ externals:
     url: https://blog.cloudflare.com/magic-transit/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: magic-transit

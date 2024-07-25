@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare Network Interconnect
@@ -8,52 +9,20 @@ meta:
 
 # Cloudflare Network Interconnect
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
+{{<description>}}Connect your network infrastructure directly to Cloudflare {{</description>}}
 
-{{<Aside type="note" header="Note">}}
-  
-  Cloudflare Network Interconnect is only available to customers on an Enterprise plan.
+{{<plan type="enterprise">}}
 
-{{</Aside>}}
+Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience. With CNI, you can bring Cloudflare’s full suite of network functions to your physical network edge.
 
-## CNI benefits
+---
 
-Use CNI with other products in Cloudflare's suite for additional benefits.
+## Related products
 
-{{<table-wrap>}}
+{{<related header="Magic Transit" href="/magic-transit/" product="magic-transit">}}
+Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+{{</related>}}
 
-<table>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Value</th>
-      <th>With CNI</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/teams/access/">Access</a></span></td>
-      <td><p>Replaces corporate VPNs with the Cloudflare network.</p></td>
-      <td><p>Securely connects your employees to your network no matter where they are when you bring your Multiprotocol Label Switching (MPLS) network to meet Cloudflare's.</p></td>
-    </tr>
-    <tr>
-      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/cdn/">CDN</a></span></td>
-      <td><p>Places content closer to visitors, improving site performance.</p></td>
-      <td><p>Improves cache fill performance and reduces cost.</p></td>
-    </tr>
-    <tr>
-      <td><span style="white-space: nowrap"><a href='https://www.cloudflare.com/magic-transit/'>Magic Transit</a></span></td>
-      <td><p>Protects data center and branch networks from unwanted and malicious traffic.</p></td>
-      <td><p>Decreases jitter, drives throughput improvements, and hardens infrastructure to attack.</p></td>
-    </tr>
-    <tr>
-      <td><span style="white-space: nowrap"><a href='https://workers.cloudflare.com/'>Workers</a></span></td>
-      <td><p>Serverless compute platform.</p></td>
-      <td><p>Provides a secure connection to serverless cloud compute that does not traverse the public Internet.</p></td>
-    </tr>
-  </tbody>
-</table>
-
-{{</table-wrap>}}
-
-For more detail on how CNI delivers these benefits, see [Introducing Cloudflare Network Interconnect](https://blog.cloudflare.com/cloudflare-network-interconnect/).
+{{<related header="Magic WAN" href="/magic-wan/" product="magic-wan">}}
+Improve security and performance for your entire corporate network, reducing cost and operation complexity.
+{{</related>}}

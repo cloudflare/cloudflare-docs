@@ -15,6 +15,7 @@ export function $focus(elem: HTMLElement, bool: boolean) {
   if (SEARCH_ID && SEARCH_ID.test(elem.id)) {
     SEARCH_INPUT = elem;
 
+    if(!elem.parentElement || !elem.parentElement.parentElement) return;
     elem.parentElement.parentElement.toggleAttribute("is-focused", bool);
     elem.setAttribute("aria-expanded", "" + bool);
 
@@ -35,12 +36,19 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash);
+
+  if (!hash) return;
+
+  const headerID = CSS.escape(hash.toLowerCase());
+  let item = document.querySelector(`#${headerID}`);
+
   let timer =
     item &&
     setInterval(() => {
       if (document.readyState !== "complete") return;
-      clearInterval(timer);
+      if(timer){
+        clearInterval(timer);
+      }
       setTimeout(() => {
         item.scrollIntoView({ behavior: "smooth" });
       }, 250);
@@ -59,83 +67,15 @@ export function mobile() {
     });
 
   // clicking on mobile search icon
-  let input: HTMLInputElement =
-    document.querySelector("#DocsSearch--input") ||
-    document.querySelector("#SiteSearch--input");
+  let input =
+    document.querySelector<HTMLInputElement>("#DocsSearch--input") ||
+    document.querySelector<HTMLInputElement>("#SiteSearch--input");
 
   // register init handler
   if (input)
     input.addEventListener("click", () => {
       $focus(input, true);
     });
-}
-
-function $copy(ev: MouseEvent) {
-  let btn = (ev.target as HTMLElement).closest("button");
-  let txt = btn.getAttribute("data-clipboard");
-  if (txt) {
-    try {
-      navigator.clipboard.writeText(txt);
-    } catch (err) {
-      /* no support */
-    }
-  }
-}
-
-export function copy() {
-  let btns = document.querySelectorAll("button[data-clipboard]");
-  for (let i = 0; i < btns.length; i++)
-    btns[i].addEventListener("click", $copy);
-}
-
-function $clicktoClipboard(ev: MouseEvent) {
-  const button = ev.target as HTMLElement;
-  const pre = button.parentElement;
-  if (pre) {
-    const codeNodes = pre.getElementsByTagName("code");
-    if (codeNodes.length >= 1){
-      // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
-      // clone the code node, we do not want to modify the DOM.
-      const code = codeNodes[0].cloneNode(true) as HTMLElement;
-      const unselectableTokens = code.getElementsByClassName("CodeBlock--token-unselectable");
-      for (let i = 0; i < unselectableTokens.length; i++){
-        unselectableTokens[i].remove();
-      }
-      const text = code.innerText;
-      if (text) {
-        try {
-          //copy to clipboard
-          navigator.clipboard.writeText(text);
-          //change SVG
-          button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"  style= "width:1rem; pointer-events: none;"  aria-label="Copied to clipboard button" focusable="true"><title>Copied Button</title><path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path></svg>`;
-          setTimeout(() => {
-            button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
-          }, 1500);
-        } catch (err) {
-          /* no support */
-        }
-      }
-    }
-  }
-}
-
-export function clipboardButton() {
-  const copyButtonLabel = "Copy to clipboard";
-  // get all codeblocks
-  let blocks = document.getElementsByClassName("CodeBlock");
-  for (let i = 0; i < blocks.length; i++) {
-    if (navigator.clipboard) {
-      // Create a button to copy the code
-      let button = document.createElement("button");
-      button.className = "copyCode-button";
-      button.setAttribute("aria-label", copyButtonLabel);
-      button.setAttribute("Title", "Copy to clipboard");
-      // Add SVG icon
-      button.innerHTML += `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
-      button.addEventListener("click", $clicktoClipboard);
-      blocks[i].appendChild(button);
-    }
-  }
 }
 
 // add focus attribute to activeElement if keyboard trigger
@@ -158,31 +98,40 @@ function $tab(ev: MouseEvent) {
   ev.preventDefault();
 
   // Get the tabs for this tab block
-  const tabBlockId = (ev.target as HTMLElement).getAttribute("data-id");
+  const tabBlockId = (ev.target as HTMLElement)
+    .closest("[data-id]")
+    ?.getAttribute("data-id");
 
-  let tabs = document.querySelectorAll(
+  let tabs = document.querySelectorAll<HTMLElement>(
     `div[tab-wrapper-id="${tabBlockId}"] > .tab`
   );
 
   for (let i = 0; i < tabs.length; i++) {
-    (tabs[i] as HTMLElement).style.display = "none";
+    tabs[i].style.display = "none";
   }
 
-  let target = ev.target;
-  let link = (target as HTMLElement).getAttribute("data-link");
+  let link = (ev.target as HTMLElement)
+    .closest("[data-link]")
+    ?.getAttribute("data-link");
 
-  document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
+  // escape ID for use in querySelector
+  const tabID = CSS.escape(`${link}-${tabBlockId}`);
+  const linkElement = document.querySelector<HTMLElement>(`#${tabID}`);
+  if(linkElement){
+    linkElement.style.display = "block";
+  }
+  zaraz.track("tab click", {selected_option: (ev.target as HTMLElement).innerText})
 }
 
 export function tabs() {
   // Find all tab wrappers
   let wrappers = document.querySelectorAll(".tabs-wrapper");
 
-  addEventListener("load", () => {
+  addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
-      const labels = wrappers[i].querySelectorAll(".tab-label");
-      const tabs = wrappers[i].querySelectorAll(".tab");
-      const defaultTab = wrappers[i].querySelector(".tab.tab-default");
+      const labels = wrappers[i].querySelectorAll<HTMLElement>(".tab-label");
+      const tabs = wrappers[i].querySelectorAll<HTMLElement>(".tab");
+      const defaultTab = wrappers[i].querySelector<HTMLElement>(".tab.tab-default");
 
       if (tabs.length > 0) {
         // if a tab has been specified as default, set that
@@ -193,13 +142,17 @@ export function tabs() {
           const parts = defaultTab.id.split("-");
           const tabId = parts.slice(0, parts.length - 1).join("-");
 
-          const defaultTabLabel = wrappers[i].querySelector(`a[data-link=${tabId}]`);
+          const defaultTabLabel = wrappers[i].querySelector(
+            `a[data-link="${tabId}"]`
+          );
 
-          (defaultTab as HTMLElement).style.display = "block";
-          (defaultTabLabel as HTMLElement).classList.add("active");
+          defaultTab.style.display = "block";
+          if(defaultTabLabel){
+            defaultTabLabel.classList.add("active");
+          }
         } else {
-          (tabs[0] as HTMLElement).style.display = "block";
-          (labels[0] as HTMLElement).classList.add("active");
+          tabs[0].style.display = "block";
+          labels[0].classList.add("active");
         }
 
         for (let i = 0; i < labels.length; i++)
@@ -210,16 +163,18 @@ export function tabs() {
 }
 
 export function activeTab() {
-  const blocks = document.getElementsByClassName("tab-active");
+  const blocks = document.querySelectorAll(".tab-active");
   if (blocks) {
     for (const block of blocks) {
       const blockId = block.getAttribute("block-id");
 
-      var tabs = block.querySelectorAll(`.tab-label`);
+      var tabs = block.querySelectorAll<HTMLElement>(`.tab-label`);
       for (var i = 0; i < tabs.length; i++) {
-        (tabs[i] as HTMLElement).addEventListener("click", function name() {
+        tabs[i].addEventListener("click", function name() {
           let current = block.querySelector(`.active`);
-          current.classList.remove("active");
+          if(current){
+            current.classList.remove("active");
+          }
           this.classList.add("active");
         });
       }
@@ -231,12 +186,14 @@ export function dropdowns() {
   let attr = "data-expanded";
 
   document.querySelectorAll(".Dropdown").forEach((div) => {
+
     let btn = div.querySelector("button");
     let links = div.querySelectorAll<HTMLAnchorElement>("li>a");
     let focused = 0; // index
 
     if (btn && links.length > 0) {
-      let arrows: EventListener = (ev: KeyboardEvent) => {
+      let arrows: EventListener = (rawEv: Event) => {
+        const ev = rawEv as KeyboardEvent;
         let key = ev.which;
         let isTAB = key === 9;
 
@@ -296,28 +253,111 @@ export function dropdowns() {
   });
 }
 
-export function toggleSidebar() {
-
-  const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if(toggleButton){
-    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar")
-    let btn = div.querySelector("button");
-    btn.addEventListener("click", () => {
-      let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsFooter', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar'];
-
-      classToggleList.forEach(function(querySelector){
-        let item = document.querySelector(querySelector);
-        item.classList.toggle('collapsed');
-      });
-
-      let attr = 'is-visually-hidden';
-      let attrToggleList = ['.DocsSidebar--nav-item', '.DocsSidebar--section-more', '.DocsSidebar--docs-title-section a div span span', '.DocsSidebar--header-section a div span'];
-
-      attrToggleList.forEach(function(querySelector){
-        let item = document.querySelector(querySelector);
-        let isHidden = item.hasAttribute(attr);
-        item.toggleAttribute(attr, !isHidden);
-      });
-  });
+export function zarazTrackDocEvents() {
+  const links = document.querySelectorAll<HTMLAnchorElement>(".DocsMarkdown--link");
+  const dropdowns = document.querySelectorAll("details")
+  const glossaryTooltips = document.querySelectorAll(".glossary-tooltip")
+  const playgroundLinks = document.querySelectorAll<HTMLAnchorElement>(".playground-link")
+  const copyCodeBlockButtons = document.querySelectorAll(".copyCode-button")
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links) {
+        const linkURL = new URL(link.href)
+        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
+        if (linkURL.hostname !== "developers.cloudflare.com") {
+          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('playground link click', link);
+            });
+          } else if (cfSubdomainRegex.test(linkURL.hostname)) {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('Cross Domain Click', link);
+            });
+          } else {
+            link.addEventListener("click", () => {
+              $zarazLinkEvent('external link click', link);
+            });
+          }
+        }
+      }
+    }
+    if (dropdowns.length > 0) {
+      for (const dropdown of dropdowns) {
+        dropdown.addEventListener("click", () => {
+          $zarazDropdownEvent(dropdown.querySelectorAll("summary")[0]);
+        });
+    }
   }
+  if (glossaryTooltips.length > 0) {
+    for (const tooltip of glossaryTooltips) {
+      tooltip.addEventListener("pointerleave", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+      tooltip.addEventListener("blur", () => {
+        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
+      });
+  }
+}
+  if (playgroundLinks.length > 0) {
+    for (const playgroundLink of playgroundLinks) {
+      playgroundLink.addEventListener("click", () => {
+        $zarazLinkEvent('playground link click', playgroundLink);
+      });
+  }
+  }
+  if (copyCodeBlockButtons.length > 0) {
+    for (const copyButton of copyCodeBlockButtons) {
+      copyButton.addEventListener("click", () => {
+        const codeBlockElement = copyButton?.parentElement?.parentElement?.firstElementChild;
+        zaraz.track('copy button link click', {
+          title: codeBlockElement?.getAttribute('title') ?? 'title not set',
+          language: codeBlockElement?.getAttribute('language') ?? 'language not set',});
+      });
+    }
+  }
+  });
+}
+
+function $zarazLinkEvent(type: string, link: HTMLAnchorElement) {
+  zaraz.track(type, {href: link.href, hostname: link.hostname})
+}
+
+function $zarazDropdownEvent(summary: HTMLElement) {
+  zaraz.track('dropdown click', {text: summary.innerText})
+}
+
+function $zarazGlossaryTooltipEvent(term: string | null) {
+  zaraz.track('glossary tooltip view', {term: term})
+}
+
+export function zarazTrackHomepageLinks() {
+  const links = document.querySelectorAll<HTMLAnchorElement>(".DocsMarkdown--link");
+  const playgroundLinks = document.querySelectorAll<HTMLAnchorElement>(".playground-link")
+  const copyCodeBlockButtons = document.querySelectorAll<HTMLButtonElement>(".copyCode-button")
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links) {
+        link.addEventListener("click", () => {
+          zaraz.track('homepage link click', {href: link.href})
+        });
+      }
+    }
+    if (playgroundLinks.length > 0) {
+      for (const playgroundLink of playgroundLinks) {
+        playgroundLink.addEventListener("click", () => {
+          $zarazLinkEvent('playground link click', playgroundLink);
+        });
+    }
+    }
+    if (copyCodeBlockButtons.length > 0) {
+      for (const copyButton of copyCodeBlockButtons) {
+        copyButton.addEventListener("click", () => {
+          const codeBlockElement = copyButton?.parentElement?.parentElement?.firstElementChild;
+          zaraz.track('copy button link click', {
+            title: codeBlockElement?.getAttribute('title') ?? 'title not set',
+            language: codeBlockElement?.getAttribute('language') ?? 'language not set',});
+        });
+      }
+    }
+  });
 }

@@ -1,7 +1,7 @@
 ---
 title: Email
 pcx_content_type: how-to
-weight: 2
+weight: 3
 meta:
   title: Email method — Domain Control Validation — SSL/TLS
 ---
@@ -19,8 +19,6 @@ With the [upcoming change](/ssl/reference/migration-guides/digicert-update/advan
 ## Limitations
 
 Based on your chosen Certificate Authority, you may not be able to use email verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
-
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
 
 ## Setup
 
@@ -43,8 +41,8 @@ Once you locate your certificate, find the following values:
 
 {{<render file="_email-validation-process.md">}}
 
-{{<render file="_dcv-validate-patch.md">}}
+## Renewal
 
-## Renew DCV tokens
+{{<render file="_dcv-certificate-renewal.md">}}
 
-{{<render file="_dcv-token-renewal.md">}}
+If any one of the conditions is not met, the certificate renewal falls back to your chosen method and you will need to repeat the DCV process manually.

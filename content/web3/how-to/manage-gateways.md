@@ -48,7 +48,7 @@ To edit a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To edit specific settings for a gateway, use a [`PATCH`](https://developers.cloudflare.com/api/operations/web3-hostname-edit-web3-hostname) request.
+To edit specific settings for a gateway, use a [`PATCH`](/api/operations/web3-hostname-edit-web3-hostname) request.
  
 {{</tab>}}
 {{</tabs>}}
@@ -72,7 +72,7 @@ To refresh a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To refresh a gateway using the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/web3-hostname-edit-web3-hostname) request with an empty request body.
+To refresh a gateway using the API, send a [`PATCH`](/api/operations/web3-hostname-edit-web3-hostname) request with an empty request body.
  
 {{</tab>}}
 {{</tabs>}}
@@ -110,7 +110,7 @@ To add an item to the blocklist using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To add a blocklist item using the API, send a [`POST`](https://developers.cloudflare.com/api/operations/web3-hostname-create-ipfs-universal-path-gateway-content-list-entry) request. 
+To add a blocklist item using the API, send a [`POST`](/api/operations/web3-hostname-create-ipfs-universal-path-gateway-content-list-entry) request. 
 
 {{</tab>}}
 {{</tabs>}}
@@ -135,7 +135,7 @@ To delete a gateway using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To delete a gateway using the API, send a [`DELETE`](https://developers.cloudflare.com/api/operations/web3-hostname-delete-web3-hostname) request.
+To delete a gateway using the API, send a [`DELETE`](/api/operations/web3-hostname-delete-web3-hostname) request.
  
 {{</tab>}}
 {{</tabs>}}

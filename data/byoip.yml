@@ -4,14 +4,20 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M38.6
 product:
   title: BYOIP
   url: /byoip/
+  group: Cloudflare essentials
+  additional_groups: [Application performance, Network security]
 
 meta:
   title: Cloudflare BYOIP docs
   description: With BYOIP, Cloudflare announces your IPs in all our locations. Use
     your IPs with Magic Transit, Spectrum, or CDN services.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: byoip

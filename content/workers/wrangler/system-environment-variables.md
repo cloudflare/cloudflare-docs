@@ -1,20 +1,21 @@
 ---
 pcx_content_type: configuration
-title: System Environment Variables
-weight: 5
+title: System environment variables
+meta:
+  description: Local environment variables that can change Wrangler's behavior.
 ---
 
-## System Environment Variables
+# System environment variables
 
-System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set System Environment Variables:
+System environment variables are local environment variables that can change Wrangler's behavior. There are three ways to set system environment variables:
 
 1. Create an `.env` file in your project directory. Set the values of your environment variables in your [`.env`](/workers/wrangler/system-environment-variables/#example-env-file) file. This is the recommended way to set these variables, as it persists the values between Wrangler sessions.
 
-2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" wrangler publish` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
+2. Inline the values in your Wrangler command. For example, `WRANGLER_LOG="debug" npx wrangler deploy` will set the value of `WRANGLER_LOG` to `"debug"` for this execution of the command.
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
-### Supported environment variables
+## Supported environment variables
 
 Wrangler supports the following environment variables:
 
@@ -22,7 +23,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The account ID for the Workers related account, can be [found in the Cloudflare dashboard](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), can usually be inferred by Wrangler.
+  - The [account ID](/fundamentals/setup/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -40,17 +41,21 @@ Wrangler supports the following environment variables:
 
   - Options for this are `true` and `false`, the default behavior is `false`.
 
+- `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/). For example, if the binding for your Hyperdrive is named `PROD_DB`, this would be `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_PROD_DB="postgres://user:password@127.0.0.1:5432/testdb"`. Each Hyperdrive is uniquely distinguished by the binding name.
+
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The default value is https://api.cloudflare.com/client/v4.
+  - The default value is `"https://api.cloudflare.com/client/v4"`.
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`.
+  - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default.
 
 {{</definitions>}}
 
-### Example `.env` file
+## Example `.env` file
 
 The following is an example `.env` file:
 
@@ -63,7 +68,7 @@ CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
 ```
 
-### Deprecated global variables
+## Deprecated global variables
 
 The following variables are deprecated. Use the new variables listed above to prevent any issues or unwanted messaging.
 

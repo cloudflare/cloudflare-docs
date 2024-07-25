@@ -2,10 +2,9 @@
 pcx_content_type: reference
 title: Enabling log retention
 weight: 13
-layout: single
 ---
 
-# Enabling log retention
+# Enable log retention
 
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
 
@@ -18,7 +17,7 @@ There are two endpoints for managing log retention:
 
 {{<Aside type="note" header="Note">}}
 
-To make a `POST` call, you must have a Cloudflare account role with `edit` permissions, such as Super Administrator, Administrator, or Log Share.
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share.
 
 {{</Aside>}}
 
@@ -27,7 +26,7 @@ To make a `POST` call, you must have a Cloudflare account role with `edit` permi
 ### Check whether log retention is turned on:
 
 ```sh
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
 ```
 
 #### Response:
@@ -45,9 +44,19 @@ $ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api
 
 ### Turn on log retention:
 
+On Linux or macOS:
+
 ```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
+curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
 ```
+
+On Windows in Command Prompt:
+
+```
+curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
+```
+
+For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
 
 #### Parameters
 
@@ -68,4 +77,4 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 
 ## Audit
 
-Turning log retention on or off is recorded in **Cloudflare Audit Logs**.
+Turning log retention on or off is recorded in [Cloudflare Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/#access-audit-logs).

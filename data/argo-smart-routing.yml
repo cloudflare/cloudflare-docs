@@ -4,6 +4,8 @@ logo: <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://
 product:
   title: Argo Smart Routing
   url: /argo-smart-routing/
+  group: Application performance
+  preview_tryout: true
 
 resources:
   community: https://community.cloudflare.com/c/performance/argo/45
@@ -14,8 +16,12 @@ meta:
   title: Cloudflare Argo Smart Routing docs
   description: Detect real-time congestion to route web traffic across the fastest and most reliable network paths.
   author: "@cloudflare"
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: argo-smart-routing

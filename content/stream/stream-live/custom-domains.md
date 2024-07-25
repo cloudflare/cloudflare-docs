@@ -2,6 +2,9 @@
 pcx_content_type: how-to
 title: Add custom ingest domains
 weight: 3
+learning_center:
+    title: What is live streaming?
+    link: https://www.cloudflare.com/learning/video/what-is-live-streaming/
 ---
 
 # Add custom ingest domains
@@ -13,6 +16,8 @@ With custom ingest domains, you can configure your RTMPS feeds to use an ingest 
 3. Click the **Settings** button above the list. The **Custom Input Domains** page displays.
 4. Under **Domain**, add your domain and click **Add domain**.
 5. At your DNS provider, add a CNAME record that points to `live.cloudflare.com`. If your DNS provider is Cloudflare, this step is done automatically.
+
+If you are using Cloudflare for DNS, ensure the [**Proxy status**](/dns/manage-dns-records/reference/proxied-dns-records/) of your ingest domain is **DNS only** (grey-clouded).
 
 ## Delete a custom domain
 

@@ -3,7 +3,7 @@ title: Operators and grouping symbols
 pcx_content_type: reference
 type: overview
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Rule operators and grouping symbols
 ---
@@ -155,13 +155,42 @@ The Rules language supports these comparison operators:
 
 \* _Access to the `matches` operator requires a Cloudflare Business or Enterprise plan._
 
-{{<Aside type="note" header="Comparing string values">}}
+### Additional operators in the Cloudflare dashboard
+
+The Cloudflare dashboard shows the following functions as operators:
+
+* _starts with_ (corresponding to the [`starts_with` function](/ruleset-engine/rules-language/functions/#function-starts_with)): Returns `true` when a string starts with a given substring, and `false` otherwise.
+* _ends with_ (corresponding to the [`ends_with` function](/ruleset-engine/rules-language/functions/#function-ends_with)): Returns `true` when a string ends with a given substring, and `false` otherwise.
+
+However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
+
+```sql
+# Valid function call
+ends_with(http.request.uri.path, ".html")
+
+# Invalid use of ends_with function
+http.request.uri.path ends_with ".html"
+```
+
+### Comparing string values
+
 String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
 ```
+
+{{<Aside type="warning" header="Wildcards are not supported">}}
+Comparison operators, namely the `eq` operator, do not support wildcards (for example, `*`) in strings. However, the `matches` operator supports regular expressions like `.*`, which matches zero or more occurrences of any character.
 {{</Aside>}}
+
+### Regular expression matching
+
+Customers on Business and Enterprise plans have access to the `matches` operator. Regular expression matching is performed using the Rust regular expression engine.
+
+If you are using a regular expression, you can test it using a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk/).
+
+For more information on regular expressions, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
 
 ## Logical operators
 
@@ -193,7 +222,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">not</code></td>
       <td><code class="InlineCode">!</code></td>
       <td>
-         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 203.0.113.0/24 )</code>
+         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in {203.0.113.0/24} )</code>
       </td>
       <td>1</td>
    </tr>
@@ -202,7 +231,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">and</code></td>
       <td><code class="InlineCode">&amp;&amp;</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 203.0.113.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in {203.0.113.0/24}</code>
       </td>
       <td>2</td>
    </tr>
@@ -212,7 +241,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">xor</code></td>
       <td><code class="InlineCode">^^</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 203.0.113.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in {203.0.113.0/24}</code>
       </td>
       <td>3</td>
    </tr>
@@ -252,7 +281,7 @@ To avoid ambiguity when working with logical operators, use grouping symbols so 
 
 The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
-Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
+Only the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) does not.
 
 
 ### Group expressions

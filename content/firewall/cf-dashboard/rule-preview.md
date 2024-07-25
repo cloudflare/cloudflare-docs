@@ -3,7 +3,7 @@ title: Preview rules
 pcx_content_type: concept
 type: table
 weight: 3
-layout: list
+layout: wide
 meta:
   title: Preview firewall rules
 ---
@@ -27,13 +27,13 @@ Rule Preview is only available to customers on an Enterprise plan.
 1. Locate the desired rule in the rules list and select **Edit** (wrench icon).
 2. Select **Test rule** to trigger the test.
 
-![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
+![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/images/firewall/firewall-rules-preview-1.png)
 
 The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression.
 
 In this screenshot, a rule that matches all User-Agents that contain the string `Mozilla` would block about 8% of requests to the zone:
 
-![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
+![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/images/firewall/cf-firewall-rules-preview-rule-plot-chart.png)
 
 ## Important notes
 
@@ -41,7 +41,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Security events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test firewall rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
+**You cannot test firewall rules that reference [IP lists](/waf/tools/lists/custom-lists/#ip-lists)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 

@@ -1,7 +1,7 @@
 ---
 title: Limitations
 pcx_content_type: reference
-weight: 4
+weight: 5
 meta:
   title: Limitations for Universal SSL
 ---
@@ -16,8 +16,8 @@ Universal SSL certificates are limited by the hostnames they cover and the brows
 
 Universal SSL certificates only support SSL for the root or first-level subdomains such as `example.com` and `www.example.com`. To enable SSL support on second, third, and fourth-level subdomains such as `dev.www.example.com` or `app3.dev.www.example.com`, you can:
 
-- Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/), to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
-- Upgrade to a Business or Enterprise plan to [upload a Custom SSL certificate](/ssl/edge-certificates/custom-certificates/)
+- Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to order advanced certificates.
+- Upgrade to a Business or Enterprise plan to [upload custom certificates](/ssl/edge-certificates/custom-certificates/).
 
 ### CNAME setup
 
@@ -33,6 +33,8 @@ Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you a
 
 ## Certificate authority
 
-For Universal SSL certificates, Cloudflare chooses the [certificate authority](/ssl/reference/certificate-authorities/) used for your certificate.
+For Universal SSL certificates, Cloudflare chooses the {{<glossary-tooltip term_id="Certificate Authority (CA)">}}certificate authority (CA){{</glossary-tooltip>}} used for your certificate.
+
+Cloudflare can change the [certificate authority](/ssl/reference/certificate-authorities/) without prior notification, and will not send any notification as the change happens.
 
 If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).

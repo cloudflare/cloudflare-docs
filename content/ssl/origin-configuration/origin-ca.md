@@ -1,15 +1,19 @@
 ---
 title: Origin CA certificates
 pcx_content_type: how-to
-weight: 4
+weight: 3
+meta:
+  description: Origin Certificate Authority (CA) certificates allow you to encrypt traffic between Cloudflare and your origin web server, and reduce origin bandwidth consumption.
 ---
 
 # Origin CA certificates
 
-Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict).
+Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
+
+For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 
 {{<Aside type="note">}}
-For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
+Using Cloudflare Origin CA certificates do not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 {{</Aside>}}
 
 ## Availability
@@ -27,18 +31,18 @@ To create an Origin CA certificate in the dashboard:
 1.  Log in to the Cloudflare dashboard and select an account.
 2.  Choose a domain.
 3.  Go to **SSL/TLS** > **Origin Server**.
-4.  Click **Create Certificate**.
+4.  Select **Create Certificate**.
 5.  Choose either:
-    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
+    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
-6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
-7.  Choose the [expiration date](#expiration).
-8.  Click **Next**.
+6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
+7.  Choose a **Certificate Validity** period.
+8.  Select **Create**.
 9.  Choose the **Key Format**:
     - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
     - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
 10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
-11. Click **OK**.
+11. Select **OK**.
 
 {{<Aside type="note">}}For details about working with certificates programmatically, refer to [API calls](#api-calls).{{</Aside>}}
 
@@ -63,8 +67,8 @@ To add an Origin CA certificate to your origin web server
 
   {{<Aside type="note">}}If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
-3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
-4.  Enable SSL and port 443 at your origin web server.
+3.  (Required for some) Upload the [Cloudflare CA root certificate](#cloudflare-origin-ca-root-certificate) to your origin server. This can also be referred to as the certificate chain.
+4.  Enable SSL and port `443` at your origin web server.
 
 ### 3. Change SSL/TLS mode
 
@@ -75,20 +79,13 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 1.  Go to **SSL/TLS**.
 2.  For **SSL/TLS encryption mode**, select **Full (strict)**.
 
-If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](https://support.cloudflare.com/hc/articles/218411427).
-
-### 4. (required for some) Add Cloudflare Origin CA root certificates
-
-Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
-
-- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
-- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/rules/page-rules/).
 
 ## Revoke an Origin CA certificate
 
 If you misplace your key material or do not want a certificate to be trusted, you may want to revoke your certificate. You cannot undo this process.
 
-To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/ssl/origin-configuration/ssl-modes/) to **Full** or **Flexible** before revoking your certificate. Do this globally via the **SSL/TLS** app or for a specific hostname via a **Page Rule**.
+To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/ssl/origin-configuration/ssl-modes/) to **Full** or **Flexible** before revoking your certificate. Do this globally via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls) or for a specific hostname via a [Page Rule](/rules/page-rules/).
 
 To revoke a certificate:
 
@@ -96,30 +93,33 @@ To revoke a certificate:
 2.  Choose a domain.
 3.  Go to **SSL/TLS** > **Origin Server**.
 4.  In **Origin Certificates**, choose a certificate.
-5.  Click **Revoke**.
+5.  Select **Revoke**.
 
 ## Additional details
 
+### Cloudflare Origin CA root certificate
+
+Some origin web servers require upload of the Cloudflare Origin CA root certificate or certificate chain. Use the following links to download either an ECC or an RSA version and upload to your origin web server:
+
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+
 ### Hostname and wildcard coverage
 
-Certificates may be generated with up to 100 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
+Certificates may be generated with up to 200 individual Subject Alternative Names (SANs). A SAN can take the form of a fully-qualified domain name (`www.example.com`) or a wildcard (`*.example.com`). You cannot use IP addresses as SANs on Cloudflare Origin CA certificates.
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 
-### Expiration
-
-By default, newly generated certificates are valid for 15 years. If you wish to generate shorter-lived certificates (for example, as short as 7 days), use the [API](#api-calls).
-
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls.
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys/).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
-| [List certificates](https://developers.cloudflare.com/api/operations/origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
-| [Create certificate](https://developers.cloudflare.com/api/operations/origin-ca-create-certificate) | `POST` | `certificates` |
-| [Get certificate](https://developers.cloudflare.com/api/operations/origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
-| [Revoke certificate](https://developers.cloudflare.com/api/operations/origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
+| [List certificates](/api/operations/origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
+| [Create certificate](/api/operations/origin-ca-create-certificate) | `POST` | `certificates` |
+| [Get certificate](/api/operations/origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
+| [Revoke certificate](/api/operations/origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
 
 ## Troubleshooting
 

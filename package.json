@@ -5,28 +5,52 @@
   "repository": "cloudflare/cloudflare-docs",
   "description": "Cloudflare Developer Docs",
   "scripts": {
-    "dev": "hugo serve -D",
+    "check-types": "tsc --noEmit",
+    "crawl-api-links": "node bin/crawl-api-links.js",
+    "dev:hugo": "hugo --environment development -D -w",
+    "dev:wrangler": "wrangler pages dev -- vite",
+    "dev:vite": "vite",
+    "dev": "concurrently --kill-others \"npm run dev:hugo\" \"npm run dev:vite\"",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
-    "prebuild": "tsm bin/highlight.ts replace",
-    "build": "hugo --minify",
-    "postbuild": "tsm bin/highlight.ts restore"
+    "build:hugo": "hugo",
+    "build:vite": "vite build",
+    "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
+    "build": "npm run build:hugo && npm run build:post",
+    "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
+    "algoliasearch": "^4.24.0",
     "fromnow": "3.0.1",
-    "mermaid": "9.1.7"
+    "instantsearch.js": "^4.73.0",
+    "mermaid": "^10.9.1",
+    "node-html-parser": "6.1.13",
+    "vue": "^3.4.31"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.17.0",
-    "@types/node": "16.11.12",
-    "@types/prettier": "2.4.3",
-    "@types/prismjs": "1.16.6",
-    "node-html-parser": "5.2.0",
-    "prettier": "2.5.1",
+    "@cloudflare/workers-types": "4.20240620.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.14.10",
+    "@types/prettier": "2.7.3",
+    "@types/prismjs": "^1.26.4",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/tsconfig": "^0.5.1",
+    "concurrently": "^8.2.2",
+    "glob": "^10.4.3",
+    "html-rewriter-wasm": "^0.4.1",
+    "lz-string": "^1.5.0",
+    "parse-numeric-range": "^1.3.0",
+    "prettier": "3.3.2",
     "prismjs": "^1.29.0",
-    "tsm": "2.2.2"
+    "tsm": "2.3.0",
+    "typescript": "~5.5.3",
+    "vite": "^5.3.3",
+    "vue-tsc": "^2.0.26",
+    "wrangler": "3.63.1"
   },
   "volta": {
-    "node": "18.10.0"
-  }
+    "node": "20.15.0"
+  },
+  "type": "module"
 }

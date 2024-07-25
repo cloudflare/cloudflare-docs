@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: JumpCloud
 weight: 2
+meta:
+  description: Learn how to deploy Cloudflare WARP using JumpCloud.
 ---
 
 # Deploy WARP using JumpCloud
@@ -10,11 +12,11 @@ weight: 2
 
 1. Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
 
-2. Navigate to **Device Management** > **Software Management**.
+2. Go to **Device Management** > **Software Management**.
 
-3. Select the **Windows** tab, then click **(+)**.
+3. Select the **Windows** tab, then select **(+)**.
 
-    ![Configuring WARP in the JumpCloud **Windows** tab](/cloudflare-one/static/documentation/connections/jumpcloud.png)
+   ![Configuring WARP in the JumpCloud **Windows** tab](/images/cloudflare-one/connections/jumpcloud.png)
 
 4. In the **Software Name** field, enter a unique display name.
 
@@ -26,15 +28,16 @@ weight: 2
 
 8. (Optional) Select **Allow end users to delay updates for up to one week** to avoid updates during a busy time.
 
-9. Click **save**.
+9. Select **save**.
 
 10. Select the device(s) you want to deploy the app to:
+
     - **Single device**: Go to the **Devices** tab and select the target device.
     - **Device group**: Go to the **Device Groups** tab and select the target device group.
 
-11. Click **save**.
+11. Select **save**.
 
-12. Click **save** again.
+12. Select **save** again.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.
 
@@ -42,20 +45,21 @@ Verify that Cloudflare WARP was installed by selecting the app and viewing the *
 
 1. Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
 
-2. Navigate to **Device Management** > **Software Management**.
+2. Go to **Device Management** > **Software Management**.
 
-3. Select the **Apple** tab, then click **(+)**.
+3. Select the **Apple** tab, then select **(+)**.
 
-    ![Configuring WARP in the JumpCloud **Apple** tab](/cloudflare-one/static/documentation/connections/jumpcloud-mac.png)
+   ![Configuring WARP in the JumpCloud **Apple** tab](/images/cloudflare-one/connections/jumpcloud-mac.png)
 
 4. In the **Software Description** field, enter a unique display name.
 
-5. In the **Software Package URL**, enter the URL location of the `Cloudflare_WARP.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
+5. In the **Software Package URL**, enter the URL location of the `Cloudflare_WARP_<VERSION>.pkg` file. If you do not already have the installer package, [download it here](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos).
 
 6. Select the device(s) you want to deploy the app to:
-    - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
-    - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
 
-7. Click **save** to install the client.
+   - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
+   - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
+
+7. Select **save** to install the client.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.

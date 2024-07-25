@@ -14,7 +14,7 @@ Business and Enterprise customers without Bot Management can use **Bot Analytics
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **Bots**.
 
-![View Bot Analytics in the Cloudflare dashboard. For more details, keep reading.](/bots/static/bot-analytics-dashboard-biz.png)
+![View Bot Analytics in the Cloudflare dashboard. For more details, keep reading.](/images/bots/bot-analytics-dashboard-biz.png)
 
 ## Features
 
@@ -32,7 +32,7 @@ Bot Analytics shows up to 72 hours of data at a time and can display data up to 
 
 Business and Enterprise customers without Bot Management can use Bot Analytics to:
 
-- Understand bot traffic
+- Understand {{<glossary-tooltip term_id="bot">}}bot{{</glossary-tooltip>}} traffic
 - Study recent attacks to find trends and detailed information
 - Learn more about Cloudflare’s detection engines with real data
 

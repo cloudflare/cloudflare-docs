@@ -1,9 +1,9 @@
 ---
-pcx_content_type: reference
+pcx_content_type: navigation
 title: Reference
-weight: 10
+weight: 11
 ---
 
 # Reference
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true" >}}

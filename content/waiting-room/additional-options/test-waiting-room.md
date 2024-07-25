@@ -18,8 +18,8 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 
-- All the [prerequisites](/waiting-room/#prerequisites) completed.
-- For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi). 
+- All the [prerequisites](/waiting-room/about/#prerequisites) completed.
+- For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi).
 
 ---
 
@@ -29,11 +29,27 @@ First, download the [sample](https://github.com/yj7o5/cf-waiting-room-testing/bl
 
 This sample plan simulates 200 active users visiting the site, slowly ramping up traffic within the first minute and then maintaining 200 active users for the next three minutes. The test plan for this tutorial follows the setup outlined in the next steps.
 
-## 2. Run sample plan
+## 2. Edit and run the sample plan
 
-To run our test plan select the **play** button to get the test started. This should take roughly around 3-4 minutes.
+Before running the sample plan, edit the waiting room in the test plan to point to your own waiting room.
 
-![Navigation bar](/waiting-room/static/navigation.png)
+1. Select **Waiting Room Simulation** to expand the test plan and then select **Request origin with waiting room** to update the test configuration.
+
+![Select Request origin with waiting room in the Waiting Room Simulation panel](/images/waiting-room/simulation-panel.png)
+
+2. In the **HTTP Request** section update the **Protocol**, **Server Name or IP**, and **Path** fields to point to your test URL with waiting room enabled. For example, if your full URL looks like `https://www.example.com/deals/summer`, then the fields should match as the following:
+
+Field | Value
+------| -----
+Protocol | https
+Server Name or IP | <www.example.com>
+Path | deals/summer
+
+![Update the HTTP Request section](/images/waiting-room/http-request-section.png)
+
+Then, select the **play** button to get the test started. This should take roughly around 3-4 minutes.
+
+![Select the play button](/images/waiting-room/navigation.png)
 
 - Each simulated user has the following attributes:
 
@@ -44,21 +60,17 @@ To run our test plan select the **play** button to get the test started. This sh
     - Logs request details.
     - Pauses for 10 seconds before refreshing the page to make another request to the origin site.
 
-![User attributes](/waiting-room/static/user-attributes.png)
+![User attributes](/images/waiting-room/user-attributes.png)
 
 Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/test_plan.html#thread_group) performs the above action once. The user traffic ramps up within the first minute and keeps a sustained traffic for the next three minutes before users leave the site. You can send more or less traffic than what is being sent in this example by updating these properties.
 
-![Visualizing number of threads](/waiting-room/static/threads.png)
+![Visualizing number of threads](/images/waiting-room/threads.png)
 
 ## 3. Analyze results
 
-To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test. 
+To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test.
 
-
-
-<details>
-  <summary>Example Curl Statement</summary>
-  <div>
+{{<details header="Example Curl Statement">}}
 
 ```bash
 echo '{
@@ -73,15 +85,14 @@ echo '{
   },
   "query": "query UsersQueuedOverTimeQuery($zoneId: string, $filter: ZoneWaitingRoomAnalyticsAdaptiveGroupsFilter_InputObject) {\n  viewer {\n    zones(filter: {zoneTag: $zoneId}) {\n      timeseries: waitingRoomAnalyticsAdaptiveGroups(limit: 5000, filter: $filter, orderBy: [datetimeMinute_ASC]) {\n        avg {\n          totalActiveUsers\n          totalActiveUsersConfig\n          totalQueuedUsers\n          __typename\n        }\n        max {\n          totalQueuedUsers\n          totalActiveUsers\n          totalActiveUsersConfig\n          __typename\n        }\n        min {\n          totalActiveUsersConfig\n          __typename\n        }\n        dimensions {\n          ts: datetimeMinute\n          __typename\n        }\n        __typename\n      }\n      total: waitingRoomAnalyticsAdaptiveGroups(limit: 1, filter: $filter) {\n        max {\n          totalQueuedUsers\n          totalActiveUsers\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
 }' | tr -d '\n' | curl \
-  -X POST \
+  -X POST
 ```
 
-</div>
-</details>
+{{</details>}}
 
-From our test, we see the following results (these are extracted from results of the query for readability):
+From our test, we got the following results (these are extracted from results of the query for readability):
 
-- 15:35:00 UTC              
+- 15:35:00 UTC
   - `"totalActiveUsers": 137,`
   - `"totalActiveUsersConfig": 300,`
   - `"totalQueuedUsers": 0`

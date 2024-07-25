@@ -2,7 +2,6 @@
 title: Enable S3-compatible endpoints
 pcx_content_type: how-to
 weight: 57
-layout: single
 meta:
   title: Enable Logpush to S3-compatible endpoints
 ---
@@ -24,44 +23,41 @@ For more information about Logpush and the current production APIs, refer to [Cl
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to an S3-compatible destination via the dashboard.
+{{<render file="_enable-logpush-job.md">}}
 
-To enable the Cloudflare Logpush service:
+5.  In **Select a destination**, choose **S3-Compatible**.
 
-1.  Log in to the Cloudflare dashboard.
-
-2.  Select the Enterprise domain you want to use with Logpush.
-
-3.  Go to **Analytics** > **Logs**.
-
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
-
-5.  Select the dataset you want to push to a storage service.
-
-6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
-
-7.  Select **S3-Compatible**.
-
-8.  Enter or select the following destination information:
-
-    - **S3 Compatible Bucket Path**
+6. Enter or select the following destination information:
+    - **Bucket** - S3 Compatible bucket name
+    - **Path** - bucket location within the storage container
+    - **Organize logs into daily subfolders** (recommended) 
+    - **Endpoint URL** - The URL without the bucket name or path. Example, `sfo2.digitaloceanspaces.com`.
     - **Bucket region**
     - **Access Key ID**
     - **Secret Access Key**
-    - **Endpoint URL**
 
-9.  Click **Validate access**.
+When you are done entering the destination details, select **Continue**.
 
-10. Click **Save and Start Pushing** to finish enabling Logpush.
+7. Select the dataset to push to the storage service.
 
-Once connected, Cloudflare lists the S3-compatible destination as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 
 To set up S3-compatible endpoints:
 
-1.  Create a job with the appropriate endpoint URL and authentication parameters.
-2.  Enable the job to begin pushing logs.
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
 
 {{<Aside type="note" header="Note">}}
 
@@ -89,15 +85,21 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 {{</Aside>}}
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/reference/log-output-options/).
 
 Example request using cURL:
 
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
+-d '{
+"name":"<DOMAIN_NAME>",
+"destination_conf":"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
+"output_options": {
+    "field_names": ["ClientIP", "ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI","EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+},  
+"dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -111,7 +113,10 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,
     "last_error": null,
@@ -143,7 +148,10 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,
     "last_error": null,

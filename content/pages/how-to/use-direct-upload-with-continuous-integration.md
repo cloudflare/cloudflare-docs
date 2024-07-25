@@ -5,7 +5,7 @@ title: Use Direct Upload with continuous integration
 
 # Use Direct Upload with continuous integration
 
-Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
 
@@ -13,7 +13,7 @@ In your project directory, install [Wrangler](/workers/wrangler/install-and-upda
 
 ```sh
 # Publish created project
-$ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages publish <DIRECTORY> --project-name=<PROJECT_NAME>
+$ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --project-name=<PROJECT_NAME>
 ```
 
 ## Get credentials from Cloudflare
@@ -30,13 +30,13 @@ To generate an API token:
 6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
 7. Select **Continue to summary** > **Create Token**.
 
-![Follow the instructions above to create an API token for Cloudflare Pages](../media/select-api-token-for-pages.png)
+![Follow the instructions above to create an API token for Cloudflare Pages](/images/pages/how-to/select-api-token-for-pages.png)
 
 Now that you have created your API token, you can use it to push your project from continuous integration platforms.
 
 ### Get project account ID
 
-To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API\* on the right-side menu. If you have not added a zone, add one by selecting **Add site\*\*. You can purchase a domain from [Cloudflare's registrar](/registrar/)
+To find your account ID, log in to the Cloudflare dashboard > select your zone in **Account Home** > find your account ID in **Overview** under **API** on the right-side menu. If you have not added a zone, add one by selecting **Add site**. You can purchase a domain from [Cloudflare's registrar](/registrar/).
 
 ## Use GitHub Actions
 
@@ -53,8 +53,6 @@ In the GitHub Action you have set up, environment variables are needed to push y
 3.  Select **Secrets** > **Actions** > **New repository secret**.
 4.  Create one secret and put **CLOUDFLARE_ACCOUNT_ID** as the name with the value being your Cloudflare account ID.
 5.  Create another secret and put **CLOUDFLARE_API_TOKEN** as the name with the value being your Cloudflare API token.
-
-This will ensure that the secrets are secure. Each time your GitHub Actions runs, it will access these secrets.
 
 Add the value of your Cloudflare account ID and Cloudflare API token as `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, respectively. This will ensure that these secrets are secure, and each time your Action runs, it will access these secrets.
 
@@ -83,7 +81,7 @@ jobs:
       # - name: Build
       #   run: npm install && npm run build
       - name: Publish
-        uses: cloudflare/pages-action@1
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -95,6 +93,12 @@ jobs:
 In the above code block, you have set up an Action that runs when you push code to the repository. Replace `YOUR_PROJECT_NAME` with your Cloudflare Pages project name and `YOUR_DIRECTORY_OF_STATIC_ASSETS` with your project's output directory, respectively.
 
 The `${{ secrets.GITHUB_TOKEN }}` will be automatically provided by GitHub Actions with the `contents: read` and `deployments: write` permission. This will enable our Cloudflare Pages action to create a Deployment on your behalf.
+
+{{<Aside type="note">}}
+
+This workflow automatically triggers on the current git branch, unless you add a `branch` option to the `with` section.
+
+{{</Aside>}}
 
 ## Using CircleCI for CI/CD
 
@@ -108,13 +112,13 @@ After you have generated your Cloudflare API token and found your account ID in 
 
 To add environment variables, in the CircleCI web application:
 
-1. Go to your project's settings.
+1. Go to your Pages project > **Settings**.
 2. Select **Projects** in the side menu.
 3. Select the ellipsis (...) button in the project's row. You will see the option to add environment variables.
 4. Select **Environment Variables** > **Add Environment Variable**.
 5. Enter the name and value of the new environment variable, which is your Cloudflare credentials (`CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`).
 
-![Follow the instructions above to add environment variables to your CircleCI settings](../media/project-settings-env-var-v2.png)
+![Follow the instructions above to add environment variables to your CircleCI settings](/images/pages/how-to/project-settings-env-var-v2.png)
 
 ### Set up a workflow
 
@@ -135,7 +139,7 @@ jobs:
      # Run your project's build step
      - run: npm install && npm run build
      # Publish with wrangler
-     - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
+     - run: npx wrangler pages deploy dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
 
 workflows:
  Publish-to-Pages-workflow:
@@ -147,11 +151,13 @@ Your continuous integration workflow is broken down into jobs when using CircleC
 
 {{<Aside type="note" header="Note">}}
 
-If your project uses a Node version less than `16.13.0`, you will have to upgrade your Node version as Wrangler requires at least Node.js version `16.13.0`.
+Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
 
 {{</Aside>}}
 
-The job then proceeds to run all the steps specified, after which you will need to define a `workflow` at the end of your file. You can learn more about creating a custom process with CircleCI from the [official documentation](https://circleci.com/docs/2.0/concepts/).
+You can modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/#deploy-1).
+
+After all the specified steps, define a `workflow` at the end of your file. You can learn more about creating a custom process with CircleCI from the [official documentation](https://circleci.com/docs/2.0/concepts/).
 
 ## Travis CI for CI/CD
 
@@ -182,11 +188,13 @@ install:
 
 script:
   - npm run build # Switch this out with your build command or remove it if you don't have a build step
-  - npx wrangler pages publish dist --project-name=<PROJECT NAME>
+  - npx wrangler pages deploy dist --project-name=<PROJECT NAME>
 
 env:
   - CLOUDFLARE_ACCOUNT_ID: { $CLOUDFLARE_ACCOUNT_ID }
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+
+You can also modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/#deploy-1).

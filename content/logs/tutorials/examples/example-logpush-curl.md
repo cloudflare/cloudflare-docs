@@ -8,10 +8,10 @@ weight: 88
 
 You can manage your Cloudflare Logpush service from the command line using cURL.
 
-Before getting started, review:
+Before getting started, review the following documentation:
 
 - [API configuration](/logs/get-started/api-configuration/)
-- [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs)
+- [Logpush job object definition](/api/operations/get-zones-zone_identifier-logpush-jobs)
 
 {{<Aside type="note">}}
 
@@ -31,7 +31,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 ### Parameters
 
-- **destination_conf** - See [Destination](/logs/get-started/api-configuration/#destination) for details.
+- **destination_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
 
 ### Response
 
@@ -54,7 +54,7 @@ You will need to provide the token contained in this file when creating a job in
 
 {{<Aside type="note" header="Note">}}
 
-When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
+When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it is uploaded.
 
 {{</Aside>}}
 
@@ -63,7 +63,15 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--d'{"name":"<DOMAIN_NAME>", "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2", "dataset": "http_requests", "logpull_options":"fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "ownership_challenge":"00000000000000000000"}' | jq .
+-d'{
+"name":"<DOMAIN_NAME>", 
+"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2", 
+"dataset": "http_requests",
+"output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+},
+"ownership_challenge":"00000000000000000000"}' | jq .
 ```
 
 ### Parameters
@@ -71,7 +79,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 - **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
 - **destination_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets; this parameter cannot be changed after the job is created.
-- **logpull_options** (optional) - Refer to [Options](/logs/get-started/api-configuration/#options).
+- **output_options** (optional) - Refer to [Log Output Options](/logs/reference/log-output-options/).
   - Typically includes the desired fields and timestamp format.
   - Set the timestamp format to `RFC 3339` (`&timestamps=rfc3339`) for:
     - Google BigQuery usage.
@@ -93,7 +101,10 @@ In the response, you get a newly-created job ID. For example:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
     "last_error": null,
@@ -101,27 +112,7 @@ In the response, you get a newly-created job ID. For example:
   },
   "success": true
 }
-```
-
-Note that you can validate the **logpull_options** parameter before including it in your job configuration:
-
-```bash
-curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
-```
-
-### Response
-
-```json
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "message": "",
-    "valid": true
-  },
-  "success": true
-}
-```
+``
 
 ## Step 3 - Enable (update) a job
 
@@ -143,7 +134,10 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
     "last_error": null,
@@ -180,7 +174,10 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": null,
     "last_error": null,
@@ -192,7 +189,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
 
 Once the job is enabled, you will start receiving logs within a few minutes and then in batches as soon as possible until you disable the job. For zones with very high request volume, it may take several hours before you start receiving logs for the first time.
 
-In addition to modifying `enabled`, you can also update the value for **logpull_options**. To modify **destination_conf**, you will need to request an ownership challenge and provide the associated token with your update request. You can also delete your current job and create a new one.
+In addition to modifying `enabled`, you can also update the value for **output_options**. To modify **destination_conf**, you will need to request an ownership challenge and provide the associated token with your update request. You can also delete your current job and create a new one.
 
 Once a job has been enabled and has started executing, the **last_complete** field will show the time when the last batch of logs was successfully sent to the destination:
 
@@ -214,7 +211,10 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2018-08-09T21:26:00Z",
     "last_error": null,
@@ -224,7 +224,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 }
 ```
 
-## Step 4 - Delete a job
+## Optional - Delete a job
 
 ```bash
 curl -s -X DELETE \
@@ -244,7 +244,7 @@ Be careful when deleting a job because this action cannot be reversed.
 }
 ```
 
-## Step 5 - Retrieve your job
+## Optional - Retrieve your job
 
 Retrieve a specific job, using the job ID:
 
@@ -264,7 +264,10 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "dataset": "http_requests",
       "enabled": true,
       "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+      "output_options": {
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "rfc3339"
+      },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": null,
       "last_error": null,
@@ -293,7 +296,9 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "dataset": "spectrum_events",
       "enabled": true,
       "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=Application,ClientAsn,ClientIP,ColoCode,Event,OriginIP,Status",
+      "output_options": {
+          "field_names": ["Application", "ClientAsn", "ClientIP", "ColoCode", "Event", "OriginIP", "Status"],
+      },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": "2019-10-01T00:25:00Z",
       "last_error": null,
@@ -304,7 +309,10 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
       "dataset": "http_requests",
       "enabled": false,
       "name": "<DOMAIN_NAME>",
-      "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+      "output_options": {
+          "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+          "timestamp_format": "rfc3339"
+      },
       "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
       "last_complete": "2019-09-24T21:15:00Z",
       "last_error": null,
@@ -314,9 +322,9 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 }
 ```
 
-## Step 6 - Updating **logpull_options**
+## Optional - Update **output_options**
 
-If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **logpull_options** for your zone.
+If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **output_options** for your zone.
 
 ```bash
 curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
@@ -338,7 +346,10 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
     "kind": "",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2021-12-14T19:56:49Z",
     "last_error": null,
@@ -348,15 +359,17 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 }
 ```
 
-Next, edit the **logpull_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
+Next, edit the **output_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
 
 ```bash
 curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
     -H 'X-Auth-Key: <API_KEY>' \
     -H 'X-Auth-Email: <EMAIL>' \
     -d '{
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true"
-}'
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
 ```
 
 Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.
@@ -375,7 +388,10 @@ Note that at this time, the **CVE-2021-44228** option is not available through t
     "kind": "",
     "enabled": true,
     "name": null,
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2021-12-14T20:02:19Z",
     "last_error": null,

@@ -33,7 +33,7 @@ tus-upload --chunk-size 5242880 \
 
 ### Step 3: Done
 
-![Screenshot of a video with Cloudflare watermark at top right](/stream/static/cat.png)
+![Screenshot of a video with Cloudflare watermark at top right](/images/stream/cat.png)
 
 ## Profiles
 
@@ -54,7 +54,7 @@ To create, list, delete, or get information about the profile, you will need you
 
 *   `padding` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.05{{</prop-meta>}}
 
-    *   Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
+    *   Blank space between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
 
     *   Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
 
@@ -138,9 +138,9 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/watermarks
 
 Once you created a watermark profile, you can now use the profile at upload time for watermarking videos.
 
-### Simple uploads
+### Basic uploads
 
-Unfortunately, Stream does not currently support specifying watermark profile at upload time for Simple Uploads.
+Unfortunately, Stream does not currently support specifying watermark profile at upload time for Basic Uploads.
 
 ### Upload video with a link
 
@@ -165,11 +165,11 @@ highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 {
   "result": {
     "uid": "8d3a5b80e7437047a0fb2761e0f7a645",
-    "thumbnail": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg",
+    "thumbnail": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg",
 
     "playback": {
-      "hls": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8",
-      "dash": "https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.mpd"
+      "hls": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8",
+      "dash": "https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.mpd"
     },
     "watermark": {
       "uid": "d6373709b7681caa6c48ef2d8c73690d",

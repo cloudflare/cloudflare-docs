@@ -7,7 +7,7 @@ meta:
 
 # Using DNS Wireformat
 
-Cloudflare respects DNS wireformat as defined in [RFC1035](https://datatracker.ietf.org/doc/html/rfc1035).
+Cloudflare respects DNS wireformat as defined in [RFC 1035](https://datatracker.ietf.org/doc/html/rfc1035).
 
 To send queries using DNS wireformat, set the header `accept: application/dns-message`, or `content-type: application/dns-message` if using `POST` to signalize the media type of the query.
 
@@ -52,7 +52,7 @@ cache-control = max-age=128
 To try this using cURL, write:
 
 ```sh
-$ echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 --decode | curl -H 'content-type: application/dns-message' --data-binary @- https://cloudflare-dns.com/dns-query -o - | hexdump
+$ echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 --decode | curl --header 'content-type: application/dns-message' --data-binary @- https://cloudflare-dns.com/dns-query --output - | hexdump
 ```
 
 ## Using GET
@@ -62,7 +62,7 @@ When making requests using `GET`, the DNS query is encoded into the URL. The `ac
 Example request:
 
 ```sh
-$ curl -H 'accept: application/dns-message' -v 'https://cloudflare-dns.com/dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | hexdump
+$ curl --header 'accept: application/dns-message' --verbose 'https://cloudflare-dns.com/dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | hexdump
 * Using HTTP2, server supports multi-use
 * Connection state changed (HTTP/2 confirmed)
 * Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0

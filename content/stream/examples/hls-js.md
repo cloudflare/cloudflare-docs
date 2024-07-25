@@ -9,8 +9,6 @@ weight: 5
 layout: example
 ---
 
-[Run and edit this code in your browser on Stackblitz.](https://workers.new/stream/hls-js) 
-
 ```html
 <html>
 	<head>
@@ -25,7 +23,7 @@ layout: example
 				hls.attachMedia(video);
 				hls.on(Hls.Events.MEDIA_ATTACHED, () => {
 					hls.loadSource(
-						'https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8'
+						'https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/manifest/video.m3u8'
 					);
 				});
 			}

@@ -1,7 +1,6 @@
 ---
 title: API
 pcx_content_type: concept
-layout: single
 weight: 2
 meta:
    title: API deployment
@@ -10,31 +9,13 @@ meta:
 
 # API deployment
 
-When you choose an **API deployment** for your [Area 1 setup](/email-security/deployment/), email messages only reach Area 1 after they have already reached a user's inbox.
+{{<Aside type="warning" header="Area 1 has been renamed">}}
 
-Then, through on integrations with your email provider, Area 1 can [retract messages](/email-security/email-configuration/retract-settings/) based on your organization's policies.
+{{<render file="rename-area1-to-ces.md">}}
 
-![With API deployment, messages travel through Area 1's email filter after reaching your users.](/email-security/static/api-deployment-diagram.png)
+{{</Aside>}}
 
-## Benefits
-
-When you choose API deployment, you get the following benefits:
-
-- Easy protection for complex email architectures, without requiring any change to mailflow operations.
-- Agentless deployment for Microsoft 365 and Gmail.
-- The initial email protection measures offered by your current email provider.
-
-## Limitations
-
-However, API deployment also has the following disadvantages:
-
-- Area 1 is dependent on your email provider's API infrastructure and outages will increase the message dwell time in the inbox.
-- Area 1 requires read and write access to mailboxes.
-- Requires API support from your email provider (does not typically support on-premise providers).
-- Your email provider may throttle API requests from Area 1.
-- Detection rates may be lower if multiple solutions exist.
-- Messages cannot be modified or quarantined.
-- Certain URL rewrite schemes cannot be decoded (for example, Mimecast).
+{{<render file="deployment/_setup-api-overview.md">}}
 
 ## Get started
 

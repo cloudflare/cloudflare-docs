@@ -1,0 +1,4 @@
+{{- $number := .Get "num" -}}
+<li class="footnote" id="fn:{{- $number -}}">
+{{ .Inner | .Page.RenderString (dict "display" "block") }}
+</li>

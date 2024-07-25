@@ -4,13 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M35 2
 product:
   title: DNS
   url: /dns/
+  group: Application performance
 
 meta:
   title: Cloudflare DNS docs
   description: Cloudflare DNS provides the fastest, most resilient, and simplest
     managed DNS platform to meet your needs.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/tags/c/reliability/7/none
@@ -20,3 +20,8 @@ resources:
 externals:
   - title: Cloudflare home
     url: https://www.cloudflare.com/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: dns

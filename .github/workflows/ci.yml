@@ -1,41 +1,56 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - '**'
-    tags-ignore:
-      - '**'
   pull_request:
     branches:
       - production
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   compile:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
-      - uses: peaceiris/actions-hugo@v2
+          node-version: 20
+      - uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.92.0'
+          hugo-version: '0.125.6'
           extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
-      - run: pnpm install
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
 
       - run: make build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
 
-      - name: Broken Links
-        run: pnpm run crawl
+      - name: Check - Broken Links
+        run: npm run crawl
         if: success()
+
+      - name: Check - Validate redirects (infinite loops, sources with fragment)
+        run: npx tsm bin/validate-redirects.ts
+
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
@@ -44,7 +59,5 @@ jobs:
   #     - uses: actions/setup-node@v3
   #       with:
   #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
+  #     - run: npm ci
+  #     - run: npm run lint

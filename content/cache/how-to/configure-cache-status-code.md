@@ -1,13 +1,13 @@
 ---
-title: Configure cache by status code
+title: Cache by status code
 pcx_content_type: how-to
 ---
 
-# Configure cache by status code
+# Cache by status code
 
 Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.
 
-Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/about/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/cache/how-to/create-page-rules/#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
+Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/concepts/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Cache Rule](/cache/how-to/cache-rules/create-api/#example-requests). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
 ## Caching limits
 
@@ -22,52 +22,68 @@ By default, Cloudflare caches certain HTTP response codes with the following Ed
 | 200, 206, 301      |  120m        |
 | 302, 303           |  20m         |
 | 404, 410           |  3m          |
-| 403                |  0s          |
-| 500, 502, 503, 504 |  0s          |
+
+All other status codes are not cached by default.
 
 ## Set cache TTL by response status via the Cloudflare dashboard
 
-To set cache TTL by response status, [create a Page Rule](/cache/how-to/create-page-rules/#create-a-page-rule) for **Cache TTL by status code**.
+To set cache TTL by response status, [create a Cache Rule](/cache/how-to/cache-rules/) for [**Cache TTL by status code**](/cache/how-to/cache-rules/settings/#edge-ttl).
 
 ## Set cache TTL by response status via the Cloudflare API
 
-```json
-curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/pagerules" \     
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: ${CF_AUTH_KEY}" \
--H "Content-Type: application/json" \
+```bash
+---
+header: Request
+---
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
-  "targets": [
+  "rules": [
     {
-      "target": "url",
-      "constraint": {
-        "operator": "matches",
-        "value": "www.example.com/*"
+      "expression": "(http.host eq \"www.example.com\")",
+      "description": "set cache TTL by response status",
+      "action": "set_cache_settings",
+      "action_parameters": {
+        "cache": true,
+        "edge_ttl": {
+          "status_code_ttl": [
+            {
+              "status_code_range": {
+                "to": 299
+              },
+              "value": 86400
+            },
+            {
+              "status_code_range": {
+                "from": 300,
+                "to": 499
+              },
+              "value": 0  // no-cache
+            },
+            {
+              "status_code_range": {
+                "from": 500
+              },
+              "value": -1  // no-store
+            }
+          ],
+          "mode": "respect_origin"
+        }
       }
     }
-  ],
-  "actions": [
-    {
-      "id": "cache_ttl_by_status",
-      "value": {
-        "200": "no-cache",
-        "100": 5,
-        "300-302": 20
-      }
-    }
-  ],
-  "priority": 1,
-  "status": "active"
+  ]
 }'
 ```
 
 ### Syntax
 
-Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status page rule has the following syntax:
+Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status cache rule has the following syntax:
 
-*   `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
-*   `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
-*   `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
+*   `status_code`: An integer value such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-999.
+*   `status_code_range`: Integer values for `from` and `to`. `status_code_range` matches any status code from the origin web server within the specified range.
+*   `value`: An integer value that defines the duration an asset is valid in seconds or one of the following strings: `no-store` (equivalent to `-1`), `no-cache` (equivalent to `0`).
 
 ## Set cache TTL by response status via a Cloudflare Worker
 

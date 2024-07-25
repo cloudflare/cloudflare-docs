@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: HTMLRewriter
+meta:
+  description: Build comprehensive and expressive HTML parsers inside of a Worker application.
 ---
 
 # HTMLRewriter
@@ -21,9 +23,9 @@ new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler(
 
 ---
 
-## Global Types
+## Global types
 
-Throughout the HTMLRewriter API, there are a few consistent types that many properties and methods use:
+Throughout the `HTMLRewriter` API, there are a few consistent types that many properties and methods use:
 
 {{<definitions>}}
 
@@ -110,7 +112,8 @@ class UserElementHandler {
 async function handleRequest(req) {
   const res = await fetch(req);
 
-  return new HTMLRewriter().on('div:user_info', new UserElementHandler()).transform(res);
+  // run the user element handler via HTMLRewriter on a div with ID `user_info`
+  return new HTMLRewriter().on('div#user_info', new UserElementHandler()).transform(res);
 }
 ```
 
@@ -143,55 +146,57 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 {{<definitions>}}
 
-- {{<code>}}getAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}string | null{{</type>}}
+- {{<code>}}getAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}string | null{{</type>}}
 
   - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-- {{<code>}}hasAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}boolean{{</type>}}
+- {{<code>}}hasAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}boolean{{</type>}}
 
   - Returns a boolean indicating whether an attribute exists on the element.
 
-- {{<code>}}setAttribute(name{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}setAttribute(name{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-- {{<code>}}removeAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}removeAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the attribute.
 
-- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content before the element.
 
-- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+  {{<render file="_content_and_contentoptions.md">}}
+
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right after the element.
 
-- {{<code>}}prepend(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}{{<type>}}Element{{</type>}}
+- {{<code>}}prepend(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right after the start tag of the element.
 
-- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right before the end tag of the element.
 
-- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element and inserts content in place of it.
 
-- {{<code>}}setInnerContent(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}setInnerContent(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Replaces content of the element.
 
-- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element with all its content.
 
-- {{<code>}}removeAndKeepContent(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}removeAndKeepContent(){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the start tag and end tag of the element but keeps its inner content intact.
 
-- {{<code>}}onEndTag(handler{{<param-type>}}Function<void>{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}onEndTag(handler{{<param-type>}}Function<void>{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Registers a handler that is invoked when the end tag of the element is reached.
 
@@ -215,15 +220,17 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 {{<definitions>}}
 
-- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}EndTag{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}EndTag{{</type>}}
 
   - Inserts content right before the end tag.
 
-- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}EndTag{{</type>}}
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}EndTag{{</type>}}
 
   - Inserts content right after the end tag.
 
-- {{<code>}}remove(){{</code>}} {{<type>}}EndTag{{</type>}}
+  {{<render file="_content_and_contentoptions.md">}}
+
+- {{<code>}}remove(){{</code>}} : {{<type>}}EndTag{{</type>}}
 
   - Removes the element with all its content.
 
@@ -256,19 +263,21 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 {{<definitions>}}
 
-- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content before the element.
 
-- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+  {{<render file="_content_and_contentoptions.md">}}
+
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right after the element.
 
-- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element and inserts content in place of it.
 
-- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element with all its content.
 
@@ -290,11 +299,11 @@ class ElementHandler {
 
 {{<definitions>}}
 
-- `removed` {{<type>}}boolean{{</type>}}
+- `comment.removed` {{<type>}}boolean{{</type>}}
 
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-- `text` {{<type>}}string{{</type>}}
+- `comment.text` {{<type>}}string{{</type>}}
   - The text of the comment. This property can be assigned different values, to modify comment’s text.
 
 {{</definitions>}}
@@ -303,19 +312,21 @@ class ElementHandler {
 
 {{<definitions>}}
 
-- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content before the element.
 
-- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+  {{<render file="_content_and_contentoptions.md">}}
+
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Inserts content right after the element.
 
-- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element and inserts content in place of it.
 
-- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} : {{<type>}}Element{{</type>}}
 
   - Removes the element with all its content.
 
@@ -338,15 +349,15 @@ class DocumentHandler {
 
 {{<definitions>}}
 
-- `name` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+- `doctype.name` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   - The doctype name.
 
-- `publicId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+- `doctype.publicId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
   - The quoted string in the doctype after the PUBLIC atom.
 
-- `systemId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+- `doctype.systemId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
   - The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
 
 {{</definitions>}}
@@ -367,9 +378,11 @@ class DocumentHandler {
 
 {{<definitions>}}
 
-- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}DocumentEnd{{</type>}}
+- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}DocumentEnd{{</type>}}
 
   - Inserts content after the end of the document.
+
+  {{<render file="_content_and_contentoptions.md">}}
 
 {{</definitions>}}
 
@@ -494,5 +507,5 @@ async function handle(request) {
 ## Related resources
 
 - [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
-- [Tutorial: Localize a Website](/workers/tutorials/localize-a-website/)
+- [Tutorial: Localize a Website](/pages/tutorials/localize-a-website/)
 - [Example: rewrite links](/workers/examples/rewrite-links/)

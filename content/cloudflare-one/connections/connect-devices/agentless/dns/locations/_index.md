@@ -1,66 +1,49 @@
 ---
 pcx_content_type: how-to
 title: Add locations
-layout: single
 weight: 1
 ---
 
 # Add locations
 
-DNS locations are usually physical entities like offices, homes, retail stores, movie theatres, or data centers. The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router.
+{{<render file="gateway/_add-locations.md">}}
 
-To add a DNS location to Gateway:
+10. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
+11. Select **Go to DNS Location**. Your location will appear in your list of locations.
 
-2. Select **Add a DNS location**.
+You can now apply [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) to your location using the [Location selector](/cloudflare-one/policies/gateway/dns-policies/#location).
 
-3. Choose a name for your DNS location.
+{{<render file="gateway/_add-locations-static-ip-warning.md">}}
 
-4. Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise customers have the option of manually entering IPs.
+## DNS endpoints
 
-    You do not need the IPv4 address field if:
+### IPv4 and IPv6 DNS
 
-    - Your DNS location only uses IPv6.
-    - Users will be sending all DNS requests from this location using DNS over HTTPS via a browser.
-    - You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+Cloudflare will prefill the [**Source IPv4 Address**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#source-ip) based on the network you are on. Enterprise users have the option of using [dedicated DNS resolver IP addresses](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) assigned to their account.
 
-    If any of the above apply to your case, select **Delete**.
+You do not need to configure the IPv4 DNS endpoint if:
+
+- Your network only uses IPv6.
+- Your users will send all DNS requests from this location using [DNS over HTTPS](#dns-over-https-doh) via a browser.
+- You will deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
 
 {{<Aside type="note" header="Your IPv4 address is taken">}}
 
-When trying to configure a DNS location over IPv4, you may run into a **Your source IPv4 address is taken** error.
+When you try to configure a DNS location over IPv4, Gateway may display a **Your source IPv4 address is taken** error. This may mean someone else in the same network configured Gateway before you did. If your network supports IPv6, you can still use Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
-This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
-
-If you think someone else is wrongfully using this IPv4 address, [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
+If you think someone else is wrongfully using this IPv4 address, [contact Cloudflare support](/support/contacting-cloudflare-support/#getting-help-with-an-issue).
 
 {{</Aside>}}
 
-5. (Optional) Toggle the following settings:
-    - **Set as Default DNS Location** sets this location as the default in your DNS policy builder.
-    - **Enable EDNS client subnet** sends a user's IP geolocation to authoritative DNS name servers.
-    
-        [EDNS client subnet (ECS)](https://en.wikipedia.org/wiki/EDNS_Client_Subnet) helps reduce latency by routing the user to the closest origin server. Cloudflare has enabled EDNS in a privacy preserving way by not sending the user's exact IP address but rather a /24 range which contains their IP address.
+### DNS over TLS (DoT)
 
-6. Select **Add DNS location**.
+{{<glossary-definition term_id="DNS over TLS">}}
 
-7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
+For more information, refer to [DNS over TLS](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/).
 
-    ![DNS resolver setup instructions on the Zero Trust dashboard](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
+### DNS over HTTPS (DoH)
 
-8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
+{{<glossary-definition term_id="DNS over HTTPS">}}
 
-You can now apply [DNS policies](/cloudflare-one/policies/filtering/dns-policies/) to your location using the [DNS Location](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
-
-{{<Aside type="warning" header="Warning">}}
-
-Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. If users are experiencing connectivity issues related to captive portals, they should:
-
-1. Remove the static IP addresses from the device.
-2. Connect to the Wi-Fi network.
-3. Once the connection has been established, add the static IP addresses back.
-
-To avoid this issue, use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to connect your devices to Cloudflare Zero Trust.
-
-{{</Aside>}}
+Gateway requires a DoH endpoint for default DNS locations. For more information, refer to [DNS over HTTPS](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/).

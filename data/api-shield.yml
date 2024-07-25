@@ -1,16 +1,17 @@
 name: API Shield
-logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z"/><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z" fill="url(#a)"/><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z" fill="url(#b)"/><defs><linearGradient id="a" x1="24.011" y1="4.5" x2="24.011" y2="43.282" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="24.011" y1="4.5" x2="24.011" y2="43.282" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>
+logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z"/><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z"/><path d="M37.807 4.5H10.192L8.692 6v12.66c0 16.162 13.103 23.798 14.595 24.622h1.463c1.5-.824 14.58-8.46 14.58-24.622V6l-1.523-1.5ZM11.692 18.66V7.5H22.5v31.71c-3.75-2.745-10.808-9.36-10.808-20.55Zm24.615 0c0 11.19-7.02 17.805-10.8 20.55V7.5h10.8v11.16Z"/></svg>
 
 product:
   title: API Shield
   url: /api-shield/
+  group: Application security
+  preview_tryout: true
 
 meta:
   title: Cloudflare API Shield docs
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield
@@ -18,3 +19,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: api-shield

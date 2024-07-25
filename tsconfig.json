@@ -1,0 +1,23 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "components/**/*",
+    "components/**/*.vue",
+    "assets/*.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./components/*"],
+      "data/*": ["./data/*"]
+    },
+    "resolveJsonModule": true
+  },
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: Deploy rulesets
 weight: 4
-layout: list
+layout: wide
 ---
 
 # Deploy rulesets
@@ -26,16 +26,17 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`<ZONE_ID>`) by adding a rule that executes the Managed Ruleset.
+The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone_id}`) by adding a rule that executes the managed ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "rules": [
     {
       "action": "execute",
@@ -87,8 +88,8 @@ header: Response
 
 ## Related resources
 
-Refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) and [Work with custom rulesets](/ruleset-engine/custom-rulesets/) for more information.
+Refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) and [Work with custom rulesets](/ruleset-engine/custom-rulesets/) for more information.
 
 For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/ruleset-engine/rulesets-api/update/).
 
-For examples of deploying rulesets, refer to [Managed Ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).
+For examples of deploying rulesets, refer to [Managed ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).

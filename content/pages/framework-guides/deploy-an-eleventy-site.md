@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Eleventy site
+title: Eleventy
 ---
 
-# Deploy an Eleventy site
+# Eleventy
 
 [Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 
@@ -37,9 +37,15 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-## Deploying with Cloudflare Pages
+## Deploy with Cloudflare Pages
 
-Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and choose "Eleventy" from the Framework preset dropdown.
+To deploy your site to Pages:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Eleventy_ as your **Framework preset**. Your selection will provide the following information:
+
+{{<pages-build-preset framework="eleventy">}}
 
 {{<Aside type="note">}}
 
@@ -48,8 +54,6 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 {{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Eleventy site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="/_framework-guides/_learn-more.md" withParameters="Eleventy">}}

@@ -10,48 +10,57 @@ meta:
 
 To create Bulk Redirects in the Cloudflare dashboard you must:
 
-1.  Create a Bulk Redirect List.
-2.  Add URL Redirects to the list created in step 1.
-3.  Create a Bulk Redirect Rule to enable the URL Redirects in the list.
+1. Create a Bulk Redirect List with one or more URL redirects.
+2. Create a Bulk Redirect Rule to enable the URL redirects in the list.
+
+{{<render file="url-forwarding/_requires-proxied-site.md" withParameters="Bulk Redirects">}}
 
 ## 1. Create a Bulk Redirect List
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. (Optional) In the new dashboard navigation, expand **Manage Account**.
-3. Go to **Configurations** > **Lists**.
-4. Click **Create new list**.
-5. Enter a list name and description, and select _Redirect_ as the content type.
-6. Click **Create**.
+2. Go to Account Home > **Bulk Redirects**.
+3. Under **Bulk Redirect Lists**, select **Create Bulk Redirect List**.
+4. Enter a list name and description, and select **Next**.
 
-## 2. Add URL Redirects to the list
+5. You can import a CSV file containing several URL redirects or enter URL redirects one at a time in the dashboard.
 
-You can enter URL Redirects one at a time in the dashboard, or import a CSV file containing several URL Redirects.
+    {{<details header="Import a CSV file">}}
 
-### Add the URL Redirects manually
+1. Drag and drop a CSV file containing URL redirects or select **browse** and select a CSV file. For more information on the file format, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
 
-1.  Under **Add items to list**, enter the URL Redirects you wish to add to the list.
+2. The dashboard will display the URL redirects that were successfully imported from the file. You can manually adjust the displayed records or add/remove URL redirects before proceeding.
 
-    You must enter at least the following three fields: **Source URL**, **Target URL**, and **Status**. To set additional options, expand **Edit Parameters**.
+3. Select **Next**.
 
-2.  Add more URL Redirects, if required.
+    {{</details>}}
 
-3.  Click **Add to list**.
+    {{<details header="Add URL redirects manually">}}
 
-### Import a CSV file with URL Redirects
+1. Select **Or, manually add URL redirects**.
 
-Instead of adding URL Redirects manually, you can upload a CSV file with the list of redirects. For more information on the file format, refer to the [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
+2. Enter the URL redirects you wish to add to the list. You must enter at least the following three fields: **Source URL**, **Target URL**, and **Status**. To set additional options, expand **Edit parameters**.
 
-1.  Click **Upload CSV** and select the CSV file you wish to upload.
+3. Add more URL redirects, if required.
 
-2.  The dashboard will display the URL Redirects that were successfully imported from the file. You can manually adjust the displayed records or add/remove URL Redirects before proceeding.
+4. Select **Next**.
 
-3.  Click **Add to list**.
+    {{</details>}}
 
-## 3. Create a Bulk Redirect Rule to enable the redirects in the list
+6. Review and edit the URL redirects you imported or created, and select **Next**.
+7. Select **Continue to Redirect Rules** to go to the rule creation page, and follow the instructions in the next section. You must create a Bulk Redirect Rule to enable the URL redirects you defined.
 
-1.  Go to **Account Home** > **Bulk Redirects**.
-2.  Click **Create Bulk Redirects**.
-3.  Enter a rule description.
-4.  Select the Bulk Redirect List you previously created.
-5.  (Optional) If necessary, edit the rule expression or the list key.
-6.  To save and deploy the Bulk Redirect Rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
+{{<Aside type="note" header="Notes">}}
+{{<render productFolder="fundamentals" file="_lists-import-notes.md">}}
+{{</Aside>}}
+
+## 2. Create a Bulk Redirect Rule
+
+1. (Optional) If you are not using the Bulk Redirect List creation wizard according to the instructions in the previous section:
+    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+    2. Go to Account Home > **Bulk Redirects**.
+    3. Select **Create Bulk Redirect Rule**.
+
+2. In **Rule name**, enter a descriptive name for the rule.
+3. Select the Bulk Redirect List you previously created.
+4. (Optional) If necessary, select **Or use the expression editor** to edit the [rule expression](/rules/url-forwarding/bulk-redirects/concepts/#expression) or the [rule key](/rules/url-forwarding/bulk-redirects/concepts/#key).
+5. To save and deploy the Bulk Redirect Rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.

@@ -18,33 +18,33 @@ Here are some common use cases for using signed URLs:
 
 ### Making a video require signed URLs
 
-Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/<VIDEO_UID>`, from working.
+Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/{video_uid}`, from working.
 
 Restricting viewing can be done by updating the video's metadata.
 
-```sh
-$ curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json"
+--data "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
 ```
 
 Response:
 
 ```json
 ---
-highlight: [8]
+highlight: [5]
 ---
-
-
 {
   "result": {
     "uid": "<VIDEO_UID>",
     ...
-    "requireSignedURLS": true
+    "requireSignedURLs": true
   },
   "success": true,
   "errors": [],
   "messages": []
 }
-
 ```
 
 ## Two Ways to Generate Signed Tokens
@@ -57,13 +57,12 @@ You can program your app to generate token in two ways:
 
 ## Option 1: Using the /token endpoint
 
-You can call the `/token` endpoint for any video that is marked private to get a signed url token which expires in one hour:
+You can call the `/token` endpoint for any video that is marked private to get a signed URL token which expires in one hour:
 
 ```bash
-curl \
--X POST \
--H "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 You will see a response similar to this if the request succeeds:
@@ -81,13 +80,11 @@ You will see a response similar to this if the request succeeds:
 
 To render the video, insert the `token` value in place of the `video id`:
 
-```HTML
-
+```html
 <iframe src="https://customer-<CODE>.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/iframe" style="border: none;" height="720" width="1280" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
-
 ```
 
-If you are using your own player, replace the video id in the manifest url with the `token` value:
+If you are using your own player, replace the video id in the manifest URL with the `token` value:
 
 `https://customer-<CODE>.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/manifest/video.m3u8`
 
@@ -95,7 +92,7 @@ If you are using your own player, replace the video id in the manifest url with 
 
 If you call the `/token` endpoint without any body, it will return a token that expires in one hour. Let's say you want to let a user watch a particular video for the next 12 hours. Here's how you'd do it with a Cloudflare Worker:
 
-```JavaScript
+```javascript
 addEventListener('fetch', event => {
     event.respondWith(handleRequest(event))
 })
@@ -104,7 +101,7 @@ async function handleRequest(request) {
 
     var signed_url_restrictions = {
         //limit viewing for the next 12 hours
-        exp: Math.floor(Date.now() / 1000) + (12*60*60) 
+        exp: Math.floor(Date.now() / 1000) + (12*60*60)
     };
 
     const init = {
@@ -115,7 +112,7 @@ async function handleRequest(request) {
     },
     body: JSON.stringify(signed_url_restrictions)
   }
-  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token", init)
+  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token", init)
   return new Response(JSON.stringify(await signedurl_service_response.json()), {status: 200})
 }
 ```
@@ -129,8 +126,7 @@ Let's take this a step further and add 2 additional restrictions:
 
 To achieve this, we can specify additional restrictions in the `signed_url_restrictions` object in our sample code:
 
-```JavaScript
-
+```javascript
 addEventListener('fetch', event => {
     event.respondWith(handleRequest(event))
 })
@@ -152,7 +148,7 @@ async function handleRequest(request) {
     },
     body: JSON.stringify(signed_url_restrictions)
   }
-  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/token", init)
+  const signedurl_service_response = await fetch("https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token", init)
   return new Response(JSON.stringify(await signedurl_service_response.json()), {status: 200})
 }
 ```
@@ -163,8 +159,10 @@ If you are generating a high-volume of tokens, it is best to generate new tokens
 
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
-```sh
-$ curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
+```bash
+curl --request POST \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/keys" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response will return `pem` and `jwk` values.
@@ -191,7 +189,7 @@ Once you generate the key in step 1, you can use the `pem` or `jwk` values to ge
 
 Here's an example Cloudflare Worker script which generates tokens that expire in 60 minutes and only work for users accessing the video from UK. In lines 2 and 3, you will configure the `id` and `jwk` values from step 1:
 
-```JavaScript
+```javascript
 // Global variables
 const jwkKey = '{PRIVATE-KEY-IN-JWK-FORMAT}'
 const keyID = '<KEY_ID>'
@@ -268,10 +266,8 @@ function objectToBase64url(payload) {
 
 If you are using the Stream Player, insert the token returned by the Worker in Step 2 in place of the video id:
 
-```HTML
-
+```html
 <iframe src="https://customer-<CODE>.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/iframe" style="border: none;" height="720" width="1280" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
-
 ```
 
 If you are using your own player, replace the video id in the manifest url with the `token` value:
@@ -283,9 +279,12 @@ If you are using your own player, replace the video id in the manifest url with 
 You can create up to 1,000 keys and rotate them at your convenience.
 Once revoked all tokens created with that key will be invalidated.
 
-```javascript
-// curl -X DELETE -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys/<KEY_ID>"
+```bash
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/keys/{key_id}" \
+--header "Authorization: Bearer <API_TOKEN>"
 
+# Response:
 {
   "result": "Revoked",
   "success": true,
@@ -319,7 +318,7 @@ Depending on the rule type, accessRules support 2 additional properties:
 
 ***Example 1: Block views from a specific country***
 
-```
+```txt
 ...
 "accessRules": [
 	{
@@ -334,7 +333,7 @@ The first rule matches on country, US, DE, and MX here. When that rule matches, 
 
 ***Example 2: Allow only views from specific country or IPs***
 
-```
+```txt
 ...
 "accessRules": [
 	{
@@ -368,19 +367,17 @@ By default, Stream embed codes can be used on any domain. If needed, you can lim
 
 In the dashboard, you will see a text box by each video labeled `Enter allowed origin domains separated by commas`. If you click on it, you can list the domains that the Stream embed code should be able to be used on.
 
-*   `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and badtortilla.com
+*   `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and does not cover badtortilla.com
 *   `example.com` does not cover www.example.com or any subdomain of example.com
-*   `localhost` requires a port if it is not being served over https on port 80 or over https on port 443
+*   `localhost` requires a port if it is not being served over HTTP on port 80 or over HTTPS on port 443
 *   There's no path support - `example.com` covers example.com/\*
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
 ```bash
-curl -X POST \
--H "Authorization: Bearer <API_TOKEN>" \
--d "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
-
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}"
 ```
 
 ### Signed URLs

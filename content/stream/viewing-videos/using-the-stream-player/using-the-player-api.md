@@ -6,7 +6,7 @@ weight: 2
 
 # Stream Player API
 
-For further control and customization, we provide an additional Javascript SDK that you can use to control video playback and listen for media events.
+For further control and customization, we provide an additional JavaScript SDK that you can use to control video playback and listen for media events.
 
 To use this SDK, add an additional `<script>` tag to your website:
 
@@ -60,11 +60,11 @@ To use this SDK, add an additional `<script>` tag to your website:
 
   - Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
 
-    {{<Aside>}}
+{{<Aside>}}
 
 Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, review the [iOS video policies](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
-    {{</Aside>}}
+{{</Aside>}}
 
 - `buffered` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
@@ -82,11 +82,11 @@ Some browsers prevent videos with audio from playing automatically. You may add 
 
   - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/edit-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
-    {{<Aside>}}
+{{<Aside>}}
 
 This will _only_ work once during initialization. Beyond that point the user has full control over their text track settings.
 
-      {{</Aside>}}
+{{</Aside>}}
 
 - `duration` {{<type>}}integer{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
@@ -120,11 +120,11 @@ This will _only_ work once during initialization. Beyond that point the user has
 
   - Sets or returns whether the video should be preloaded upon element load.
 
-    {{<Aside>}}
+{{<Aside>}}
 
 The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
-    {{</Aside>}}
+{{</Aside>}}
 
 - `primaryColor` {{<type>}}string{{</type>}}
 

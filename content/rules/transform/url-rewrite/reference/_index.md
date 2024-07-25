@@ -3,11 +3,11 @@ title: Reference
 pcx_content_type: navigation
 weight: 5
 meta:
-  title: URL Rewrite Rules reference
+  title: Rewrite URL rules reference
 ---
 
-# URL Rewrite Rules reference
+# Rewrite URL rules reference
 
-This section contains reference information on URL Rewrite Rules.
+This section contains reference information for rewrite URL rules.
 
 {{<directory-listing>}}

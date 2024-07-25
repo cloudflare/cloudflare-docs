@@ -2,6 +2,9 @@
 pcx_content_type: faq
 title: Policies
 weight: 5
+meta:
+    description: Review frequently asked questions about policies in Cloudflare Zero Trust.
+    title: Policies FAQ
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -10,11 +13,11 @@ weight: 5
 
 ## What is the order of policy enforcement?
 
-Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/policies/access/#order-of-execution) and [Gateway policies](/cloudflare-one/policies/filtering/order-of-enforcement/).
+Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/policies/access/#order-of-execution) and [Gateway policies](/cloudflare-one/policies/gateway/order-of-enforcement/).
 
 ## **How can I bypass the L7 firewall for a website?**
 
-Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify the destination of the request. Administrators who wish to bypass a site must create a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) policy in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
+Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify the destination of the request. Administrators who wish to bypass a site must create a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policy in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
 
 Bypassing the L7 firewall results in no HTTP traffic inspection, and logging is disabled for that HTTP session.
 

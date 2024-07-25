@@ -4,6 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.2
 product:
   title: Analytics
   url: /analytics/
+  group: Cloudflare essentials
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Analytics docs
@@ -12,8 +14,12 @@ meta:
     exactly what you need, from one metric for a domain to multiple metrics
     aggregated for your account.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: analytics

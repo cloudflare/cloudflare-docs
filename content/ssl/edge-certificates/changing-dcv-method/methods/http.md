@@ -1,7 +1,7 @@
 ---
 title: HTTP
 pcx_content_type: how-to
-weight: 3
+weight: 4
 meta:
   title: HTTP method — Domain Control Validation — SSL/TLS
 ---
@@ -12,17 +12,21 @@ When you choose HTTP DCV, Cloudflare automatically adds a verification HTTP toke
 
 Only use this method if your domain can tolerate a few minutes of downtime.
 
+{{<Aside type="note">}}
+
+If you encounter issues with HTTP DCV, refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+{{</Aside>}}
+
 ## Limitations
 
 HTTP DCV is only available for [proxied domains](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-HTTP DCV validation also does not work for wildcard certificates or certificates with multiple SANs.
+HTTP DCV validation also does not work for wildcard certificates.
 
 If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
 Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
-
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
 
 ## Setup
 
@@ -38,24 +42,20 @@ To make sure your domain does not accidentally block HTTP DCV, review your Cloud
 
 ### Complete DCV
 
-Your HTTP token will be available for the Certificate Authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#step-3--add-dns-records).
+Your HTTP token will be available for the Certificate Authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#add-dns-records).
 
 This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) for your hostname within Cloudflare.
 
 This process may involve a few minutes of downtime.
 
-<details>
-<summary>What happens after you create your records</summary>
-<div>
+{{<details header="What happens after you create your records">}}
 
 {{<render file="_cname-cert-verification.md">}}
 
-</div>
-
-</details>
+{{</details>}}
 
 {{<render file="_acm-validate-cert.md">}}
 
-## Renew DCV tokens
+## Renewal
 
-{{<render file="_dcv-token-renewal.md">}}
+{{<render file="_dcv-certificate-renewal.md">}}

@@ -24,8 +24,8 @@ When filtering by location or autonomous system (AS), we are filtering by the so
 In the following example, we will examine the worldwide versus Singapore distribution of mitigated attacks by network protocol:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeseries_groups?name=global&dateRange=1d&location=&name=singapore&location=SG&dateRange=1d&aggInterval=1h&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeseries_groups?name=global&dateRange=1d&location=&name=singapore&location=SG&dateRange=1d&aggInterval=1h&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 If we inspect the abbreviated response below, we can conclude that globally, at those timestamps, `UDP` and `TCP` attacks were mostly evenly split.
@@ -62,7 +62,7 @@ If we inspect the abbreviated response below, we can conclude that globally, at 
 
 We can also conclude that the distribution of network layer attacks coming from Singapore  — or, more accurately, reaching Cloudflare's data center located in Singapore — differs quite a bit from the worldwide distribution. At those times, the distribution of network layer attacks clearly favors [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/).
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer3Timeseries) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-attacks-layer3-timeseries-by-bytes) for this endpoint.
 
 ### Summary
 
@@ -71,8 +71,8 @@ For more information refer to the [API reference](https://developers.cloudflare.
 We can also filter by source location and examine attacks coming from Russia:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location=RU&name=attacks_ru&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location=RU&name=attacks_ru&dateRange=1d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -99,7 +99,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?l
 
 The response shows that the attacks coming from Russia to other locations tended to use the [UDP](https://www.cloudflare.com/en-gb/learning/ddos/glossary/user-datagram-protocol-udp/) network protocol at those timestamps.
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer3TimeseriesGroups) for this endpoint.
+For more information refer to the [API reference](/api/operations/radar-get-attacks-layer3-timeseries-by-bytes) for this endpoint.
 
 
 ## Next steps

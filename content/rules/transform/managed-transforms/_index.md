@@ -1,8 +1,7 @@
 ---
 title: Managed Transforms
 pcx_content_type: concept
-weight: 1
-layout: single
+weight: 4
 ---
 
 # Managed Transforms

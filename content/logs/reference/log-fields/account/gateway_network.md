@@ -10,26 +10,122 @@ weight: 21
 
 The descriptions below detail the fields available for `gateway_network`.
 
-{{<table-wrap>}}
+## AccountID
 
-| Field | Value | Type |
-| -- | -- | -- |
-| AccountID | Cloudflare account tag. | string |
-| Action | Action performed by gateway on the session. | string |
-| Datetime | The date and time the corresponding network session was made (for example, '2021-07-27T00:01:07Z'). | int or string |
-| DestinationIP | Destination IP of the network session. | string |
-| DestinationPort | Destination port of the network session. | int |
-| DeviceID | UUID of the device where the network session originated from. | string |
-| Email | Email associated with the user identity where the network sesion originated from. | string |
-| OverrideIP | Overriden IP of the network session, if any. | string |
-| OverridePort | Overriden port of the network session, if any. | int |
-| PolicyID | Identifier of the policy/rule that was applied, if any. | string |
-| PolicyName | The name of the gateway policy applied to the request, if any. | string |
-| SNI | Content of the SNI for the TLS network session, if any. | string |
-| SessionID | The session identifier of this network session. | string |
-| SourceIP | Source IP of the network session. | string |
-| SourcePort | Source port of the network session. | int |
-| Transport | Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em>. | string |
-| UserID | User identity where the network session originated from. | string |
+Type: string
 
-{{</table-wrap>}}
+Cloudflare account tag.
+
+## Action
+
+Type: string
+
+Action performed by gateway on the session.
+
+## Datetime
+
+Type: int or string
+
+The date and time the corresponding network session was made (for example, '2021-07-27T00:01:07Z').
+
+## DestinationIP
+
+Type: string
+
+Destination IP of the network session.
+
+## DestinationPort
+
+Type: int
+
+Destination port of the network session.
+
+## DetectedProtocol
+
+Type: string
+
+Detected traffic protocol of the network session.
+
+## DeviceID
+
+Type: string
+
+UUID of the device where the network session originated from.
+
+## DeviceName
+
+Type: string
+
+The name of the device where the HTTP request originated from (for example, 'Laptop MB810').
+
+## Email
+
+Type: string
+
+Email associated with the user identity where the network session originated from.
+
+## OverrideIP
+
+Type: string
+
+Overridden IP of the network session, if any.
+
+## OverridePort
+
+Type: int
+
+Overridden port of the network session, if any.
+
+## PolicyID
+
+Type: string
+
+Identifier of the policy/rule that was applied, if any.
+
+## PolicyName
+
+Type: string
+
+The name of the gateway policy applied to the request, if any.
+
+## SNI
+
+Type: string
+
+Content of the SNI for the TLS network session, if any.
+
+## SessionID
+
+Type: string
+
+The session identifier of this network session.
+
+## SourceIP
+
+Type: string
+
+Source IP of the network session.
+
+## SourceInternalIP
+
+Type: string
+
+Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp.
+
+## SourcePort
+
+Type: int
+
+Source port of the network session.
+
+## Transport
+
+Type: string
+
+Transport protocol used for this session. <br />Possible values are <em>tcp</em> \| <em>quic</em> \| <em>udp</em>.
+
+## UserID
+
+Type: string
+
+User identity where the network session originated from.

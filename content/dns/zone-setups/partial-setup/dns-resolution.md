@@ -8,7 +8,7 @@ meta:
 
 # DNS resolution in partial zones
 
-When you have a [partial zone](/dns/zone-setups/partial-setup/)[^1], Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
+When you have a {{<glossary-tooltip term_id="partial setup" link="/dns/zone-setups/partial-setup/">}}partial zone{{</glossary-tooltip>}}, Cloudflare handles DNS records a bit differently from full zones in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
 ## Records within the same zone
 
@@ -25,7 +25,7 @@ Since Cloudflare contains both the `CNAME` and its target, our DNS resolution wi
 
 This can cause issues if you already have DNS records for `sub2.partialzone.com` at your authoritative DNS provider. These records may point to `192.0.2.4`, another IP address, or another domain but - because Cloudflare contains the initial record and the target - it never queries your authoritative DNS provider for the record for `sub2.partialzone.com`.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in same partial zone
       A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record for <code>sub1.partialzone.com</code> to <code>sub2.partialzone.com</code>]
@@ -36,12 +36,12 @@ This can cause issues if you already have DNS records for `sub2.partialzone.com`
       subgraph Authoritative DNS
       E[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.4</code>]
       end
-</div>
+```
 <br />
 
 When you avoid this situation - meaning you do not have the **target** of the `CNAME` record within your partial zone - this DNS resolution would happen differently.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target not in partial zone
       A[Request to <code>sub1.partialzone.com</code>] --> B[<code>CNAME</code> record for <code>sub1.partialzone.com</code> to <code>sub2.partialzone.com</code>]
@@ -53,7 +53,7 @@ When you avoid this situation - meaning you do not have the **target** of the `C
       subgraph Authoritative DNS
         C
       end
-</div>
+```
 
 ---
 
@@ -63,7 +63,7 @@ You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-d
 
 In this case, Cloudflare will always resolve the `CNAME` target based on the value at your authoritative DNS provider of the partial target zone.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in a zone within the same account
       A[Request to <code>www.alice.com</code>] --> B[<code>CNAME</code> record for <code>www.alice.com</code> to <code>www.partialzone.com</code>]
@@ -80,6 +80,4 @@ In this case, Cloudflare will always resolve the `CNAME` target based on the val
       subgraph Authoritative DNS
       C
       end
-</div>
-
-[^1]: {{<render file="_partial-setup-definition.md">}}
+```

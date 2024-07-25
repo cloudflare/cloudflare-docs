@@ -5,9 +5,9 @@ title: Use Pages Functions for A/B testing
 
 # Use Pages Functions for A/B testing
 
-In this guide, you will learn how to use [Pages Functions](/pages/platform/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
+In this guide, you will learn how to use [Pages Functions](/pages/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
-# Overview 
+## Overview
 
 Configuring different versions of your application for A/B testing will be unique to your specific use case. For all developers, A/B testing setup can be simplified into a few helpful principles.
 
@@ -17,26 +17,26 @@ To ensure that a user remains in the group you have given, you will set and stor
 
 ## Set up your Pages Function
 
-In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/platform/functions/). Pages Functions allows you to handle server logic from within your Pages project. 
+In your project, you can handle the logic for A/B testing using [Pages Functions](/pages/functions/). Pages Functions allows you to handle server logic from within your Pages project.
 
 To begin:
 
  1. Go to your Pages project directory on your local machine.
- 2. Create a `/functions` directory. Your application server logic will live in the `/functions` directory. 
+ 2. Create a `/functions` directory. Your application server logic will live in the `/functions` directory.
 
 ## Add middleware logic
 
-Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/functions/middleware/). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
 
-In your `/functions` directory, create a `_middleware.js` file. 
+In your `/functions` directory, create a `_middleware.js` file.
 
-{{<Aside type="Note">}}
+{{<Aside type="note">}}
 
-When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/#middleware-routing).
+When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/functions/middleware/).
 
 {{</Aside>}}
 
-Following the Functions naming convention, the `_middleware.js` file exports a single async `onRequest` function that accepts a `request`, `env` and `next` as an argument. 
+Following the Functions naming convention, the `_middleware.js` file exports a single async `onRequest` function that accepts a `request`, `env` and `next` as an argument.
 
 ```js
 ---
@@ -44,9 +44,9 @@ filename: /functions/_middleware.js
 ---
 const abTest = async ({request, next, env}) => {
   /*
-  Todo: 
+  Todo:
   1. Conditional statements to check for the cookie
-  2. Assign cookies based on percentage, then sever 
+  2. Assign cookies based on percentage, then serve
   */
 }
 
@@ -65,9 +65,9 @@ const newHomepagePathName = "/test"
 
 const abTest = async ({request, next, env}) => {
   /*
-  Todo: 
+  Todo:
   1. Conditional statements to check for the cookie
-  2. Assign cookie based on percentage then serve 
+  2. Assign cookie based on percentage then serve
   */
 }
 
@@ -88,8 +88,8 @@ const newHomepagePathName = "/test"
 
 const abTest = async ({request, next, env}) => {
   /*
-  Todo: 
-  1. Assign cookies based on randomly genrated percentage, then serve
+  Todo:
+  1. Assign cookies based on randomly generated percentage, then serve
   */
 
   const url = new URL(request.url)
@@ -125,13 +125,13 @@ A Function is a Worker that executes on your Pages project to add dynamic functi
 ```js
 ---
 filename: /functions/_middleware.js
-highlight: [20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
+highlight: 20-36
 ---
 const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"
 
-const abTest = async ({ request, next, env }) => {
-  const url = new URL(request.url)
+const abTest = async (context) => {
+  const url = new URL(context.request.url)
   // if homepage
   if (url.pathname === "/") {
     // if cookie ab-test-cookie=new then change the request to go to /test
@@ -142,23 +142,23 @@ const abTest = async ({ request, next, env }) => {
     if (cookie && cookie.includes(`${cookieName}=new`)) {
       // pass the request to /test
       url.pathname = newHomepagePathName
-      return env.ASSETS.fetch(url)
+      return context.env.ASSETS.fetch(url)
     } else {
       const percentage = Math.floor(Math.random() * 100)
       let version = "current" // default version
-      // change pathname and version name for 50% of traffic 
+      // change pathname and version name for 50% of traffic
       if (percentage < 50) {
         url.pathname = newHomepagePathName
         version = "new"
       }
       // get the static file from ASSETS, and attach a cookie
-      const asset = await env.ASSETS.fetch(url)
+      const asset = await context.env.ASSETS.fetch(url)
       let response = new Response(asset.body, asset)
       response.headers.append("Set-Cookie", `${cookieName}=${version}; path=/`)
       return response
     }
   }
-  return next()
+  return context.next()
 };
 
 export const onRequest = [abTest];
@@ -168,4 +168,8 @@ export const onRequest = [abTest];
 
 After you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Push your project changes to GitHub/GitLab.
 
-After you have deployed your application, you will see your middleware Function in the Cloudflare dashboard under **Pages** > **Settings** > **Functions** > **Configuration**. 
+After you have deployed your application, review your middleware Function:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Pages project > **Settings** > **Functions** > **Configuration**.

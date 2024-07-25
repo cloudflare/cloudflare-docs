@@ -17,19 +17,17 @@ Stream thumbnails are not supported for videos with non-square pixels.
 A thumbnail from your video can be generated using a special link where you specify the time from the video you'd like to get the thumbnail from.
 
 `
-https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg?time=1s&height=270
+https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg?time=1s&height=270
 `
 
-<img src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg?time=1s&height=270" alt="Example of thumbnail image generated from example video" />
+<img src="https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.jpg?time=1s&height=270" alt="Example of thumbnail image generated from example video" />
 
 Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/viewing-videos/securing-your-stream/) are required, you must use a signed URL instead of video UIDs.
 
 ```html
 <iframe
-  src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/iframe?poster=https%3A%2F%2Fcustomer-m033z5x00ks6nunl.cloudflarestream.com%2Fb236bde30eb07b9d01318940e5fc3eda%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D1s%26height%3D600"
-  style="border: none"
-  height="720"
-  width="1280"
+  src="https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/iframe?poster=https%3A%2F%2Fcustomer-f33zs165nr7gyfy4.cloudflarestream.com%2F6b9e68b07dfee8cc2d116e4c51d6a957%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
   allowfullscreen="true"
 ></iframe>
@@ -57,7 +55,7 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>
 ```
 
-`thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the `thumbnailTimestampPct` value to 0.5. Using relative values in this way allows you to set the default thumbnail even if you or your users' videos vary in duration.
+`thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can set the `thumbnailTimestampPct` value to 0.5. Using relative values in this way allows you to set the default thumbnail even if you or your users' videos vary in duration.
 
 ## Use Case 3: Generating animated thumbnails
 
@@ -66,10 +64,10 @@ Stream supports animated GIFs as thumbnails. Viewing animated thumbnails does no
 ### Animated GIF thumbnails
 
 `
- https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.gif?time=1s&height=200&duration=4s
+ https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.gif?time=1s&height=200&duration=4s
 `
 
-<img src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.gif?time=1s&height=200&duration=4s" alt="Animated gif example, generated on-demand from Cloudflare Stream" />
+<img src="https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/thumbnails/thumbnail.gif?time=1s&height=200&duration=4s" alt="Animated gif example, generated on-demand from Cloudflare Stream" />
 
 Supported URL attributes for animated thumbnails are:
 

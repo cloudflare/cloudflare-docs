@@ -1,52 +1,49 @@
 ---
 pcx_content_type: configuration
 title: Request
+meta:
+  description: Interface that represents an HTTP request.
 ---
 
 # Request
 
-The `Request` interface represents an HTTP request and is part of the Fetch API.
+The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
 ## Background
 
-The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
+The most common way you will encounter a `Request` object is as a property of an incoming request:
 
 ```js
 ---
 highlight: [2]
 ---
-addEventListener("fetch", event => {
-  let request = event.request // Request object
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) {
+		return new Response('Hello World!');
+	},
+};
 ```
 
-You may also want to construct a `Request` yourself when you need to modify a request object, because a `FetchEvent`’s `request` property is immutable.
+You may also want to construct a `Request` yourself when you need to modify a request object, because the incoming `request` parameter that you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/) is immutable.
 
 ```js
-addEventListener("fetch", event => {
-  const request = event.request
-  const url = "https://example.com"
-
-  const modifiedRequest = new Request(url, request)
-
-  // ...
-})
+export default {
+	async fetch(request, env, ctx) {
+        const url = "https://example.com";
+        const modifiedRequest = new Request(url, request);
+		// ...
+	},
+};
 ```
 
-The global `fetch` method itself invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
+The [`fetch() handler`](/workers/runtime-apis/handlers/fetch/) invokes the `Request` constructor. The [`RequestInit`](#options) and [`RequestInitCfProperties`](#the-cf-property-requestinitcfproperties) types defined below also describe the valid parameters that can be passed to the [`fetch() handler`](/workers/runtime-apis/handlers/fetch/).
 
-{{<Aside type="note" header="Learn more">}}
-
-Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for a deeper understanding of these fundamental Workers concepts.
-
-{{</Aside>}}
+---
 
 ## Constructor
 
 ```js
-let request = new Request(input [, init])
+let request = new Request(input, options)
 ```
 
 ### Parameters
@@ -57,23 +54,25 @@ let request = new Request(input [, init])
 
     *   Either a string that contains a URL, or an existing `Request` object.
 
-*   `init` {{<type-link href="#requestinit">}}RequestInit{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `options` {{<type-link href="#options">}}options{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object that contains settings to apply to the `Request`.
 
 {{</definitions>}}
 
-#### `RequestInit`
+#### `options`
+
+An object containing properties that you want to apply to the request.
 
 {{<definitions>}}
 
-*   `cf` {{<type-link href="#requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+*   `cf` {{<type-link href="#the-cf-property-requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s edge handles the request.
+    *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The HTTP request method. The default is `GET`.
+    *   The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -82,6 +81,7 @@ let request = new Request(input [, init])
 *   `body` {{<type>}}string | ReadableStream | FormData | URLSearchParams{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   The request body, if any.
+    *   Note that a request using the GET or HEAD method cannot have a body.
 
 *   `redirect` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -89,7 +89,7 @@ let request = new Request(input [, init])
 
 {{</definitions>}}
 
-#### `RequestInitCfProperties`
+#### The `cf` property (`RequestInitCfProperties`)
 
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
@@ -108,7 +108,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -117,19 +117,19 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTags` {{<type>}}Array\<string\>{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/#cache-tags-enterprise-only) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
+    *   This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
 
 *   `cacheTtl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
+    *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, "404": 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables [Image Resizing](/images/) for this request. The possible values are described in [Image Resizing with Workers](/images/image-resizing/resize-with-workers) documentation.
+    *   Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
 *   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -157,11 +157,11 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 {{</definitions>}}
 
-***
+---
 
 ## Properties
 
-All properties of an incoming `Request` object (that is, `event.request`) are read only. To modify a request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (the request you receive from the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/)) are read-only. To modify the properties of an incoming request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 {{<definitions>}}
 
@@ -175,15 +175,14 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-    *   An object containing properties about the incoming request provided by Cloudflare’s edge network.
+    *   An object containing properties about the incoming request provided by Cloudflare’s global network.
+    *   This property is read-only (unless created from an existing `Request`). To modify its values, pass in the new values on the [`cf` key of the `init` options argument](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) when creating a new `Request` object.
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
     *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
-    {{<Aside type="note">}}
-Note that, compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
-    {{</Aside>}}
+    *  Compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header.
 
     {{<Aside type="warning">}}
 If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.
@@ -205,7 +204,7 @@ If the response is a redirect and the redirect mode is set to `follow` (see belo
 
 ### `IncomingRequestCfProperties`
 
-In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
+In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s global network.
 
 All plans have access to:
 
@@ -221,7 +220,7 @@ All plans have access to:
 
 *   `botManagement` {{<type>}}Object | null{{</type>}}
 
-    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
+    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, `ja3Hash`, `ja4`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
 
 *   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
 
@@ -254,6 +253,14 @@ All plans have access to:
 *   `tlsClientAuth` {{<type>}}Object | null{{</type>}}
 
     *   Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+
+*   `tlsClientHelloLength` {{<type>}}string{{</type>}}
+
+    *   The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). For example, `"508"`. Specifically, the length of the bytestring of the client hello.
+
+*   `tlsClientRandom` {{<type>}}string{{</type>}}
+
+    *   The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). Refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2) for more details.
 
 *   `tlsVersion` {{<type>}}string{{</type>}}
 
@@ -303,7 +310,7 @@ The `request.cf` object is not available in the Cloudflare Workers dashboard or 
 
 {{</Aside>}}
 
-***
+---
 
 ## Methods
 
@@ -313,46 +320,46 @@ These methods are only available on an instance of a `Request` object or through
 
 {{<definitions>}}
 
-*   `clone()` {{<type>}}Promise\<Request>{{</type>}}
+*   `clone()` : {{<type>}}Promise\<Request>{{</type>}}
 
     *   Creates a copy of the `Request` object.
 
-*   `arrayBuffer()` {{<type>}}Promise\<ArrayBuffer>{{</type>}}
+*   `arrayBuffer()` : {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
-*   `formData()` {{<type>}}Promise\<FormData>{{</type>}}
+*   `formData()` : {{<type>}}Promise\<FormData>{{</type>}}
 
     *   Returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) representation of the request body.
 
-*   `json()` {{<type>}}Promise\<Object>{{</type>}}
+*   `json()` : {{<type>}}Promise\<Object>{{</type>}}
 
     *   Returns a promise that resolves with a JSON representation of the request body.
 
-*   `text()` {{<type>}}Promise\<string>{{</type>}}
+*   `text()` : {{<type>}}Promise\<string>{{</type>}}
 
     *   Returns a promise that resolves with a string (text) representation of the request body.
 
 {{</definitions>}}
 
-***
+---
 
-## The request context
+## The `Request` context
 
-The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the request context.
-
-The request context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
+Each time a Worker is invoked by an incoming HTTP request, the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) is called on your Worker. The `Request` context starts when the `fetch()` handler is called, and asynchronous tasks (such as making a subrequest using the [`fetch() API`](/workers/runtime-apis/fetch/)) can only be run inside the `Request` context:
 
 ```js
-addEventListener("fetch", event => {
-  // Request context available here
-  event.respondWith(/*...*/)
-})
+export default {
+	async fetch(request, env, ctx) {
+        // Request context starts here
+		return new Response('Hello World!');
+	},
+};
 ```
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event `.respondWith()` method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {
@@ -399,8 +406,11 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
 
 Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
 
+---
+
 ## Related resources
 
-*   [Examples: Modify request property](/workers/examples/modify-request-property/)
-*   [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
-*   [Reference: `Response`](/workers/runtime-apis/response/)
+* [Examples: Modify request property](/workers/examples/modify-request-property/)
+* [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
+* [Reference: `Response`](/workers/runtime-apis/response/)
+* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

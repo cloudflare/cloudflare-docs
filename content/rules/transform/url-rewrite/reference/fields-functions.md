@@ -3,20 +3,18 @@ title: Available fields and functions
 pcx_content_type: reference
 weight: 3
 meta:
-  title: Available fields and functions in URL Rewrite Rules
+  title: Available fields and functions in rewrite URL rules
 ---
 
-# Available fields and functions in URL Rewrite Rules
+# Available fields and functions in rewrite URL rules
 
 ## Filter expressions
 
-A URL Rewrite Rule filter expression (that is, the expression that defines which incoming requests match the rule) can include the following fields:
+A rewrite URL rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
 {{<render file="transform/_transform-phase-fields.md">}}
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
-
-The maximum length of a filter expression is 4,096 characters.
 
 ## Rewrite expressions
 

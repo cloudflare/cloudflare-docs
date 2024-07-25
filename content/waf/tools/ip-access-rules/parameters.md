@@ -2,9 +2,9 @@
 title: Parameters
 pcx_content_type: reference
 weight: 3
+layout: wide
 meta:
   title: IP Access rule parameters
-layout: list
 ---
 
 # Parameters
@@ -42,12 +42,12 @@ You can specify a country by name or two-letter [ISO-3166-1 alpha-2 codes](https
 
 Cloudflare uses the following special country alpha-2 codes that are not part of the ISO:
 
-* `T1`: [Tor exit nodes](https://support.cloudflare.com/hc/articles/203306930) (country name: `Tor`)
+* `T1`: [Tor exit nodes](/network/onion-routing/) (country name: `Tor`)
 * `XX`: Unknown/reserved
 
 {{<Aside type="note" header="Notes about country blocking">}}
 * Block by country is only available on Enterprise plans.
-* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [firewall rules](/firewall/).
+* IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [WAF custom rules](/waf/custom-rules/).
 {{</Aside>}}
 
 ## Autonomous System Number (ASN)

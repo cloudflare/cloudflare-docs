@@ -4,12 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24.6
 product:
   title: Spectrum
   url: /spectrum/
+  group: Application performance
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare Spectrum docs
   description: DDoS protection for everything.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/spectrum/48
@@ -18,3 +19,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: spectrum

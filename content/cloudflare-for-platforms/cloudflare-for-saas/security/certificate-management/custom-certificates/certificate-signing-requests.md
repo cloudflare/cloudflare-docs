@@ -8,7 +8,7 @@ meta:
 
 # Certificate signing requests (CSRs) — Cloudflare for SaaS
 
-{{<render file="../../ssl/_partials/_csr-definition.md">}} <br>
+{{<render file="_csr-definition.md" productFolder="ssl" >}}
 
 Once the CSR has been generated, provide it to your customer. Your customer will then pass it along to their preferred CA to obtain a certificate and return it to you. After you receive the certificate, you should upload it to Cloudflare and reference the unique CSR ID that was provided to you during CSR creation.
 
@@ -39,7 +39,7 @@ $ request_body=$(< <(cat <<EOF
     "blog.example.com",
     "example.com"
   ],
-  "key_type" : "p256v1"
+  "key_type": "p256v1"
 }
 EOF
 ))
@@ -50,10 +50,13 @@ EOF
 Now, you want to generate a CSR that you can provide to your customer.
 
 ```bash
-$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-    -H 'Content-Type: application/json' -d "$request_body"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data "$request_body"
 
+# Response:
 {
   "result": {
     "id": "7b163417-1d2b-4c84-a38a-2fb7a0cd7752",
@@ -72,17 +75,18 @@ $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs 
     "key_type": "p256v1",
     "csr": "-----BEGIN CERTIFICATE REQUEST-----\nMIIBSzCB8gIBADBiMQswaQYDVQQGEwJVUzELMAkGA1UECBMCTUExDzANBgNVBAcT\nBkJvc3RvbjEaMBgGA1UEChMRQ2l0eSBvZiBDaGFtcGlvbnMxGTAXBgNVBAMTEGNz\nci1wcm9kLnRscy5mdW4wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAaTKf70NYlwr\n20P6P8xj8/4mTN5q28dbZR/gM3u4m/RPs24+PxAfMZCNvkVKAPVWYfUAadZI4Ha/\ndxLh5Q6X5bhIoC4wLAYJKoZIhvcNAQkOMR8wHTAbBqNVHREEFDASghBjc3ItcHJv\nZC50bHMuZnVuMAoGCCqGSM49BAMCA0gAMEUCIQDgtFUZav466SbT2FGBsIBlahDI\nVkg4y+u+V/K5DlY1+gIgQ9xLfUSKnSnJYbM9TwWr4Z964+lBtB9af4O5pp7/PSA=\n-----END CERTIFICATE REQUEST-----\n"
   },
-  "success": true,
+  "success": true
 }
 ```
 
-Replace the ‘\n’ strings with actual newline before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
+Replace the `\n` characters with actual newlines before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
 
 ```bash
-$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-    -H 'Content-Type: application/json' -d "$request_body" | jq .result.csr |\
-    perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data "$request_body" | jq .result.csr | perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
 ```
 
 ### Step 3 — Customer obtains certificate
@@ -93,12 +97,13 @@ Your customer will take the provided CSR and work with their CA to obtain a sign
 
 Upload the certificate and reference the ID that was provided when you generated the CSR.
 
-You should replace newlines in the certificate with literal ‘\n’ characters, as illustrated above in the custom certificate upload example. After doing so, build the request body and provide the ID that was returned in a previous step.
+You should replace newlines in the certificate with literal `\n` characters, as illustrated above in the custom certificate upload example. After doing so, build the request body and provide the ID that was returned in a previous step.
 
 Cloudflare only accepts publicly trusted certificates. If you attempt to upload a self-signed certificate, it will be rejected.
 
-```txt
+```bash
 $ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+
 $ request_body=$(< <(cat <<EOF
 {
   "hostname": "app.example.com",
@@ -111,7 +116,7 @@ EOF
 ))
 ```
 
-With the request body built, [create the custom hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
+With the request body built, [create the custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
 
 ---
 

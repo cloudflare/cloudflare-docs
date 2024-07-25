@@ -1,11 +1,13 @@
 ---
 pcx_content_type: concept
 type: overview
-title: Determining the rate
+title: Request rate calculation
 weight: 12
+meta:
+  title: How Cloudflare determines the request rate
 ---
 
-# Determining the rate
+# How Cloudflare determines the request rate
 
 Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
 
@@ -18,7 +20,9 @@ In this case, two incoming requests with the **same** value for the HTTP header 
 
 The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers with Advanced Rate Limiting can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="warning" header="Important notes">}}
+
+* Cloudflare currently does not support global rate limiting counters across the entire network — counters are not shared across data centers. This fact is especially relevant for customers that do not add the IP address as one of the rate limiting characteristics. The only exception is when Cloudflare has multiple data centers associated with a given geographical location. In this case, the rate limiting counters are shared between those specific data centers.
 
 * The Cloudflare data center ID (`cf.colo.id`) is a mandatory characteristic of every rate limiting rule to ensure that counters are not shared across data centers. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
 
@@ -55,13 +59,13 @@ _**Rate limiting rule #1**_
 
 The following diagram shows how Cloudflare handles four incoming requests in the context of the above rate limiting rule.
 
-![Rate limiting example with four requests where one of the requests is being rate limited. For details, keep reading.](/waf/static/custom-rules/rate-limiting-example.png)
+![Rate limiting example with four requests where one of the requests is being rate limited. For details, keep reading.](/images/waf/custom-rules/rate-limiting-example.png)
 
 Since request 1 matches the rule expression, the rate limiting rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the rate limiting rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests**, the request is allowed.
 
 Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The values of the characteristics do not match any existing counter (the value of the `X-API-Key` header is different). Therefore, Cloudflare defines a separate counter in the context of this rule and sets it to `1`. The counter value is within the request limit established in **Requests**, and so this request is allowed.
 
-Request 3 matches the rule expression and the same values for rule characteristics. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests**, and so request 2 gets blocked.
+Request 3 matches the rule expression and has the same values for rule characteristics as request 1. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests**, and so request 3 gets blocked.
 
 Request 4 does not match the rule expression, since the value for the `Content-Type` header does not match the value in the expression. Therefore, Cloudflare does not create a new rule counter for this request. Request 4 is not evaluated in the context of this rate limiting rule and is passed on to subsequent rules in the request evaluation workflow.
 
@@ -98,7 +102,7 @@ _**Rate limiting rule #2**_
 
 The following diagram shows how Cloudflare handles these four incoming requests received during a 10-second period in the context of the above rate limiting rule.
 
-![Rate limiting example with four requests where the rate limiting rule uses a response field (the HTTP response code) in the counting expression. For details, keep reading.](/waf/static/custom-rules/rate-limiting-example-response-field.png)
+![Rate limiting example with four requests where the rate limiting rule uses a response field (the HTTP response code) in the counting expression. For details, keep reading.](/images/waf/custom-rules/rate-limiting-example-response-field.png)
 
 Since request 1 matches the rule expression, the rate limiting rule is evaluated. The request is sent to the origin, skipping any cached content, because the rate limiting rule includes a response field (`http.response.code`) in the counting expression. The origin responds with a `400` status code. Since there is a match for the counting expression, Cloudflare creates a request counter for the values of the characteristics in the context of the rate limiting rule, and sets this counter to `1`.
 
@@ -123,10 +127,10 @@ When you configure a complexity-based rate limiting rule, the origin server must
 Complexity-based rate limiting rules must contain the following properties:
 
 * **Score** (API field: `score_per_period`): Maximum score per period. When this value is exceeded, the rule action will execute.
-* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 500.
+* **Score response header name** (API field: `score_response_header_name`): Name of HTTP header in the response, set by the origin server, with the score for the current request. The score corresponds to the complexity (or cost) of serving the current request. The score value must be between 1 and 1,000,000.
 
 Cloudflare keeps counters with the total score of all requests with the same values for the rule characteristics that match the rule expression. The score increases by the value provided by the origin in the response when there is a match for the counting expression (by default, it is the same as the rule expression). When the total score is larger than the configured maximum score per period, the rule action is applied.
 
-If the origin server does not provide the HTTP response header with a score value, the corresponding rate limiting counter will not be updated.
+If the origin server does not provide the HTTP response header with a score value or if the score value is outside of the allowed range, the corresponding rate limiting counter will not be updated.
 
 For an example of a complexity-based rate limiting rule, refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/#example-d---complexity-based-rate-limiting-rule).

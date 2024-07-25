@@ -10,7 +10,9 @@ Logpush jobs may fail for a few reasons, for instance because the destination is
 
 With analytics and alerting, you can monitor your Logpush job health and find out for yourself when a job fails. You can get alerted and you can also get analytics about your Logpush jobs health via GraphQL.
 
-Alerts are sent via the [Cloudflare Notifications](/fundamentals/notifications/) system. They can be sent via email or webhook. When subscribed to job disablement notification, you will receive at most one alert per job per 24 hours. The notification email contains the job ID and destination configuration.
+Alerts are sent via the [Cloudflare Notifications](/notifications/) system. They can be sent via email or webhook. When subscribed to job disablement notification, you will receive at most one alert per job per 24 hours. The notification email contains the job ID and destination configuration.
+
+{{<available-notifications product="Logpush">}}
 
 ## Enable alerts 
 

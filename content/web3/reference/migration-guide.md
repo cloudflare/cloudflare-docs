@@ -16,7 +16,7 @@ If you created a hostname pointing to these gateways during the [private beta](h
 
 The migration is a simple process.
 
-First, create a [Cloudflare account](/learning-paths/get-started/#account-setup).
+First, create a [Cloudflare account](/fundamentals/setup/account/create-account/).
 
 Then create a new [Web3 custom gateway](/web3/how-to/manage-gateways/#create-a-gateway) with your existing hostname.
 

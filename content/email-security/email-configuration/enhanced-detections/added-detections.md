@@ -14,7 +14,7 @@ These settings apply particularly to trusted business partners that your organiz
 
 | Feature | Description |
 | --- | --- |
-| Malicious Domain Age | Controls the threshold for a **Malicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days. |
+| Malicious Domain Age | Controls the threshold for a **Malicious** {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/#dispositions">}}disposition{{</glossary-tooltip>}} based on domain age. Maximum of 120 days. |
 | Suspicious Domain Age | Controls the threshold for a **Suspicious** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions) based on domain age. Maximum of 120 days. |
 | Encrypted Attachment Scanning | Auto-scan encrypted attachments to detect sophisticated malware campaigns. |
 | Anti-Spam Engine | Detect bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions). |
@@ -24,7 +24,7 @@ These settings apply particularly to trusted business partners that your organiz
 
 To access **Added Detections** and potentially adjust your settings:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Enhanced Detections** > **Added Detections**.
 

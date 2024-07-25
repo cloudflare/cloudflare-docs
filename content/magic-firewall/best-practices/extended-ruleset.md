@@ -8,7 +8,7 @@ meta:
 
 # Extended suggested ruleset
 
-If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user-groups that reside on your MT prefixes, for example:
+If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user groups that reside on your Magic Transit prefixes. For example:
 
 - [Endpoints (user devices)](#endpoints-user-devices)
 - [Internal routers](#internal-routerfirewall-ip-addresses)
@@ -27,7 +27,7 @@ You can also create a list from the dashboard from **Configurations** > **Lists*
 
 Endpoint devices do not operate as servers, which means:
 
-- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (above 1025 in older Windows Server 2003 and Windows XP).
+- They receive traffic from standard common ports — for example `80` or `443` — towards their ephemeral ports, above `32768` in modern operating systems (above `1025` in older Windows Server 2003 and Windows XP).
 - Connections flow outwards, not inwards, and therefore do not receive TCP SYN or ACK packets.
 - They typically only need client TCP and UDP, with no requirement for ingress ICMP.
 
@@ -72,9 +72,9 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 
 Follow the best practices for internal routers or firewall interface IP addresses on your MT prefixes below.
 
-1.  Create [a list](/firewall/cf-dashboard/rules-lists/), **Internal routers** for example, list your IP addresses.
+1.  Create [an IP list](/waf/tools/lists/custom-lists/#ip-lists), **Internal routers** for example, with your IP addresses.
 2.  Block ICMP if it is not needed.
-3.  Permit GRE/ESP as needed if the devices have GRE/IPSEC tunnels via the Internet.
+3.  Permit GRE/ESP as needed if the devices have GRE/IPsec tunnels via the Internet.
 
 ### Suggested rules
 
@@ -102,7 +102,7 @@ Where possible, permit the required destination IP addresses and ports for web s
 
 The following is an example of suggested rules, but you should only make changes based on your specific requirements. For example, if you are not proxied by Cloudflare Layer 7 protection and you expect traffic sourced from the web towards your web servers:
 
-1.  Create [a list](/firewall/cf-dashboard/rules-lists/), **web servers** for example, to list IP addresses for your web servers.
+1.  Create [an IP list](/waf/tools/lists/custom-lists/#ip-lists), **web servers** for example, to list IP addresses for your web servers.
 2.  Permit traffic for the web server traffic inbound from the Internet.
 3.  Permit traffic for the infrastructure or client traffic flows from the Internet, for example DNS and NTP.
 4.  Block all other traffic destined for the web server IP addresses.
@@ -110,13 +110,13 @@ The following is an example of suggested rules, but you should only make changes
 ### Suggested rules
 
 **Rule ID**: 1 <br/>
-**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
-**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
+**Description**: Allows inbound HTTP/S traffic from the Internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
+**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 
 **Rule ID**: 2 <br/>
 **Description**: Allows UDP replies for DNS and NTP to web servers <br/>
-**Match**: `ip.dst in $web_servers and ip.proto eq “udp” and udp.srcport in {53 123} and udp.dstport in {1024..65535}` <br/>
+**Match**: `ip.dst in $web_servers and ip.proto eq "udp" and udp.srcport in {53 123} and udp.dstport in {1024..65535}` <br/>
 **Action**: Allow if necessary but Disable if under attack <br/>
 
 **Rule ID**: 3 <br/>
@@ -131,7 +131,7 @@ For a list of Cloudflare's IP addresses, refer to [Cloudflare's IP addresses](ht
 ### Suggested rules for Cloudflare proxied traffic
 
 **Description**: Allow inbound HTTP/S traffic from Cloudflare with SYN or ACK <br/>
-**Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack) and ip.src in {173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22}` <br/>
+**Match**: `ip.proto eq "tcp" and ip.dst in $web_servers and tcp.dstport in {80 443} and not (tcp.flags.syn and tcp.flags.ack) and ip.src in {173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22}` <br/>
 **Action**: Allow <br/>
 
 ## Non-web servers

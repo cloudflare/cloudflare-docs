@@ -3,7 +3,7 @@ pcx_content_type: how-to
 type: overview
 title: Filters
 weight: 40
-layout: list
+layout: wide
 ---
 
 # Filters
@@ -188,7 +188,7 @@ The following table represents the comparison operators that are supported and e
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#x2705;</td>
+      <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
          <code class="InlineCode">{\"key\":\"EdgeResponseStatus\",\"operator\":\"<strong>in</strong>\",\"value\":[200,201]}</code>
@@ -200,7 +200,7 @@ The following table represents the comparison operators that are supported and e
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#x2705;</td>
+      <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
          <code class="InlineCode">{\"key\":\"EdgeResponseStatus\",\"operator\":\"<strong>!in</strong>\",\"value\":[200,201]}</code>
@@ -212,13 +212,7 @@ The following table represents the comparison operators that are supported and e
 
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 
-{{<Aside type="note" header="Note">}}
-Filtering is not supported on the following data types: `objects`, `array[int]`, `array[object]`.
-
-For the Firewall events dataset, the following fields are not supported: Action, Kind, MatchIndex, Metadata, OriginatorRayID, RuleID and Source.
-
-For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
-{{</Aside>}}
+{{<render file="_filtering-limitations.md">}}
 
 ## Logical Operators
 
@@ -236,9 +230,9 @@ Here are some examples of how the logical operators can be implemented. `X`, `Y`
 
 - (X AND Y) OR Z - `{"where":{"or":[{"and": [{X},{Y}]},{Z}]}}`
 
-## Setting filters via API or dashboard
+## Set filters via API or dashboard
 
-Filters can be set via API or the Cloudflare dashboard.
+Filters can be set via API or the Cloudflare dashboard. Note that using a filter is optional, but if used, it must contain the `where` key.
 
 ### API
 
@@ -251,7 +245,12 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 -H 'Content-Type: application/json' \
 -d '{
 "name":"static-assets",
-"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+"output_options": {
+    "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
+    "sample_rate": 0.1,
+    "timestamp_format": "rfc3339"
+    "CVE-2021-44228": "true"
+},
 "dataset": "http_requests",
 "filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"},{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}",
 "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2/"
@@ -263,8 +262,8 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 To set filters through the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the domain you want to use.
-2. Go to **Analytics** > **Logs**.
-3. Select **Connect a service**. A modal window will open.
+2. Go to **Analytics & Logs** > **Logs**.
+3. Select **Add Logpush job**. A modal window will open.
 4. Select the dataset you want to push to a storage service.
 5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
 6. You need to select  a [Field](/logs/reference/log-fields/), an [Operator](/logs/reference/filters/#logical-operators), and a **Value**.

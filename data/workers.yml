@@ -4,6 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.6
 product:
   title: Workers
   url: /workers/
+  group: Developer platform
+  preview_tryout: true
 
 meta:
   title: Cloudflare Workers docs
@@ -11,7 +13,6 @@ meta:
     environment that allows you to create entirely new applications or augment
     existing ones without configuring or maintaining infrastructure.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
@@ -23,8 +24,13 @@ externals:
   - title: Workers home
     url: https://workers.cloudflare.com
   - title: Playground
-    url: https://cloudflareworkers.com
+    url: https://workers.cloudflare.com/playground
   - title: Pricing
     url: https://workers.cloudflare.com/#plans
   - title: Discord
-    url: https://discord.gg/cloudflaredev
+    url: https://discord.cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: workers

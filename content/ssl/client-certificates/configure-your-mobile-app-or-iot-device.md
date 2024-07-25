@@ -6,7 +6,7 @@ weight: 4
 
 # Configure your mobile app or IoT device
 
-This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](/api-shield/).
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield](/api-shield/).
 
 ## Scenario details
 
@@ -14,7 +14,7 @@ This walkthrough uses the example of a device that captures temperature readings
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app/)).
 
-Temperatures are stored in [Workers KV](/workers/learning/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
+Temperatures are stored in [Workers KV](/kv/reference/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
@@ -105,7 +105,7 @@ $ echo -e "$TEMPERATURE\n$TIMESTAMP"
 36.70
 2020-09-28T02:54:56Z
 
-$ curl -v -H "Content-Type: application/json" -d '{"temperature":'''$TEMPERATURE''', "time": "'''$TIMESTAMP'''"}' https://shield.upinatoms.com/temps 2>&1 | grep "< HTTP/2"
+$ curl --verbose --header "Content-Type: application/json" --data '{"temperature":'''$TEMPERATURE''', "time": "'''$TIMESTAMP'''"}' https://shield.upinatoms.com/temps 2>&1 | grep "< HTTP/2"
 < HTTP/2 201
 
 ```
@@ -114,8 +114,8 @@ $ curl -v -H "Content-Type: application/json" -d '{"temperature":'''$TEMPERATURE
 
 A GET request to the `temps` endpoint returns the most recent readings, including the one submitted in the example above:
 
-```json
-$ curl -s https://shield.upinatoms.com/temps | jq .
+```sh
+$ curl --silent https://shield.upinatoms.com/temps | jq .
 [
   {
     "temperature": 36.3,
@@ -136,19 +136,11 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 
 ## Step 2 — Create Cloudflare-issued certificates
 
-Before you can use API Shield to protect your API or web application, you must create Cloudflare-issued client certificates.
+Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.
 
 You can [create a client certificate in the Cloudflare dashboard](/ssl/client-certificates/create-a-client-certificate/).
 
 However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.
-
-{{<Aside type="warning" header="Important">}}
-
-You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
-
-If you need to use a different CA, contact a Cloudflare customer success manager.
-
-{{</Aside>}}
 
 To create a bootstrap certificate for the iOS application and the IoT device, this example uses [Cloudflare’s public key infrastructure toolkit, CFSSL](https://github.com/cloudflare/cfssl):
 
@@ -176,6 +168,7 @@ $ cat <<'EOF' | tee -a csr.json
 EOF
 
 $ cfssl genkey csr.json | cfssljson -bare certificate
+
 2020/09/27 21:28:46 [INFO] generate received request
 2020/09/27 21:28:46 [INFO] received CSR
 2020/09/27 21:28:46 [INFO] generating key: rsa-2048
@@ -192,8 +185,8 @@ $ cfssl genkey csr.json | cfssljson -bare certificate
 $ mv certificate-key.pem sensor-key.pem
 $ mv certificate.csr sensor.csr
 
-// now ask that these CSRs be signed by the private CA issued for your zone
-// we need to replace actual newlines in the CSR with ‘\n’ before POST’ing
+# now ask that these CSRs be signed by the private CA issued for your zone
+# we need to replace actual newlines in the CSR with ‘\n’ before POST’ing
 $ CSR=$(cat ios.csr | perl -pe 's/\n/\\n/g')
 $ request_body=$(< <(cat <<EOF
 {
@@ -203,10 +196,15 @@ $ request_body=$(< <(cat <<EOF
 EOF
 ))
 
-// save the response so we can view it and then extra the certificate
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
+# save the response so we can view it and then extra the certificate
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/client_certificates \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data "$request_body" > response.json
 
 $ cat response.json | jq .
+
 {
   "success": true,
   "errors": [],
@@ -248,8 +246,11 @@ $ request_body=$(< <(cat <<EOF
 EOF
 ))
 
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates | perl -npe 's/\\n/\n/g; s/"//g' > sensor.pem
-
+$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/client_certificates \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data "$request_body" | perl -npe 's/\\n/\n/g; s/"//g' > sensor.pem
 ```
 
 ***
@@ -361,7 +362,7 @@ def readSensor():
     # Takes a reading from a temperature sensor and store it to temp_measurement
 
     dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime(‘%Y-%m-%dT%H:%M:%SZ’)
+    timestampStr = dateTimeObj.strftime('%Y-%m-%dT%H:%M:%SZ')
 
     measurement = {'temperature':str(temp_measurement),'time':timestampStr}
     return measurement
@@ -387,7 +388,7 @@ When the script attempts to connect to `https://shield.upinatoms.com/temps`, Clo
 
 Without the client certificate, the Cloudflare rejects the request:
 
-```bash
+```txt
 Cloudflare API Shield [IoT device demonstration]
 Request body:  {"temperature": "36.5", "time": "2020-09-28T15:52:19Z"}
 Response status code: 403
@@ -395,7 +396,7 @@ Response status code: 403
 
 When the IoT device presents a valid client certificate, the POST request succeeds and the temperature reading is recorded:
 
-```bash
+```txt
 Cloudflare API Shield [IoT device demonstration]
 Request body:  {"temperature": "36.5", "time": "2020-09-28T15:56:45Z"}
 Response status code: 201
@@ -411,4 +412,4 @@ After creating Cloudflare-issued certificates, the next step is to [enable mTLS]
 
 ## Step 6 — Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create a mTLS rule](/firewall/cf-dashboard/create-mtls-rule/).
+To configure API Shield to require client certificates, [create a mTLS rule](/api-shield/security/mtls/configure/#create-an-mtls-rule/).

@@ -4,12 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M39 4
 product:
   title: Rules
   url: /rules/
+  group: Cloudflare essentials
+  additional_groups: [Application performance, Application security, Network security]
 
 meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/general/rules/66
@@ -18,3 +19,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: rules

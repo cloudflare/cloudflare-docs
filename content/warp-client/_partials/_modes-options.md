@@ -18,7 +18,7 @@ WARP mode is the default and the recommended mode of operation. However, if you 
 
 ## WARP options
 
-Beyond the two modes of operation, the WARP app lets you configure additional options to better suit your needs. You can change the protocol used to connect to Cloudflare or enable [1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families), for example. To access these options:
+Beyond the two modes of operation, the WARP app lets you configure additional options to better suit your needs. You can change the protocol used to connect to Cloudflare or enable [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families), for example. To access these options:
 
 1. Select the WARP app icon.
 2. Select the **cog icon** > **Preferences**.
@@ -27,9 +27,9 @@ The following is a list of options you can configure in the **Connection** tab:
 
 * **Disable for all Wi-Fi / wired networks**: Check the box corresponding to the network where you want to prevent WARP from working on.
 * **DNS Protocol**: The available options depend on the WARP mode you have enabled:
-  * **WARP**: Only available when you have the WARP mode enabled. All DNS traffic encrypted and [sent to Cloudflare's edge](/warp-client/warp-modes/#_1.1.1.1_with_warp).
+  * **WARP**: Only available when you have the WARP mode enabled. All DNS traffic encrypted and [sent to Cloudflare's global network](/warp-client/warp-modes/#1111-with-warp).
   * **HTTPS**: All DNS traffic is sent outside the tunnel via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/).
   * **TLS**: All DNS traffic is sent outside the tunnel via [encrypted TLS](/1.1.1.1/encryption/dns-over-tls/).
-* **1.1.1.1 for Families**: Allows you to [enable 1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families) and choose between blocking malware, or blocking malware and adult content.
+* **1.1.1.1 for Families**: Allows you to [enable 1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) and choose between blocking malware, or blocking malware and adult content.
 
-For the **Advanced** options, refer to [Exclude or include network traffic with WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) for more information.
+For the **Advanced** options, refer to [Exclude or include network traffic with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/) for more information.

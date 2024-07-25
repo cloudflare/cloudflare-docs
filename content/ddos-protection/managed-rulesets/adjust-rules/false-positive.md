@@ -14,35 +14,32 @@ To remedy a false positive:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-2. Navigate to the analytics dashboard and apply filters to the displayed data.
+2. Go to the analytics dashboard and apply filters to the displayed data.
 
-    <details><summary>For WAF/CDN customers</summary><div>
+    {{<details header="For WAF/CDN customers">}}
 
-    1\. Select the zone that is experiencing DDoS attack false positives.
+1. Select the zone that is experiencing DDoS attack false positives.
+2. Go to **Security** > **Events**.
+3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
-    2\. Navigate to **Security** > **Events**.
+    {{</details>}}
 
-    3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+    {{<details header="For Magic Transit and Spectrum customers">}}
 
-    </div></details>
+1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+2. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
-    <details><summary>For Magic Transit and Spectrum customers</summary><div>
-
-    1\. In the account home page, open **Network Analytics**.
-
-    2\. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
-
-    </div></details>
+    {{</details>}}
 
 3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
 
 4. Copy the rule name.
 
-5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
+5. Go to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
-7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_.
+7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
 
 8. Select **Next** and then select **Save**.
 
@@ -50,7 +47,7 @@ Once saved, the rule takes effect within one or two minutes. The rule adjustment
 
 ## Updating the adjusted rules later
 
-Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
+Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity-level) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
 
 {{<Aside type="note" header="Recommendation: Enable DDoS alerts">}}
 

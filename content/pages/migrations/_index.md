@@ -2,8 +2,9 @@
 type: overview
 pcx_content_type: navigation
 title: Migration guides
-weight: 5
-layout: table
+weight: 4
 ---
 
 # Migration guides
+
+{{<directory-listing>}}

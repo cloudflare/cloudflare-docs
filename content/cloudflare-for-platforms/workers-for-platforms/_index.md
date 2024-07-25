@@ -1,21 +1,57 @@
 ---
-pcx_content_type: navigation
 title: Workers for Platforms
-weight: 9
+weight: 1
+layout: overview
+pcx_content_type: overview
 ---
  
 # Workers for Platforms
- 
-Using Cloudflare [Workers](/workers/) allows you to improve performance and scalability by hosting your application entirely through our network. Cloudflare’s Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-The Workers configuration API was initially built around managing a relatively small number of scripts on each account. This leads to some difficulties when using Workers as a platform for your own users, including: frequently needing to increase script limits; adding an ever-increasing number of routes; and managing logic in a central place if your own logic is supposed to come before your customers' logic.
+{{<description>}}
 
-Dispatch namespaces are Cloudflare's solution to these problems. Instead of adding individual routes to your users’ Workers, you will upload them to a dispatch namespace and then dynamically dispatch to them at runtime using a dispatch namespace binding. This allows you to run your own code as a wrapper around the namespaced Worker while still managing it as a single script; logically groups your code separately from your users’ code; and provides additional APIs like `script tags` for bulk operations on the namespaced Workers.
+Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.
 
-Prior to using Workers for Platforms, [generate an API token](/fundamentals/api/get-started/create-token/) or [obtain your API key](/fundamentals/api/get-started/keys/).
+{{</description>}}
 
-{{<directory-listing>}}
+{{<plan type="paid">}}
 
-## Connect with us
+Workers for Platforms allows you to run your own code as a wrapper around your user's code. With Workers for Platforms, you can logically group your code separately from your users' code, create custom logic, and use additional APIs such as [script tags](/cloudflare-for-platforms/workers-for-platforms/configuration/tags/) for bulk operations.
 
-If you have feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community](https://discord.gg/jbBfwFqDVU) on Discord.
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms lets you surpass Cloudflare Workers' 500 scripts per account [limit](/cloudflare-for-platforms/workers-for-platforms/platform/limits/).
+
+---
+
+## Features
+
+{{<feature header="Get started" href="/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/" cta="Get started">}}
+Learn how to set up Workers for Platforms.
+{{</feature>}}
+
+{{<feature header="Workers for Platforms architecture" href="/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/" cta="Learn more">}}
+Learn about Workers for Platforms architecture.
+{{</feature>}}
+
+
+---
+
+## Related products
+
+{{<related header="Workers" href="/workers/" product="workers">}}
+
+Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
+
+{{</related>}}
+
+---
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Limits" href="/cloudflare-for-platforms/workers-for-platforms/platform/limits/" icon="documentation-clipboard">}}Learn about limits that apply to your Workers for Platforms project.{{</resource>}}
+
+{{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+
+{{</resource-group>}}

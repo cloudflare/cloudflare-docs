@@ -14,11 +14,13 @@ You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
-Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
+Right now, Zaraz e-commerce is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing, Facebook Pixel, Amplitude, Pinterest Conversions API, TikTok and Branch.
+
+{{<Aside type="note" header="Note">}}It is crucial you follow the guidelines set by third-party tools, such as Google Analytics 3 and Google Analytics 4, to ensure compliance with their limitations on payload size and length. For instance, if your `Order Completed` call includes a large number of products, it may exceed the limitations of the selected tool.{{</Aside>}}
 
 ## Enable e-commerce tracking
 
-You do not need to map e-commerce events to triggers. Zaraz will automatically forward data using the right format to the tools with e-commerce support.
+You do not need to map e-commerce events to triggers. Zaraz automatically forwards data using the right format to the tools with e-commerce support.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Settings**.
@@ -62,13 +64,12 @@ To create a complete tracking event, you need to add an event and one or more pa
 - `Order Cancelled`
 - `Clicked Promotion`
 - `Viewed Promotion`
+- `Shipping Info Entered`
 
 ## List of supported parameters:
 
-{{<table-wrap>}}
-
 Parameter | Type | Description |
---- | --- | --- 
+--- | --- | ---
 `product_id`             | String | Product ID.
 `sku`                    | String | Product SKU number.
 `category`               | String | Product category.
@@ -104,8 +105,7 @@ Parameter | Type | Description |
 `creative`               | String | Label for creative asset of promotion being tracked.
 `query`                  | String | Product search term.
 `step`                   | Number | The Number of the checkout step in the checkout process.
-
-{{</table-wrap>}}
+`payment_type`           | String | The type of payment used.
 
 ## Event code examples
 
@@ -128,10 +128,10 @@ zaraz.ecommerce('Product Viewed', {
 ### Product List Viewed
 
 ```js
-zaraz.ecommerce('Product List Viewed', 
-  {  products: 
+zaraz.ecommerce('Product List Viewed',
+  {  products:
     [
-    { 
+    {
       product_id: '999555321',
       sku: '2671033',
       category: 'T-shirts',
@@ -140,9 +140,9 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'White',
       price: 14.99,
       currency: 'usd',
-      value: 18.99, 
-      position: 1, 
-    },{ 
+      value: 18.99,
+      position: 1,
+    },{
       product_id: '999555322',
       sku: '2671034',
       category: 'T-shirts',
@@ -151,10 +151,10 @@ zaraz.ecommerce('Product List Viewed',
       variant: 'Pink',
       price: 10.99,
       currency: 'usd',
-      value: 16.99, 
-      position: 2, 
+      value: 16.99,
+      position: 2,
     },
-    ], 
+    ],
   }
 );
 ```
@@ -193,7 +193,7 @@ zaraz.ecommerce('Order Completed', {
   order_id: '817286897056801',
   affiliation: 'affiliate.com',
   total: 30.0,
-  revenue: 25.0,
+  revenue: 20.0,
   shipping: 3,
   tax: 2,
   discount: 5,

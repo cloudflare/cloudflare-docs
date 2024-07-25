@@ -2,56 +2,57 @@
 title: Configure Managed Transforms
 pcx_content_type: how-to
 weight: 1
+meta:
+    description: Learn how to configure Managed Transforms.
 ---
 
 # Configure Managed Transforms
 
-## In the dashboard
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/managed-transforms-card.png)
+3. Go to the **Managed Transforms** tab.
 
-3. Click **Managed Transforms**.
+4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by selecting the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
-4. In the pop-up dialog that appears, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
-5. Click **Close**.
+**1. Get list of available Managed Transforms**
 
-## Via API
+Check the Managed Transform's current status and availability using the [List Managed Transforms](/api/operations/managed-transforms-list-managed-transforms) operation.
 
-To enable a Managed Transform via API:
-
-1. Check the Managed Transform's current status and availability using the [Get all managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-list-managed-transforms) operation.
-2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Change state of managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
-
-### 1. Get list of available Managed Transforms
-
-The following request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field).
+The following example request obtains a list of available Managed Transforms, organized by request or response, with information about their current status (`enabled` field) and if you can update them, based on conflicts with other enabled Managed Transforms (`has_conflict` field).
 
 Each Managed Transform item will optionally contain a `conflicts_with` array informing you about any Managed Transforms that will conflict with the current Managed Transform when enabled.
 
 The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
-```json
+```bash
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
--H "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
+{{<details header="Response">}}
+
 ```json
----
-header: Response
----
 {
   "result": {
     "managed_request_headers": [
       {
         "id": "add_bot_protection_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
+        "id": "add_client_certificate_headers",
         "enabled": false,
         "has_conflict": false
       },
@@ -96,21 +97,25 @@ header: Response
 }
 ```
 
-### 2. Change the status of Managed Transforms
+{{</details>}}
+
+**2. Change the status of Managed Transforms**
+
+Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Update status of Managed Transforms](/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
 
 Add the Managed Transforms you wish to change to the request body, and update their status in the `enabled` field. You cannot enable a Managed Transform that has a conflict with a currently enabled Managed Transform (that is, an item where `has_conflict` is `true`).
 
 Make sure you include the Managed Transforms you are updating in the correct JSON object (`managed_request_headers` or `managed_response_headers`).
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
--d '{
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
   "managed_request_headers": [
     {
       "id": "add_visitor_location_headers",
@@ -128,15 +133,19 @@ curl -X PATCH \
 
 The response will include all the available Managed Transforms and their new status after the update.
 
+{{<details header="Response">}}
+
 ```json
----
-header: Response
----
 {
   "result": {
     "managed_request_headers": [
       {
         "id": "add_bot_protection_headers",
+        "enabled": false,
+        "has_conflict": false
+      },
+      {
+        "id": "add_client_certificate_headers",
         "enabled": false,
         "has_conflict": false
       },
@@ -180,3 +189,8 @@ header: Response
   "messages": []
 }
 ```
+
+{{</details>}}
+
+{{</tab>}}
+{{</tabs>}}

@@ -4,12 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44.9
 product:
   title: Stream
   url: /stream/
+  group: Developer platform
+  additional_groups: [Media]
+  preview_tryout: true
 
 meta:
   title: Cloudflare Stream docs
   description: Store, encode, deliver, and play videos on your sites and applications.
   author: '@cloudflare'
-  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/stream/52
@@ -20,3 +22,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: stream

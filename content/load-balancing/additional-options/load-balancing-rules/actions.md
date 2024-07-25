@@ -3,7 +3,7 @@ title: Actions
 type: overview
 pcx_content_type: reference
 weight: 31
-layout: list
+layout: wide
 meta:
   title: Load Balancing actions
 ---
@@ -50,12 +50,12 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     <tr>
       <td><em>Override</em></td>
       <td><em>Fallback pool</em></td>
-      <td>Update the <a href="/load-balancing/understand-basics/traffic-steering/steering-policies/#off---failover">fallback pools</a> associated with your load balancer.</td>
+      <td>Update the <a href="/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#off---failover">fallback pools</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>
-      <td><em>Origin pools</em></td>
-      <td>Update the <a href="/load-balancing/understand-basics/pools/">origin pools</a> associated with your load balancer.</td>
+      <td><em>Pools</em></td>
+      <td>Update the <a href="/load-balancing/pools/">pools</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>

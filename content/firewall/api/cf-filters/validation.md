@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Expression validation
 weight: 8
-layout: list
+layout: wide
 ---
 
 # Expression validation
@@ -47,10 +47,9 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
 ---
 header: Request
 ---
-curl -X GET \
-'https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -79,18 +78,17 @@ Filter parsing error:
 
 ### Validate expression via JSON object
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
-"https://api.cloudflare.com/client/v4/filters/validate-expr" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
--d '{
+curl "https://api.cloudflare.com/client/v4/filters/validate-expr" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "expression": "ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}"
-}' 
+}'
 ```
 
 ```json
@@ -114,5 +112,5 @@ Note the validation error in the response. In this example, the value for the su
 ```txt
 Filter parsing error:
 `ip.src in {2400:cb00::/32 2405:8100::/2000 2c0f:f248::/32 2a06:98c0::/29}`
-                                        ^^^^ number too large to fit in target type while parsing with radix 10
+                                       ^^^^ number too large to fit in target type while parsing with radix 10
 ```

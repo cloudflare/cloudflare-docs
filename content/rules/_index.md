@@ -11,21 +11,24 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{<render file="_rules-definition.md">}}
+<br>
+
+Rules features require that you [proxy the DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) of your domain (or subdomain) through Cloudflare.
 
 ---
 
-## Products
+## Features
 
 {{<feature header="Transform Rules" href="/rules/transform/">}}
-Adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
+Adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
 {{</feature>}}
 
 {{<feature header="URL normalization" href="/rules/normalization/" cta="Configure URL normalization">}}
 Modify the URLs of incoming requests so that they conform to a consistent formatting standard.
 {{</feature>}}
 
-{{<feature header="URL forwarding" href="/rules/url-forwarding/">}}
+{{<feature header="Redirects" href="/rules/url-forwarding/">}}
 Redirect visitors from a source URL to a target URL with a specific HTTP status code. Use Single Redirects or Bulk Redirects depending on your use case.
 {{</feature>}}
 
@@ -37,21 +40,25 @@ Customize where the incoming traffic will go and with which parameters. Override
 Customize Cloudflare configuration settings for matching incoming requests.
 {{</feature>}}
 
+{{<feature header="Compression Rules" href="/rules/compression-rules/">}}
+Customize the compression applied to responses from Cloudflare's global network to your website visitors, based on the file extension and content type.
+{{</feature>}}
+
+{{<feature header="Snippets" href="/rules/snippets/">}}
+Customize the behavior of your website or application using short pieces of JavaScript code.
+{{</feature>}}
+
 {{<feature header="Custom error responses" href="/rules/custom-error-responses/" cta="Configure custom error responses">}}
 Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
 {{</feature>}}
 
-{{<feature header="Page Rules" href="https://support.cloudflare.com/hc/articles/218411427">}}
+{{<feature header="Page Rules" href="/rules/page-rules/" cta="Use Page Rules">}}
 Trigger certain actions when a request matches a URL pattern.
 {{</feature>}}
 
 ---
 
 ## Related products
-
-{{<related header="Firewall rules" href="/firewall/" product="firewall">}}
-Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
-{{</related>}}
 
 {{<related header="Custom rules" href="/waf/custom-rules/" product="waf">}}
 Control incoming traffic by filtering requests to a zone. You can block or challenge incoming requests according to rules you define.
@@ -61,8 +68,12 @@ Control incoming traffic by filtering requests to a zone. You can block or chall
 Define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 {{</related>}}
 
-{{<related header="Cache rules" href="/cache/about/cache-rules/" product="cache">}}
+{{<related header="Cache rules" href="/cache/how-to/cache-rules/" product="cache">}}
 Customize the cache properties of your HTTP requests.
+{{</related>}}
+
+{{<related header="Workers" href="/workers/" product="workers">}}
+Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 {{</related>}}
 
 ---

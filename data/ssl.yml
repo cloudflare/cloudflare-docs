@@ -4,6 +4,8 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.4
 product:
   title: SSL/TLS
   url: /ssl/
+  group: Application performance
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare SSL/TLS docs
@@ -11,7 +13,6 @@ meta:
     prevent data theft and other tampering. We are the first Internet
     performance and security company to offer free SSL/TLS protection.
   author: '@cloudflare'
-  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -21,3 +22,8 @@ resources:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: ssl
