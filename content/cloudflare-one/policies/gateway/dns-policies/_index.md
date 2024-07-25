@@ -134,6 +134,8 @@ API value: `override`
 
 {{<details header="Available selectors">}}
 
+The Override action cannot be used with selectors evaluated during or after DNS resolution.
+
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [DNS Resolver IP](#dns-resolver-ip)
@@ -162,8 +164,6 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
-
-{{<Aside type="note">}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
 
 ### Safe Search
 
