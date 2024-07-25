@@ -151,8 +151,6 @@ API value: `isolate`
 
 - [Application](#application)
 - [Content Categories](#content-categories)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
 - [Domain](#domain)
 - [Host](#host)
 - [HTTP Method](#http-method)
@@ -175,12 +173,6 @@ API value: `isolate`
 
 The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
 
-{{<Aside type="warning">}}
-
-The [Destination Continent](#destination-continent), [Destination Country](#destination-country), and [Destination IP](#destination-ip) selectors do not support isolation.
-
-{{</Aside>}}
-
 ### Do Not Isolate
 
 API value: `noisolate`
@@ -189,8 +181,6 @@ API value: `noisolate`
 
 - [Application](#application)
 - [Content Categories](#content-categories)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
 - [Domain](#domain)
 - [Host](#host)
 - [HTTP Method](#http-method)
