@@ -66,7 +66,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/), to answer a question.
 
-Update the `index.ts` file in your `hello-ai` application directory with the following code:
+Replace the `index.ts` file in your `hello-ai` application directory with the following code:
 
 ```typescript
 ---
