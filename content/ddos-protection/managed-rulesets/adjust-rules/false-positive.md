@@ -59,7 +59,7 @@ Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-prot
 
 ### Avoid false positives while retaining protection and visibility
 
-To see what DDoS Managed Rules do in a high sensitivity level while remaining protected by blocking attacks at a low sensitivity level, Advanced DDoS protection customers can [create a first override](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override) that blocks attacks at a low sensitivity and a second override expression to log at a high sensitivity. 
+To see what DDoS Managed Rules do in a high sensitivity level while remaining protected by blocking attacks at a low sensitivity level, Advanced DDoS protection customers can [create a first override](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override) that blocks attacks at a low sensitivity and a second override to log at a high sensitivity. 
 
 The overrides must be set in that order. Otherwise, it will not work. This is because overrides are evaluated in order and will stop at the first override that matches both expression and sensitivity. Setting the overrides in the wrong order would cause the `Log` override at a high sensitivity to match all instances. As a result, Cloudflare will never evaluate the `Block` override that would be placed behind it, causing all rules to be set in `Log` mode.
 
