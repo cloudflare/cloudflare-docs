@@ -81,6 +81,8 @@ Note: The keyword `ASSETS` is reserved and cannot be used as a resource binding.
 
 Save `wrangler.toml` and we are ready to move on to the last step.
 
+Alternatively, you can add a binding to your Pages project on the dashboard by navigating to the project’s _Settings_ tab > _Functions_ > _R2 bucket bindings_.
+
 ## Serve R2 Assets From Pages
 
 The last step involves serving media assets from R2 on the blog. To do that, we will create a function to handle requests for media files.
@@ -107,9 +109,9 @@ After creating the folders and JavaScript file, the blog directory structure sho
 Finally, we will add a handler function to `[[all]].js`. This function receives all media requests, and returns the corresponding file asset from R2:
 
 ```js
-export async function onRequestGet(c) {
-  const path = new URL(c.request.url).pathname.replace("/media/", "");
-  const file = await c.env.MEDIA.get(path);
+export async function onRequestGet(ctx) {
+  const path = new URL(ctx.request.url).pathname.replace("/media/", "");
+  const file = await ctx.env.MEDIA.get(path);
   if (!file) return new Response(null, { status: 404 });
   return new Response(file.body, {
     headers: { "Content-Type": file.httpMetadata.contentType },
