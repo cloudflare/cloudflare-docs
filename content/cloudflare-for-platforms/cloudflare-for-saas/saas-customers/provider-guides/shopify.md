@@ -32,7 +32,7 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 For questions about Shopify setup, refer to their [support guide](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains/connect-domain-manual).
 
-If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), reach out to your account team or the [Cloudflare Community](https://community.cloudflare.com).
 
 {{</Aside>}}
 
