@@ -39,6 +39,7 @@ This is not an exhaustive list of Cloudflare products and features.
 | [Origin Rules](/rules/origin-rules/) | Yes | Yes | Enterprise zones can configure Origin Rules, by setting the Host Header and DNS Overrides to direct traffic to a SaaS zone. |
 | [Polish](/images/polish/) | Yes* | Yes | Polish only runs on cached assets. If the customer zone is bypassing cache for SaaS zone destined traffic, then images optimized by Polish will not be loaded from origin. |
 | [Rate Limiting](/waf/rate-limiting-rules/) | Yes* | Yes | Rate Limiting rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
+| [Rocket Loader](/speed/optimization/content/rocket-loader/) | No | No |
 | [Security Level](/waf/tools/security-level/) | Yes | Yes |
 | [Spectrum](/spectrum/) | No | No |
 | [Transform Rules](/rules/transform/) | Yes* | Yes | Transform Rules that match the subdomain used for O2O may block or interfere with the flow of visitors to your website. |
