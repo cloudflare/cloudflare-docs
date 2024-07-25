@@ -48,7 +48,7 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 That record must remain in place for as long as your subdomain is active on the partial setup on Cloudflare.
 
 6. Within a short period of time, the child zone should be active.
-7. At your authoritative DNS provider, add `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomains you want to proxy through Cloudflare.
+7. At your authoritative DNS provider, add `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomain records you want to proxy through Cloudflare.
 
 {{<details header="Example CNAME record at authoritative DNS provider">}}
 
@@ -116,7 +116,7 @@ That record must remain in place for as long as your subdomain is active on the 
 
 8. Within a short period of time, the child zone should be active.
 9. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any previous `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.
-10. At your authoritative DNS provider, add `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomains you want to proxy through Cloudflare.
+10. At your authoritative DNS provider, confirm you have `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomain records you want to proxy through Cloudflare.
 
 {{<details header="Example CNAME record at authoritative DNS provider">}}
 
