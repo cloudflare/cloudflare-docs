@@ -218,24 +218,28 @@ Subdomains that have not been assigned a category will inherit the category of t
 
 {{</table-wrap>}}
 
-## Filter by resolved IP category
+## Filtering options
 
-When creating a DNS block policy for security or content categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
+### Filter traffic by resolved IP category
 
-## Categorization Process
+When creating a DNS policy for security or content categories, you can optionally turn on **Filter traffic by resolved IP category** in the policy settings. When turned on, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
 
-Our domain categorization process consists of a robust data-driven approach that combines Cloudflare's proprietary data and third-party intelligence (encompassing both open-source and commercial feeds), with machine learning models and insights from our community feedback. This multifaceted strategy ensures the most accurate, timely, and comprehensive domain categorization available.
+### Ignore `CNAME` domain categories
 
-First, the categorization engine begins with a vast array of data sources. This includes:
+The categories for a site's `CNAME` records may differ from its `A` record. For example, `blog.example.com` may be categorized under Personal Blogs, while `example.com` is categorized under Technology. To limit matches for a DNS policy to only the root domain's categories, turn on **Ignore CNAME domain categories**.
 
-1. Cloudflare’s proprietary data leveraging Cloudflare’s extensive network data.
+Regardless of this setting, `CNAME` domain categories will still appear in your Gateway [Logpush](/cloudflare-one/insights/logs/logpush/) logs.
 
-2. Third-party intelligence feeds. We incorporate data from over 30 open-source intelligence feeds and premium commercial feeds, including industry leaders like Avira, Zvelo and others. This aggregation enriches our categorization with diverse insights and global threat intelligence.
+## Categorization process
 
-Then, the initial categorization is refined and continuously improved through:
+Cloudflare's domain categorization engine begins with multiple data sources, including:
 
-3. Machine learning models. Our advanced algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
+  1. Cloudflare's proprietary data using our global network.
 
-4. Community feedback. Direct input from our customers plays a critical role in refining and verifying our categorizations. Through a review process, feedback is assessed by both our internal models and threat analysts, ensuring that our categorizations reflect the most current and accurate threat intelligence.
+  2. Third-party intelligence feeds. Cloudflare uses data from over 30 open-source intelligence feeds and premium commercial feeds, such as Avira and Zvelo.
 
-This approach outlines how each component of our process contributes to the creation of a secure and accurately categorized Internet environment. By leveraging both data-driven insights and machine learning, complemented by the critical eye of our community, our categories are not just comprehensive, but also dynamically attuned to the evolving digital landscape.
+Then, the initial categorization is refined via:
+
+  3. Machine learning models. Our algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
+
+  4. Community feedback. Through a review process, Cloudflare assesses feedback by both our internal models and threat analysts. This ensures that our categorizations reflect the most current and accurate threat intelligence.

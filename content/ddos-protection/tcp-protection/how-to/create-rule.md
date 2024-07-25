@@ -11,7 +11,7 @@ meta:
 To create a [SYN flood rule](/ddos-protection/tcp-protection/#syn-flood-protection) or an [out-of-state TCP](/ddos-protection/tcp-protection/#out-of-state-tcp-protection) rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to Account Home > **L3/4 DDoS** > **Advanced TCP Protection**.
+2. Go to **L3/4 DDoS** > **Advanced Protection** > **Advanced TCP Protection**.
 3. Depending on the rule you are creating, do one of the following:
 
     * Under **SYN Flood Protection**, select **Create SYN flood rule**.

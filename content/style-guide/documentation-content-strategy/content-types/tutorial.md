@@ -7,6 +7,8 @@ title: Tutorial
 
 {{<glossary-definition term_id="tutorial">}}
 
+{{<render file="_howto-vs-tutorial.md">}}
+
 ## Template
 
 We have a [pre-built template](https://github.com/cloudflare/cloudflare-docs/blob/production/archetypes/tutorial.md) that helps you follow our general structure and content guidelines.
@@ -77,8 +79,4 @@ Guiding, straightforward, educational, authoritative
 
 ## Examples
 
-[Tutorials](/tutorials/)
-
-## Additional information
-
-We have a tool that pulls together everything labeled with `<pcx_content_type: tutorial>`: [Tutorials](/tutorials/)
+[Workers Tutorials](/workers/tutorials)

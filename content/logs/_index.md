@@ -45,7 +45,7 @@ Use Logs Engine to store your logs in R2 and query them directly.
 Summarize the history of changes made within your Cloudflare account.
 {{</related>}}
 
-{{<related header="Web Analytics" href="/analytics/web-analytics/" product="analytics">}}
+{{<related header="Web Analytics" href="/web-analytics/" product="analytics">}}
 Provides privacy-first analytics without changing your DNS or using Cloudflare's proxy.
 {{</related>}}
 

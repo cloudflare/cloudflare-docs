@@ -252,7 +252,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 -H 'Content-Type: application/json' \
 -d '{
 "name": "workers-logpush",
-"logpull_options": "fields=Event,EventTimestampMs,Outcome,Exceptions,Logs,ScriptName,ScriptVersion",
+"output_options": {
+    "field_names": ["Event", "EventTimestampMs", "Outcome", "Logs", "ScriptName", "ScriptVersion"],
+},
 "destination_conf": "<DESTINATION_URL>",
 "dataset": "workers_trace_events",
 "enabled": true
@@ -283,5 +285,4 @@ You can only create a new deployment with the last 10 uploaded versions of your 
 
 These Workers features will be supported in the near future.
 
-- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding.
 - Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).

@@ -34,6 +34,10 @@ Cloudflare Calls TURN server runs on [Cloudflare's global network](https://www.c
 
 There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predictable flat-rate pricing and SLA guarantees.
 
+### Does Cloudflare Calls TURN run in the Cloudflare China Network?
+
+Cloudflare's [China Network](/china-network/) does not participate in serving Calls traffic and TURN traffic from China will connect to Cloudflare locations outside of China.
+
 ## Technical
 
 ### I need to allowlist (whitelist) Cloudflare TURN IP addresses which IP addresses should I use?
@@ -71,3 +75,9 @@ No. Calls TURN will not respect `REQUESTED-ADDRESS-FAMILY` STUN attribute if spe
 ### Does Calls TURN support TCP relaying?
 
 No. Calls does not implement [RFC6062](https://datatracker.ietf.org/doc/html/rfc6062) and will not respect `REQUESTED-TRANSPORT` STUN attribute.
+
+### I am unable to make CreatePermission or ChannelBind requests with certain IP addresses. Why is that?
+
+Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
+
+If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.

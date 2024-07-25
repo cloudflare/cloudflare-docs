@@ -18,6 +18,10 @@ Ensure that traffic can reach your IdP and `<your-team-name>.cloudflareaccess.co
 
 {{<render file="warp/_warp-sessions-gateway.md">}}
 
+{{<Aside type="note" header="Enforce a global timeout">}}
+To enforce a global reauthentication event, set each of your Network or HTTP policies to the same WARP session duration.
+{{</Aside>}}
+
 {{<heading-pill style="beta" heading="h2">}}Configure WARP sessions in Access{{</heading-pill>}}
 
 You can allow users to log in to Access applications using their WARP session. WARP authentication is only supported for Access applications protected by Allow or Block policies.

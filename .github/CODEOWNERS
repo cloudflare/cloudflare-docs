@@ -173,3 +173,6 @@
 # Waiting Room
 /content/waiting-room/ @aolache @angelampcosta @cloudflare/pcx-technical-writing
 /data/changelogs/waiting-room.yaml @aolache @angelampcosta @cloudflare/pcx-technical-writing
+
+# Web Analytics
+/content/web-analytics/ @angelampcosta @cloudflare/pcx-technical-writing

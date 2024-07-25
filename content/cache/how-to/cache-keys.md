@@ -7,21 +7,14 @@ meta:
 
 # Cache Keys
 
-A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. For example, consider the following HTTP request on a TLS connection:
+A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. 
 
-```txt
-GET /logo.jpg HTTP/1.1
-Host: www.cloudflare.com
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
-Accept: image/jpg
-```
-
-As we can see from the example, the default cache key includes:
+A default cache key includes:
 
 1.  Full URL:
-    - scheme - not shown above, but could be HTTP or HTTPS.
-    - host - which in this example is `www.cloudflare.com`
-    - URI with query string - in this example is `/logo.jpg`
+    - scheme - could be HTTP or HTTPS.
+    - host - for example, `www.cloudflare.com`
+    - URI with query string - for example, `/logo.jpg`
 2.  Origin header sent by client (for CORS support).
 3.  `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4.  `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.

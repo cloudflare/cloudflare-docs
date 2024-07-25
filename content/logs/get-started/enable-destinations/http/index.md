@@ -41,7 +41,7 @@ The supported parameters are as follows:
 - Fields that are unchanged from other sources:
     - **dataset** (required): For example, `http_requests`.
     - **name** (optional): We suggest using your domain name as the job name.
-    - **logpull_options** (optional): Refer to [API configuration options](/logs/get-started/api-configuration/#options) to configure fields, sample rate, and timestamp format.
+    - **output_options** (optional): Refer to [Log Output Options](/logs/reference/log-output-options/) to configure fields, sample rate, and timestamp format.
 - Unique fields:
     - **destination_conf**: Where to send the logs. This consists of an endpoint URL and HTTP headers used.
         - Any `"header_*"` URL parameters will be used to set request headers.
@@ -64,7 +64,10 @@ The `ownership_challenge` parameter is not required to create a Logpush job to a
 $ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X POST -d '
 {
   "name": "theburritobot.com-https",
-  "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+  "output_options": {
+      "field_names": ["EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+  },
   "destination_conf": "https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
   "max_upload_bytes": 5000000,
   "max_upload_records": 1000,
