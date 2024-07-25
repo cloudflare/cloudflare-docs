@@ -16,4 +16,4 @@ To protect your network using a Cloudflare IP address, contact your account mana
 - Confirm [tunnel](/magic-transit/how-to/tunnel-health-checks/) and endpoint health checks were properly configured.
 - Update your infrastructure at your own pace to use the allocated Cloudflare IPs.
 
-When you use a Cloudflare-owned IP space, you do not need a {{<glossary-tooltip term_id="letter of agency" link="/magic-transit/prerequisites/#draft-letter-of-agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}. You can skip this step from the Prerequisites page.
+When you use a Cloudflare-owned IP space, you do not need a {{<glossary-tooltip term_id="letter of agency" link="/magic-transit/get-started/#draft-letter-of-agency">}}Letter of Agency (LOA){{</glossary-tooltip>}}. You can skip this step from the Prerequisites page.
