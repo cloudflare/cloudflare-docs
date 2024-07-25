@@ -179,3 +179,11 @@ entries:
   languages: [JavaScript]
   cloudflare: true
   updated: 2024-03-05
+- link: https://github.com/cloudflare/js-rpc-and-entrypoints-demo
+  name: JavaScript-native RPC on Cloudflare Workers <> Named Entrypoints
+  description: This is a collection of examples of communicating between multiple Cloudflare Workers using the remote-procedure call (RPC) system that is built into the Workers runtime.
+  tags: [RPC, Discord]
+  products: [Workers, D1, Access]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-16
