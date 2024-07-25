@@ -21,7 +21,7 @@ Create a new project named `hello-ai` by running:
 
 {{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
 
-Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI.
+Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI. When prompted with `In which directory do you want to create your application?`, you will see a pre-generated directory name. To name your directory `hello-ai`, simply type over the pre-generated name with `hello-ai` and press Enter.
 
 When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
@@ -29,7 +29,7 @@ When setting up your `hello-ai` Worker, answer the setup questions as follows:
 * Choose `"Hello World" Worker` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
-* Select `no` to deploying.
+* Select `no` to deploying. This allows you to complete the setup and test your Worker locally before deploying it [^1].
 
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
@@ -46,7 +46,7 @@ $ cd hello-ai
 
 You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file and save it:
 
 ```toml
 ---
