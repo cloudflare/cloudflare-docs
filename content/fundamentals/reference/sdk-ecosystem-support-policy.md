@@ -43,7 +43,7 @@ The SDK ecosystem follows semantic versioning, which defines versions as follows
 - PATCH version for backward-compatible bug fixes (without any improvements).
 
 {{<Aside type="warning">}}
-As Cloudflare has recently swapped to [automatically generating our libraries using OpenAPI](https://blog.cloudflare.com/lessons-from-building-an-automated-sdk-pipeline), we have relaxed the strict versioning requirements on the libraries (Terraform is not changing). Minor releases _may_ contain breaking changes in the forms of method, structure ,or type renames as the service owners stabilize their schemas and iterate on usability improvements.
+As Cloudflare has recently swapped to [automatically generating our libraries using OpenAPI](https://blog.cloudflare.com/lessons-from-building-an-automated-sdk-pipeline), we have relaxed the strict versioning requirements on the libraries (Terraform is not changing). Minor releases _may_ contain breaking changes in the forms of method, structure, or type renames as the service owners stabilize their schemas and iterate on usability improvements.
 
 If this is not suitable for your use case, pin to a known good version or use the previous major version of the library.
 {{</Aside>}}
