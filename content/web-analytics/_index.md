@@ -60,7 +60,7 @@ Speed allows you to assess the performance of your website and get recommendatio
 
 {{<resource header="Resource hub" href="https://www.cloudflare.com/application-services/products/analytics/" icon="documentation-clipboard">}}Refer to our latest resources to learn more about security, performance and reliability.{{</resource>}}
 
-{{<resource header="Cloudflare blog" href="https://blog.cloudflare.com/web-analytics-vitals-explorer/" icon="learning-center-book">}}Read articles about the latest updates about Web Analytics.
+{{<resource header="Cloudflare blog" href="https://blog.cloudflare.com/privacy-first-web-analytics/" icon="learning-center-book">}}Read articles about the latest updates about Web Analytics.
 {{</resource>}}
 
 {{</resource-group>}}
