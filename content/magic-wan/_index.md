@@ -76,7 +76,7 @@ Cloudflare Load Balancing distributes traffic across your endpoints, which reduc
 {{<resource-group>}}
 
 {{<resource header="Reference Architecture" href="/reference-architecture/architectures/sase/" icon="reference-architecture">}}
-Deep dive into the key architecture and functionalities of Cloudflare One, and learn more about Magic WAN and its structure.
+Deep dive into key architecture and functionalities aspects of Cloudflare One, and learn more about Magic WAN and its structure.
 {{</resource>}}
 
 {{</resource-group>}}
