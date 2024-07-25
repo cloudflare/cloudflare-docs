@@ -152,7 +152,8 @@ The following table lists the CAA record content for each CA:
 |-----------------------|------------------------------------------|
 | Let's Encrypt         | `letsencrypt.org`                        |
 | Google Trust Services | `pki.goog; cansignhttpexchanges=yes`     |
-| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
+| SSL.com               | `ssl.com`                                |
 | Sectigo               | `sectigo.com`                            |
+| DigiCert              | `digicert.com; cansignhttpexchanges=yes` |
 
 {{</table-wrap>}}
