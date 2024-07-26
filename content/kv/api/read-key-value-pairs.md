@@ -126,7 +126,7 @@ Metadata is a serializable value you append to each KV entry.
 
 - `response` {{<type>}}Promise<{
     value: <string | Object | ArrayBuffer | ReadableStream> | null>,
-    metadata: <string | null>
+    metadata: string | null
     }>{{</type>}}
 
   - An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
