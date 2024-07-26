@@ -55,7 +55,23 @@ In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Expres
 $ npm install hono
 ```
 
-## 3. Initialise the application
+## 3. Add API_KEY
+
+To ensure that the API Key is secure, you will add it as a [secret](https://developers.cloudflare.com/workers/configuration/secrets/). To do so, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
+
+```env
+API_KEY="YOUR_API_KEY"
+```
+
+Replace `YOUR_API_KEY` with a valid string value. You can also generate this value using the following command.
+
+```sh
+$ openssl rand -base64 32
+```
+
+Your Hono applicaton will use this API key for authentication.
+
+## 4. Initialise the application
 
 In the `src/index.ts` file, import the required packages, initialize a new Hono application, and configure the following middleware:
 
@@ -74,19 +90,18 @@ import { prettyJSON } from 'hono/pretty-json';
 
 type Bindings = {
 	DB: D1Database;
+	API_KEY: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-// update the token value
-const token = 'YOUR_SECRET_TOKEN'
-
-app.use('*', bearerAuth({token}), prettyJSON(), logger());
+app.use('*', prettyJSON(), logger(), async (c, next) => {
+	const auth = bearerAuth({ token: c.env.API_KEY });
+	return auth(c, next);
+});;
 ```
 
-In the above code, replace `YOUR_SECRET_TOKEN` with a secret token you want to use for API authentication.
-
-## 4. Add API endpoints
+## 5. Add API endpoints
 
 Next, in the `src/index.ts` file, add the following endpoints:
 
@@ -122,10 +137,10 @@ Start the development server by running the following command:
 $ npm run dev
 ```
 
-To test the API locally, execute the below cURL command:
+To test the API locally, execute the below cURL command. Replace `YOUR_API_KEY` with the value you set in the `.dev.vars` file.
 
 ```sh
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/all" --data '{}'
+$ curl -H "Authorization: Bearer YOUR_API_KEY" "http://localhost:8787/api/all" --data '{}'
 ```
 
 You should get the following output
@@ -136,7 +151,7 @@ You should get the following output
 
 The Hono application is now set up. You can test the other enpoints and add more endpoints if needed. The API does not yet return any information from your database. In the next steps, you will create a database, add its bindings, and update the endpoints to interact with the database.
 
-## 5. Create a database
+## 6. Create a database
 
 If you don't have a D1 database already, you can create a new database with `wrangler d1 create`:
 
@@ -169,7 +184,7 @@ database_id = "1234567890"
 
 You can now access the database in the Hono application.
 
-## 6. Create a table
+## 7. Create a table
 
 To create a table in your newly created database, create a new `schemas/schema.sql` file and paste the following SQL statement into the file. The code will drop any table named `posts` if it exists and then create a new table `posts` with the field `id`, `author`, `title`, `body`, and `post_slug`.
 
@@ -207,7 +222,7 @@ The table will be created in the local instance of the database. If you want to 
 
 {{</Aside>}}
 
-## 7. Query the database
+## 8. Query the database
 
 Your application can now access the D1 database. In this step, you will update the API endpoints to query the database and return the result.
 
@@ -266,7 +281,7 @@ app.post('/api/batch', async (c) => {
 
 In the above code, the endpoints are updated to receive `query` and `params`. These queries and parameters are passed to the respective functions to interact with the database. If the query is successful, you recieve the result from the database. If there is an error, the error message is returned.
 
-## 8. Test the API
+## 9. Test the API
 
 Now that the API can query the database, you can test it locally. If the local database is empty, populate it with some data.
 
@@ -276,32 +291,32 @@ Start the development server by executing the following command:
 $ npm run dev
 ```
 
-In a new terminal window, execute the following cURL commands. Make sure to replace `YOUR_SECRET_TOKEN` with the correct token.
+In a new terminal window, execute the following cURL commands. Make sure to replace `YOUR_API_KEY` with the correct value.
 
 ```sh
 ---
 header: /api/all
 ---
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/all" --data '{"query": "SELECT title FROM posts WHERE id=?", "params":1}'
+$ curl -H "Authorization: Bearer YOUR_API_KEY" "http://localhost:8787/api/all" --data '{"query": "SELECT title FROM posts WHERE id=?", "params":1}'
 ```
 
 ```sh
 ---
 header: /api/batch
 ---
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"batch": [ {"query": "SELECT title FROM posts WHERE id=?", "params":1},{"query": "SELECT id FROM posts"}]}'
+$ curl -H "Authorization: Bearer YOUR_API_KEY" "http://localhost:8787/api/batch" --data '{"batch": [ {"query": "SELECT title FROM posts WHERE id=?", "params":1},{"query": "SELECT id FROM posts"}]}'
 ```
 
 ```sh
 ---
 header: /api/exec
 ---
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "localhost:8787/api/exec" --data '{"query": "INSERT INTO posts (author, title, body, post_slug) VALUES ('\''Harshil'\'', '\''D1 HTTP API'\'', '\''Learn to create an API to query your D1 database.'\'','\''d1-http-api'\'')" }'
+$ curl -H "Authorization: Bearer YOUR_API_KEY" "localhost:8787/api/exec" --data '{"query": "INSERT INTO posts (author, title, body, post_slug) VALUES ('\''Harshil'\'', '\''D1 HTTP API'\'', '\''Learn to create an API to query your D1 database.'\'','\''d1-http-api'\'')" }'
 ```
 
 If everything is implemented correctly, the above commands should result successful outputs.
 
-## 9. Deploy the API
+## 10. Deploy the API
 
 Now that everything is working as expected, the last step is to deploy it to the Cloudflare network. You will use Wrangler to deploy the API. The deployment involves two steps:
 
@@ -326,10 +341,20 @@ To deploy the application to the Cloudflare network, run the following command:
 $ npx wrangler deploy
 ```
 
-Upon successful deployment, you will get the link of the deployed app in the terminal. Test it by running the following cURL command with the correct `YOUR_SECRET_TOKEN` and `WORKERS_URL`.
+Upon successful deployment, you will get the link of the deployed app in the terminal. Make a note of it.
+
+Next, execute the `wrangler secret put <KEY>` command to add the `API_KEY` to the deployed project.
 
 ```sh
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "https://WORKERS_URL.workers.dev/api/exec" --data '{"query": "SELECT 1"}'
+$ npx wrangler secret put API_KEY
+```
+
+Enter the value of your API key. Your API key will get added to your project. Using this value you can make secure API calls to your deployed API.
+
+To test it, run the following cURL command with the correct `YOUR_API_KEY` and `WORKERS_URL`.
+
+```sh
+$ curl -H "Authorization: Bearer YOUR_API_KEY" "https://WORKERS_URL.workers.dev/api/exec" --data '{"query": "SELECT 1"}'
 ```
 
 ## Conclusion
