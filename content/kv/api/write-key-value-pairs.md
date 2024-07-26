@@ -64,7 +64,7 @@ env.NAMESPACE.put(key, value, options?);
   expirationTtl?: number,
   metadata?: object
 }{{</type>}}
-  - Optional. An object containing the `expiration`, `expirationTtl`, and `metadata` attributes. 
+  - Optional. An object containing the `expiration` (optional), `expirationTtl` (optional), and `metadata` (optional) attributes. 
     - `metadata` is an object that must serialize to JSON. The maximum size of the serialized JSON representation of the metadata object is 1024 bytes.
 
 {{</definitions>}}
