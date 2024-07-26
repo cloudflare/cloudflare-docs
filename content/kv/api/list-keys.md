@@ -60,7 +60,7 @@ NAMESPACE.list(options?)
   cursor?: string
 }{{</type>}}
 
-  - An object with attributes `prefix`, `limit`, or `cursor`.
+  - An object with attributes `prefix` (optional), `limit` (optional), or `cursor` (optional).
     - `prefix` is a `string` that represents a prefix you can use to filter all keys.
     - `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
     - `cursor` is a `string` used for paginating responses.
