@@ -39,34 +39,6 @@ import sys
 !{sys.executable} -m pip install --pre cloudflare
 ```
 
-    Requirement already satisfied: python-dotenv in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (1.0.1)
-    Requirement already satisfied: requests in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (2.31.0)
-    Requirement already satisfied: charset-normalizer<4,>=2 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from requests) (3.3.2)
-    Requirement already satisfied: idna<4,>=2.5 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from requests) (3.6)
-    Requirement already satisfied: urllib3<3,>=1.21.1 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from requests) (2.2.1)
-    Requirement already satisfied: certifi>=2017.4.17 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from requests) (2024.2.2)
-
-    [1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m A new release of pip is available: [0m[31;49m24.0[0m[39;49m -> [0m[32;49m24.1.2[0m
-    [1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m To update, run: [0m[32;49mpip install --upgrade pip[0m
-    Requirement already satisfied: cloudflare in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (3.0.0b7)
-    Requirement already satisfied: anyio<5,>=3.5.0 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (4.3.0)
-    Requirement already satisfied: distro<2,>=1.7.0 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (1.9.0)
-    Requirement already satisfied: httpx<1,>=0.23.0 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (0.27.0)
-    Requirement already satisfied: pydantic<3,>=1.9.0 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (2.7.0)
-    Requirement already satisfied: sniffio in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (1.3.1)
-    Requirement already satisfied: typing-extensions<5,>=4.7 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from cloudflare) (4.11.0)
-    Requirement already satisfied: idna>=2.8 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from anyio<5,>=3.5.0->cloudflare) (3.6)
-    Requirement already satisfied: certifi in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from httpx<1,>=0.23.0->cloudflare) (2024.2.2)
-    Requirement already satisfied: httpcore==1.* in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from httpx<1,>=0.23.0->cloudflare) (1.0.4)
-    Requirement already satisfied: h11<0.15,>=0.13 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from httpcore==1.*->httpx<1,>=0.23.0->cloudflare) (0.14.0)
-    Requirement already satisfied: annotated-types>=0.4.0 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from pydantic<3,>=1.9.0->cloudflare) (0.6.0)
-    Requirement already satisfied: pydantic-core==2.18.1 in /Users/craig/Code/scratch/test-unum-over-bias/venv/lib/python3.12/site-packages (from pydantic<3,>=1.9.0->cloudflare) (2.18.1)
-
-    [1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m A new release of pip is available: [0m[31;49m24.0[0m[39;49m -> [0m[32;49m24.1.2[0m
-    [1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m To update, run: [0m[32;49mpip install --upgrade pip[0m
-
-
-
 ```python
 import os
 from getpass import getpass
