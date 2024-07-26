@@ -22,9 +22,16 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 5. Select **Add application**.
 6. Fill in the following fields:
     - **Entity ID**: `https://<your-domain>.my.salesforce.com`
-    - **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com`
+    - **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before 2019 or does not have a My Domain subdomain.
     - **Name ID format**: _Email_
-7. Copy the **SSO endpoint** and **Public key**.
+
+{{<Aside type="note">}}
+
+If you are unsure of which URL to use in the **Assertion Consumer Service URL** field, you can check your Salesforce account's metadata. In Salesforce, go to the **Single Sign-On Settings** page and select **Download Metadata**. In this file, you will find the correct URL to use.
+
+{{</Aside>}}
+
+7. Copy the **SSO endpoint**, **Public key**, and **Access Entity ID or Issuer**.
 8. Select **Save configuration**.
 9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 10. Select **Done**.
@@ -43,7 +50,7 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 4. Fill in the following fields:
     - **Name:** Name of the SSO provider (for example, `Cloudflare Access`). Users will select this name when signing in to Salesforce.
     - **API name:** (this will pre-populate)
-    - **Issuer:** `https://<your-team-name>.cloudflareaccess.com`, where `<your-team-name>` is your {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
+    - **Issuer:** Paste the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
     - **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
     - **Entity ID**: `https://<your-domain>.my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
@@ -57,11 +64,11 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 
 ## 4. Enable Single Sign-On in Salesforce
 
-1. {{<render file="access/saas-apps/_salesforce-sso.md">}}
-2. Configure Single Sign-On settings:
+1. Configure Single Sign-On settings:
     1. In the **Quick Find** box, enter `single sign-on` and select **Single Sign-On Settings**.
     2. (Optional) To require users to login with Cloudflare Access, turn on **Disable login with Salesforce credentials**.
     3. Turn on **SAML Enabled**.
     4. Turn on **Make federation ID case-insensitive**.
+2. {{<render file="access/saas-apps/_salesforce-sso.md">}}
 
 To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).
