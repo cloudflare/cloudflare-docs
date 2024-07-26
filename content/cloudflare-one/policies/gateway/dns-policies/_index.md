@@ -36,6 +36,43 @@ These are the action types you can choose from:
 
 API value: `allow`
 
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Authoritative Nameserver IP](#authoritative-nameserver-ip)
+- [Content Categories](#content-categories)
+- [DNS CNAME Response Value](#dns-cname-record)
+- [DNS MX Response Value](#dns-mx-record)
+- [DNS PTR Response Value](#dns-ptr-record)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DNS TXT Response Value](#dns-txt-record)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Indicator Feeds](#indicator-feeds)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Resolved IP](#resolved-ip)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
+
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
 | Selector           | Operator | Value     | Action |
@@ -49,6 +86,43 @@ When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries 
 ### Block
 
 API value: `block`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Authoritative Nameserver IP](#authoritative-nameserver-ip)
+- [Content Categories](#content-categories)
+- [DNS CNAME Response Value](#dns-cname-record)
+- [DNS MX Response Value](#dns-mx-record)
+- [DNS PTR Response Value](#dns-ptr-record)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DNS TXT Response Value](#dns-txt-record)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Indicator Feeds](#indicator-feeds)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Resolved IP](#resolved-ip)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
@@ -68,17 +142,77 @@ When choosing the Block action, turn on **Display custom block page** to respond
 
 API value: `override`
 
+{{<details header="Available selectors">}}
+
+The Override action cannot be used with selectors evaluated during or after DNS resolution.
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
+
 Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside type="note">}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
-
 ### Safe Search
 
 API value: `safesearch`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
 
@@ -91,6 +225,36 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 ### YouTube Restricted Mode
 
 API value: `ytrestricted`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Restricted_ action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
@@ -174,9 +338,9 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 {{<render file="gateway/selectors/_host.md">}}
 
-### Indicator Feed
+### Indicator Feeds
 
-{{<render file="gateway/selectors/_indicator-feed.md" withParameters="dns">}}
+{{<render file="gateway/selectors/_indicator-feeds.md" withParameters="dns">}}
 
 ### Location
 

@@ -331,8 +331,6 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
       If the URI path is `/apps/calendar/login`,<br />
       `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login`.
 
-      For more examples of wildcard matching, refer to [Wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching).
-
 {{<Aside type="warning">}}
 Currently, you can only use the `wildcard_replace()` function in target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 {{</Aside>}}

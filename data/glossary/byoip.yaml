@@ -3,7 +3,7 @@ productName: BYOIP
 entries:
 - term: address map
   general_definition: |-
-    a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a zone's DNS records when they are proxied through Cloudflare.
+    a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to DNS records when they are proxied through Cloudflare.
 
 - term: autonomous system numbers (ASNs)
   general_definition: |-
