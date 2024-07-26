@@ -107,7 +107,11 @@ ___
 
 For services subject to usage-based billing, Cloudflare may preauthorize your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. If your payment method succeeds, service will continue normally.
 
-If your payment method fails, we will remove access to any usage-based billing services that use preauthorization (for example, R2). To regain access, you must settle any outstanding balances and pass preauthorization with a new, valid payment method. For assistance, [contact support](/support/contacting-cloudflare-support).
+If your payment method fails, we will remove access to any usage-based billing services that use preauthorization. In the case of [R2](/r2/), you will not be able to access your R2 buckets and requests will return errors, but your data will remain secure and unaffected.
+
+To regain access, you must settle any outstanding balances and pass preauthorization with a new, valid payment method. To update your primary payment method, navigate to the Manage Account -> Billing -> Payment section of your account. Upon confirmation of your updated payment details, we will promptly reactivate your subscription(s), which will restore access to your data and services.
+
+For assistance, visit our [Support Portal](https://support.cloudflare.com/hc/en-us) and submit a Billing request (category: “Payment issue”) to our Support team. They will assist you in verifying your updated payment information.
 
 ___
 
