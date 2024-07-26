@@ -36,7 +36,7 @@ Your zone configurations are split up into two areas: **Global Configuration** a
 
 {{<Aside type="note">}}
 
-To use the API for a different version, you will need to use a different zone tag.
+To use the API for a different version, you will need to use a different zone ID.
 
 {{</Aside>}}
 
