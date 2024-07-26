@@ -85,6 +85,8 @@ You can filter by the following parameters:
 * TCP flag
 * TTL
 
+Note that the IP Range filter currently has a limitation that only supports filtering /24 IPv4 Ranges and /64 IPv6 Ranges.
+
 {{<render file="_network-analytics-tabs-other-parameters.md" withParameters="filter parameters">}}
 
 ### Traffic direction
