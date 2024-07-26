@@ -77,7 +77,7 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 
 {{<definitions>}}
 
-- `response` {{<type>}}Promise<string | Object | ArrayBuffer | ReadableStream> | null>{{</type>}}
+- `response` {{<type>}}Promise<string | Object | ArrayBuffer | ReadableStream | null>{{</type>}}
 
   - The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
     - `text`: A `string` (default).
