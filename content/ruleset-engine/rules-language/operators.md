@@ -155,12 +155,16 @@ The Rules language supports these comparison operators:
 
 \* _Access to the `matches` operator requires a Cloudflare Business or Enterprise plan._
 
+{{<Aside type="warning" header="Warning">}}
+Comparison operators entered using English notation (such as `eq`, `lt`, and `gt`) must be written in lowercase.
+{{</Aside>}}
+
 ### Additional operators in the Cloudflare dashboard
 
 The Cloudflare dashboard shows the following functions as operators:
 
-* _starts with_ (corresponding to the [`starts_with` function](/ruleset-engine/rules-language/functions/#function-starts_with)): Returns `true` when a string starts with a given substring, and `false` otherwise.
-* _ends with_ (corresponding to the [`ends_with` function](/ruleset-engine/rules-language/functions/#function-ends_with)): Returns `true` when a string ends with a given substring, and `false` otherwise.
+* _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with)) function: Returns `true` when a string starts with a given substring, and `false` otherwise.
+* _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with)) function: Returns `true` when a string ends with a given substring, and `false` otherwise.
 
 However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
 
@@ -257,6 +261,10 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
   </tbody>
 </table>
 {{</table-wrap>}}
+
+{{<Aside type="warning" header="Warning">}}
+Logical operators entered using English notation (such as `not`, `and`, and `or`) must be written in lowercase.
+{{</Aside>}}
 
 ### Order of precedence
 
