@@ -59,7 +59,7 @@ env.NAMESPACE.put(key, value, options?);
   - The value to store. The type is inferred. The maximum size of a value is 25 MiB.
 
 
-- `options?` {{<type>}}{
+- `options` {{<type>}}{
   expiration?: number,
   expirationTtl?: number,
   metadata?: object
