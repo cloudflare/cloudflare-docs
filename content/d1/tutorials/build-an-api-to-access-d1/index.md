@@ -185,10 +185,12 @@ CREATE TABLE IF NOT EXISTS posts (
   body text NOT NULL,
   post_slug text NOT NULL
 );
+```
 
--- Uncomment the below statement to add data
+Optinally, you can add the below INSERT statement to populate the table.
 
--- INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
+```sql
+INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
 ```
 
 In your terminal, execute the following command to create this table:
@@ -280,7 +282,7 @@ In a new terminal window, execute the following cURL commands. Make sure to repl
 ---
 header: /api/all
 ---
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"query": "SELECT title FROM posts WHERE id=?", "params":1}'
+$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/all" --data '{"query": "SELECT title FROM posts WHERE id=?", "params":1}'
 ```
 
 ```sh
@@ -294,7 +296,7 @@ $ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/b
 ---
 header: /api/exec
 ---
-$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "http://localhost:8787/api/batch" --data '{"query": "INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api')" }'
+$ curl -H "Authorization: Bearer YOUR_SECRET_TOKEN" "localhost:8787/api/exec" --data '{"query": "INSERT INTO posts (author, title, body, post_slug) VALUES ('\''Harshil'\'', '\''D1 HTTP API'\'', '\''Learn to create an API to query your D1 database.'\'','\''d1-http-api'\'')" }'
 ```
 
 If everything is implemented correctly, the above commands should result successful outputs.
