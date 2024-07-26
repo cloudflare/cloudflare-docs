@@ -65,7 +65,7 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 
   - Optional. The type of the value to be returned. `string` is the default.
 
-- `options?` {{<type>}}{
+- `options` {{<type>}}{
     cacheTtl: number,
     type: "text" | "json" | "arrayBuffer" | "stream"
 }{{</type>}}
