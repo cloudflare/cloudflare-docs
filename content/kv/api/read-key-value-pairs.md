@@ -61,7 +61,7 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 
   - The key of the KV pair.
 
-- `type?` {{<type>}}"text" | "json" | "arrayBuffer" | "stream"{{</type>}}
+- `type` {{<type>}}"text" | "json" | "arrayBuffer" | "stream"{{</type>}}
 
   - Optional. The type of the value to be returned. `string` is the default.
 
