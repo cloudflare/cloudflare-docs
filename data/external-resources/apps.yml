@@ -125,7 +125,7 @@ entries:
   name: Upload Image to R2 starter
   description: Upload images to Cloudflare R2 from a Next.js application.
   tags: [NextJS]
-  products: [R2]
+  products: [R2, Pages]
   languages: [TypeScript]
   author: harshil
   cloudflare: true
