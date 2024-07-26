@@ -13,7 +13,7 @@ Unless otherwise stated in the code repository, Cloudflare only provides active 
 We provide three primary stages of development: early access, active support, and end of life.
 
 {{<Aside type="note">}}
-These lifecycle stages may be known by different names however, the underlying principles are the same.
+These lifecycle stages may be referred to in different terms across Cloudflare products, but the underlying principles are the same.
 {{</Aside>}}
 
 ### Early access
