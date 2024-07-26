@@ -65,6 +65,8 @@ env.NAMESPACE.put(key, value, options?);
   metadata?: object
 }{{</type>}}
   - Optional. An object containing the `expiration` (optional), `expirationTtl` (optional), and `metadata` (optional) attributes. 
+    - `expiration` is the number that represents when to expire the key-value pair in seconds since epoch.
+    - `expirationTtl` is the number that represents when to expire the key-value pair in seconds from now. The minimum value is 60.
     - `metadata` is an object that must serialize to JSON. The maximum size of the serialized JSON representation of the metadata object is 1024 bytes.
 
 {{</definitions>}}
