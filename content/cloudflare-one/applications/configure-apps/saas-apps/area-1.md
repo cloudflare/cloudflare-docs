@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Area 1
 weight: 3
 ---
