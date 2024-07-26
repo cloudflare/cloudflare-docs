@@ -36,6 +36,7 @@ export default {
       const encoder = new TextEncoder();
       const encoded = encoder.encode(url.pathname + "\r\n");
       await writer.write(encoded);
+      await writer.close();
 
       return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
     } catch (error) {
