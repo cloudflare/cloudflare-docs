@@ -6,7 +6,7 @@ weight: 4
 
 # Read key-value pairs
 
-To get the value for a given key, call the `get()` method of the [KV binding](/kv/reference/kv-bindings/) on any KV namespace you have bound to your Worker code:
+To get the value for a given key, call the `get()` method of the [KV binding](/kv/reference/kv-bindings/) on any [KV namespace](/kv/reference/kv-namespaces/) you have bound to your Worker code:
 
 ```js
 env.NAMESPACE.get(key);
