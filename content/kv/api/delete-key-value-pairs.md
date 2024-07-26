@@ -6,7 +6,7 @@ weight: 6
 
 # Delete key-value pairs
 
-To delete a key-value pair, call the `delete()` method of the [KV binding](/kv/reference/kv-bindings/) on any KV namespace you have bound to your Worker code:
+To delete a key-value pair, call the `delete()` method of the [KV binding](/kv/reference/kv-bindings/) on any [KV namespace](/kv/reference/kv-namespaces/) you have bound to your Worker code:
 
 ```js
 env.NAMESPACE.delete(key);
