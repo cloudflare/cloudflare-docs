@@ -6,7 +6,7 @@ weight: 5
 
 # Write key-value pairs
 
-To create a new key-value pair, or to update the value for a particular key, call the `put()` method of the [KV binding](/kv/reference/kv-bindings/) on any KV namespace you have bound to your Worker code:
+To create a new key-value pair, or to update the value for a particular key, call the `put()` method of the [KV binding](/kv/reference/kv-bindings/) on any [KV namespace](/kv/reference/kv-namespaces/) you have bound to your Worker code:
 
 ```js
 env.NAMESPACE.put(key, value);
