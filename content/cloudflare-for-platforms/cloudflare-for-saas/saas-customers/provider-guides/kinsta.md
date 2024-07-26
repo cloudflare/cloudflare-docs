@@ -20,7 +20,7 @@ For additional detail about how traffic routes when O2O is enabled, refer to [Ho
 
 ## Enable
 
-Kinsta customers can enable O2O on any Cloudflare zone plan; Cloudflare support for O2O setups is only available for Enterprise customers.
+Kinsta customers can enable O2O on any Cloudflare zone plan.
 
 To enable O2O for a specific hostname within a Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with your Kinsta site name as the target. Kinsta’s domain addition setup will walk you through other validation steps.
 

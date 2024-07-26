@@ -25,6 +25,8 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
+{{<render file="_siteverify-warning.md">}}
+
 {{<Aside type="note">}}
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
 {{</Aside>}}

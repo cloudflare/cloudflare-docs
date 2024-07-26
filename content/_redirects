@@ -697,9 +697,9 @@
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
-/magic-transit/set-up/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/set-up/requirements/ /magic-transit/get-started/ 301
 /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
-/magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/get-started/requirements/ /magic-transit/get-started/ 301
 /magic-transit/about/bandwidth-measurement/ /magic-transit/reference/bandwidth-measurement/ 301
 /magic-transit/about/health-checks/ /magic-transit/reference/tunnel-health-checks/ 301
 /magic-transit/about/probe-construction/ /magic-transit/reference/tunnel-health-checks/ 301
@@ -708,6 +708,7 @@
 /magic-transit/reference/ipsec/ /magic-transit/reference/tunnels/#ipsec-tunnels 301
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
+/magic-transit/prerequisites/ /magic-transit/get-started/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -736,6 +737,7 @@
 /magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
+/magic-wan/prerequisites/ /magic-wan/get-started/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301

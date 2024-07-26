@@ -6,6 +6,8 @@ pcx_content_type: get-started
 
 # Server-side validation
 
+{{<render file="_siteverify-warning.md">}}
+
 Turnstile needs to be verified using siteverify because it is a front-end widget that creates a token which is cryptographically secured. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of a token using Cloudflare's siteverify API.
 
 You must call the siteverify endpoint to validate the Turnstile widget response from your website’s backend. The widget response must only be considered valid once it has been verified by the siteverify endpoint. The presence of a response alone is not enough to verify it as it does not protect from replay or forgery attacks. In some cases, Turnstile may purposely create invalid responses that are rejected by the siteverify API.
