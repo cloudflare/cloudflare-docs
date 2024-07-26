@@ -6,7 +6,7 @@ weight: 7
 
 # List keys
 
-To list all the keys in your KV namespace, call the `list()` method of the [KV binding](/kv/reference/kv-bindings/) on any KV namespace you have bound to your Worker code:
+To list all the keys in your KV namespace, call the `list()` method of the [KV binding](/kv/reference/kv-bindings/) on any [KV namespace](/kv/reference/kv-namespaces/) you have bound to your Worker code:
 
 
 ```js
