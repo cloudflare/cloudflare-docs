@@ -57,7 +57,7 @@ $ npm install hono
 
 ## 3. Add API_KEY
 
-To ensure that the API Key is secure, you will add it as a [secret](https://developers.cloudflare.com/workers/configuration/secrets/). To do so, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
+To ensure that the API Key is secure, you will add it as a [secret](/workers/configuration/secrets/). To do so, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
 
 ```env
 API_KEY="YOUR_API_KEY"
