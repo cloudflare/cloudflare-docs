@@ -112,7 +112,7 @@ Metadata is a serializable value you append to each KV entry.
 
   - Optional. The type of the value to be returned. `string` is the default.
 
-- `options?` {{<type>}}{
+- `options` {{<type>}}{
     cacheTtl: number,
     type: "text" | "json" | "arrayBuffer" | "stream"
 }{{</type>}}
