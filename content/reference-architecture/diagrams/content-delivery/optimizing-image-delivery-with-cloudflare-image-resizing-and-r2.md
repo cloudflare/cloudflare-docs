@@ -15,7 +15,7 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 - [Cloudflare CDN](https://www.cloudflare.com/en-gb/application-services/products/cdn/) - Leverage [Cloudflare’s Global Network](https://www.cloudflare.com/en-gb/network/) to cache your transformed images for fast and reliable delivery to your end users.
 - [Cloudflare Images](https://www.cloudflare.com/en-gb/developer-platform/cloudflare-images/) - Leverage Cloudflare Images to resize, optimize and transform your images that are stored in an object storage solution such as Cloudflare R2. Transformations are performed based on a specifically-formatted URL which requires minimal refactoring to your application to support.
 - [Cloudflare R2 Object Storage](https://www.cloudflare.com/en-gb/developer-platform/r2/) - R2 allows users to store a large amount of unstructured data, and in this use case will be used for storing our original images (best quality) for transformation.
-- [Cloudflare Transform Rules](/rules/transform/) - If you’re migrating from another solution to Cloudflare, Transform Rules allows you to Rewrite the URL from the anothers solutions syntax to a Cloudflare specific syntax, which reduces the complexity of migration.
+- [Cloudflare Transform Rules](/rules/transform/) - If you’re migrating from another solution to Cloudflare, Transform Rules allows you to Rewrite the URL from another solutions syntax to a Cloudflare specific syntax, which reduces the complexity of migration.
 
 ## Image Delivery with Cloudflare Image Resizing and R2
 
@@ -31,7 +31,7 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 
 You can easily convert and resize images by requesting them through a specifically-formatted URL. This section explains the URL structure for image transformation, referring back to the diagram and detailing each URL component:
 
-- **Part 1** - Your specific domain name on Cloudflare, this is the Zone you onboarded to Cloudflare and where your website or images are served from. e.g. https://www.mywebsite.com/
+- **Part 1** - Your specific domain name on Cloudflare, this is the Zone you on-boarded to Cloudflare and where your website or images are served from. e.g. https://www.mywebsite.com/
 - **Part 2** - A fixed prefix that identifies this is a special path handled by Cloudflare’s built-in Worker.
 - **Part 3** - A comma-separated list of options for the image, such as width=80,quality=75
 - **Part 4** - Absolute path on the origin server. For example: /uploads/image.jpg
