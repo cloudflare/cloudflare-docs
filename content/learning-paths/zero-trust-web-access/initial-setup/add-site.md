@@ -13,7 +13,7 @@ You only need to add one domain to Cloudflare, since you can create an infinite 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select **Add a site**.
-3. Enter your website’s apex domain (`example.com`).
+3. Enter your website’s apex domain (`cult-of-vecna.blogspot.com`).
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features) for this website. Everything you need to do with the domain in Cloudflare Zero Trust is available on the **Free** plan.
 5. Select **Continue**. Cloudflare will scan your website for any configured DNS records.
 
