@@ -210,6 +210,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   [Keepalives](http://tldp.org/HOWTO/TCP-Keepalive-HOWTO/overview.html) are disabled at the origin web server.
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
+-   If port 80 is blocked on your server, certain browsers that attempt http connections first will receive and display the CloudFlare 522 error page instead of automatically retrying with https.
 
 If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
