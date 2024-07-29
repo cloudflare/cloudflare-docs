@@ -173,7 +173,7 @@ We are going to use the GraphQL Analytics API to query the top 10 consuming URLs
 curl -s -H "Authorization: Bearer $API_TOKEN" -H "Content-Type:application/json" \
 -XPOST https://api.cloudflare.com/client/v4/graphql \
 -d'{
-  "query": "{\n  viewer {zones(filter: {zoneTag: $zoneTag}) {topPaths: httpRequestsAdaptiveGroups(filter: $filter, limit: 10, orderBy: [sum_edgeResponseBytes_DESC]) {count sum {edgeResponseBytes} dimensions {metric: clientRequestPath}}}}}",
+  "query": "{viewer {zones(filter: {zoneTag: $zoneTag}) {topPaths: httpRequestsAdaptiveGroups(filter: $filter, limit: 10, orderBy: [sum_edgeResponseBytes_DESC]) {count sum {edgeResponseBytes} dimensions {metric: clientRequestPath}}}}}",
   "variables": {
     "zoneTag": "'$ARG'",
     "filter": {
@@ -188,5 +188,5 @@ curl -s -H "Authorization: Bearer $API_TOKEN" -H "Content-Type:application/json"
       ]
     }
   }
-}' | jq -r 'try .data.viewer.zones[].topPaths[] | "\(.dimensions.metric) | \(.sum.edgeResponseBytes)"' | numfmt -d'|' --field=2 --to=iec-i
+}' | jq -r 'try .data.viewer.zones[].topPaths[] | "\"\(.dimensions.metric)\": \(.sum.edgeResponseBytes)"' | sort
 ```
