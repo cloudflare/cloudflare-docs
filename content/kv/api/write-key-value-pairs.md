@@ -90,7 +90,7 @@ Due to the eventually consistent nature of KV, concurrent writes to the same key
 
 If concurrent writes are made to the same key, the last write will take precedence. 
 
-Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
+Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds (or the value of the `cacheTtl` parameter of the `get()` or `getWithMetadata()` methods) to be visible in other parts of the world. 
 
 Refer to [How KV works](/kv/reference/how-kv-works/) for more information on this topic.
 
