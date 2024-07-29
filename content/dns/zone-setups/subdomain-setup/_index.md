@@ -21,3 +21,7 @@ Subdomain setups are also useful when different subdomains require entirely diff
 ## Availability
 
 {{<feature-table id="dns.subdomain_setup">}}
+
+## Resources
+
+{{<directory-listing>}}

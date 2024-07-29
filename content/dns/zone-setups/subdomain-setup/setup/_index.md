@@ -36,8 +36,8 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 
 The availability of different setups will depend on both the parent zone setup and the setup used for the child zone. A child zone holds DNS management for a delegated subdomain.
 
-| Parent zone | Child zone | Available | How to
-| --- | --- | --- | --- |
+| Parent zone | Child zone | Available |
+| --- | --- | --- |
 | [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Full](/dns/zone-setups/full-setup/) | Yes |
 | [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes |
 | [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Partial](/dns/zone-setups/partial-setup/) | No |
@@ -53,6 +53,8 @@ This table assumes zones that are in an [active status](/dns/zone-setups/referen
 
 ---
 ## How to
+
+Refer to he following guides to learn how to configure a subdomain setup depending on the setup used for the parent zone:
 
 {{<directory-listing>}}
 

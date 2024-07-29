@@ -18,7 +18,7 @@ Ideally, you should also wait 12 to 24 hours after enabling DNSSEC on the parent
 
 ## Setup
 
-1. [Create](/dns/zone-setups/subdomain-setup/setup/) the child zone.
+1. [Create](/dns/zone-setups/subdomain-setup/setup//#how-to) the child zone.
 2. Make sure the child zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare and that DNS resolution is working properly for your subdomain.
 3. [Enable DNSSEC](/dns/dnssec/) for the child zone and save the information provided within the `DS` record output.
 4. In the **DNS** > **Records** settings of the parent zone, [add the `DS` record](/dns/manage-dns-records/how-to/create-dns-records/) from the previous step.
