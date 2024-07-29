@@ -31,8 +31,6 @@ While SMB was developed for Microsoft Windows, Samba provides SMB connectivity f
 
 ### 2. Set up the client
 
-In order for devices to connect to your Zero Trust organization, you will need to:
-
 {{<render file="tunnel/_warp-to-tunnel-client.md">}}
 
 ### 3. Route private network IPs through WARP
