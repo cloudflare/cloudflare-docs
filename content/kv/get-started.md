@@ -185,7 +185,7 @@ This can be combined with `--preview` flag to interact with a preview namespace 
 Exactly one of `--binding` or `--namespace-id` is required.
 {{</Aside>}}
 
-Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
+Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to write a file of multiple key-value pairs to a given KV namespace.
 
 ## 4. Access your KV namespace from a Worker
 
