@@ -11,7 +11,7 @@ meta:
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
-{{<render file="_prereqs.md" productFolder="/workers/" >}}
+{{<render file="_prereqs.md" productFolder="workers" >}}
 
 ## 1. Create a Worker project
 
@@ -19,9 +19,9 @@ You will create a new Worker project using the `create-cloudflare` CLI (C3). [C3
 
 Create a new project named `hello-ai` by running:
 
-{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
+{{<render file="_c3-run-command.md" productFolder="workers" >}}
 
-Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI. When prompted with `In which directory do you want to create your application?`, you will see a pre-generated directory name. To name your directory `hello-ai`, simply type over the pre-generated name with `hello-ai` and press Enter.
+Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI.
 
 When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
@@ -29,7 +29,9 @@ When setting up your `hello-ai` Worker, answer the setup questions as follows:
 * Choose `"Hello World" Worker` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
-* Select `no` to deploying. This allows you to complete the setup and test your Worker locally before deploying it [^1].
+* Select `no` to deploying. [^1]
+
+[^1]: This allows you to complete the setup and test your Worker locally before deploying it.
 
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
@@ -46,7 +48,7 @@ $ cd hello-ai
 
 You must create an AI binding for your Worker to connect to Workers AI. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file and save it:
+To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
 
 ```toml
 ---
@@ -66,7 +68,7 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/), to answer a question.
 
-Replace the `index.ts` file in your `hello-ai` application directory with the following code:
+Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
 ```typescript
 ---
