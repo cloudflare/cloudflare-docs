@@ -42,7 +42,7 @@ ___
 
 Yes. All customers have a limit on the number of DNS records they can create.
 
-Pro, Business, and Enterprise have limit of 3,500 DNS records.
+Pro, Business, and Enterprise have a limit of 3,500 DNS records.
 
 If you are an Enterprise customer, contact your account team if you require more DNS records. Cloudflare can support millions of DNS records on a single zone.
 
