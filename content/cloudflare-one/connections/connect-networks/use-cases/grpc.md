@@ -50,7 +50,7 @@ You can configure [Gateway network policies](/cloudflare-one/policies/gateway/ne
 | Passed Device Posture Checks | is | `macOS firewall (Firewall)` | And      |        |
 | Passed Device Posture Checks | is | `macOS disk encryption (Disk encryption)` |     |        |
 
-### 2. Block everyone else
+### 2. Block everything else
 
 | Selector       | Operator | Value        | Action |
 | -------------- | -------- | ------------ | ------ |
