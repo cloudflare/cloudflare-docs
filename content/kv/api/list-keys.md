@@ -105,7 +105,7 @@ The `list()` method returns a promise which resolves with an object that looks l
 }
 ```
 
-Changes may take up to 60 seconds to be reflected on the application calling the method on the KV namespace.
+Changes may take up to 60 seconds (or the value set with `cacheTtl` of the `get()` or `getWithMetadata()` method) to be reflected on the application calling the method on the KV namespace.
 
 ## Guidance
 
