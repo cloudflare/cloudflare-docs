@@ -12,7 +12,7 @@ As opposed to the [normal process](/dns/dnssec/) for enabling DNSSEC, DNSSEC wit
 
 ## Requirements
 
-In order to use DNSSEC for a subdomain setup, DNSSEC must be enabled on the parent zone.
+To use DNSSEC for a subdomain setup, DNSSEC must be enabled on the parent zone.
 
 Ideally, you should also wait 12 to 24 hours after enabling DNSSEC on the parent zone to ensure DNS resolvers provide the same DNS query responses.
 
