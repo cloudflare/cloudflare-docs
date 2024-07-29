@@ -161,7 +161,7 @@ We are going to use the GraphQL Analytics API to query the top 10 consuming URLs
 
 - To filter on a specific hostname, add the line `"clientRequestHTTPHost": "'$2'"` below `"requestSource"`." 
 - Replace `API_TOKEN` with your generated API token using the `Read all resources` permissions. The script will only access zones available to the token's creator. 
-- Pass the zone ID as a parameter `ARG=$1`. 
+- Pass the zone ID (`zoneTag`) as a parameter `ARG=$1`. 
 - To calculate the current date and the date from 30 days ago, use `gdate` on Mac:
   - `CURRENTDATE=$(gdate -u +'%FT%TZ')` 
   - `OLDDATE=$(gdate -d '-30 days' -u +'%FT%TZ')`. 
