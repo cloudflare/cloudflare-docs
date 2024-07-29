@@ -191,7 +191,7 @@
 /cache/about/crawler-hints/ /cache/advanced-configuration/crawler-hints/ 301
 /cache/how-to/enable-crawler-hints/ /cache/advanced-configuration/crawler-hints/#enable-crawler-hints 301
 /cache/about/edge-browser-cache-ttl/ /cache/how-to/edge-browser-cache-ttl/ 301
-/cache/how-to/create-page-rules/ /cache/how-to/edge-browser-cache-ttl/create-page-rules/ 301
+/cache/how-to/create-page-rules/ /cache/how-to/cache-rules/ 301
 /cache/how-to/set-browser-ttl/ /cache/how-to/edge-browser-cache-ttl/set-browser-ttl/ 301
 /cache/about/cache-rules/ /cache/how-to/cache-rules/ 301
 /cache/about/cache-keys/ /cache/how-to/cache-keys/ 301
@@ -219,6 +219,7 @@
 /support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/cache-everything-ignore-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
+/cache/how-to/edge-browser-cache-ttl/create-page-rules/ /cache/how-to/cache-rules/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
