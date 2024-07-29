@@ -153,6 +153,12 @@ wrangler docs [<COMMAND>]
 
 ## `init`
 
+{{<Aside type="note">}}
+
+This command has been deprecated and will be removed in a future version.
+
+{{</Aside>}}
+
 Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
 
 ```txt
