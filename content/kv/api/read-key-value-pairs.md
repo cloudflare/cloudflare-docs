@@ -139,7 +139,7 @@ Metadata is a serializable value you append to each KV entry.
 
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
-The `getWithMetadata()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds to display. 
+The `getWithMetadata()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display. 
 
 
 #### Example 
