@@ -967,6 +967,9 @@
 /stream/uploading-videos/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
+/stream/changelog/ /stream/platform/ 301
+/stream/webrtc-beta/ /stream/platform/webrtc-beta/ 301
+/stream/faq/ /stream/faq/ 301
 
 # support
 
