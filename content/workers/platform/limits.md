@@ -84,6 +84,10 @@ CPU time is the amount of time the CPU actually spends doing work, during a give
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
 {{</Aside>}}
 
+#### Custom CPU time limits
+
+To set a custom limit on the amount of CPU time that can be used during each invocation of your Worker, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
+
 ---
 
 ## Cache API limits
