@@ -82,7 +82,6 @@ def run():
         stub = helloworld_pb2_grpc.GreeterStub(channel)
         response = stub.SayHello(helloworld_pb2.HelloRequest(name="you"))
     print("Greeter client received: " + response.message)
-
 ```
 
 ## 6. Test the connection
