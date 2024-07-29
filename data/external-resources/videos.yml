@@ -98,14 +98,14 @@ entries:
   difficulty: Advanced
   content_type: 🎥 Video
   pcx_content_type: tutorial
-  - link: https://www.youtube.com/watch?v=CHfKeFakGAI
-  title: How to use Cloudflare AI models and inference in Python with Jupyter Notebooks
-  description: Cloudflare Workers AI provides a ton of AI models and inference capabilities. In this video, we will explore how to make use of Cloudflare’s AI model catalog using a Python Jupyter Notebook.
-  tags: [AI]
-  products: [Workers, AI Gateway]
-  cloudflare: true
-  author: craig
-  updated: 2023-12-14
-  difficulty: Intermediate
-  content_type: 🎥 Video
-  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=CHfKeFakGAI
+title: How to use Cloudflare AI models and inference in Python with Jupyter Notebooks
+description: Cloudflare Workers AI provides a ton of AI models and inference capabilities. In this video, we will explore how to make use of Cloudflare’s AI model catalog using a Python Jupyter Notebook.
+tags: [AI]
+products: [Workers, AI Gateway]
+cloudflare: true
+author: craig
+updated: 2023-12-14
+difficulty: Intermediate
+content_type: 🎥 Video
+pcx_content_type: tutorial
