@@ -54,7 +54,7 @@ This table assumes zones that are in an [active status](/dns/zone-setups/referen
 ---
 ## How to
 
-Refer to he following guides to learn how to configure a subdomain setup depending on the setup used for the parent zone:
+Refer to the following guides to learn how to configure a subdomain setup depending on the setup used for the parent zone:
 
 {{<directory-listing>}}
 
