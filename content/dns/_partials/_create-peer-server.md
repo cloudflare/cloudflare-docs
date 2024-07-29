@@ -18,7 +18,7 @@ To create a peer server using the dashboard:
     - **IP**: Specifies where Cloudflare sends transfer requests to.
     - **Port**: Specifies the IP Port for the transfer IP.
     - **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
-    - **Link a an existing TSIG**: If desired, link the TSIG you [previously created](#1-create-tsig-optional).
+    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#1-create-tsig-optional).
 6. Select **Create**.
 
 {{</tab>}}
