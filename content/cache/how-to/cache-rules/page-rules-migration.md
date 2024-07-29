@@ -10,7 +10,7 @@ meta:
 
 If you are migrating from Page Rules, there is a behavior change between Page Rules and Cache Rules. 
 
-When you create a new Cache Rule and select **Eligible for cache**, the [Cache Everything](/cache/how-to/edge-browser-cache-ttl/create-page-rules/#cache-everything) feature is enabled by default. With Page Rules, you had to specifically enable the Cache Everything option.
+When you create a new Cache Rule and select **Eligible for cache**, the Cache Everything feature is enabled by default. With Page Rules, you had to specifically enable the Cache Everything option.
 
 To maintain the same behavior you had with Page Rules (that is, not enabling Cache Everything), you need to create these two specific rules in this order before creating any additional rules.
 

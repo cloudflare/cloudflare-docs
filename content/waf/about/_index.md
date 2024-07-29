@@ -58,7 +58,7 @@ The WAF provides the following mitigation features for traffic posing as a secur
 
 - [**Custom rules**](/waf/custom-rules/): Allow you to control incoming traffic by filtering requests to a zone. You can perform actions like Block or Managed Challenge on incoming requests according to rules you define.
 - [**Rate limiting rules**](/waf/rate-limiting-rules/): Allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
-- [**Managed rules**](#waf-managed-rules): Allow you to deploy pre-configured managed rulesets that provide immediate protection against common attacks.
+- [**Managed rules**](/waf/managed-rules/): Allow you to deploy pre-configured managed rulesets that provide immediate protection against common attacks.
 
 To configure these mitigation features in the Cloudflare dashboard, go to your domain > **Security** > **WAF**.
 
