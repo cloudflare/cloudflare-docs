@@ -21,13 +21,13 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-    - **Entity ID**: `https://<your-domain>.my.salesforce.com`
-    - **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before 2019 or does not have a My Domain subdomain.
+    - **Entity ID**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before summer 2019 or does not have a My Domain subdomain.
+    - **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before summer 2019 or does not have a My Domain subdomain.
     - **Name ID format**: _Email_
 
 {{<Aside type="note">}}
 
-If you are unsure of which URL to use in the **Assertion Consumer Service URL** field, you can check your Salesforce account's metadata. In Salesforce, go to the **Single Sign-On Settings** page and select **Download Metadata**. In this file, you will find the correct URL to use.
+If you are unsure of which URL to use in the **Entity ID** and **Assertion Consumer Service URL** fields, you can check your Salesforce account's metadata. In Salesforce, go to the **Single Sign-On Settings** page and select **Download Metadata**. In this file, you will find the correct URLs to use.
 
 {{</Aside>}}
 
