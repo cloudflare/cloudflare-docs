@@ -22,7 +22,7 @@ Make sure you consider the following:
 
 ## 1. Prepare a zone file
 
-1. Export a zone file from the authoritatve DNS provider you were using with your partial (CNAME) setup.
+1. Export a zone file from the authoritative DNS provider you were using with your partial (CNAME) setup.
 2. Edit the zone file to remove any occurrences of the `cdn.cloudflare.net` suffix.
 
   * If the `CNAME` target is only appending the Cloudflare suffix to the same hostname at which it is created, replace it by the records on the Cloudflare partial zone.

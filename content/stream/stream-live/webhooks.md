@@ -6,7 +6,7 @@ weight: 6
 
 # Receive Live Webhooks
 
-Stream Live supports webhooks that notify your service when an Input connects or disconnects to Stream Live.
+Stream Live offers webhooks to notify your service when an Input connects, disconnects, or encounters an error with Stream Live.
 
 {{<available-notifications product="Stream">}}
 

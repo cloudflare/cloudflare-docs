@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Jamf Pro
-weight: 15
+weight: 16
 ---
 
 # Connect to Jamf Pro through Access

@@ -5,6 +5,12 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-23'
+  title: New Live Webhooks for Error States
+  description: |-
+    Stream has added a new notification event for Live broadcasts to alert (via email or webhook) on various error conditions including unsupported codecs, bad GOP/keyframe interval, or quota exhaustion.
+
+    When creating/editing a notification, subscribe to `live_input.errored` to receive the new event type. Existing notification subscriptions will not be changed automatically. For more information, refer to [Receive Live Webhooks](/stream/stream-live/webhooks/).
 - publish_date: '2024-06-20'
   title: Generated Captions to Open beta
   description: |-
