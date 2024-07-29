@@ -185,8 +185,8 @@ Comparison operators entered using English notation (such as `eq`, `lt`, and `gt
 
 The Cloudflare dashboard shows the following functions as operators:
 
-* _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with)) function: Returns `true` when a string starts with a given substring, and `false` otherwise.
-* _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with)) function: Returns `true` when a string ends with a given substring, and `false` otherwise.
+* _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with) function): Returns `true` when a string starts with a given substring, and `false` otherwise.
+* _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with) function): Returns `true` when a string ends with a given substring, and `false` otherwise.
 
 However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
 
