@@ -25,7 +25,7 @@ All fields except for organizational_unit and key_type are required. If you do n
 Common names are restricted to 64 characters and subject alternative names (SANs) are limited to 255 characters, [per RFC 5280](https://tools.ietf.org/html/rfc5280). You must specify at least one SAN, and the list of SANs should include the common name.
 
 ```bash
-$ request_body=$(< <(cat <<EOF
+request_body=$(< <(cat <<EOF
 {
   "country": "US",
   "state": "MA",

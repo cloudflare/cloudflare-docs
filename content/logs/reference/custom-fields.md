@@ -66,12 +66,13 @@ Perform the following steps to create the rule:
 
 2. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
 
-    ```json
+    ```bash
     curl -X POST \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    -d '{
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "name": "Zone-level phase entry point",
       "kind": "zone",
       "description": "This ruleset configures custom log fields.",
@@ -88,8 +89,9 @@ Perform the following steps to create the rule:
     ```json
     curl -X PUT \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "Content-Type: application/json" \
     -d '{
       "rules": [
         {

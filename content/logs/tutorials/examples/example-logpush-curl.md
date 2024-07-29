@@ -64,8 +64,8 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -d'{
-"name":"<DOMAIN_NAME>", 
-"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2", 
+"name":"<DOMAIN_NAME>",
+"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
 "dataset": "http_requests",
 "output_options": {
     "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
@@ -362,10 +362,11 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 Next, edit the **output_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
 
 ```bash
-curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
-    -H 'X-Auth-Key: <API_KEY>' \
-    -H 'X-Auth-Email: <EMAIL>' \
-    -d '{
+curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>" \
+    --header "X-Auth-Key: <API_KEY>" \
+    --header "X-Auth-Email: <EMAIL>" \
+    --header "Content-Type: application/json" \
+    --data '{
     "output_options": {
         "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
         "timestamp_format": "rfc3339"

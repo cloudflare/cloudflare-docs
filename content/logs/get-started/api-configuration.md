@@ -50,9 +50,9 @@ To issue an ownership challenge token to your destination:
 
 ```bash
 $ curl -s -X POST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/ownership \
--H "X-Auth-Email: <EMAIL>" \ 
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \ 
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
@@ -138,14 +138,15 @@ The kind parameter (optional) is used to differentiate between Logpush and Edge 
 
 {{<Aside type="note" header="Note">}}
 
-The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
+The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job.
 
 {{</Aside>}}
 
 ```bash
 curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/jobs' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 -d '{
  "name":"<DOMAIN_NAME>",
  "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
@@ -178,6 +179,7 @@ To check if the selected **logpull_options** are valid:
 curl https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
   "dataset": "http_requests"
@@ -204,7 +206,7 @@ Use filters to select the events to include and/or remove from your logs. For mo
 
 ## Sampling rate
 
-Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
+Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled.
 
 ## Max Upload Parameters
 
