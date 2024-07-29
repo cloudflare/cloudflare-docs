@@ -20,7 +20,7 @@ You can [download the Workers AI notebook](/workers-ai/static/documentation/note
 
 Or you can run this on [Google Colab](https://colab.research.google.com/github/craigsdennis/notebooks-cloudflare-workers-ai/blob/main/cloudflare-workers-ai.ipynb)
 
-{{<stream video_id="3c46281a9b2b84ee6776a53f87580c45" video_title="Explore Workers AI Models Using a Jupyter Notebook">}}
+{{<stream video_id="2c60022bea5c8c1b343e76566fed76f2" video_title="Explore Workers AI Models Using a Jupyter Notebook" poster="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/2c60022bea5c8c1b343e76566fed76f2/thumbnails/thumbnail.jpg?time=2.5s">}}
 
 [comment]: <> (The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai the <audio> tag is hard coded)
 
