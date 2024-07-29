@@ -10,7 +10,7 @@ gRPC is a Remote Procedure Call (RPC) framework that allows client applications 
 
 {{<render file="tunnel/_grpc-support.md">}}
 <br /> <br />
-In this example, we will connect a gRPC server to Cloudflare using the `cloudflared` daemon, secure the server with Gateway policies, and open a gRPC channel to the server using the Cloudflare WARP client.
+In this example, we will connect a gRPC server to Cloudflare using the `cloudflared` {{<glossary-tooltip term_id="daemon">}}daemon{{</glossary-tooltip>}}, secure the server with Gateway policies, and open a gRPC channel to the server using the Cloudflare WARP client.
 
 ## 1. Set up a gRPC server
 
