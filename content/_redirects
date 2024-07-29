@@ -549,7 +549,6 @@
 /images/variants/ /images/manage-images/enable-flexible-variants/ 301
 /images/worker/ /images/transform-images/transform-via-workers/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
-/support/troubleshooting/general-troubleshooting/troubleshoot-image-resizing-problems/ /images/troubleshooting/ 301
 /images/cloudflare-images/ /images/ 301
 /images/cloudflare-images/api-request/ /images/get-started/ 301
 /images/cloudflare-images/images-analytics/ /images/ 301
@@ -967,9 +966,9 @@
 /stream/uploading-videos/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
-/stream/changelog/ /stream/platform/ 301
+/stream/changelog/ /stream/platform/changelog/ 301
 /stream/webrtc-beta/ /stream/platform/webrtc-beta/ 301
-/stream/faq/ /stream/faq/ 301
+/stream/faq/ /stream/reference/faq/ 301
 
 # support
 
