@@ -112,6 +112,14 @@ To link a primary zone to a peer using the API, send a [POST](/api/operations/se
 {{</tab>}}
 {{</tabs>}}
 
+{{
+
+}}
+For security reasons TSIGs are considered a zone level configuration, this means that if one of the linked peer configured on a zone has a TSIG then all the linked peers on that zone are expected to make zone transfer requests using the same TSIG
+{{
+
+}}
+
 ## Step 4 - Create an ACL
 
 When you create an Access Control List (ACL), that list contains the source IP addresses that are allowed to send zone transfer requests. If you do not configure an ACL, your zone transfers will fail from IP addresses other than the one specified in the peer DNS server linked to your primary zone on Cloudflare.
