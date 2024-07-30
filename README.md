@@ -2,7 +2,7 @@
 
 **[View the docs →](https://developers.cloudflare.com/)**
 
-## Why we are open source
+## Why Cloudflare Docs is open source
 
 Our documentation is open source so that we can stay connected with our community and quickly implement feedback. Whether you have opened an issue or contributed your own content, we thank you for helping us maintain quality documentation.
 
