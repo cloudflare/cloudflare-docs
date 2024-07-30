@@ -116,7 +116,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="11">}}Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.{{</fnentry>}}
 {{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2025.{{</fnentry>}}
-{{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for [these datasets](https://developers.cloudflare.com/data-localization/metadata-boundary/logpush-datasets/). Contact your Customer Success Manager if you need another dataset.{{</fnentry>}}
+{{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your Customer Success Manager if you need another dataset.{{</fnentry>}}
 {{<fnentry num="14">}}Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.{{</fnentry>}}
 {{<fnentry num="15">}}Can be localized to US FedRAMP region only. More regions coming in 2024.{{</fnentry>}}
 {{<fnentry num="16">}}Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.{{</fnentry>}}
