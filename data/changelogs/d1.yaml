@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-07-26"
+    title: Fixed bug in TypeScript typings for run() API
+    description: |-
+      The `run()` method as part of the [D1 Client API](/d1/build-with-d1/d1-client-api/) had an incorrect (outdated) type definition, which has now been addressed as of [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) version `4.20240725.0`.
+
+      The correct type definition is `stmt.run<T>(): D1Result`, as `run()` returns the result rows of the query. The previously _incorrect_ type definition was `stmt.run(): D1Response`, which only returns query metadata and no results.
+
   - publish_date: "2024-06-17"
     title: HTTP API now returns a HTTP 429 error for overloaded D1 databases
     description: |-
