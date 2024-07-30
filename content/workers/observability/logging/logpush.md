@@ -44,20 +44,20 @@ To create a Logpush job in the Cloudflare dashboard:
 
 The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
 
-```json
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
--H 'X-Auth-Key: <API_KEY>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'Content-Type: application/json' \
--d '{
-"name": "workers-logpush",
-"output_options": {
-  "field_names": ["Event", "EventTimestampMs", "Outcome", "Exceptions", "Logs", "ScriptName"],
-},
-"destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
-"dataset": "workers_trace_events",
-"enabled": true
-}'| jq .
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs" \
+--header 'X-Auth-Key: <API_KEY>' \
+--header 'X-Auth-Email: <EMAIL>' \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "workers-logpush",
+  "output_options": {
+    "field_names": ["Event", "EventTimestampMs", "Outcome", "Exceptions", "Logs", "ScriptName"],
+  },
+  "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
+  "dataset": "workers_trace_events",
+  "enabled": true
+}' | jq .
 ```
 
 In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for requests that did not result in an exception, add the following `filter` JSON property below `output_options`:
@@ -87,7 +87,8 @@ route = { pattern = "example.org/*", zone_name = "example.org" }
 Configure via multipart script upload API:
 
 ```bash
-curl --request PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts/<SCRIPT_NAME>" \
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --form 'metadata={"main_module": "my-worker.js", "logpush": true}' \
 --form '"my-worker.js"=@./my-worker.js;type=application/javascript+module'
