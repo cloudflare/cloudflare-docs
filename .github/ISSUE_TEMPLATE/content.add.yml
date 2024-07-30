@@ -21,6 +21,14 @@ body:
       label: Subject Matter
       description: What needs to be documented?
 
+  - type: input
+    id: products
+    validations:
+      required: true
+    attributes:
+      label: Cloudflare Products
+      description: Which Cloudflare products or features does this relate to?
+
   - type: textarea
     id: location
     validations:
