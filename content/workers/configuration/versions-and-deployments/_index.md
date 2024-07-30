@@ -93,7 +93,6 @@ To view your deployments in the Cloudflare dashboard:
 
 You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload) the first time you upload a Worker will fail.
 
-
 ### Service worker syntax
 
 Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload). You must use ES modules format.
@@ -104,4 +103,4 @@ Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate
 
 Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
 
-This will be supported in the near future. 
+This will be supported in the near future.
