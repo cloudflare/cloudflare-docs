@@ -13,8 +13,8 @@ For basic uploads, you will need to add the Creator ID after you upload the vide
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy" \
--H "Authorization: Bearer <API_TOKEN>" \
--H "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{"url":"https://example.com/myvideo.mp4","creator": "<CREATOR_ID>","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
 
@@ -85,6 +85,7 @@ You can associate videos with a single creator by setting a default creator ID v
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs" \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{"DefaultCreator":"1234"}'
 ```
 
@@ -99,6 +100,7 @@ To update the creator property in existing videos, make a `POST` request to the 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/<VIDEO_UID>" \
 --header "Authorization: Bearer <AUTH_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{"creator":"test123"}'
 ```
 
