@@ -1119,6 +1119,7 @@
 /r2/buckets/data-location/ /r2/reference/data-location/ 301
 /r2/reference/audit-logs/ /r2/platform/audit-logs/ 301
 /r2/reference/changelog/ /r2/platform/changelog/ 301
+/r2/reference/changelog/index.xml /r2/platform/changelog/index.xml 301 
 /r2/reference/limits/ /r2/platform/limits/ 301
 /r2/reference/metrics-analytics/ /r2/platform/metrics-analytics/ 301
 
