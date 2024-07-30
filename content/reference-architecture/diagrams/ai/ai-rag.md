@@ -6,6 +6,7 @@ meta:
   title: "Reference Architecture Diagram: Retrieval Augmented Generation (RAG)"
 tags:
   - AI
+products: [Workers AI, Workers, Queues, Vectorize, D1]
 ---
 
 # Retrieval Augmented Generation (RAG) Architecture

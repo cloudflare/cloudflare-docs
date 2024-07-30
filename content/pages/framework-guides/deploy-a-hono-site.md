@@ -143,7 +143,7 @@ Every time you commit new code to your Hono site, Cloudflare Pages will automati
 
 For more tutorials involving Hono, refer to the following resources:
 
-{{<resource-by-tag tags="Hono" resource_type="tutorial" show_description=false >}}
+{{<resource-by-selector tags="Hono" resource_type="tutorial" show_description=false >}}
 
 ### Demo apps
 
