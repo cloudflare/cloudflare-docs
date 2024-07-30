@@ -128,7 +128,7 @@ The Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Matches<br /> wildcard pattern</td>
+      <td>Matches wildcard pattern (case insensitive)</td>
       <td><code class="InlineCode">wildcard</code></td>
       <td></td>
       <td>&#x2705;</td>
@@ -139,7 +139,7 @@ The Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Matches<br /> wildcard pattern (case sensitive)</td>
+      <td>Matches wildcard pattern (case sensitive)</td>
       <td><code class="InlineCode">strict wildcard</code></td>
       <td></td>
       <td>&#x2705;</td>
