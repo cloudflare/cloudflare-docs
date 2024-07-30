@@ -317,7 +317,7 @@ You can only use the `uuidv4()` function in [rewrite expressions of Transform Ru
       `wildcard_replace(http.request.full_uri, "https://*.example.com/*/*", "https://example.com/${1}/${2}/${3}")` will return `https://example.com/apps/calendar/admin?expand=true`
 
       If the full URI is `https://example.com/applications/app1`,<br />
-      `wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged URI value, since there is no match for the full URI value; you should use the `http.request.uri.path` field for URI path matching).
+      `wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged value, since there is no match for the full URI value; you should use the `http.request.uri.path` field for URI path matching).
 
       If the URI path is `/calendar`,<br />
       `wildcard_replace(http.request.uri.path, "/*", "/apps/${1}")` will return `/apps/calendar`.
