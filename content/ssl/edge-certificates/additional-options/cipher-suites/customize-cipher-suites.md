@@ -28,11 +28,15 @@ Custom cipher suites is a hostname-level setting, which implies that:
 - The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of certificate type (universal, advanced, or custom).
 - If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
 
+### Scope
+
 Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-edit-single-setting) (using `ciphers` as the setting name in the URI path)
 - [Per-hostname](/api/operations/per-hostname-tls-settings-put) (regular zones only)
-- [Custom hostname](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) (Cloudflare for SaaS zones only)
+- [Custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) (Cloudflare for SaaS zones only)
+
+### Settings priority and ciphers order
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
@@ -45,16 +49,43 @@ ECDSA is prioritized over RSA and Cloudflare preserves the specified cipher suit
 Note that:
 
 * Cipher suites are used in combination with other [SSL/TLS settings](/ssl/edge-certificates/additional-options/cipher-suites/#related-ssltls-settings).
-* You cannot set specific TLS 1.3 ciphers. Instead, you can [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire zone and Cloudflare will use all applicable TLS 1.3 cipher suites.
+* You cannot set specific TLS 1.3 ciphers. Instead, you can [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire zone and Cloudflare will use all applicable [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
 * Each cipher suite also supports a specific algorithm (RSA or ECDSA) so you should consider the algorithms in use by your edge certificates when making your ciphers selection. You can find this information under each certificate listed in [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
 ### Steps and API examples
 
 To specify certain cipher suites, include an array of applicable cipher suites used for TLS 1.2 or lower in the `value` field. Cloudflare offers a list of [recommended ciphers by security requirements](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), but you can also refer to the [full list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) of supported ciphers.
 
-
 ## Reset to default values
 
-For zones and custom hostnames, to reset to the default cipher suites, send an empty array in the `value` field.
+{{<tabs labels="Zone | Per-hostname">}}
+{{<tab label="zone" no-code="true">}}
+
+To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URI path, and send an empty array in the `value` field.
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": []}'
+```
+
+{{</tab>}}
+{{<tab label="per-hostname" no-code="true">}}
 
 For specific hostname settings, use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint.
+
+```bash
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
