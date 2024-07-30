@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Workday
-weight: 25
+weight: 26
 ---
 
 # Connect to Workday through Access
