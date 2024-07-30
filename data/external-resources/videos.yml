@@ -13,7 +13,7 @@ entries:
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=MlV9Kvkh9hw
   title: Build a URL Shortener with an AI-based admin section
-  description: When building the URL Shortener, shrty.dev on Cloudflare. He used Workers KV and Workers Analytics engine. Craig decided to build with Workers AI runWithTools to provide a chat interface for admins.
+  description: We are building a URL Shortener, shrty.dev, on Cloudflare. The apps uses Workers KV and Workers Analytics engine. Craig decided to build with Workers AI runWithTools to provide a chat interface for admins.
   tags: [Workers Analytics Engine, AI]
   products: [Workers AI, KV]
   cloudflare: true
