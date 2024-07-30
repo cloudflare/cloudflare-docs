@@ -14,7 +14,7 @@ This process will not lead to any downtime in your SSL/TLS protection.
 
 {{<Aside type="note">}}
 
-Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
+Note that this process only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/origin-configuration/cipher-suites/#match-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
 
 {{</Aside>}}
 
@@ -42,7 +42,7 @@ ECDSA is prioritized over RSA and Cloudflare preserves the specified cipher suit
 
 ### TLS 1.2 or lower
 
-To specify certain cipher suites, include an array of applicable cipher suites used for TLS 1.2 or lower in the `value` field. Cloudflare offers a list of [recommended ciphers by security requirements](/ssl/reference/cipher-suites/recommendations/), but you can also refer to the [full list](/ssl/reference/cipher-suites/supported-cipher-suites/) of supported ciphers.
+To specify certain cipher suites, include an array of applicable cipher suites used for TLS 1.2 or lower in the `value` field. Cloudflare offers a list of [recommended ciphers by security requirements](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), but you can also refer to the [full list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) of supported ciphers.
 
 ### TLS 1.3
 

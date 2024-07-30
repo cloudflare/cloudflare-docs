@@ -110,4 +110,4 @@ The following table lists the default cipher suites Gateway uses for TLS decrypt
 | AES128-SHA                    | TLS_RSA_WITH_AES_128_CBC_SHA            | ❌             |
 | AES256-SHA                    | TLS_RSA_WITH_AES_256_CBC_SHA            | ❌             |
 
-For more information on cipher suites, refer to [Cipher suites](/ssl/reference/cipher-suites/).
+For more information on cipher suites, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).

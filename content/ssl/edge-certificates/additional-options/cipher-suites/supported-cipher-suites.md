@@ -9,9 +9,9 @@ meta:
 
 # Supported cipher suites
 
-Cloudflare supports the following cipher suites by default. If needed, you can [restrict your website or application](/ssl/reference/cipher-suites/customize-cipher-suites/) to only use specific cipher suites.
+Cloudflare supports the following cipher suites by default. If needed, you can [restrict your website or application](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) to only use specific cipher suites.
 
-| Cipher name | Minimum protocol | [Security recommendation](/ssl/reference/cipher-suites/recommendations/) | Cipher suite | IANA name |
+| Cipher name | Minimum protocol | [Security recommendation](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) | Cipher suite | IANA name |
 | ----------------------------------- | ------- | ------- | ------- | ------- |
 | ECDHE-ECDSA-AES128-GCM-SHA256       | TLS 1.2 | Modern | [0xc02b] | TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 |
 | ECDHE-ECDSA-CHACHA20-POLY1305       | TLS 1.2 | Modern | [0xcca9] | TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 |

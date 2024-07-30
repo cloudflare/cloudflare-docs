@@ -9,7 +9,7 @@ meta:
 
 # Compliance status
 
-Consider the following table for recommendations on [custom cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) when your organization needs to comply with regulatory standards.
+Consider the following table for recommendations on [custom cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) when your organization needs to comply with regulatory standards.
 
 
 | Standard | Description | Cipher suites |

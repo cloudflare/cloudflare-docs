@@ -12,7 +12,7 @@ For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0
 
 {{<Aside type="note">}}
 
-If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
+If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
 

@@ -9,7 +9,7 @@ weight: 7
 
 {{<render file="_cipher-suites-definition.md">}}
 
-Refer to the sections below to understand how cipher suites work with the different Cloudflare edge certificates. For more details and reference content, refer to [Cipher suites](/ssl/reference/cipher-suites/).
+Refer to the sections below to understand how cipher suites work with the different Cloudflare edge certificates. For more details and reference content, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 ## Cipher suites and edge certificates
 
@@ -29,7 +29,7 @@ Assuming this is just a one-time change, you can trigger the API call using curl
 
 1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
-3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/).
+3.  Decide which cipher suites you would like to allow from [the list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
 
 Here is an example value (list of cipher suites) which you can use to replace `<CIPHER_SUITES>` in the commands below:
 
