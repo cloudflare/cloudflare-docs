@@ -2,7 +2,7 @@
 
 Before contributing code to Cloudflare's documentation, please read the following guidelines carefully.
 
-## Have feedback for our documentation? Open an issue.
+## Have feedback for our documentation? Open an issue
 
 [Open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) when something in our documentation is incorrect, out-of-date, or if the documentation doesn’t match the actual functionality.
 
