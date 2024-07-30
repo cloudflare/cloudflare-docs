@@ -5,6 +5,7 @@ weight: 1
 ---
 
 # Universal Endpoint
+You can use the Universal endpoint to contact every provider.
 
 {{<render file="_universal.md">}}
 
