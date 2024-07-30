@@ -29,14 +29,10 @@ Applications that use certificate pinning and mTLS authentication do not trust t
 If you try to perform TLS decryption, these applications may not load or may return an error. To resolve this issue, you can:
 
 - Add the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to supported applications.
-- Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from TLS decryption.
+- Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from TLS decryption. The [Application selector](/cloudflare-one/policies/gateway/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates.
 - Configure a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 
 Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) to _Pass through_.
-
-To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a list of trusted applications that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you may see a **Your connection is not private** warning, which you can proceed through to connect.
-
-HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gateway or subject to your HTTP policies. You can, however, still apply [network policies](/cloudflare-one/policies/gateway/network-policies/) to these applications.
 
 ### Google Chrome automatic HTTPS upgrades
 
