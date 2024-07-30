@@ -12,7 +12,11 @@ tags: [Hono]
 
 {{<tutorial-date-info>}}
 
-In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database. This is useful if you want to access a D1 database outside of a Worker or Pages project. While you can query a D1 database via the [REST API](/api/operations/cloudflare-d1-create-database), this approach is not recommende due to rate limits and high latency.
+In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database.
+
+This is useful if you want to access a D1 database outside of a Worker or Pages project, customize access controls and/or limit what tables can be queried.
+
+D1's built-in [REST API](/api/operations/cloudflare-d1-create-database) is best suited for administrative use as the global [Cloudflare API rate limit](/fundamentals/api/reference/limits/) applies.
 
 To access a D1 database outside of a Worker project, you need to create an API using a Worker. Your application can then securely interact with this API to run D1 queries.
 
