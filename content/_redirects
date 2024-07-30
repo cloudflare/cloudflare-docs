@@ -971,7 +971,8 @@
 /cloudflare-for-platforms/workers-for-platforms/platform/observability/ /cloudflare-for-platforms/workers-for-platforms/reference/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/tags/ /cloudflare-for-platforms/workers-for-platforms/reference/tags/ 301
-/cloudflare-for-platforms/workers-for-platforms/platform/metadata/  /cloudflare-for-platforms/workers-for-platforms/reference/metadata/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/metadata/ /workers/configuration/multipart-upload-metadata/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/metadata/ /workers/configuration/multipart-upload-metadata/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/custom-limits/ /cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
@@ -1736,4 +1737,3 @@
 /support/speed/* /speed/ 301
 /support/troubleshooting/planned-maintenance/* /support/troubleshooting/disruptive-maintenance/ 301
 /support/cloudflare-client-api/* /fundamentals/api/ 301
-
