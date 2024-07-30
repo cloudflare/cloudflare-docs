@@ -281,7 +281,7 @@ Information contained within HTTPS encryption, such as the full requested URL, w
 
 {{</Aside>}}
 
-Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
 
 All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if decryption should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
 
