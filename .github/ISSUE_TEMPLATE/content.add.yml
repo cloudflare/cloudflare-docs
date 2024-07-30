@@ -27,7 +27,7 @@ body:
       required: true
     attributes:
       label: Cloudflare Products
-      description: Which Cloudflare products or features does this relate to?
+      description: Which Cloudflare products or features does this request relate to?
 
   - type: textarea
     id: location
