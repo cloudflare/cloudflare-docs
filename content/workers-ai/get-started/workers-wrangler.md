@@ -50,7 +50,7 @@ To bind Workers AI to your Worker, add the following to the end of your `wrangle
 
 ```toml
 ---
-filename: wrangler.toml
+header: wrangler.toml
 ---
 
 [ai]
@@ -70,7 +70,7 @@ Update the `index.ts` file in your `hello-ai` application directory with the fol
 
 ```typescript
 ---
-filename: "src/index.ts"
+header: src/index.ts
 ---
 export interface Env {
   // If you set another name in wrangler.toml as the value for 'binding',
