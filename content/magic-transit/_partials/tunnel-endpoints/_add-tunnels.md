@@ -25,7 +25,7 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 9. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
 11. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
-12. _(Optional)_ If you kept **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_, and _High_.
+12. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_, and _High_.
 13. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
 14. The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 15. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
@@ -43,7 +43,7 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 8. In **Customer endpoint**, enter your router’s public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
 9. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
 10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks,, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
-11. _(Optional)_ If you kept **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
 13. _(Optional)_ The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
