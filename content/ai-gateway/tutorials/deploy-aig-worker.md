@@ -151,7 +151,7 @@ export default {
 
 		try {
 		  const chatCompletion = await openai.chat.completions.create({
-			model: "4o-mini",
+			model: "gpt-4o-mini",
 			messages: [{role: "user", content: "What is a neuron?"}],
 			max_tokens: 100,
 		  });
