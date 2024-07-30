@@ -92,7 +92,7 @@ Perform the following steps to create the rule:
     --header "X-Auth-Email: <EMAIL>" \
     --header "X-Auth-Key: <API_KEY>" \
     --header "Content-Type: application/json" \
-    -d '{
+    --data '{
       "rules": [
         {
           "action": "log_custom_field",
