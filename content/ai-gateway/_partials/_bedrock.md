@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
+## Endpoint
+
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock`
 
 When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east-1.amazonaws.com/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/`, then add the model you want to run at the end of the URL.

@@ -77,7 +77,7 @@ $ npx wrangler r2 object put <PATH> -f <FILE_NAME>
 
 ## 3. Bind your bucket to the Worker
 
-A binding is a how your Worker interacts with external resources such as the R2 bucket.
+A binding is how your Worker interacts with external resources such as the R2 bucket.
 
 To bind the R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the binding property to a valid JavaScript variable identifier. Replace `<YOUR_BUCKET_NAME>` with the name of the bucket you created in [step 2](#2-upload-a-fine-tune-document-to-r2):
 

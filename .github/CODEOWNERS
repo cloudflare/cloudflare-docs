@@ -75,7 +75,7 @@
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer Platform
-/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774
+/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774 @zaidf @nils-ohlmeier @rcccf @astroza
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/email-routing/ @kodster28 @cloudflare/pcx-technical-writing

@@ -191,7 +191,7 @@
 /cache/about/crawler-hints/ /cache/advanced-configuration/crawler-hints/ 301
 /cache/how-to/enable-crawler-hints/ /cache/advanced-configuration/crawler-hints/#enable-crawler-hints 301
 /cache/about/edge-browser-cache-ttl/ /cache/how-to/edge-browser-cache-ttl/ 301
-/cache/how-to/create-page-rules/ /cache/how-to/edge-browser-cache-ttl/create-page-rules/ 301
+/cache/how-to/create-page-rules/ /cache/how-to/cache-rules/ 301
 /cache/how-to/set-browser-ttl/ /cache/how-to/edge-browser-cache-ttl/set-browser-ttl/ 301
 /cache/about/cache-rules/ /cache/how-to/cache-rules/ 301
 /cache/about/cache-keys/ /cache/how-to/cache-keys/ 301
@@ -219,6 +219,7 @@
 /support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/cache-everything-ignore-query-strings/ /cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/ 301
 /cache/troubleshooting/chunked-encoding-and-dynamic-content/ /cache/how-to/cache-rules/ 301
+/cache/how-to/edge-browser-cache-ttl/create-page-rules/ /cache/how-to/cache-rules/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -697,9 +698,9 @@
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
-/magic-transit/set-up/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/set-up/requirements/ /magic-transit/get-started/ 301
 /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
-/magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/get-started/requirements/ /magic-transit/get-started/ 301
 /magic-transit/about/bandwidth-measurement/ /magic-transit/reference/bandwidth-measurement/ 301
 /magic-transit/about/health-checks/ /magic-transit/reference/tunnel-health-checks/ 301
 /magic-transit/about/probe-construction/ /magic-transit/reference/tunnel-health-checks/ 301
@@ -708,6 +709,7 @@
 /magic-transit/reference/ipsec/ /magic-transit/reference/tunnels/#ipsec-tunnels 301
 /magic-transit/flow-based-monitoring/ /magic-transit/magic-network-monitoring/ 301
 /magic-transit/how-to/auto-advertise-prefixes/ /magic-network-monitoring/rules/ 301
+/magic-transit/prerequisites/ /magic-transit/get-started/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -736,6 +738,7 @@
 /magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/manually/how-to/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
+/magic-wan/prerequisites/ /magic-wan/get-started/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301

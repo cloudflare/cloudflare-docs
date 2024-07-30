@@ -32,6 +32,42 @@ Like actions in DNS and HTTP policies, actions in network policies define which 
 
 API value: `allow`
 
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Detected Protocol](#detected-protocol)
+- [Protocol](#protocol)
+- [Proxy Endpoint](#proxy-endpoint)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
 
 | Selector       | Operator | Value           | Logic | Action |
@@ -42,6 +78,36 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 ### Audit SSH
 
 API value: `audit_ssh`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
 
 Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
 
@@ -57,6 +123,42 @@ For more information on SSH logging, refer to [Configure SSH proxy and command l
 
 API value: `block`
 
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Detected Protocol](#detected-protocol)
+- [Protocol](#protocol)
+- [Proxy Endpoint](#proxy-endpoint)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
+
 Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:
 
 | Selector         | Operator | Value | Action |
@@ -70,6 +172,39 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 ### Network Override
 
 API value: `l4_override`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Destination Port](#destination-port)
+- [Protocol](#protocol)
+- [SNI](#sni)
+- [SNI Domain](#sni-domain)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Source Port](#source-port)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+{{</details>}}
 
 Policies with Network Override actions override traffic directed to, or coming from, certain IPv4/IPv6 addresses or ports. Destination IPs can be public IPs or private IPs connected to your Zero Trust network. For example, the following configuration overrides traffic sent to a public IP with a private IP based on a user’s identity:
 

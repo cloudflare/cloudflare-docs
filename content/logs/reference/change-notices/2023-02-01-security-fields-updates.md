@@ -144,7 +144,7 @@ After updating Logpush jobs, you may need to update external filters or reports 
 
 ### Update Logpush job via API
 
-Follow the instructions in [Update log_pull options](/logs/tutorials/examples/example-logpush-curl/#optional---update-logpull_options) to update the fields in the Logpush job.
+Follow the instructions in [Update output_options](/logs/tutorials/examples/example-logpush-curl/#optional---update-output_options) to update the fields in the Logpush job.
 
 ### Update Logpush job via Terraform
 

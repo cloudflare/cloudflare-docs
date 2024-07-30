@@ -147,7 +147,7 @@ name = "fauna-workers"
 
 Before developing your Worker, add your Fauna secret key as a [secret](/workers/configuration/secrets/).
 
-There are two types of secrets for [development](/workers/configuration/secrets/#secrets-in-development) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
+There are two types of secrets for [development](/workers/configuration/secrets/#local-development-with-secrets) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
 
 For development, add a `.dev.vars` file on the project root and write your secret.
 
