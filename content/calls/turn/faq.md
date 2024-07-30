@@ -32,7 +32,7 @@ Cloudflare Calls TURN server runs on [Cloudflare's global network](https://www.c
 
 ### Does Cloudflare Calls TURN use the Cloudflare Backbone or is there any "magic" Cloudflare do to speed connection up?
 
-Cloudflare Calls TURN allocations are homed in the nearest available Cloudflare datacenter to the TURN client via anycast routing. If both ends of a connection is using Cloudflare Calls TURN, Cloudflare will be able to control the routing and, if possible, route TURN packets through the Cloudflare backbone.
+Cloudflare Calls TURN allocations are homed in the nearest available Cloudflare datacenter to the TURN client via anycast routing. If both ends of a connection are using Cloudflare Calls TURN, Cloudflare will be able to control the routing and, if possible, route TURN packets through the Cloudflare backbone.
 
 ### What is the difference between Cloudflare Calls TURN with a enterprise plan vs self-serve (pay with your credit card) plans?
 
@@ -56,7 +56,7 @@ Please allowlist the following IP addresses:
 
 Cloudflare tries to, but cannot guarantee that the IP addresses used for the TURN service won't change unless this is in your enterprise contract. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team. Your enterprise account will be able to provide additional addresses to allowlist as future backup to achieve address diversity.
 
-If you are allowlisting IP addresses, and don't have a enterprise contract with different instructions, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change.
+If you are allowlisting IP addresses and do not have a enterprise contract with different instructions, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change.
 
 ### I would like to hardcode IP addresses used for TURN in my application to save a DNS lookup
 
