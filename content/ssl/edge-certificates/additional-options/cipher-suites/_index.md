@@ -10,7 +10,7 @@ meta:
 
 {{<render file="_cipher-suites-definition.md">}}<br />
 
-More specifically, this section is dedicated to cipher suites used in connections between clients - such as your visitor's browser - and the Cloudflare network. For information about cipher suites used between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
+This section is dedicated to cipher suites used in connections between clients - such as your visitor's browser - and the Cloudflare network. For information about cipher suites used between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 
 {{<Aside type="note">}}
 Cloudflare maintains a [public repository of our SSL/TLS configurations](https://github.com/cloudflare/sslconfig) on GitHub, and you can find changes in the commit history.
@@ -30,7 +30,7 @@ Although configured independently, cipher suites interact with other SSL/TLS set
 
 ### Minimum TLS Version
 
-Any Cloudflare customer can specify a [minimum TLS protocol](/ssl/edge-certificates/additional-options/minimum-tls/) that is required for a client to connect to their website or application.
+You can specify a [minimum TLS protocol](/ssl/edge-certificates/additional-options/minimum-tls/) that is required for a client to connect to your website or application.
 
 For example, if TLS 1.1 is selected as the minimum, visitors attempting to connect with TLS 1.0 will be rejected while visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed.
 

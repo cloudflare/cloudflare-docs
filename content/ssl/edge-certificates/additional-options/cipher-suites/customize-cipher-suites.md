@@ -10,7 +10,7 @@ meta:
 
 With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
-You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to disable weak cipher suites, or to become compliant to [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
+You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to disable weak cipher suites, or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
@@ -25,7 +25,7 @@ Note that this process only refers to connections [between clients and the Cloud
 Custom cipher suites is a hostname-level setting, which implies that:
 
 - When you customize cipher suites for a [zone](/fundamentals/setup/accounts-and-zones/#zones), this will affect all hostnames within that zone.
-- The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of certificate type (universal, advanced, or custom).
+- The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of [certificate type](/ssl/edge-certificates/) (universal, advanced, or custom).
 - If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
 
 ### Scope
@@ -60,12 +60,34 @@ Note that:
 
 2. Log in to the Cloudflare dashboard and get your Global API Key in [**My Profile** > **API Tokens**](https://dash.cloudflare.com/?to=/:account/profile/api-tokens/).
 3. Get the Zone ID from the Overview page of the domain you want to specify cipher suites for.
-4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put), specifying `ciphers` in the URL and listing your array of chosen cipher suites in the `value` field.
+4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL and listing your array of chosen cipher suites in the `value` field.
 
     {{<Aside type="warning">}}
 For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
 {{</Aside>}}
 
+{{<tabs labels="Compatible | Modern | PCI DSS | FIPS-140-2">}}
+{{<tab label="compatible" no-code="true">}}
+
+Content.....
+
+{{</tab>}}
+{{<tab label="modern" no-code="true">}}
+
+Content......
+
+{{</tab>}}
+{{<tab label="pci dss" no-code="true">}}
+
+Content......
+
+{{</tab>}}
+{{<tab label="fips-140-2" no-code="true">}}
+
+Content......
+
+{{</tab>}}
+{{</tabs>}}
 
 ## Reset to default values
 

@@ -1,5 +1,5 @@
 ---
-title: Compliance status
+title: Compliance standards
 pcx_content_type: reference
 weight: 6
 meta:
@@ -10,7 +10,9 @@ meta:
 
 Consider the following recommendations on custom [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) for when your organization needs to comply with regulatory standards.
 
-Refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) to learn how to specify cipher suites at zone level or per-hostname.
+Refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) to learn how to specify cipher suites at zone level or per hostname.
+
+Also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and, when opting for [PCI DSS](#pci-dss), make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`. Refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) and [TLS protocols](/ssl/reference/protocols/) to learn more.
 
 ## PCI DSS
 

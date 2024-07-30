@@ -10,7 +10,7 @@ meta:
 
 Refer to the sections below for three different security levels and how Cloudflare recommends that you set them up if you need to restrict the [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) used between Cloudflare and clients that access your website or application.
 
-Refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) to learn how to specify cipher suites at zone level or per-hostname.
+Refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) to learn how to specify cipher suites at zone level or per hostname.
 
 When opting for [compatible](#compatible) or [modern](#modern), make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2` and [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone.
 
