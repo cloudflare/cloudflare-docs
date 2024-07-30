@@ -10,7 +10,7 @@ Function calling enables people to take Large Language Models (LLMs) and use the
 
 In essence, function calling allows you to perform actions with LLMs by executing code or making additional API calls.
 
-{{<youtube id="Id5oKCa__IA">}}
+{{<stream video_id="603e94c9803b4779dd612493c0dd7125">}}
 
 ## How can I use function calling?
 

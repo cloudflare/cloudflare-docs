@@ -5,6 +5,7 @@ entries:
   tags: [AI]
   products: [Workers AI]
   cloudflare: true
+  stream_id: 603e94c9803b4779dd612493c0dd7125
   author: craig
   updated: 2024-06-20
   difficulty: Beginner
