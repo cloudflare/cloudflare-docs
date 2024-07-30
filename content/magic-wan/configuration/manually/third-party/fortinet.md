@@ -29,7 +29,10 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 2. Go to **Magic WAN** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
 4. Select **IPsec tunnel** > **Next**.
-5. When creating your IPsec tunnels, set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint**. Leave other settings with their default values. Do not change **Tunnel Health Check** and **Replay Protection** from their default settings. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
+5. When creating your IPsec tunnels:
+    - **Health check type**: Change to _Request_.
+    - **Replay Protection**: Do not change from the default setting.
+    - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you.  Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) to learn more.
 
 ### Magic static routes
 
