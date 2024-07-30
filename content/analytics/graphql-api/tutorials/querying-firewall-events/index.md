@@ -42,8 +42,9 @@ echo '{ "query":
     }
   }
 }' | tr -d '\n' | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data @-
 ```
@@ -52,8 +53,9 @@ The results returned will be in JSON (as requested), so piping the output to `jq
 
 ```bash
 ... | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data @- | jq .
 

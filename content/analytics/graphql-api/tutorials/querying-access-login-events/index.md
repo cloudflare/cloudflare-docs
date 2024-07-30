@@ -53,8 +53,9 @@ echo '{ "query":
     "datetimeEnd": "2022-09-22T14:36:38Z"
 }
 }' | tr -d '\n' | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data @- | jq .
 ```

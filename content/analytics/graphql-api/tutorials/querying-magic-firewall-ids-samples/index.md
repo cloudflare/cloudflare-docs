@@ -41,8 +41,9 @@ echo '{ "query":
     }
   }
 }' | tr -d '\n' | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data @-
 ```
@@ -51,8 +52,9 @@ The returned values represent the total number of packets and bits that matched 
 
 ```bash
 ... | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data @- | jq .
 

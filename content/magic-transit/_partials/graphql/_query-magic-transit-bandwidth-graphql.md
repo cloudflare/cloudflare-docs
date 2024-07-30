@@ -50,15 +50,17 @@ PAYLOAD='{ "query":
 }'
 
 # curl with Legacy API Key
-curl https://api.cloudflare.com/client/v4/graphql/ \
+curl https://api.cloudflare.com/client/v4/graphql \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data "$(echo $PAYLOAD)"
 
 # curl with API Token
-curl https://api.cloudflare.com/client/v4/graphql/ \
+curl https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data "$(echo $PAYLOAD)"
 ```
@@ -68,8 +70,9 @@ The returned values represent the total bandwidth in bits/second during the five
 The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
 
 ```bash
-curl https://api.cloudflare.com/client/v4/graphql/ \
+curl https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data "$(echo $PAYLOAD)" | jq .
 

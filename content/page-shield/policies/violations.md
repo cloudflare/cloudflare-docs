@@ -107,7 +107,7 @@ echo '{ "query":
     "datetimeEnd": "2023-04-24T12:00:00Z"
   }
 }' | tr -d '\n' | curl --silent \
-https://api.cloudflare.com/client/v4/graphql/ \
+https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data @-
