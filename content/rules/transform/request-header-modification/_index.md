@@ -43,6 +43,8 @@ You can create an HTTP request header modification rule [in the dashboard](/rule
 
 *   You cannot modify or remove HTTP request headers whose name starts with `x-cf-` or `cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
 
+*   Due to protocol compliance reasons, modifying or removing request headers with [forbidden header names](https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name) (such as `Accept-Encoding`) is generally not allowed in request header modification rules.
+
 *   You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`. Additionally, you cannot remove the `x-forwarded-for` header.
 
 *   You cannot set or modify the value of `cookie` HTTP request headers, but you can remove these headers. Configuring a rule that removes the `cookie` HTTP request header will remove all `cookie` headers in matching requests.
