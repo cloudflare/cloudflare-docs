@@ -128,6 +128,28 @@ The Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
+      <td>Matches wildcard pattern<br/>(case insensitive)</td>
+      <td><code class="InlineCode">wildcard</code></td>
+      <td></td>
+      <td>&#x2705;</td>
+      <td>&#10060;</td>
+      <td>&#10060;</td>
+      <td>
+         <code class="InlineCode">http.request.uri.path <strong>wildcard</strong> "/admin/*"</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Matches wildcard pattern<br/>(case sensitive)</td>
+      <td><code class="InlineCode">strict wildcard</code></td>
+      <td></td>
+      <td>&#x2705;</td>
+      <td>&#10060;</td>
+      <td>&#10060;</td>
+      <td>
+         <code class="InlineCode">http.request.uri.path <strong>strict wildcard</strong> "/admin/*"</code>
+      </td>
+    </tr>
+    <tr>
       <td>Matches<br />regex*</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
@@ -163,8 +185,8 @@ Comparison operators entered using English notation (such as `eq`, `lt`, and `gt
 
 The Cloudflare dashboard shows the following functions as operators:
 
-* _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with)) function: Returns `true` when a string starts with a given substring, and `false` otherwise.
-* _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with)) function: Returns `true` when a string ends with a given substring, and `false` otherwise.
+* _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with) function): Returns `true` when a string starts with a given substring, and `false` otherwise.
+* _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with) function): Returns `true` when a string ends with a given substring, and `false` otherwise.
 
 However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
 
@@ -184,8 +206,69 @@ String comparison in rule expressions is case sensitive. To account for possible
 lower(http.request.uri.path) contains "/wp-login.php"
 ```
 
-{{<Aside type="warning" header="Wildcards are not supported">}}
-Comparison operators, namely the `eq` operator, do not support wildcards (for example, `*`) in strings. However, the `matches` operator supports regular expressions like `.*`, which matches zero or more occurrences of any character.
+{{<Aside type="warning">}}
+Wildcard matching is only supported with the `wildcard` and `strict wildcard` operators, and regular expression matching is only supported with the `matches` operator.
+{{</Aside>}}
+
+### Wildcard matching
+
+The `wildcard` operator performs a case-insensitive match between a field value and a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters. The `strict wildcard` operator performs a similar match, but is case sensitive.
+
+When using the `wildcard`/`strict wildcard` operator, the entire field value must match the literal string with wildcards (the literal after the operator).
+
+```sql
+---
+header: Example A
+---
+# The following expression:
+http.request.full_uri wildcard "https://example.com/a/*"
+
+# Would match the following URIs:
+# - https://example.com/a/           (the '*' matches zero characters)
+# - https://example.com/a/page.html
+# - https://example.com/a/sub/folder/?name=value
+
+# Would NOT match the following URIs:
+# - https://example.com/ab/
+# - https://example.com/b/page.html
+# - https://sub.example.com/a/
+```
+
+{{<details header="Example B">}}
+```sql
+# The following expression:
+http.request.full_uri wildcard "*.example.com/*/page.html"
+
+# Would match the following URIs:
+# - http://sub.example.com/folder/page.html
+# - https://admin.example.com/team/page.html
+# - https://admin.example.com/team/subteam/page.html
+
+# Would NOT match the following URIs:
+# - https://example.com/ab/page.html                   ('*.example.com' matches only subdomains)
+# - https://sub.example.com/folder2/page.html?s=value  (http.request.full_uri includes the query string and its full value does not match)
+# - https://sub.example.com/a/                         ('page.html' is missing)
+```
+{{</details>}}
+
+{{<details header="Example C">}}
+```sql
+# The following expression:
+http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildcard "example.com/*"
+
+# Would match the following URIs:
+# - https://example.com/folder/list.htm
+# - https://admin.example.com/folder/team/app1/
+# - https://admin.example.com/folder/team/app1/?s=foobar
+```
+{{</details>}}
+
+The matching algorithm used by the `wildcard` operator is case insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
+
+To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
+
+{{<Aside type="note" header="Wildcard matching versus regex matching">}}
+The `wildcard`/`strict wildcard` operators always consider the entire field value (left-side operand) when determining if there is a match. The `matches` operator can match a partial value.
 {{</Aside>}}
 
 ### Regular expression matching
