@@ -998,7 +998,7 @@
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
 /stream/changelog/ /stream/platform/changelog/ 301
-/stream/changelog/index.xml /stream/platform/changelog/index.xml 301
+/stream/changelog/index.xml /stream/platform/changelog/index.xml
 /stream/webrtc-beta/ /stream/platform/webrtc-beta/ 301
 /stream/faq/ /stream/reference/faq/ 301
 
