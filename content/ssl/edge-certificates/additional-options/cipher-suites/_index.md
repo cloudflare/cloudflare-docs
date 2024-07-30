@@ -30,13 +30,13 @@ Although configured independently, cipher suites interact with other SSL/TLS set
 
 ### Minimum TLS Version
 
-You can specify a [minimum TLS protocol](/ssl/edge-certificates/additional-options/minimum-tls/) that is required for a client to connect to your website or application.
+You can specify a [minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) that is required for a client to connect to your website or application.
 
 For example, if TLS 1.1 is selected as the minimum, visitors attempting to connect with TLS 1.0 will be rejected while visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed.
 
-Each cipher suite supports a specific TLS version. This means that if you use a [higher security level](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) for your cipher suites and stop supporting TLS 1.0, you should adjust your Minimum TLS version accordingly.
+Each cipher suite relates to a specific minimum protocol that it supports. This means that if you use a [higher security level](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) for your cipher suites and stop supporting TLS 1.0, you should also adjust your minimum TLS version accordingly.
 
-[Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) can also require you to up the minimum TLS version accepted in connections to your domain.
+[Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) can also require you to up the minimum TLS version accepted in connections to your website or application.
 
 ### TLS 1.3
 
