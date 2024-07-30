@@ -937,6 +937,7 @@
 /ssl/client-certificates/byo-ca-api-shield/ /ssl/client-certificates/byo-ca/ 301
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/edge-certificates/custom-certificates/caa-records/ /ssl/edge-certificates/caa-records/ 301
+/ssl/edge-certificates/disable-weak-cipher-suites/ /ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/edge-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301

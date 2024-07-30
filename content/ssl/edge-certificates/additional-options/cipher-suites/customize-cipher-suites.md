@@ -10,7 +10,7 @@ meta:
 
 With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
-You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to disable weak cipher suites, or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
+You may want to do this to follow specific [recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/), to [disable weak cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/troubleshooting/#ssl-labs-weak-ciphers-report), or to comply with [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
