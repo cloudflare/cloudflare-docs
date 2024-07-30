@@ -2,11 +2,16 @@
 title: Login pages
 pcx_content_type: tutorial
 weight: 2
+updated: 2024-07-09
+difficulty: Beginner
+content_type: 📝 Tutorial
 ---
 
 # Protect your login page using Turnstile
 
-This tutorial will guide you through integrating Cloudflare Turnstile to protect your login page. Learn how to implement the Turnstile widget on the client side and verify the Turnstile token via the siteverify API on the server side. 
+{{<tutorial-date-info>}}
+
+This tutorial will guide you through integrating Cloudflare Turnstile to protect your login page. Learn how to implement the Turnstile widget on the client side and verify the Turnstile token via the siteverify API on the server side.
 
 {{<tutorial>}}
 
@@ -28,7 +33,7 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 
 {{<tutorial-step title="Add the Turnstile widget to your HTML form">}}
 
-1. Add the Turnstile widget to your login form. 
+1. Add the Turnstile widget to your login form.
 2. Replace `YOUR-SITE-KEY` with the sitekey from Cloudflare.
 
 ```html
@@ -47,10 +52,10 @@ highlight: [13-14]
     <form id="login-form" action="/login" method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
-        
+
         <!-- Turnstile widget -->
         <div class="cf-turnstile" data-sitekey="YOUR-SITE-KEY"></div>
-        
+
         <button type="submit">Log in</button>
     </form>
 </body>
@@ -76,7 +81,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/login', async (req, res) => {
     const turnstileToken = req.body['cf-turnstile-response'];
     const secretKey = 'your-secret-key';
-    
+
     try {
         const response = await axios.post('https://challenges.cloudflare.com/turnstile/v0/siteverify', null, {
             params: {
@@ -84,7 +89,7 @@ app.post('/login', async (req, res) => {
                 response: turnstileToken
             }
         });
-        
+
         if (response.data.success) {
             // Token is valid, proceed with login
             const username = req.body.username;

@@ -125,7 +125,7 @@ entries:
   name: Upload Image to R2 starter
   description: Upload images to Cloudflare R2 from a Next.js application.
   tags: [NextJS]
-  products: [R2]
+  products: [R2, Pages]
   languages: [TypeScript]
   author: harshil
   cloudflare: true
@@ -139,3 +139,51 @@ entries:
   author: harshil
   cloudflare: true
   updated: 2024-07-09
+- link: https://github.com/cloudflare/turnstile-demo-workers
+  name: Turnstile Demo
+  description: A simple demo with a Turnstile-protected form, using Cloudflare Workers. With the code in this repository, we demonstrate implicit rendering and explicit rendering.
+  tags: []
+  products: [Turnstile, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-02-15
+- link: https://github.com/cloudflare/doom-workers
+  name: Multiplayer Doom Workers
+  description: A WebAssembly Doom port with multiplayer support running on top of Cloudflare's global network using Workers, WebSockets, Pages, and Durable Objects.
+  tags: [WebSockets]
+  products: [Pages, Durable Objects, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2023-06-15
+- link: https://github.com/cloudflare/hyperdrive-demo
+  name: Hyperdrive demo
+  description: A Remix app that connects to a database behind Cloudflare's Hyperdrive, making regional databases feel like they're globally distributed.
+  tags: [Remix]
+  products: [Hyperdrive]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-04
+- link: https://github.com/cloudflare/d1-northwind
+  name: D1 Northwind Demo
+  description: This is a demo of the Northwind dataset, running on Cloudflare Workers, and D1 - Cloudflare's SQL database, running on SQLite.
+  tags: [Tailwind, React, Remix]
+  products: [Workers, D1]
+  languages: [Typescript]
+  cloudflare: true
+  updated: 2023-07-12
+- link: https://github.com/cloudflare/workers-chat-demo
+  name: Cloudflare Workers Chat Demo
+  description: This is a demo app written on Cloudflare Workers utilizing Durable Objects to implement real-time chat with stored history.
+  tags: [WebSockets]
+  products: [Workers, Durable Objects]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-03-05
+- link: https://github.com/cloudflare/js-rpc-and-entrypoints-demo
+  name: JavaScript-native RPC on Cloudflare Workers <> Named Entrypoints
+  description: This is a collection of examples of communicating between multiple Cloudflare Workers using the remote-procedure call (RPC) system that is built into the Workers runtime.
+  tags: [RPC, Discord]
+  products: [Workers, D1, Access]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-16
