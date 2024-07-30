@@ -52,20 +52,12 @@ Use `username` and `credential` as follows when instantiating the `RTCPeerConnec
 const myPeerConnection = new RTCPeerConnection({
   iceServers: [
     {
-      urls: "stun:stun.cloudflare.com:3478",
-    },
-    {
-      urls: "turn:turn.cloudflare.com:3478",
-      username: "REPLACE_WITH_USERNAME",
-      credential: "REPLACE_WITH_CREDENTIAL",
-    },
-    {
-      urls: "turns:turn.cloudflare.com:5349?transport=tcp",
-      username: "REPLACE_WITH_USERNAME",
-      credential: "REPLACE_WITH_CREDENTIAL",
-    },
-    {
-      urls: "turn:turn.cloudflare.com:3478?transport=tcp",
+      urls: [
+        "stun:stun.cloudflare.com:3478",
+        "turn:turn.cloudflare.com:3478?transport=udp",
+        "turn:turn.cloudflare.com:3478?transport=tcp",
+        "turns:turn.cloudflare.com:5349?transport=tcp"
+      ],
       username: "REPLACE_WITH_USERNAME",
       credential: "REPLACE_WITH_CREDENTIAL",
     },
