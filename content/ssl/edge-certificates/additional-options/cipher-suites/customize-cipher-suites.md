@@ -69,22 +69,74 @@ For guidance around custom hostnames, refer to [TLS settings - Cloudflare for Sa
 {{<tabs labels="Compatible | Modern | PCI DSS | FIPS-140-2">}}
 {{<tab label="compatible" no-code="true">}}
 
-Content.....
+{{<render file="_ciphers-api-general-notes.md">}}
+
+```bash
+# Replace the first two lines by the following to configure cipher suites per hostname
+# curl --request PUT \
+# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384"]}'
+```
 
 {{</tab>}}
 {{<tab label="modern" no-code="true">}}
 
-Content......
+{{<render file="_ciphers-api-general-notes.md">}}
+
+```bash
+# Replace the first two lines by the following to configure cipher suites per hostname
+# curl --request PUT \
+# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384"]}'
+```
 
 {{</tab>}}
 {{<tab label="pci dss" no-code="true">}}
 
-Content......
+{{<render file="_ciphers-api-general-notes.md">}}
+
+```bash
+# Replace the first two lines by the following to configure cipher suites per hostname
+# curl --request PUT \
+# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-CHACHA20-POLY1305"]}'
+```
 
 {{</tab>}}
 {{<tab label="fips-140-2" no-code="true">}}
 
-Content......
+{{<render file="_ciphers-api-general-notes.md">}}
+
+```bash
+# Replace the first two lines by the following to configure cipher suites per hostname
+# curl --request PUT \
+# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value":["AES128-GCM-SHA256", "AES128-SHA", "AES128-SHA256", "AES256-SHA", "AES256-SHA256", "DES-CBC3-SHA", "ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES128-SHA", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-AES128-SHA", "ECDHE-RSA-AES128-SHA256", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-SHA", "ECDHE-RSA-AES256-SHA384"]}'
+```
 
 {{</tab>}}
 {{</tabs>}}
