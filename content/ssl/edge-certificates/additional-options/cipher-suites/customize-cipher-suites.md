@@ -59,7 +59,7 @@ Note that:
     Below you will find samples covering the recommended ciphers [by security level](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) and [compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/), but you can also refer to the [full list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) of supported ciphers and customize your choice.
 
 2. Log in to the Cloudflare dashboard and get your Global API Key in [**My Profile** > **API Tokens**](https://dash.cloudflare.com/?to=/:account/profile/api-tokens/).
-3. Get the Zone ID from the Overview page of the domain you want to specify cipher suites for.
+3. Get the Zone ID from the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/) of the domain you want to specify cipher suites for.
 4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL and listing your array of chosen cipher suites in the `value` field.
 
     {{<Aside type="warning">}}
