@@ -75,9 +75,11 @@
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer Platform
-/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774 @zaidf @nils-ohlmeier @rcccf @astroza
+/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774 @nils-ohlmeier @rcccf @astroza
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/email-routing/ @kodster28 @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing
