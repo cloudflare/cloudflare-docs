@@ -43,6 +43,7 @@ echo '{ "query":
 https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Accept: application/json" \
+--header "Content-Type: application/json" \
 --data @- | jq .
 ```
 
