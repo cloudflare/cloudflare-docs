@@ -31,7 +31,7 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 
 You can easily convert and resize images by requesting them through a specifically-formatted URL. This section explains the URL structure for image transformation, referring back to the diagram and detailing each URL component:
 
-- **Part 1** - Your specific domain name on Cloudflare, this is the Zone you on-boarded to Cloudflare and where your website or images are served from. e.g. https://www.mywebsite.com/
+- **Part 1** - Your specific domain name on Cloudflare, this is the Zone you onboarded to Cloudflare and where your website or images are served from. e.g. https://www.mywebsite.com/
 - **Part 2** - A fixed prefix that identifies this is a special path handled by Cloudflare’s built-in Worker.
 - **Part 3** - A comma-separated list of options for the image, such as width=80,quality=75
 - **Part 4** - Absolute path on the origin server. For example: /uploads/image.jpg
