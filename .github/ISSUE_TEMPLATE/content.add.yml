@@ -24,8 +24,9 @@ body:
       required: true
     attributes:
       label: Proposed changes
-      description: Explain what changes you would like to be made and provide links to the revelant Cloudflare documentation pages the changes should apply to.
+      description: Describe the changes you are proposing and provide links to the revelant Cloudflare documentation pages the changes should apply to.
       placeholder: |
+      Describe the changes you are proposing here.
         - https://developers.cloudflare.com/cloudflare-one/
         - https://developers.cloudflare.com/workers/examples/
 
