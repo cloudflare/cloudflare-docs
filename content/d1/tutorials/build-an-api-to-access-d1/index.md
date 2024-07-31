@@ -1,14 +1,14 @@
 ---
-updated: 2024-07-26
+updated: 2024-07-31
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Build an API to access D1
+title: Build an API to access D1 using a proxy Worker
 products: [Workers]
 tags: [Hono]
 ---
 
-# Build an API to access D1 outside of your Workers or Pages project
+# Build an API to access D1 using a proxy Worker
 
 {{<tutorial-date-info>}}
 
@@ -22,7 +22,7 @@ To access a D1 database outside of a Worker project, you need to create an API u
 
 {{<Aside type="note">}}
 
-The tutorial does not cover how to sanitize SQL queries. Please ensure that you sanitize query statements before executing them.
+D1 uses patameterized queries. This prevents SQL injection. To make your API more secure, validate the input using a library like [zod](https://zod.dev/).
 
 {{</Aside>}}
 
@@ -35,7 +35,7 @@ The tutorial does not cover how to sanitize SQL queries. Please ensure that you 
 Use [C3](/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
-$ npm create cloudflare d1-http
+$ npm create cloudflare@latest d1-http
 ```
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options:
@@ -61,7 +61,7 @@ $ npm install hono
 
 ## 3. Add API_KEY
 
-To ensure that the API Key is secure, you will add it as a [secret](/workers/configuration/secrets/). To do so, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
+You will need an API Key to make authenticated calls to the API. To ensure that the API Key is secure, you will add it as a [secret](/workers/configuration/secrets/). For local development, create a `.dev.vars` file in the root directory. Add your API key in the file as follows.
 
 ```env
 API_KEY="YOUR_API_KEY"
@@ -72,8 +72,6 @@ Replace `YOUR_API_KEY` with a valid string value. You can also generate this val
 ```sh
 $ openssl rand -base64 32
 ```
-
-Your Hono applicaton will use this API key for authentication.
 
 ## 4. Initialise the application
 
@@ -93,7 +91,6 @@ import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
 type Bindings = {
-	DB: D1Database;
 	API_KEY: string;
 };
 
@@ -118,18 +115,18 @@ Next, in the `src/index.ts` file, add the following endpoints:
 filename: src/index.ts
 ---
 
-...
+// Paste this code at the end of the src/index.ts file
 
 app.post('/api/all', async (c)=> {
-    return c.text('/api/all endpoint')
+    return c.text('/api/all endpoint');
 })
 
 app.post('/api/exec', async (c)=> {
-    return c.text('/api/exec endpoint')
+    return c.text('/api/exec endpoint');
 })
 
 app.post('/api/batch', async (c)=> {
-    return c.text('/api/batch endpoint')
+    return c.text('/api/batch endpoint');
 })
 
 export default app;
@@ -177,6 +174,8 @@ database_id = "1234567890"
 
 Make a note of the displayed `database_name` and `database_id`. You will use this to reference to the database by creating a [binding](/workers/runtime-apis/bindings/).
 
+## 7. Add bindings
+
 Open the `wrangler.toml` file, Wrangler's configuration file. Add the following binding in the file. Make sure that the `database_name` and the `database_id` are correct.
 
 ```toml
@@ -186,9 +185,18 @@ database_name = "d1-http-example"
 database_id = "1234567890"
 ```
 
+Next, in your `src/index.ts` file, update the `Bindings` type and add `DB: D1Database`. The updated type should be as follow:
+
+```ts
+type Bindings = {
+  DB: D1Database;
+  API_KEY: string;
+};
+```
+
 You can now access the database in the Hono application.
 
-## 7. Create a table
+## 8. Create a table
 
 To create a table in your newly created database, create a new `schemas/schema.sql` file and paste the following SQL statement into the file. The code will drop any table named `posts` if it exists and then create a new table `posts` with the field `id`, `author`, `title`, `body`, and `post_slug`.
 
@@ -226,7 +234,7 @@ The table will be created in the local instance of the database. If you want to 
 
 {{</Aside>}}
 
-## 8. Query the database
+## 9. Query the database
 
 Your application can now access the D1 database. In this step, you will update the API endpoints to query the database and return the result.
 
@@ -236,7 +244,13 @@ In your `src/index.ts` file, update the code as follow.
 ---
 filename: src/index.ts
 ---
-...
+// Update the API routes
+
+/**
+ * Executes the `stmt.all()` method.
+ * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#await-stmtall
+ */
+
 app.post('/api/all', async (c) => {
 	try {
 		let { query, params } = await c.req.json();
@@ -252,6 +266,11 @@ app.post('/api/all', async (c) => {
 	}
 });
 
+/**
+ * Executes the `db.exec()` method.
+ * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#await-dbexec
+ */
+
 app.post('/api/exec', async (c) => {
 	try {
 		let { query } = await c.req.json();
@@ -261,6 +280,11 @@ app.post('/api/exec', async (c) => {
 		return c.json({ error: `Failed to run query: ${err}` }, 500);
 	}
 });
+
+/**
+ * Executes the `db.batch()` method.
+ * https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/#dbbatch
+ */
 
 app.post('/api/batch', async (c) => {
 	try {
@@ -285,7 +309,7 @@ app.post('/api/batch', async (c) => {
 
 In the above code, the endpoints are updated to receive `query` and `params`. These queries and parameters are passed to the respective functions to interact with the database. If the query is successful, you recieve the result from the database. If there is an error, the error message is returned.
 
-## 9. Test the API
+## 10. Test the API
 
 Now that the API can query the database, you can test it locally. If the local database is empty, populate it with some data.
 
@@ -320,14 +344,14 @@ $ curl -H "Authorization: Bearer YOUR_API_KEY" "localhost:8787/api/exec" --data 
 
 If everything is implemented correctly, the above commands should result successful outputs.
 
-## 10. Deploy the API
+## 11. Deploy the API
 
 Now that everything is working as expected, the last step is to deploy it to the Cloudflare network. You will use Wrangler to deploy the API. The deployment involves two steps:
 
 1. Create a table in the production database
 2. Deploy the app
 
-### 9.1 Create the table in the production database
+### 11.1 Create the table in the production database
 
 Until now, you were running a local instance of D1 database. To use the API in production, you need to add the table to your remote (production) database. To add the table to your production database, run the following command:
 
@@ -337,7 +361,7 @@ $ npx wrangler d1 execute d1-http-example --file=./schemas/schema.sql --remote
 
 You should now be able to view the table on the Cloudflare D1 dashboard.
 
-### 9.2 Deploy the app
+### 11.2 Deploy the app
 
 To deploy the application to the Cloudflare network, run the following command:
 
@@ -347,7 +371,7 @@ $ npx wrangler deploy
 
 Upon successful deployment, you will get the link of the deployed app in the terminal. Make a note of it.
 
-Next, execute the `wrangler secret put <KEY>` command to add the `API_KEY` to the deployed project.
+Next, generate a new API key to use in production and then execute the `wrangler secret put <KEY>` command to add the `API_KEY` to the deployed project.
 
 ```sh
 $ npx wrangler secret put API_KEY
@@ -363,4 +387,4 @@ $ curl -H "Authorization: Bearer YOUR_API_KEY" "https://WORKERS_URL.workers.dev/
 
 ## Conclusion
 
-In this tutorial, you created an API that interacts with your D1 database. You deployed this API to the Workers. You can use this API in your external application to execute queries against your D1 database. To make your API more secure, sanitize the query before executing it. You can check out a similar implimentation that use Zod for validation in [this GitHub repository](https://github.com/elithrar/http-api-d1-example).
+In this tutorial, you created an API that interacts with your D1 database. You deployed this API to the Workers. You can use this API in your external application to execute queries against your D1 database. You can check out a similar implimentation that use Zod for validation in [this GitHub repository](https://github.com/elithrar/http-api-d1-example). If you want to build an OpenAPI compliant API for your D1 database, you should use the [Cloudflare Workers OpenAPI 3.1 template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-openapi).
