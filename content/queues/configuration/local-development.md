@@ -41,7 +41,6 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Known Issues
 
-{{<render file="_local-producer-consumer.md">}}
-<br/>
+Wrangler does not yet support running separate producer and consumer Workers bound to the same Queue locally. To develop locally with Queues, you can temporarily put your consumer's `queue()` handler in the same Worker as your producer, so the same Worker acts as both a producer and consumer.
 
 Wrangler also does not yet support `wrangler dev --remote`.

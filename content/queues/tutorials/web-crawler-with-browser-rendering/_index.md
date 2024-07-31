@@ -5,7 +5,7 @@ title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
 content_type:  📝 Tutorial
 pcx_content_type: tutorial
-products: [Browser Rendering, KV]
+products: [Workers, Browser Rendering, KV]
 ---
 
 # Build a web crawler with Queues and Browser Rendering
@@ -144,13 +144,6 @@ binding = "CRAWLER_QUEUE"
 ```
 
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
-
-{{<details header="Why am I using the same queue as the producer and consumer?">}}
-
-{{<render file="_local-producer-consumer.md">}}
-<br/>
-
-{{</details>}}
 
 Your final `wrangler.toml` file should look similar to the one below.
 
