@@ -95,7 +95,7 @@ kv_namespaces = [
 
 Now, you need to set up your Worker for Browser Rendering.
 
-In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser]:
+In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
 ```sh
 $ npm install @cloudflare/puppeteer --save-dev
