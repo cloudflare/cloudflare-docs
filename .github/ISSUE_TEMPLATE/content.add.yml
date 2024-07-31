@@ -2,17 +2,6 @@ name: Request content addition
 description: Request NEW documentation content.
 labels: ["documentation", "content:new"]
 body:
-  - type: textarea
-    id: location-urls
-    validations:
-      required: true
-    attributes:
-      label: Proposed changes
-      description: Provide links to the top-level section of `https://developers.cloudflare.com/` or specific proposed pages.
-      placeholder: |
-        - https://developers.cloudflare.com/cloudflare-one/
-        - https://developers.cloudflare.com/workers/examples/
-
   - type: input
     id: subject
     validations:
@@ -28,6 +17,17 @@ body:
     attributes:
       label: Cloudflare Products
       description: Which Cloudflare products or features does this request relate to?
+      
+  - type: textarea
+    id: location-urls
+    validations:
+      required: true
+    attributes:
+      label: Proposed changes
+      description: Provide links to the top-level section of `https://developers.cloudflare.com/` or specific proposed pages.
+      placeholder: |
+        - https://developers.cloudflare.com/cloudflare-one/
+        - https://developers.cloudflare.com/workers/examples/
 
   - type: textarea
     id: location
