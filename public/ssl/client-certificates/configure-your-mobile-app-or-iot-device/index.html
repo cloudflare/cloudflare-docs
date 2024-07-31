@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Configure your mobile app or IoT device · Cloudflare SSL/TLS docs</title>
+  <meta name="title" content="Configure your mobile app or IoT device · Cloudflare SSL/TLS docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Configure your mobile app or IoT device · Cloudflare SSL/TLS docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Configure your mobile app or IoT device · Cloudflare SSL/TLS docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with API Shield." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Configure your mobile app or IoT device · Cloudflare SSL/TLS docs" />
+  <meta property="og:description" content="This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with API Shield." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/ssl/client-certificates/configure-your-mobile-app-or-iot-device/" />
+
+  <meta name="twitter:title" content="Configure your mobile app or IoT device · Cloudflare SSL/TLS docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with API Shield." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="ssl"><meta name="algolia_product_filter" content="SSL/TLS"><meta name="algolia_page_title" content="Configure your mobile app or IoT device">
+  <meta name="pcx_word_count" content="800"><meta name="pcx_last_modified" content="41"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Application performance" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/ssl/client-certificates/configure-your-mobile-app-or-iot-device/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"ssl"}</script>
+  <meta name="docsearch:product" content="ssl" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - cd4bcd2ad8e84584cc4cedccfa61bf5f" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - cd4bcd2ad8e84584cc4cedccfa61bf5f">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/ssl/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare SSL/TLS logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.437 11.88H12.03v3h11.407v-3Z"/><path d="M43.5 24.383a9.112 9.112 0 0 0-7.5-8.955V7.32l-1.5-1.5H7.35l-1.5 1.5v32.955l1.5 1.5h19.5V43.5l2.602 1.02 4.898-5.295 4.897 5.295 2.625-1.02V29.543a9.052 9.052 0 0 0 1.628-5.16Zm-3 0a6.113 6.113 0 1 1-6.113-6.113 6.12 6.12 0 0 1 6.113 6.113ZM8.85 38.775V8.82H33v6.57A9.105 9.105 0 0 0 27.885 18h-15.81v3H25.92a9.075 9.075 0 0 0-.638 3H12.075v3H25.65c.272.91.684 1.774 1.222 2.558v9.217H8.85ZM35.467 36l-1.095-1.185L33.277 36l-3.405 3.675v-7.38a9.037 9.037 0 0 0 9 0v7.372L35.467 36Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">SSL/TLS</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - cde82f5a4d8c4c4f8cabbdc5ec1c6fd4" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - cde82f5a4d8c4c4f8cabbdc5ec1c6fd4">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/ssl/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare SSL/TLS logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M23.437 11.88H12.03v3h11.407v-3Z"/><path d="M43.5 24.383a9.112 9.112 0 0 0-7.5-8.955V7.32l-1.5-1.5H7.35l-1.5 1.5v32.955l1.5 1.5h19.5V43.5l2.602 1.02 4.898-5.295 4.897 5.295 2.625-1.02V29.543a9.052 9.052 0 0 0 1.628-5.16Zm-3 0a6.113 6.113 0 1 1-6.113-6.113 6.12 6.12 0 0 1 6.113 6.113ZM8.85 38.775V8.82H33v6.57A9.105 9.105 0 0 0 27.885 18h-15.81v3H25.92a9.075 9.075 0 0 0-.638 3H12.075v3H25.65c.272.91.684 1.774 1.222 2.558v9.217H8.85ZM35.467 36l-1.095-1.185L33.277 36l-3.405 3.675v-7.38a9.037 9.037 0 0 0 9 0v7.372L35.467 36Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">SSL/TLS</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>SSL/TLS menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/ssl/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/concepts/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Concepts</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Edge certificates</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Edge certificates</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Universal SSL</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Universal SSL</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/enable-universal-ssl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Universal SSL certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/disable-universal-ssl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Disable Universal SSL certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/alerts/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alerts</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/limitations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limitations</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/universal-ssl/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Advanced certificates</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/advanced-certificate-manager/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Advanced certificates</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage advanced certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/advanced-certificate-manager/api-commands/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API commands</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Custom certificates</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom certificates</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/uploading/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage custom certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/renewing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Renewal and expiration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/bundling-methodologies/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bundle methodologies</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/remove-file-key-password/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Remove key file password</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/custom-certificates/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/encrypt-visitor-traffic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enforce HTTPS connections</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Domain control validation (DCV)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Domain control validation (DCV)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Methods</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/methods/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Methods</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delegated</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/methods/txt/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TXT</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/methods/email/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Email</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/methods/http/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Validation backoff schedule</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/dcv-flow/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Domain control validation flow</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/changing-dcv-method/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Geo Key Manager</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/geokey-manager/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Geo Key Manager</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/geokey-manager/setup/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Setup</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/geokey-manager/supported-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Supported options</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/caa-records/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add CAA records</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/disable-weak-cipher-suites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Disable weak cipher suites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/staging-environment/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Staging environment (Beta)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/backup-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Backup certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/ech/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ECH Protocol (beta)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Additional options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Additional options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate Transparency Monitoring</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/http-strict-transport-security/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Strict Transport Security (HSTS)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/certificate-signing-requests/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate Signing Requests (CSRs)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/tls-13/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TLS 1.3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/minimum-tls/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Minimum TLS Version</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/automatic-https-rewrites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Automatic HTTPS Rewrites</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Total TLS</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/total-tls/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Total TLS</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/total-tls/enable/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/total-tls/error-messages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Error messages</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/always-use-https/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Always Use HTTPS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/additional-options/opportunistic-encryption/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Opportunistic Encryption</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/troubleshooting/ca-faq/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">CAs and certificates FAQ</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/edge-certificates/troubleshooting/caa-records/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certification Authority Authorization (CAA) FAQ</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Origin server</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Origin server</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Encryption modes</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Encryption modes</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/off/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Off (no encryption)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/flexible/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Flexible</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/full/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Full</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/full-strict/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Full (strict)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-modes/ssl-only-origin-pull/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Strict (SSL-Only Origin Pull)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/ssl-tls-recommender/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SSL/TLS Recommender</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/origin-ca/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Origin CA certificates</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Authenticated Origin Pulls (mTLS)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Authenticated Origin Pulls (mTLS)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/explanation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Setup</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/set-up/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Setup</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zone-level</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Per-hostname</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/authenticated-origin-pull/aws-alb-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AWS integration</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/custom-origin-trust-store/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom Origin Trust Store</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/origin-configuration/cipher-suites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cipher suites</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Client certificates</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Client certificates</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/create-a-client-certificate/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Create a client certificate</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/ssl/client-certificates/configure-your-mobile-app-or-iot-device/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure your mobile app or IoT device</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/enable-mtls/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable mTLS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/byo-ca/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bring your own CA for mTLS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/label-client-certificate/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Label client certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/revoke-client-certificate/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Revoke a client certificate</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/client-certificates/troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">mTLS for Zero Trust</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/cloudflare-for-platforms/cloudflare-for-saas/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare for SaaS</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Keyless SSL</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Keyless SSL</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/configuration/cloudflare-tunnel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Tunnel</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/configuration/public-dns/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Public DNS</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Hardware security modules</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hardware security modules</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/aws-cloud-hsm/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AWS cloud HSM</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/azure-dedicated-hsm/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Azure Dedicated HSM</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/azure-managed-hsm/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Azure Managed HSM</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/softhsmv2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SoftHSMv2</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/entrust-nshield-connect/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Entrust nShield Connect</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/ibm-cloud-hsm/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">IBM cloud HSM</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/hardware-security-modules/google-cloud-hsm/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Google Cloud HSM</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/upgrading-your-key-server/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upgrade your key server</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/reference/high-availability/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">High availability</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/reference/scaling-and-benchmarking/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Scaling and benchmarking</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/reference/keyless-delegation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Keyless delegation</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/glossary/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/keyless-ssl/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cipher suites</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cipher suites</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/customize-cipher-suites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Customize cipher suites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/recommendations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Recommendations</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/supported-cipher-suites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Supported cipher suites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/compliance-status/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Compliance status</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/matching-on-origin/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Match on origin</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cipher-suites/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/protocols/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TLS protocols</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/certificate-and-hostname-priority/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate and hostname priority</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/certificate-authorities/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate authorities</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/browser-compatibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Browser compatibility</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Migration guides</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migration guides</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/lets-encrypt-chain/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Let&#39;s Encrypt chain update</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: DigiCert update</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/digicert-update/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DigiCert update</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/digicert-update/universal-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Universal certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/digicert-update/advanced-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Advanced certificates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SSL for SaaS</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/migration-guides/dcv-update/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changes to HTTP DCV</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/certificate-pinning/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate pinning</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/certificate-statuses/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Certificate statuses</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/certificate-validity-periods/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Validity periods and renewal</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/all-features/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Features and plans</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/cloudflare-and-cve-2019-1559/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare and CVE-2019-1559</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/reference/compliance-and-vulnerabilities/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">PCI compliance and vulnerabilities mitigation</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/version-cipher-mismatch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ERR_SSL_VERSION_OR_CIPHER_MISMATCH</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/too-many-redirects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ERR_TOO_MANY_REDIRECTS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/faq/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FAQ</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/general-ssl-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">General SSL errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ssl/troubleshooting/mixed-content-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Mixed content errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/ssl/client-certificates/configure-your-mobile-app-or-iot-device.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ssl/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >SSL/TLS</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ssl/client-certificates/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Client certificates</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ssl/client-certificates/configure-your-mobile-app-or-iot-device/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Configure your mobile app or IoT device</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="configure-your-mobile-app-or-iot-device">Configure your mobile app or IoT device</h1><p>This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with <a href=/api-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">API Shield</span></a>.</p>
+<h2 id="scenario-details">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#scenario-details">&#8203;​</a>
+    </span>
+    <span>Scenario details</span>
+  </h2><p>This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.</p>
+<p>To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the <a href=/workers/tutorials/build-a-jamstack-app/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">To-Do List tutorial on building a jamstack app</span></a>).</p>
+<p>Temperatures are stored in <a href=/kv/reference/how-kv-works/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers KV</span></a> using the source IP address as a key, but you can easily use a <a href=/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">value from the client certificate</span></a>, such as the fingerprint.</p>
+<p>The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;defaultData&#43;%3D&#43;%7B&#43;temperatures%3A&#43;%5B%5D&#43;%7D%0A%0Aconst&#43;getCache&#43;%3D&#43;key&#43;%3D%3E&#43;TEMPERATURES.get%28key%29%0Aconst&#43;setCache&#43;%3D&#43;%28key%2C&#43;data%29&#43;%3D%3E&#43;TEMPERATURES.put%28key%2C&#43;data%29%0A%0Aasync&#43;function&#43;addTemperature%28request%29&#43;%7B%0A%0A&#43;&#43;&#43;&#43;%2F%2F&#43;Pull&#43;previously&#43;recorded&#43;temperatures&#43;for&#43;this&#43;client.%0A&#43;&#43;&#43;&#43;const&#43;ip&#43;%3D&#43;request.headers.get%28%27CF-Connecting-IP%27%29%0A&#43;&#43;&#43;&#43;const&#43;cacheKey&#43;%3D&#43;%60data-%24%7Bip%7D%60%0A&#43;&#43;&#43;&#43;let&#43;data%0A&#43;&#43;&#43;&#43;const&#43;cache&#43;%3D&#43;await&#43;getCache%28cacheKey%29%0A&#43;&#43;&#43;&#43;if&#43;%28%21cache%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;await&#43;setCache%28cacheKey%2C&#43;JSON.stringify%28defaultData%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;data&#43;%3D&#43;defaultData%0A&#43;&#43;&#43;&#43;%7D&#43;else&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;data&#43;%3D&#43;JSON.parse%28cache%29%0A&#43;&#43;&#43;&#43;%7D%0A%0A&#43;&#43;&#43;&#43;%2F%2F&#43;Append&#43;the&#43;recorded&#43;temperatures&#43;with&#43;the&#43;submitted&#43;reading&#43;%28assuming&#43;it&#43;has&#43;both&#43;temperature&#43;and&#43;a&#43;timestamp%29.%0A&#43;&#43;&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;const&#43;body&#43;%3D&#43;await&#43;request.text%28%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;const&#43;val&#43;%3D&#43;JSON.parse%28body%29%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;if&#43;%28val.temperature&#43;%26%26&#43;val.time%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;data.temperatures.push%28val%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;await&#43;setCache%28cacheKey%2C&#43;JSON.stringify%28data%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28%22%22%2C&#43;%7B&#43;status%3A&#43;201&#43;%7D%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D&#43;else&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28%22Unable&#43;to&#43;parse&#43;temperature&#43;and%2For&#43;timestamp&#43;from&#43;JSON&#43;POST&#43;body%22%2C&#43;%7B&#43;status%3A&#43;400&#43;%7D%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%7D&#43;catch&#43;%28err%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28err%2C&#43;%7B&#43;status%3A&#43;500&#43;%7D%29%0A&#43;&#43;&#43;&#43;%7D%0A%7D%0A%0Afunction&#43;compareTimestamps%28a%2Cb%29&#43;%7B%0A&#43;&#43;&#43;&#43;return&#43;-1&#43;%2A&#43;%28Date.parse%28a.time%29&#43;-&#43;Date.parse%28b.time%29%29%0A%7D%0A%0A%2F%2F&#43;Return&#43;the&#43;5&#43;most&#43;recent&#43;temperature&#43;measurements.%0Aasync&#43;function&#43;getTemperatures%28request%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;ip&#43;%3D&#43;request.headers.get%28%27CF-Connecting-IP%27%29%0A&#43;&#43;&#43;&#43;const&#43;cacheKey&#43;%3D&#43;%60data-%24%7Bip%7D%60%0A%0A&#43;&#43;&#43;&#43;const&#43;cache&#43;%3D&#43;await&#43;getCache%28cacheKey%29%0A&#43;&#43;&#43;&#43;if&#43;%28%21cache%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28JSON.stringify%28defaultData%29%2C&#43;%7B&#43;status%3A&#43;200%2C&#43;headers%3A&#43;%7B&#43;%27content-type%27%3A&#43;%27application%2Fjson%27&#43;%7D&#43;%7D%29%0A&#43;&#43;&#43;&#43;%7D&#43;else&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;data&#43;%3D&#43;JSON.parse%28cache%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;const&#43;retval&#43;%3D&#43;JSON.stringify%28data.temperatures.sort%28compareTimestamps%29.splice%280%2C5%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28retval%2C&#43;%7B&#43;status%3A&#43;200%2C&#43;headers%3A&#43;%7B&#43;%27content-type%27%3A&#43;%27application%2Fjson%27&#43;%7D&#43;%7D%29%0A&#43;&#43;&#43;&#43;%7D%0A%7D%0A%0Aasync&#43;function&#43;handleRequest%28request%29&#43;%7B%0A%0A&#43;&#43;&#43;&#43;if&#43;%28request.method&#43;%3D%3D%3D&#43;%27POST%27%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;addTemperature%28request%29%0A&#43;&#43;&#43;&#43;%7D&#43;else&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;getTemperatures%28request%29%0A&#43;&#43;&#43;&#43;%7D%0A%0A%7D%0A%0AaddEventListener%28%27fetch%27%2C&#43;event&#43;%3D%3E&#43;%7B%0A&#43;&#43;event.respondWith%28handleRequest%28event.request%29%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h2 id="step-1--validate-api">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-1--validate-api">&#8203;​</a>
+    </span>
+    <span>Step 1 — Validate API</span>
+  </h2><h3 id="post-sample-data-to-api">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#post-sample-data-to-api">&#8203;​</a>
+    </span>
+    <span>POST sample data to API</span>
+  </h3><p>To validate the API before adding mTLS authentication, POST a random temperature reading:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;TEMPERATURE%3D%24%28echo&#43;%24%28%28361&#43;%2B&#43;RANDOM&#43;%2511%29%29&#43;%7C&#43;awk&#43;%27%7Bprintf%28%22%25.2f%22%2C%241%2F10.0%29%7D%27%29%0A%24&#43;TIMESTAMP%3D%24%28date&#43;-u&#43;%2B%22%25Y-%25m-%25dT%25H%3A%25M%3A%25SZ%22%29%0A%0A%24&#43;echo&#43;-e&#43;%22%24TEMPERATURE%5Cn%24TIMESTAMP%22%0A36.70%0A2020-09-28T02%3A54%3A56Z%0A%0A%24&#43;curl&#43;--verbose&#43;--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;--data&#43;%27%7B%22temperature%22%3A%27%27%27%24TEMPERATURE%27%27%27%2C&#43;%22time%22%3A&#43;%22%27%27%27%24TIMESTAMP%27%27%27%22%7D%27&#43;https%3A%2F%2Fshield.upinatoms.com%2Ftemps&#43;2%3E%261&#43;%7C&#43;grep&#43;%22%3C&#43;HTTP%2F2%22%0A%3C&#43;HTTP%2F2&#43;201"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="get-sample-data-from-api">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#get-sample-data-from-api">&#8203;​</a>
+    </span>
+    <span>GET sample data from API</span>
+  </h3><p>A GET request to the <code>temps</code> endpoint returns the most recent readings, including the one submitted in the example above:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;--silent&#43;https%3A%2F%2Fshield.upinatoms.com%2Ftemps&#43;%7C&#43;jq&#43;.%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;%22temperature%22%3A&#43;36.3%2C%0A&#43;&#43;&#43;&#43;%22time%22%3A&#43;%222020-09-28T02%3A57%3A49Z%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;%22temperature%22%3A&#43;36.7%2C%0A&#43;&#43;&#43;&#43;%22time%22%3A&#43;%222020-09-28T02%3A54%3A56Z%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;%22temperature%22%3A&#43;36.2%2C%0A&#43;&#43;&#43;&#43;%22time%22%3A&#43;%222020-09-28T02%3A33%3A08Z%22%0A&#43;&#43;%7D%0A%5D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h2 id="step-2--create-cloudflare-issued-certificates">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-2--create-cloudflare-issued-certificates">&#8203;​</a>
+    </span>
+    <span>Step 2 — Create Cloudflare-issued certificates</span>
+  </h2><p>Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.</p>
+<p>You can <a href=/ssl/client-certificates/create-a-client-certificate/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">create a client certificate in the Cloudflare dashboard</span></a>.</p>
+<p>However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.</p>
+<p>To create a bootstrap certificate for the iOS application and the IoT device, this example uses <a href="https://github.com/cloudflare/cfssl" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare’s public key infrastructure toolkit, CFSSL</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%23&#43;Generate&#43;a&#43;private&#43;key&#43;and&#43;CSR&#43;for&#43;the&#43;iOS&#43;device.%0A%0A%24&#43;cat&#43;%3C%3C%27EOF%27&#43;%7C&#43;tee&#43;-a&#43;csr.json%0A%7B%0A&#43;&#43;&#43;&#43;%22hosts%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22ios-bootstrap.devices.upinatoms.com%22%0A&#43;&#43;&#43;&#43;%5D%2C%0A&#43;&#43;&#43;&#43;%22CN%22%3A&#43;%22ios-bootstrap.devices.upinatoms.com%22%2C%0A&#43;&#43;&#43;&#43;%22key%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22algo%22%3A&#43;%22rsa%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22size%22%3A&#43;2048%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%22names%22%3A&#43;%5B%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22C%22%3A&#43;%22US%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22L%22%3A&#43;%22Austin%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22O%22%3A&#43;%22Temperature&#43;Testers%2C&#43;Inc.%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22OU%22%3A&#43;%22Tech&#43;Operations%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22ST%22%3A&#43;%22Texas%22%0A&#43;&#43;&#43;&#43;%7D%5D%0A%7D%0AEOF%0A%0A%24&#43;cfssl&#43;genkey&#43;csr.json&#43;%7C&#43;cfssljson&#43;-bare&#43;certificate%0A%0A2020%2F09%2F27&#43;21%3A28%3A46&#43;%5BINFO%5D&#43;generate&#43;received&#43;request%0A2020%2F09%2F27&#43;21%3A28%3A46&#43;%5BINFO%5D&#43;received&#43;CSR%0A2020%2F09%2F27&#43;21%3A28%3A46&#43;%5BINFO%5D&#43;generating&#43;key%3A&#43;rsa-2048%0A2020%2F09%2F27&#43;21%3A28%3A47&#43;%5BINFO%5D&#43;encoded&#43;CSR%0A%0A%24&#43;mv&#43;certificate-key.pem&#43;ios-key.pem%0A%24&#43;mv&#43;certificate.csr&#43;ios.csr%0A%0A%23&#43;Do&#43;the&#43;same&#43;for&#43;the&#43;IoT&#43;sensor.%0A%0A%24&#43;sed&#43;-i.bak&#43;%27s%2Fios-bootstrap%2Fsensor-001%2Fg%27&#43;csr.json%0A%24&#43;cfssl&#43;genkey&#43;csr.json&#43;%7C&#43;cfssljson&#43;-bare&#43;certificate%0A...%0A%24&#43;mv&#43;certificate-key.pem&#43;sensor-key.pem%0A%24&#43;mv&#43;certificate.csr&#43;sensor.csr%0A%0A%23&#43;now&#43;ask&#43;that&#43;these&#43;CSRs&#43;be&#43;signed&#43;by&#43;the&#43;private&#43;CA&#43;issued&#43;for&#43;your&#43;zone%0A%23&#43;we&#43;need&#43;to&#43;replace&#43;actual&#43;newlines&#43;in&#43;the&#43;CSR&#43;with&#43;%E2%80%98%5Cn%E2%80%99&#43;before&#43;POST%E2%80%99ing%0A%24&#43;CSR%3D%24%28cat&#43;ios.csr&#43;%7C&#43;perl&#43;-pe&#43;%27s%2F%5Cn%2F%5C%5Cn%2Fg%27%29%0A%24&#43;request_body%3D%24%28%3C&#43;%3C%28cat&#43;%3C%3CEOF%0A%7B%0A&#43;&#43;%22validity_days%22%3A&#43;3650%2C%0A&#43;&#43;%22csr%22%3A%22%24CSR%22%0A%7D%0AEOF%0A%29%29%0A%0A%23&#43;save&#43;the&#43;response&#43;so&#43;we&#43;can&#43;view&#43;it&#43;and&#43;then&#43;extra&#43;the&#43;certificate%0A%24&#43;curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Fclient_certificates&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;%5C%0A--data&#43;%22%24request_body%22&#43;%3E&#43;response.json%0A%0A%24&#43;cat&#43;response.json&#43;%7C&#43;jq&#43;.%0A%0A%7B%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;%227bf7f70c-7600-42e1-81c4-e4c0da9aa515%22%2C%0A&#43;&#43;&#43;&#43;%22certificate_authority%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%228f5606d9-5133-4e53-b062-a2e5da51be5e%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Cloudflare&#43;Managed&#43;CA&#43;for&#43;account&#43;11cbe197c050c9e422aaa103cfe30ed8%22%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%22certificate%22%3A&#43;%22-----BEGIN&#43;CERTIFICATE-----%5CnMIIEkzCCA...%5Cn-----END&#43;CERTIFICATE-----%5Cn%22%2C%0A&#43;&#43;&#43;&#43;%22csr%22%3A&#43;%22-----BEGIN&#43;CERTIFICATE&#43;REQUEST-----%5CnMIIDITCCA...%5Cn-----END&#43;CERTIFICATE&#43;REQUEST-----%5Cn%22%2C%0A&#43;&#43;&#43;&#43;%22ski%22%3A&#43;%22eb2a48a19802a705c0e8a39489a71bd586638fdf%22%2C%0A&#43;&#43;&#43;&#43;%22serial_number%22%3A&#43;%22133270673305904147240315902291726509220894288063%22%2C%0A&#43;&#43;&#43;&#43;%22signature%22%3A&#43;%22SHA256WithRSA%22%2C%0A&#43;&#43;&#43;&#43;%22common_name%22%3A&#43;%22ios-bootstrap.devices.upinatoms.com%22%2C%0A&#43;&#43;&#43;&#43;%22organization%22%3A&#43;%22Temperature&#43;Testers%2C&#43;Inc.%22%2C%0A&#43;&#43;&#43;&#43;%22organizational_unit%22%3A&#43;%22Tech&#43;Operations%22%2C%0A&#43;&#43;&#43;&#43;%22country%22%3A&#43;%22US%22%2C%0A&#43;&#43;&#43;&#43;%22state%22%3A&#43;%22Texas%22%2C%0A&#43;&#43;&#43;&#43;%22location%22%3A&#43;%22Austin%22%2C%0A&#43;&#43;&#43;&#43;%22expires_on%22%3A&#43;%222030-09-26T02%3A41%3A00Z%22%2C%0A&#43;&#43;&#43;&#43;%22issued_on%22%3A&#43;%222020-09-28T02%3A41%3A00Z%22%2C%0A&#43;&#43;&#43;&#43;%22fingerprint_sha256%22%3A&#43;%2284b045d498f53a59bef53358441a3957de81261211fc9b6d46b0bf5880bdaf25%22%2C%0A&#43;&#43;&#43;&#43;%22validity_days%22%3A&#43;3650%0A&#43;&#43;%7D%0A%7D%0A%0A%24&#43;cat&#43;response.json&#43;%7C&#43;jq&#43;.result.certificate&#43;%7C&#43;perl&#43;-npe&#43;%27s%2F%5C%5Cn%2F%5Cn%2Fg%3B&#43;s%2F%22%2F%2Fg%27&#43;%3E&#43;ios.pem%0A%0A%23&#43;Now&#43;ask&#43;that&#43;the&#43;second&#43;client&#43;certificate&#43;signing&#43;request&#43;be&#43;signed.%0A%0A%24&#43;CSR%3D%24%28cat&#43;sensor.csr&#43;%7C&#43;perl&#43;-pe&#43;%27s%2F%5Cn%2F%5C%5Cn%2Fg%27%29%0A%24&#43;request_body%3D%24%28%3C&#43;%3C%28cat&#43;%3C%3CEOF%0A%7B%0A&#43;&#43;%22validity_days%22%3A&#43;3650%2C%0A&#43;&#43;%22csr%22%3A%22%24CSR%22%0A%7D%0AEOF%0A%29%29%0A%0A%24&#43;curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Fclient_certificates&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;%5C%0A--data&#43;%22%24request_body%22&#43;%7C&#43;perl&#43;-npe&#43;%27s%2F%5C%5Cn%2F%5Cn%2Fg%3B&#43;s%2F%22%2F%2Fg%27&#43;%3E&#43;sensor.pem"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h2 id="step-3--embed-the-client-certificate-in-your-mobile-app">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-3--embed-the-client-certificate-in-your-mobile-app">&#8203;​</a>
+    </span>
+    <span>Step 3 — Embed the client certificate in your mobile app</span>
+  </h2><p>To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.</p>
+<p>For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;openssl&#43;pkcs12&#43;-export&#43;-out&#43;bootstrap-cert.pfx&#43;-inkey&#43;ios-key.pem&#43;-in&#43;ios.pem%0AEnter&#43;Export&#43;Password%3A%0AVerifying&#43;-&#43;Enter&#43;Export&#43;Password%3A"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.</p>
+<h3 id="embed-the-client-certificate-in-an-android-app">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#embed-the-client-certificate-in-an-android-app">&#8203;​</a>
+    </span>
+    <span>Embed the client certificate in an Android app</span>
+  </h3><p>The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in <code>AndroidManifest.xml</code> to allow an Internet connection.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="xml" data-code="%3Cuses-permission&#43;android%3Aname%3D%22android.permission.INTERNET%22&#43;%2F%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>For demonstration purposes, the certificate in this example is stored in <code>app/src/main/res/raw/cert.pem</code> and the private key is stored in <code>app/src/main/res/raw/key.pem</code>. You may also store these files in other secure manners.</p>
+<p>The following example uses an <code>OkHttpClient</code>, but you may also use other clients such as <code>HttpURLConnection</code> in similar ways. The key is to use the <code>SSLSocketFactory</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="java" data-code="private&#43;OkHttpClient&#43;setUpClient%28%29&#43;%7B%0A&#43;&#43;&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;final&#43;String&#43;SECRET&#43;%3D&#43;%22secret%22%3B&#43;%2F%2F&#43;You&#43;may&#43;also&#43;store&#43;this&#43;String&#43;somewhere&#43;more&#43;secure.%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;CertificateFactory&#43;certificateFactory&#43;%3D&#43;CertificateFactory.getInstance%28%22X.509%22%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Get&#43;private&#43;key%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;InputStream&#43;privateKeyInputStream&#43;%3D&#43;getResources%28%29.openRawResource%28R.raw.key%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;byte%5B%5D&#43;privateKeyByteArray&#43;%3D&#43;new&#43;byte%5BprivateKeyInputStream.available%28%29%5D%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;privateKeyInputStream.read%28privateKeyByteArray%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;String&#43;privateKeyContent&#43;%3D&#43;new&#43;String%28privateKeyByteArray%2C&#43;Charset.defaultCharset%28%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;.replace%28%22-----BEGIN&#43;PRIVATE&#43;KEY-----%22%2C&#43;%22%22%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;.replaceAll%28System.lineSeparator%28%29%2C&#43;%22%22%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;.replace%28%22-----END&#43;PRIVATE&#43;KEY-----%22%2C&#43;%22%22%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;byte%5B%5D&#43;rawPrivateKeyByteArray&#43;%3D&#43;Base64.getDecoder%28%29.decode%28privateKeyContent%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;KeyFactory&#43;keyFactory&#43;%3D&#43;KeyFactory.getInstance%28%22RSA%22%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;PKCS8EncodedKeySpec&#43;keySpec&#43;%3D&#43;new&#43;PKCS8EncodedKeySpec%28rawPrivateKeyByteArray%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Get&#43;certificate%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;InputStream&#43;certificateInputStream&#43;%3D&#43;getResources%28%29.openRawResource%28R.raw.cert%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;Certificate&#43;certificate&#43;%3D&#43;certificateFactory.generateCertificate%28certificateInputStream%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Set&#43;up&#43;KeyStore%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;KeyStore&#43;keyStore&#43;%3D&#43;KeyStore.getInstance%28KeyStore.getDefaultType%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;keyStore.load%28null%2C&#43;SECRET.toCharArray%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;keyStore.setKeyEntry%28%22client%22%2C&#43;keyFactory.generatePrivate%28keySpec%29%2C&#43;SECRET.toCharArray%28%29%2C&#43;new&#43;Certificate%5B%5D%7Bcertificate%7D%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;certificateInputStream.close%28%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Set&#43;up&#43;Trust&#43;Managers%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;TrustManagerFactory&#43;trustManagerFactory&#43;%3D&#43;TrustManagerFactory.getInstance%28TrustManagerFactory.getDefaultAlgorithm%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;trustManagerFactory.init%28%28KeyStore%29&#43;null%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;TrustManager%5B%5D&#43;trustManagers&#43;%3D&#43;trustManagerFactory.getTrustManagers%28%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Set&#43;up&#43;Key&#43;Managers%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;KeyManagerFactory&#43;keyManagerFactory&#43;%3D&#43;KeyManagerFactory.getInstance%28KeyManagerFactory.getDefaultAlgorithm%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;keyManagerFactory.init%28keyStore%2C&#43;SECRET.toCharArray%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;KeyManager%5B%5D&#43;keyManagers&#43;%3D&#43;keyManagerFactory.getKeyManagers%28%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Obtain&#43;SSL&#43;Socket&#43;Factory%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;SSLContext&#43;sslContext&#43;%3D&#43;SSLContext.getInstance%28%22TLS%22%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;sslContext.init%28keyManagers%2C&#43;trustManagers%2C&#43;new&#43;SecureRandom%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;SSLSocketFactory&#43;sslSocketFactory&#43;%3D&#43;sslContext.getSocketFactory%28%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;Finally%2C&#43;return&#43;the&#43;client%2C&#43;which&#43;will&#43;then&#43;be&#43;used&#43;to&#43;make&#43;HTTP&#43;calls.%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;OkHttpClient&#43;client&#43;%3D&#43;new&#43;OkHttpClient.Builder%28%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;.sslSocketFactory%28sslSocketFactory%2C&#43;%28X509TrustManager%29&#43;trustManagers%5B0%5D%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;.build%28%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;client%3B%0A%0A&#43;&#43;&#43;&#43;%7D&#43;catch&#43;%28CertificateException&#43;%7C&#43;IOException&#43;%7C&#43;NoSuchAlgorithmException&#43;%7C&#43;KeyStoreException&#43;%7C&#43;UnrecoverableKeyException&#43;%7C&#43;KeyManagementException&#43;%7C&#43;InvalidKeySpecException&#43;e%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;e.printStackTrace%28%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;null%3B%0A&#43;&#43;&#43;&#43;%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The above function returns an <code>OkHttpClient</code> embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.</p>
+<hr>
+<h2 id="step-4--embed-the-client-certificate-on-your-iot-device">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-4--embed-the-client-certificate-on-your-iot-device">&#8203;​</a>
+    </span>
+    <span>Step 4 — Embed the client certificate on your IoT device</span>
+  </h2><p>To prepare the IoT device for secure communication with the API endpoint, embed the certificate on the device and configure the device to use the certificate when making POST requests.</p>
+<p>This example assumes the certificate and the private key are securely copied to <code>/etc/ssl/private/sensor-key.pem</code> and <code>/etc/ssl/certs/sensor.pem</code>.</p>
+<p>The sample script is modified to point to these files:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="import&#43;requests%0Aimport&#43;json%0Afrom&#43;datetime&#43;import&#43;datetime%0A%0Adef&#43;readSensor%28%29%3A%0A%0A&#43;&#43;&#43;&#43;%23&#43;Takes&#43;a&#43;reading&#43;from&#43;a&#43;temperature&#43;sensor&#43;and&#43;store&#43;it&#43;to&#43;temp_measurement%0A%0A&#43;&#43;&#43;&#43;dateTimeObj&#43;%3D&#43;datetime.now%28%29%0A&#43;&#43;&#43;&#43;timestampStr&#43;%3D&#43;dateTimeObj.strftime%28%27%25Y-%25m-%25dT%25H%3A%25M%3A%25SZ%27%29%0A%0A&#43;&#43;&#43;&#43;measurement&#43;%3D&#43;%7B%27temperature%27%3Astr%28temp_measurement%29%2C%27time%27%3AtimestampStr%7D%0A&#43;&#43;&#43;&#43;return&#43;measurement%0A%0Adef&#43;main%28%29%3A%0A%0A&#43;&#43;&#43;&#43;print%28%22Cloudflare&#43;API&#43;Shield&#43;%5BIoT&#43;device&#43;demonstration%5D%22%29%0A%0A&#43;&#43;&#43;&#43;temperature&#43;%3D&#43;readSensor%28%29%0A&#43;&#43;&#43;&#43;payload&#43;%3D&#43;json.dumps%28temperature%29%0A%0A&#43;&#43;&#43;&#43;url&#43;%3D&#43;%27https%3A%2F%2Fshield.upinatoms.com%2Ftemps%27%0A&#43;&#43;&#43;&#43;json_headers&#43;%3D&#43;%7B%27Content-Type%27%3A&#43;%27application%2Fjson%27%7D%0A&#43;&#43;&#43;&#43;cert_file&#43;%3D&#43;%28%27%2Fetc%2Fssl%2Fcerts%2Fsensor.pem%27%2C&#43;%27%2Fetc%2Fssl%2Fprivate%2Fsensor-key.pem%27%29%0A%0A&#43;&#43;&#43;&#43;r&#43;%3D&#43;requests.post%28url%2C&#43;headers&#43;%3D&#43;json_headers%2C&#43;data&#43;%3D&#43;payload%2C&#43;cert&#43;%3D&#43;cert_file%29%0A%0A&#43;&#43;&#43;&#43;print%28%22Request&#43;body%3A&#43;%22%2C&#43;r.request.body%29%0A&#43;&#43;&#43;&#43;print%28%22Response&#43;status&#43;code%3A&#43;%25d%22&#43;%25&#43;r.status_code%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When the script attempts to connect to <code>https://shield.upinatoms.com/temps</code>, Cloudflare requests that a client certificate is sent and the script sends the contents of <code>/etc/ssl/certs/sensor.pem</code>. Then, as required to complete the SSL/TLS handshake, the script demonstrates it has possession of <code>/etc/ssl/private/sensor-key.pem</code>.</p>
+<p>Without the client certificate, the Cloudflare rejects the request:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="Cloudflare&#43;API&#43;Shield&#43;%5BIoT&#43;device&#43;demonstration%5D%0ARequest&#43;body%3A&#43;&#43;%7B%22temperature%22%3A&#43;%2236.5%22%2C&#43;%22time%22%3A&#43;%222020-09-28T15%3A52%3A19Z%22%7D%0AResponse&#43;status&#43;code%3A&#43;403"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When the IoT device presents a valid client certificate, the POST request succeeds and the temperature reading is recorded:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="Cloudflare&#43;API&#43;Shield&#43;%5BIoT&#43;device&#43;demonstration%5D%0ARequest&#43;body%3A&#43;&#43;%7B%22temperature%22%3A&#43;%2236.5%22%2C&#43;%22time%22%3A&#43;%222020-09-28T15%3A56%3A45Z%22%7D%0AResponse&#43;status&#43;code%3A&#43;201"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h2 id="step-5--enable-mtls">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-5--enable-mtls">&#8203;​</a>
+    </span>
+    <span>Step 5 — Enable mTLS</span>
+  </h2><p>After creating Cloudflare-issued certificates, the next step is to <a href=/ssl/client-certificates/enable-mtls/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">enable mTLS</span></a> for the hosts you want to protect with API Shield.</p>
+<hr>
+<h2 id="step-6--configure-api-shield-to-require-client-certificates">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-6--configure-api-shield-to-require-client-certificates">&#8203;​</a>
+    </span>
+    <span>Step 6 — Configure API Shield to require client certificates</span>
+  </h2><p>To configure API Shield to require client certificates, <a href=/api-shield/security/mtls/configure/#create-an-mtls-rule/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">create a mTLS rule</span></a>.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/security/6" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/ssl/client-certificates/configure-your-mobile-app-or-iot-device.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-05T09:32:14&#43;01:00
+  title=2024-07-05
+>July 5, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

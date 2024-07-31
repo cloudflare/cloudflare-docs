@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>strongSwan · Cloudflare Magic WAN docs</title>
+  <meta name="title" content="strongSwan · Cloudflare Magic WAN docs" />
+  <meta name="image" content="https://developers.cloudflare.com/zt-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="strongSwan · Cloudflare Magic WAN docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="strongSwan · Cloudflare Magic WAN docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta property="og:title" content="strongSwan · Cloudflare Magic WAN docs" />
+  <meta property="og:description" content="This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/magic-wan/configuration/manually/third-party/strongswan/" />
+
+  <meta name="twitter:title" content="strongSwan · Cloudflare Magic WAN docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta name="twitter:description" content="This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="magic-wan"><meta name="algolia_product_filter" content="Magic WAN"><meta name="algolia_page_title" content="strongSwan">
+  <meta name="pcx_word_count" content="500"><meta name="pcx_last_modified" content="41"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="integration-guide" />
+  <meta name="algolia_content_type" content="Integration Guide"><meta name="pcx_content_group" content="Cloudflare One" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/magic-wan/configuration/manually/third-party/strongswan/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"magic-wan"}</script>
+  <meta name="docsearch:product" content="magic-wan" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - c2f8e14dcbecc46dfadc4c8fc4d55b8a" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - c2f8e14dcbecc46dfadc4c8fc4d55b8a">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/magic-wan/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Magic WAN logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M43.5 22.5H31.567l11.003-4.575-1.148-2.775-11.047 4.56 8.453-8.46-2.123-2.123-8.415 8.423 4.575-10.988-2.775-1.155-4.59 11.04V4.5h-3v11.895L18 5.393 15.225 6.54l4.56 11.047-8.49-8.452-2.123 2.115 8.415 8.422L6.6 15.105l-1.155 2.767L16.5 22.5h-12v3h11.933L5.43 30l1.147 2.775 11.048-4.56-8.453 8.452 2.123 2.123 8.415-8.415-4.575 10.987 2.775 1.155L22.5 31.5v11.932h3V31.5L30 42.502l2.775-1.14-4.522-11.025 8.452 8.453 2.123-2.123-8.416-8.415L41.4 32.828l1.155-2.776L31.5 25.5h12v-3Zm-12 0v3l-1.14 2.76-2.107 2.107-2.753 1.088h-3l-2.753-1.14-2.107-2.108-1.14-2.76V22.5l1.14-2.76 2.107-2.107L22.5 16.5h3l2.753 1.14 2.107 2.107L31.5 22.5Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Magic WAN</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - d8a8c44d5c1fdfef2ebdcc86b4cca4c5" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - d8a8c44d5c1fdfef2ebdcc86b4cca4c5">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/magic-wan/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Magic WAN logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M43.5 22.5H31.567l11.003-4.575-1.148-2.775-11.047 4.56 8.453-8.46-2.123-2.123-8.415 8.423 4.575-10.988-2.775-1.155-4.59 11.04V4.5h-3v11.895L18 5.393 15.225 6.54l4.56 11.047-8.49-8.452-2.123 2.115 8.415 8.422L6.6 15.105l-1.155 2.767L16.5 22.5h-12v3h11.933L5.43 30l1.147 2.775 11.048-4.56-8.453 8.452 2.123 2.123 8.415-8.415-4.575 10.987 2.775 1.155L22.5 31.5v11.932h3V31.5L30 42.502l2.775-1.14-4.522-11.025 8.452 8.453 2.123-2.123-8.416-8.415L41.4 32.828l1.155-2.776L31.5 25.5h12v-3Zm-12 0v3l-1.14 2.76-2.107 2.107-2.753 1.088h-3l-2.753-1.14-2.107-2.108-1.14-2.76V22.5l1.14-2.76 2.107-2.107L22.5 16.5h3l2.753 1.14 2.107 2.107L31.5 22.5Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Magic WAN</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Magic WAN menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/magic-wan/" tabindex="-1">Magic WAN home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://blog.cloudflare.com/magic-wan-firewall/" tabindex="-1">Blog: Magic WAN &amp; Magic Firewall</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/magic-wan/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/on-ramps/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">On-ramps</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Manual configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manual configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: How to</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How to</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/configure-tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure tunnel endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/configure-static-routes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure static routes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/tunnel-health-checks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Update tunnel health checks frequency</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/traceroute/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Run traceroute</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Third-party integration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Third-party integration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/alibaba-cloud/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alibaba Cloud VPN Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/aws/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Amazon AWS Transit Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/aruba-edgeconnect/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Aruba EdgeConnect Enterprise</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/cisco-ios-xe/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cisco IOS XE</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/viptela/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cisco SD-WAN</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/fortinet/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fortinet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/fitelnet/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Furukawa Electric FITELnet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/google/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Google Cloud VPN</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/azure/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Microsoft Azure</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/palo-alto/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Palo Alto Networks NGFW</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/pfsense/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">pfSense</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/sonicwall/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SonicWall</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/sophos-firewall/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sophos Firewall</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/strongswan/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">strongSwan</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/vyos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">VyOS</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configure with Connector</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure with Connector</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configure hardware Connector</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-hardware-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure hardware Connector</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SFP&#43; port information</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-virtual-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure virtual Connector</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Network options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Application-aware policies</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Application-aware policies</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="4" style="--depth:4"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/breakout-traffic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Breakout traffic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/prioritized-traffic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Prioritized traffic</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: DHCP options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="4" style="--depth:4"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP relay</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP server</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP static address reservation</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/nat-subnet/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable NAT for a subnet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/network-segmentation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network segmentation</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/routed-subnets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Routed subnets</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Maintenance</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Maintenance</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/deactivate-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deactivate Magic WAN Connector</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/heartbeat/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Heartbeat</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/interrupt-service-window/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Interrupt window</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/device-metrics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Device metrics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/magic-cloud-networking/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure cloud on-ramps (beta)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Common settings</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Common settings</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Check tunnel health in the dashboard</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure Magic Tunnel health alerts</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/enable-magic-roles/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Magic user roles</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/security/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security filters</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Zero Trust integration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zero Trust integration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/cloudflare-gateway/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/cloudflare-tunnel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Tunnel</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/warp/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WARP</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/network-interconnect/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network Interconnect (CNI)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/load-balancing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Load Balancing</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Analytics</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/site-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Site Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/network-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/traceroutes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traceroutes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/packet-captures/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Packet captures</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/query-bandwidth/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Querying Magic WAN tunnel bandwidth analytics with GraphQL</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/query-tunnel-health/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Querying Magic WAN tunnel health check results with GraphQL</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/anti-replay-protection/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Anti-replay protection</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/bandwidth-measurement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bandwidth measurement</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/device-compatibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Device compatibility</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">GRE and IPsec tunnels</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/magic-tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Tunnels background information</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/traffic-steering/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traffic steering</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/tunnel-health-checks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tunnel health checks</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Legal</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/legal/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Legal</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/glossary/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-wan/configuration/manually/third-party/strongswan.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Magic WAN</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/" itemprop="item" class="DocsMarkdown--link" aria-label="Configuration" title="Configuration">
+            <span class="DocsMarkdown--link-content" >...</span></a><meta itemprop="name" content="Configuration" /><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/" itemprop="item" class="DocsMarkdown--link" aria-label="Manual configuration" title="Manual configuration">
+            <span class="DocsMarkdown--link-content" >...</span></a><meta itemprop="name" content="Manual configuration" /><meta itemprop="position" content="4" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/third-party/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Third-party integration</span></a><meta itemprop="position" content="5" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/third-party/strongswan/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >strongSwan</span></a><meta itemprop="position" content="6" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="strongswan">strongSwan</h1><p>This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create a Policy Based Routing.</p>
+<h2 id="1-health-checks-configuration">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-health-checks-configuration">&#8203;​</a>
+    </span>
+    <span>1. Health checks configuration</span>
+  </h2><p>Start by configuring the <a href=/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bidirectional health checks</span></a> target for Magic WAN. For this particular tutorial, we are using <code>172.64.240.252</code> as the target IP address, and <code>type</code> as the request.</p>
+<p>This can be set up <a href="/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">with the API</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a>. For example:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;--request&#43;PUT&#43;%5C%0Ahttps%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fmagic%2Fipsec_tunnels%2F%7Btunnel_id%7D&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;%5C%0A--data&#43;%27%7B%0A&#43;&#43;%22health_check%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22enabled%22%3A&#43;true%2C%0A&#43;&#43;&#43;&#43;%22target%22%3A&#43;%22172.64.240.252%22%2C%0A&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22request%22%2C%0A&#43;&#43;&#43;&#43;%22rate%22%3A&#43;%22mid%22%0A&#43;&#43;%7D%0A%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="2-configure-strongswan">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-configure-strongswan">&#8203;​</a>
+    </span>
+    <span>2. Configure StrongSwan</span>
+  </h2><ol>
+<li>Start by <a href="https://docs.strongswan.org/docs/5.9/install/install.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">installing StrongSwan</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. For example, open the console and run:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;apt-get&#43;install&#43;strongswan&#43;-y"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="2">
+<li>After StrongSwan finishes installing, go to <code>/etc/strongswan.conf</code> to edit the configuration file and add the following settings:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="charon&#43;%7B%0A&#43;&#43;&#43;&#43;load_modular&#43;%3D&#43;yes%0A&#43;&#43;&#43;&#43;install_routes&#43;%3D&#43;no%0A&#43;&#43;&#43;&#43;install_virtual_ip&#43;%3D&#43;no%0A%0A&#43;&#43;&#43;&#43;plugins&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;include&#43;strongswan.d%2Fcharon%2F%2A.conf%0A&#43;&#43;&#43;&#43;%7D%0A%7D%0A%0Ainclude&#43;strongswan.d%2F%2A.conf"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="3-configure-ipsec-file">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-configure-ipsec-file">&#8203;​</a>
+    </span>
+    <span>3. Configure IPsec file</span>
+  </h2><ol>
+<li>Go to <code>/etc/ipsec.conf</code> and add the following settings:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="%23&#43;ipsec.conf&#43;-&#43;strongSwan&#43;IPsec&#43;configuration&#43;file%0Aconfig&#43;setup%0A&#43;&#43;&#43;&#43;charondebug%3D%22all%22%0A&#43;&#43;&#43;&#43;uniqueids&#43;%3D&#43;yes%0A%0Aconn&#43;%25default%0A&#43;&#43;&#43;&#43;ikelifetime%3D4h%0A&#43;&#43;&#43;&#43;rekey%3Dyes%0A&#43;&#43;&#43;&#43;reauth%3Dno%0A&#43;&#43;&#43;&#43;keyexchange%3Dikev2%0A&#43;&#43;&#43;&#43;authby%3Dsecret%0A&#43;&#43;&#43;&#43;dpdaction%3Drestart%0A&#43;&#43;&#43;&#43;closeaction%3Drestart%0A%0A%23&#43;Sample&#43;VPN&#43;connections%0Aconn&#43;cloudflare-ipsec%0A&#43;&#43;&#43;&#43;auto%3Dstart%0A&#43;&#43;&#43;&#43;type%3Dtunnel%0A&#43;&#43;&#43;&#43;fragmentation%3Dno%0A&#43;&#43;&#43;&#43;leftauth%3Dpsk%0A&#43;&#43;&#43;&#43;%23&#43;Private&#43;IP&#43;of&#43;the&#43;VM%0A&#43;&#43;&#43;&#43;left%3D%25any%0A&#43;&#43;&#43;&#43;%23&#43;Tunnel&#43;ID&#43;from&#43;dashboard%2C&#43;in&#43;this&#43;example&#43;FQDN&#43;is&#43;used%0A&#43;&#43;&#43;&#43;leftid%3D%3CYOUR_TUNNEL_ID%3E.%3CYOUR_ACCOUNT_ID%3E.ipsec.cloudflare.com%0A&#43;&#43;&#43;&#43;leftsubnet%3D0.0.0.0%2F0%0A&#43;&#43;&#43;&#43;%23&#43;Cloudflare&#43;Anycast&#43;IP%0A&#43;&#43;&#43;&#43;right%3D%3CYOUR_CLOUDFLARE_ANYCAST_IP%3E%0A&#43;&#43;&#43;&#43;rightid%3D%3CYOUR_CLOUDFLARE_ANYCAST_IP%3E%0A&#43;&#43;&#43;&#43;rightsubnet%3D0.0.0.0%2F0%0A&#43;&#43;&#43;&#43;rightauth%3Dpsk%0A&#43;&#43;&#43;&#43;ike%3Daes256-sha256-modp2048%21%0A&#43;&#43;&#43;&#43;esp%3Daes256-sha256-modp2048%21%0A&#43;&#43;&#43;&#43;replay_window%3D0%0A&#43;&#43;&#43;&#43;mark_in%3D42%0A&#43;&#43;&#43;&#43;mark_out%3D42%0A&#43;&#43;&#43;&#43;leftupdown%3D%2Fetc%2Fstrongswan.d%2Fipsec-vti.sh"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="2">
+<li>
+<p>Now, you need to create a virtual tunnel interface (VTI) with the IP we configured earlier as the target for Cloudflare&rsquo;s health checks (<code>172.64.240.252</code>) to route IPsec packets. Go to <code>/etc/strongswan.d/</code>.</p>
+</li>
+<li>
+<p>Create a script called <code>ipsec-vti.sh</code> and add the following:</p>
+</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="%23%21%2Fbin%2Fbash%0A%0Aset&#43;-o&#43;nounset%0Aset&#43;-o&#43;errexit%0A%0AVTI_IF%3D%22vti0%22%0A%0Acase&#43;%22%24%7BPLUTO_VERB%7D%22&#43;in%0A&#43;&#43;&#43;&#43;up-client%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;tunnel&#43;add&#43;%22%24%7BVTI_IF%7D%22&#43;local&#43;%22%24%7BPLUTO_ME%7D%22&#43;remote&#43;%22%24%7BPLUTO_PEER%7D%22&#43;mode&#43;vti&#43;%5C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;key&#43;%22%24%7BPLUTO_MARK_OUT%25%25%2F%2A%7D%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;link&#43;set&#43;%22%24%7BVTI_IF%7D%22&#43;up%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;addr&#43;add&#43;172.64.240.252%2F32&#43;dev&#43;vti0%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;sysctl&#43;-w&#43;%22net.ipv4.conf.%24%7BVTI_IF%7D.disable_policy%3D1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;sysctl&#43;-w&#43;%22net.ipv4.conf.%24%7BVTI_IF%7D.rp_filter%3D0%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;sysctl&#43;-w&#43;%22net.ipv4.conf.all.rp_filter%3D0%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;rule&#43;add&#43;from&#43;172.64.240.252&#43;lookup&#43;viatunicmp%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;route&#43;add&#43;default&#43;dev&#43;vti0&#43;table&#43;viatunicmp%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%3B%3B%0A&#43;&#43;&#43;&#43;down-client%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;tunnel&#43;del&#43;%22%24%7BVTI_IF%7D%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;rule&#43;del&#43;from&#43;172.64.240.252&#43;lookup&#43;viatunicmp%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;ip&#43;route&#43;del&#43;default&#43;dev&#43;vti0&#43;table&#43;viatunicmp%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%3B%3B%0Aesac%0Aecho&#43;%22executed%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="4-add-policy-based-routing-pbr">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-add-policy-based-routing-pbr">&#8203;​</a>
+    </span>
+    <span>4. Add Policy Based Routing (PBR)</span>
+  </h2><p>Although the IPsec tunnel is working as is, we need to create Policy Based Routing (PBR) to redirect returning traffic via the IPsec tunnel. Without it, the ICMP replies to the health probes sent by Cloudflare will be returned via the Internet, instead of the same IPsec tunnel. This is required to avoid any potential issues.</p>
+<p>To accomplish this, the tutorial uses <a href="https://en.wikipedia.org/wiki/Iproute2" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">iproute2</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to route IP packets from <code>172.63.240.252</code> to the tunnel interface.</p>
+<ol>
+<li>
+<p>Go to <code>/etc/iproute2/</code>.</p>
+</li>
+<li>
+<p>Edit the <code>rt_tables</code> file to add a routing table number and name. In this example, we used <code>viatunicmp</code> as the name and <code>200</code> as the number for the routing table.</p>
+</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="%23%0A%23&#43;reserved&#43;values%0A%23%0A255&#43;local%0A254&#43;main%0A253&#43;default%0A0&#43;&#43;&#43;unspec%0A200&#43;viatunicmp%0A%23%0A%23&#43;local%0A%23%0A%231&#43;&#43;inr.ruhep"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="3">
+<li>Open the console and add a rule to match the routing table just created. This rule instructs the system to use routing table <code>viatunicmp</code> if the packet&rsquo;s source address is <code>172.64.240.252</code>:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;ip&#43;rule&#43;add&#43;from&#43;172.64.240.252&#43;lookup&#43;viatunicmp"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="4">
+<li>Add a route to the newly created routing table <code>viatunicmp</code>. This is the default route via the interface <code>vti0</code>  in the <code>viatunicmp</code> table.</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;ip&#43;route&#43;add&#43;default&#43;dev&#43;vti0&#43;table&#43;viatunicmp"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="5">
+<li>Now, you can <code>start</code> IPsec. You can also <code>stop</code>, <code>restart</code> and show the <code>status</code> for the IPsec connection:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;ipsec&#43;start%0ASecurity&#43;Associations&#43;%281&#43;up%2C&#43;0&#43;connecting%29%3A%0Acloudflare-ipsec%5B1%5D%3A&#43;ESTABLISHED&#43;96&#43;minutes&#43;ago%2C&#43;%3CIPSEC_TUNNEL_IDENTIFIER%3E.ipsec.cloudflare.com%5D...162.159.67.88%5B162.159.67.88%5D%0Acloudflare-ipsec%7B4%7D%3A&#43;&#43;INSTALLED%2C&#43;TUNNEL%2C&#43;reqid&#43;1%2C&#43;ESP&#43;SPIs%3A&#43;c4e20a95_i&#43;c5373d00_o%0Acloudflare-ipsec%7B4%7D%3A&#43;&#43;&#43;0.0.0.0%2F0&#43;%3D%3D%3D&#43;0.0.0.0%2F0"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="5-check-connection-status">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-check-connection-status">&#8203;​</a>
+    </span>
+    <span>5. Check connection status</span>
+  </h2><p>After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;tcpdump&#43;-i&#43;%3COUTGOING_INTERFACE%3E&#43;esp&#43;and&#43;host&#43;%3CTUNNEL_CLOUDFLARE_ENDPOINT_IP%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>In this example, the outgoing Internet interface shows that the IPsec encrypted packets (ESP) from Cloudflare&rsquo;s health check probes (both the request and response) are going through the IPsec tunnel we configured.</p>
+<p><figure class="image-caption">
+    <img alt="tcpdump shows the IPsec encrypted packets from Cloudflare&amp;rsquo;s health probbes" src="/images/magic-wan/third-party/strongswan/ipsec_hu35a2bdb54b00da0ad2bbff7a3acf9683_311901_1999x294_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="294" width="1999"
+    style="aspect-ratio:6.799353741496598;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+<p>You can also run tcpdump on <code>vti0</code> to check the decrypted packets.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;tcpdump&#43;-i&#43;vti0&#43;host&#43;172.64.240.252"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p><figure class="image-caption">
+    <img alt="If you run tcpdump on vti0 you can check for decrypted packets" src="/images/magic-wan/third-party/strongswan/tcpdump_hu7b24a3570586638a5858ea4c819bb4f4_274555_1999x275_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="275" width="1999"
+    style="aspect-ratio:7.269127272727273;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/magic-wan" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-wan/configuration/manually/third-party/strongswan.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-05T09:32:14&#43;01:00
+  title=2024-07-05
+>July 5, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight</title>
+  <meta name="title" content="Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight" />
+  <meta property="og:description" content="This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/developer-spotlight/tutorials/custom-access-control-for-files/" />
+
+  <meta name="twitter:title" content="Custom access control for files in R2 using D1 and Workers · Cloudflare Developer spotlight" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="developer-spotlight"><meta name="algolia_product_filter" content="Developer spotlight"><meta name="algolia_page_title" content="Custom access control for files in R2 using D1 and Workers">
+  <meta name="pcx_word_count" content="1600"><meta name="pcx_last_modified" content="48"><meta name="pcx_last_reviewed" content="59" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/developer-spotlight/tutorials/custom-access-control-for-files/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"developer-spotlight"}</script>
+  <meta name="docsearch:product" content="developer-spotlight" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - dcb28c58fdcdff84ceadc641ec4c4ba5" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - dcb28c58fdcdff84ceadc641ec4c4ba5">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/developer-spotlight/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Developer spotlight logo"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M32.022 32.9121C33.9009 32.9121 35.7376 32.3549 37.2999 31.3111C38.8622 30.2672 40.0798 28.7835 40.7988 27.0476C41.5179 25.3117 41.706 23.4016 41.3394 21.5588C40.9729 19.7159 40.0681 18.0232 38.7395 16.6946C37.4109 15.366 35.7182 14.4612 33.8753 14.0947C32.0325 13.7281 30.1224 13.9162 28.3865 14.6353C26.6506 15.3543 25.1669 16.5719 24.123 18.1342C23.0792 19.6965 22.522 21.5332 22.522 23.4121C22.5241 25.931 23.5257 28.3462 25.3068 30.1273C27.0879 31.9084 29.5031 32.91 32.022 32.9121ZM32.022 17.9171C33.1098 17.9171 34.1732 18.2397 35.0776 18.844C35.9821 19.4484 36.687 20.3074 37.1033 21.3124C37.5196 22.3173 37.6285 23.4232 37.4163 24.4901C37.2041 25.557 36.6803 26.537 35.9111 27.3062C35.1419 28.0754 34.1619 28.5992 33.095 28.8114C32.0281 29.0237 30.9222 28.9147 29.9172 28.4985C28.9122 28.0822 28.0533 27.3772 27.4489 26.4728C26.8446 25.5683 26.522 24.5049 26.522 23.4171C26.522 21.9584 27.1014 20.5595 28.1329 19.528C29.1644 18.4966 30.5633 17.9171 32.022 17.9171Z"/><path d="M12.052 37.0571C13.4365 37.0571 14.7898 36.6466 15.941 35.8774C17.0921 35.1082 17.9893 34.015 18.5191 32.7359C19.049 31.4568 19.1876 30.0493 18.9175 28.6915C18.6474 27.3336 17.9807 26.0863 17.0017 25.1074C16.0228 24.1284 14.7755 23.4617 13.4176 23.1916C12.0598 22.9215 10.6523 23.0601 9.3732 23.59C8.09412 24.1198 7.00087 25.017 6.2317 26.1681C5.46253 27.3193 5.05199 28.6726 5.05199 30.0571C5.05384 31.9131 5.79193 33.6925 7.10429 35.0048C8.41664 36.3172 10.196 37.0553 12.052 37.0571ZM12.052 27.0571C12.6453 27.0571 13.2254 27.2331 13.7187 27.5627C14.212 27.8923 14.5966 28.3609 14.8236 28.9091C15.0507 29.4572 15.1101 30.0604 14.9943 30.6424C14.8786 31.2243 14.5929 31.7589 14.1733 32.1784C13.7538 32.598 13.2192 32.8837 12.6373 32.9995C12.0553 33.1152 11.4521 33.0558 10.9039 32.8288C10.3558 32.6017 9.88722 32.2172 9.55758 31.7238C9.22793 31.2305 9.05199 30.6505 9.05199 30.0571C9.05278 29.262 9.3692 28.4997 9.93173 27.9377C10.4943 27.3758 11.2569 27.0601 12.052 27.0601V27.0571Z"/><path d="M54.015 38.1001H49.982C48.4967 38.0988 47.0302 38.4317 45.691 39.0741C44.3822 37.5189 42.7492 36.2686 40.9064 35.4108C39.0637 34.5529 37.0556 34.1084 35.023 34.1081H28.977C26.948 34.1085 24.9435 34.5516 23.1033 35.4066C21.2632 36.2615 19.6318 37.5077 18.323 39.0581C16.9884 38.4258 15.5298 38.0985 14.053 38.1001H10.021C7.37431 38.103 4.83683 39.1556 2.96515 41.0269C1.09348 42.8982 0.0404281 45.4354 0.0369873 48.0821L2.03699 50.0821H62L64 48.0821C63.9968 45.4352 62.9437 42.8976 61.0718 41.0262C59.1998 39.1548 56.6619 38.1025 54.015 38.1001ZM10.021 42.1001H14.053C14.7774 42.1037 15.4951 42.2393 16.171 42.5001C15.6745 43.6429 15.3344 44.8474 15.16 46.0811H4.38099C4.79602 44.9171 5.56069 43.9098 6.57032 43.1971C7.57995 42.4845 8.78518 42.1013 10.021 42.1001ZM19.201 46.0831C19.6652 43.8325 20.8909 41.8106 22.6715 40.358C24.4522 38.9054 26.679 38.1109 28.977 38.1081H35.023C37.321 38.1106 39.548 38.9049 41.3288 40.3573C43.1096 41.8098 44.3355 43.8315 44.8 46.0821L19.201 46.0831ZM48.84 46.0831C48.6666 44.853 48.3283 43.6518 47.834 42.5121C48.5184 42.2432 49.2467 42.1035 49.982 42.1001H54.015C55.2509 42.1014 56.4562 42.4848 57.4658 43.1979C58.4753 43.9109 59.2396 44.9187 59.654 46.0831H48.84Z"/><path d="M52.014 37.0571C53.3985 37.0571 54.7518 36.6466 55.903 35.8774C57.0541 35.1082 57.9513 34.015 58.4811 32.7359C59.011 31.4568 59.1496 30.0493 58.8795 28.6915C58.6094 27.3336 57.9427 26.0863 56.9637 25.1074C55.9848 24.1284 54.7375 23.4617 53.3796 23.1916C52.0218 22.9215 50.6143 23.0601 49.3352 23.59C48.0561 24.1198 46.9629 25.017 46.1937 26.1681C45.4245 27.3193 45.014 28.6726 45.014 30.0571C45.0158 31.9131 45.7539 33.6925 47.0663 35.0048C48.3786 36.3172 50.158 37.0553 52.014 37.0571ZM52.014 27.0571C52.6073 27.0571 53.1874 27.2331 53.6807 27.5627C54.174 27.8923 54.5586 28.3609 54.7856 28.9091C55.0127 29.4572 55.0721 30.0604 54.9563 30.6424C54.8406 31.2243 54.5549 31.7589 54.1353 32.1784C53.7158 32.598 53.1812 32.8837 52.5993 32.9995C52.0173 33.1152 51.4141 33.0558 50.8659 32.8288C50.3178 32.6017 49.8492 32.2172 49.5196 31.7238C49.1899 31.2305 49.014 30.6505 49.014 30.0571C49.0148 29.262 49.3312 28.4997 49.8937 27.9377C50.4562 27.3758 51.2189 27.0601 52.014 27.0601V27.0571Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:19">Developer spotlight</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 1c4c46258cc44dfeedc8cd8da5fbcfab" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 1c4c46258cc44dfeedc8cd8da5fbcfab">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/developer-spotlight/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Developer spotlight logo"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M32.022 32.9121C33.9009 32.9121 35.7376 32.3549 37.2999 31.3111C38.8622 30.2672 40.0798 28.7835 40.7988 27.0476C41.5179 25.3117 41.706 23.4016 41.3394 21.5588C40.9729 19.7159 40.0681 18.0232 38.7395 16.6946C37.4109 15.366 35.7182 14.4612 33.8753 14.0947C32.0325 13.7281 30.1224 13.9162 28.3865 14.6353C26.6506 15.3543 25.1669 16.5719 24.123 18.1342C23.0792 19.6965 22.522 21.5332 22.522 23.4121C22.5241 25.931 23.5257 28.3462 25.3068 30.1273C27.0879 31.9084 29.5031 32.91 32.022 32.9121ZM32.022 17.9171C33.1098 17.9171 34.1732 18.2397 35.0776 18.844C35.9821 19.4484 36.687 20.3074 37.1033 21.3124C37.5196 22.3173 37.6285 23.4232 37.4163 24.4901C37.2041 25.557 36.6803 26.537 35.9111 27.3062C35.1419 28.0754 34.1619 28.5992 33.095 28.8114C32.0281 29.0237 30.9222 28.9147 29.9172 28.4985C28.9122 28.0822 28.0533 27.3772 27.4489 26.4728C26.8446 25.5683 26.522 24.5049 26.522 23.4171C26.522 21.9584 27.1014 20.5595 28.1329 19.528C29.1644 18.4966 30.5633 17.9171 32.022 17.9171Z"/><path d="M12.052 37.0571C13.4365 37.0571 14.7898 36.6466 15.941 35.8774C17.0921 35.1082 17.9893 34.015 18.5191 32.7359C19.049 31.4568 19.1876 30.0493 18.9175 28.6915C18.6474 27.3336 17.9807 26.0863 17.0017 25.1074C16.0228 24.1284 14.7755 23.4617 13.4176 23.1916C12.0598 22.9215 10.6523 23.0601 9.3732 23.59C8.09412 24.1198 7.00087 25.017 6.2317 26.1681C5.46253 27.3193 5.05199 28.6726 5.05199 30.0571C5.05384 31.9131 5.79193 33.6925 7.10429 35.0048C8.41664 36.3172 10.196 37.0553 12.052 37.0571ZM12.052 27.0571C12.6453 27.0571 13.2254 27.2331 13.7187 27.5627C14.212 27.8923 14.5966 28.3609 14.8236 28.9091C15.0507 29.4572 15.1101 30.0604 14.9943 30.6424C14.8786 31.2243 14.5929 31.7589 14.1733 32.1784C13.7538 32.598 13.2192 32.8837 12.6373 32.9995C12.0553 33.1152 11.4521 33.0558 10.9039 32.8288C10.3558 32.6017 9.88722 32.2172 9.55758 31.7238C9.22793 31.2305 9.05199 30.6505 9.05199 30.0571C9.05278 29.262 9.3692 28.4997 9.93173 27.9377C10.4943 27.3758 11.2569 27.0601 12.052 27.0601V27.0571Z"/><path d="M54.015 38.1001H49.982C48.4967 38.0988 47.0302 38.4317 45.691 39.0741C44.3822 37.5189 42.7492 36.2686 40.9064 35.4108C39.0637 34.5529 37.0556 34.1084 35.023 34.1081H28.977C26.948 34.1085 24.9435 34.5516 23.1033 35.4066C21.2632 36.2615 19.6318 37.5077 18.323 39.0581C16.9884 38.4258 15.5298 38.0985 14.053 38.1001H10.021C7.37431 38.103 4.83683 39.1556 2.96515 41.0269C1.09348 42.8982 0.0404281 45.4354 0.0369873 48.0821L2.03699 50.0821H62L64 48.0821C63.9968 45.4352 62.9437 42.8976 61.0718 41.0262C59.1998 39.1548 56.6619 38.1025 54.015 38.1001ZM10.021 42.1001H14.053C14.7774 42.1037 15.4951 42.2393 16.171 42.5001C15.6745 43.6429 15.3344 44.8474 15.16 46.0811H4.38099C4.79602 44.9171 5.56069 43.9098 6.57032 43.1971C7.57995 42.4845 8.78518 42.1013 10.021 42.1001ZM19.201 46.0831C19.6652 43.8325 20.8909 41.8106 22.6715 40.358C24.4522 38.9054 26.679 38.1109 28.977 38.1081H35.023C37.321 38.1106 39.548 38.9049 41.3288 40.3573C43.1096 41.8098 44.3355 43.8315 44.8 46.0821L19.201 46.0831ZM48.84 46.0831C48.6666 44.853 48.3283 43.6518 47.834 42.5121C48.5184 42.2432 49.2467 42.1035 49.982 42.1001H54.015C55.2509 42.1014 56.4562 42.4848 57.4658 43.1979C58.4753 43.9109 59.2396 44.9187 59.654 46.0831H48.84Z"/><path d="M52.014 37.0571C53.3985 37.0571 54.7518 36.6466 55.903 35.8774C57.0541 35.1082 57.9513 34.015 58.4811 32.7359C59.011 31.4568 59.1496 30.0493 58.8795 28.6915C58.6094 27.3336 57.9427 26.0863 56.9637 25.1074C55.9848 24.1284 54.7375 23.4617 53.3796 23.1916C52.0218 22.9215 50.6143 23.0601 49.3352 23.59C48.0561 24.1198 46.9629 25.017 46.1937 26.1681C45.4245 27.3193 45.014 28.6726 45.014 30.0571C45.0158 31.9131 45.7539 33.6925 47.0663 35.0048C48.3786 36.3172 50.158 37.0553 52.014 37.0571ZM52.014 27.0571C52.6073 27.0571 53.1874 27.2331 53.6807 27.5627C54.174 27.8923 54.5586 28.3609 54.7856 28.9091C55.0127 29.4572 55.0721 30.0604 54.9563 30.6424C54.8406 31.2243 54.5549 31.7589 54.1353 32.1784C53.7158 32.598 53.1812 32.8837 52.5993 32.9995C52.0173 33.1152 51.4141 33.0558 50.8659 32.8288C50.3178 32.6017 49.8492 32.2172 49.5196 31.7238C49.1899 31.2305 49.014 30.6505 49.014 30.0571C49.0148 29.262 49.3312 28.4997 49.8937 27.9377C50.4562 27.3758 51.2189 27.0601 52.014 27.0601V27.0571Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:19">Developer spotlight</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Developer spotlight menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/playground" tabindex="-1">Playground</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/#plans" tabindex="-1">Pricing</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/developer-spotlight/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item" is-active-root is-expanded><a class="DocsSidebar--nav-link"  href="/developer-spotlight/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/developer-spotlight/application-guide/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Application guide</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/developer-spotlight/tutorials/custom-access-control-for-files.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Developer spotlight</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/tutorials/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Tutorials</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/tutorials/custom-access-control-for-files/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Custom access control for files in R2 using D1 and Workers</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="custom-access-control-for-files-in-r2-using-d1-and-workers">Custom access control for files in R2 using D1 and Workers</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2024-06-17T00:00:00&#43;00:00
+  title=2024-06-17
+>June 17, 2024</time></span>
+</div>
+<div class="author-container">
+  <div class="author-details"><a href=/developer-spotlight/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Developer Spotlight</span></a> community contribution</div>
+  <div>
+      <span class="author-details">Written by: </span>Dominik Fuerst</div>
+  <span class="author-details">Profile: </span><a href="https://github.com/justDMNK" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+</div>
+
+<p>This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage.</p>
+<p>The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.</p>
+<h2 id="prerequisites">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#prerequisites">&#8203;​</a>
+    </span>
+    <span>Prerequisites</span>
+  </h2><p>Before you can start with this tutorial, you will need to have the following prerequisites:</p>
+<ul>
+<li>A Cloudflare account</li>
+<li><a href="https://docs.npmjs.com/getting-started" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li>
+<li><a href="https://nodejs.org/en/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Node.js</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> with version <code>16.17.0</code> or later</li>
+</ul>
+<h2 id="1-create-a-new-worker-application">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-create-a-new-worker-application">&#8203;​</a>
+    </span>
+    <span>1. Create a new Worker application</span>
+  </h2><p>To get started developing your Worker you will use the <a href="https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>create-cloudflare</code> CLI</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. To do this, open a terminal window and run the following command:</p>
+<div class="tabs-wrapper" tab-wrapper-id="f67346bb699bb652">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="f67346bb699bb652">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-npm" data-id="f67346bb699bb652">
+NPM
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-yarn" data-id="f67346bb699bb652">
+Yarn
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-npm-f67346bb699bb652"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;create&#43;cloudflare%40latest&#43;-y"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  noCodeTab" id="tab-yarn-f67346bb699bb652"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;yarn&#43;create&#43;cloudflare"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<p>Then simply follow the prompts in order to create your new Worker application:</p>
+<ol>
+<li>Give your new Worker a concise and descriptive name.</li>
+<li>Select <code>&quot;Hello World&quot; Worker</code> for the type of application, as it creates a simple example Worker which is triggered by an HTTP request.</li>
+<li>Select <code>Yes</code> to use TypeScript.</li>
+<li>Decide if you want to initialize a git repository for this new Worker project. We will select <code>No</code>, for this tutorial, but feel free to choose <code>Yes</code>.</li>
+<li>Choose <code>No</code> when asked if you want to deploy your application.</li>
+</ol>
+<p>If you do choose to deploy here, you will be asked to authenticate (if not logged in already) and select an account, then your project will be deployed. You can always (re)deploy your application later on by running <code>npx wrangler deploy</code>.</p>
+<h2 id="2-create-a-new-d1-database-and-binding">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-create-a-new-d1-database-and-binding">&#8203;​</a>
+    </span>
+    <span>2. Create a new D1 database and binding</span>
+  </h2><p>Now that you have created your Worker, next you will need to create a D1 database.
+This can be done through the Cloudflare Portal or the Wrangler CLI.
+For this tutorial, we will use the Wrangler CLI for simplicity.</p>
+<p>To create a D1 database, just run the following command.
+If you get asked to install wrangler, just confirm by pressing <code>y</code> and then press <code>Enter</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;d1&#43;create&#43;%3CYOUR_DATABASE_NAME%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Replace <code>&lt;YOUR_DATABASE_NAME&gt;</code> with the name you want to use for your database. Keep in mind that this name can&rsquo;t be changed later on.</p>
+<p>After the database is successfully created, you will see the data for the binding displayed as an output.
+The binding declaration will start with <code>[[d1_databases]]</code> and contain the binding name, database name and ID.
+To use the database in your worker, you will need to add the binding to your <code>wrangler.toml</code> file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="%5B%5Bd1_databases%5D%5D%0Abinding&#43;%3D&#43;%22DB%22%0Adatabase_name&#43;%3D&#43;%22%3CYOUR_DATABASE_NAME%3E%22%0Adatabase_id&#43;%3D&#43;%22%3CYOUR_DATABASE_ID%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="3-create-r2-bucket-and-binding">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-create-r2-bucket-and-binding">&#8203;​</a>
+    </span>
+    <span>3. Create R2 bucket and binding</span>
+  </h2><p>Now that the D1 database is created, you also need to create an R2 bucket which will be used to store the uploaded files.
+This step can also be done through the Cloudflare Portal, but as before, we will use the Wrangler CLI for this tutorial.
+To create an R2 bucket, run the following command:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;r2&#43;bucket&#43;create&#43;%3CYOUR_BUCKET_NAME%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This works similar to the D1 database creation, where you will need to replace <code>&lt;YOUR_BUCKET_NAME&gt;</code> with the name you want to use for your bucket.
+To do this, go to the <code>wrangler.toml</code> file again and then add the following lines:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="%5B%5Br2_buckets%5D%5D%0Abinding&#43;%3D&#43;%22BUCKET%22%0Abucket_name&#43;%3D&#43;%22%3CYOUR_BUCKET_NAME%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Now that you have prepared the Wrangler configuration, you should update the <code>worker-configuration.d.ts</code> file to include the new bindings.
+This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.
+You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;run&#43;cf-typegen"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="4-database-preparation">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-database-preparation">&#8203;​</a>
+    </span>
+    <span>4. Database preparation</span>
+  </h2><p>Before you can start developing the Worker, you need to prepare the D1 database.</p>
+<p>For this you need to</p>
+<ol>
+<li>Create a table in the database which will then be used to store the user data</li>
+<li>Create a unique index on the username column, which will speed up database queries and ensure that the username is unique</li>
+<li>Insert a test user into the table, so you can test your code later on</li>
+</ol>
+<p>As this operation only needs to be done once, this will be done through the Wrangler CLI and not in the Worker&rsquo;s code.
+Copy the commands listed below, replace the placeholders and then run them in order to prepare the database.
+For this tutorial you can replace the <code>&lt;YOUR_USERNAME&gt;</code> and <code>&lt;YOUR_HASHED_PASSWORD&gt;</code> placeholders with <code>admin</code> and <code>5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</code> respecively.
+And <code>&lt;YOUR_DATABASE_NAME&gt;</code> should be replaced with the name you used to create the database.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;d1&#43;execute&#43;%3CYOUR_DATABASE_NAME%3E&#43;--command&#43;%22CREATE&#43;TABLE&#43;user&#43;%28id&#43;INTEGER&#43;PRIMARY&#43;KEY&#43;NOT&#43;NULL%2C&#43;username&#43;STRING&#43;NOT&#43;NULL%2C&#43;password&#43;STRING&#43;NOT&#43;NULL%29%22&#43;--remote%0A%24&#43;npx&#43;wrangler&#43;d1&#43;execute&#43;%3CYOUR_DATABASE_NAME%3E&#43;--command&#43;%22CREATE&#43;UNIQUE&#43;INDEX&#43;user_username&#43;ON&#43;user&#43;%28username%29%22&#43;&#43;--remote%0A%24&#43;npx&#43;wrangler&#43;d1&#43;execute&#43;%3CYOUR_DATABASE_NAME%3E&#43;--command&#43;%22INSERT&#43;INTO&#43;user&#43;%28username%2C&#43;password%29&#43;VALUES&#43;%28%27%3CYOUR_USERNAME%3E%27%2C&#43;%27%3CYOUR_HASHED_PASSWORD%3E%27%29%22&#43;&#43;--remote"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="5-implement-authentication-in-the-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-implement-authentication-in-the-worker">&#8203;​</a>
+    </span>
+    <span>5. Implement authentication in the Worker</span>
+  </h2><p>Now that the database and bucket are all set up, you can start to develop the Worker application.
+The first thing you will need to do is to implement the authentication for the requests.</p>
+<p>This tutorial will use a simple username and password authentication, where the username and password (hashed) are stored in the D1 database.
+The requests will contain the username and password as a base64 encoded string, which is also called Basic Authentication.
+Depending on the request method, this string will be retrieved from the <code>Authorization</code> header for POST requests or the <code>Authorization</code> search parameter for GET requests.</p>
+<p>To handle the authentication, you will need to replace the current code within <code>index.ts</code> file with the following code:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="export&#43;default&#43;%7B%0A%09async&#43;fetch%28request%3A&#43;Request%2C&#43;env%3A&#43;Env%2C&#43;ctx%3A&#43;ExecutionContext%29%3A&#43;Promise%3CResponse%3E&#43;%7B%0A%09%09try&#43;%7B%0A%09%09%09const&#43;url&#43;%3D&#43;new&#43;URL%28request.url%29%3B%0A%09%09%09let&#43;authBase64%3B%0A%09%09%09if&#43;%28request.method&#43;%3D%3D%3D&#43;%27POST%27%29&#43;%7B%0A%09%09%09%09authBase64&#43;%3D&#43;request.headers.get%28%27Authorization%27%29%3B%0A%09%09%09%7D&#43;else&#43;if&#43;%28request.method&#43;%3D%3D%3D&#43;%27GET%27%29&#43;%7B%0A%09%09%09%09authBase64&#43;%3D&#43;url.searchParams.get%28%27Authorization%27%29%3B%0A%09%09%09%7D&#43;else&#43;%7B%0A%09%09%09%09return&#43;new&#43;Response%28%27Method&#43;Not&#43;Allowed%21%27%2C&#43;%7B&#43;status%3A&#43;405&#43;%7D%29%3B%0A%09%09%09%7D%0A%09%09%09if&#43;%28%21authBase64&#43;%7C%7C&#43;authBase64.substring%280%2C&#43;6%29&#43;%21%3D%3D&#43;%27Basic&#43;%27%29&#43;%7B%0A%09%09%09%09return&#43;new&#43;Response%28%27Unauthorized%21%27%2C&#43;%7B&#43;status%3A&#43;401&#43;%7D%29%3B%0A%09%09%09%7D%0A%0A%09%09%09const&#43;authString&#43;%3D&#43;atob%28authBase64.substring%286%29%29%3B%0A%09%09%09const&#43;%5Busername%2C&#43;password%5D&#43;%3D&#43;authString.split%28%27%3A%27%29%3B%0A%09%09%09if&#43;%28%21username&#43;%7C%7C&#43;%21password%29&#43;%7B%0A%09%09%09%09return&#43;new&#43;Response%28%27Unauthorized%21%27%2C&#43;%7B&#43;status%3A&#43;401&#43;%7D%29%3B%0A%09%09%09%7D%0A%0A%09%09%09%2F%2F&#43;TODO%3A&#43;Check&#43;if&#43;the&#43;username&#43;and&#43;password&#43;are&#43;correct%0A%09%09%7D&#43;catch&#43;%28error%29&#43;%7B%0A%09%09%09console.error%28%27An&#43;error&#43;occurred%21%27%2C&#43;error%29%3B%0A%09%09%09return&#43;new&#43;Response%28%27Internal&#43;Server&#43;Error%21%27%2C&#43;%7B&#43;status%3A&#43;500&#43;%7D%29%3B%0A%09%09%7D%0A%09%7D%2C%0A%7D%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The code above currently extracts the username and password from the request, but does not yet check if the username and password are correct.</p>
+<p>To check the username and password, you will need to hash the password and then query the D1 database table <code>user</code> with the given username and hashed password.
+If the username and password are correct, you will retrieve a record from D1. If the username or password is incorrect, undefined will be returned and a <code>401 Unauthorized</code> response will be sent.
+To add this functionality, you will need to add the following code to the <code>fetch</code> function by replacing the TODO comment from the last code snippet:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="const&#43;passwordHashBuffer&#43;%3D&#43;await&#43;crypto.subtle.digest%28%0A%09%7B&#43;name%3A&#43;%27SHA-256%27%2C&#43;%7D%2C%0A%09new&#43;TextEncoder%28%29.encode%28password%29%0A%29%3B%0Aconst&#43;passwordHashArray&#43;%3D&#43;Array.from%28new&#43;Uint8Array%28passwordHashBuffer%29%29%3B%0Aconst&#43;passwordHashString&#43;%3D&#43;passwordHashArray.map%28b&#43;%3D%3E&#43;b.toString%2816%29.padStart%282%2C&#43;%270%27%29%29.join%28%27%27%29%0A%0Aconst&#43;user&#43;%3D&#43;await&#43;env.DB.prepare%28%27SELECT&#43;id&#43;FROM&#43;user&#43;WHERE&#43;username&#43;%3D&#43;%3F&#43;AND&#43;password&#43;%3D&#43;%3F&#43;LIMIT&#43;1%27%29%0A%09.bind%28username%2C&#43;passwordHashString%29%0A%09.first%3C%7B&#43;id%3A&#43;number&#43;%7D%3E%28%29%3B%0Aif&#43;%28%21user%29&#43;%7B%0A%09return&#43;new&#43;Response%28%27Unauthorized%21%27%2C&#43;%7B&#43;status%3A&#43;401&#43;%7D%29%3B%0A%7D%0A%0A%2F%2F&#43;TODO%3A&#43;Implement&#43;upload&#43;functionality"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This code will now ensure that every request is authenticated before it can be processed further.</p>
+<h2 id="6-upload-a-file-through-the-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#6-upload-a-file-through-the-worker">&#8203;​</a>
+    </span>
+    <span>6. Upload a file through the Worker</span>
+  </h2><p>Now that the authentication is set up, you can start to implement the functionality for uploading a file through the Worker.
+To do this, you will need to add a new code path that handles HTTP <code>POST</code> requests.
+Then within it, you will need to get the data from the request, which is sent within the body of the request, by using the <code>request.blob()</code> function.
+After that, you can upload the data to the R2 bucket by using the <code>env.BUCKET.put</code> function.
+And finally, you will return a <code>200 OK</code> response to the client.</p>
+<p>To implement this functionality, you will need to replace the TODO comment from the last code snippet with the following code:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="if&#43;%28request.method&#43;%3D%3D%3D&#43;%27POST%27%29&#43;%7B%0A%09%2F%2F&#43;Upload&#43;the&#43;file&#43;to&#43;the&#43;R2&#43;bucket&#43;with&#43;the&#43;user&#43;id&#43;followed&#43;by&#43;a&#43;slash&#43;as&#43;the&#43;prefix&#43;and&#43;then&#43;the&#43;path&#43;of&#43;the&#43;URL%0A&#43;&#43;&#43;&#43;await&#43;env.BUCKET.put%28%60%24%7Buser.id%7D%2F%24%7Burl.pathname%7D%60%2C&#43;request.body%29%3B%0A&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28%27OK%27%2C&#43;%7B&#43;status%3A&#43;200&#43;%7D%29%3B%0A%7D%0A%2F%2F&#43;TODO%3A&#43;Implement&#43;GET&#43;request&#43;handling"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This code will now allow you to upload a file through the Worker, which will be stored in your R2 bucket.</p>
+<h2 id="7-fetch-from-the-r2-bucket">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#7-fetch-from-the-r2-bucket">&#8203;​</a>
+    </span>
+    <span>7. Fetch from the R2 bucket</span>
+  </h2><p>To round up the Worker application, you will need to implement the functionality to fetch files from the R2 bucket.
+This can be done by adding a new code path that handles <code>GET</code> requests.
+Within this code path, you will need to extract the URL pathname and then retrieve the asset from the R2 bucket by using the <code>env.BUCKET.get</code> function.</p>
+<p>To finalize the code, just replace the TODO comment for handling GET requests from the last code snippet with the following code:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="if&#43;%28request.method&#43;%3D%3D%3D&#43;%27GET%27%29&#43;%7B%0A%09const&#43;file&#43;%3D&#43;await&#43;env.BUCKET.get%28%60%24%7Buser.id%7D%2F%24%7Burl.pathname.slice%281%29%7D%60%29%3B%0A%09if&#43;%28%21file%29&#43;%7B%0A%09%09return&#43;new&#43;Response%28%27Not&#43;Found%21%27%2C&#43;%7B&#43;status%3A&#43;404&#43;%7D%29%3B%0A%09%7D%0A&#43;&#43;const&#43;headers&#43;%3D&#43;new&#43;Headers%28%29%3B%0A&#43;&#43;file.writeHttpMetadata%28headers%29%3B%0A&#43;&#43;return&#43;new&#43;Response%28file.body%2C&#43;%7B&#43;headers&#43;%7D%29%3B%0A%7D%0Areturn&#43;new&#43;Response%28%27Method&#43;Not&#43;Allowed%21%27%2C&#43;%7B&#43;status%3A&#43;405&#43;%7D%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This code now allows you to fetch and return data from the R2 bucket when a <code>GET</code> request is made to the Worker application.</p>
+<h2 id="8-deploy-your-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#8-deploy-your-worker">&#8203;​</a>
+    </span>
+    <span>8. Deploy your Worker</span>
+  </h2><p>After completing the code for this Cloudflare Worker tutorial, you will need to deploy it to Cloudflare.
+To do this open the terminal in the directory created for your application, and then run:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;deploy"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You might get asked to authenticate (if not logged in already) and select an account. After that, the Worker will be deployed to Cloudflare.
+When the deployment finished successfully, you will see a success message with the URL where your Worker is now accessible.</p>
+<h2 id="9-test-your-worker-optional">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#9-test-your-worker-optional">&#8203;​</a>
+    </span>
+    <span>9. Test your Worker (optional)</span>
+  </h2><p>To finish this tutorial, you should test your Worker application by sending a <code>POST</code> request to upload a file and after that a <code>GET</code> request to fetch the file.
+This can be done by using a tool like <code>curl</code> or <code>Postman</code>, but for simplicity, this will describe the usage of <code>curl</code>.</p>
+<p>Copy the following command which can be used to upload a simple JSON file with the content <code>{&quot;Hello&quot;: &quot;Worker!&quot;}</code>.
+Replace <code>&lt;YOUR_API_SECRET&gt;</code> with the base64 encoded username and password combination and then run the command. For this example you can use <code>YWRtaW46cGFzc3dvcmQ=</code>, which can be decoded to <code>admin</code> and <code>test</code>, for the api secret placeholder.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;--location&#43;%27%3CYOUR_WORKER_URL%3E%2FmyFile.json%27&#43;%5C%0A--header&#43;%27Content-Type%3A&#43;application%2Fjson%27&#43;%5C%0A--header&#43;%27Authorization%3A&#43;Basic&#43;%3CYOUR_API_SECRET%3E%27&#43;%5C%0A--data&#43;%27%7B%0A&#43;&#43;&#43;&#43;%22Hello%22%3A&#43;%22Worker%21%22%0A%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then run the next command, or simply open the URL in your browser, to fetch the file you just uploaded:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;--location&#43;%27%3CYOUR_WORKER_URL%3E%2FmyFile.json%3FAuthorization%3DBasic%2520YWRtaW46cGFzc3dvcmQ%253D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="next-steps">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#next-steps">&#8203;​</a>
+    </span>
+    <span>Next steps</span>
+  </h2><p>If you want to learn more about Cloudflare Workers, R2, or D1 you can check out the following documentation:</p>
+<ul>
+<li><a href=/workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Workers</span></a></li>
+<li><a href=/r2/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare R2</span></a></li>
+<li><a href=/d1/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare D1</span></a></li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/workers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/workers/40" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/serverless/what-is-serverless/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/developer-spotlight/tutorials/custom-access-control-for-files.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-28T15:09:17&#43;01:00
+  title=2024-06-28
+>June 28, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,1549 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · DDoS Protection</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/</link>
+    <description>Updates to DDoS Protection</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/ddos-protection/change-log/index.xml" rel="self" />
+    <lastBuildDate>Mon, 03 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>DDoS alerts now available for EU CMB customers</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/general-updates/#ddos-alerts-now-available-for-eu-cmb-customers</link>
+    <description>&lt;a href=https://developers.cloudflare.com/ddos-protection/reference/alerts/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;DDoS alerts&lt;/span&gt;&lt;/a&gt; are now available for EU Customer Metadata Boundary (CMB) customers. This includes all DDoS alert type (Standard and Advanced) for both HTTP DDoS attacks and L3/4 DDoS attacks.</description>
+    <pubDate>Mon, 03 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - Scheduled changes for 2024-04-29</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/scheduled-changes/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Announcement Date&lt;/th&gt;
+      &lt;th&gt;Change Date&lt;/th&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2024-04-19&lt;/td&gt;
+      &lt;td&gt;2024-04-29&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&#34;ruleID&#34;&gt; &lt;span class=&#34;ruleID&#34; title=&#34;Click to copy the full ID&#34; onclick=&#34;navigator.clipboard.writeText(&amp;#34;0a07c24f3cd44a57a5c19b73d2f294d7&amp;#34;)&#34;&gt;...d2f294d7&amp;nbsp;&lt;svg fill=&#34;currentColor&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 16 16&#34; style=&#34;width: 16px;height: 18px;&#34; class=&#34;icon-copy&#34;&gt;&lt;path d=&#34;M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand rule to catch more attacks&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 19 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-04-19</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-04-19/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&#34;ruleID&#34;&gt; &lt;span class=&#34;ruleID&#34; title=&#34;Click to copy the full ID&#34; onclick=&#34;navigator.clipboard.writeText(&amp;#34;4dc034ab293145e4b0b27e20154b29a0&amp;#34;)&#34;&gt;...154b29a0&amp;nbsp;&lt;svg fill=&#34;currentColor&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 16 16&#34; style=&#34;width: 16px;height: 18px;&#34; class=&#34;icon-copy&#34;&gt;&lt;path d=&#34;M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #66).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 19 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Network Analytics now supported for EU CMB customers</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/general-updates/#network-analytics-now-supported-for-eu-cmb-customers</link>
+    <description>&lt;p&gt;The Network Analytics dashboard is available to customers that have opted in to the EU &lt;a href=https://developers.cloudflare.com/data-localization/metadata-boundary/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Customer Metadata Boundary&lt;/span&gt;&lt;/a&gt; (CMB) solution. This also includes Network Analytics Logs (Logpush) and GraphQL API.&lt;/p&gt;
+&lt;p&gt;API users can ensure they are routed properly by directing their API requests at &lt;code&gt;eu.api.cloudflare.com&lt;/code&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 17 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-04-16 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-04-16-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&#34;ruleID&#34;&gt; &lt;span class=&#34;ruleID&#34; title=&#34;Click to copy the full ID&#34; onclick=&#34;navigator.clipboard.writeText(&amp;#34;767bd3e188fc46f79827e95e05ad9070&amp;#34;)&#34;&gt;...05ad9070&amp;nbsp;&lt;svg fill=&#34;currentColor&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 16 16&#34; style=&#34;width: 16px;height: 18px;&#34; class=&#34;icon-copy&#34;&gt;&lt;path d=&#34;M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #64).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;&lt;code class=&#34;ruleID&#34;&gt; &lt;span class=&#34;ruleID&#34; title=&#34;Click to copy the full ID&#34; onclick=&#34;navigator.clipboard.writeText(&amp;#34;8655dc40759f43b9878b775d890b8f4e&amp;#34;)&#34;&gt;...890b8f4e&amp;nbsp;&lt;svg fill=&#34;currentColor&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 16 16&#34; style=&#34;width: 16px;height: 18px;&#34; class=&#34;icon-copy&#34;&gt;&lt;path d=&#34;M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z&#34;&gt;&lt;/path&gt;&lt;path d=&#34;M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #65).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 16 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-04-04 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-04-04-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...177059f1&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #31).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...7b231fb2&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #81).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 04 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-04-02</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-04-02/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...d2f294d7&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Update the rule to match to block attacks more consistently.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 02 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - Network-layer DDoS managed ruleset - 2024-03-12</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/network/2024-03-12/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...85fa2e98&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for UDP Destination Ports (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Enable rule that uses a customer&#39;s UDP destination port profile to
+mitigate traffic (log mode by default).&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 12 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-26 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-26-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...6831bff1&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #35).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Extend the rule to catch attacks more comprehensively.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...e269dfd6&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #56).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Extend the rule to catch attacks more comprehensively.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 26 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-19</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-19/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...0fbfd5ae&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #32).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand rule logic to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...3ad719cd&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #79).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand the rule scope to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 19 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-12</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-12/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...c47bdca6&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #62).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 12 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-08 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-08-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...3a679c52&lt;/td&gt;
+      &lt;td&gt;Requests coming from known bad sources.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;Expand the rule to mitigate on all zones.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 08 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-06 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-06-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1fc1e601&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #31).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Modify characteristics of the unusual HTTP headers or URI path.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...3a679c52&lt;/td&gt;
+      &lt;td&gt;Requests coming from known bad sources.&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...3ad719cd&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #79).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand the scope of the rule to match more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 06 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-02-05 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-02-05-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+&lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Extend the rule to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 05 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-01-26 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-01-26-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...3ad719cd&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #79).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...61bc58d5&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #55).&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;Expanded the scope of the rule to catch attacks more consistently.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 26 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-01-25</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-01-25/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1fc1e601&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #31).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Add more characteristics to the unusual HTTP headers or URI path.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 25 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-01-23</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-01-23/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1fc1e601&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #31).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Add more characteristics to the unusual HTTP headers or URI path.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...2de94fb2&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #3).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Expand rule scope to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...2f8d9a4f&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #78).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 23 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2024-01-05</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2024-01-05/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...2de94fb2&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #3).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Fine-tune the characteristics of the unusual requests.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...177059f1&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #31).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;Removed due to false positives.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;Removed due to false positives.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...82c0ed5f&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #77).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...e4f3ea4d&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #76).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 05 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-12-19 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-12-19-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1fc1e601&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #31).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Add more characteristics to the unusual HTTP headers or URI path.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Extend the rule to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...d2f294d7&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Change the rule to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 19 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-12-14 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-12-14-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Tweak the rule to avoid false positives in some rare cases.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 14 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-12-08 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-12-08-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Updated the rule to avoid false positives in some rare circumstances.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...e7a37252&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #75).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 08 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-11-29</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-11-29/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...8ed59b32&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #61).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Rename rule to avoid confusion.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...61e8d513&lt;/td&gt;
+      &lt;td&gt;Global L7 WordPress attack mitigations (Deprecated)&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Mark rule as deprecated.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Wed, 29 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-11-22</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-11-22/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...254da96a&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #58).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Wed, 22 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-11-13 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-11-13-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Improve this filter to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...7c7a2f25&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #74).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...d2f294d7&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 13 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-11-10 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-11-10-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+&lt;tr&gt;
+      &lt;td&gt;...7d0f1e5f&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #72).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...94547a95&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #59).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...e269dfd6&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #56).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Enable filter early to mitigate widespread impact.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...f35a42a0&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #57).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Enable filter early to mitigate widespread impact.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 10 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-10-19</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-10-19/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...61bc58d5&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #55).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Requests will be challenged by default, larger attacks are blocked.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 19 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-10-11</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-10-11/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...35675e08&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #24).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;This rule can cause rare false positives with custom apps sending invalid
+headers.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Wed, 11 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-10-09 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-10-09-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...02bbdce1&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #47).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...493cb8a8&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #52).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...5c344623&lt;/td&gt;
+      &lt;td&gt;HTTP requests from uncommon clients&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...6363bb1b&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #48).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...c1fbd175&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers (pattern #4).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 09 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-09-24 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-09-24-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...0fb54442&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #49).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...3dd5f188&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #71).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...97003a74&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #17).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Expand rule to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Sun, 24 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-09-21 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-09-21-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1d73128d&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #56).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Make the rule customizable as it might cause false positive in rare cases.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...4a95ba67&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #32).&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand the scope of the rule to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Update the rule to remove some rare false positives.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Thu, 21 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-09-05 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-09-05-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand filter to catch attacks more comprehensively.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...4346874d&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #46).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...6fe7a312&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #70).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Expand filter to catch more attacks. It is now configurable.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 05 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-30 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-30-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...46082508&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #45).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Wed, 30 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-29 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-29-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...3fe55678&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #44).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Tue, 29 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-25 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-25-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...20c5afb5&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #36).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;This rule was previously readonly, but can cause false positives in rare
+cases. It is now possible to override it.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...cb26e2e2&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #69).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...ebff5ef1&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #43).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 25 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-16 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-16-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...9721fd20&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers (pattern #3).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Wed, 16 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-14</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-14/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;Expand the filter to catch more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...d2f294d7&lt;/td&gt;
+      &lt;td&gt;HTTP requests trying to impersonate browsers.&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;Expand the filter to catch  more attacks.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 14 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-08-11 - Emergency</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-08-11-emergency/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...1de9523e&lt;/td&gt;
+      &lt;td&gt;HTTP requests with unusual HTTP headers or URI path (signature #41).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...22807318&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnets.&lt;/td&gt;
+      &lt;td&gt;managed_challenge&lt;/td&gt;
+      &lt;td&gt;ddos_dynamic&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...aa03a345&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #68).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...efca86eb&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #66).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...f93fb5d6&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #67).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 11 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - HTTP DDoS managed ruleset - 2023-07-31</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/http/2023-07-31/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...9aec0913&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #52).&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;Expose existing read-only filter publicly as it might cause false positives
+in rare cases.&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...c5f479f0&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #62).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...d0e36f9c&lt;/td&gt;
+      &lt;td&gt;HTTP requests from known botnet (signature #63).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;block&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 31 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - Network-layer DDoS managed ruleset - 2023-07-31</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/network/2023-07-31/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...aa772b5c&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for Location-Based UDP (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;N/A&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Enable UDP geolocation Adaptive DDoS rule&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Mon, 31 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - Network-layer DDoS managed ruleset - 2023-04-17</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/network/2023-04-17/</link>
+    <description>
+  &lt;p&gt;Previously, only a subset of rules were exposed publicly. In rare situations, these rules can cause false positives. When this happens, you can customize their behavior using overrides.&lt;/p&gt;
+&lt;p&gt;Besides these rules, the DDoS managed rules contain other rules that do not cause issues. Until now, these rules were not shown in the dashboard or referenced in the documentation.&lt;/p&gt;
+&lt;p&gt;Cloudflare now shows all rules in the dashboard, including these high-confidence rules. This means that packets matching these rules will now have the correct rule identifier. The newly published rules are read-only and you cannot disable them.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 17 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DDoS Protection - Network-layer DDoS managed ruleset - 2022-12-02</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/network/2022-12-02/</link>
+    <description>
+  
+    &lt;table style=&#34;width: 100%&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Rule ID&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Previous Action&lt;/th&gt;
+      &lt;th&gt;New Action&lt;/th&gt;
+      &lt;th&gt;Notes&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;...58e4914a&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for UDP (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...76d5e15c&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for Other IPv6 Protocols (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...8de83ef6&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for IPv6 GRE (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...938e978c&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for IPv6 ESP (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...9c173480&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for ICMP (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...ad8078b8&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for IPv4 GRE (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...ae3f5e4e&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for ICMPv6 (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...c7dc52df&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for Other IPv4 Protocols (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;tr&gt;
+      &lt;td&gt;...e4e7541c&lt;/td&gt;
+      &lt;td&gt;Adaptive DDoS Protection for IPv4 ESP (Available only to Enterprise accounts).&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;log&lt;/td&gt;
+      &lt;td&gt;Lower sensitivity to avoid false positives&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+  
+
+</description>
+    <pubDate>Fri, 02 Dec 2022 08:00:00 EST</pubDate></item></channel>
+</rss>

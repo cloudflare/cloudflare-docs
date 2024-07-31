@@ -1,0 +1,14 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Browser Isolation · Browser Isolation</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/browser-isolation/</link>
+    <description>Updates to Browser Isolation</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/cloudflare-one/changelog/browser-isolation/index.xml" rel="self" />
+    <lastBuildDate>Thu, 21 Mar 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Removed third-party cookie dependencies</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/browser-isolation/#removed-third-party-cookie-dependencies</link>
+    <description>Removed dependency on third-party cookies in the isolated browser, fixing an issue that previously caused intermittent disruptions for users maintaining multi-site, cross-tab sessions in the isolated browser.</description>
+    <pubDate>Thu, 21 Mar 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

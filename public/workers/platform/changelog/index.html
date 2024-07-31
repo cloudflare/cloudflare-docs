@@ -1,0 +1,1944 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Workers Changelog · Cloudflare Workers docs</title>
+  <meta name="title" content="Workers Changelog · Cloudflare Workers docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Workers Changelog · Cloudflare Workers docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Workers Changelog · Cloudflare Workers docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Review recent changes to Cloudflare Workers." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Workers Changelog · Cloudflare Workers docs" />
+  <meta property="og:description" content="Review recent changes to Cloudflare Workers." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/workers/platform/changelog/" />
+
+  <meta name="twitter:title" content="Workers Changelog · Cloudflare Workers docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="Review recent changes to Cloudflare Workers." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="workers"><meta name="algolia_product_filter" content="Workers"><meta name="algolia_page_title" content="Workers Changelog">
+  <meta name="pcx_word_count" content="2000"><meta name="pcx_last_modified" content="98"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="changelog" />
+  <meta name="algolia_content_type" content="Changelog"><meta name="pcx_content_group" content="Developer platform" />
+  
+
+  
+    <link rel="alternate" type="application/rss+xml" href="https://developers.cloudflare.com/workers/platform/changelog/index.xml" title="Workers Changelog - Workers - RSS Feed" />
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/workers/platform/changelog/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"workers"}</script>
+  <meta name="docsearch:product" content="workers" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 44d1cbace8c5fdcc8af6dd44cc2b85fe" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 44d1cbace8c5fdcc8af6dd44cc2b85fe">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/workers/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Workers logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542 1.868-2.527Z"/><path d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81 21.997 6.503Z"/><path d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808L29.175 6.503Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Workers</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 4df5d8dc24f1cccc5cd6ecbb4a884aef" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 4df5d8dc24f1cccc5cd6ecbb4a884aef">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/workers/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Workers logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542 1.868-2.527Z"/><path d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81 21.997 6.503Z"/><path d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808L29.175 6.503Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Workers</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Workers menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/playground" tabindex="-1">Playground</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/#plans" tabindex="-1">Pricing</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/workers/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/get-started/guide/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">CLI</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/get-started/dashboard/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Dashboard</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/get-started/quickstarts/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Quickstarts</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/playground/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Playground</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bindings</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/compatibility-dates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Compatibility dates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/continuous-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Continuous integration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/cron-triggers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cron Triggers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/environment-variables/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Environment variables</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Integrations</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/configuration/integrations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Integrations</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/integrations/apis/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">APIs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/integrations/external-services/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">External Services</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/integrations/momento/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Momento</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/workers-with-page-rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Page Rules</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Routes and domains</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/configuration/routing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Routes and domains</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/routing/custom-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom Domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/routing/routes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Routes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/routing/workers-dev/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">workers.dev</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/secrets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secrets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/smart-placement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Smart Placement (beta)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Versions &amp; Deployments</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/configuration/versions-and-deployments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Versions &amp; Deployments</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/versions-and-deployments/gradual-deployments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gradual deployments</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/versions-and-deployments/rollbacks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rollbacks</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Workers Sites</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/configuration/sites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers Sites</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/sites/start-from-existing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Start from existing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/sites/start-from-scratch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Start from scratch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/sites/start-from-worker/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Start from Worker</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/sites/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers Sites configuration</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Runtime APIs</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Runtime APIs</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Bindings (env)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bindings (env)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AI</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/analytics/analytics-engine"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics Engine</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Browser Rendering</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/d1-client-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">D1</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Dispatcher (Workers for Platforms)</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/durable-objects/api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Durable Objects</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/environment-variables/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Environment Variables</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/hyperdrive"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hyperdrive</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/kv/api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">KV</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/mtls/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">mTLS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/javascript-apis/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Queues</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/workers/workers-api-reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">R2</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/rate-limit/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rate Limiting</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/secrets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secrets</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Service bindings</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/service-bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Service bindings</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/service-bindings/http/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/service-bindings/rpc/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">RPC (WorkerEntrypoint)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/logging/tail-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tail Workers</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/vectorize/reference/client-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Vectorize</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/bindings/version-metadata/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Version metadata</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/cache/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cache</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/console/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Console</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/context/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Context (ctx)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/encoding/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Encoding</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/eventsource/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">EventSource</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/fetch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fetch</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Handlers</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/handlers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Handlers</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/durable-objects/api/alarms/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alarm Handler</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/email-routing/email-workers/runtime-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Email Handler</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/handlers/fetch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fetch Handler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/javascript-apis/#consumer"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Queue Handler</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/handlers/scheduled/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Scheduled Handler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/handlers/tail/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tail Handler</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/headers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Headers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/html-rewriter/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTMLRewriter</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Node.js compatibility</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Node.js compatibility</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/assert/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">assert</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/asynclocalstorage/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AsyncLocalStorage</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/buffer/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Buffer</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/crypto/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Crypto</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/diagnostics-channel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Diagnostics Channel</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/eventemitter/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">EventEmitter</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/path/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">path</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/process/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">process</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/streams/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Streams</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/string-decoder/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">StringDecoder</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/test/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">test</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/nodejs/util/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">util</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/performance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Performance and timers</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Remote-procedure call (RPC)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Remote-procedure call (RPC)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/lifecycle/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Lifecycle</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/reserved-methods/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reserved Methods</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/visibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Visibility and Security Model</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/typescript/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TypeScript</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/rpc/error-handling/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Error handling</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/request/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Request</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/response/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Response</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Streams</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Streams</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/readablestream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ReadableStream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/readablestreambyobreader/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ReadableStream BYOBReader</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/readablestreamdefaultreader/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ReadableStream DefaultReader</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/transformstream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TransformStream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/writablestream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WritableStream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/streams/writablestreamdefaultwriter/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WritableStream DefaultWriter</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/tcp-sockets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TCP sockets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/web-crypto/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Web Crypto</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/web-standards/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Web standards</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: WebAssembly (Wasm)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/webassembly/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WebAssembly (Wasm)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/webassembly/javascript/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wasm in JavaScript</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/runtime-apis/websockets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WebSockets</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Databases</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/databases/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Databases</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/connecting-to-databases/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Connect to databases</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/analytics/analytics-engine/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics Engine</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/vectorize/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Vectorize (vector database)</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare D1</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/hyperdrive/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hyperdrive</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Database Integrations (beta)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Database Integrations (beta)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/neon/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Neon</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/planetscale/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">PlanetScale</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/supabase/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Supabase</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/turso/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Turso</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/upstash/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upstash</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/databases/native-integrations/xata/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Xata</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Testing</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/testing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Testing</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/local-development/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Local development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/unit-testing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Unit testing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/integration-testing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Integration testing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/debugging-tools/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Debugging tools</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Vitest integration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Vitest integration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/get-started/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/get-started/write-your-first-test/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Write your first test</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrate from Miniflare 2&#39;s test environments</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrate from unstable_dev</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/recipes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Recipes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/test-apis/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Test APIs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/isolation-and-concurrency/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Isolation and concurrency</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/testing/vitest-integration/known-issues/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Known issues</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Observability</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/observability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Observability</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/baselime-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Baselime integration (beta)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Errors and exceptions</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Logging</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/observability/logging/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logging</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/logging/logpush/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logpush</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/logging/real-time-logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Real-time logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/logging/tail-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tail Workers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/metrics-and-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics and analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/sentry-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sentry integration (beta)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/observability/source-maps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Source maps and stack traces</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Wrangler</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/wrangler/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/install-and-update/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Install/Update Wrangler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/bundling/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bundling</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/commands/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Commands</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/custom-builds/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom builds</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/deprecations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deprecations</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/environments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Environments</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Migrations</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrations</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Migrate from Wrangler v1 to v2</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrate from Wrangler v1 to v2</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/eject-webpack/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">1. Migrate webpack projects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/update-v1-to-v2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">2. Update to Wrangler v2</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Wrangler v1 (legacy)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler v1 (legacy)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="4" style="--depth:4"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/install-update/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Install / Update</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Authentication</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Commands</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/v1-to-v2/wrangler-legacy/webpack/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Webpack</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/migration/update-v2-to-v3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrate from Wrangler v2 to v3</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/ci-cd/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Run in CI/CD</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/system-environment-variables/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">System environment variables</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Languages</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Languages</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: JavaScript</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/javascript/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">JavaScript</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/examples/?languages=JavaScript"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: TypeScript</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/typescript/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TypeScript</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/examples/?languages=TypeScript"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Python</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/python/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Python</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/how-python-workers-work/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How Python Workers Work</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/stdlib/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Standard Library</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/ffi/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Foreign Function Interface (FFI)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Packages</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/python/packages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Packages</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/packages/fastapi/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FastAPI</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/python/packages/langchain/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Langchain</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Rust</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/languages/rust/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rust</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/languages/rust/crates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Supported crates</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/pricing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Changelog</span>
+    </button><a aria-current="page" class="DocsSidebar--nav-link"  href="/workers/platform/changelog/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/changelog/historical-changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers (Historic)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/changelog/wrangler/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/limits/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/betas/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Betas</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/known-issues/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Known issues</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/cloudflare-for-platforms/workers-for-platforms/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers for Platforms</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/reference/how-the-cache-works/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How the Cache works</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/reference/how-workers-works/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How Workers works</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/reference/migrate-to-module-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrate from Service Workers to ES Modules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/reference/protocols/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Protocols</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/reference/security-model/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security model</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/glossary/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/ai/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AI Assistant</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers/platform/changelog/_index.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--tools-icon-item">
+    <div class="Tooltip---root">
+      <div class="DocsToolbar--tools-icon-item-content">
+        <a class="Link Link-without-underline" href="/workers/platform/changelog/index.xml" target="_blank">
+          <svg viewBox="0 0 485 560" fill="currentColor" role="img" aria-labelledby="title-1234" xmlns="http://www.w3.org/2000/svg">
+            <title id="title-1234">RSS icon</title>
+            <path
+              d="M0 64C0 46.3 14.3 32 32 32c229.8 0 416 186.2 416 416c0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96C14.3 96 0 81.7 0 64zM128 416c0 35.3-28.7 64-64 64s-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64zM32 160c159.1 0 288 128.9 288 288c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224c-17.7 0-32-14.3-32-32s14.3-32 32-32z">
+            </path>
+          </svg>
+        </a>
+      </div>
+
+      <span class="Tooltip" role="tooltip" position="bottom-end">
+        View RSS feed
+      </span>
+    </div>
+  </div>
+
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Workers</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers/platform/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Platform</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers/platform/changelog/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Changelog</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="workers-changelog">Workers Changelog</h1><!-- Actual content lives in /data/changelogs/workers.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<h2 id="2024-07-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-07-19">&#8203;​</a>
+    </span>
+    <span>2024-07-19</span>
+  </h2>
+<ul>
+<li>Workers with the <a href=/workers/runtime-apis/bindings/mtls/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">mTLS</span></a> binding now support <a href=/workers/configuration/versions-and-deployments/gradual-deployments/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Gradual Deployments</span></a>.</li>
+</ul>
+<h2 id="2024-07-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-07-11">&#8203;​</a>
+    </span>
+    <span>2024-07-11</span>
+  </h2>
+<ul>
+<li>Added community contributed tutorial on how to create <a href=/developer-spotlight/tutorials/custom-access-control-for-files/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">custom access control for files in R2 using D1 and Workers</span></a>.</li>
+<li>Added community contributed tutorial on how to <a href=/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">send form submissions using Astro and Resend</span></a>.</li>
+<li>Added community contributed tutorial on how to <a href=/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">create a sitemap from Sanity CMS with Workers</span></a>.</li>
+</ul>
+<h2 id="2024-07-01">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-07-01">&#8203;​</a>
+    </span>
+    <span>2024-07-01</span>
+  </h2>
+<ul>
+<li>When using <a href=/workers/configuration/versions-and-deployments/gradual-deployments/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Gradual Deployments</span></a>, you can now use <a href=/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">version overrides</span></a> to send a request to a specific version of your Worker.</li>
+</ul>
+<h2 id="2024-06-24">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-24">&#8203;​</a>
+    </span>
+    <span>2024-06-24</span>
+  </h2>
+<ul>
+<li><a href=/durable-objects/best-practices/error-handling class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Exceptions</span></a> thrown from Durable Object internal operations and tunneled to the caller may now be populated with a <code>.retryable: true</code> property if the exception was likely due to a transient failure, or populated with an <code>.overloaded: true</code> property if the exception was due to <a href=/durable-objects/observability/troubleshooting/#durable-object-is-overloaded class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">overload</span></a>.</li>
+</ul>
+<h2 id="2024-06-20">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-20">&#8203;​</a>
+    </span>
+    <span>2024-06-20</span>
+  </h2>
+<ul>
+<li>We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the <a href="/api/operations/worker-deployments-create-deployment" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Deployments API</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a> where the value of a secret is different than the currently deployed version. A <code>?force=true</code> query parameter can be specified to proceed with the rollback.</li>
+</ul>
+<h2 id="2024-06-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-19">&#8203;​</a>
+    </span>
+    <span>2024-06-19</span>
+  </h2>
+<ul>
+<li>When using <a href=/workers/runtime-apis/nodejs/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>nodejs_compat</code> compatibility flag</span></a>, the <code>buffer</code> module now has an implementation of <code>isAscii()</code> and <code>isUtf8()</code> methods.</li>
+<li>Fixed a bug where exceptions propagated from <a href=/workers/runtime-apis/rpc class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">JS RPC</span></a> calls to Durable Objects would lack the <code>.remote</code> property that exceptions from <code>fetch()</code> calls to Durable Objects have.</li>
+</ul>
+<h2 id="2024-06-12">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-12">&#8203;​</a>
+    </span>
+    <span>2024-06-12</span>
+  </h2>
+<ul>
+<li>Blob and Body objects now include a new <code>bytes()</code> method, reflecting <a href="https://w3c.github.io/FileAPI/#bytes-method-algo" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">recent</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> <a href="https://fetch.spec.whatwg.org/#dom-body-bytes" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">additions</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to web standards.</li>
+</ul>
+<h2 id="2024-05-17">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-05-17">&#8203;​</a>
+    </span>
+    <span>2024-05-17</span>
+  </h2>
+<ul>
+<li>Updated v8 to version 12.6.</li>
+</ul>
+<h2 id="2024-05-15">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-05-15">&#8203;​</a>
+    </span>
+    <span>2024-05-15</span>
+  </h2>
+<ul>
+<li>The new <a href=/workers/configuration/compatibility-dates/#use-standard-url-parsing-in-fetch class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>fetch_standard_url</code> compatibility flag</span></a> will become active by default on June 3rd, 2024 and ensures that URLs passed into the <code>fetch(...)</code> API, the <code>new Request(...)</code> constructor, and redirected requests will be parsed using the standard WHATWG URL parser.</li>
+<li>DigestStream is now more efficient and exposes a new <code>bytesWritten</code> property that indicates that number of bytes written to the digest.</li>
+</ul>
+<h2 id="2024-05-13">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-05-13">&#8203;​</a>
+    </span>
+    <span>2024-05-13</span>
+  </h2>
+<ul>
+<li>Updated v8 to version 12.5.</li>
+<li>A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new <a href=/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>blob_standard_mime_type</code> compatibility flag</span></a>.</li>
+</ul>
+<h2 id="2024-05-03">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-05-03">&#8203;​</a>
+    </span>
+    <span>2024-05-03</span>
+  </h2>
+<ul>
+<li>Fixed RPC to/from Durable Objects not honoring the output gate.</li>
+<li>The <code>internal_stream_byob_return_view</code> compatibility flag can be used to improve the standards compliance of the <code>ReadableStreamBYOBReader</code> implementation when working with BYOB streams provided by the runtime (like in <code>response.body</code> or <code>request.body</code>). The flag ensures that the final read result will always include a <code>value</code> field whose value is set to an empty <code>Uint8Array</code> whose underlying <code>ArrayBuffer</code> is the same memory allocation as the one passed in on the call to <code>read()</code>.</li>
+<li>The Web platform standard <code>reportError(err)</code> global API is now available in workers. The reported error will first be emitted as an &rsquo;error&rsquo; event on the global scope then reported in both the console output and tail worker exceptions by default.</li>
+</ul>
+<h2 id="2024-04-26">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-26">&#8203;​</a>
+    </span>
+    <span>2024-04-26</span>
+  </h2>
+<ul>
+<li>Updated v8 to version 12.4.</li>
+</ul>
+<h2 id="2024-04-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-11">&#8203;​</a>
+    </span>
+    <span>2024-04-11</span>
+  </h2>
+<ul>
+<li>Improve Streams API spec compliance by exposing <code>desiredSize</code> and other properties on stream class prototypes</li>
+<li>The new <code>URL.parse(...)</code> method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.</li>
+<li>R2 bindings objects now have a <code>storageClass</code> option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.</li>
+</ul>
+<h2 id="2024-04-05">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-05">&#8203;​</a>
+    </span>
+    <span>2024-04-05</span>
+  </h2>
+<ul>
+<li>A new <a href=/workers/runtime-apis/rpc class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">JavaScript-native remote procedure call (RPC) API</span></a> is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.</li>
+</ul>
+<h2 id="2024-04-04">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-04">&#8203;​</a>
+    </span>
+    <span>2024-04-04</span>
+  </h2>
+<ul>
+<li>There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API <a href=/workers/runtime-apis/cache/#put class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>put()</code></span></a> per request. Other <a href=/workers/platform/limits/#cache-api-limits class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cache API Limits</span></a> continue to apply.</li>
+<li>The Web standard <code>ReadableStream.from()</code> API is now implemented. The API enables creating a <code>ReadableStream</code> from a either a sync or async iterable.</li>
+</ul>
+<h2 id="2024-04-03">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-03">&#8203;​</a>
+    </span>
+    <span>2024-04-03</span>
+  </h2>
+<ul>
+<li>When the <a href=/workers/configuration/compatibility-dates/#brotli-content-encoding-support class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>brotli_content_encoding</code></span></a> compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Brotli</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> compression algorithm. Refer to <a href=/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">this docs section</span></a> for more detail.</li>
+</ul>
+<h2 id="2024-04-02">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-02">&#8203;​</a>
+    </span>
+    <span>2024-04-02</span>
+  </h2>
+<ul>
+<li>You can now <a href=/workers/languages/python class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">write Workers in Python</span></a></li>
+</ul>
+<h2 id="2024-04-01">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-04-01">&#8203;​</a>
+    </span>
+    <span>2024-04-01</span>
+  </h2>
+<ul>
+<li>The new <a href=/workers/configuration/compatibility-dates/#handling-custom-thenables class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>unwrap_custom_thenables</code> compatibility flag</span></a> enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the <code>ctx.waitUntil(...)</code> method).</li>
+<li>TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.</li>
+<li>The <a href=/workers/runtime-apis/nodejs/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>nodejs_compat</code> compatibility flag</span></a> now includes an implementation of the <a href="https://nodejs.org/api/test.html#class-mocktracker" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>MockTracker</code> API from <code>node:test</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. This is not an implementation of the full <code>node:test</code> module, and mock timers are currently not included.</li>
+<li>Exceptions reported to <a href=/workers/observability/logging/tail-workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Tail Workers</span></a> now include a &ldquo;stack&rdquo; property containing the exception&rsquo;s stack trace, if available.</li>
+</ul>
+<h2 id="2024-03-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-03-11">&#8203;​</a>
+    </span>
+    <span>2024-03-11</span>
+  </h2>
+<ul>
+<li>Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.</li>
+<li>A new compat flag <code>fetcher_no_get_put_delete</code> removes the <code>get()</code>, <code>put()</code>, and <code>delete()</code> methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around <code>fetch()</code>, but were never documented.</li>
+<li>Updated v8 to version 12.3.</li>
+</ul>
+<h2 id="2024-02-24">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-02-24">&#8203;​</a>
+    </span>
+    <span>2024-02-24</span>
+  </h2>
+<ul>
+<li>v8 updated to version 12.2.</li>
+<li>You can now use <a href="https://v8.dev/features/iterator-helpers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Iterator helpers</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> in Workers.</li>
+<li>You can now use <a href="https://github.com/tc39/proposal-set-methods" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">new methods on <code>Set</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, such as <code>Set.intersection</code> and <code>Set.union</code>, in Workers.</li>
+</ul>
+<h2 id="2024-02-23">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-02-23">&#8203;​</a>
+    </span>
+    <span>2024-02-23</span>
+  </h2>
+<ul>
+<li>Sockets now support an <a href=/workers/runtime-apis/tcp-sockets/#socket class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>opened</code></span></a> attribute.</li>
+<li><a href=/durable-objects/api/alarms/#alarm class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Durable Object alarm handlers</span></a> now impose a maximum wall time of 15 minutes.</li>
+</ul>
+<h2 id="2023-12-04">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-12-04">&#8203;​</a>
+    </span>
+    <span>2023-12-04</span>
+  </h2>
+<ul>
+<li>The Web Platform standard <a href=/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>navigator.sendBeacon(...)</code> API</span></a> is now provided by the Workers runtime.</li>
+<li>V8 updated to 12.0.</li>
+</ul>
+<h2 id="2023-10-30">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-30">&#8203;​</a>
+    </span>
+    <span>2023-10-30</span>
+  </h2>
+<ul>
+<li>A new usage model called <a href=/workers/platform/pricing/#workers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Standard</span></a> is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the <a href="https://blog.cloudflare.com/workers-pricing-scale-to-zero/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">blog post</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for more information.</li>
+<li>The usage model set in a script&rsquo;s wrangler.toml will be ignored after an account has opted-in to <a href=/workers/platform/pricing/#workers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Standard</span></a> pricing. It must be configured through the dashboard (Workers &amp; Pages &gt; Select your Worker &gt; Settings &gt; Usage Model).</li>
+<li>Workers and Pages Functions on the Standard usage model can set custom <a href=/workers/wrangler/configuration/#limits class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">CPU limits</span></a> for their Workers</li>
+</ul>
+<h2 id="2023-10-20">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-20">&#8203;​</a>
+    </span>
+    <span>2023-10-20</span>
+  </h2>
+<ul>
+<li>Added the <a href=/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>crypto_preserve_public_exponent</code></span></a>
+compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+the WebCrypto API.</li>
+</ul>
+<h2 id="2023-10-18">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-18">&#8203;​</a>
+    </span>
+    <span>2023-10-18</span>
+  </h2>
+<ul>
+<li>The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+Cron Triggers across all Workers still apply.</li>
+</ul>
+<h2 id="2023-10-12">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-12">&#8203;​</a>
+    </span>
+    <span>2023-10-12</span>
+  </h2>
+<ul>
+<li>A <a href=/workers/runtime-apis/tcp-sockets/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">TCP Socket</span></a>&rsquo;s WritableStream now ensures the connection has opened before resolving the promise returned by <code>close</code>.</li>
+</ul>
+<h2 id="2023-10-09">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-09">&#8203;​</a>
+    </span>
+    <span>2023-10-09</span>
+  </h2>
+<ul>
+<li>The Web Platform standard <a href="https://dom.spec.whatwg.org/#interface-customevent" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>CustomEvent</code> class</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> is now available in Workers.</li>
+<li>Fixed a bug in the WebCrypto API where the <code>publicExponent</code> field of the algorithm of RSA keys would have the wrong type. Use the <a href=/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>crypto_preserve_public_exponent</code> compatibility flag</span></a> to enable the new behavior.</li>
+</ul>
+<h2 id="2023-09-14">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-09-14">&#8203;​</a>
+    </span>
+    <span>2023-09-14</span>
+  </h2>
+<ul>
+<li>An implementation of the <a href=/workers/runtime-apis/nodejs/crypto/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>node:crypto</code></span></a>
+API from Node.js is now available when the <a href=/workers/runtime-apis/nodejs/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>nodejs_compat</code> compatibility flag</span></a>
+is enabled.</li>
+</ul>
+<h2 id="2023-07-14">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-07-14">&#8203;​</a>
+    </span>
+    <span>2023-07-14</span>
+  </h2>
+<ul>
+<li>An implementation of the <a href="https://nodejs.org/api/util.html#class-utilmimetype" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>util.MIMEType</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+API from Node.js is now available when the <a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>nodejs_compat</code> compatibility flag</span></a>
+is enabled.</li>
+</ul>
+<h2 id="2023-07-07">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-07-07">&#8203;​</a>
+    </span>
+    <span>2023-07-07</span>
+  </h2>
+<ul>
+<li>An implementation of the <a href=/workers/runtime-apis/nodejs/process class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>process.env</code></span></a> API from Node.js is now available when using the <code>nodejs_compat</code> compatibility flag.</li>
+<li>An implementation of the <a href=/workers/runtime-apis/nodejs/diagnostics-channel class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>diagnostics_channel</code></span></a> API from Node.js is now available when using the <code>nodejs_compat</code> compatibility flag.</li>
+</ul>
+<h2 id="2023-06-22">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-06-22">&#8203;​</a>
+    </span>
+    <span>2023-06-22</span>
+  </h2>
+<ul>
+<li>Added the <a href=/workers/configuration/compatibility-dates/#strict-crypto-error-checking class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>strict_crypto_checks</code></span></a> compatibility flag to enable additional <a href=/workers/runtime-apis/web-crypto/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Web Crypto API</span></a> error and security checking.</li>
+<li>Fixes regression in the <a href=/workers/runtime-apis/tcp-sockets/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">TCP Sockets API</span></a> where <code>connect(&quot;google.com:443&quot;)</code> would fail with a <code>TypeError</code>.</li>
+</ul>
+<h2 id="2023-06-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-06-19">&#8203;​</a>
+    </span>
+    <span>2023-06-19</span>
+  </h2>
+<ul>
+<li>The <a href=/workers/runtime-apis/tcp-sockets/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">TCP Sockets API</span></a> now reports clearer errors when a connection cannot be established.</li>
+<li>Updated V8 to 11.5.</li>
+</ul>
+<h2 id="2023-06-09">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-06-09">&#8203;​</a>
+    </span>
+    <span>2023-06-09</span>
+  </h2>
+<ul>
+<li><code>AbortSignal.any()</code> is now available.</li>
+<li>Updated V8 to 11.4.</li>
+<li>Following an update to the <a href="https://url.spec.whatwg.org/#interface-urlsearchparams" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">WHATWG URL spec</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, the <code>delete()</code> and <code>has()</code> methods of the <code>URLSearchParams</code> class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new <code>urlsearchparams_delete_has_value_arg</code> and <a href=/workers/configuration/compatibility-dates/#new-url-parser-implementation class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>url_standard</code></span></a> compatibility flags.</li>
+<li>Added the <a href=/workers/configuration/compatibility-dates/#strict-compression-error-checking class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>strict_compression_checks</code></span></a> compatibility flag for additional <a href=/workers/runtime-apis/web-standards/#compression-streams class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>DecompressionStream</code></span></a> error checking.</li>
+</ul>
+<h2 id="2023-05-26">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-05-26">&#8203;​</a>
+    </span>
+    <span>2023-05-26</span>
+  </h2>
+<ul>
+<li>A new <a href=/durable-objects/api/websockets/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Hibernatable WebSockets API</span></a>
+(beta) has been added to <a href=/durable-objects/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Durable Objects</span></a>. The Hibernatable
+WebSockets API allows a Durable Object that is not currently running an event
+handler (for example, processing a WebSocket message or alarm) to be removed from
+memory while keeping its WebSockets connected (“hibernation”). A Durable Object
+that hibernates will not incur billable Duration (GB-sec) charges.</li>
+</ul>
+<h2 id="2023-05-16">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-05-16">&#8203;​</a>
+    </span>
+    <span>2023-05-16</span>
+  </h2>
+<ul>
+<li>The <a href=/workers/runtime-apis/tcp-sockets/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">new <code>connect()</code> method</span></a> allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the <a href=/workers/reference/protocols/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">new Protocols documentation</span></a>.</li>
+<li>We have added new <a href=/workers/databases/native-integrations/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">native database integrations</span></a> for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.</li>
+<li>You can now also connect directly to databases over TCP from a Worker, starting with <a href=/hyperdrive/configuration/connect-to-postgres/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">PostgreSQL</span></a>. Support for PostgreSQL is based on the popular <code>pg</code> driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.</li>
+<li>The <a href=/r2/data-migration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">R2 Migrator</span></a> (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.</li>
+</ul>
+<h2 id="2023-05-15">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-05-15">&#8203;​</a>
+    </span>
+    <span>2023-05-15</span>
+  </h2>
+<ul>
+<li><a href=/workers/ai/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cursor</span></a>, an experimental AI assistant, trained to answer
+questions about Cloudflare&rsquo;s Developer Platform, is now available to preview!
+Cursor can answer questions about Workers and the Cloudflare Developer Platform,
+and is itself built on Workers. You can read more about Cursor in the <a href="https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">announcement
+blog</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ul>
+<h2 id="2023-05-12">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-05-12">&#8203;​</a>
+    </span>
+    <span>2023-05-12</span>
+  </h2>
+<ul>
+<li>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/now" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>performance.now()</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>performance.timeOrigin</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+APIs can now be used in Cloudflare Workers. Just like <code>Date.now()</code>, for <a href=/workers/reference/security-model/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">security
+reasons</span></a> time only advances after I/O.</li>
+</ul>
+<h2 id="2023-05-05">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-05-05">&#8203;​</a>
+    </span>
+    <span>2023-05-05</span>
+  </h2>
+<ul>
+<li>The new <code>nodeJsCompatModule</code> type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as <code>process</code> and <code>Buffer</code> will be present, and <code>require('...')</code> can be used to load Node.js built-ins without the <code>node:</code> specifier prefix.</li>
+<li>Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.</li>
+</ul>
+<h2 id="2023-04-28">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-04-28">&#8203;​</a>
+    </span>
+    <span>2023-04-28</span>
+  </h2>
+<ul>
+<li>The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.</li>
+<li>The global <code>connect</code> method has been moved to a <code>cloudflare:sockets</code> module.</li>
+</ul>
+<h2 id="2023-04-14">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-04-14">&#8203;​</a>
+    </span>
+    <span>2023-04-14</span>
+  </h2>
+<ul>
+<li>No externally-visible changes this week.</li>
+</ul>
+<h2 id="2023-04-10">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-04-10">&#8203;​</a>
+    </span>
+    <span>2023-04-10</span>
+  </h2>
+<ul>
+<li><code>URL.canParse(...)</code> is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.</li>
+<li>The Workers-specific <code>IdentityTransformStream</code> and <code>FixedLengthStream</code> classes now support specifying a <code>highWaterMark</code> for the writable-side that is used for backpressure signaling using the standard <code>writer.desiredSize</code>/<code>writer.ready</code> mechanisms.</li>
+</ul>
+<h2 id="2023-03-24">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-03-24">&#8203;​</a>
+    </span>
+    <span>2023-03-24</span>
+  </h2>
+<ul>
+<li>Fixed a bug in Wrangler tail and live logs on the dashboard that
+prevented the Administrator Read-Only and Workers Tail Read roles from successfully
+tailing Workers.</li>
+</ul>
+<h2 id="2023-03-09">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-03-09">&#8203;​</a>
+    </span>
+    <span>2023-03-09</span>
+  </h2>
+<ul>
+<li>No externally-visible changes.</li>
+</ul>
+<h2 id="2023-03-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-03-06">&#8203;​</a>
+    </span>
+    <span>2023-03-06</span>
+  </h2>
+<ul>
+<li><a href=/workers/observability/logging/logpush/#limits class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Logpush</span></a> now supports
+300 characters per log line. This is an increase from the previous limit of 150
+characters per line.</li>
+</ul>
+<h2 id="2023-02-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-02-06">&#8203;​</a>
+    </span>
+    <span>2023-02-06</span>
+  </h2>
+<ul>
+<li>Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.</li>
+<li>Previously, an error would be thrown when trying to access unimplemented standard <code>Request</code> and <code>Response</code> properties. Now those will be left as <code>undefined</code>.</li>
+</ul>
+<h2 id="2023-01-31">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-01-31">&#8203;​</a>
+    </span>
+    <span>2023-01-31</span>
+  </h2>
+<ul>
+<li>The <a href=/workers/runtime-apis/request/#incomingrequestcfproperties class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>request.cf</code></span></a> object now includes two additional properties, <code>tlsClientHelloLength</code> and <code>tlsClientRandom</code>.</li>
+</ul>
+<h2 id="2023-01-13">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-01-13">&#8203;​</a>
+    </span>
+    <span>2023-01-13</span>
+  </h2>
+<ul>
+<li>Durable Objects can now use jurisdictions with <code>idFromName</code> via a new subnamespace API.</li>
+<li>V8 updated to 10.9.</li>
+</ul>
+
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/workers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/workers/40" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/serverless/what-is-serverless/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers/platform/changelog/_index.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

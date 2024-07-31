@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight</title>
+  <meta name="title" content="Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight" />
+  <meta property="og:description" content="E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/" />
+
+  <meta name="twitter:title" content="Recommend products on e-commerce sites using Workers AI and Stripe · Cloudflare Developer spotlight" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="developer-spotlight"><meta name="algolia_product_filter" content="Developer spotlight"><meta name="pcx_tags" content="AI,Hono"><meta name="algolia_page_title" content="Recommend products on e-commerce sites using Workers AI and Stripe">
+  <meta name="pcx_word_count" content="3000"><meta name="pcx_last_modified" content="23"><meta name="pcx_last_reviewed" content="52" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"developer-spotlight"}</script>
+  <meta name="docsearch:product" content="developer-spotlight" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 44ddfce5ccdcfeabb82c85c8cd1f4a46" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 44ddfce5ccdcfeabb82c85c8cd1f4a46">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/developer-spotlight/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Developer spotlight logo"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M32.022 32.9121C33.9009 32.9121 35.7376 32.3549 37.2999 31.3111C38.8622 30.2672 40.0798 28.7835 40.7988 27.0476C41.5179 25.3117 41.706 23.4016 41.3394 21.5588C40.9729 19.7159 40.0681 18.0232 38.7395 16.6946C37.4109 15.366 35.7182 14.4612 33.8753 14.0947C32.0325 13.7281 30.1224 13.9162 28.3865 14.6353C26.6506 15.3543 25.1669 16.5719 24.123 18.1342C23.0792 19.6965 22.522 21.5332 22.522 23.4121C22.5241 25.931 23.5257 28.3462 25.3068 30.1273C27.0879 31.9084 29.5031 32.91 32.022 32.9121ZM32.022 17.9171C33.1098 17.9171 34.1732 18.2397 35.0776 18.844C35.9821 19.4484 36.687 20.3074 37.1033 21.3124C37.5196 22.3173 37.6285 23.4232 37.4163 24.4901C37.2041 25.557 36.6803 26.537 35.9111 27.3062C35.1419 28.0754 34.1619 28.5992 33.095 28.8114C32.0281 29.0237 30.9222 28.9147 29.9172 28.4985C28.9122 28.0822 28.0533 27.3772 27.4489 26.4728C26.8446 25.5683 26.522 24.5049 26.522 23.4171C26.522 21.9584 27.1014 20.5595 28.1329 19.528C29.1644 18.4966 30.5633 17.9171 32.022 17.9171Z"/><path d="M12.052 37.0571C13.4365 37.0571 14.7898 36.6466 15.941 35.8774C17.0921 35.1082 17.9893 34.015 18.5191 32.7359C19.049 31.4568 19.1876 30.0493 18.9175 28.6915C18.6474 27.3336 17.9807 26.0863 17.0017 25.1074C16.0228 24.1284 14.7755 23.4617 13.4176 23.1916C12.0598 22.9215 10.6523 23.0601 9.3732 23.59C8.09412 24.1198 7.00087 25.017 6.2317 26.1681C5.46253 27.3193 5.05199 28.6726 5.05199 30.0571C5.05384 31.9131 5.79193 33.6925 7.10429 35.0048C8.41664 36.3172 10.196 37.0553 12.052 37.0571ZM12.052 27.0571C12.6453 27.0571 13.2254 27.2331 13.7187 27.5627C14.212 27.8923 14.5966 28.3609 14.8236 28.9091C15.0507 29.4572 15.1101 30.0604 14.9943 30.6424C14.8786 31.2243 14.5929 31.7589 14.1733 32.1784C13.7538 32.598 13.2192 32.8837 12.6373 32.9995C12.0553 33.1152 11.4521 33.0558 10.9039 32.8288C10.3558 32.6017 9.88722 32.2172 9.55758 31.7238C9.22793 31.2305 9.05199 30.6505 9.05199 30.0571C9.05278 29.262 9.3692 28.4997 9.93173 27.9377C10.4943 27.3758 11.2569 27.0601 12.052 27.0601V27.0571Z"/><path d="M54.015 38.1001H49.982C48.4967 38.0988 47.0302 38.4317 45.691 39.0741C44.3822 37.5189 42.7492 36.2686 40.9064 35.4108C39.0637 34.5529 37.0556 34.1084 35.023 34.1081H28.977C26.948 34.1085 24.9435 34.5516 23.1033 35.4066C21.2632 36.2615 19.6318 37.5077 18.323 39.0581C16.9884 38.4258 15.5298 38.0985 14.053 38.1001H10.021C7.37431 38.103 4.83683 39.1556 2.96515 41.0269C1.09348 42.8982 0.0404281 45.4354 0.0369873 48.0821L2.03699 50.0821H62L64 48.0821C63.9968 45.4352 62.9437 42.8976 61.0718 41.0262C59.1998 39.1548 56.6619 38.1025 54.015 38.1001ZM10.021 42.1001H14.053C14.7774 42.1037 15.4951 42.2393 16.171 42.5001C15.6745 43.6429 15.3344 44.8474 15.16 46.0811H4.38099C4.79602 44.9171 5.56069 43.9098 6.57032 43.1971C7.57995 42.4845 8.78518 42.1013 10.021 42.1001ZM19.201 46.0831C19.6652 43.8325 20.8909 41.8106 22.6715 40.358C24.4522 38.9054 26.679 38.1109 28.977 38.1081H35.023C37.321 38.1106 39.548 38.9049 41.3288 40.3573C43.1096 41.8098 44.3355 43.8315 44.8 46.0821L19.201 46.0831ZM48.84 46.0831C48.6666 44.853 48.3283 43.6518 47.834 42.5121C48.5184 42.2432 49.2467 42.1035 49.982 42.1001H54.015C55.2509 42.1014 56.4562 42.4848 57.4658 43.1979C58.4753 43.9109 59.2396 44.9187 59.654 46.0831H48.84Z"/><path d="M52.014 37.0571C53.3985 37.0571 54.7518 36.6466 55.903 35.8774C57.0541 35.1082 57.9513 34.015 58.4811 32.7359C59.011 31.4568 59.1496 30.0493 58.8795 28.6915C58.6094 27.3336 57.9427 26.0863 56.9637 25.1074C55.9848 24.1284 54.7375 23.4617 53.3796 23.1916C52.0218 22.9215 50.6143 23.0601 49.3352 23.59C48.0561 24.1198 46.9629 25.017 46.1937 26.1681C45.4245 27.3193 45.014 28.6726 45.014 30.0571C45.0158 31.9131 45.7539 33.6925 47.0663 35.0048C48.3786 36.3172 50.158 37.0553 52.014 37.0571ZM52.014 27.0571C52.6073 27.0571 53.1874 27.2331 53.6807 27.5627C54.174 27.8923 54.5586 28.3609 54.7856 28.9091C55.0127 29.4572 55.0721 30.0604 54.9563 30.6424C54.8406 31.2243 54.5549 31.7589 54.1353 32.1784C53.7158 32.598 53.1812 32.8837 52.5993 32.9995C52.0173 33.1152 51.4141 33.0558 50.8659 32.8288C50.3178 32.6017 49.8492 32.2172 49.5196 31.7238C49.1899 31.2305 49.014 30.6505 49.014 30.0571C49.0148 29.262 49.3312 28.4997 49.8937 27.9377C50.4562 27.3758 51.2189 27.0601 52.014 27.0601V27.0571Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:19">Developer spotlight</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - afc85ddc5244bfc6b4ccdc41e8efda8c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - afc85ddc5244bfc6b4ccdc41e8efda8c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/developer-spotlight/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Developer spotlight logo"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M32.022 32.9121C33.9009 32.9121 35.7376 32.3549 37.2999 31.3111C38.8622 30.2672 40.0798 28.7835 40.7988 27.0476C41.5179 25.3117 41.706 23.4016 41.3394 21.5588C40.9729 19.7159 40.0681 18.0232 38.7395 16.6946C37.4109 15.366 35.7182 14.4612 33.8753 14.0947C32.0325 13.7281 30.1224 13.9162 28.3865 14.6353C26.6506 15.3543 25.1669 16.5719 24.123 18.1342C23.0792 19.6965 22.522 21.5332 22.522 23.4121C22.5241 25.931 23.5257 28.3462 25.3068 30.1273C27.0879 31.9084 29.5031 32.91 32.022 32.9121ZM32.022 17.9171C33.1098 17.9171 34.1732 18.2397 35.0776 18.844C35.9821 19.4484 36.687 20.3074 37.1033 21.3124C37.5196 22.3173 37.6285 23.4232 37.4163 24.4901C37.2041 25.557 36.6803 26.537 35.9111 27.3062C35.1419 28.0754 34.1619 28.5992 33.095 28.8114C32.0281 29.0237 30.9222 28.9147 29.9172 28.4985C28.9122 28.0822 28.0533 27.3772 27.4489 26.4728C26.8446 25.5683 26.522 24.5049 26.522 23.4171C26.522 21.9584 27.1014 20.5595 28.1329 19.528C29.1644 18.4966 30.5633 17.9171 32.022 17.9171Z"/><path d="M12.052 37.0571C13.4365 37.0571 14.7898 36.6466 15.941 35.8774C17.0921 35.1082 17.9893 34.015 18.5191 32.7359C19.049 31.4568 19.1876 30.0493 18.9175 28.6915C18.6474 27.3336 17.9807 26.0863 17.0017 25.1074C16.0228 24.1284 14.7755 23.4617 13.4176 23.1916C12.0598 22.9215 10.6523 23.0601 9.3732 23.59C8.09412 24.1198 7.00087 25.017 6.2317 26.1681C5.46253 27.3193 5.05199 28.6726 5.05199 30.0571C5.05384 31.9131 5.79193 33.6925 7.10429 35.0048C8.41664 36.3172 10.196 37.0553 12.052 37.0571ZM12.052 27.0571C12.6453 27.0571 13.2254 27.2331 13.7187 27.5627C14.212 27.8923 14.5966 28.3609 14.8236 28.9091C15.0507 29.4572 15.1101 30.0604 14.9943 30.6424C14.8786 31.2243 14.5929 31.7589 14.1733 32.1784C13.7538 32.598 13.2192 32.8837 12.6373 32.9995C12.0553 33.1152 11.4521 33.0558 10.9039 32.8288C10.3558 32.6017 9.88722 32.2172 9.55758 31.7238C9.22793 31.2305 9.05199 30.6505 9.05199 30.0571C9.05278 29.262 9.3692 28.4997 9.93173 27.9377C10.4943 27.3758 11.2569 27.0601 12.052 27.0601V27.0571Z"/><path d="M54.015 38.1001H49.982C48.4967 38.0988 47.0302 38.4317 45.691 39.0741C44.3822 37.5189 42.7492 36.2686 40.9064 35.4108C39.0637 34.5529 37.0556 34.1084 35.023 34.1081H28.977C26.948 34.1085 24.9435 34.5516 23.1033 35.4066C21.2632 36.2615 19.6318 37.5077 18.323 39.0581C16.9884 38.4258 15.5298 38.0985 14.053 38.1001H10.021C7.37431 38.103 4.83683 39.1556 2.96515 41.0269C1.09348 42.8982 0.0404281 45.4354 0.0369873 48.0821L2.03699 50.0821H62L64 48.0821C63.9968 45.4352 62.9437 42.8976 61.0718 41.0262C59.1998 39.1548 56.6619 38.1025 54.015 38.1001ZM10.021 42.1001H14.053C14.7774 42.1037 15.4951 42.2393 16.171 42.5001C15.6745 43.6429 15.3344 44.8474 15.16 46.0811H4.38099C4.79602 44.9171 5.56069 43.9098 6.57032 43.1971C7.57995 42.4845 8.78518 42.1013 10.021 42.1001ZM19.201 46.0831C19.6652 43.8325 20.8909 41.8106 22.6715 40.358C24.4522 38.9054 26.679 38.1109 28.977 38.1081H35.023C37.321 38.1106 39.548 38.9049 41.3288 40.3573C43.1096 41.8098 44.3355 43.8315 44.8 46.0821L19.201 46.0831ZM48.84 46.0831C48.6666 44.853 48.3283 43.6518 47.834 42.5121C48.5184 42.2432 49.2467 42.1035 49.982 42.1001H54.015C55.2509 42.1014 56.4562 42.4848 57.4658 43.1979C58.4753 43.9109 59.2396 44.9187 59.654 46.0831H48.84Z"/><path d="M52.014 37.0571C53.3985 37.0571 54.7518 36.6466 55.903 35.8774C57.0541 35.1082 57.9513 34.015 58.4811 32.7359C59.011 31.4568 59.1496 30.0493 58.8795 28.6915C58.6094 27.3336 57.9427 26.0863 56.9637 25.1074C55.9848 24.1284 54.7375 23.4617 53.3796 23.1916C52.0218 22.9215 50.6143 23.0601 49.3352 23.59C48.0561 24.1198 46.9629 25.017 46.1937 26.1681C45.4245 27.3193 45.014 28.6726 45.014 30.0571C45.0158 31.9131 45.7539 33.6925 47.0663 35.0048C48.3786 36.3172 50.158 37.0553 52.014 37.0571ZM52.014 27.0571C52.6073 27.0571 53.1874 27.2331 53.6807 27.5627C54.174 27.8923 54.5586 28.3609 54.7856 28.9091C55.0127 29.4572 55.0721 30.0604 54.9563 30.6424C54.8406 31.2243 54.5549 31.7589 54.1353 32.1784C53.7158 32.598 53.1812 32.8837 52.5993 32.9995C52.0173 33.1152 51.4141 33.0558 50.8659 32.8288C50.3178 32.6017 49.8492 32.2172 49.5196 31.7238C49.1899 31.2305 49.014 30.6505 49.014 30.0571C49.0148 29.262 49.3312 28.4997 49.8937 27.9377C50.4562 27.3758 51.2189 27.0601 52.014 27.0601V27.0571Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:19">Developer spotlight</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Developer spotlight menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/playground" tabindex="-1">Playground</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com/#plans" tabindex="-1">Pricing</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/developer-spotlight/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item" is-active-root is-expanded><a class="DocsSidebar--nav-link"  href="/developer-spotlight/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/developer-spotlight/application-guide/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Application guide</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/developer-spotlight/tutorials/creating-a-recommendation-api.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Developer spotlight</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/tutorials/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Tutorials</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/developer-spotlight/tutorials/creating-a-recommendation-api/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Recommend products on e-commerce sites using Workers AI and Stripe</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="recommend-products-on-e-commerce-sites-using-workers-ai-and-stripe">Recommend products on e-commerce sites using Workers AI and Stripe</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2024-06-24T00:00:00&#43;00:00
+  title=2024-06-24
+>June 24, 2024</time></span>
+</div>
+<div class="author-container">
+  <div class="author-details"><a href=/developer-spotlight/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Developer Spotlight</span></a> community contribution</div>
+  <div>
+      <span class="author-details">Written by: </span>Hidetaka Okamoto</div>
+  <span class="author-details">Profile: </span><a href="https://www.linkedin.com/in/hideokamoto/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">LinkedIn</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+</div>
+
+<p>E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is &ldquo;cross-selling,&rdquo; which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.</p>
+<h2 id="goals">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#goals">&#8203;​</a>
+    </span>
+    <span>Goals</span>
+  </h2><p>In this workshop, you will develop three REST APIs.</p>
+<ol>
+<li>An API to search for information highly related to a specific product.</li>
+<li>An API to suggest products in response to user inquiries.</li>
+<li>A Webhook API to synchronize product information with external e-commerce applications.</li>
+</ol>
+<p>By developing these APIs, you will learn about the resources needed to build cross-selling and recommendation features for e-commerce sites.</p>
+<p>You will also learn how to use the following Cloudflare products:</p>
+<ul>
+<li><a href=/workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><strong>Cloudflare Workers</strong></span></a>: Execution environment for API applications</li>
+<li><a href=/vectorize/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><strong>Cloudflare Vectorize</strong></span></a>: Vector DB used for related product searches</li>
+<li><a href=/workers-ai/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><strong>Cloudflare Workers AI</strong></span></a>: Used for vectorizing data and generating recommendation texts</li>
+</ul>
+<h2 id="before-you-start">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#before-you-start">&#8203;​</a>
+    </span>
+    <span>Before you start</span>
+  </h2><p>All of the tutorials assume you have already completed the <a href=/workers/get-started/guide/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Get started guide</span></a>, which gets you set up with a Cloudflare Workers account, <a href="https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">C3</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a>.</p>
+<ol>
+<li>Sign up for a <a href="https://dash.cloudflare.com/sign-up/workers-and-pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare account</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://docs.npmjs.com/getting-started" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://nodejs.org/en/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Node.js</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ol>
+<details class="DocsMarkdown"
+  >
+    <summary>Node.js version manager</summary>
+    <div>Use a Node version manager like <a href="https://volta.sh/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Volta</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> or <a href="https://github.com/nvm-sh/nvm" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">nvm</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to avoid permission issues and change Node.js versions. <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a>, discussed later in this guide, requires a Node version of <code>16.17.0</code> or later.</div>
+</details>
+
+<h3 id="prerequisites">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#prerequisites">&#8203;​</a>
+    </span>
+    <span>Prerequisites</span>
+  </h3><p>This tutorial involves the use of several Cloudflare products. Some of these products have free tiers, while others may incur minimal charges. Please review the following billing information carefully.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Workers AI local development usage charges</div><p>Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.</p>
+</aside>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Vectorize usage charges</div><p>You will also need access to <a href=/vectorize/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Vectorize</span></a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><a href=/workers/platform/pricing/#workers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid</span></a></th>
+<th><a href=/workers/platform/pricing/#workers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Free</span></a> <sup>1</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Total queried vector dimensions</strong></td>
+<td>First 50 million queried vector dimensions / month included + $0.040 per million</td>
+<td>30 million queried vector dimensions / month</td>
+</tr>
+<tr>
+<td><strong>Total stored vector dimensions</strong></td>
+<td>First 10 million stored vector dimensions + $0.040 per million</td>
+<td>5 million stored vector dimensions</td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup> Vectorize will be available to developers on the Workers Free plan in the future.</p>
+<h3 id="calculating-vector-dimensions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#calculating-vector-dimensions">&#8203;​</a>
+    </span>
+    <span>Calculating vector dimensions</span>
+  </h3><p>To calculate your potential usage, calculate the sum of your stored + queried vectors, multiply by the dimension size, and multiply by the unit price (divided by 1 million). The formula is defined as <code>(stored vectors + queried vectors) * dimensions * ($0.040 / 1000000)</code></p>
+<ul>
+<li>For example, inserting 10,000 vectors of 768 dimensions each, and querying those 1,000 times per day (30,000 times per month) would be calculated as <code>(30000 * 768) = 23,040,000</code> queried dimensions and <code>(10000 * 768) = 7,680,000</code> stored dimensions (within the included monthly allocation)</li>
+<li>Separately, and excluding the included monthly allocation, this would be calculated as <code>(30,000+10,000) * 768 * ($0.040 / 1,000,000)</code> and sum to $1.23 per month.</li>
+</ul>
+</aside>
+
+<h2 id="1-create-a-new-worker-project">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-create-a-new-worker-project">&#8203;​</a>
+    </span>
+    <span>1. Create a new Worker project</span>
+  </h2><p>First, let&rsquo;s create a Cloudflare Workers project.</p>
+<a href="https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">C3 (create-cloudflare-cli)</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> is a command-line tool designed to help you set up and deploy new applications to Cloudflare. In addition to speed, it leverages officially developed templates for Workers and framework-specific setup guides to ensure each new application that you set up follows Cloudflare and any third-party best practices for deployment on the Cloudflare network.
+<p>To efficiently create and manage multiple APIs, let&rsquo;s use <a href="https://hono.dev" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Hono</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. Hono is an open-source application framework released by a Cloudflare Developer Advocate. It is lightweight and allows for the creation of multiple API paths, as well as efficient request and response handling.
+Open your command line interface (CLI) and run the following command:</p>
+<div class="tabs-wrapper" tab-wrapper-id="97f19a08b2f14163">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="97f19a08b2f14163">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-npm" data-id="97f19a08b2f14163">
+npm
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-yarn" data-id="97f19a08b2f14163">
+yarn
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-pnpm" data-id="97f19a08b2f14163">
+pnpm
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab tab-default " id="tab-npm-97f19a08b2f14163"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;create&#43;cloudflare%40latest&#43;cross-sell-api&#43;--&#43;--framework&#43;hono"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-yarn-97f19a08b2f14163"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;yarn&#43;create&#43;cloudflare%40latest&#43;cross-sell-api&#43;--&#43;--framework&#43;hono"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-pnpm-97f19a08b2f14163"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;pnpm&#43;create&#43;cloudflare%40latest&#43;cross-sell-api&#43;--&#43;--framework&#43;hono"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<p>If this is your first time running the <code>C3</code> command, you will be asked whether you want to install it. Confirm that the package name for installation is <code>create-cloudflare</code> and answer <code>y</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="Need&#43;to&#43;install&#43;the&#43;following&#43;packages%3A%0Acreate-cloudflare%40latest%0AOk&#43;to&#43;proceed%3F&#43;%28y%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>During the setup, you will be asked if you want to manage your project source code with <code>Git</code>. It is recommended to answer <code>Yes</code> as it helps in recording your work and rolling back changes. You can also choose <code>No</code>, which will not affect the tutorial progress.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%E2%95%B0&#43;Do&#43;you&#43;want&#43;to&#43;use&#43;git&#43;for&#43;version&#43;control%3F%0A%E2%80%8A%E2%80%8AYes&#43;%2F&#43;No"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Finally, you will be asked if you want to deploy the application to your Cloudflare account. For now, select <code>No</code> and start development locally.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%E2%95%AD&#43;Deploy&#43;with&#43;Cloudflare&#43;Step&#43;3&#43;of&#43;3%0A%E2%94%82%0A%E2%95%B0&#43;Do&#43;you&#43;want&#43;to&#43;deploy&#43;your&#43;application%3F%0A%E2%80%8A%E2%80%8AYes&#43;%2F&#43;No"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you see a message like the one below, the project setup is complete. You can open the <code>cross-sell-api</code> directory in your preferred IDE to start development.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%E2%94%9C&#43;&#43;APPLICATION&#43;CREATED&#43;&#43;Deploy&#43;your&#43;application&#43;with&#43;npm&#43;run&#43;deploy%0A%E2%94%82%0A%E2%94%82&#43;Navigate&#43;to&#43;the&#43;new&#43;directory&#43;cd&#43;cross-sell-api%0A%E2%94%82&#43;Run&#43;the&#43;development&#43;server&#43;npm&#43;run&#43;dev%0A%E2%94%82&#43;Deploy&#43;your&#43;application&#43;npm&#43;run&#43;deploy%0A%E2%94%82&#43;Read&#43;the&#43;documentation&#43;https%3A%2F%2Fdevelopers.cloudflare.com%2Fworkers%0A%E2%94%82&#43;Stuck%3F&#43;Join&#43;us&#43;at&#43;https%3A%2F%2Fdiscord.cloudflare.com%0A%E2%94%82%0A%E2%95%B0&#43;See&#43;you&#43;again&#43;soon%21"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Cloudflare Workers applications can be developed and tested in a local environment. On your CLI, change directory into your newly created Workers and run <code>npx wrangler dev</code> to start the application. Using <code>Wrangler</code>, the application will start, and you&rsquo;ll see a URL beginning with <code>localhost</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="&#43;%E2%9B%85%EF%B8%8F&#43;wrangler&#43;3.60.1%0A-------------------%0A%0A%E2%8E%94&#43;Starting&#43;local&#43;server...%0A%5Bwrangler%3Ainf%5D&#43;Ready&#43;on&#43;http%3A%2F%2Flocalhost%3A8787%0A%E2%95%AD%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%AE%0A%E2%94%82&#43;%5Bb%5D&#43;open&#43;a&#43;browser%2C&#43;%5Bd%5D&#43;open&#43;Devtools%2C&#43;%5Bl%5D&#43;turn&#43;off&#43;local&#43;mode%2C&#43;%5Bc%5D&#43;clear&#43;console%2C&#43;%5Bx%5D&#43;to&#43;exit&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%E2%94%82%0A%E2%95%B0%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%AF"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You can send a request to the API using the <code>curl</code> command. If you see the text <code>Hello Hono!</code>, the API is running correctly.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;http%3A%2F%2Flocalhost%3A8787%0AHello&#43;Hono%21"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>So far, we&rsquo;ve covered how to create a Cloudflare Worker project and introduced tools and open-source projects like the <code>C3</code> command and the <code>Hono</code> framework that streamline development with Cloudflare. Leveraging these features will help you develop applications on Cloudflare Workers more smoothly.</p>
+<h2 id="2-create-an-api-to-import-product-information">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-create-an-api-to-import-product-information">&#8203;​</a>
+    </span>
+    <span>2. Create an API to import product information</span>
+  </h2><p>Now, we will start developing the three APIs that will be used in our cross-sell system. First, let&rsquo;s create an API to synchronize product information with an existing e-commerce application. In this example, we will set up a system where product registrations in <a href="https://stripe.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Stripe</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> are synchronized with the cross-sell system.</p>
+<p>This API will receive product information sent from an external service like Stripe as a Webhook event. It will then extract the necessary information for search purposes and store it in a database for related product searches. Since vector search will be used, we also need to implement a process that converts strings to vector data using an Embedding model provided by Cloudflare Workers AI.</p>
+<p>The process flow is illustrated as follows:</p>
+<vue-component name="Mermaid" data-mermaid="sequenceDiagram%0A&#43;&#43;&#43;&#43;participant&#43;Stripe%0A%0A&#43;&#43;&#43;&#43;box&#43;Cloudflare%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;participant&#43;CF_Workers%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;participant&#43;CF_Workers_AI%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;participant&#43;CF_Vectorize%0A&#43;&#43;&#43;&#43;end%0A%0A&#43;&#43;&#43;&#43;Stripe-%3E%3ECF_Workers%3A&#43;Send&#43;product&#43;registration&#43;event%0A&#43;&#43;&#43;&#43;CF_Workers-%3E%3ECF_Workers_AI%3A&#43;Request&#43;product&#43;information&#43;vectorization%0A&#43;&#43;&#43;&#43;CF_Workers_AI-%3E%3ECF_Workers%3A&#43;Send&#43;back&#43;vector&#43;data&#43;result%0A&#43;&#43;&#43;&#43;CF_Workers-%3E%3ECF_Vectorize%3A&#43;Save&#43;vector&#43;data">
+</vue-component><p>Let&rsquo;s start implementing step-by-step.</p>
+<h3 id="bind-workers-ai-and-vectorize-to-your-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#bind-workers-ai-and-vectorize-to-your-worker">&#8203;​</a>
+    </span>
+    <span>Bind Workers AI and Vectorize to your Worker</span>
+  </h3><p>This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then <a href=/workers/runtime-apis/bindings/#what-is-a-binding class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bind</span></a> them to a Worker. First, let&rsquo;s create a Vectorize index with Wrangler using the command <code>wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}</code>. The values for <code>dimensions</code> and <code>metric</code> depend on the type of <a href=/workers-ai/models/#text-embeddings class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Text Embedding Model</span></a> you are using for data vectorization (Embedding). For example, if you are using the <code>bge-large-en-v1.5</code> model, the command is:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;vectorize&#43;create&#43;stripe-products&#43;--dimensions%3D1024&#43;--metric%3Dcosine"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When this command executes successfully, you will see a message like the following. It provides the items you need to add to <code>wrangler.toml</code> to bind the Vectorize index with your Worker application. Copy the three lines starting with <code>[[vectorize]]</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%E2%9C%85&#43;Successfully&#43;created&#43;a&#43;new&#43;Vectorize&#43;index%3A&#43;%27stripe-products%27%0A%F0%9F%93%8B&#43;To&#43;start&#43;querying&#43;from&#43;a&#43;Worker%2C&#43;add&#43;the&#43;following&#43;binding&#43;configuration&#43;into&#43;%27wrangler.toml%27%3A%0A%0A%5B%5Bvectorize%5D%5D%0Abinding&#43;%3D&#43;%22VECTORIZE_INDEX%22%0Aindex_name&#43;%3D&#43;%22stripe-products%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>To use the created Vectorize index from your Worker, let&rsquo;s add the binding. Open <code>wrangler.toml</code> and add the copied lines.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="---%0Afilename%3A&#43;wrangler.toml%0Ahighlight%3A&#43;%5B5%2C6%2C7%5D%0A---%0Aname&#43;%3D&#43;%22cross-sell-api%22%0Amain&#43;%3D&#43;%22src%2Findex.ts%22%0Acompatibility_date&#43;%3D&#43;%222024-06-05%22%0A%0A%5B%5Bvectorize%5D%5D%0Abinding&#43;%3D&#43;%22VECTORIZE_INDEX%22%0Aindex_name&#43;%3D&#43;%22stripe-products%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Additionally, let&rsquo;s add the configuration to use Workers AI in <code>wrangler.toml</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="---%0Afilename%3A&#43;wrangler.toml%0Ahighlight%3A&#43;%5B9%2C10%5D%0A---%0Aname&#43;%3D&#43;%22cross-sell-api%22%0Amain&#43;%3D&#43;%22src%2Findex.ts%22%0Acompatibility_date&#43;%3D&#43;%222024-06-05%22%0A%0A%5B%5Bvectorize%5D%5D%0Abinding&#43;%3D&#43;%22VECTORIZE_INDEX%22%0Aindex_name&#43;%3D&#43;%22stripe-products%22%0A%0A%5Bai%5D%0Abinding&#43;%3D&#43;%22AI%22&#43;%23&#43;available&#43;in&#43;your&#43;Worker&#43;on&#43;env.AI"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When handling bound resources from your application, you can generate TypeScript type definitions to develop more safely. Run the <code>npm run cf-typegen</code> command. This command updates the <code>worker-configuration.d.ts</code> file, allowing you to use both Vectorize and Workers AI in a type-safe manner.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;run&#43;cf-typegen%0A%0A%3E&#43;cf-typegen%0A%3E&#43;wrangler&#43;types&#43;--env-interface&#43;CloudflareBindings%0A%0A&#43;%E2%9B%85%EF%B8%8F&#43;wrangler&#43;3.60.1%0A-------------------%0A%0Ainterface&#43;CloudflareBindings&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;VECTORIZE_INDEX%3A&#43;VectorizeIndex%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;AI%3A&#43;Ai%3B%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Once you save these changes, the respective resources and APIs will be available for use in the Workers application. You can access these properties from <code>env</code>. In this example, you can use them as follows:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aapp.get%28%27%2F%27%2C&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;c.env.AI&#43;%2F%2F&#43;Workers&#43;AI&#43;SDK%0A&#43;&#43;c.env.VECTORIZE_INDEX&#43;%2F%2F&#43;Vectorize&#43;SDK%0A&#43;&#43;return&#43;c.text%28%27Hello&#43;Hono%21%27%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Finally, rerun the <code>npx wrangler dev</code> command with the <code>--remote</code> option. This is necessary because Vectorize indexes are not supported in local mode. If you see the message, <code>Vectorize bindings are not currently supported in local mode. Please use --remote if you are working with them.</code>, rerun the command with the <code>--remote</code> option added.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;dev&#43;--remote"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="create-a-webhook-api-to-handle-product-registration-events">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#create-a-webhook-api-to-handle-product-registration-events">&#8203;​</a>
+    </span>
+    <span>Create a webhook API to handle product registration events</span>
+  </h3><p>You can receive notifications about product registration and information via POST requests using webhooks. Let&rsquo;s create an API that accepts POST requests. Open your <code>src/index.ts</code> file and add the following code:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aapp.post%28%27%2Fwebhook%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;body&#43;%3D&#43;await&#43;c.req.json%28%29%0A&#43;&#43;if&#43;%28body.type&#43;%3D%3D%3D&#43;%27product.created%27%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;product&#43;%3D&#43;body.data.object%0A&#43;&#43;&#43;&#43;console.log%28JSON.stringify%28product%2C&#43;null%2C&#43;2%29%29%0A&#43;&#43;%7D%0A&#43;&#43;return&#43;c.text%28%27ok%27%2C&#43;200%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This code implements an API that processes POST requests to the <code>/webhook</code> endpoint. The data sent by Stripe&rsquo;s Webhook events is included in the request body in JSON format. Therefore, we use <code>c.req.json()</code> to extract the data. There are multiple types of Webhook events that Stripe can send, so we added a conditional to only process events when a product is newly added, as indicated by the <code>type</code>.</p>
+<h3 id="add-stripes-api-key-to-the-project">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#add-stripes-api-key-to-the-project">&#8203;​</a>
+    </span>
+    <span>Add Stripe&rsquo;s API Key to the project</span>
+  </h3><p>When developing a webhook API, you need to ensure that requests from unauthorized sources are rejected. To prevent unauthorized API requests from causing unintended behavior or operational confusion, you need a mechanism to verify the source of API requests. When integrating with Stripe, you can protect the API by generating a signing secret used for webhook verification.</p>
+<ol>
+<li>Refer to the <a href="https://docs.stripe.com/keys" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Stripe documentation</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to get a <a href="https://docs.stripe.com/keys#reveal-an-api-secret-key-for-test-mode" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">secret API key for the test environment</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Save the obtained API key in a <code>.dev.vars</code> file.</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="STRIPE_SECRET_API_KEY%3Dsk_test_XXXX"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="3">
+<li>Follow the <a href="https://docs.stripe.com/stripe-cli" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">guide</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to install Stripe CLI.</li>
+<li>Use the following Stripe CLI command to forward Webhook events from Stripe to your local application.</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;stripe&#43;listen&#43;--forward-to&#43;http%3A%2F%2Flocalhost%3A8787%2Fwebhook&#43;--events&#43;product.created"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="5">
+<li>Copy the signing secret that starts with <code>whsec_</code> from the Stripe CLI command output.</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="%3E&#43;Ready%21&#43;You&#43;are&#43;using&#43;Stripe&#43;API&#43;Version&#43;%5B2024-06-10%5D.&#43;Your&#43;webhook&#43;signing&#43;secret&#43;is%0Awhsec_xxxxxx&#43;%28%5EC&#43;to&#43;quit%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="6">
+<li>Save the obtained signing secret in the <code>.dev.vars</code> file.</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="STRIPE_WEBHOOK_SECRET%3Dwhsec_xxxxxx"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="7">
+<li>Run <code>npm run cf-typegen</code> to update the type definitions in <code>worker-configuration.d.ts</code>.</li>
+<li>Run <code>npm install stripe</code> to add the Stripe SDK to your application.</li>
+<li>Restart the <code>npm run dev -- --remote</code> command to import the API key into your application.</li>
+</ol>
+<p>Finally, modify the source code of <code>src/index.ts</code> as follows to ensure that the webhook API cannot be used from sources other than your Stripe account.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aimport&#43;%7B&#43;Hono&#43;%7D&#43;from&#43;%27hono%27%0Aimport&#43;%7B&#43;env&#43;%7D&#43;from&#43;%27hono%2Fadapter%27%0Aimport&#43;Stripe&#43;from&#43;%27stripe%27%0A%0Atype&#43;Bindings&#43;%3D&#43;%7B%0A&#43;&#43;%5Bkey&#43;in&#43;keyof&#43;CloudflareBindings%5D%3A&#43;CloudflareBindings%5Bkey%5D%0A%7D%0A%0Aconst&#43;app&#43;%3D&#43;new&#43;Hono%3C%7B%0A&#43;&#43;Bindings%3A&#43;Bindings%3B%0A&#43;&#43;Variables%3A&#43;%7B%0A&#43;&#43;&#43;&#43;stripe%3A&#43;Stripe%3B%0A&#43;&#43;%7D%0A%7D%3E%28%29%0A%0A%2F%2A%2A%0A&#43;%2A&#43;Initialize&#43;Stripe&#43;SDK&#43;client%0A&#43;%2A&#43;We&#43;can&#43;use&#43;this&#43;SDK&#43;without&#43;initializing&#43;on&#43;each&#43;API&#43;route%2C%0A&#43;%2A&#43;just&#43;get&#43;it&#43;by&#43;the&#43;following&#43;example%3A%0A&#43;%2A&#43;%60%60%60%0A&#43;%2A&#43;const&#43;stripe&#43;%3D&#43;c.get%28%27stripe%27%29%0A&#43;%2A&#43;%60%60%60%0A&#43;%2A%2F%0Aapp.use%28%27%2A%27%2C&#43;async&#43;%28c%2C&#43;next%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;STRIPE_SECRET_API_KEY&#43;%7D&#43;%3D&#43;env%28c%29%0A&#43;&#43;const&#43;stripe&#43;%3D&#43;new&#43;Stripe%28STRIPE_SECRET_API_KEY%29%0A&#43;&#43;c.set%28%27stripe%27%2C&#43;stripe%29%0A&#43;&#43;await&#43;next%28%29%0A%7D%29%0A%0Aapp.post%28%27%2Fwebhook%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;STRIPE_WEBHOOK_SECRET&#43;%7D&#43;%3D&#43;env%28c%29%0A&#43;&#43;const&#43;stripe&#43;%3D&#43;c.get%28%27stripe%27%29%0A&#43;&#43;const&#43;signature&#43;%3D&#43;c.req.header%28%27stripe-signature%27%29%0A&#43;&#43;if&#43;%28%21signature&#43;%7C%7C&#43;%21STRIPE_WEBHOOK_SECRET&#43;%7C%7C&#43;%21stripe%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;return&#43;c.text%28%22%22%2C&#43;400%29%0A&#43;&#43;%7D%0A&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;body&#43;%3D&#43;await&#43;c.req.text%28%29%0A&#43;&#43;&#43;&#43;const&#43;event&#43;%3D&#43;await&#43;stripe.webhooks.constructEventAsync%28%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;body%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;signature%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;STRIPE_WEBHOOK_SECRET%2C%0A&#43;&#43;&#43;&#43;%29%0A&#43;&#43;&#43;&#43;if&#43;%28event.type&#43;%3D%3D%3D&#43;%27product.created%27%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;const&#43;product&#43;%3D&#43;event.data.object%0A&#43;&#43;&#43;&#43;&#43;&#43;console.log%28JSON.stringify%28product%2C&#43;null%2C&#43;2%29%29%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;return&#43;c.text%28%22%22%2C&#43;200%29%0A&#43;&#43;%7D&#43;catch&#43;%28err%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;errorMessage&#43;%3D&#43;%60%E2%9A%A0%EF%B8%8F&#43;&#43;Webhook&#43;signature&#43;verification&#43;failed.&#43;%24%7Berr&#43;instanceof&#43;Error&#43;%3F&#43;err.message&#43;%3A&#43;%22Internal&#43;server&#43;error%22%7D%60%0A&#43;&#43;&#43;&#43;console.log%28errorMessage%29%0A&#43;&#43;&#43;&#43;return&#43;c.text%28errorMessage%2C&#43;400%29%0A&#43;&#43;%7D%0A%7D%29%0A%0Aexport&#43;default&#43;app"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This ensures that an HTTP 400 error is returned if the Webhook API is called directly by unauthorized sources.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;-XPOST&#43;http%3A%2F%2Flocalhost%3A8787%2Fwebhook&#43;-I%0AHTTP%2F1.1&#43;400&#43;Bad&#43;Request%0AContent-Length%3A&#43;0%0AContent-Type%3A&#43;text%2Fplain%3B&#43;charset%3DUTF-8"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Use the Stripe CLI command to test sending events from Stripe.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;stripe&#43;trigger&#43;product.created%0ASetting&#43;up&#43;fixture&#43;for%3A&#43;product%0ARunning&#43;fixture&#43;for%3A&#43;product%0ATrigger&#43;succeeded%21&#43;Check&#43;dashboard&#43;for&#43;event&#43;details."></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The product information added on the Stripe side is recorded as a log on the terminal screen where <code>npm run dev</code> is executed.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="%7B%0A&#43;&#43;id%3A&#43;%27prod_QGw9VdIqVCNABH%27%2C%0A&#43;&#43;object%3A&#43;%27product%27%2C%0A&#43;&#43;active%3A&#43;true%2C%0A&#43;&#43;attributes%3A&#43;%5B%5D%2C%0A&#43;&#43;created%3A&#43;1718087602%2C%0A&#43;&#43;default_price%3A&#43;null%2C%0A&#43;&#43;description%3A&#43;%27%28created&#43;by&#43;Stripe&#43;CLI%29%27%2C%0A&#43;&#43;features%3A&#43;%5B%5D%2C%0A&#43;&#43;images%3A&#43;%5B%5D%2C%0A&#43;&#43;livemode%3A&#43;false%2C%0A&#43;&#43;marketing_features%3A&#43;%5B%5D%2C%0A&#43;&#43;metadata%3A&#43;%7B%7D%2C%0A&#43;&#43;name%3A&#43;%27myproduct%27%2C%0A&#43;&#43;package_dimensions%3A&#43;null%2C%0A&#43;&#43;shippable%3A&#43;null%2C%0A&#43;&#43;statement_descriptor%3A&#43;null%2C%0A&#43;&#43;tax_code%3A&#43;null%2C%0A&#43;&#43;type%3A&#43;%27service%27%2C%0A&#43;&#43;unit_label%3A&#43;null%2C%0A&#43;&#43;updated%3A&#43;1718087603%2C%0A&#43;&#43;url%3A&#43;null%0A%7D%0A%5Bwrangler%3Ainf%5D&#43;POST&#43;%2Fwebhook&#43;201&#43;Created&#43;%2814ms%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="3-convert-text-into-vector-data-using-workers-ai">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-convert-text-into-vector-data-using-workers-ai">&#8203;​</a>
+    </span>
+    <span>3. Convert text into vector data using Workers AI</span>
+  </h2><p>We&rsquo;ve prepared to ingest product information, so let&rsquo;s start implementing the preprocessing needed to create an index for search. In vector search using Cloudflare Vectorize, text data must be converted to numerical data before indexing. By storing data as numerical sequences, we can search based on the similarity of these vectors, allowing us to retrieve highly similar data.</p>
+<p>In this step, we&rsquo;ll first implement the process of converting externally sent data into text data. This is necessary because the information to be converted into vector data is in text form. If you want to include product names, descriptions, and metadata as search targets, add the following processing.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B3%2C4%2C5%2C6%2C7%2C8%2C9%5D%0A---%0Aif&#43;%28event.type&#43;%3D%3D%3D&#43;%27product.created%27%29&#43;%7B%0A&#43;&#43;const&#43;product&#43;%3D&#43;event.data.object%0A&#43;&#43;const&#43;productData&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%60%23%23&#43;%24%7Bproduct.name%7D%60%2C%0A&#43;&#43;&#43;&#43;product.description%2C%0A&#43;&#43;&#43;&#43;%27%23%23%23&#43;metadata%27%2C%0A&#43;&#43;&#43;&#43;Object.entries%28product.metadata%29.map%28%28%5Bkey%2C&#43;value%5D%29&#43;%3D%3E&#43;%60-&#43;%24%7Bkey%7D%3A&#43;%24%7Bvalue%7D%60%29.join%28%27%5Cn%27%29%0A&#43;&#43;%5D.join%28%27%5Cn%27%29%0A&#43;&#43;console.log%28JSON.stringify%28productData%2C&#43;null%2C&#43;2%29%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>By adding this processing, you convert product information in JSON format into a simple Markdown format product introduction text.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%23%23&#43;product&#43;name%0Aproduct&#43;description.%0A%23%23%23&#43;metadata%0A-&#43;key%3A&#43;value"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Now that we&rsquo;ve converted the data to text, let&rsquo;s convert it to vector data. By using the Text Embedding model of Workers AI, we can convert text into vector data of any desired dimension.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B7%2C8%2C9%2C10%2C11%2C12%2C13%5D%0A---%0Aconst&#43;productData&#43;%3D&#43;%5B%0A&#43;&#43;%60%23%23&#43;%24%7Bproduct.name%7D%60%2C%0A&#43;&#43;product.description%2C%0A&#43;&#43;%27%23%23%23&#43;metadata%27%2C%0A&#43;&#43;Object.entries%28product.metadata%29.map%28%28%5Bkey%2C&#43;value%5D%29&#43;%3D%3E&#43;%60-&#43;%24%7Bkey%7D%3A&#43;%24%7Bvalue%7D%60%29.join%28%27%5Cn%27%29%0A%5D.join%28%27%5Cn%27%29%0Aconst&#43;embeddings&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;%27%40cf%2Fbaai%2Fbge-large-en-v1.5%27%2C%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;text%3A&#43;productData%2C%0A&#43;&#43;%7D%0A%29%0Aconsole.log%28JSON.stringify%28embeddings%2C&#43;null%2C&#43;2%29%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When using Workers AI, execute the <code>c.env.AI.run()</code> function. Specify the model you want to use as the first argument. In the second argument, input text data about the text you want to convert using the Text Embedding model or the instructions for the generated images or text. If you want to save the converted vector data using Vectorize, make sure to select a model that matches the number of <code>dimensions</code> specified in the <code>npx wrangler vectorize create</code> command. If the numbers do not match, there is a possibility that the converted vector data cannot be saved.</p>
+<h3 id="save-vector-data-to-vectorize">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#save-vector-data-to-vectorize">&#8203;​</a>
+    </span>
+    <span>Save vector data to Vectorize</span>
+  </h3><p>Finally, let&rsquo;s save the created data to Vectorize. Edit <code>src/index.ts</code> to implement the indexing process using the <code>VECTORIZE_INDEX</code> binding. Since the data to be saved will be vector data, save the pre-conversion text data as metadata.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%5D%0A---%0Aif&#43;%28event.type&#43;%3D%3D%3D&#43;%27product.created%27%29&#43;%7B%0A&#43;&#43;const&#43;product&#43;%3D&#43;event.data.object%0A&#43;&#43;const&#43;productData&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%60%23%23&#43;%24%7Bproduct.name%7D%60%2C%0A&#43;&#43;&#43;&#43;product.description%2C%0A&#43;&#43;&#43;&#43;%27%23%23%23&#43;metadata%27%2C%0A&#43;&#43;&#43;&#43;Object.entries%28product.metadata%29.map%28%28%5Bkey%2C&#43;value%5D%29&#43;%3D%3E&#43;%60-&#43;%24%7Bkey%7D%3A&#43;%24%7Bvalue%7D%60%29.join%28%27%5Cn%27%29%0A&#43;&#43;%5D.join%28%27%5Cn%27%29%0A&#43;&#43;console.log%28JSON.stringify%28productData%2C&#43;null%2C&#43;2%29%29%0A&#43;&#43;const&#43;embeddings&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;&#43;&#43;%27%40cf%2Fbaai%2Fbge-large-en-v1.5%27%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;text%3A&#43;productData%2C%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%29%0A&#43;&#43;await&#43;c.env.VECTORIZE_INDEX.insert%28%5B%7B%0A&#43;&#43;&#43;&#43;id%3A&#43;product.id%2C%0A&#43;&#43;&#43;&#43;values%3A&#43;embeddings.data%5B0%5D%2C%0A&#43;&#43;&#43;&#43;metadata%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;name%3A&#43;product.name%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;description%3A&#43;product.description&#43;%7C%7C&#43;%27%27%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;product_metadata%3A&#43;product.metadata%2C%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%7D%5D%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>With this, we have established a mechanism to synchronize the product data with the database for recommendations. Use Stripe CLI commands to save some product data.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;stripe&#43;products&#43;create&#43;--name%3D%22Smartphone&#43;X%22&#43;%5C%0A&#43;&#43;--description%3D%22Latest&#43;model&#43;with&#43;cutting-edge&#43;features%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bcurrency%5D%3Dusd%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bunit_amount%5D%3D79900%22&#43;%5C%0A&#43;&#43;-d&#43;%22metadata%5Bcategory%5D%3Delectronics%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;stripe&#43;products&#43;create&#43;--name%3D%22Ultra&#43;Notebook%22&#43;%5C%0A&#43;&#43;--description%3D%22Lightweight&#43;and&#43;powerful&#43;notebook&#43;computer%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bcurrency%5D%3Dusd%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bunit_amount%5D%3D129900%22&#43;%5C%0A&#43;&#43;-d&#43;%22metadata%5Bcategory%5D%3Dcomputers%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;stripe&#43;products&#43;create&#43;--name%3D%22Wireless&#43;Earbuds&#43;Pro%22&#43;%5C%0A&#43;&#43;--description%3D%22High&#43;quality&#43;sound&#43;with&#43;noise&#43;cancellation%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bcurrency%5D%3Dusd%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bunit_amount%5D%3D19900%22&#43;%5C%0A&#43;&#43;-d&#43;%22metadata%5Bcategory%5D%3Daudio%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;stripe&#43;products&#43;create&#43;--name%3D%22Smartwatch&#43;2%22&#43;%5C%0A&#43;&#43;--description%3D%22Stay&#43;connected&#43;with&#43;the&#43;latest&#43;smartwatch%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bcurrency%5D%3Dusd%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bunit_amount%5D%3D29900%22&#43;%5C%0A&#43;&#43;-d&#43;%22metadata%5Bcategory%5D%3Dwearables%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%24&#43;stripe&#43;products&#43;create&#43;--name%3D%22Tablet&#43;Pro%22&#43;%5C%0A&#43;&#43;--description%3D%22Versatile&#43;tablet&#43;for&#43;work&#43;and&#43;play%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bcurrency%5D%3Dusd%22&#43;%5C%0A&#43;&#43;-d&#43;%22default_price_data%5Bunit_amount%5D%3D49900%22&#43;%5C%0A&#43;&#43;-d&#43;%22metadata%5Bcategory%5D%3Dcomputers%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If the save is successful, you will see logs like <code>[200] POST</code> in the screen where you are running the <code>stripe listen</code> command.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="2024-06-11&#43;16%3A41%3A42&#43;&#43;&#43;--%3E&#43;product.created&#43;%5Bevt_1PQPKsL8xlxrZ26gst0o1DK3%5D%0A2024-06-11&#43;16%3A41%3A45&#43;&#43;%3C--&#43;&#43;%5B200%5D&#43;POST&#43;http%3A%2F%2Flocalhost%3A8787%2Fwebhook&#43;%5Bevt_1PQPKsL8xlxrZ26gst0o1DK3%5D%0A2024-06-11&#43;16%3A41%3A47&#43;&#43;&#43;--%3E&#43;product.created&#43;%5Bevt_1PQPKxL8xlxrZ26gGk90TkcK%5D%0A2024-06-11&#43;16%3A41%3A49&#43;&#43;%3C--&#43;&#43;%5B200%5D&#43;POST&#43;http%3A%2F%2Flocalhost%3A8787%2Fwebhook&#43;%5Bevt_1PQPKxL8xlxrZ26gGk90TkcK%5D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you confirm one log entry for each piece of registered data, the save process is complete. Next, we will implement the API for related product searches.</p>
+<h2 id="4-create-a-related-products-search-api-using-vectorize">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-create-a-related-products-search-api-using-vectorize">&#8203;​</a>
+    </span>
+    <span>4. Create a related products search API using Vectorize</span>
+  </h2><p>Now that we have prepared the index for searching, the next step is to implement an API to search for related products. By utilizing a vector index, we can perform searches based on how similar the data is. Let&rsquo;s implement an API that searches for product data similar to the specified product ID using this method.</p>
+<p>In this API, the product ID is received as a part of the API path. Using the received ID, vector data is retrieved from Vectorize using <code>c.env.VECTORIZE_INDEX.getByIds()</code>. The return value of this process includes vector data, which is then passed to <code>c.env.VECTORIZE_INDEX.query()</code> to conduct a similarity search. To quickly check which products are recommended, we set <code>returnMetadata</code> to <code>true</code> to obtain the stored metadata information as well. The <code>topK</code> parameter specifies the number of data items to retrieve. Change this value if you want to obtain less than 2 or more than 4 data items.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aapp.get%28%27%2Fproducts%2F%3Aproduct_id%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;%2F%2F&#43;Get&#43;the&#43;product&#43;ID&#43;from&#43;API&#43;path&#43;parameters%0A&#43;&#43;const&#43;productId&#43;%3D&#43;c.req.param%28%27product_id%27%29%0A%0A&#43;&#43;%2F%2F&#43;Retrieve&#43;the&#43;indexed&#43;data&#43;by&#43;the&#43;product&#43;ID%0A&#43;&#43;const&#43;%5Bproduct%5D&#43;%3D&#43;await&#43;c.env.VECTORIZE_INDEX.getByIds%28%5BproductId%5D%29%0A%0A&#43;&#43;%2F%2F&#43;Search&#43;similar&#43;products&#43;by&#43;using&#43;the&#43;embedding&#43;data%0A&#43;&#43;const&#43;similarProducts&#43;%3D&#43;await&#43;c.env.VECTORIZE_INDEX.query%28product.values%2C&#43;%7B%0A&#43;&#43;&#43;&#43;topK%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;returnMetadata%3A&#43;true%2C%0A&#43;&#43;%7D%29%0A%0A&#43;&#43;return&#43;c.json%28%7B%0A&#43;&#43;&#43;&#43;product%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;...product.metadata%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;similarProducts%2C%0A&#43;&#43;%7D%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Let&rsquo;s run this API. Use a product ID that starts with <code>prod_</code>, which can be obtained from the result of running the <code>stripe products crate</code> command or the <code>stripe products list</code> command.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;http%3A%2F%2Flocalhost%3A8787%2Fproducts%2Fprod_xxxx"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you send a request using a product ID that exists in the Vectorize index, the data for that product and two related products will be returned as follows.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22product%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Tablet&#43;Pro%22%2C%0A&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Versatile&#43;tablet&#43;for&#43;work&#43;and&#43;play%22%2C%0A&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22computers%22%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22similarProducts%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22count%22%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;%22matches%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGxFoHEpIyxHHF%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Tablet&#43;Pro%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Versatile&#43;tablet&#43;for&#43;work&#43;and&#43;play%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22computers%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;1%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGxFEgfmOmy5Ve%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Ultra&#43;Notebook%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Lightweight&#43;and&#43;powerful&#43;notebook&#43;computer%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22computers%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;0.724717327%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGwkGYUcKU2UwH%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22demo&#43;product%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22aaaa%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22test%22%3A&#43;%22hello%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;0.635707003%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Looking at the <code>score</code> in <code>similarProducts</code>, you can see that there is data with a <code>score</code> of <code>1</code>. This means it is exactly the same as the query used to search. By looking at the metadata, it is evident that the data is the same as the product ID sent in the request. Since we want to search for related products, let&rsquo;s add a <code>filter</code> to prevent the same product from being included in the search results. Here, a filter is added to exclude data with the same product name using the <code>metadata</code> name.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B7%2C8%2C9%2C10%2C11%5D%0A---%0Aapp.get%28%27%2Fproducts%2F%3Aproduct_id%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;productId&#43;%3D&#43;c.req.param%28%27product_id%27%29%0A&#43;&#43;const&#43;%5Bproduct%5D&#43;%3D&#43;await&#43;c.env.VECTORIZE_INDEX.getByIds%28%5BproductId%5D%29%0A&#43;&#43;const&#43;similarProducts&#43;%3D&#43;await&#43;c.env.VECTORIZE_INDEX.query%28product.values%2C&#43;%7B%0A&#43;&#43;&#43;&#43;topK%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;returnMetadata%3A&#43;true%2C%0A&#43;&#43;&#43;&#43;filter%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;name%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22%24ne%22%3A&#43;product.metadata%3F.name.toString%28%29%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%7D%29%0A%0A&#43;&#43;return&#43;c.json%28%7B%0A&#43;&#43;&#43;&#43;product%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;...product.metadata%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;similarProducts%2C%0A&#43;&#43;%7D%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>After adding this process, if you run the API, you will see that there is no data with a <code>score</code> of <code>1</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22product%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Tablet&#43;Pro%22%2C%0A&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Versatile&#43;tablet&#43;for&#43;work&#43;and&#43;play%22%2C%0A&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22computers%22%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22similarProducts%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22count%22%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;%22matches%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGxFEgfmOmy5Ve%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Ultra&#43;Notebook%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Lightweight&#43;and&#43;powerful&#43;notebook&#43;computer%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22computers%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;0.724717327%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGwkGYUcKU2UwH%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22demo&#43;product%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22aaaa%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22test%22%3A&#43;%22hello%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;0.635707003%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%22prod_QGxFEafrNDG88p%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22Smartphone&#43;X%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22description%22%3A&#43;%22Latest&#43;model&#43;with&#43;cutting-edge&#43;features%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22product_metadata%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22category%22%3A&#43;%22electronics%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22score%22%3A&#43;0.632409942%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>In this way, you can implement a system to search for related product information using Vectorize.</p>
+<h2 id="5-create-a-recommendation-api-that-answers-user-questions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-create-a-recommendation-api-that-answers-user-questions">&#8203;​</a>
+    </span>
+    <span>5. Create a recommendation API that answers user questions.</span>
+  </h2><p>Recommendations can be more than just displaying related products; they can also address user questions and concerns. The final API will implement a process to answer user questions using Vectorize and Workers AI.</p>
+<p>This API will implement the following processes:</p>
+<ol>
+<li>Vectorize the user&rsquo;s question using the Text Embedding Model from Workers AI.</li>
+<li>Use Vectorize to search and retrieve highly relevant products.</li>
+<li>Convert the search results into a string in Markdown format.</li>
+<li>Utilize the Text Generation Model from Workers AI to generate a response based on the search results.</li>
+</ol>
+<p>This method realizes a text generation mechanism called Retrieval Augmented Generation (RAG) using Cloudflare. The bindings and other preparations are already completed, so let&rsquo;s add the API.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aapp.post%28%27%2Fask%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;question&#43;%7D&#43;%3D&#43;await&#43;c.req.json%28%29%0A&#43;&#43;if&#43;%28%21question%29&#43;%7B%0A&#43;&#43;&#43;&#43;return&#43;c.json%28%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;message%3A&#43;%27Please&#43;tell&#43;me&#43;your&#43;question.%27%0A&#43;&#43;&#43;&#43;%7D%29%0A&#43;&#43;%7D%0A&#43;&#43;%2F%2A%2A%0A&#43;&#43;&#43;%2A&#43;Convert&#43;the&#43;question&#43;to&#43;the&#43;vector&#43;data%0A&#43;&#43;&#43;%2A%2F%0A&#43;&#43;const&#43;embeddedQuestion&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;&#43;&#43;%27%40cf%2Fbaai%2Fbge-large-en-v1.5%27%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;text%3A&#43;question%2C%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%29%0A%0A&#43;&#43;%2F%2A%2A%0A&#43;&#43;&#43;%2A&#43;Query&#43;similarity&#43;data&#43;from&#43;Vectorize&#43;index%0A&#43;&#43;&#43;%2A%2F%0A&#43;&#43;const&#43;similarProducts&#43;%3D&#43;await&#43;c.env.VECTORIZE_INDEX.query%28embeddedQuestion.data%5B0%5D%2C&#43;%7B%0A&#43;&#43;&#43;&#43;topK%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;returnMetadata%3A&#43;true%2C%0A&#43;&#43;%7D%29%0A%0A&#43;&#43;%2F%2A%2A%0A&#43;&#43;&#43;%2A&#43;Convert&#43;the&#43;JSON&#43;data&#43;to&#43;the&#43;Markdown&#43;text%0A&#43;&#43;&#43;%2A%2A%2F%0A&#43;&#43;const&#43;contextData&#43;%3D&#43;similarProducts.matches.reduce%28%28prev%2C&#43;current%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;if&#43;%28%21current.metadata%29&#43;return&#43;prev%0A&#43;&#43;&#43;&#43;const&#43;productTexts&#43;%3D&#43;Object.entries%28current.metadata%29.map%28%28%5Bkey%2C&#43;value%5D%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;switch&#43;%28key%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;case&#43;%27name%27%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;%60%23%23&#43;%24%7Bvalue%7D%60%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;case&#43;%27product_metadata%27%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;%60-&#43;%24%7Bkey%7D%3A&#43;%24%7BJSON.stringify%28value%29%7D%60%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;default%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;%60-&#43;%24%7Bkey%7D%3A&#43;%24%7Bvalue%7D%60%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%7D%29%0A&#43;&#43;&#43;&#43;const&#43;productTextData&#43;%3D&#43;productTexts.join%28%27%5Cn%27%29%0A&#43;&#43;&#43;&#43;return&#43;%60%24%7Bprev%7D%5Cn%24%7BproductTextData%7D%60%0A&#43;&#43;%7D%2C&#43;%22%22%29%0A%0A&#43;&#43;%2F%2A%2A%0A&#43;&#43;&#43;%2A&#43;Generate&#43;the&#43;answer%0A&#43;&#43;&#43;%2A%2F%0A&#43;&#43;const&#43;response&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;&#43;&#43;%22%40cf%2Fmeta%2Fllama-3.1-8b-instruct%22%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;messages%3A&#43;%5B%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;role%3A&#43;%27system%27%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;content%3A&#43;%60You&#43;are&#43;an&#43;assistant&#43;for&#43;question-answering&#43;tasks.&#43;Use&#43;the&#43;following&#43;pieces&#43;of&#43;retrieved&#43;context&#43;to&#43;answer&#43;the&#43;question.&#43;If&#43;you&#43;don%27t&#43;know&#43;the&#43;answer%2C&#43;just&#43;say&#43;that&#43;you&#43;don%27t&#43;know.%5Cn%23Context%3A&#43;%5Cn%24%7BcontextData%7D&#43;%60%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;role%3A&#43;%27user%27%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;content%3A&#43;question%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%5D%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%29%0A%0A&#43;&#43;return&#43;c.json%28response%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Let&rsquo;s use the created API to consult on a product. You can send your question in the body of a POST request. For example, if you want to ask about getting a new PC, you can execute the following command:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;-X&#43;POST&#43;%22http%3A%2F%2Flocalhost%3A8787%2Fask%22&#43;-H&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;-d&#43;%27%7B%22question%22%3A&#43;%22I&#43;want&#43;to&#43;get&#43;a&#43;new&#43;PC%22%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When the question is sent, a recommendation text will be generated as introduced earlier. In this example, the <code>Ultra Notebook</code> product was recommended. This is because it has a <code>notebook compucoter</code> description, which means it received a relatively high score in the Vectorize search.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22response%22%3A&#43;%22Exciting%21&#43;You%27re&#43;looking&#43;to&#43;get&#43;a&#43;new&#43;PC%21&#43;Based&#43;on&#43;the&#43;context&#43;I&#43;retrieved%2C&#43;I%27d&#43;recommend&#43;considering&#43;the&#43;%5C%22Ultra&#43;Notebook%5C%22&#43;since&#43;it%27s&#43;described&#43;as&#43;a&#43;lightweight&#43;and&#43;powerful&#43;notebook&#43;computer%2C&#43;which&#43;fits&#43;the&#43;category&#43;of&#43;%5C%22computers%5C%22.&#43;Would&#43;you&#43;like&#43;to&#43;know&#43;more&#43;about&#43;its&#43;specifications&#43;or&#43;features%3F%22%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The text generation model generates new text each time based on the input prompt (questions or product search results). Therefore, even if you send the same request to this API, the response text may differ slightly. When developing for production, use features like logging or caching in the <a href=/ai-gateway/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">AI Gateway</span></a> to set up proper control and debugging.</p>
+<h2 id="6-deploy-the-application">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#6-deploy-the-application">&#8203;​</a>
+    </span>
+    <span>6. Deploy the application</span>
+  </h2><p>Before deploying the application, we need to make sure your Worker project has access to the Stripe API keys we created earlier. Since the API keys of external services are defined in <code>.dev.vars</code>, this information also needs to be set in your Worker project. To save API keys and secrets, run the <code>npx wrangler secret put &lt;KEY&gt;</code> command. In this tutorial, you&rsquo;ll execute the command twice, referring to the values set in <code>.dev.vars</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="npx&#43;wrangler&#43;secret&#43;put&#43;STRIPE_SECRET_API_KEY%0Anpx&#43;wrangler&#43;secret&#43;put&#43;STRIPE_WEBHOOK_SECRET"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then, run <code>npx wrangler deploy</code>. This will deploy the application on Cloudflare, making it publicly accessible.</p>
+<h2 id="conclusion">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#conclusion">&#8203;​</a>
+    </span>
+    <span>Conclusion</span>
+  </h2><p>As you can see, using Cloudflare Workers, Workers AI, and Vectorize allows you to easily implement related product or product recommendation APIs. Even if product data is managed on external services like Stripe, you can incorporate them by adding a webhook API. Additionally, though not introduced in this tutorial, you can save information such as user preferences and interested categories in Workers KV or D1. By using this stored information as text generation prompts, you can provide more accurate recommendation functions.</p>
+<p>Use the experience from this tutorial to enhance your e-commerce site with new ideas.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/workers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/workers/40" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/serverless/what-is-serverless/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/developer-spotlight/tutorials/creating-a-recommendation-api.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-23T10:13:57-05:00
+  title=2024-07-23
+>July 23, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

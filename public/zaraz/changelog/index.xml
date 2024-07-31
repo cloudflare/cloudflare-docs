@@ -1,0 +1,205 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Zaraz</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/</link>
+    <description>Updates to Zaraz</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/zaraz/changelog/index.xml" rel="self" />
+    <lastBuildDate>Tue, 23 Jul 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Zaraz - 2024-07-23</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-07-23</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Embeds&lt;/strong&gt;: Add support for server-side rendering of X (Twitter) and Instagram embeds&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CSP Compliance&lt;/strong&gt;: Remove &lt;code&gt;eval&lt;/code&gt; dependency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Allow customizing the document title and client ID fields&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom HTML Managed Component&lt;/strong&gt;: Scripts included in a Custom HTML will preserve their running order&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Ads Managed Component&lt;/strong&gt;: Allow linking data with Google Analytics 4 instances&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TikTok Managed Component&lt;/strong&gt;: Use the new TikTok Events API v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reddit Managed Component&lt;/strong&gt;: Support custom events&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Twitter Managed Component&lt;/strong&gt;: Support setting the &lt;code&gt;event_id&lt;/code&gt;, using custom fields, and improve conversion tracking&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Cookie life-time cannot exceed one year anymore&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Zaraz Debugger UI does not break when presenting really long lines of information&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 23 Jul 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-06-21</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-06-21</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dashboard&lt;/strong&gt;: Add an option to disable the automatic &lt;code&gt;Pageview&lt;/code&gt; event&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 21 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-06-18</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-06-18</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Amplitude Managed Component&lt;/strong&gt;: Allow users to choose data center&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bing Managed Component&lt;/strong&gt;: Fix e-commerce events handling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Mark e-commerce events as conversions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Fix IAB Consent Mode tools not showing with purposes&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 18 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-05-03</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-05-03</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dashboard&lt;/strong&gt;: Add setting for Google Consent mode default&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Cookie values are now decoded&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Ensure context enricher worker can access the &lt;code&gt;context.system.consent&lt;/code&gt; object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Ads Managed Component&lt;/strong&gt;: Add conversion linker on pageviews without sending a pageview event&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pinterest Conversion API Managed Component&lt;/strong&gt;: Bugfix handling of partial e-commerce event payloads&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 03 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-04-19</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-04-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Instagram Managed Component&lt;/strong&gt;: Improve performance of Instagram embeds&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mixpanel Managed Component&lt;/strong&gt;: Include &lt;code&gt;gclid&lt;/code&gt; and &lt;code&gt;fbclid&lt;/code&gt; values in Mixpanel requests if available&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Ensure consent platform is enabled when using IAB TCF compliant mode when there’s at least one TCF-approved vendor configured&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Ensure track data payload keys take priority over preset-keys when using enrich-payload feature for custom actions&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 19 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-04-08</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-04-08</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Add &lt;code&gt;consent&lt;/code&gt; object to &lt;code&gt;context.system&lt;/code&gt; for finer control over consent preferences&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Add support for IAB-compliant consent mode&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Add “zarazConsentChoicesUpdated” event&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Modal now respects system dark mode prefs when present&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Add support for Google Consent Mode v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Ads Managed Component&lt;/strong&gt;: Add support for Google Consent Mode v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Twitter Managed Component&lt;/strong&gt;: Enable tweet embeds&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bing Managed Component&lt;/strong&gt;: Support running without setting cookies&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: &lt;code&gt;client.get&lt;/code&gt; for Custom Managed Components fixed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Prevent duplicate pageviews in monitoring after consent granting&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Prevent Managed Component routes from blocking origin routes unintentionally&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 08 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-02-15</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-02-15</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Single Page Applications&lt;/strong&gt;: Introduce &lt;code&gt;zaraz.spaPageview()&lt;/code&gt; for manually triggering SPA pageviews&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pinterest Managed Component&lt;/strong&gt;: Add ecommerce support&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Ads Managed Component&lt;/strong&gt;: Append url and rnd params to pagead/landing endpoint&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Add noindex robots headers for Zaraz GET endpoint responses&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Gracefully handle responses from custom Managed Components without mapped endpoints&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 15 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2024-02-05</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2024-02-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dashboard&lt;/strong&gt;: rename “tracks” to “events” for consistency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pinterest Conversion API Managed Component&lt;/strong&gt;: update parameters sent to api&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Managed Component&lt;/strong&gt;: update _settings prefix usage handling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: better minification of client-side js&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: fix bug where anchor link click events were not bubbling when using click listener triggers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;API update&lt;/strong&gt;: begin migration support from deprecated &lt;code&gt;tool.neoEvents&lt;/code&gt; array to &lt;code&gt;tool.actions&lt;/code&gt; object config schema migration&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 05 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-12-19</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-12-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Fix Google Analytics 4 average engagement time metric.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 19 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-11-13</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-11-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;HTTP Request Managed Component&lt;/strong&gt;: Re-added &lt;code&gt;__zarazTrack&lt;/code&gt; property.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 13 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-10-31</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-10-31</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Remove &lt;code&gt;debug_mode&lt;/code&gt; key if falsy or &lt;code&gt;false&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 31 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-10-26</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-10-26</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Custom HTML&lt;/strong&gt;: Added support for non-JavaScript script tags.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 26 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-10-20</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-10-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Bing Managed Component&lt;/strong&gt;: Fixed an issue where some events were not being sent to Bing even after being triggered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dashboard&lt;/strong&gt;: Improved welcome screen for new Zaraz users.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 20 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-10-03</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-10-03</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Bugfix&lt;/strong&gt;: Fixed an issue that prevented some server-side requests from arriving to their destination&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: Add support for &lt;code&gt;dbg&lt;/code&gt; and &lt;code&gt;ir&lt;/code&gt; fields.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 03 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-09-13</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-09-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Add support for custom button translations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Modal stays fixed when scrolling.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google Analytics 4 Managed Component&lt;/strong&gt;: &lt;code&gt;hideOriginalIP&lt;/code&gt; and &lt;code&gt;ga-audiences&lt;/code&gt; can be set from tool event.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 13 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-09-11</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-09-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reddit Managed Component&lt;/strong&gt;: Support new “Account ID” formats (e.g. “ax_xxxxx”).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 11 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-09-06</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-09-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Consent cookie name can now be customized.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 06 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-09-05</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-09-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Segment Managed Component&lt;/strong&gt;: API Endpoint can be customized.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 05 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Zaraz - 2023-08-21</title>
+    <link>https://developers.cloudflare.com/zaraz/changelog/#2023-08-21</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TikTok Managed Component&lt;/strong&gt;: Support setting &lt;code&gt;ttp&lt;/code&gt; and &lt;code&gt;event_id&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consent Management&lt;/strong&gt;: Accessibility improvements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Facebook Managed Component&lt;/strong&gt;: Support for using “Limited Data Use” features.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 21 Aug 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

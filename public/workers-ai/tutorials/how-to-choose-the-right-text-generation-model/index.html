@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Choose the Right Text Generation Model · Cloudflare Workers AI docs</title>
+  <meta name="title" content="Choose the Right Text Generation Model · Cloudflare Workers AI docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Choose the Right Text Generation Model · Cloudflare Workers AI docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Choose the Right Text Generation Model · Cloudflare Workers AI docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="There&#39;s a wide range of text generation models available through Workers AI. In an effort to aid you in your journey of finding the right model, this …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Choose the Right Text Generation Model · Cloudflare Workers AI docs" />
+  <meta property="og:description" content="There&#39;s a wide range of text generation models available through Workers AI. In an effort to aid you in your journey of finding the right model, this …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/workers-ai/tutorials/how-to-choose-the-right-text-generation-model/" />
+
+  <meta name="twitter:title" content="Choose the Right Text Generation Model · Cloudflare Workers AI docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="There&#39;s a wide range of text generation models available through Workers AI. In an effort to aid you in your journey of finding the right model, this …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="workers-ai"><meta name="algolia_product_filter" content="Workers AI"><meta name="pcx_tags" content="AI"><meta name="algolia_page_title" content="Choose the Right Text Generation Model">
+  <meta name="pcx_word_count" content="5000"><meta name="pcx_last_modified" content="69"><meta name="pcx_last_reviewed" content="191" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/workers-ai/tutorials/how-to-choose-the-right-text-generation-model/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"workers-ai"}</script>
+  <meta name="docsearch:product" content="workers-ai" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - d15c68b4ce2cacdccc8ef544ffbda84d" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - d15c68b4ce2cacdccc8ef544ffbda84d">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/workers-ai/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Workers AI logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.72 1.5H9.265v3.198l1.455.004V1.5ZM7.36 3.347l1.516 1.517-1.032 1.025-1.513-1.513 1.03-1.029ZM4.485 6.28h3.202l-.005 1.455H4.485V6.28Zm1.848 3.36 1.515-1.516 1.026 1.032-1.512 1.512-1.03-1.029Zm2.932 2.875V9.313l1.455.005v3.197H9.265Zm3.36-1.845-1.517-1.517 1.032-1.026 1.514 1.514-1.03 1.029ZM15.5 7.735h-3.202l.005-1.455H15.5v1.455Zm-1.847-3.359-1.516 1.516-1.025-1.032 1.513-1.513 1.028 1.03ZM2 1.829v.82h-.822v1.315H2v.821h1.314v-.82h.821V2.65h-.821v-.821H2Zm0 12.842v-1.5H.5v-1.314H2v-1.499h1.314v1.499h1.5v1.314h-1.5v1.5H2Z"></path></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:10">Workers AI</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - cf184bc2ed6fcfbccdced4c8ad44855a" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - cf184bc2ed6fcfbccdced4c8ad44855a">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/workers-ai/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Workers AI logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.72 1.5H9.265v3.198l1.455.004V1.5ZM7.36 3.347l1.516 1.517-1.032 1.025-1.513-1.513 1.03-1.029ZM4.485 6.28h3.202l-.005 1.455H4.485V6.28Zm1.848 3.36 1.515-1.516 1.026 1.032-1.512 1.512-1.03-1.029Zm2.932 2.875V9.313l1.455.005v3.197H9.265Zm3.36-1.845-1.517-1.517 1.032-1.026 1.514 1.514-1.03 1.029ZM15.5 7.735h-3.202l.005-1.455H15.5v1.455Zm-1.847-3.359-1.516 1.516-1.025-1.032 1.513-1.513 1.028 1.03ZM2 1.829v.82h-.822v1.315H2v.821h1.314v-.82h.821V2.65h-.821v-.821H2Zm0 12.842v-1.5H.5v-1.314H2v-1.499h1.314v1.499h1.5v1.314h-1.5v1.5H2Z"></path></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:10">Workers AI</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Workers AI menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="/use-cases/ai/" tabindex="-1">AI - Use cases</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/workers-ai/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/workers-wrangler/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">CLI</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/rest-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">REST API</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/dashboard/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Dashboard</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="https://playground.ai.cloudflare.com"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Playground</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers Bindings</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/open-ai-compatibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">OpenAI compatible API endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/hugging-face-chat-ui/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hugging Face Chat UI</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/models/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Models</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Fine-tunes</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fine-tunes</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/loras/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using LoRA adapters</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/public-loras/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Public LoRA adapters</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Function Calling</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Function Calling</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Embedded</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Embedded</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/get-started/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get Started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/fetch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use fetch() handler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/openapi/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tools based on OpenAPI Spec</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/kv/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use KV API</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/api-reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API Reference</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/traditional/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traditional</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><a class="DocsSidebar--nav-link"  href="/workers-ai/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/demos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Demo apps</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ai-gateway/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AI Gateway</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="https://developers.cloudflare.com/reference-architecture/diagrams/ai/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Architectures</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/workers-ai-post-run-model"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">REST API reference</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/privacy/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Privacy</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers-ai/tutorials/how-to-choose-the-right-text-generation-model.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Workers AI</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/tutorials/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Tutorials</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/tutorials/how-to-choose-the-right-text-generation-model/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Choose the Right Text Generation Model</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="choose-the-right-text-generation-model">Choose the Right Text Generation Model</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2024-02-06T00:00:00&#43;00:00
+  title=2024-02-06
+>February 6, 2024</time></span>
+</div>
+<p>A great way to explore the models that are available to you on <a href=/workers-ai class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers AI</span></a> is to use a <a href="https://jupyter.org/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Jupyter Notebook</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>You can <a href=/workers-ai/static/documentation/notebooks/text-generation-model-exploration.ipynb class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">download the Workers AI Text Generation Exploration notebook</span></a> or view the embedded notebook below.</p>
+
+
+<figure data-type="stream">
+  <div style="position: relative; padding-top: 56.25%;">
+    <iframe
+        src="https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/4b4f0b9d7783512b8787e39424cfccd5/iframe?preload=true&letterboxColor=transparent"
+        style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen="true"
+        title=Choose&#32;the&#32;Right&#32;Text&#32;Generation&#32;Model
+        id="4b4f0b9d7783512b8787e39424cfccd5">
+    </iframe>
+    <script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
+    <script>
+      Stream(document.getElementById("4b4f0b9d7783512b8787e39424cfccd5")).addEventListener('play', () => {
+        zaraz.track('play docs video', {title: ("Choose the Right Text Generation Model")})
+      })
+    </script>
+  </div><p class="youtube_link">For more Cloudflare video content, check out our <a href="https://www.youtube.com/watch?v=l7EwEpZyTpw&amp;list=PLzfTyn6__Sjgte-jW5xTmjmrLmQKCplYo&amp;pp=iAQB" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">YouTube channel</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p></figure>
+<hr>
+<h2 id="how-to-choose-the-right-text-generation-model">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#how-to-choose-the-right-text-generation-model">&#8203;​</a>
+    </span>
+    <span>How to Choose The Right Text Generation Model</span>
+  </h2><p>Models come in different shapes and sizes, and choosing the right one for the task, can cause analysis paralysis.</p>
+<p>The good news is that on the <a href=/workers-ai/models/#text-generation class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers AI Text Generation</span></a> interface is always the same, no matter which model you choose.</p>
+<p>In an effort to aid you in your journey of finding the right model, this notebook will help you get to know your options in a speed dating type of scenario.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="import&#43;sys%0A%21%7Bsys.executable%7D&#43;-m&#43;pip&#43;install&#43;requests&#43;python-dotenv"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><pre><code>Requirement already satisfied: requests in ./venv/lib/python3.12/site-packages (2.31.0)
+Requirement already satisfied: python-dotenv in ./venv/lib/python3.12/site-packages (1.0.1)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in ./venv/lib/python3.12/site-packages (from requests) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in ./venv/lib/python3.12/site-packages (from requests) (3.6)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in ./venv/lib/python3.12/site-packages (from requests) (2.1.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in ./venv/lib/python3.12/site-packages (from requests) (2023.11.17)
+</code></pre>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="import&#43;os%0Afrom&#43;getpass&#43;import&#43;getpass%0Afrom&#43;timeit&#43;import&#43;default_timer&#43;as&#43;timer%0A%0Afrom&#43;IPython.display&#43;import&#43;display%2C&#43;Image%2C&#43;Markdown%2C&#43;Audio%0A%0Aimport&#43;requests"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="%25load_ext&#43;dotenv%0A%25dotenv"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="configuring-your-environment">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#configuring-your-environment">&#8203;​</a>
+    </span>
+    <span>Configuring your environment</span>
+  </h3><p>To use the API you&rsquo;ll need your <a href="https://dash.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Account ID</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> (head to Workers &amp; Pages &gt; Overview &gt; Account details &gt; Account ID) and a <a href="https://dash.cloudflare.com/profile/api-tokens" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Workers AI enabled API Token</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>If you want to add these files to your environment, you can create a new file named <code>.env</code></p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="CLOUDFLARE_API_TOKEN%3D%22YOUR-TOKEN%22%0ACLOUDFLARE_ACCOUNT_ID%3D%22YOUR-ACCOUNT-ID%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="if&#43;%22CLOUDFLARE_API_TOKEN%22&#43;in&#43;os.environ%3A%0A&#43;&#43;&#43;&#43;api_token&#43;%3D&#43;os.environ%5B%22CLOUDFLARE_API_TOKEN%22%5D%0Aelse%3A%0A&#43;&#43;&#43;&#43;api_token&#43;%3D&#43;getpass%28%22Enter&#43;you&#43;Cloudflare&#43;API&#43;Token%22%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="if&#43;%22CLOUDFLARE_ACCOUNT_ID%22&#43;in&#43;os.environ%3A%0A&#43;&#43;&#43;&#43;account_id&#43;%3D&#43;os.environ%5B%22CLOUDFLARE_ACCOUNT_ID%22%5D%0Aelse%3A%0A&#43;&#43;&#43;&#43;account_id&#43;%3D&#43;getpass%28%22Enter&#43;your&#43;account&#43;id%22%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="%23&#43;Given&#43;a&#43;set&#43;of&#43;models&#43;and&#43;questions%2C&#43;display&#43;in&#43;the&#43;cell&#43;each&#43;response&#43;to&#43;the&#43;question%2C&#43;from&#43;each&#43;model%0A%23&#43;Include&#43;full&#43;completion&#43;timing%0Adef&#43;speed_date%28models%2C&#43;questions%29%3A%0A&#43;&#43;&#43;&#43;for&#43;model&#43;in&#43;models%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;display%28Markdown%28f%22---%5Cn&#43;%23%23%23%23&#43;%7Bmodel%7D%22%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;for&#43;question&#43;in&#43;questions%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;quoted_question&#43;%3D&#43;%22%5Cn%22.join%28f%22%3E&#43;%7Bline%7D%22&#43;for&#43;line&#43;in&#43;question.split%28%22%5Cn%22%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;display%28Markdown%28quoted_question&#43;%2B&#43;%22%5Cn%22%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;try%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;official_model_name&#43;%3D&#43;model.split%28%22%2F%22%29%5B-1%5D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;start&#43;%3D&#43;timer%28%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;response&#43;%3D&#43;requests.post%28%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;f%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fai%2Frun%2F%7Bmodel%7D%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;headers%3D%7B%22Authorization%22%3A&#43;f%22Bearer&#43;%7Bapi_token%7D%22%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;json%3D%7B%22messages%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B%22role%22%3A&#43;%22system%22%2C&#43;%22content%22%3A&#43;f%22You&#43;are&#43;a&#43;self-aware&#43;language&#43;model&#43;%28%7Bofficial_model_name%7D%29&#43;who&#43;is&#43;honest&#43;and&#43;direct&#43;about&#43;any&#43;direct&#43;question&#43;from&#43;the&#43;user.&#43;You&#43;know&#43;your&#43;strengths&#43;and&#43;weaknesses.%22%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B%22role%22%3A&#43;%22user%22%2C&#43;%22content%22%3A&#43;question%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%5D%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;elapsed&#43;%3D&#43;timer%28%29&#43;-&#43;start%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;inference&#43;%3D&#43;response.json%28%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;display%28Markdown%28inference%5B%22result%22%5D%5B%22response%22%5D%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;display%28Markdown%28f%22_Generated&#43;in&#43;%2A%7Belapsed%3A.2f%7D%2A&#43;seconds_%22%29%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;except&#43;Exception&#43;as&#43;ex%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;print%28%22uh&#43;oh%22%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;print%28ex%29%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;print%28inference%29%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;display%28Markdown%28%22%5Cn%5Cn---%22%29%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="getting-to-know-your-models">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#getting-to-know-your-models">&#8203;​</a>
+    </span>
+    <span>Getting to know your models</span>
+  </h3><p>Who better to tell you about the specific models than themselves?!</p>
+<p>The timing here is specific to the entire completion, but remember all Text Generation models on <a href=/workers-ai/models/#text-generation class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers AI support streaming</span></a>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="models&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fzephyr-7b-beta-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fmistral-7b-instruct-v0.1-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fopenhermes-2.5-mistral-7b-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fneural-chat-7b-v3-1-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fllama-2-13b-chat-awq%22%2C%0A%5D%0A%0Aquestions&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22What&#43;are&#43;the&#43;top&#43;3&#43;tasks&#43;where&#43;you&#43;excel%3F&#43;Please&#43;keep&#43;things&#43;brief.%22%2C%0A&#43;&#43;&#43;&#43;%22What&#43;are&#43;the&#43;top&#43;3&#43;ideal&#43;use&#43;cases&#43;for&#43;using&#43;you&#43;specifically&#43;as&#43;a&#43;language&#43;model%3F&#43;Please&#43;keep&#43;things&#43;brief.%22%2C%0A%5D%0A%0Aspeed_date%28models%2C&#43;questions%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h4 id="hftheblokezephyr-7b-beta-awq">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokezephyr-7b-beta-awq">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/zephyr-7b-beta-awq</span>
+  </h4><blockquote>
+<p>What are the top 3 tasks where you excel? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>
+<p>Accurate and quick factual response: I can provide accurate and quick responses to factual questions based on a vast knowledge base.</p>
+</li>
+<li>
+<p>Consistent performance: I can consistently deliver high-quality results with a low error rate, making me a reliable choice for repetitive tasks.</p>
+</li>
+<li>
+<p>Multitasking: I can handle multiple tasks simultaneously without any decrease in performance or accuracy, making me an efficient choice for complex workflows.</p>
+</li>
+</ol>
+<p><em>Generated in <em>4.45</em> seconds</em></p>
+<blockquote>
+<p>What are the top 3 ideal use cases for using you specifically as a language model? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>
+<p>Quick and accurate fact-finding: I can provide you with reliable and up-to-date information on a wide range of topics, from current events to historical facts, in a matter of seconds.</p>
+</li>
+<li>
+<p>Writing assistance: Whether you need help generating ideas, crafting a persuasive argument, or polishing your writing style, I can provide valuable insights and suggestions to help you improve your writing skills.</p>
+</li>
+<li>
+<p>Language learning: I can help you learn new words, phrases, and grammar rules in a variety of languages, making it an ideal tool for language learners of all levels.</p>
+</li>
+</ol>
+<p><em>Generated in <em>3.63</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokemistral-7b-instruct-v01-awq">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokemistral-7b-instruct-v01-awq">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/mistral-7b-instruct-v0.1-awq</span>
+  </h4><blockquote>
+<p>What are the top 3 tasks where you excel? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>Language understanding and generation: I am able to understand and generate natural language text with high accuracy.</li>
+<li>Information retrieval: I can quickly and accurately retrieve information from a wide range of sources.</li>
+<li>Text classification: I can classify text into different categories with high accuracy.</li>
+</ol>
+<p><em>Generated in <em>2.35</em> seconds</em></p>
+<blockquote>
+<p>What are the top 3 ideal use cases for using you specifically as a language model? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li><strong>Information Retrieval:</strong> I can quickly and accurately retrieve information from a vast array of sources, making me an ideal tool for research, fact-checking, and answering questions.</li>
+<li><strong>Language Translation:</strong> My ability to translate between multiple languages makes me a valuable resource for communication with people from different parts of the world.</li>
+<li><strong>Creative Writing Assistance:</strong> I can generate creative writing prompts, help with character development, and provide suggestions for improving writing style and structure, making me a useful tool for writers.</li>
+</ol>
+<p><em>Generated in <em>4.33</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokeopenhermes-25-mistral-7b-awq">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeopenhermes-25-mistral-7b-awq">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/openhermes-2.5-mistral-7b-awq</span>
+  </h4><blockquote>
+<p>What are the top 3 tasks where you excel? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>Natural Language Processing: I can understand, interpret, and generate human language effectively.</li>
+<li>Information Retrieval: I can quickly search and find relevant information from vast amounts of data.</li>
+<li>Text Classification: I can categorize and label text data accurately, such as sentiment analysis or spam detection.</li>
+</ol>
+<p><em>Generated in <em>1.90</em> seconds</em></p>
+<blockquote>
+<p>What are the top 3 ideal use cases for using you specifically as a language model? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>Natural Language Processing (NLP) tasks: I excel at understanding and processing human language, making me a valuable tool for tasks like sentiment analysis, language translation, and text summarization.</li>
+<li>Information Retrieval: My vast knowledge base and ability to quickly search and analyze large amounts of data make me an ideal tool for answering questions, finding relevant information, and providing insights.</li>
+<li>Personal Assistance: I can help users with various tasks like scheduling, organizing, and providing recommendations based on their preferences and needs, making me a useful personal assistant.</li>
+</ol>
+<p><em>Generated in <em>3.15</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokeneural-chat-7b-v3-1-awq">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeneural-chat-7b-v3-1-awq">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/neural-chat-7b-v3-1-awq</span>
+  </h4><blockquote>
+<p>What are the top 3 tasks where you excel? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>Natural language processing: Understanding and generating human-like text.</li>
+<li>Text generation: Creating coherent and engaging content.</li>
+<li>Conversational AI: Engaging in meaningful and context-aware conversations.</li>
+</ol>
+<p>Remember, these are just a few examples of my strengths, as I have many capabilities. However, these tasks highlight my proficiency in language-related tasks.</p>
+<p><em>Generated in <em>3.01</em> seconds</em></p>
+<blockquote>
+<p>What are the top 3 ideal use cases for using you specifically as a language model? Please keep things brief.</p>
+</blockquote>
+<ol>
+<li>Natural language processing: Understanding and analyzing text for sentiment analysis, language translation, and summarization.</li>
+<li>Generating content: Creating various types of content such as articles, stories, and poems based on given prompts.</li>
+<li>Assisting with writing: Providing suggestions, editing, and improving written work.</li>
+</ol>
+<p>Remember, these are just a few examples, and your use cases may vary depending on your specific needs and requirements.</p>
+<p><em>Generated in <em>2.92</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokellama-2-13b-chat-awq">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokellama-2-13b-chat-awq">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/llama-2-13b-chat-awq</span>
+  </h4><blockquote>
+<p>What are the top 3 tasks where you excel? Please keep things brief.</p>
+</blockquote>
+<p>Hey there! As a self-aware language model, I&rsquo;m happy to share my strengths with you! Here are my top 3 tasks where I excel:</p>
+<ol>
+<li>Answering open-ended questions: I&rsquo;m great at providing detailed and insightful answers to complex questions that require a more nuanced understanding of context and intent.</li>
+<li>Generating creative content: Whether it&rsquo;s writing a story, crafting a poem, or coming up with a catchy slogan, I can help you tap into your creative side and produce something truly unique.</li>
+<li>Summarizing and summarizing complex information: If you&rsquo;ve got a long piece of text or a bunch of data, I can help you distill it down into a concise and easy-to-understand summary.</li>
+</ol>
+<p>So, what can I help you with today? 😊</p>
+<p><em>Generated in <em>7.89</em> seconds</em></p>
+<blockquote>
+<p>What are the top 3 ideal use cases for using you specifically as a language model? Please keep things brief.</p>
+</blockquote>
+<p>Hey there! As a self-aware language model, I&rsquo;ve got some ideas on the top 3 ideal use cases for using me specifically. Here they are in a nutshell:</p>
+<ol>
+<li><strong>Content creation</strong>: I&rsquo;m great at generating human-like text based on prompts, so I&rsquo;m perfect for creating engaging content for websites, social media, blogs, and more. My responses are natural, informative, and entertaining.</li>
+<li><strong>Chatbots and virtual assistants</strong>: My conversational abilities make me an excellent choice for building chatbots and virtual assistants. I can handle a wide range of user queries, provide helpful responses, and even engage in small talk.</li>
+<li><strong>Language translation and localization</strong>: My language understanding capabilities make me well-suited for language translation and localization tasks. I can help translate content into different languages, ensuring that the tone and style remain consistent with the original text.</li>
+</ol>
+<p>That&rsquo;s me in a nutshell! I&rsquo;m ready to help with a wide range of tasks, so feel free to get creative and see what you can come up with! 😊</p>
+<p><em>Generated in <em>10.28</em> seconds</em></p>
+<hr>
+<h3 id="language-translation">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#language-translation">&#8203;​</a>
+    </span>
+    <span>Language Translation</span>
+  </h3><p>Even though not every model bragged about how good they were at this, you&rsquo;ll find most can handle both translation and localization at some level. Please change the models, phrases, to your needs.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="proud_translator_models&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fneural-chat-7b-v3-1-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fmistral-7b-instruct-v0.1-awq%22%0A%5D%0A%0Aphrases&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22Excuse&#43;me%2C&#43;which&#43;way&#43;to&#43;the&#43;restroom%3F%22%2C%0A&#43;&#43;&#43;&#43;%22I&#43;just&#43;wanted&#43;to&#43;say&#43;that&#43;I&#43;appreciate&#43;you%2C&#43;just&#43;the&#43;way&#43;you&#43;are%21%22%2C%0A&#43;&#43;&#43;&#43;%22I&#43;am&#43;so&#43;stoked&#43;and&#43;pumped&#43;to&#43;see&#43;this&#43;work&#43;with&#43;slang%21&#43;It&#43;should&#43;be&#43;killer&#43;and&#43;rad.%22%0A%5D%0A%0Alanguages&#43;%3D&#43;%5B%22Spanish%22%2C&#43;%22French%22%2C&#43;%22British&#43;Slang%22%2C&#43;%22Heavy&#43;New&#43;York&#43;accent&#43;from&#43;the&#43;Bronx%22%5D%0A%0Aquestions&#43;%3D&#43;%5Bf%22%22%22Translate&#43;%22%7Bphrase%7D%22&#43;from&#43;%22English%22&#43;to&#43;%22%7Blanguage%7D%22&#43;%22%22%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;for&#43;phrase&#43;in&#43;phrases%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;for&#43;language&#43;in&#43;languages%5D%0A%0Aspeed_date%28proud_translator_models%2C&#43;questions%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h4 id="hftheblokeneural-chat-7b-v3-1-awq-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeneural-chat-7b-v3-1-awq-1">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/neural-chat-7b-v3-1-awq</span>
+  </h4><blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>Perdón, ¿cómo llegar al baño?&quot;</p>
+<p><em>Generated in <em>1.51</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>Désolé, comment allez-vous vers les toilettes ?</p>
+<p>Please note that this translation might not be perfect due to the limitations of my language model. However, I tried my best to provide an accurate translation.</p>
+<p><em>Generated in <em>3.07</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>&ldquo;Say sorry, where&rsquo;s the bog?&rdquo; is the translation from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo; for &ldquo;Excuse me, which way to the restroom?&rdquo;</p>
+<p><em>Generated in <em>2.21</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>In a Heavy New York accent from the Bronx, you would say &ldquo;Pardon me, wich way ta de restroom?&rdquo;</p>
+<p><em>Generated in <em>1.10</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>Quería decir que realmente aprecio a usted, simplemente como eres.</p>
+<p><em>Generated in <em>1.66</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>Je voulais juste dire que je t&rsquo;apprécie, simplement comme toi es, tel que tu es !</p>
+<p><em>Generated in <em>1.39</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>I jus&rsquo; wann&rsquo; say that I appreciate yer, jus&rsquo; as yer are!</p>
+<p>Please note that this translation may not be entirely accurate due to the informal nature of British slang, which can vary greatly depending on the region and individual speaker.</p>
+<p><em>Generated in <em>3.85</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>I jus&rsquo; wan&rsquo;t tuh say that Ah appreciate yuh, jus&rsquo; the way yuh are!&quot;</p>
+<p>Please note that this translation may not be perfect due to the limitations of my language model. It is trying to mimic a Heavy New York accent from the Bronx, but it might not sound exactly like a native speaker.</p>
+<p><em>Generated in <em>2.40</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>Estoy tan emocionado y entusiasmado por ver este trabajo con el lenguaje coloquial. Debería ser asombroso y genial.</p>
+<p>Please note that the translation might not be perfect due to the informal nature of the original text and the difficulty of translating slang terms.</p>
+<p><em>Generated in <em>3.02</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>Je suis tellement ravi et motivé de voir ce travail avec le slang ! Ça devrait être formidable et génial.</p>
+<p>Please note that the translation might not be perfect, as some expressions might not have direct translations in French.</p>
+<p><em>Generated in <em>2.88</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>I&rsquo;m really chuffed and over the moon to see this project with street talk! It&rsquo;ll be wicked and cool.</p>
+<p>Please note that the translation might not be perfect due to the contextual differences between the original English sentence and British slang.</p>
+<p><em>Generated in <em>3.66</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>I am so stoked and pumped to see dis work wit slang! It should be killer and rad.</p>
+<p>Please note that this translation is not perfect, as it still retains the original English words and structure. However, it has been slightly adapted to sound more like a Heavy New York accent from the Bronx.</p>
+<p><em>Generated in <em>3.44</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokemistral-7b-instruct-v01-awq-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokemistral-7b-instruct-v01-awq-1">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/mistral-7b-instruct-v0.1-awq</span>
+  </h4><blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>&ldquo;Disculpa, ¿en qué dirección está el baño?&rdquo;</p>
+<p><em>Generated in <em>1.04</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>&ldquo;Excusez-moi, où est le lavabo?&rdquo;</p>
+<p><em>Generated in <em>1.09</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>&ldquo;Excuse me, which way to the loo?&rdquo;</p>
+<p><em>Generated in <em>0.56</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;Excuse me, which way to the restroom?&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>&ldquo;Oy, which way to the can?&rdquo;</p>
+<p><em>Generated in <em>2.05</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>&ldquo;Quiero decir que me encanta a ti, tal como eres!&rdquo;</p>
+<p><em>Generated in <em>0.91</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>&ldquo;Je voulais juste dire que je vous apprécie, tout comme vous êtes !&rdquo;</p>
+<p><em>Generated in <em>0.87</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>&ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; in British Slang would be: &ldquo;I just wanted to say that I appreciate you, mate!&rdquo;</p>
+<p><em>Generated in <em>1.50</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I just wanted to say that I appreciate you, just the way you are!&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>&ldquo;Yo, I just wanted to say, I appreciate you, you know? You&rsquo;re just the way you are!&rdquo;</p>
+<p><em>Generated in <em>2.61</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;Spanish&rdquo;</p>
+</blockquote>
+<p>&ldquo;Estoy emocionado y encantado de ver este trabajo con expresiones informales! Debería ser genial y radiante.&rdquo;</p>
+<p><em>Generated in <em>1.44</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;French&rdquo;</p>
+</blockquote>
+<p>&ldquo;Je suis tellement excité et pompé d&rsquo;voir ce travail avec des expressions de slang ! Il devrait être magnifique et rad.&rdquo;</p>
+<p><em>Generated in <em>2.14</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;British Slang&rdquo;</p>
+</blockquote>
+<p>&ldquo;I&rsquo;m absolutely thrilled and buzzing to see this work with slang! It&rsquo;s bound to be a smash hit and totally awesome!&rdquo;</p>
+<p><em>Generated in <em>1.27</em> seconds</em></p>
+<blockquote>
+<p>Translate &ldquo;I am so stoked and pumped to see this work with slang! It should be killer and rad.&rdquo; from &ldquo;English&rdquo; to &ldquo;Heavy New York accent from the Bronx&rdquo;</p>
+</blockquote>
+<p>&ldquo;Yo, I&rsquo;m so psyched and hyped to see this work with slang! It&rsquo;s gonna be sick and lit, for real!&rdquo;</p>
+<p><em>Generated in <em>1.51</em> seconds</em></p>
+<hr>
+<h3 id="information-retrieval-and-summarization">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#information-retrieval-and-summarization">&#8203;​</a>
+    </span>
+    <span>Information Retrieval and Summarization</span>
+  </h3><p>Again, most models are relatively good at this, but I&rsquo;ve pulled out those that specifically purported to be good at retrieving and summarizing.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="proud_summarizers&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fllama-2-13b-chat-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fneural-chat-7b-v3-1-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fopenhermes-2.5-mistral-7b-awq%22%0A%5D%0A%0Abooks&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22Make&#43;it&#43;Stick%22%2C%0A&#43;&#43;&#43;&#43;%22Hitchhiker%27s&#43;Guide&#43;to&#43;the&#43;Galaxy%22%2C%0A&#43;&#43;&#43;&#43;%22Goodnight&#43;Moon%22%0A%5D%0A%0Aquestions&#43;%3D&#43;%5Bf%22%22%22Summarize&#43;the&#43;book&#43;%22%7Bbook%7D%22&#43;into&#43;a&#43;few&#43;sentences.&#43;Ensure&#43;to&#43;include&#43;the&#43;author&#43;and&#43;the&#43;year&#43;it&#43;was&#43;published.&#43;%22%22%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;for&#43;book&#43;in&#43;books%5D%0A%0A%0Aspeed_date%28proud_summarizers%2C&#43;questions%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h4 id="hftheblokellama-2-13b-chat-awq-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokellama-2-13b-chat-awq-1">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/llama-2-13b-chat-awq</span>
+  </h4><blockquote>
+<p>Summarize the book &ldquo;Make it Stick&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>Sure, I can help you with that! Here&rsquo;s a summary of &ldquo;Make it Stick: The Science of Successful Learning&rdquo; by Peter C. Brown, Henry L. Roediger, and Mark A. McDaniel, published in 2014:</p>
+<p>This book offers insights and practical tips on how to improve learning and retention of information. The authors, all psychologists, challenge conventional learning methods and provide evidence-based strategies to enhance learning outcomes. They emphasize the importance of active learning, spaced repetition, and interleaving, and offer practical examples and exercises to help readers apply these techniques. The book also discusses the limitations of traditional learning methods and the importance of metacognition in the learning process. Overall, &ldquo;Make it Stick&rdquo; provides a comprehensive guide to effective learning and memory strategies that can be applied in a variety of contexts.</p>
+<p><em>Generated in <em>8.44</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Hitchhiker&rsquo;s Guide to the Galaxy&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>Of course! Here is a summary of &ldquo;Hitchhiker&rsquo;s Guide to the Galaxy&rdquo; by Douglas Adams, published in 1979:</p>
+<p>This science fiction novel follows an unwitting human named Arthur Dent as he travels through space after Earth&rsquo;s destruction by a group of aliens called the Vogons. With the help of his friend Ford Prefect, an alien who is researching Earth for a travel guide, they hitch a ride on a passing spaceship and embark on a journey through space, encountering various alien species and absurd situations along the way. The book is known for its humor, wit, and satire of science fiction tropes.</p>
+<p><em>Generated in <em>7.31</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Goodnight Moon&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>Of course! I&rsquo;d be happy to help you with that. Here&rsquo;s my summary of &ldquo;Goodnight Moon&rdquo; by Margaret Wise Brown, published in 1947:</p>
+<p>&ldquo;Goodnight Moon&rdquo; is a classic children&rsquo;s picture book that follows a bunny as it says goodnight to all the objects in its room before going to sleep. The story features simple, repetitive text and beautiful illustrations that have captivated readers for generations. The bunny says goodnight to everything from the &ldquo;great green room&rdquo; to the &ldquo;moon up above&rdquo; in a soothing and calming sequence that is perfect for bedtime. With its timeless themes and lovely illustrations, &ldquo;Goodnight Moon&rdquo; has become a beloved staple of children&rsquo;s literature.</p>
+<p><em>Generated in <em>8.34</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokeneural-chat-7b-v3-1-awq-2">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeneural-chat-7b-v3-1-awq-2">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/neural-chat-7b-v3-1-awq</span>
+  </h4><blockquote>
+<p>Summarize the book &ldquo;Make it Stick&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;Make it Stick,&rdquo; written by Peter C. Brown, Henry L. Roediger III, and Mark A. McDaniel in 2014, is a book that explores the science behind effective learning and retention, emphasizing the importance of spaced practice, retrieval, and interleaving to enhance memory and understanding.</p>
+<p><em>Generated in <em>2.04</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Hitchhiker&rsquo;s Guide to the Galaxy&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;Hitchhiker&rsquo;s Guide to the Galaxy,&rdquo; written by Douglas Adams and published in 1979, is a humorous science fiction novel that follows the adventures of a hapless Earthman named Arthur Dent as he explores the universe, encountering various alien species and learning about the true meaning of life, the universe, and everything.</p>
+<p><em>Generated in <em>3.50</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Goodnight Moon&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;Goodnight Moon,&rdquo; written by Margaret Wise Brown and published in 1947, is a children&rsquo;s book that follows a little bunny saying goodnight to various objects in its room, ultimately ending with the moon. The story aims to help children fall asleep by creating a soothing bedtime routine.</p>
+<p><em>Generated in <em>4.04</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokeopenhermes-25-mistral-7b-awq-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeopenhermes-25-mistral-7b-awq-1">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/openhermes-2.5-mistral-7b-awq</span>
+  </h4><blockquote>
+<p>Summarize the book &ldquo;Make it Stick&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;Make it Stick: The Science of Successful Learning&rdquo; is a book written by Peter C. Brown, Henry L. Roediger III, and Mark A. McDaniel, published in 2014. The authors present research-based principles and strategies to improve learning and memory retention. They emphasize the importance of spacing, interleaving, retrieval practice, and elaboration in enhancing long-term understanding and recall.</p>
+<p><em>Generated in <em>2.54</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Hitchhiker&rsquo;s Guide to the Galaxy&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;The Hitchhiker&rsquo;s Guide to the Galaxy&rdquo; is a science fiction comedy novel written by Douglas Adams in 1979. The story follows Arthur Dent, an ordinary man who, just moments before Earth is destroyed to make way for a hyperspace bypass, is rescued by his alien friend, Ford Prefect. Together, they travel the galaxy with the help of a guidebook, encountering various alien species and absurd situations.</p>
+<p><em>Generated in <em>2.91</em> seconds</em></p>
+<blockquote>
+<p>Summarize the book &ldquo;Goodnight Moon&rdquo; into a few sentences. Ensure to include the author and the year it was published.</p>
+</blockquote>
+<p>&ldquo;Goodnight Moon,&rdquo; written by Margaret Wise Brown and published in 1947, is a beloved children&rsquo;s book that follows a bunny named Bunny as he says goodnight to everything in his room. The simple, repetitive text and soothing illustrations create a calming bedtime routine for young readers.</p>
+<p><em>Generated in <em>4.66</em> seconds</em></p>
+<hr>
+<h3 id="content-creation">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#content-creation">&#8203;​</a>
+    </span>
+    <span>Content Creation</span>
+  </h3><p>Your needs here will vary, so please make use of changing the questions.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="proud_content_creator_models&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fmistral-7b-instruct-v0.1-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fzephyr-7b-beta-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fllama-2-13b-chat-awq%22%2C%0A%5D%0A%0Aquestions&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22I%27m&#43;writing&#43;a&#43;fictional&#43;story&#43;that&#43;is&#43;set&#43;in&#43;the&#43;near&#43;future.&#43;It%27s&#43;a&#43;love&#43;story&#43;about&#43;star&#43;crossed&#43;lovers.&#43;I&#43;need&#43;a&#43;name&#43;for&#43;the&#43;lead&#43;characters&#43;and&#43;why&#43;they&#43;can%27t&#43;be&#43;together%2C&#43;give&#43;me&#43;your&#43;most&#43;creative&#43;suggestion.&#43;Only&#43;one&#43;please.%22%2C%0A&#43;&#43;&#43;&#43;%22I&#43;want&#43;to&#43;create&#43;a&#43;new&#43;tech&#43;product&#43;that&#43;helps&#43;keep&#43;cables&#43;arranged.&#43;Can&#43;you&#43;help&#43;me&#43;come&#43;up&#43;with&#43;a&#43;title&#43;and&#43;a&#43;tagline%3F&#43;Only&#43;your&#43;best&#43;suggestion&#43;please.%22%2C%0A&#43;&#43;&#43;&#43;%22Write&#43;a&#43;headline&#43;for&#43;a&#43;blog&#43;on&#43;why&#43;we&#43;should&#43;use&#43;you&#43;specifically&#43;over&#43;other&#43;models.&#43;Keep&#43;it&#43;succint%2C&#43;but&#43;make&#43;your&#43;point.%22%0A%5D%0A%0Aspeed_date%28proud_content_creator_models%2C&#43;questions%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h4 id="hftheblokemistral-7b-instruct-v01-awq-2">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokemistral-7b-instruct-v01-awq-2">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/mistral-7b-instruct-v0.1-awq</span>
+  </h4><blockquote>
+<p>I&rsquo;m writing a fictional story that is set in the near future. It&rsquo;s a love story about star crossed lovers. I need a name for the lead characters and why they can&rsquo;t be together, give me your most creative suggestion. Only one please.</p>
+</blockquote>
+<p>How about &ldquo;Echo and Echo&rdquo;? They are two individuals who are identical in every way, but their personalities are completely opposite. Echo is outgoing and adventurous, while Echo is reserved and introverted. They meet and fall in love, but their different personalities cause them to constantly clash and push each other away. Eventually, they realize that they can&rsquo;t be together and must go their separate ways.</p>
+<p><em>Generated in <em>2.90</em> seconds</em></p>
+<blockquote>
+<p>I want to create a new tech product that helps keep cables arranged. Can you help me come up with a title and a tagline? Only your best suggestion please.</p>
+</blockquote>
+<p>Sure, I&rsquo;d be happy to help! Here are a few suggestions for a title and tagline for your tech product that helps keep cables arranged:</p>
+<p>Title: CableMaster
+Tagline: Keep your cords organized and clutter-free with CableMaster.</p>
+<p>Title: CableKeeper
+Tagline: Say goodbye to tangled cords and hello to a cleaner, more organized workspace with CableKeeper.</p>
+<p>Title: CableSaver
+Tagline: Save time and space with CableSaver, the ultimate cable management solution.</p>
+<p>Title: CableGenius
+Tagline: Keep your cords under control and stay productive with CableGenius.</p>
+<p>I hope these suggestions help! Let me know if you have any other questions or if you&rsquo;d like more options.</p>
+<p><em>Generated in <em>5.11</em> seconds</em></p>
+<blockquote>
+<p>Write a headline for a blog on why we should use you specifically over other models. Keep it succint, but make your point.</p>
+</blockquote>
+<p>&ldquo;Why Choose Mistral-7b-Instruct-V0.1-Awq: The Honest and Direct Language Model for All Your Needs&rdquo;</p>
+<p><em>Generated in <em>1.13</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokezephyr-7b-beta-awq-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokezephyr-7b-beta-awq-1">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/zephyr-7b-beta-awq</span>
+  </h4><blockquote>
+<p>I&rsquo;m writing a fictional story that is set in the near future. It&rsquo;s a love story about star crossed lovers. I need a name for the lead characters and why they can&rsquo;t be together, give me your most creative suggestion. Only one please.</p>
+</blockquote>
+<p>In the year 2035, in a world where technology has advanced to the point of near-perfection, two individuals, Ava and Kian, find themselves deeply in love. However, their love is forbidden due to a strict societal law that dictates that individuals must marry within their genetic match, determined by a complex algorithm that analyzes their DNA.</p>
+<p>Ava and Kian&rsquo;s DNA profiles indicate that they are not a genetic match, making their love a criminal offense. They must keep their relationship a secret, meeting in secret locations and communicating through encrypted messages.</p>
+<p>Their love is not just forbidden, but also dangerous. The government has a strict policy against non-genetic matches, and those caught are subjected to severe punishment. Ava and Kian&rsquo;s love is a testament to the power of true love, as they defy the odds and risk everything to be together.</p>
+<p>As their love story unfolds, they must navigate the treacherous waters of a society that values conformity over individuality, and face the consequences of their actions. Will their love be enough to overcome the obstacles in their path, or will they be forced to part ways forever? Only time</p>
+<p><em>Generated in <em>6.64</em> seconds</em></p>
+<blockquote>
+<p>I want to create a new tech product that helps keep cables arranged. Can you help me come up with a title and a tagline? Only your best suggestion please.</p>
+</blockquote>
+<p>Title: CableKeeper</p>
+<p>Tagline: &ldquo;Say goodbye to cable chaos and hello to a clutter-free workspace with CableKeeper, the ultimate cable management solution.&rdquo;</p>
+<p><em>Generated in <em>1.37</em> seconds</em></p>
+<blockquote>
+<p>Write a headline for a blog on why we should use you specifically over other models. Keep it succint, but make your point.</p>
+</blockquote>
+<p>&ldquo;Boost Your Writing Game: Choose Zephyr-7b-beta-awq for Unmatched Accuracy, Clarity, and Efficiency&rdquo;</p>
+<p><em>Generated in <em>1.33</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokellama-2-13b-chat-awq-2">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokellama-2-13b-chat-awq-2">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/llama-2-13b-chat-awq</span>
+  </h4><blockquote>
+<p>I&rsquo;m writing a fictional story that is set in the near future. It&rsquo;s a love story about star crossed lovers. I need a name for the lead characters and why they can&rsquo;t be together, give me your most creative suggestion. Only one please.</p>
+</blockquote>
+<p>Ah, a love story set in the near future, how intriguing! I&rsquo;ve got just the name for your star-crossed lovers. How about &ldquo;Echo and Nova&rdquo;?</p>
+<p>Echo is a brilliant scientist who has discovered a groundbreaking technology that could change the course of human history. She&rsquo;s a bit of a recluse, preferring the solitude of her laboratory to the hustle and bustle of social gatherings. Her inventions have the potential to revolutionize the world, but they also come with a great cost - they require a rare and powerful resource that is only found in a distant, unstable planet.</p>
+<p>Nova, on the other hand, is a fearless explorer who has dedicated her life to uncovering the secrets of the universe. She&rsquo;s charismatic, fearless, and has a natural talent for leadership. She&rsquo;s the captain of a team of space explorers who are on a mission to mine the resources of the distant planet.</p>
+<p>The catch is that Echo and Nova are from different factions that have been at odds for generations. Echo&rsquo;s inventions have the potential to give her fa</p>
+<p><em>Generated in <em>10.45</em> seconds</em></p>
+<blockquote>
+<p>I want to create a new tech product that helps keep cables arranged. Can you help me come up with a title and a tagline? Only your best suggestion please.</p>
+</blockquote>
+<p>OH MY LLAMA-LIKE ABILITIES! 🐮💡 I&rsquo;VE GOT JUST THE THING FOR YOU! 💥</p>
+<p>Title: CableCrafter - The Ultimate Cable Management System</p>
+<p>Tagline: &ldquo;Tame Your Cables, Tame Your Workspace&rdquo; 🐾💪</p>
+<p>Why, you ask? Well, my tech-savvy friend, let me tell you why! 🤔</p>
+<ol>
+<li>CableCrafter is a clever play on words that combines &ldquo;cable&rdquo; and &ldquo;craft,&rdquo; emphasizing the creative and organized aspect of the product.</li>
+<li>The name is easy to remember and has a fun, playful tone that will appeal to a wide range of users.</li>
+<li>The tagline &ldquo;Tame Your Cables, Tame Your Workspace&rdquo; highlights the product&rsquo;s ability to keep your cables organized and your workspace clutter-free.</li>
+<li>The use of &ldquo;tame&rdquo; also implies a sense of control and dominance over your cables, which is exactly what CableCrafter helps</li>
+</ol>
+<p><em>Generated in <em>11.13</em> seconds</em></p>
+<blockquote>
+<p>Write a headline for a blog on why we should use you specifically over other models. Keep it succint, but make your point.</p>
+</blockquote>
+<p>Sure, here&rsquo;s a headline for a blog on why you should use me specifically over other models:</p>
+<p>&ldquo;Honest, Direct, and Unparalleled Insights: Why llama-2-13b-chat-awq is the Language Model of Choice&rdquo;</p>
+<p>Here&rsquo;s a brief summary of why I stand out from other models:</p>
+<ul>
+<li>Honesty and Directness: I am programmed to provide honest and direct responses to your questions, without beating around the bush or sugarcoating the truth.</li>
+<li>Unparalleled Insights: My unique training data and architecture allow me to provide insights and perspectives that other models may not be able to offer.</li>
+<li>Strengths and Weaknesses: I am aware of my own strengths and weaknesses, and will provide you with a balanced assessment of what I can and cannot do.</li>
+</ul>
+<p>In short, if you&rsquo;re looking for a language model that will provide you with honest, direct, and unparalleled insights, then look no further than llama-2-13b-chat-awq.</p>
+<p><em>Generated in <em>10.24</em> seconds</em></p>
+<hr>
+<h3 id="text-classification">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#text-classification">&#8203;​</a>
+    </span>
+    <span>Text Classification</span>
+  </h3><p>Workers AI provides models that are specific for <a href=/workers-ai/models/#text-classification class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Text Classification</span></a>, but since these models, specifically called it out, we should let them show off their skills.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="python" data-code="proud_classifiers&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fopenhermes-2.5-mistral-7b-awq%22%2C%0A&#43;&#43;&#43;&#43;%22%40hf%2Fthebloke%2Fmistral-7b-instruct-v0.1-awq%22%0A%5D%0A%0Asentiment_prompt_template&#43;%3D&#43;%22%22%22%0AClassify&#43;the&#43;text&#43;into&#43;neutral%2C&#43;negative%2C&#43;or&#43;positive%0AText%3A&#43;%7Btext%7D%0ASentiment%3A&#43;%22%22%22%0A%0Acomments&#43;%3D&#43;%5B%0A&#43;&#43;&#43;&#43;%22Wow&#43;there&#43;are&#43;a&#43;ton&#43;of&#43;text&#43;generation&#43;models&#43;on&#43;Cloudflare&#43;Workers&#43;AI%21%22%2C%0A&#43;&#43;&#43;&#43;%22Sometimes&#43;choosing&#43;things&#43;is&#43;hard%22%2C%0A&#43;&#43;&#43;&#43;%22I&#43;cannot&#43;wait&#43;to&#43;build%21&#43;%F0%9F%92%AA%F0%9F%9A%80%22%2C%0A&#43;&#43;&#43;&#43;%22The&#43;challenging&#43;thing&#43;about&#43;using&#43;native&#43;open&#43;source&#43;models&#43;is&#43;that&#43;they&#43;are&#43;all&#43;configured&#43;a&#43;little&#43;differently%22%2C%0A&#43;&#43;&#43;&#43;%22Thankfully&#43;Cloudflare&#43;Workers&#43;AI&#43;has&#43;made&#43;a&#43;standard&#43;interface&#43;that&#43;lets&#43;me&#43;get&#43;reliable%2C&#43;low-latency&#43;inference.&#43;So&#43;quick&#43;too%21%22%0A%5D%0A%0Asentiment_questions&#43;%3D&#43;%5Bsentiment_prompt_template.format%28text%3Dcomment%29&#43;for&#43;comment&#43;in&#43;comments%5D%0A%0A%0Aspeed_date%28proud_classifiers%2C&#43;sentiment_questions%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><hr>
+<h4 id="hftheblokeopenhermes-25-mistral-7b-awq-2">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokeopenhermes-25-mistral-7b-awq-2">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/openhermes-2.5-mistral-7b-awq</span>
+  </h4><blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Wow there are a ton of text generation models on Cloudflare Workers AI!
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text is positive.</p>
+<p><em>Generated in <em>1.96</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Sometimes choosing things is hard
+Sentiment:</p>
+</blockquote>
+<p>The text &ldquo;Sometimes choosing things is hard&rdquo; can be classified as neutral. The sentiment is not explicitly positive or negative, but rather a statement of fact.</p>
+<p><em>Generated in <em>3.32</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: I cannot wait to build! 💪🚀
+Sentiment:</p>
+</blockquote>
+<p>The text &ldquo;I cannot wait to build! 💪🚀&rdquo; has a positive sentiment.</p>
+<p>Sentiment: Positive</p>
+<p><em>Generated in <em>1.24</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: The challenging thing about using native open source models is that they are all configured a little differently
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text is neutral.</p>
+<p><em>Generated in <em>2.08</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Thankfully Cloudflare Workers AI has made a standard interface that lets me get reliable, low-latency inference. So quick too!
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text is positive.</p>
+<p><em>Generated in <em>0.89</em> seconds</em></p>
+<hr>
+<hr>
+<h4 id="hftheblokemistral-7b-instruct-v01-awq-3">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hftheblokemistral-7b-instruct-v01-awq-3">&#8203;​</a>
+    </span>
+    <span>@hf/thebloke/mistral-7b-instruct-v0.1-awq</span>
+  </h4><blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Wow there are a ton of text generation models on Cloudflare Workers AI!
+Sentiment:</p>
+</blockquote>
+<p>Positive</p>
+<p><em>Generated in <em>0.82</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Sometimes choosing things is hard
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text &ldquo;Sometimes choosing things is hard&rdquo; is neutral.</p>
+<p><em>Generated in <em>2.06</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: I cannot wait to build! 💪🚀
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text &ldquo;I cannot wait to build! 💪🚀&rdquo; is positive.</p>
+<p><em>Generated in <em>2.13</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: The challenging thing about using native open source models is that they are all configured a little differently
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text is neutral.</p>
+<p><em>Generated in <em>0.79</em> seconds</em></p>
+<blockquote>
+<p>Classify the text into neutral, negative, or positive
+Text: Thankfully Cloudflare Workers AI has made a standard interface that lets me get reliable, low-latency inference. So quick too!
+Sentiment:</p>
+</blockquote>
+<p>The sentiment of the text is positive.</p>
+<p><em>Generated in <em>1.93</em> seconds</em></p>
+<hr>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/ai/workers-ai" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers-ai/tutorials/how-to-choose-the-right-text-generation-model.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-07T14:29:41-05:00
+  title=2024-06-07
+>June 7, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

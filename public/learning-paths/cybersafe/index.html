@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en" theme="light" is-site-page is-docs-page>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Project Cybersafe · Cloudflare Docs</title>
+  <meta name="title" content="Project Cybersafe · Cloudflare Docs" />
+  <meta name="image" content="https://developers.cloudflare.com/zt-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Project Cybersafe · Cloudflare Docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Project Cybersafe · Cloudflare Docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Prevent children from accessing obscene or harmful content over the Internet." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta property="og:title" content="Project Cybersafe · Cloudflare Docs" />
+  <meta property="og:description" content="Prevent children from accessing obscene or harmful content over the Internet." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/learning-paths/cybersafe/" />
+
+  <meta name="twitter:title" content="Project Cybersafe · Cloudflare Docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta name="twitter:description" content="Prevent children from accessing obscene or harmful content over the Internet." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="learning-paths"><meta name="algolia_product_filter" content="Home page"><meta name="algolia_page_title" content="Project Cybersafe">
+  <meta name="pcx_word_count" content="300"><meta name="pcx_last_modified" content="365"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="learning-path" />
+  <meta name="algolia_content_type" content="Learning Path"><meta name="pcx_content_group" content="Cloudflare One" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/learning-paths/cybersafe/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2"}</script>
+  <meta name="docsearch:product" content="" /><link rel="stylesheet preconnect" href="/learning-paths.css" /><link rel="stylesheet preconnect" href="/codeBlock.css" />
+
+  <link rel="stylesheet preconnect" href="/home.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/home.js" defer></script></head>
+
+<body>
+  <div class="DocsPage">
+    <div class="SiteHeader">
+      <div class="SiteHeader--container">
+        <div class="SiteHeader--logo-section">
+          <a aria-current="page" class="SiteHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+            <div class="DocsNavLogoLockup">
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - f12cfef8bcacccb4eddc846c48455add" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - f12cfef8bcacccb4eddc846c48455add">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span></div>
+          </a>
+        </div>
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div><div class="SiteHeader--nav">
+          <a class="SiteHeader--nav-link" href="/products/"><span>Product directory</span></a>
+          <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
+          <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
+          <a class="SiteHeader--nav-link"
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
+          <a class="SiteHeader--nav-link"
+          href="https://dash.cloudflare.com"><span>Log in</span></a>
+        </div>
+        <div class="SiteHeader--theme-toggle"><button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+            <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+              <path
+                d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+              </path>
+            </svg>
+          </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+      </div>
+    </div>
+
+    
+    <div class="SiteHeader---shadow"></div>
+    <div class="SiteHeader---shadow-cover"></div>
+    
+
+    <main class="DocsBody">
+      
+          <div id="docs-content" data-reach-skip-nav-content></div>
+          <div class="DocsContent" page-type="developers-site">
+            <article class="DocsMarkdown">
+<p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
+
+<div class="header">
+<h1>Project Cybersafe Schools</h1>
+<p><em>Learning path</em></p>
+<p>Prevent children from accessing obscene or harmful content over the Internet. Go to <a href='https://www.cloudflare.com/lp/cybersafe-schools/'>Project Cybersafe Schools</a> to apply.</p>
+<p></p>
+<p class="DocsMarkdown--button-group">
+  <span class="DocsMarkdown--button-group-content">
+    <a href="/learning-paths/cybersafe/concepts/" class="getStartedButton learningNavigation Button Button-is-docs-primary">
+      <span class="getStarted DocsMarkdown--link-content">Start path</span>
+    </a>
+</span>
+</p>
+</div>
+
+
+
+<div class="background">
+  <p class="estimate"><strong>Modules</strong>: <span>4</span>&emsp;&emsp;&emsp;<strong>Reading time</strong>: <span>30 min</span></p><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="concepts"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#concepts"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Concepts</span>
+    </h2>
+    </div><p>Learn the technical concepts behind Project Cybersafe Schools.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/cybersafe/concepts/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 4 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/cybersafe/concepts/cipa-overview/">Project Cybersafe Schools and CIPA</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/concepts/what-is-dns/">What is DNS?</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/concepts/what-is-dns-filtering/">What is DNS filtering?</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/concepts/what-is-area1/">What is Area 1 email security?</a>
+              <p class="readingTime">8&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="account-creation"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#account-creation"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Account Creation</span>
+    </h2>
+    </div><p>Get started by creating a Cloudflare account and initializing the Zero Trust and Area 1 dashboards.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/cybersafe/account-creation/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 3 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/cybersafe/account-creation/create-cloudflare-account/">Create a Cloudflare account</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/account-creation/create-zero-trust-org/">Create a Zero Trust organization</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/account-creation/create-area1-org/">Create an Area 1 account</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="onboarding-area-1-email-security"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#onboarding-area-1-email-security"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Onboarding Area 1 Email Security</span>
+    </h2>
+    </div><p>Continue securing your environment by protecting against email phishing attacks.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/cybersafe/area1-onboarding/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 2 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/cybersafe/area1-onboarding/area1-inline/">Deploy inline</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/area1-onboarding/area1-next-steps/">Next steps</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="onboarding-cloudflare-gateway"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#onboarding-cloudflare-gateway"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Onboarding Cloudflare Gateway</span>
+    </h2>
+    </div><p>Now that your Cloudflare environment is ready and you have established a foundation of the technical concepts behind Project Cybersafe Schools, you are ready to test and onboard your DNS traffic.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/cybersafe/gateway-onboarding/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 7 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-connection-methods/">Gateway connection methods</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-locations/">Gateway locations</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-update-local-resolver/">Update local DNS resolver</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-verify-local-connectivity/">Verify local connectivity</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-create-test-policy/">Create a test policy</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-create-cipa-policy/">Create CIPA policy</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/cybersafe/gateway-onboarding/gateway-block-pages/">Block pages</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div></div>
+  
+</article>
+          </div>
+          
+    </main><div class="SiteFooter">
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Stay in touch</p>
+    </div>
+
+    <ul>
+      <li><a href="https://github.com/cloudflare">GitHub</a></li>
+      <li><a href="https://discord.cloudflare.com">Discord</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Resources</p>
+    </div>
+    <ul>
+      <li><a href="/api/">API</a></li>
+      <li><a href="/fundamentals/">New to Cloudflare?</a></li>
+      <li><a href="/products/">Products</a></li>
+      <li><a href="/sponsorships/">Sponsorships</a></li>
+      <li><a href="https://github.com/cloudflare">Open Source</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Support</p>
+    </div>
+    <ul>
+      <li><a href="https://support.cloudflare.com/">Help Center</a></li>
+      <li><a href="https://www.cloudflarestatus.com/">System Status</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/compliance-resources/">Compliance</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/gdpr/">GDPR</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>What we do</p>
+    </div>
+    <ul>
+      <li><a href="https://www.cloudflare.com/people/">Our Team</a></li>
+      <li><a href="https://www.cloudflare.com/careers/">Careers</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Tools</p>
+    </div>
+    <ul>
+      <li><a href="https://radar.cloudflare.com">Cloudflare Radar</a></li>
+      <li><a href="https://speed.cloudflare.com/">Speed Test</a></li>
+      <li><a href="https://isbgpsafeyet.com/">Is BGP Safe Yet?</a></li>
+      <li><a href="https://rpki.cloudflare.com/">RPKI Toolkit</a></li>
+      <li><a href="https://ct.cloudflare.com/">Certificate Transparency</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="legalInformation">
+  <ul>
+    <li>© 2024 Cloudflare, Inc.</li>
+    <li><a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a></li>
+    <li><a href="https://www.cloudflare.com/website-terms/">Terms of Use</a></li>
+    <li><a href="https://www.cloudflare.com/disclosure/">Report Security Issues</a></li>
+    <li><a href="https://www.cloudflare.com/trademark/">Trademark</a></li>
+    <li>
+      
+        <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+      
+    </li>
+  </ul>
+</div>
+</div>
+</body>
+
+</html>

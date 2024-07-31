@@ -1,0 +1,547 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Workers</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/</link>
+    <description>Updates to Workers</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/workers/platform/changelog/index.xml" rel="self" />
+    <lastBuildDate>Fri, 19 Jul 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Workers - 2024-07-19</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-07-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Workers with the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/bindings/mtls/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;mTLS&lt;/span&gt;&lt;/a&gt; binding now support &lt;a href=https://developers.cloudflare.com/workers/configuration/versions-and-deployments/gradual-deployments/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Gradual Deployments&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 19 Jul 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-07-11</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-07-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added community contributed tutorial on how to create &lt;a href=https://developers.cloudflare.com/developer-spotlight/tutorials/custom-access-control-for-files/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;custom access control for files in R2 using D1 and Workers&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Added community contributed tutorial on how to &lt;a href=https://developers.cloudflare.com/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;send form submissions using Astro and Resend&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Added community contributed tutorial on how to &lt;a href=https://developers.cloudflare.com/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;create a sitemap from Sanity CMS with Workers&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 11 Jul 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-07-01</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-07-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;When using &lt;a href=https://developers.cloudflare.com/workers/configuration/versions-and-deployments/gradual-deployments/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Gradual Deployments&lt;/span&gt;&lt;/a&gt;, you can now use &lt;a href=https://developers.cloudflare.com/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;version overrides&lt;/span&gt;&lt;/a&gt; to send a request to a specific version of your Worker.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 01 Jul 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-06-24</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-06-24</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/durable-objects/best-practices/error-handling class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Exceptions&lt;/span&gt;&lt;/a&gt; thrown from Durable Object internal operations and tunneled to the caller may now be populated with a &lt;code&gt;.retryable: true&lt;/code&gt; property if the exception was likely due to a transient failure, or populated with an &lt;code&gt;.overloaded: true&lt;/code&gt; property if the exception was due to &lt;a href=https://developers.cloudflare.com/durable-objects/observability/troubleshooting/#durable-object-is-overloaded class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;overload&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 24 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-06-20</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-06-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the &lt;a href=&#34;https://developers.cloudflare.com/api/operations/worker-deployments-create-deployment&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Deployments API&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; where the value of a secret is different than the currently deployed version. A &lt;code&gt;?force=true&lt;/code&gt; query parameter can be specified to proceed with the rollback.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 20 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-06-19</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-06-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;When using &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt;, the &lt;code&gt;buffer&lt;/code&gt; module now has an implementation of &lt;code&gt;isAscii()&lt;/code&gt; and &lt;code&gt;isUtf8()&lt;/code&gt; methods.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where exceptions propagated from &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/rpc class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;JS RPC&lt;/span&gt;&lt;/a&gt; calls to Durable Objects would lack the &lt;code&gt;.remote&lt;/code&gt; property that exceptions from &lt;code&gt;fetch()&lt;/code&gt; calls to Durable Objects have.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 19 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-06-12</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-06-12</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Blob and Body objects now include a new &lt;code&gt;bytes()&lt;/code&gt; method, reflecting &lt;a href=&#34;https://w3c.github.io/FileAPI/#bytes-method-algo&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;recent&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://fetch.spec.whatwg.org/#dom-body-bytes&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;additions&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; to web standards.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 12 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-05-17</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-05-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Updated v8 to version 12.6.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 17 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-05-15</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-05-15</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The new &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#use-standard-url-parsing-in-fetch class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;fetch_standard_url&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt; will become active by default on June 3rd, 2024 and ensures that URLs passed into the &lt;code&gt;fetch(...)&lt;/code&gt; API, the &lt;code&gt;new Request(...)&lt;/code&gt; constructor, and redirected requests will be parsed using the standard WHATWG URL parser.&lt;/li&gt;
+&lt;li&gt;DigestStream is now more efficient and exposes a new &lt;code&gt;bytesWritten&lt;/code&gt; property that indicates that number of bytes written to the digest.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 15 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-05-13</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-05-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Updated v8 to version 12.5.&lt;/li&gt;
+&lt;li&gt;A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#properly-extract-blob-mime-type-from-content-type-headers class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;blob_standard_mime_type&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 13 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-05-03</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-05-03</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed RPC to/from Durable Objects not honoring the output gate.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;internal_stream_byob_return_view&lt;/code&gt; compatibility flag can be used to improve the standards compliance of the &lt;code&gt;ReadableStreamBYOBReader&lt;/code&gt; implementation when working with BYOB streams provided by the runtime (like in &lt;code&gt;response.body&lt;/code&gt; or &lt;code&gt;request.body&lt;/code&gt;). The flag ensures that the final read result will always include a &lt;code&gt;value&lt;/code&gt; field whose value is set to an empty &lt;code&gt;Uint8Array&lt;/code&gt; whose underlying &lt;code&gt;ArrayBuffer&lt;/code&gt; is the same memory allocation as the one passed in on the call to &lt;code&gt;read()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The Web platform standard &lt;code&gt;reportError(err)&lt;/code&gt; global API is now available in workers. The reported error will first be emitted as an ’error’ event on the global scope then reported in both the console output and tail worker exceptions by default.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 03 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-26</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-26</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Updated v8 to version 12.4.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 26 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-11</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Improve Streams API spec compliance by exposing &lt;code&gt;desiredSize&lt;/code&gt; and other properties on stream class prototypes&lt;/li&gt;
+&lt;li&gt;The new &lt;code&gt;URL.parse(...)&lt;/code&gt; method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.&lt;/li&gt;
+&lt;li&gt;R2 bindings objects now have a &lt;code&gt;storageClass&lt;/code&gt; option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 11 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-05</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;A new &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/rpc class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;JavaScript-native remote procedure call (RPC) API&lt;/span&gt;&lt;/a&gt; is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 05 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-04</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-04</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/cache/#put class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;put()&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; per request. Other &lt;a href=https://developers.cloudflare.com/workers/platform/limits/#cache-api-limits class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Cache API Limits&lt;/span&gt;&lt;/a&gt; continue to apply.&lt;/li&gt;
+&lt;li&gt;The Web standard &lt;code&gt;ReadableStream.from()&lt;/code&gt; API is now implemented. The API enables creating a &lt;code&gt;ReadableStream&lt;/code&gt; from a either a sync or async iterable.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 04 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-03</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-03</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;When the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#brotli-content-encoding-support class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;brotli_content_encoding&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Brotli&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; compression algorithm. Refer to &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;this docs section&lt;/span&gt;&lt;/a&gt; for more detail.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 03 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-02</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-02</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;You can now &lt;a href=https://developers.cloudflare.com/workers/languages/python class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;write Workers in Python&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 02 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-04-01</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-04-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The new &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#handling-custom-thenables class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;unwrap_custom_thenables&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt; enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the &lt;code&gt;ctx.waitUntil(...)&lt;/code&gt; method).&lt;/li&gt;
+&lt;li&gt;TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.&lt;/li&gt;
+&lt;li&gt;The &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt; now includes an implementation of the &lt;a href=&#34;https://nodejs.org/api/test.html#class-mocktracker&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;MockTracker&lt;/code&gt; API from &lt;code&gt;node:test&lt;/code&gt;&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;. This is not an implementation of the full &lt;code&gt;node:test&lt;/code&gt; module, and mock timers are currently not included.&lt;/li&gt;
+&lt;li&gt;Exceptions reported to &lt;a href=https://developers.cloudflare.com/workers/observability/logging/tail-workers/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Tail Workers&lt;/span&gt;&lt;/a&gt; now include a “stack” property containing the exception’s stack trace, if available.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 01 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-03-11</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-03-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.&lt;/li&gt;
+&lt;li&gt;A new compat flag &lt;code&gt;fetcher_no_get_put_delete&lt;/code&gt; removes the &lt;code&gt;get()&lt;/code&gt;, &lt;code&gt;put()&lt;/code&gt;, and &lt;code&gt;delete()&lt;/code&gt; methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around &lt;code&gt;fetch()&lt;/code&gt;, but were never documented.&lt;/li&gt;
+&lt;li&gt;Updated v8 to version 12.3.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 11 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-02-24</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-02-24</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;v8 updated to version 12.2.&lt;/li&gt;
+&lt;li&gt;You can now use &lt;a href=&#34;https://v8.dev/features/iterator-helpers&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Iterator helpers&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; in Workers.&lt;/li&gt;
+&lt;li&gt;You can now use &lt;a href=&#34;https://github.com/tc39/proposal-set-methods&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;new methods on &lt;code&gt;Set&lt;/code&gt;&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, such as &lt;code&gt;Set.intersection&lt;/code&gt; and &lt;code&gt;Set.union&lt;/code&gt;, in Workers.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Sat, 24 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2024-02-23</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2024-02-23</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Sockets now support an &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/#socket class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;opened&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; attribute.&lt;/li&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/durable-objects/api/alarms/#alarm class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Durable Object alarm handlers&lt;/span&gt;&lt;/a&gt; now impose a maximum wall time of 15 minutes.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 23 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-12-04</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-12-04</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The Web Platform standard &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;navigator.sendBeacon(...)&lt;/code&gt; API&lt;/span&gt;&lt;/a&gt; is now provided by the Workers runtime.&lt;/li&gt;
+&lt;li&gt;V8 updated to 12.0.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 04 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-10-30</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-10-30</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;A new usage model called &lt;a href=https://developers.cloudflare.com/workers/platform/pricing/#workers class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Workers Standard&lt;/span&gt;&lt;/a&gt; is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the &lt;a href=&#34;https://blog.cloudflare.com/workers-pricing-scale-to-zero/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; for more information.&lt;/li&gt;
+&lt;li&gt;The usage model set in a script’s wrangler.toml will be ignored after an account has opted-in to &lt;a href=https://developers.cloudflare.com/workers/platform/pricing/#workers class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Workers Standard&lt;/span&gt;&lt;/a&gt; pricing. It must be configured through the dashboard (Workers &amp; Pages &gt; Select your Worker &gt; Settings &gt; Usage Model).&lt;/li&gt;
+&lt;li&gt;Workers and Pages Functions on the Standard usage model can set custom &lt;a href=https://developers.cloudflare.com/workers/wrangler/configuration/#limits class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;CPU limits&lt;/span&gt;&lt;/a&gt; for their Workers&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 30 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-10-20</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-10-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;crypto_preserve_public_exponent&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;
+compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+the WebCrypto API.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 20 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-10-18</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-10-18</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+Cron Triggers across all Workers still apply.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 18 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-10-12</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-10-12</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;A &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;TCP Socket&lt;/span&gt;&lt;/a&gt;’s WritableStream now ensures the connection has opened before resolving the promise returned by &lt;code&gt;close&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 12 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-10-09</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-10-09</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The Web Platform standard &lt;a href=&#34;https://dom.spec.whatwg.org/#interface-customevent&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;CustomEvent&lt;/code&gt; class&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; is now available in Workers.&lt;/li&gt;
+&lt;li&gt;Fixed a bug in the WebCrypto API where the &lt;code&gt;publicExponent&lt;/code&gt; field of the algorithm of RSA keys would have the wrong type. Use the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#webcrypto-preserve-publicexponent-field class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;crypto_preserve_public_exponent&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt; to enable the new behavior.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 09 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-09-14</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-09-14</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;An implementation of the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/crypto/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;node:crypto&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;
+API from Node.js is now available when the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt;
+is enabled.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 14 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-07-14</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-07-14</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;An implementation of the &lt;a href=&#34;https://nodejs.org/api/util.html#class-utilmimetype&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;util.MIMEType&lt;/code&gt;&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+API from Node.js is now available when the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag&lt;/span&gt;&lt;/a&gt;
+is enabled.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 14 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-07-07</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-07-07</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;An implementation of the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/process class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;process.env&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; API from Node.js is now available when using the &lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag.&lt;/li&gt;
+&lt;li&gt;An implementation of the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/nodejs/diagnostics-channel class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;diagnostics_channel&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; API from Node.js is now available when using the &lt;code&gt;nodejs_compat&lt;/code&gt; compatibility flag.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 07 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-06-22</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-06-22</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#strict-crypto-error-checking class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;strict_crypto_checks&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; compatibility flag to enable additional &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/web-crypto/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Web Crypto API&lt;/span&gt;&lt;/a&gt; error and security checking.&lt;/li&gt;
+&lt;li&gt;Fixes regression in the &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;TCP Sockets API&lt;/span&gt;&lt;/a&gt; where &lt;code&gt;connect(&#34;google.com:443&#34;)&lt;/code&gt; would fail with a &lt;code&gt;TypeError&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 22 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-06-19</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-06-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;TCP Sockets API&lt;/span&gt;&lt;/a&gt; now reports clearer errors when a connection cannot be established.&lt;/li&gt;
+&lt;li&gt;Updated V8 to 11.5.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 19 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-06-09</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-06-09</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AbortSignal.any()&lt;/code&gt; is now available.&lt;/li&gt;
+&lt;li&gt;Updated V8 to 11.4.&lt;/li&gt;
+&lt;li&gt;Following an update to the &lt;a href=&#34;https://url.spec.whatwg.org/#interface-urlsearchparams&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;WHATWG URL spec&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, the &lt;code&gt;delete()&lt;/code&gt; and &lt;code&gt;has()&lt;/code&gt; methods of the &lt;code&gt;URLSearchParams&lt;/code&gt; class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new &lt;code&gt;urlsearchparams_delete_has_value_arg&lt;/code&gt; and &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#new-url-parser-implementation class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;url_standard&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; compatibility flags.&lt;/li&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#strict-compression-error-checking class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;strict_compression_checks&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; compatibility flag for additional &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/web-standards/#compression-streams class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;DecompressionStream&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; error checking.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 09 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-05-26</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-05-26</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;A new &lt;a href=https://developers.cloudflare.com/durable-objects/api/websockets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Hibernatable WebSockets API&lt;/span&gt;&lt;/a&gt;
+(beta) has been added to &lt;a href=https://developers.cloudflare.com/durable-objects/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Durable Objects&lt;/span&gt;&lt;/a&gt;. The Hibernatable
+WebSockets API allows a Durable Object that is not currently running an event
+handler (for example, processing a WebSocket message or alarm) to be removed from
+memory while keeping its WebSockets connected (“hibernation”). A Durable Object
+that hibernates will not incur billable Duration (GB-sec) charges.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 26 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-05-16</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-05-16</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;new &lt;code&gt;connect()&lt;/code&gt; method&lt;/span&gt;&lt;/a&gt; allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the &lt;a href=https://developers.cloudflare.com/workers/reference/protocols/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;new Protocols documentation&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;We have added new &lt;a href=https://developers.cloudflare.com/workers/databases/native-integrations/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;native database integrations&lt;/span&gt;&lt;/a&gt; for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.&lt;/li&gt;
+&lt;li&gt;You can now also connect directly to databases over TCP from a Worker, starting with &lt;a href=https://developers.cloudflare.com/hyperdrive/configuration/connect-to-postgres/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;PostgreSQL&lt;/span&gt;&lt;/a&gt;. Support for PostgreSQL is based on the popular &lt;code&gt;pg&lt;/code&gt; driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.&lt;/li&gt;
+&lt;li&gt;The &lt;a href=https://developers.cloudflare.com/r2/data-migration/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;R2 Migrator&lt;/span&gt;&lt;/a&gt; (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 16 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-05-15</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-05-15</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/workers/ai/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Cursor&lt;/span&gt;&lt;/a&gt;, an experimental AI assistant, trained to answer
+questions about Cloudflare’s Developer Platform, is now available to preview!
+Cursor can answer questions about Workers and the Cloudflare Developer Platform,
+and is itself built on Workers. You can read more about Cursor in the &lt;a href=&#34;https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;announcement
+blog&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 15 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-05-12</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-05-12</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/Performance/now&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;performance.now()&lt;/code&gt;&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+and &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;performance.timeOrigin&lt;/code&gt;&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+APIs can now be used in Cloudflare Workers. Just like &lt;code&gt;Date.now()&lt;/code&gt;, for &lt;a href=https://developers.cloudflare.com/workers/reference/security-model/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;security
+reasons&lt;/span&gt;&lt;/a&gt; time only advances after I/O.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 12 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-05-05</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-05-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The new &lt;code&gt;nodeJsCompatModule&lt;/code&gt; type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as &lt;code&gt;process&lt;/code&gt; and &lt;code&gt;Buffer&lt;/code&gt; will be present, and &lt;code&gt;require(&#39;...&#39;)&lt;/code&gt; can be used to load Node.js built-ins without the &lt;code&gt;node:&lt;/code&gt; specifier prefix.&lt;/li&gt;
+&lt;li&gt;Fixed an issue where websocket connections would be disconnected when updating workers. Now, only websockets connected to Durable Object instances are disconnected by updates to that Durable Object’s code.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 05 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-04-28</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-04-28</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.&lt;/li&gt;
+&lt;li&gt;The global &lt;code&gt;connect&lt;/code&gt; method has been moved to a &lt;code&gt;cloudflare:sockets&lt;/code&gt; module.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 28 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-04-14</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-04-14</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;No externally-visible changes this week.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 14 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-04-10</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-04-10</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;URL.canParse(...)&lt;/code&gt; is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.&lt;/li&gt;
+&lt;li&gt;The Workers-specific &lt;code&gt;IdentityTransformStream&lt;/code&gt; and &lt;code&gt;FixedLengthStream&lt;/code&gt; classes now support specifying a &lt;code&gt;highWaterMark&lt;/code&gt; for the writable-side that is used for backpressure signaling using the standard &lt;code&gt;writer.desiredSize&lt;/code&gt;/&lt;code&gt;writer.ready&lt;/code&gt; mechanisms.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 10 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-03-24</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-03-24</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug in Wrangler tail and live logs on the dashboard that
+prevented the Administrator Read-Only and Workers Tail Read roles from successfully
+tailing Workers.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 24 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-03-09</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-03-09</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;No externally-visible changes.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 09 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-03-06</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-03-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/workers/observability/logging/logpush/#limits class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Workers Logpush&lt;/span&gt;&lt;/a&gt; now supports
+300 characters per log line. This is an increase from the previous limit of 150
+characters per line.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 06 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-02-06</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-02-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.&lt;/li&gt;
+&lt;li&gt;Previously, an error would be thrown when trying to access unimplemented standard &lt;code&gt;Request&lt;/code&gt; and &lt;code&gt;Response&lt;/code&gt; properties. Now those will be left as &lt;code&gt;undefined&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 06 Feb 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-01-31</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-01-31</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;a href=https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;request.cf&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; object now includes two additional properties, &lt;code&gt;tlsClientHelloLength&lt;/code&gt; and &lt;code&gt;tlsClientRandom&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 31 Jan 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Workers - 2023-01-13</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/#2023-01-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Durable Objects can now use jurisdictions with &lt;code&gt;idFromName&lt;/code&gt; via a new subnamespace API.&lt;/li&gt;
+&lt;li&gt;V8 updated to 10.9.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 13 Jan 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

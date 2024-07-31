@@ -119,6 +119,11 @@ Refer to [Vectorize API](/vectorize/reference/client-api/) for additional exampl
 
 ### wrangler CLI
 
+{{<Aside type="note" header="Cloudflare API rate limit">}}
+
+Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the global [rate limit](/fundamentals/api/reference/limits/) for the Cloudflare API.
+{{</Aside>}}
+
 You can bulk upload vector embeddings directly:
 
 * The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.

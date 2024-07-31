@@ -1,0 +1,44 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Rules</title>
+    <link>https://developers.cloudflare.com/rules/changelog/</link>
+    <description>Updates to Rules</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/rules/changelog/index.xml" rel="self" />
+    <lastBuildDate>Mon, 01 Jul 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Cloudflare Snippets now available to all paid customers</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#cloudflare-snippets-now-available-to-all-paid-customers</link>
+    <description>Cloudflare Snippets (alpha) are now available to all paid customers.</description>
+    <pubDate>Mon, 01 Jul 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Cloudflare Snippets now available to all Enterprise customers</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#cloudflare-snippets-now-available-to-all-enterprise-customers</link>
+    <description>Cloudflare Snippets (alpha) are now available to all Enterprise customers. Customers in other paid plans will gradually get access throughout 2024.</description>
+    <pubDate>Mon, 03 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Page Rules migration</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#page-rules-migration</link>
+    <description>The &lt;a href=https://developers.cloudflare.com/rules/reference/page-rules-migration/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Page Rules migration guide&lt;/span&gt;&lt;/a&gt; is now available for users interested in transitioning to modern Rules features instead of Page Rules. Explore the guide for detailed instructions on migrating your configurations.</description>
+    <pubDate>Tue, 14 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>New Configuration Rules setting for Web Analytics (RUM)</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-configuration-rules-setting-for-web-analytics-rum</link>
+    <description>You can now turn off Cloudflare Web Analytics, also known as Real User Monitoring (RUM), for specific requests using a configuration rule.</description>
+    <pubDate>Mon, 13 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>New Configuration Rules setting for Cloudflare Fonts</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-configuration-rules-setting-for-cloudflare-fonts</link>
+    <description>You can now turn on or off Cloudflare Fonts for specific requests using a configuration rule.</description>
+    <pubDate>Mon, 29 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>New TLS fields in rule expressions</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-tls-fields-in-rule-expressions</link>
+    <description>Customers can now use new fields &lt;code&gt;cf.tls_client_hello_length&lt;/code&gt; (the length of the client hello message sent in a TLS handshake), &lt;code&gt;cf.tls_client_random&lt;/code&gt; (the value of the 32-byte random value provided by the client in a TLS handshake), and &lt;code&gt;cf.tls_client_extensions_sha1&lt;/code&gt; (the SHA-1 fingerprint of TLS client extensions) in various products built on Ruleset Engine.</description>
+    <pubDate>Fri, 22 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Origin Rules now allow port numbers in Host Header Override</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#origin-rules-now-allow-port-numbers-in-host-header-override</link>
+    <description>Customers can now use arbitrary port numbers in Host Header Override in Origin Rules. Previously, only hostname was allowed as a value (for example, &lt;code&gt;example.com&lt;/code&gt;). Now, you can set the value to &lt;code&gt;hostname:port&lt;/code&gt; (for example, &lt;code&gt;example.com:1234&lt;/code&gt;) as well.</description>
+    <pubDate>Wed, 20 Mar 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

@@ -1,0 +1,1565 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Available Notifications · Cloudflare Notifications docs</title>
+  <meta name="title" content="Available Notifications · Cloudflare Notifications docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Available Notifications · Cloudflare Notifications docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Available Notifications · Cloudflare Notifications docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Available Notifications · Cloudflare Notifications docs" />
+  <meta property="og:description" content="Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/notifications/notification-available/" />
+
+  <meta name="twitter:title" content="Available Notifications · Cloudflare Notifications docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as Billing, …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="notifications"><meta name="algolia_product_filter" content="Notifications"><meta name="algolia_page_title" content="Available Notifications">
+  <meta name="pcx_word_count" content="5600"><meta name="pcx_last_modified" content="184"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="concept" />
+  <meta name="algolia_content_type" content="Concept"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/notifications/notification-available/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"notifications"}</script>
+  <meta name="docsearch:product" content="notifications" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fd8c64cd4eeca54c25d8cdba84cfcf1b" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fd8c64cd4eeca54c25d8cdba84cfcf1b">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/notifications/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Notifications logo"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 15" fill="none"><path d="M11.3496 1.86129C10.9253 1.55851 10.4416 1.34927 9.93034 1.24743L10.1257 0.266705C10.7758 0.396204 11.3909 0.662266 11.9305 1.04729C12.4701 1.43231 12.9217 1.92752 13.2556 2.50014C13.5894 3.07277 13.7979 3.70976 13.8672 4.36898C13.9364 5.0282 13.8649 5.69461 13.6574 6.32412L12.7077 6.01102C12.8709 5.51596 12.9271 4.99189 12.8726 4.47348C12.8182 3.95507 12.6542 3.45414 12.3917 3.00382C12.1291 2.55351 11.7739 2.16407 11.3496 1.86129Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.16967 0.630135L7.05089 0.601745L11.6759 8.61249L11.2107 9.36145L5.96477 9.02304L5.6628 9.19738L7.30989 12.0504L7.12686 12.7334L5.39481 13.7333L4.7118 13.5503L3.06465 10.6974L2.41522 11.0724L1.73221 10.8894L0.107193 8.07478L0.290204 7.39177L3.83975 5.34244L6.16967 0.630135ZM5.16285 8.33132L4.03781 6.38279L1.22322 8.00779L2.34823 9.95634L5.16285 8.33132ZM3.93067 10.1974L5.32782 12.6173L6.19386 12.1173L4.79677 9.69738L3.93067 10.1974ZM10.3427 8.30338L6.14512 8.03259L4.78767 5.68148L6.652 1.91085L10.3427 8.30338Z" fill="black"/><path d="M10.7634 2.67054C10.4614 2.4565 10.1183 2.30738 9.75578 2.23262L9.5538 3.212C9.78096 3.25885 9.99594 3.35228 10.1852 3.4864C10.3744 3.62052 10.5338 3.79242 10.6532 3.99123C10.7727 4.19005 10.8496 4.41147 10.8792 4.64152C10.9088 4.87156 10.8903 5.10524 10.825 5.3278L11.7846 5.60932C11.8888 5.25412 11.9182 4.88118 11.871 4.51404C11.8238 4.14689 11.7011 3.79352 11.5104 3.47622C11.3198 3.15892 11.0654 2.88459 10.7634 2.67054Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:13">Notifications</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - bd6cccffdcde4c488525e1f4dab4cc8a" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - bd6cccffdcde4c488525e1f4dab4cc8a">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/notifications/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Notifications logo"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 15" fill="none"><path d="M11.3496 1.86129C10.9253 1.55851 10.4416 1.34927 9.93034 1.24743L10.1257 0.266705C10.7758 0.396204 11.3909 0.662266 11.9305 1.04729C12.4701 1.43231 12.9217 1.92752 13.2556 2.50014C13.5894 3.07277 13.7979 3.70976 13.8672 4.36898C13.9364 5.0282 13.8649 5.69461 13.6574 6.32412L12.7077 6.01102C12.8709 5.51596 12.9271 4.99189 12.8726 4.47348C12.8182 3.95507 12.6542 3.45414 12.3917 3.00382C12.1291 2.55351 11.7739 2.16407 11.3496 1.86129Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.16967 0.630135L7.05089 0.601745L11.6759 8.61249L11.2107 9.36145L5.96477 9.02304L5.6628 9.19738L7.30989 12.0504L7.12686 12.7334L5.39481 13.7333L4.7118 13.5503L3.06465 10.6974L2.41522 11.0724L1.73221 10.8894L0.107193 8.07478L0.290204 7.39177L3.83975 5.34244L6.16967 0.630135ZM5.16285 8.33132L4.03781 6.38279L1.22322 8.00779L2.34823 9.95634L5.16285 8.33132ZM3.93067 10.1974L5.32782 12.6173L6.19386 12.1173L4.79677 9.69738L3.93067 10.1974ZM10.3427 8.30338L6.14512 8.03259L4.78767 5.68148L6.652 1.91085L10.3427 8.30338Z" fill="black"/><path d="M10.7634 2.67054C10.4614 2.4565 10.1183 2.30738 9.75578 2.23262L9.5538 3.212C9.78096 3.25885 9.99594 3.35228 10.1852 3.4864C10.3744 3.62052 10.5338 3.79242 10.6532 3.99123C10.7727 4.19005 10.8496 4.41147 10.8792 4.64152C10.9088 4.87156 10.8903 5.10524 10.825 5.3278L11.7846 5.60932C11.8888 5.25412 11.9182 4.88118 11.871 4.51404C11.8238 4.14689 11.7011 3.79352 11.5104 3.47622C11.3198 3.15892 11.0654 2.88459 10.7634 2.67054Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:13">Notifications</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Notifications menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/notifications/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/notifications/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/get-started/configure-pagerduty/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure PagerDuty</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/get-started/configure-webhooks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure webhooks</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/notifications/notification-available/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Available Notifications</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/notification-history/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Notification History</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/notifications/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/reference/traffic-alerts/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Traffic Alerts</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/reference/common-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Common errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/notifications/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/notification-alert-types-get-alert-types"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API reference</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/notifications/notification-available.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/notifications/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Notifications</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/notifications/notification-available/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Available Notifications</span></a><meta itemprop="position" content="3" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="available-notifications">Available Notifications</h1><p>Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as <a href=/fundamentals/subscriptions-and-billing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Billing</span></a>, <a href=/ddos-protection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Denial of Service protection</span></a>, <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a>, and <a href=/ssl/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">SSL/TLS</span></a>.</p>
+<p>Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.</p>
+<h2 id="actions-available-on-receiving-a-notification">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#actions-available-on-receiving-a-notification">&#8203;​</a>
+    </span>
+    <span>Actions available on receiving a Notification</span>
+  </h2><p>Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.</p>
+<p>Refer to information below to understand what each Notification does and what to do when receiving one.</p>
+<h2 id="billing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#billing">&#8203;​</a>
+    </span>
+    <span>Billing</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Usage Based Billing</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive a notification when the usage of a product goes above a set level.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can choose the product that you want to be notified about and the threshold that fires the notification. Thresholds depend on the product chosen.</p>
+<p>For example:</p>
+<ul>
+<li>Argo Smart Routing has <strong>Notify when total bytes of traffic exceeds</strong> as a threshold.</li>
+<li>Load Balancing has <strong>Notify when total number of DNS Queries exceeds</strong> as a threshold.</li>
+</ul>
+
+
+    <p><strong>Included with</strong></p>
+    <p>Professional plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review your product usage and adjust the configuration and/or increase the alerting threshold.</p></div>
+</details><h2 id="cloudflare-access">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#cloudflare-access">&#8203;​</a>
+    </span>
+    <span>Cloudflare Access</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Expiring Access Service Token Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/cloudflare-one/policies/access/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Access</span></a> customers who want to receive a notification when their service token is about to expire.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Access</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Refresh your service token in the <a href="https://one.dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Teams dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> under <strong>Configuration</strong> &gt; <strong>Service Auth</strong>.</p></div>
+</details><h2 id="cloudflare-status">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#cloudflare-status">&#8203;​</a>
+    </span>
+    <span>Cloudflare Status</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Maintenance Notification</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers interested in knowing about planned <a href=/support/troubleshooting/disruptive-maintenance/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare maintenance</span></a> for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can filter maintenance notifications for specific points of presence and updates (scheduled, changed, canceled).</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar. During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Incident Alerts</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers interested in knowing about Cloudflare incidents. The notification lets you know when Cloudflare incidents are created, updated, and resolved.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can filter incident alerts to specific impact levels (minor, major, critical).</p>
+<p>Additionally, incident alerts can be filtered to incidents affecting specific components. By default, incident alerts will trigger a notification for incident updates across all impact levels and components.</p>
+<p>The impact level and affected components of an incident may change as the incident progresses. A notification will only be sent if the configured filters match at the time of the incident update. Updates will not be sent retroactively.</p>
+
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review your <a href=/analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">analytics</span></a> page to see if your domain is impacted.</p></div>
+</details><h2 id="ddos-protection">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ddos-protection">&#8203;​</a>
+    </span>
+    <span>DDoS Protection</span>
+  </h2><details class="DocsMarkdown">
+    <summary>HTTP DDoS Attack Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/waf/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF</span></a> or <a href=/cache/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">CDN</span></a> customers who want to receive a notification when Cloudflare has mitigated HTTP attacks that generate more than 100 requests per second.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Refer to <a href=/ddos-protection/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DDoS alerts</span></a> for more information.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Layer 3/4 DDoS Attack Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/byoip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">BYOIP</span></a> and <a href=/spectrum/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Spectrum</span></a> customers with <a href=/analytics/network-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Network Analytics</span></a> who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit and/or BYOIP.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Refer to <a href=/ddos-protection/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DDoS alerts</span></a> for more information.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Advanced HTTP DDoS Attack Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/waf/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF</span></a> or <a href=/cache/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">CDN</span></a> customers with the <a href=/ddos-protection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced DDoS Protection</span></a> subscription who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of requests per second (100 rps by default).</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can choose when to trigger a notification.</p>
+<p>Available filters include:</p>
+<ul>
+<li>The zones in the account for which you wish to receive notifications.</li>
+<li>The specific hostnames for which you wish to receive notifications.</li>
+<li>The minimum requests-per-second rate that will trigger the alert (100 rps by default).</li>
+</ul>
+
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Refer to <a href=/ddos-protection/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DDoS alerts</span></a> for more information.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Advanced Layer 3/4 DDoS Attack Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/byoip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">BYOIP</span></a> and <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers with <a href=/analytics/network-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Network Analytics</span></a> who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of packets per second (12,000 pps by default).</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can choose when to trigger a notification.</p>
+<p>Available filters include:</p>
+<ul>
+<li>The IP prefixes for which you wish to receive notifications.</li>
+<li>The specific IP addresses for which you wish to receive notifications.</li>
+<li>The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).</li>
+<li>The minimum megabits-per-second rate that will trigger the alert.</li>
+<li>The protocols for which you wish to receive notifications (all protocols by default).</li>
+</ul>
+
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit and/or BYOIP (Enterprise plans).</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Refer to <a href=/ddos-protection/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DDoS alerts</span></a> for more information.</p></div>
+</details><h2 id="dex">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#dex">&#8203;​</a>
+    </span>
+    <span>DEX</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Device connectivity anomaly</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p><ul>
+<li><strong>Alert configuration</strong>: Choose when to trigger a notification. Available options are <em>Connectivity spike</em>, <em>Connectivity drop</em>, and <em>Connectivity spike or drop</em>.</li>
+<li>Filters:
+<ul>
+<li><strong>Colo</strong>: Cloudflare data center that the device is connected to.</li>
+<li><strong>Platform</strong>: Operating system of the device.</li>
+<li><strong>Version</strong>: WARP client version (for example, <code>2024.3.409.0</code>).</li>
+<li><strong>Mode</strong>: <a href=/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WARP mode</span></a> deployed on the device.</li>
+</ul>
+</li>
+</ul>
+</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare Zero Trust plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review your <a href=/cloudflare-one/insights/dex/fleet-status/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">fleet status</span></a> to investigate why the spike or drop occurred and which devices are impacted.</p><p><strong>Additional information</strong></p>
+    <p>To learn more about the alert logic, refer to <a href=/cloudflare-one/insights/dex/notifications/#z-score class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Z-score</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>DEX test latency</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test <a href=/cloudflare-one/insights/dex/tests/http/#test-results class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Resource Fetch time</span></a> or Traceroute test <a href=/cloudflare-one/insights/dex/tests/traceroute/#test-results class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Round trip time</span></a>. Requires setting up a <a href=/cloudflare-one/insights/dex/tests/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DEX test</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p><ul>
+<li><strong>Alert configuration</strong>: Choose when to trigger a notification. Available options are <em>Latency spike</em>, <em>Latency drop</em>, and <em>Latency spike or drop</em>.</li>
+<li>Filters:
+<ul>
+<li><strong>Colo</strong>: Cloudflare data center that the device is connected to.</li>
+<li><strong>Platform</strong>: Operating system of the device.</li>
+<li><strong>Version</strong>: WARP client version (for example, <code>2024.3.409.0</code>).</li>
+<li><strong>Test name</strong>: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.</li>
+</ul>
+</li>
+</ul>
+</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare Zero Trust plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>View your <a href=/cloudflare-one/insights/dex/tests/view-results/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">test results</span></a> to investigate why the spike occurred.</p><p><strong>Additional information</strong></p>
+    <p>To learn more about the alert logic, refer to <a href=/cloudflare-one/insights/dex/notifications/#z-score class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Z-score</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>DEX test low availability</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Zero Trust customers who wish to receive alerts when the percentage of successful HTTP or traceroute requests to an application drops below the selected service-level objective (SLO). Requires setting up a <a href=/cloudflare-one/insights/dex/tests/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DEX test</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p><ul>
+<li><strong>Service Level Objective (SLO)</strong>: Specify the availability threshold that will trigger an alert. Enter a percentage in <code>xx.x</code> format (for example, <code>98.0</code>).</li>
+<li>Filters:
+<ul>
+<li><strong>Colo</strong>: Cloudflare data center that the device is connected to.</li>
+<li><strong>Platform</strong>: Operating system of the device.</li>
+<li><strong>Version</strong>: WARP client version (for example, <code>2024.3.409.0</code>).</li>
+<li><strong>Test name</strong>: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.</li>
+</ul>
+</li>
+</ul>
+</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare Zero Trust plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>View your <a href=/cloudflare-one/insights/dex/tests/view-results/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">test results</span></a> to investigate why the degradation occurred.</p><p><strong>Additional information</strong></p>
+    <p>To learn more about the alert logic, refer to <a href=/cloudflare-one/insights/dex/notifications/#slo class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">SLO</span></a>.</p></div>
+</details><h2 id="dns">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#dns">&#8203;​</a>
+    </span>
+    <span>DNS</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Secondary DNS all Primaries Failing</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who have at least one secondary zone in their account and want to receive a notification if all of their primary nameservers are failing.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Secondary DNS</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p><ol>
+<li>Confirm that your primary nameservers are up and running.</li>
+<li>Confirm that the <a href=/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Access Control Lists (ACLs)</span></a> on your primary nameservers are configured correctly.</li>
+<li>Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).</li>
+</ol>
+</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Secondary DNS Primaries Failing</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Secondary DNS.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p><ol>
+<li>Confirm that your primary nameservers are up and running.</li>
+<li>Confirm that the <a href=/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Access Control Lists (ACLs)</span></a> on your primary nameservers are configured correctly.</li>
+<li>Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).</li>
+</ol>
+</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Secondary DNS Successfully Updated</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who have at least one secondary zone in their account and want to receive a notification on successful zone transfers.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Secondary DNS.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Everything is working correctly.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Secondary DNSSEC Validation Warning</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Success alerts require no further action. Actions for failure notifications will depend on the type of failure.</p>
+<p>Possible actions include:</p>
+<ul>
+<li>Checking the Access Control List (ACL) on your primary nameserver.</li>
+<li>Checking if Cloudflare IPs have been <a href=/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">configured correctly on your primary nameserver</span></a>.</li>
+<li>Checking logs on primary nameservers for other errors.</li>
+</ul>
+</div>
+</details><h2 id="health-checks">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#health-checks">&#8203;​</a>
+    </span>
+    <span>Health Checks</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Health Checks status notification</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be warned about changes to server health as determined by <a href=/health-checks/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">health checks</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Available filters include:</p>
+<ul>
+<li>You can search for and add health checks from your list of health checks.</li>
+<li>You can choose a trigger to fire the notification when your server becomes <strong>unhealthy</strong>, <strong>healthy</strong>, or <strong>either healthy or unhealthy</strong>.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Professional plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review your <a href=/health-checks/health-checks-analytics/#common-error-codes class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">health check analytics</span></a>.</p></div>
+</details><h2 id="load-balancing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#load-balancing">&#8203;​</a>
+    </span>
+    <span>Load Balancing</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Pool Enablement</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be warned about status changes (enabled/disabled) in their pools.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Available filters include:</p>
+<ul>
+<li>You can search for and add pools from your list of pools.</li>
+<li>You can also choose the trigger that fires the notification when the Load Balancing pool is <strong>enabled</strong>, <strong>disabled</strong>, and <strong>either enabled or disabled</strong>.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of <a href=/load-balancing/get-started/enable-load-balancing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Load Balancing</span></a>.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action is needed.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Load Balancing Health Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be warned about <a href=/load-balancing/understand-basics/health-details/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">changes in health status</span></a> in their pools or origins.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Available filters include:</p>
+<ul>
+<li>You can search for and add pools from your list of pools, as well as <strong>Include future pools</strong> (if all pools are selected).</li>
+<li>You can choose the trigger that fires the notification when the health status becomes <strong>unhealthy</strong>, <strong>healthy</strong>, or <strong>either unhealthy or healthy</strong></li>
+<li>You can choose the trigger that fires the notification when the event source health status changes in <strong>pool</strong>, <strong>origin</strong>, or <strong>either pool or origin</strong>.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of <a href=/load-balancing/get-started/enable-load-balancing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Load Balancing</span></a>.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Evaluate <a href=/load-balancing/reference/load-balancing-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">load balancing analytics</span></a> to review changes in health status over time.</p></div>
+</details><h2 id="logpush">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#logpush">&#8203;​</a>
+    </span>
+    <span>Logpush</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Failing Logpush Job Disabled</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who use <a href=/logs/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Logpush</span></a> and want to monitor their job health.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p><ul>
+<li>Notification Name: A custom name for the notification.</li>
+<li>Description (optional): A custom description for the notification.</li>
+<li>Notification Email (can be multiple emails): The email address of the recipient for the notification.</li>
+</ul>
+</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted <a href="https://www.cloudflare.com/ips/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare IPs</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p></div>
+</details><h2 id="magic-transit">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magic-transit">&#8203;​</a>
+    </span>
+    <span>Magic Transit</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Magic Network Monitoring - Auto Advertisement</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/magic-transit/on-demand/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit on-demand</span></a> customers who use Flow-Based Monitoring and want alerts when Magic Transit is automatically enabled.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action is needed. You can go to the <a href="https://dash.cloudflare.com/?to=/:account/magic-transit" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to review the health and status of your tunnels.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Magic Network Monitoring - DDoS Attack</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/byoip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">BYOIP</span></a> and <a href=/spectrum/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Spectrum</span></a> customers with <a href=/analytics/network-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Network Analytics</span></a> who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit and/or BYOIP.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action needed. Refer to <a href=/ddos-protection/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DDoS alerts</span></a> for more information.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Magic Network Monitoring - Volumetric Attack</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/magic-transit/on-demand/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit on-demand</span></a> customers who are using Flow-Based Monitoring to detect attacks when Magic Transit is disabled.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, refer to <a href=/byoip/concepts/dynamic-advertisement/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Dynamic advertisement</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Magic Tunnel Health Check Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of successful health checks for a Magic Tunnel drops below the selected service-level objective (SLO).</p>
+    <p><strong>Other options / filters</strong></p>
+    <p><ul>
+<li>Notification Name: A custom name for the notification.</li>
+<li>Description (optional): A custom description for the notification.</li>
+<li>Notification Email (can be multiple emails): The email address of recipient for the notification.</li>
+<li>Webhooks</li>
+<li>Tunnels: Choose one or more tunnels to monitor.</li>
+<li>SLO: Define SLO threshold for Magic Tunnel health alerts. Available options are <em>High</em>, <em>Medium</em>, and <em>Low</em>.</li>
+</ul>
+</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of Magic Transit and Magic WAN.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Refer to the <a href=/magic-transit/how-to/check-tunnel-health-dashboard/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit tunnel health</span></a> or <a href=/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic WAN tunnel health</span></a> for more information on what the issue might be.</p></div>
+</details><h2 id="page-shield">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#page-shield">&#8203;​</a>
+    </span>
+    <span>Page Shield</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Page Shield New Code Change Detection Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans with paid add-on.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Investigate to confirm that it is an expected change.</p><p><strong>Additional information</strong></p>
+    <p>Triggered daily.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Domain Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when resources from new host domains appear in their domain.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Business plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Investigate to confirm that it is an expected change.</p><p><strong>Additional information</strong></p>
+    <p>Triggered hourly.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Malicious Domain Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when resources from a known malicious domain appear in their domain. For more information, refer to <a href=/page-shield/how-it-works/malicious-script-detection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Malicious script and connection detection</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans with paid add-on.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.</p>
+<p>For more information, refer to <a href=/page-shield/detection/review-malicious-scripts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Review scripts and connections considered malicious</span></a>.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Malicious Script Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious. For more information, refer to <a href=/page-shield/how-it-works/malicious-script-detection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Malicious script and connection detection</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans with paid add-on.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.</p>
+<p>For more information, refer to <a href=/page-shield/detection/review-malicious-scripts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Review scripts and connections considered malicious</span></a>.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Malicious URL Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when resources from a known malicious URL appear in their domain. For more information, refer to <a href=/page-shield/how-it-works/malicious-script-detection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Malicious script and connection detection</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans with paid add-on.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the information in the Page Shield dashboard about the detected malicious resources, then update the pages where those resources were detected.</p>
+<p>For more information, refer to <a href=/page-shield/detection/review-malicious-scripts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Review scripts and connections considered malicious</span></a>.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Resources Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when new resources appear in their domain.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Business plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Investigate to confirm that it is an expected change.</p><p><strong>Additional information</strong></p>
+    <p>Triggered daily.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Page Shield New Resource Exceeds Max URL Length Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/page-shield/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Page Shield</span></a> customers who want to receive a notification when a resource&rsquo;s URL exceeds the maximum allowed length.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Business plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Manually check the resource.</p></div>
+</details><h2 id="pages">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#pages">&#8203;​</a>
+    </span>
+    <span>Pages</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Project updates</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive notifications about project-level events in <a href=/pages/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Pages</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Available filters include:</p>
+<ul>
+<li>Pages projects</li>
+<li>Environments</li>
+<li>Different events: <strong>Deployment started</strong>, <strong>Deployment failed</strong>, or <strong>Deployment success</strong></li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>For failed deployments, review our <a href=/pages/configuration/debugging-pages/#check-your-build-log class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">debugging guide</span></a>.</p></div>
+</details><h2 id="radar">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#radar">&#8203;​</a>
+    </span>
+    <span>Radar</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Radar Alerts</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive a notification when traffic anomalies, outages, route hijacks, or route leaks are impacting one or more countries, regions, or autonomous systems (ASNs) of interest.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Filters include:</p>
+<ul>
+<li>Notification type (anomaly, outage, route hijack, route leak)</li>
+<li>Location (country or region)</li>
+<li>Autonomous systems (ASNs)</li>
+</ul>
+<p>You have the option to send the notification via email, webhook, or PagerDuty.</p>
+
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Further action will depend on your role. Refer to the <a href=/radar/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Radar documentation</span></a> for more information.</p></div>
+</details><h2 id="route-leak-detection">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#route-leak-detection">&#8203;​</a>
+    </span>
+    <span>Route Leak Detection</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Route Leak Detection Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/byoip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">BYOIP customers</span></a> who want to receive a notification when their prefixes are advertised in places they should not be.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of BYOIP.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Confirm your traffic is healthy. Reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.</p></div>
+</details><h2 id="security-center">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#security-center">&#8203;​</a>
+    </span>
+    <span>Security Center</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Brand Protection Alerts</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want a summary of activity related to <a href=/security-center/brand-protection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Brand Protection</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can set up Brand Protection Alerts on individual monitored queries. For more details, refer to <a href=/security-center/brand-protection/#brand-protection-alerts class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Brand Protection Alerts</span></a>.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Professional plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Brand Protection Digest</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want a summary of activity related to <a href=/security-center/brand-protection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Brand Protection</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can set up Brand Protection Digest on individual monitored queries. For more details, refer to <a href=/security-center/brand-protection/#brand-protection-alerts class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Brand Protection Alerts</span></a>.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Professional plans or higher.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Investigate and potentially block any suspicious domains that may be trying to impersonate your brand.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Logo Match Alerts</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive a notification when the <a href=/security-center/brand-protection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Brand Protection</span></a> system detects a new domain which is using the uploaded logo and might be infringing copyright.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can select the query that you want to be alerted on.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the domains and URLs that are potentially impersonating your brand.</p></div>
+</details><h2 id="ssltls">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ssltls">&#8203;​</a>
+    </span>
+    <span>SSL/TLS</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Access mTLS Certificate Expiration Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p><a href=/cloudflare-one/policies/access/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Access</span></a> customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of <a href=/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Access</span></a> and/or <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare for SaaS</span></a>.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Upload a <a href=/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">renewed certificate</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Advanced Certificate Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">advanced certificates</span></a> that want to be alerted on validation, issuance, renewal, and expiration of certificates.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>When an advanced certificate is validated, issued, renewed, or expired.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Action only needed if notification is about a certificate that failed to be issued. Refer to <a href=/ssl/troubleshooting/version-cipher-mismatch/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">SSL expired or SSL mismatch errors</span></a> for more information.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Hostname-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Authenticated Origin Pull.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Upload a renewed certificate to use for <a href=/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">hostname-level AOP</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>SSL for SaaS Custom Hostnames Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates. For more details around data formatting for webhooks, refer to the <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/webhook-definitions/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare for SaaS docs</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Purchase of <a href=/cloudflare-for-platforms/cloudflare-for-saas/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare for SaaS</span></a>.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>You only need to take action if you are notified that you have a certificate that failed. You can find the reasons why a certificate is not being issued in <a href=/ssl/troubleshooting/general-ssl-errors/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Troubleshooting SSL errors</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Universal SSL Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>You only need to take action if you are notified that you have a certificate that failed. You can find the reasons why a certificate is not being issued in <a href=/ssl/troubleshooting/general-ssl-errors/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Troubleshooting SSL errors</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Zone-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+AOP certificate expiration notifications are sent 30 days and 14 days before the certificate expiry.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>Authenticated Origin Pull.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Upload a renewed certificate to use for <a href=/ssl/origin-configuration/authenticated-origin-pull/set-up/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">zone-level AOP</span></a>.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>mTLS Certificate Store Certificate Expiration Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers that upload their own client certificates for mTLS via <a href=/ssl/client-certificates/byo-ca/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bring your own CA</span></a>.</p>
+<p>This notification will be sent 30 and 14 days before the expiration of the certificate.</p>
+
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p><a href=/ssl/client-certificates/byo-ca/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Bring your own CA</span></a>.</p>
+<p>The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the <a href=/ssl/client-certificates/create-a-client-certificate/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare CA</span></a>.</p>
+
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Upload a renewed certificate.</p></div>
+</details><h2 id="stream">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#stream">&#8203;​</a>
+    </span>
+    <span>Stream</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Stream Live Notifications</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who are using <a href=/stream/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Stream</span></a> and want to receive webhooks with the status of their videos.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>You can input Stream Live IDs to receive notifications only about those inputs. If left blank, you will receive a list for all inputs.</p>
+<p>The following input states will fire notifications. You can toggle them on or off:</p>
+<ul>
+<li><code>live_input.connected</code></li>
+<li><code>live_input.disconnected</code></li>
+</ul>
+
+
+    <p><strong>Included with</strong></p>
+    <p>Stream subscription.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Stream notifications are entirely customizable by the customer. Action will depend on the customizations enabled.</p></div>
+</details><h2 id="traffic-monitoring">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#traffic-monitoring">&#8203;​</a>
+    </span>
+    <span>Traffic Monitoring</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Advanced Error Rate Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who want to receive a notification when Cloudflare detects edge and/or origin errors. Refer to <a href=/notifications/reference/traffic-alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP Traffic Alerts</span></a> for more information.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Available filters include:</p>
+<ul>
+<li>You can search and add domains from your list of domains.</li>
+<li>You can filter alerts by <strong>edge status code</strong>, <strong>origin status code</strong>, and the <strong>IP Address</strong>.</li>
+<li>You can also choose the trigger that fires the notification. Available triggers are <strong>low sensitivity</strong>, <strong>medium sensitivity</strong>, <strong>high sensitivity</strong>, or <strong>very high sensitivity</strong>.</li>
+</ul>
+<p>You can also toggle Alert Grouping to receive separate alerts for your domain, edge status code, and/or origin status code.</p>
+
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p><ol>
+<li>Use the link in the notification you received to see which error codes Cloudflare is seeing.</li>
+<li>Depending on the statuses you are alerting on, refer to <a href=/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Troubleshooting Cloudflare 5XX errors</span></a>.</li>
+</ol>
+</p><p><strong>Limitations</strong></p>
+    <p>Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Service level objectives (SLOs) are used to determine the threshold.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Origin Error Rate Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server. Refer to <a href=/notifications/reference/traffic-alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP Traffic Alerts</span></a> for more information.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Multiple filters available:</p>
+<ul>
+<li>You can search and add domains from your list of domains.</li>
+<li>You can also choose the trigger that fires the notification. Available triggers are <strong>low sensitivity</strong>, <strong>medium sensitivity</strong>, <strong>high sensitivity</strong>, or <strong>very high sensitivity</strong>.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p><ol>
+<li>Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.</li>
+<li>Refer to <a href=/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Troubleshooting Cloudflare 5XX errors</span></a> to learn how to troubleshoot these errors.</li>
+</ol>
+</p><p><strong>Limitations</strong></p>
+    <p>Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Service level objectives (SLOs) are used to determine the threshold.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Passive Origin Monitoring</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a <code>521</code> error.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Refer to <a href=/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Troubleshooting Cloudflare 5XX errors</span></a> to learn how to troubleshoot these errors.</p><p><strong>Limitations</strong></p>
+    <p>Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Service level objectives (SLOs) are used to determine the threshold.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Traffic Anomalies Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who want to receive a notification when one zone is experiencing an unexpected spike or drop in traffic. Refer to <a href=/notifications/reference/traffic-alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP Traffic Alerts</span></a> for more information.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>Multiple filters available:</p>
+<ul>
+<li>You can search and add domains from your list of domains.</li>
+<li>You can include or exclude traffic mitigated by the <a href=/waf/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Web Application Firewall (WAF)</span></a>.</li>
+<li>You can choose whether to be notified of either spikes or drops in traffic.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Use the link in the Notification you received to view if the spike or drop is significant enough to require further actions.</p><p><strong>Limitations</strong></p>
+    <p>Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Z-score is used to determine the threshold.</p>
+</div>
+</details><h2 id="trust-and-safety-blocks">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#trust-and-safety-blocks">&#8203;​</a>
+    </span>
+    <span>Trust and Safety Blocks</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Block Review Rejection</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be notified when Cloudflare Trust &amp; Safety rejects a request for block removal.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Take care of any abuse on your website. Then, go to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and request a review.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>New Blocks</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be notified when Cloudflare Trust &amp; Safety places a block on their website.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Take care of any abuse on your website. Then, go to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and request a review.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Removed Blocks</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be notified when Cloudflare Trust &amp; Safety removes a block from their website.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>This is informational follow up.</p></div>
+</details><h2 id="tunnel">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#tunnel">&#8203;​</a>
+    </span>
+    <span>Tunnel</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Tunnel Creation or Deletion Event</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to receive a notification when Cloudflare Tunnels are created or deleted in their account.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare Zero Trust plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action is needed.</p></div>
+</details><details class="DocsMarkdown">
+    <summary>Tunnel Health Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers who want to be warned about changes in health status for their Cloudflare Tunnels.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare Zero Trust plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Monitor tunnel health over time and consider deploying <a href=/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>cloudflared</code> replicas or load balancers</span></a>.</p><p><strong>Additional information</strong></p>
+    <p><table>
+<thead>
+<tr>
+<th><div style="width:75px">Health status</div></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Healthy</td>
+<td>The tunnel is active and serving traffic through four connections to the Cloudflare global network.</td>
+</tr>
+<tr>
+<td>Degraded</td>
+<td>The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in <a href=/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">tunnel availability</span></a> could risk the tunnel going down and failing to serve traffic.</td>
+</tr>
+<tr>
+<td>Down</td>
+<td>The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.</td>
+</tr>
+<tr>
+<td>Inactive</td>
+<td>This value is reserved for tunnels which have been created, but have never been run.</td>
+</tr>
+</tbody>
+</table>
+</p></div>
+</details><h2 id="web-analytics">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#web-analytics">&#8203;​</a>
+    </span>
+    <span>Web Analytics</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Weekly summary</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Customers using <a href=/web-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Web Analytics</span></a> to monitor their website&rsquo;s performance.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>None.</p>
+
+    <p><strong>Included with</strong></p>
+    <p>All Cloudflare plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>No action is needed. This notification is a weekly summary with reports from your Web Analytics account. Refer to <a href="https://dash.cloudflare.com/?to=/:account/notifications" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Notifications</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> in the Cloudflare dashboard to refine your notifications settings.</p></div>
+</details><h2 id="web-application-firewall-waf">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#web-application-firewall-waf">&#8203;​</a>
+    </span>
+    <span>Web Application Firewall (WAF)</span>
+  </h2><details class="DocsMarkdown">
+    <summary>Advanced Security Events Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in <a href=/waf/analytics/security-events/paid-plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Security Events</span></a>. For more information, refer to <a href=/waf/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF alerts</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>A mandatory <a href="/api/operations/notification-policies-create-a-notification-policy" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>filters</code></span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a> selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.</p>
+<ul>
+<li>You can search for and add domains from your list of Enterprise zones.</li>
+<li>You can choose which services the alert should monitor (Managed Firewall, Rate Limiting, etc.).</li>
+<li>You can filter events by a targeted action.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the information in <a href=/waf/analytics/security-events/paid-plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Security Events</span></a> to identify any possible attack or misconfiguration.</p><p><strong>Additional information</strong></p>
+    <p>The mean time to detection is five minutes.</p>
+<p>This alert will look for spikes across all services that generate log entries in <a href=/waf/analytics/security-events/paid-plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">security/firewall events</span></a>.</p>
+<p><strong>Limitations</strong></p>
+    <p>Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Z-score is used to determine the threshold.</p>
+</div>
+</details><details class="DocsMarkdown">
+    <summary>Security Events Alert</summary>
+    <div>
+    <p><strong>Who is it for?</strong></p>
+    <p>Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in <a href=/waf/analytics/security-events/paid-plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Security Events</span></a>. For more information, refer to <a href=/waf/reference/alerts/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF alerts</span></a>.</p>
+    <p><strong>Other options / filters</strong></p>
+    <p>A mandatory <a href="/api/operations/notification-policies-create-a-notification-policy" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>filters</code></span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a> selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.</p>
+<ul>
+<li>You can also search for and add domains from your list of business or enterprise zones. The notification will be sent for the domains chosen.</li>
+<li>You can filter events by a targeted action.</li>
+</ul>
+
+    <p><strong>Included with</strong></p>
+    <p>Business and Enterprise plans.</p>
+    <p><strong>What should you do if you receive one?</strong></p>
+    <p>Review the information in <a href=/waf/analytics/security-events/paid-plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Security Events</span></a> to identify any possible attack or misconfiguration.</p><p><strong>Additional information</strong></p>
+    <p>The mean time to detection is two hours.</p>
+<p>When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.</p>
+<p><strong>Limitations</strong></p>
+    <p>Security Events (WAF) alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.</p>
+<p>These thresholds cannot be configured. Z-score is used to determine the threshold.</p>
+</div>
+</details>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/notifications" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/notifications/notification-available.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-02-13T11:05:40-08:00
+  title=2024-02-13
+>February 13, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

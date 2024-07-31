@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Query D1 · Cloudflare D1 docs</title>
+  <meta name="title" content="Query D1 · Cloudflare D1 docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Query D1 · Cloudflare D1 docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Query D1 · Cloudflare D1 docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="D1 is compatible with most SQLite’s SQL convention since it leverages SQLite’s query engine. D1 client API allows you to interact with a D1 database …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Query D1 · Cloudflare D1 docs" />
+  <meta property="og:description" content="D1 is compatible with most SQLite’s SQL convention since it leverages SQLite’s query engine. D1 client API allows you to interact with a D1 database …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/" />
+
+  <meta name="twitter:title" content="Query D1 · Cloudflare D1 docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="D1 is compatible with most SQLite’s SQL convention since it leverages SQLite’s query engine. D1 client API allows you to interact with a D1 database …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="d1"><meta name="algolia_product_filter" content="D1"><meta name="algolia_page_title" content="Query D1">
+  <meta name="pcx_word_count" content="1500"><meta name="pcx_last_modified" content="16"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="concept" />
+  <meta name="algolia_content_type" content="Concept"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/d1/build-with-d1/d1-client-api/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"d1"}</script>
+  <meta name="docsearch:product" content="d1" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 5acd56882cbc4a1ce444ddcfbec8cffd" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 5acd56882cbc4a1ce444ddcfbec8cffd">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/d1/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare D1 logo"><svg width="65" height="64" viewBox="0 0 65 64" xmlns="http://www.w3.org/2000/svg"><path d="m23.6 22.2 3.03 1.75v3.5l-3.03 1.75-3.03-1.75v-3.5zm-3.54 26.8 3.54-3.54 3.54 3.54-3.54 3.54zm3.54-14.7c0.593 0 1.17 0.176 1.67 0.506 0.493 0.33 0.878 0.798 1.1 1.35 0.227 0.548 0.286 1.15 0.171 1.73-0.116 0.582-0.401 1.12-0.821 1.54-0.42 0.42-0.954 0.705-1.54 0.821-0.582 0.116-1.19 0.0563-1.73-0.171-0.548-0.227-1.02-0.612-1.35-1.1-0.33-0.493-0.506-1.07-0.506-1.67 0-0.796 0.316-1.56 0.879-2.12 0.563-0.563 1.33-0.879 2.12-0.879zm-13.3-23.1 6.42-4.89 1.21-0.37h29l1.19 0.39 6.61 4.89 0.82 1.61v38l-0.55 1.38-4.83 5.11-1.46 0.63h-31.7l-1.37-0.54-5.48-5.11-0.64-1.47v-38zm3.21 25.4 4.47 4.94h0.0561v4h-1.83l-2.7-3v7.39l4.26 4h30l3.7-3.91v-7.72l-3.67 3.24h-18.6v-4h17.2l5.19-4.61v-7.44l-3.67 3.25h-18.7v-4h17.2l5.19-4.6v-6.92l-3.67 3.26h-31.6l-2.74-2.8v6.12l4.47 4.94h0.0561v4h-1.83l-2.7-3zm32.7-26.7h-27.6l-4.07 3.11 3.4 3.48h28.4l4-3.56z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">D1</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 4ccdccaf6cf5feac84d5eb82d1c4d4b8" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 4ccdccaf6cf5feac84d5eb82d1c4d4b8">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/d1/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare D1 logo"><svg width="65" height="64" viewBox="0 0 65 64" xmlns="http://www.w3.org/2000/svg"><path d="m23.6 22.2 3.03 1.75v3.5l-3.03 1.75-3.03-1.75v-3.5zm-3.54 26.8 3.54-3.54 3.54 3.54-3.54 3.54zm3.54-14.7c0.593 0 1.17 0.176 1.67 0.506 0.493 0.33 0.878 0.798 1.1 1.35 0.227 0.548 0.286 1.15 0.171 1.73-0.116 0.582-0.401 1.12-0.821 1.54-0.42 0.42-0.954 0.705-1.54 0.821-0.582 0.116-1.19 0.0563-1.73-0.171-0.548-0.227-1.02-0.612-1.35-1.1-0.33-0.493-0.506-1.07-0.506-1.67 0-0.796 0.316-1.56 0.879-2.12 0.563-0.563 1.33-0.879 2.12-0.879zm-13.3-23.1 6.42-4.89 1.21-0.37h29l1.19 0.39 6.61 4.89 0.82 1.61v38l-0.55 1.38-4.83 5.11-1.46 0.63h-31.7l-1.37-0.54-5.48-5.11-0.64-1.47v-38zm3.21 25.4 4.47 4.94h0.0561v4h-1.83l-2.7-3v7.39l4.26 4h30l3.7-3.91v-7.72l-3.67 3.24h-18.6v-4h17.2l5.19-4.61v-7.44l-3.67 3.25h-18.7v-4h17.2l5.19-4.6v-6.92l-3.67 3.26h-31.6l-2.74-2.8v6.12l4.47 4.94h0.0561v4h-1.83l-2.7-3zm32.7-26.7h-27.6l-4.07 3.11 3.4 3.48h28.4l4-3.56z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">D1</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>D1 menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/d1/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Build with D1</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Build with D1</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/import-export-data/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Import and export data</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/d1/build-with-d1/d1-client-api/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/use-indexes/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use indexes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/remote-development/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Remote development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/foreign-keys/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Define foreign keys</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/query-json/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query JSON</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/local-development/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Local development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/bindings/#d1-databases"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use D1 from Pages</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/configuration/data-location/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data location</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/configuration/environments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Environments</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/smart-placement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Smart Placement</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Observability</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/observability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Observability</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/observability/debug-d1/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Debug D1</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/observability/metrics-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics and analytics</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-remix/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Remix</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-hono/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Hono</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-sveltekit/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from SvelteKit</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/query-d1-from-python-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Python Workers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/demos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Demos</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/alpha-migration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alpha database migration guide</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/changelog/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/migrations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrations</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/time-travel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Time Travel and backups</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/community-projects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Community projects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/generated-columns/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Generated columns</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/database-commands/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Database commands</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/commands/#d1"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler commands</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/data-security/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data security</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/backups/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Backups (Legacy)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/cloudflare-d1-create-database"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">D1 REST API</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/d1/build-with-d1/d1-client-api.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >D1</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/build-with-d1/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Build with D1</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/build-with-d1/d1-client-api/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Query D1</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="d1-client-api">D1 client API</h1><p>D1 is compatible with most SQLite&rsquo;s SQL convention since it leverages SQLite&rsquo;s query engine. D1 client API allows you to interact with a D1 database from within a <a href=/workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Worker</span></a>.</p>
+<h2 id="prepared-and-static-statements">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#prepared-and-static-statements">&#8203;​</a>
+    </span>
+    <span>Prepared and static statements</span>
+  </h2><p>D1 client API supports prepared and static statements. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.</p>
+<p>Below is an example of a prepared statement:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%3F1%27%29.bind%28%27Joe%27%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>However, if you still choose to use a static statement you can use the following as an example:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%22John&#43;Doe%22%27%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="parameter-binding">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#parameter-binding">&#8203;​</a>
+    </span>
+    <span>Parameter binding</span>
+  </h2><p>D1 follows the <a href="https://www.sqlite.org/lang_expr.html#varparam" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">SQLite convention</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for prepared statements parameter binding. Currently, D1 only supports Ordered (<code>?NNNN</code>) and Anonymous (<code>?</code>) parameters. In the future, D1 will support named parameters as well.</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?NNN</code></td>
+<td>Ordered</td>
+<td>A question mark followed by a number <code>NNN</code> holds a spot for the <code>NNN</code>-th parameter. <code>NNN</code> must be between <code>1</code> and <code>SQLITE_MAX_VARIABLE_NUMBER</code></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Anonymous</td>
+<td>A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the <code>?NNN</code> format above instead</td>
+</tr>
+</tbody>
+</table>
+<p>To bind a parameter, use the <code>stmt.bind()</code> method.</p>
+<h3 id="order-and-anonymous-examples">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#order-and-anonymous-examples">&#8203;​</a>
+    </span>
+    <span>Order and anonymous examples:</span>
+  </h3><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%3F%27%29.bind%28&#43;%27John&#43;Doe%27&#43;%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%3F&#43;AND&#43;age&#43;%3D&#43;%3F%27%29.bind%28&#43;%27John&#43;Doe%27%2C&#43;41&#43;%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%3F2&#43;AND&#43;age&#43;%3D&#43;%3F1%27%29.bind%28&#43;41%2C&#43;%27John&#43;Doe%27&#43;%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="type-conversion">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#type-conversion">&#8203;​</a>
+    </span>
+    <span>Type conversion</span>
+  </h2><p>D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:</p>
+<table>
+<thead>
+<tr>
+<th>JavaScript</th>
+<th>D1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>null</td>
+<td><code>NULL</code></td>
+</tr>
+<tr>
+<td>Number</td>
+<td><code>REAL</code></td>
+</tr>
+<tr>
+<td>Number <sup>1</sup></td>
+<td><code>INTEGER</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>TEXT</code></td>
+</tr>
+<tr>
+<td>Boolean <sup>2</sup></td>
+<td><code>INTEGER</code></td>
+</tr>
+<tr>
+<td>ArrayBuffer</td>
+<td><code>BLOB</code></td>
+</tr>
+<tr>
+<td>undefined</td>
+<td>Not supported. Queries with <code>undefined</code> values will return a <code>D1_TYPE_ERROR</code></td>
+</tr>
+</tbody>
+</table>
+<p><sup>1</sup> D1 supports 64-bit signed <code>INTEGER</code> values internally, however <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">BigInts</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> are not currently supported in the API yet. JavaScript integers are safe up to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Number.MAX_SAFE_INTEGER</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p><sup>2</sup> Booleans will be cast to an <code>INTEGER</code> type where <code>1</code> is <code>TRUE</code> and <code>0</code> is <code>FALSE</code>.</p>
+<h2 id="return-object">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#return-object">&#8203;​</a>
+    </span>
+    <span>Return object</span>
+  </h2><p>The methods <code>stmt.all()</code> and <code>db.batch()</code> return a typed <code>D1Result</code> object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="%7B%0A&#43;&#43;results%3A&#43;array&#43;%7C&#43;null%2C&#43;%2F%2F&#43;%5B%5D&#43;if&#43;empty%2C&#43;or&#43;null&#43;if&#43;it&#43;does&#43;not&#43;apply%0A&#43;&#43;success%3A&#43;boolean%2C&#43;%2F%2F&#43;true&#43;if&#43;the&#43;operation&#43;was&#43;successful%2C&#43;false&#43;otherwise%0A&#43;&#43;meta%3A&#43;%7B%0A&#43;&#43;&#43;&#43;duration%3A&#43;number%2C&#43;%2F%2F&#43;duration&#43;of&#43;the&#43;operation&#43;in&#43;milliseconds%0A&#43;&#43;&#43;&#43;rows_read%3A&#43;number%2C&#43;%2F%2F&#43;the&#43;number&#43;of&#43;rows&#43;read&#43;%28scanned%29&#43;by&#43;this&#43;query%0A&#43;&#43;&#43;&#43;rows_written%3A&#43;number&#43;%2F%2F&#43;the&#43;number&#43;of&#43;rows&#43;written&#43;by&#43;this&#43;query%0A&#43;&#43;%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Example:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;%7B&#43;duration&#43;%7D&#43;%3D&#43;%28await&#43;db.prepare%28%27INSERT&#43;INTO&#43;users&#43;%28name%2C&#43;age%29&#43;VALUES&#43;%28%3F1%2C&#43;%3F2%29%27%29.bind%28&#43;%22John%22%2C&#43;42&#43;%29.run%28%29%29.meta%3B%0A%0Aconsole.log%28duration%29%3B&#43;%2F%2F&#43;0.172"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The <code>db.exec()</code> method returns a <code>D1ExecResult</code> object:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="%7B%0A&#43;&#43;count%3A&#43;number%2C&#43;%2F%2F&#43;the&#43;number&#43;of&#43;queries&#43;executed%0A&#43;&#43;duration%3A&#43;number&#43;%2F%2F&#43;duration&#43;of&#43;the&#43;operation&#43;in&#43;milliseconds%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="query-statement-methods">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#query-statement-methods">&#8203;​</a>
+    </span>
+    <span>Query statement methods</span>
+  </h2><p>D1 client API supports the following query statement methods for querying against a D1 database:</p>
+<ul>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-stmtall class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await stmt.all()</code></span></a></li>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-stmtraw class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await stmt.raw()</code></span></a></li>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-stmtfirstcolumn class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await stmt.first( [column] )</code></span></a></li>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-stmtrun class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await stmt.run()</code></span></a></li>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-dbdump class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await db.dump()</code></span></a></li>
+<li><a href=/d1/build-with-d1/d1-client-api/#await-dbexec class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>await db.exec()</code></span></a></li>
+</ul>
+<h3 id="await-stmtall">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-stmtall">&#8203;​</a>
+    </span>
+    <span>await stmt.all()</span>
+  </h3><p>Returns all rows as an array of objects, with each result row represented as an object on the <code>results</code> property of the <code>D1Result</code> type.</p>
+<p>When joining tables with identical column names, only the leftmost column will be included in the row object. Use <a href=#await-stmtraw class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>stmt.raw()</code></span></a> to return all rows as an array of arrays.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;name%2C&#43;age&#43;FROM&#43;users&#43;LIMIT&#43;3%27%29%3B%0Aconst&#43;%7B&#43;results&#43;%7D&#43;%3D&#43;await&#43;stmt.all%28%29%3B%0Aconsole.log%28results%29%3B%0A%2F%2A%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22John%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;42%2C%0A&#43;&#43;%7D%2C%0A&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22Anthony%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;37%2C%0A&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22Dave%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;29%2C%0A&#43;&#43;%7D%2C%0A&#43;%5D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When using TypeScript, you can pass a <a href=/d1/build-with-d1/d1-client-api/#typescript-support class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">type parameter</span></a> to <code>all()</code> to return a typed result object.</p>
+<h3 id="await-stmtraw">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-stmtraw">&#8203;​</a>
+    </span>
+    <span>await stmt.raw()</span>
+  </h3><p>Returns results as an array of arrays, with each row represented by an array. The return type is an array of arrays, and does not include query metadata.</p>
+<p>Column names are not included in the result set by default. To include column names as the first row of the result array, set <code>.raw({columnNames: true})</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;name%2C&#43;age&#43;FROM&#43;users&#43;LIMIT&#43;3%27%29%3B%0Aconst&#43;rows&#43;%3D&#43;await&#43;stmt.raw%28%29%3B%0Aconsole.log%28rows%29%3B%0A%0A%2F%2A%0A%5B%0A&#43;&#43;%5B&#43;%22John%22%2C&#43;42&#43;%5D%2C%0A&#43;&#43;%5B&#43;%22Anthony%22%2C&#43;37&#43;%5D%2C%0A&#43;&#43;%5B&#43;%22Dave%22%2C&#43;29&#43;%5D%2C%0A%5D%0A%2A%2F%0A%0A%2F%2F&#43;With&#43;columnNames%3A&#43;true%0Aconst&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;name%2C&#43;age&#43;FROM&#43;users&#43;LIMIT&#43;3%27%29%3B%0Aconst&#43;%5Bcolumns%2C&#43;...rows%5D&#43;%3D&#43;await&#43;stmt.raw%28%7BcolumnNames%3A&#43;true%7D%29%3B%0Aconsole.log%28columns%29%3B%0A%0A%2F%2A%0A%5B&#43;%22name%22%2C&#43;age&#43;%5D%2C&#43;%2F%2F&#43;The&#43;first&#43;result&#43;array&#43;includes&#43;the&#43;column&#43;names%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When using TypeScript, you can pass a <a href=/d1/build-with-d1/d1-client-api/#typescript-support class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">type parameter</span></a> to <code>raw()</code> to return a typed result array.</p>
+<h3 id="await-stmtfirstcolumn">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-stmtfirstcolumn">&#8203;​</a>
+    </span>
+    <span>await stmt.first([column])</span>
+  </h3><p>Returns the first row of the results. This does not return metadata like the other methods. Instead, it returns the object directly.</p>
+<p>Get a specific column from the first row:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;COUNT%28%2A%29&#43;AS&#43;total&#43;FROM&#43;users%27%29%3B%0Aconst&#43;total&#43;%3D&#43;await&#43;stmt.first%28%27total%27%29%3B%0Aconsole.log%28total%29%3B&#43;%2F%2F&#43;50"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Get all the columns from the first row:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%27SELECT&#43;COUNT%28%2A%29&#43;AS&#43;total&#43;FROM&#43;users%27%29%3B%0Aconst&#43;values&#43;%3D&#43;await&#43;stmt.first%28%29%3B%0Aconsole.log%28values%29%3B&#43;%2F%2F&#43;%7B&#43;total%3A&#43;50&#43;%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If the query returns no rows, then <code>first()</code> will return <code>null</code>. If the query returns rows, but <code>column</code> does not exist, then <code>first()</code> will throw the <code>D1_ERROR</code> exception.</p>
+<p><code>stmt.first()</code> does not alter the SQL query. To improve performance, consider appending <code>LIMIT 1</code> to your statement.</p>
+<p>When using TypeScript, you can pass a <a href=/d1/build-with-d1/d1-client-api/#typescript-support class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">type parameter</span></a> to <code>first()</code> to return a typed result object.</p>
+<h3 id="await-stmtrun">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-stmtrun">&#8203;​</a>
+    </span>
+    <span>await stmt.run()</span>
+  </h3><p>Runs the query (or queries) and returns results. Returns all rows as an array of objects, with each result row represented as an object on the <code>results</code> property of the <code>D1Result</code> type. For write operations like UPDATE, DELETE or INSERT, <code>results</code> will be empty.</p>
+<p>Run is functionally equivalent to <code>stmt.all()</code> and can be treated as an alias.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;await&#43;db.prepare%28%27SELECT&#43;name%2C&#43;age&#43;FROM&#43;users&#43;LIMIT&#43;3%27%29%0Aconst&#43;%7B&#43;results&#43;%7D&#43;%3D&#43;await&#43;stmt.run%28%29%3B%0Aconsole.log%28results%29%3B%0A%2F%2A%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22John%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;42%2C%0A&#43;&#43;%7D%2C%0A&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22Anthony%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;37%2C%0A&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22Dave%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;29%2C%0A&#43;&#43;%7D%2C%0A&#43;%5D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>When using TypeScript, you can pass a <a href=/d1/build-with-d1/d1-client-api/#typescript-support class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">type parameter</span></a> to <code>run()</code> to return a typed result object.</p>
+<h3 id="await-dbdump">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-dbdump">&#8203;​</a>
+    </span>
+    <span>await db.dump()</span>
+  </h3><aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>This API only works on databases created during D1&rsquo;s alpha period. Check which version your database uses with <code>wrangler d1 info &lt;DATABASE_NAME&gt;</code>.</p>
+</aside>
+
+<p>Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;dump&#43;%3D&#43;await&#43;db.dump%28%29%0Areturn&#43;new&#43;Response%28dump%2C&#43;%7B%0A&#43;&#43;&#43;&#43;status%3A&#43;200%2C%0A&#43;&#43;&#43;&#43;headers%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%27Content-Type%27%3A&#43;%27application%2Foctet-stream%27%0A&#43;&#43;&#43;&#43;%7D%0A%7D%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="await-dbexec">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#await-dbexec">&#8203;​</a>
+    </span>
+    <span>await db.exec()</span>
+  </h3><p>Executes one or more queries directly without prepared statements or parameters binding. This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe. Only use this method for maintenance and one-shot tasks (for example, migration jobs). The input can be one or multiple queries separated by <code>\n</code>.</p>
+<p>If an error occurs, an exception is thrown with the query and error messages, execution stops and further statements are not executed. Refer to <a href=/d1/build-with-d1/d1-client-api/#errors class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Errors</span></a> to learn more.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;migration&#43;%3D&#43;await&#43;fetch%28%27%2Fmigration.sql%27%29%3B%0Aconst&#43;out&#43;%3D&#43;await&#43;db.exec%28migration.text%28%29%29%3B%0Aconsole.log%28out%29%3B%0A%2F%2A%0A%7B%0A&#43;&#43;count%3A&#43;80%2C%0A&#43;&#43;duration%3A&#43;76%0A%7D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="typescript-support">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#typescript-support">&#8203;​</a>
+    </span>
+    <span>TypeScript support</span>
+  </h2><p>D1 client API is fully-typed via the <code>@cloudflare/workers-types</code> package, and also supports <a href="https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">generic types</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> as part of its TypeScript API. A generic type allows you to provide an optional <em>type parameter</em> so that a function understands the type of the data it is handling.</p>
+<p>When using the <a href=#query-statement-methods class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">query statement methods</span></a> <code>stmt.all()</code>, <code>stmt.raw()</code> and <code>stmt.first()</code>, you can provide a type representing each database row. D1&rsquo;s API will <a href=#return-object class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">return the result object</span></a> with the correct type.</p>
+<p>For example, providing an <code>OrderRow</code> type as a type parameter to <code>stmt.all()</code> will return a typed <code>Array&lt;OrderRow&gt;</code> object instead of the default <code>Record&lt;string, unknown&gt;</code> type:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="%2F%2F&#43;Row&#43;definition%0Atype&#43;OrderRow&#43;%3D&#43;%7B%0A&#43;&#43;Id%3A&#43;string%3B%0A&#43;&#43;CustomerName%3A&#43;string%3B%0A&#43;&#43;OrderDate%3A&#43;number%3B%0A%7D%0A%0A%2F%2F&#43;Elsewhere&#43;in&#43;your&#43;application%0Aconst&#43;result&#43;%3D&#43;await&#43;env.MY_DB.prepare%28%22SELECT&#43;Id%2C&#43;CustomerName%2C&#43;OrderDate&#43;FROM&#43;%5BOrder%5D&#43;ORDER&#43;BY&#43;ShippedDate&#43;DESC&#43;LIMIT&#43;100%22%29.all%3COrderRow%3E%28%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="reuse-prepared-statements">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#reuse-prepared-statements">&#8203;​</a>
+    </span>
+    <span>Reuse prepared statements</span>
+  </h2><p>Prepared statements can be reused with new bindings:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;&#43;db.prepare%28%27SELECT&#43;name%2C&#43;age&#43;FROM&#43;users&#43;WHERE&#43;age&#43;%3C&#43;%3F1%27%29%3B%0Aconst&#43;young&#43;%3D&#43;await&#43;stmt.bind%2820%29.all%28%29%3B%0Aconsole.log%28young%29%3B%0A%2F%2A%0A%7B%0A&#43;&#43;results%3A&#43;%5B...%5D%2C%0A&#43;&#43;success%3A&#43;true%0A&#43;&#43;meta%3A&#43;%7B%0A&#43;&#43;&#43;&#43;duration%3A&#43;31%2C%0A&#43;&#43;%7D%0A%7D%0A%2A%2F%0A&#43;const&#43;old&#43;%3D&#43;await&#43;stmt.bind%2880%29.all%28%29%3B%0Aconsole.log%28old%29%3B%0A%2F%2A%0A%7B%0A&#43;&#43;results%3A&#43;%5B...%5D%2C%0A&#43;&#43;success%3A&#43;true%0A&#43;&#43;meta%3A&#43;%7B%0A&#43;&#43;&#43;&#43;duration%3A&#43;29%2C%0A&#43;&#43;%7D%0A%7D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="search-with-like">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#search-with-like">&#8203;​</a>
+    </span>
+    <span>Search with LIKE</span>
+  </h2><p>Perform a search using SQL&rsquo;s <code>LIKE</code> operator:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;%7B&#43;results&#43;%7D&#43;%3D&#43;await&#43;env.DB.prepare%28%0A&#43;&#43;%22SELECT&#43;%2A&#43;FROM&#43;Customers&#43;WHERE&#43;CompanyName&#43;LIKE&#43;%3F%22%0A%29%0A&#43;&#43;.bind%28%22%25eve%25%22%29%0A&#43;&#43;.all%28%29%3B%0Aconsole.log%28%22results%3A&#43;%22%2C&#43;results%29%3B%0A%2F%2A%0Aresults%3A&#43;&#43;%5B...%5D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="batch-statements">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#batch-statements">&#8203;​</a>
+    </span>
+    <span>Batch statements</span>
+  </h2><p>Batching sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.</p>
+<p>Batched statements are <a href="https://www.sqlite.org/lang_transaction.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">SQL transactions</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. If a statement in the sequence fails, then an error is returned for that specific statement, and it aborts or rolls back the entire sequence.</p>
+<h3 id="dbbatch">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#dbbatch">&#8203;​</a>
+    </span>
+    <span>db.batch()</span>
+  </h3><p>To send batch statements, provide <code>batch()</code> a list of prepared statements and get the results in the same order.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="await&#43;db.batch%28%5B%0A&#43;&#43;&#43;&#43;db.prepare%28%22UPDATE&#43;users&#43;SET&#43;name&#43;%3D&#43;%3F1&#43;WHERE&#43;id&#43;%3D&#43;%3F2%22%29.bind%28&#43;%22John%22%2C&#43;17&#43;%29%2C%0A&#43;&#43;&#43;&#43;db.prepare%28%22UPDATE&#43;users&#43;SET&#43;age&#43;%3D&#43;%3F1&#43;WHERE&#43;id&#43;%3D&#43;%3F2%22%29.bind%28&#43;35%2C&#43;19&#43;%29%2C%0A%5D%29%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You can construct batches reusing the same prepared statement:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;stmt&#43;%3D&#43;db.prepare%28%22SELECT&#43;%2A&#43;FROM&#43;users&#43;WHERE&#43;name&#43;%3D&#43;%3F1%22%29%3B%0A%0Aconst&#43;rows&#43;%3D&#43;await&#43;db.batch%28%5B%0A&#43;&#43;&#43;&#43;stmt.bind%28%22John%22%29%2C%0A&#43;&#43;&#43;&#43;stmt.bind%28%22Anthony%22%29%2C%0A%5D%29%3B%0A%0Aconsole.log%28rows%5B0%5D.results%29%3B%0A%2F%2A%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22John&#43;Clemente%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;42%2C%0A&#43;&#43;%7D%2C%0A&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22John&#43;Davis%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;37%2C%0A&#43;&#43;%7D%2C%0A&#43;%5D%0A%2A%2F%0Aconsole.log%28rows%5B1%5D.results%29%3B%0A%2F%2A%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;name%3A&#43;%22Anthony&#43;Hopkins%22%2C%0A&#43;&#43;&#43;&#43;&#43;age%3A&#43;66%2C%0A&#43;&#43;%7D%2C%0A&#43;%5D%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="pragma-statements">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#pragma-statements">&#8203;​</a>
+    </span>
+    <span>PRAGMA statements</span>
+  </h2><p>D1 supports the following <a href="https://www.sqlite.org/pragma.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">SQLite PRAGMA</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> statements:</p>
+<table>
+<thead>
+<tr>
+<th>PRAGMA</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table_list</code></td>
+<td>Returns information about the tables and views in the schema, one table per row of output.</td>
+</tr>
+<tr>
+<td><code>table_info</code></td>
+<td>This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column.</td>
+</tr>
+<tr>
+<td><code>defer_foreign_keys</code></td>
+<td>Query, set, or clear the enforcement of foreign key constraints. For more information, refer to <a href=/d1/build-with-d1/foreign-keys/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Define foreign key</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>Other PRAGMAs are disabled because of D1 implementation specifics.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="const&#43;r&#43;%3D&#43;await&#43;db.batch%28%5B%0A&#43;&#43;&#43;&#43;db.prepare%28%22PRAGMA&#43;table_list%22%29%2C%0A&#43;&#43;&#43;&#43;db.prepare%28%22PRAGMA&#43;table_info%28my_table%29%22%29%2C%0A%5D%29%3B%0Aconsole.log%28r%29%3B%0A%2F%2A%0A%5B%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;%22results%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22schema%22%3A&#43;%22main%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22my_table%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22table%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22ncol%22%3A&#43;3%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22wr%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22strict%22%3A&#43;0%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;...%0A&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;%7D%2C%0A&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;%22results%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22cid%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22name%22%3A&#43;%22cid%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22INTEGER%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22notnull%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22dflt_value%22%3A&#43;null%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22pk%22%3A&#43;1%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;...%0A&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;%7D%0A%5D%0A%0A%2A%2F"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="errors">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#errors">&#8203;​</a>
+    </span>
+    <span>Errors</span>
+  </h2><p>The <code>stmt.</code> and <code>db.</code> methods will throw an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Error object</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> whenever an error occurs.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Prior to <a href="https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>wrangler</code> 3.1.1</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, D1 JavaScript errors used the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">cause property</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for detailed error messages.</p>
+<p>To inspect these errors when using older versions of <code>wrangler</code>, you should log <code>error?.cause?.message</code>.</p>
+</aside>
+
+<p>To capture exceptions, log the <code>Error.message</code> value. For example, the code below has a query with an invalid keyword - <code>INSERTZ</code> instead of <code>INSERT</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="try&#43;%7B%0A&#43;&#43;&#43;&#43;%2F%2F&#43;This&#43;is&#43;an&#43;intentional&#43;mispelling%0A&#43;&#43;&#43;&#43;await&#43;db.exec%28%22INSERTZ&#43;INTO&#43;my_table&#43;%28name%2C&#43;employees%29&#43;VALUES&#43;%28%29%22%29%3B%0A%7D&#43;catch&#43;%28e%3A&#43;any%29&#43;%7B%0A&#43;&#43;&#43;&#43;console.error%28%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;message%3A&#43;e.message%0A&#43;&#43;&#43;&#43;%7D%29%3B%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The code above would throw the following error message:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22message%22%3A&#43;%22D1_EXEC_ERROR%3A&#43;Error&#43;in&#43;line&#43;1%3A&#43;INSERTZ&#43;INTO&#43;my_table&#43;%28name%2C&#43;employees%29&#43;VALUES&#43;%28%29%3A&#43;sql&#43;error%3A&#43;near&#43;%5C%22INSERTZ%5C%22%3A&#43;syntax&#43;error&#43;in&#43;INSERTZ&#43;INTO&#43;my_table&#43;%28name%2C&#43;employees%29&#43;VALUES&#43;%28%29&#43;at&#43;offset&#43;0%22%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="error-list">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#error-list">&#8203;​</a>
+    </span>
+    <span>Error list</span>
+  </h2><p>D1 will return the following error constants, in addition to the extended (detailed) error message:</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>D1_ERROR</code></td>
+<td>Generic error.</td>
+</tr>
+<tr>
+<td><code>D1_TYPE_ERROR</code></td>
+<td>Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an <code>undefined</code> variable (unsupported) instead of <code>null</code>.</td>
+</tr>
+<tr>
+<td><code>D1_COLUMN_NOTFOUND</code></td>
+<td>Column not found.</td>
+</tr>
+<tr>
+<td><code>D1_DUMP_ERROR</code></td>
+<td>Database dump error.</td>
+</tr>
+<tr>
+<td><code>D1_EXEC_ERROR</code></td>
+<td>Exec error in line x: y error.</td>
+</tr>
+</tbody>
+</table>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/workers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/d1/build-with-d1/d1-client-api.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-30T13:19:26-04:00
+  title=2024-07-30
+>July 30, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

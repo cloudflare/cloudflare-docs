@@ -86,6 +86,59 @@ const details = await env.YOUR_INDEX.describe();
 
 Retrieves the configuration of a given index directly, including its configured `dimensions` and distance `metric`.
 
+### Create Metadata Index
+
+Enable metadata filtering on the specified property. Limited to 10 properties.
+
+{{<render file="_vectorize-wrangler-version.md">}}
+
+Run the following `wrangler vectorize` command:
+
+```sh
+$ wrangler vectorize create-metadata-index <name>
+
+```
+
+### Delete Metadata Index
+
+Allow Vectorize to delete the specified metadata index.
+
+{{<render file="_vectorize-wrangler-version.md">}}
+
+Run the following `wrangler vectorize` command:
+
+```sh
+$ wrangler vectorize delete-metadata-index <name>
+
+```
+
+### List Metadata Indexes
+
+List metadata properties on which metadata filtering is enabled.
+
+{{<render file="_vectorize-wrangler-version.md">}}
+
+Run the following `wrangler vectorize` command:
+
+```sh
+$ wrangler vectorize list-metadata-index <name>
+
+```
+
+### Get Index Info
+
+Get additional details about the index.
+
+{{<render file="_vectorize-wrangler-version.md">}}
+
+Run the following `wrangler vectorize` command:
+
+```sh
+$ wrangler vectorize info <name>
+
+```
+
+
 ## Vectors
 
 A vector represents the vector embedding output from a machine learning model.

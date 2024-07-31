@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hono on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/hono/</link>
+    <description>Recent content in Hono on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/hono/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Create a fine-tuned OpenAI model with R2</title>
+      <link>https://developers.cloudflare.com/workers/tutorials/create-finetuned-chatgpt-ai-models-with-r2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/tutorials/create-finetuned-chatgpt-ai-models-with-r2/</guid>
+      <description>Create a fine-tuned OpenAI model with R2 Last reviewed: June 7, 2024 In this tutorial, you will use the OpenAI External link icon Open external link API and Cloudflare R2 to create a fine-tuned model External link icon Open external link .</description>
+    </item>
+    <item>
+      <title>Build a Retrieval Augmented Generation (RAG) AI</title>
+      <link>https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/</guid>
+      <description>Build a Retrieval Augmented Generation (RAG) AI Last reviewed: September 25, 2023 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.</description>
+    </item>
+    <item>
+      <title>Recommend products on e-commerce sites using Workers AI and Stripe</title>
+      <link>https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/</guid>
+      <description>Recommend products on e-commerce sites using Workers AI and Stripe Last reviewed: June 24, 2024 Developer Spotlight community contribution Written by: Hidetaka Okamoto Profile: LinkedIn External link icon Open external link E-commerce and media sites often work on increasing the average transaction value to boost profitability.</description>
+    </item>
+    <item>
+      <title>Query D1 from Hono</title>
+      <link>https://developers.cloudflare.com/d1/examples/d1-and-hono/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/d1/examples/d1-and-hono/</guid>
+      <description>Query D1 from the Hono web framework</description>
+    </item>
+    <item>
+      <title>Build a Comments API</title>
+      <link>https://developers.cloudflare.com/d1/tutorials/build-a-comments-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/d1/tutorials/build-a-comments-api/</guid>
+      <description>Build a Comments API Last reviewed: November 23, 2022 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.</description>
+    </item>
+    <item>
+      <title>Build a Slackbot</title>
+      <link>https://developers.cloudflare.com/workers/tutorials/build-a-slackbot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/tutorials/build-a-slackbot/</guid>
+      <description>Build a Slackbot Last reviewed: June 5, 2024 In this tutorial, you will build a Slack External link icon Open external link bot using Cloudflare Workers. Your bot will make use of GitHub webhooks to send messages to a Slack channel when issues are updated or created, and allow users to write a command to look up GitHub issues from inside Slack.</description>
+    </item>
+    <item>
+      <title>Build a Staff Directory Application</title>
+      <link>https://developers.cloudflare.com/d1/tutorials/build-a-staff-directory-app/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/d1/tutorials/build-a-staff-directory-app/</guid>
+      <description>Build a Staff Directory with D1, Cloudflare Pages and HonoX Last reviewed: March 21, 2024 In this tutorial, you will learn how to use D1 to build a staff directory.</description>
+    </item>
+    <item>
+      <title>Create a serverless, globally distributed REST API with Fauna</title>
+      <link>https://developers.cloudflare.com/workers/tutorials/store-data-with-fauna/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/tutorials/store-data-with-fauna/</guid>
+      <description>Create a serverless, globally distributed REST API with Fauna Last reviewed: September 13, 2023 In this tutorial, you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using Fauna External link icon Open external link as its data layer.</description>
+    </item>
+    <item>
+      <title>Hono</title>
+      <link>https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/</guid>
+      <description>Hono Hono External link icon Open external link is a small, simple, and ultrafast web framework for Cloudflare Pages and Workers, Deno, and Bun. In this guide, you will create a new Hono application and deploy it using Cloudflare Pages.</description>
+    </item>
+    <item>
+      <title>Use R2 As static asset storage for your Pages app</title>
+      <link>https://developers.cloudflare.com/pages/tutorials/use-r2-as-static-asset-storage-for-pages/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/pages/tutorials/use-r2-as-static-asset-storage-for-pages/</guid>
+      <description>Use R2 as static asset storage for your Pages app Last reviewed: July 22, 2024 This tutorial will teach you how to use R2 as a static asset bucket for your Pages app.</description>
+    </item>
+  </channel>
+</rss>

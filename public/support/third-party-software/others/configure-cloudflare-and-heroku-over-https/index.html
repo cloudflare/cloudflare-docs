@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs</title>
+  <meta name="title" content="Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Heroku is a cloud PaaS that supports several pre-configured programming languages. Heroku deals with all your infrastructure so you can focus on your …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs" />
+  <meta property="og:description" content="Heroku is a cloud PaaS that supports several pre-configured programming languages. Heroku deals with all your infrastructure so you can focus on your …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/support/third-party-software/others/configure-cloudflare-and-heroku-over-https/" />
+
+  <meta name="twitter:title" content="Configure Cloudflare and Heroku over HTTPS · Cloudflare Support docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="Heroku is a cloud PaaS that supports several pre-configured programming languages. Heroku deals with all your infrastructure so you can focus on your …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="support"><meta name="algolia_product_filter" content="Support"><meta name="algolia_page_title" content="Configure Cloudflare and Heroku over HTTPS">
+  <meta name="pcx_word_count" content="700"><meta name="pcx_last_modified" content="111"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="troubleshooting" />
+  <meta name="algolia_content_type" content="Troubleshooting"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/support/third-party-software/others/configure-cloudflare-and-heroku-over-https/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"support"}</script>
+  <meta name="docsearch:product" content="support" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading") init();
+  else addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip) return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fd2cde5ace5ccdbba4dc8ff14884cc46" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fd2cde5ace5ccdbba4dc8ff14884cc46">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/support/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Support logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">  <path fill="#000" fill-rule="evenodd" d="M2 3.309 3.28 2h23.196l1.281 1.309v11.178h2.073l1.005 4.07 3.72-1.092 3.368 5.962-2.85 2.813L38 29.126l-3.368 5.962-3.771-1.106L29.875 38h-6.807l-.973-4.031-3.746 1.1-.954-1.694H3.281L2 32.068V3.309Zm13.92 27.449-.939-1.664 2.862-2.834-2.862-2.827 3.368-5.962 3.765 1.087.96-4.07h2.122v-9.87H4.56v26.14h11.36Zm6.584-20.844H7.252V7.297h15.252v2.617Zm2.594 25.449h2.728l.896-3.671 1.089-.766 3.54 1.04 1.383-2.408-2.638-2.617-.038-1.342 2.657-2.617-1.364-2.415-3.585 1.06-1.044-.857-.896-3.645h-2.728l-.884 3.625-1.056.864-3.567-1.047-1.363 2.415 2.657 2.617v1.342l-2.657 2.617 1.363 2.408 3.567-1.04 1.05.792.89 3.645Zm2.913-9.12c0 .86-.68 1.555-1.52 1.555s-1.521-.696-1.521-1.554c0-.859.68-1.555 1.52-1.555s1.521.696 1.521 1.555Zm2.562 0c0 2.305-1.828 4.173-4.082 4.173-2.255 0-4.082-1.868-4.082-4.172 0-2.304 1.827-4.172 4.082-4.172 2.254 0 4.082 1.868 4.082 4.172Zm-23.32-11.05h10.974v-2.618H7.252v2.618Zm6.698 5.277H7.252v-2.618h6.699v2.618Z" clip-rule="evenodd"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Support</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fefcde24ac6dccd8a5b8d4ccfc1548b4" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fefcde24ac6dccd8a5b8d4ccfc1548b4">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/support/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Support logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">  <path fill="#000" fill-rule="evenodd" d="M2 3.309 3.28 2h23.196l1.281 1.309v11.178h2.073l1.005 4.07 3.72-1.092 3.368 5.962-2.85 2.813L38 29.126l-3.368 5.962-3.771-1.106L29.875 38h-6.807l-.973-4.031-3.746 1.1-.954-1.694H3.281L2 32.068V3.309Zm13.92 27.449-.939-1.664 2.862-2.834-2.862-2.827 3.368-5.962 3.765 1.087.96-4.07h2.122v-9.87H4.56v26.14h11.36Zm6.584-20.844H7.252V7.297h15.252v2.617Zm2.594 25.449h2.728l.896-3.671 1.089-.766 3.54 1.04 1.383-2.408-2.638-2.617-.038-1.342 2.657-2.617-1.364-2.415-3.585 1.06-1.044-.857-.896-3.645h-2.728l-.884 3.625-1.056.864-3.567-1.047-1.363 2.415 2.657 2.617v1.342l-2.657 2.617 1.363 2.408 3.567-1.04 1.05.792.89 3.645Zm2.913-9.12c0 .86-.68 1.555-1.52 1.555s-1.521-.696-1.521-1.554c0-.859.68-1.555 1.52-1.555s1.521.696 1.521 1.555Zm2.562 0c0 2.305-1.828 4.173-4.082 4.173-2.255 0-4.082-1.868-4.082-4.172 0-2.304 1.827-4.172 4.082-4.172 2.254 0 4.082 1.868 4.082 4.172Zm-23.32-11.05h10.974v-2.618H7.252v2.618Zm6.698 5.277H7.252v-2.618h6.699v2.618Z" clip-rule="evenodd"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Support</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Support menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/" tabindex="-1">Cloudflare home</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/support/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/contacting-cloudflare-support/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Contacting Cloudflare Support</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: About Cloudflare</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About Cloudflare</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Support - Enterprise Documentation</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/enterprise-documentation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Support - Enterprise Documentation</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/enterprise-documentation/customer-incident-management-policy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Customer Incident Management Policy</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Account Management &amp; Billing</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Account Management &amp; Billing</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Billing Cloudflare Plans</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Billing Cloudflare Plans</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Billing Policy</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Understanding Cloudflare sales tax</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/cannot-locate-dashboard-account/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cannot locate dashboard account</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-add-on-service/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Understanding Billing for Add-on Services</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: More Dashboard Apps</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">More Dashboard Apps</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Apps</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Apps</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Managing Cloudflare Apps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Removing Cloudflare Apps</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Custom Pages</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-custom-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Custom Pages</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuring Custom Pages (Error and Challenge)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Stream</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-stream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Stream</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delivering Videos with Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Partners Support</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/partners/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Partners Support</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/partners/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reduce data transfer (egress costs) between Azure and Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Third-Party Software</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Third-Party Software</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Content Management System (CMS)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Content Management System (CMS)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/caching-html-with-drupal/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching HTML with Drupal</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching Static HTML with WordPressWooCommerce</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/can-i-use-wordpress-caching-plugins-like-super-cache-or-w3-total-cache-w3tc-with-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Can I use WordPress caching plugins like Super Cache or W3 Total Cache (W3TC) with Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/cloudflare-and-joomla-recommended-first-steps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare and Joomla Recommended First Steps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/cloudflare-wordpress-plugin-automatic-cache-management/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare WordPress Plugin Automatic Cache Management</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/how-do-i-enable-http2-server-push-in-wordpress/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How do I enable HTTP2 Server Push in WordPress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Improving web security for content management systems like WordPress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/speed-up-wordpress-and-improve-performance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Speed Up WordPress and Improve Performance</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/using-cloudflare-and-drupal-five-easy-recommended-steps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using Cloudflare and Drupal Five Easy Recommended Steps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/what-settings-are-applied-when-i-click-optimize-cloudflare-for-wordpress-in-cloudflares-wordpress-plugin/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">What settings are applied when I click Optimize Cloudflare for WordPress in Cloudflare&#39;s WordPress plugin</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/wordpress-jetpack-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WordPress Jetpack and Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WordPress.com and Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: e-Commerce</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/e-commerce/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">e-Commerce</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching Static HTML with Magento (Business and Enterprise only)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Forum Software</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/forum-software/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Forum Software</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/forum-software/using-cloudflare-with-various-forums-vbulletin-xenforo-mybb/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using Cloudflare with various forums</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Others</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Others</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/support/third-party-software/others/configure-cloudflare-and-heroku-over-https/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure Cloudflare and Heroku over HTTPS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuring an Amazon Web Services static site to use Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enabling Cloudflare SSL on Azure Storage Static Web Hosting Applications</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Errors</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Errors</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 10XXX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 1XXX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 5XX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-other-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting other errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: General Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">General Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gathering information for troubleshooting sites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting crawl errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: HTTP Status Codes</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Status Codes</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/1xx-informational/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">1xx Informational</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/2xx-success/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">2xx Success</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/3xx-redirection/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">3xx Redirection</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/4xx-client-error/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">4xx Client Error</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/http-status-codes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Status Codes</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Restoring Visitor IPs</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/restoring-visitor-ips/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Restoring Visitor IPs</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Restoring original visitor IPs</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Disruptive Maintenance</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/disruptive-maintenance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Disruptive Maintenance</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/support/third-party-software/Others/Configure%20Cloudflare%20and%20Heroku%20over%20HTTPS.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="configure-cloudflare-and-heroku-over-https">Configure Cloudflare and Heroku over HTTPS</h1><h2 id="overview">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#overview">&#8203;​</a>
+    </span>
+    <span>Overview</span>
+  </h2><p>Heroku is a cloud PaaS that supports several pre-configured programming languages. Heroku deals with all your infrastructure so you can focus on your application without having to work at the command line.</p>
+<p>This article describes how to configure Heroku with Cloudflare to serve your traffic over HTTPS. For this article, we&rsquo;ll assume that you already have an <a href="https://support.cloudflare.com/hc/en-us/sections/200820158-CloudFlare-101" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">active domain on Cloudflare</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, as well as a running Heroku app.</p>
+<hr>
+<h2 id="step-1---add-a-custom-domain-to-your-heroku-app">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-1---add-a-custom-domain-to-your-heroku-app">&#8203;​</a>
+    </span>
+    <span>Step 1 - Add a custom domain to your Heroku app</span>
+  </h2><p>Follow Heroku&rsquo;s instructions: <a href="https://devcenter.heroku.com/articles/custom-domains" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Custom Domain Names for Apps</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<hr>
+<h2 id="step-2---add-a-subdomain-in-cloudflare-dns">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-2---add-a-subdomain-in-cloudflare-dns">&#8203;​</a>
+    </span>
+    <span>Step 2 - Add a subdomain in Cloudflare DNS</span>
+  </h2><p>Below, you will need to add DNS records for a subdomain and the apex domain (also known as &ldquo;root domain&rdquo;). Learn how to <a href=/dns/manage-dns-records/how-to/create-dns-records/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Managing DNS records in Cloudflare</span></a>.</p>
+<h3 id="step-2a---add-a-subdomain">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-2a---add-a-subdomain">&#8203;​</a>
+    </span>
+    <span>Step 2a - Add a subdomain</span>
+  </h3><p>To start, log in to your Cloudflare account, navigate to the <strong>DNS</strong> app and add a &lsquo;www&rsquo; <em>CNAME</em> record that points to the custom domain (also known as <em>DNS target</em>) that you obtained in Step 1 above for your subdomain.</p>
+<div class="DocsMarkdown--example"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Target</th>
+<th>Proxy status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CNAME</code></td>
+<td><code>www</code></td>
+<td><code>{example-domain}.herokudns.com</code></td>
+<td>Proxied</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="step-2b---add-your-root-domain">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-2b---add-your-root-domain">&#8203;​</a>
+    </span>
+    <span>Step 2b - Add your root domain</span>
+  </h3><p>Adding a root or apex domain on Heroku also requires using a CNAME record pointed from your root. You cannot use A records on Heroku because no IP addresses are exposed for Heroku users to use.</p>
+<p>Fortunately, Cloudflare offers <a href=/dns/cname-flattening/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">CNAME flattening</span></a> to resolve requests for your root domain.</p>
+<p>Add a CNAME record for your root and point it to DNS target you obtained in Step 1 above for your domain.</p>
+<div class="DocsMarkdown--example"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Target</th>
+<th>Proxy status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CNAME</code></td>
+<td><code>@</code></td>
+<td><code>{example-domain}.herokudns.com</code></td>
+<td>Proxied</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="step-3---confirm-that-your-domain-is-routed-through-cloudflare">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-3---confirm-that-your-domain-is-routed-through-cloudflare">&#8203;​</a>
+    </span>
+    <span>Step 3 - Confirm that your domain is routed through Cloudflare</span>
+  </h2><p>The easiest way to confirm that Cloudflare is working for your domain is to issue a cURL command.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;&#43;curl&#43;-I&#43;www.example.com%0AHTTP%2F1.1&#43;200&#43;OK%0ADate%3A&#43;Tue%2C&#43;23&#43;Jan&#43;2018&#43;18%3A51%3A30&#43;GMT%0AContent-Type%3A&#43;text%2Fhtml%3B&#43;charset%3DUTF-8%0AConnection%3A&#43;keep-alive%0ACache-Control%3A&#43;public%2C&#43;max-age%3D0%0ALast-Modified%3A&#43;Mon%2C&#43;31&#43;Dec&#43;1979&#43;04%3A08%3A00&#43;GMT%0AX-Powered-By%3A&#43;Express%0AServer%3A&#43;cloudflare%0ACF-RAY%3A&#43;3e1cf1d936f28c52-SFO-DOG"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You can identify Cloudflare-proxied requests by the <em>CF-Ray</em> response header. If either of these two are present, your requests are being proxied by Cloudflare accordingly.</p>
+<p>You can repeat the above cURL command for any of the subdomains that you have configured within your DNS settings.</p>
+<hr>
+<h2 id="step-4---configure-your-domain-for-ssl">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-4---configure-your-domain-for-ssl">&#8203;​</a>
+    </span>
+    <span>Step 4 - Configure your domain for SSL</span>
+  </h2><h3 id="step-4a---enable-ssl">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-4a---enable-ssl">&#8203;​</a>
+    </span>
+    <span>Step 4a - Enable SSL</span>
+  </h3><p>Cloudflare provides a SANs wildcard certificate with all paid plans, and a SNI wildcard certificate with the Free plan. Full details on SSL <a href="https://www.cloudflare.com/ssl" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">can be found here</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>If you don&rsquo;t know what this means, navigate to the <strong>Overview</strong> tab of the <strong>SSL/TLS</strong> app in your Cloudflare dashboard. Select <em>Flexible</em> mode to serve your site over HTTPS to all public visitors.</p>
+<p>Once the certificate status changes to <strong>• Active Certificate</strong>, incoming traffic will be served to your site over HTTPS (e.g., visitors will see HTTPS prefixed to your domain name in the browser bar).  </p>
+<h3 id="step-4b---force-all-traffic-over-https">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-4b---force-all-traffic-over-https">&#8203;​</a>
+    </span>
+    <span>Step 4b - Force all traffic over HTTPS</span>
+  </h3><p>To ensure all traffic to your site is encrypted, Cloudflare lets you force an automatic HTTPS redirect.  To configure this, consult: <a href="https://support.cloudflare.com/hc/articles/200170536" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">How do I redirect all visitors to HTTPS/SSL?</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></p>
+<p>You can then use a cURL command to verify that all requests are being forced over HTTPS.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;-I&#43;-L&#43;example.com%0AHTTP%2F1.1&#43;301&#43;Moved&#43;Permanently%0ADate%3A&#43;Tue%2C&#43;23&#43;Jan&#43;2018&#43;23%3A17%3A44&#43;GMT%0AConnection%3A&#43;keep-alive%0ACache-Control%3A&#43;max-age%3D3600%0AExpires%3A&#43;Wed%2C&#43;24&#43;Jan&#43;2018&#43;00%3A17%3A44&#43;GMT%0ALocation%3A&#43;https%3A%2F%2Fexample.com%2F%0AServer%3A&#43;cloudflare%0ACF-RAY%3A&#43;3e1e77d5c42b8c52-SFO-DOG"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If SSL was not working for your domain (e.g. your SSL certificate has not yet been issued), you would see a <a href="https://support.cloudflare.com/hc/articles/115003011431#525error" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">525</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> or <a href="https://support.cloudflare.com/hc/articles/115003011431#526error" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">526</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> HTTP response after the redirect.</p>
+<p>Please note that the issuing of a Universal SSL certificate typically takes up to 24 hours. Our paid SSL certificates issue within 10-15 minutes.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/support" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/support/third-party-software/Others/Configure%20Cloudflare%20and%20Heroku%20over%20HTTPS.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-04-26T10:27:39-05:00
+  title=2024-04-26
+>April 26, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

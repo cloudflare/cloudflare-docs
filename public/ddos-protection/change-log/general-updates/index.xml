@@ -1,0 +1,21 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>General updates · DDoS protection</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/general-updates/</link>
+    <description>Updates to DDoS protection</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/ddos-protection/change-log/general-updates/index.xml" rel="self" />
+    <lastBuildDate>Mon, 03 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>DDoS alerts now available for EU CMB customers</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/general-updates/#ddos-alerts-now-available-for-eu-cmb-customers</link>
+    <description>&lt;a href=https://developers.cloudflare.com/ddos-protection/reference/alerts/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;DDoS alerts&lt;/span&gt;&lt;/a&gt; are now available for EU Customer Metadata Boundary (CMB) customers. This includes all DDoS alert type (Standard and Advanced) for both HTTP DDoS attacks and L3/4 DDoS attacks.</description>
+    <pubDate>Mon, 03 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Network Analytics now supported for EU CMB customers</title>
+    <link>https://developers.cloudflare.com/ddos-protection/change-log/general-updates/#network-analytics-now-supported-for-eu-cmb-customers</link>
+    <description>&lt;p&gt;The Network Analytics dashboard is available to customers that have opted in to the EU &lt;a href=https://developers.cloudflare.com/data-localization/metadata-boundary/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Customer Metadata Boundary&lt;/span&gt;&lt;/a&gt; (CMB) solution. This also includes Network Analytics Logs (Logpush) and GraphQL API.&lt;/p&gt;
+&lt;p&gt;API users can ensure they are routed properly by directing their API requests at &lt;code&gt;eu.api.cloudflare.com&lt;/code&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 17 Apr 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

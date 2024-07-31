@@ -1,0 +1,593 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · R2</title>
+    <link>https://developers.cloudflare.com/r2/platform/changelog/</link>
+    <description>Updates to R2</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/r2/platform/changelog/index.xml" rel="self" />
+    <lastBuildDate>Fri, 07 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>R2 - 2024-06-07</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-06-07</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed an issue that prevented Sippy from copying over objects from S3 buckets with SSE set up.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 07 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-06-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-06-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;R2 will now ignore the &lt;code&gt;x-purpose&lt;/code&gt; request parameter.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 06 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-02-20</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-02-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;When an &lt;code&gt;OPTIONS&lt;/code&gt; request against the public entrypoint does not include an &lt;code&gt;origin&lt;/code&gt; header, an &lt;code&gt;HTTP 400&lt;/code&gt; instead of an &lt;code&gt;HTTP 401&lt;/code&gt; is returned.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 20 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-02-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-02-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The response shape of &lt;code&gt;GET /buckets/:bucket/sippy&lt;/code&gt; has changed.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;/buckets/:bucket/sippy/validate&lt;/code&gt; endpoint is exposed over APIGW to validate Sippy’s configuration.&lt;/li&gt;
+&lt;li&gt;The shape of the configuration object when modifying Sippy’s configuration has changed.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 06 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-01-30</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-01-30</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where the API would accept empty strings in the &lt;code&gt;AllowedHeaders&lt;/code&gt; property of &lt;code&gt;PutBucketCors&lt;/code&gt; actions.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 30 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-01-26</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-01-26</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Parts are now automatically sorted in ascending order regardless of input during &lt;code&gt;CompleteMultipartUpload&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 26 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2024-01-11</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2024-01-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Sippy is available for Google Cloud Storage (GCS) beta.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 11 Jan 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-12-11</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-12-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;x-id&lt;/code&gt; query param for &lt;code&gt;S3 ListBuckets&lt;/code&gt; action is now ignored.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;x-id&lt;/code&gt; query param is now ignored for all S3 actions.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 11 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-10-23</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-10-23</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PutBucketCors&lt;/code&gt; now only accepts valid origins.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 23 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-09-01</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-09-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed an issue with &lt;code&gt;ListBuckets&lt;/code&gt; where the &lt;code&gt;name_contains&lt;/code&gt; parameter would also search over the jurisdiction name.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 01 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-08-23</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-08-23</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Config Audit Logs GA.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 23 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-08-11</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-08-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Users can now complete conditional multipart publish operations. When a condition failure occurs when publishing an upload, the upload is no longer available and is treated as aborted.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 11 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-07-05</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-07-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than
+ranged reads on smaller files. Performance should now be consistently good independent of filesize.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 05 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-06-21</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-06-21</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/r2/objects/multipart-objects/#etags class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Multipart ETags&lt;/span&gt;&lt;/a&gt; are now MD5
+hashes.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 21 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-06-16</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-06-16</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where calling &lt;a href=&#34;https://developers.cloudflare.com/api/operations/r2-get-bucket&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;GetBucket&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; on a non-existent bucket would return a 500 instead of a 404.&lt;/li&gt;
+&lt;li&gt;Improved S3 compatibility for ListObjectsV1, now nextmarker is only set when truncated is true.&lt;/li&gt;
+&lt;li&gt;The R2 worker bindings now support parsing conditional headers with multiple etags. These etags can now be strong, weak or a wildcard. Previously the bindings only accepted headers containing a single strong etag.&lt;/li&gt;
+&lt;li&gt;S3 putObject now supports sha256 and sha1 checksums. These were already supported by the R2 worker bindings.&lt;/li&gt;
+&lt;li&gt;CopyObject in the S3 compatible api now supports Cloudflare specific headers which allow the copy operation to be conditional on the state of the destination object.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 16 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-04-01</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-04-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://developers.cloudflare.com/api/operations/r2-get-bucket&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;GetBucket&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; is now available for use through the Cloudflare API.&lt;/li&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/r2/reference/data-location/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Location hints&lt;/span&gt;&lt;/a&gt; can now be set when creating a bucket, both through the S3 API, and the dashboard.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Sat, 01 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-03-16</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-03-16</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The ListParts API has been implemented and is available for use.&lt;/li&gt;
+&lt;li&gt;HTTP2 is now enabled by default for new custom domains linked to R2 buckets.&lt;/li&gt;
+&lt;li&gt;Object Lifecycles are now available for use.&lt;/li&gt;
+&lt;li&gt;Bug fix: Requests to public buckets will now return the &lt;code&gt;Content-Encoding&lt;/code&gt; header for gzip files when &lt;code&gt;Accept-Encoding: gzip&lt;/code&gt; is used.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 16 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2023-01-27</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2023-01-27</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;R2 authentication tokens created via the R2 token page are now scoped
+to a single account by default.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 27 Jan 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-12-07</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-12-07</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.&lt;/li&gt;
+&lt;li&gt;Passing a range header to the &lt;code&gt;get&lt;/code&gt; operation in the R2 bindings API should now work as expected.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 07 Dec 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-11-30</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-11-30</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Requests with the header &lt;code&gt;x-amz-acl: public-read&lt;/code&gt; are no longer rejected.&lt;/li&gt;
+&lt;li&gt;Fixed issues with wildcard CORS rules and presigned URLs.&lt;/li&gt;
+&lt;li&gt;Fixed an issue where &lt;code&gt;ListObjects&lt;/code&gt; would time out during delimited listing of unicode-normalized keys.&lt;/li&gt;
+&lt;li&gt;S3 API’s &lt;code&gt;PutBucketCors&lt;/code&gt; now rejects requests with unknown keys in the XML body.&lt;/li&gt;
+&lt;li&gt;Signing additional headers no longer breaks CORS preflight requests for presigned URLs.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 30 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-11-21</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-11-21</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug in &lt;code&gt;ListObjects&lt;/code&gt; where &lt;code&gt;startAfter&lt;/code&gt; would skip over objects with keys that have numbers right after the &lt;code&gt;startAfter&lt;/code&gt; prefix.&lt;/li&gt;
+&lt;li&gt;Add worker bindings for multipart uploads.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 21 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-11-17</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-11-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Unconditionally return HTTP 206 on ranged requests to match behavior of other S3 compatible implementations.&lt;/li&gt;
+&lt;li&gt;Fixed a CORS bug where &lt;code&gt;AllowedHeaders&lt;/code&gt; in the CORS config were being treated case-sensitively.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 17 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-11-08</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-11-08</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Copying multipart objects via &lt;code&gt;CopyObject&lt;/code&gt; is re-enabled.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UploadPartCopy&lt;/code&gt; is re-enabled.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 08 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-10-28</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-10-28</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.&lt;/li&gt;
+&lt;li&gt;Fixed a performance issue where concurrent multipart part uploads would get rejected.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 28 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-10-26</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-10-26</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed ranged reads for multipart objects with part sizes unaligned
+to 64KiB.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 26 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-10-19</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-10-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HeadBucket&lt;/code&gt; now sets &lt;code&gt;x-amz-bucket-region&lt;/code&gt; to &lt;code&gt;auto&lt;/code&gt; in the response.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 19 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-10-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-10-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Temporarily disabled &lt;code&gt;UploadPartCopy&lt;/code&gt; while we investigate an issue.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 06 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-09-29</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-09-29</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a CORS issue where &lt;code&gt;Access-Control-Allow-Headers&lt;/code&gt; was not being
+set for preflight requests.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 29 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-09-28</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-09-28</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where CORS configuration was not being applied to S3 endpoint.&lt;/li&gt;
+&lt;li&gt;No-longer render the &lt;code&gt;Access-Control-Expose-Headers&lt;/code&gt; response header if &lt;code&gt;ExposeHeader&lt;/code&gt; is not defined.&lt;/li&gt;
+&lt;li&gt;Public buckets will no-longer return the &lt;code&gt;Content-Range&lt;/code&gt; response header unless the response is partial.&lt;/li&gt;
+&lt;li&gt;Fixed CORS rendering for the S3 &lt;code&gt;HeadObject&lt;/code&gt; operation.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where no matching CORS configuration could result in a &lt;code&gt;403&lt;/code&gt; response.&lt;/li&gt;
+&lt;li&gt;Temporarily disable copying objects that were created with multipart uploads.&lt;/li&gt;
+&lt;li&gt;Fixed a bug in the Workers bindings where an internal error was being returned for malformed ranged &lt;code&gt;.get&lt;/code&gt; requests.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 28 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-09-27</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-09-27</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;CORS preflight responses and adding CORS headers for other responses is now implemented for S3 and public buckets. Currently, the only way to configure CORS is via the S3 API.&lt;/li&gt;
+&lt;li&gt;Fixup for bindings list truncation to work more correctly when listing keys with custom metadata that have &lt;code&gt;&#34;&lt;/code&gt; or when some keys/values contain certain multi-byte UTF-8 values.&lt;/li&gt;
+&lt;li&gt;The S3 &lt;code&gt;GetObject&lt;/code&gt; operation now only returns &lt;code&gt;Content-Range&lt;/code&gt; in response to a ranged request.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 27 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-09-19</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-09-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The R2 &lt;code&gt;put()&lt;/code&gt; binding options can now be given an &lt;code&gt;onlyIf&lt;/code&gt; field, similar to &lt;code&gt;get()&lt;/code&gt;, that performs a conditional upload.&lt;/li&gt;
+&lt;li&gt;The R2 &lt;code&gt;delete()&lt;/code&gt; binding now supports deleting multiple keys at once.&lt;/li&gt;
+&lt;li&gt;The R2 &lt;code&gt;put()&lt;/code&gt; binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.&lt;/li&gt;
+&lt;li&gt;User-specified object checksums will now be available in the R2 &lt;code&gt;get()&lt;/code&gt; and &lt;code&gt;head()&lt;/code&gt; bindings response. MD5 is included by default for non-multipart uploaded objects.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 19 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-09-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-09-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The S3 &lt;code&gt;CopyObject&lt;/code&gt; operation now includes &lt;code&gt;x-amz-version-id&lt;/code&gt; and &lt;code&gt;x-amz-copy-source-version-id&lt;/code&gt; in the response headers for consistency with other methods.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;ETag&lt;/code&gt; for multipart files uploaded until shortly after Open Beta uploaded now include the number of parts as a suffix.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 06 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-08-17</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-08-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The S3 &lt;code&gt;DeleteObjects&lt;/code&gt; operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 &lt;code&gt;DeleteObject&lt;/code&gt; operation was not affected by this.&lt;/li&gt;
+&lt;li&gt;Fixed presigned URL support for the S3 &lt;code&gt;ListBuckets&lt;/code&gt; and &lt;code&gt;ListObjects&lt;/code&gt; operations.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 17 Aug 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-08-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-08-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Uploads will automatically infer the &lt;code&gt;Content-Type&lt;/code&gt; based on file body
+if one is not explicitly set in the &lt;code&gt;PutObject&lt;/code&gt; request. This functionality will
+come to multipart operations in the future.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Sat, 06 Aug 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-30</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-30</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed S3 conditionals to work properly when provided the &lt;code&gt;LastModified&lt;/code&gt; date of the last upload, bindings fixes will come in the next release.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;If-Match&lt;/code&gt; / &lt;code&gt;If-None-Match&lt;/code&gt; headers now support arrays of ETags, Weak ETags and wildcard (&lt;code&gt;*&lt;/code&gt;) as per the HTTP standard and undocumented AWS S3 behavior.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Sat, 30 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-21</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-21</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added dummy implementation of the following operation that mimics
+the response that a basic AWS S3 bucket will return when first created: &lt;code&gt;GetBucketAcl&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 21 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-20</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GetBucketVersioning&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GetBucketLifecycleConfiguration&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GetBucketReplication&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GetBucketTagging&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GetObjectLockConfiguration&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    <pubDate>Wed, 20 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-19</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed an S3 compatibility issue for error responses with MinIO .NET SDK and any other tooling that expects no &lt;code&gt;xmlns&lt;/code&gt; namespace attribute on the top-level &lt;code&gt;Error&lt;/code&gt; tag.&lt;/li&gt;
+&lt;li&gt;List continuation tokens prior to 2022-07-01 are no longer accepted and must be obtained again through a new &lt;code&gt;list&lt;/code&gt; operation.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;list()&lt;/code&gt; binding will now correctly return a smaller limit if too much data would otherwise be returned (previously would return an &lt;code&gt;Internal Error&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 19 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-14</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-14</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Improvements to 500s: we now convert errors, so things that were previously concurrency problems for some operations should now be &lt;code&gt;TooMuchConcurrency&lt;/code&gt; instead of &lt;code&gt;InternalError&lt;/code&gt;. We’ve also reduced the rate of 500s through internal improvements.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ListMultipartUpload&lt;/code&gt; correctly encodes the returned &lt;code&gt;Key&lt;/code&gt; if the &lt;code&gt;encoding-type&lt;/code&gt; is specified.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 14 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-13</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;S3 XML documents sent to R2 that have an XML declaration are not rejected with &lt;code&gt;400 Bad Request&lt;/code&gt; / &lt;code&gt;MalformedXML&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Minor S3 XML compatibility fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.&lt;/li&gt;
+&lt;li&gt;Beta &lt;code&gt;ListMultipartUploads&lt;/code&gt; support.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 13 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Support the &lt;code&gt;r2_list_honor_include&lt;/code&gt; compat flag coming up in an upcoming runtime release (default behavior as of 2022-07-14 compat date). Without that compat flag/date, list will continue to function implicitly as &lt;code&gt;include: [&#39;httpMetadata&#39;, &#39;customMetadata&#39;]&lt;/code&gt; regardless of what you specify.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cf-create-bucket-if-missing&lt;/code&gt; can be set on a &lt;code&gt;PutObject&lt;/code&gt;/&lt;code&gt;CreateMultipartUpload&lt;/code&gt; request to implicitly create the bucket if it does not exist.&lt;/li&gt;
+&lt;li&gt;Fix S3 compatibility with MinIO client spec non-compliant XML for publishing multipart uploads. Any leading and trailing quotes in &lt;code&gt;CompleteMultipartUpload&lt;/code&gt; are now optional and ignored as it seems to be the actual non-standard behavior AWS implements.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 06 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-07-01</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-07-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Unsupported search parameters to &lt;code&gt;ListObjects&lt;/code&gt;/&lt;code&gt;ListObjectsV2&lt;/code&gt; are
+now rejected with &lt;code&gt;501 Not Implemented&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Fixes for Listing:
+&lt;ul&gt;
+&lt;li&gt;Fix listing behavior when the number of files within a folder exceeds the limit (you’d end
+up seeing a CommonPrefix for that large folder N times where N = number of children
+within the CommonPrefix / limit).&lt;/li&gt;
+&lt;li&gt;Fix corner case where listing could cause
+objects with sharing the base name of a &#34;folder&#34; to be skipped.&lt;/li&gt;
+&lt;li&gt;Fix listing over some files that shared a certain common prefix.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DeleteObjects&lt;/code&gt; can now handle 1000 objects at a time.&lt;/li&gt;
+&lt;li&gt;S3 &lt;code&gt;CreateBucket&lt;/code&gt; request can specify &lt;code&gt;x-amz-bucket-object-lock-enabled&lt;/code&gt; with a value of &lt;code&gt;false&lt;/code&gt; and not have the requested rejected with a &lt;code&gt;NotImplemented&lt;/code&gt;
+error. A value of &lt;code&gt;true&lt;/code&gt; will continue to be rejected as R2 does not yet support
+object locks.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 01 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-06-17</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-06-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a regression for some clients when using an empty delimiter.&lt;/li&gt;
+&lt;li&gt;Added support for S3 pre-signed URLs.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 17 Jun 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-06-16</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-06-16</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a regression in the S3 API &lt;code&gt;UploadPart&lt;/code&gt; operation where &lt;code&gt;TooMuchConcurrency&lt;/code&gt;
+&amp; &lt;code&gt;NoSuchUpload&lt;/code&gt; errors were being returned as &lt;code&gt;NoSuchBucket&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 16 Jun 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-06-13</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-06-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug with the S3 API &lt;code&gt;ListObjectsV2&lt;/code&gt; operation not returning empty folder/s as common prefixes when using delimiters.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;ListObjectsV2&lt;/code&gt; &lt;code&gt;KeyCount&lt;/code&gt; parameter now correctly returns the sum of keys and common prefixes rather than just the keys.&lt;/li&gt;
+&lt;li&gt;Invalid cursors for list operations no longer fail with an &lt;code&gt;InternalError&lt;/code&gt; and now return the appropriate error message.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 13 Jun 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-06-10</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-06-10</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;ContinuationToken&lt;/code&gt; field is now correctly returned in the response if provided in a S3 API &lt;code&gt;ListObjectsV2&lt;/code&gt; request.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where the S3 API &lt;code&gt;AbortMultipartUpload&lt;/code&gt; operation threw an error when called multiple times.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 10 Jun 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-27</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-27</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where the S3 API’s &lt;code&gt;PutObject&lt;/code&gt; or the &lt;code&gt;.put()&lt;/code&gt; binding could fail but still show the bucket upload as successful.&lt;/li&gt;
+&lt;li&gt;If &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc7232&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;conditional headers&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; are provided to S3 API &lt;code&gt;UploadObject&lt;/code&gt; or &lt;code&gt;CreateMultipartUpload&lt;/code&gt; operations, and the object exists, a &lt;code&gt;412 Precondition Failed&lt;/code&gt; status code will be returned if these checks are not met.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 27 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-20</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-20</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug when &lt;code&gt;Accept-Encoding&lt;/code&gt; was being used in &lt;code&gt;SignedHeaders&lt;/code&gt;
+when sending requests to the S3 API would result in a &lt;code&gt;SignatureDoesNotMatch&lt;/code&gt;
+response.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 20 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-17</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Fixed a bug where requests to the S3 API were not handling non-encoded parameters used for the authorization signature.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where requests to the S3 API where number-like keys were being parsed as numbers instead of strings.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 17 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-16</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-16</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Add support for S3 &lt;a href=&#34;https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;virtual-hosted style paths&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, such as &lt;code&gt;&lt;BUCKET&gt;.&lt;ACCOUNT_ID&gt;.r2.cloudflarestorage.com&lt;/code&gt; instead of path-based routing (&lt;code&gt;&lt;ACCOUNT_ID&gt;.r2.cloudflarestorage.com/&lt;BUCKET&gt;&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Implemented &lt;code&gt;GetBucketLocation&lt;/code&gt; for compatibility with external tools, this will always return a &lt;code&gt;LocationConstraint&lt;/code&gt; of &lt;code&gt;auto&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 16 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-06</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;S3 API &lt;code&gt;GetObject&lt;/code&gt; ranges are now inclusive (&lt;code&gt;bytes=0-0&lt;/code&gt; will correctly return the first byte).&lt;/li&gt;
+&lt;li&gt;S3 API &lt;code&gt;GetObject&lt;/code&gt; partial reads return the proper &lt;code&gt;206 Partial Content&lt;/code&gt; response code.&lt;/li&gt;
+&lt;li&gt;Copying from a non-existent key (or from a non-existent bucket) to another bucket now returns the proper &lt;code&gt;NoSuchKey&lt;/code&gt; / &lt;code&gt;NoSuchBucket&lt;/code&gt; response.&lt;/li&gt;
+&lt;li&gt;The S3 API now returns the proper &lt;code&gt;Content-Type: application/xml&lt;/code&gt; response header on relevant endpoints.&lt;/li&gt;
+&lt;li&gt;Multipart uploads now have a &lt;code&gt;-N&lt;/code&gt; suffix on the etag representing the number of parts the file was published with.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UploadPart&lt;/code&gt; and &lt;code&gt;UploadPartCopy&lt;/code&gt; now return proper error messages, such as &lt;code&gt;TooMuchConcurrency&lt;/code&gt; or &lt;code&gt;NoSuchUpload&lt;/code&gt;, instead of ‘internal error’.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;UploadPart&lt;/code&gt; can now be sent a 0-length part.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 06 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-05</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-05</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;When using the S3 API, an empty string and &lt;code&gt;us-east-1&lt;/code&gt; will now alias to the &lt;code&gt;auto&lt;/code&gt; region for compatibility with external tools.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GetBucketEncryption&lt;/code&gt;, &lt;code&gt;PutBucketEncryption&lt;/code&gt; and &lt;code&gt;DeleteBucketEncrypotion&lt;/code&gt; are now supported (the only supported value currently is &lt;code&gt;AES256&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Unsupported operations are explicitly rejected as unimplemented rather than implicitly converting them into &lt;code&gt;ListObjectsV2&lt;/code&gt;/&lt;code&gt;PutBucket&lt;/code&gt;/&lt;code&gt;DeleteBucket&lt;/code&gt; respectively.&lt;/li&gt;
+&lt;li&gt;S3 API &lt;code&gt;CompleteMultipartUploads&lt;/code&gt; requests are now properly escaped.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 05 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-05-03</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-05-03</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Pagination cursors are no longer returned when the keys in a bucket is the same as the &lt;code&gt;MaxKeys&lt;/code&gt; argument.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;ListBuckets&lt;/code&gt; operation now accepts &lt;code&gt;cf-max-keys&lt;/code&gt;, &lt;code&gt;cf-start-after&lt;/code&gt; and &lt;code&gt;cf-continuation-token&lt;/code&gt; headers behave the same as the respective URL parameters.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;ListBuckets&lt;/code&gt; and &lt;code&gt;ListObjects&lt;/code&gt; endpoints now allow &lt;code&gt;per_page&lt;/code&gt; to be 0.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;CopyObject&lt;/code&gt; source parameter now requires a leading slash.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;CopyObject&lt;/code&gt; operation now returns a &lt;code&gt;NoSuchBucket&lt;/code&gt; error when copying to a non-existent bucket instead of an internal error.&lt;/li&gt;
+&lt;li&gt;Enforce the requirement for &lt;code&gt;auto&lt;/code&gt; in SigV4 signing and the &lt;code&gt;CreateBucket&lt;/code&gt; &lt;code&gt;LocationConstraint&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;CreateBucket&lt;/code&gt; operation now returns the proper &lt;code&gt;location&lt;/code&gt; response header.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 03 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-04-14</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-04-14</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The S3 API now supports unchunked signed payloads.&lt;/li&gt;
+&lt;li&gt;Fixed &lt;code&gt;.put()&lt;/code&gt; for the Workers R2 bindings.&lt;/li&gt;
+&lt;li&gt;Fixed a regression where key names were not properly decoded when using the S3 API.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;DeleteObjects&lt;/code&gt; operation no longer returns an error even though an object has been deleted in some cases.&lt;/li&gt;
+&lt;li&gt;Fixed a bug where &lt;code&gt;startAfter&lt;/code&gt; and &lt;code&gt;continuationToken&lt;/code&gt; were not working in list operations.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;ListObjects&lt;/code&gt; operation now correctly renders &lt;code&gt;Prefix&lt;/code&gt;, &lt;code&gt;Delimiter&lt;/code&gt;, &lt;code&gt;StartAfter&lt;/code&gt; and &lt;code&gt;MaxKeys&lt;/code&gt; in the response.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;ListObjectsV2&lt;/code&gt; now correctly honors the &lt;code&gt;encoding-type&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;li&gt;The S3 API &lt;code&gt;PutObject&lt;/code&gt; operation now works with &lt;code&gt;POST&lt;/code&gt; requests for &lt;code&gt;s3cmd&lt;/code&gt; compatibility.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 14 Apr 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>R2 - 2022-04-04</title>
+    <link>https://developers.cloudflare.com/r2/reference/changelog/#2022-04-04</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;The S3 API &lt;code&gt;DeleteObjects&lt;/code&gt; request now properly returns a &lt;code&gt;MalformedXML&lt;/code&gt;
+error instead of &lt;code&gt;InternalError&lt;/code&gt; when provided with more than 128 keys.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 04 Apr 2022 08:00:00 EST</pubDate></item></channel>
+</rss>

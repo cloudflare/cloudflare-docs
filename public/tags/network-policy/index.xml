@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Network Policy on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/network-policy/</link>
+    <description>Recent content in Network Policy on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/network-policy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network policy</title>
+      <link>https://developers.cloudflare.com/cloudflare-one/api-terraform/gateway-api-examples/network-policy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/cloudflare-one/api-terraform/gateway-api-examples/network-policy/</guid>
+      <description>Override one hostname with another.</description>
+    </item>
+  </channel>
+</rss>
