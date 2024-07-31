@@ -31,6 +31,12 @@ Follow this workflow to create a custom error response rule for a given zone via
 
 ## Example API calls
 
+The examples in this section use the following fields in their rule expressions:
+
+- [`http.response.code`](/ruleset-engine/rules-language/fields/#field-http-response-code): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/#field-cf-response-1xxx_code): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+
 ### Custom JSON response for all 5xx errors
 
 This example configures a custom JSON error response for all 5xx errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
@@ -85,7 +91,6 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
-
 ### Custom HTML response for Cloudflare 1020 errors
 
 This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
@@ -111,10 +116,6 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
 ```
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
-
-{{<Aside type="warning">}}
-The `cf.response.1xxx_code` field will only work for Cloudflare-generated errors like [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
-{{</Aside>}}
 
 ---
 
