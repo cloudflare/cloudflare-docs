@@ -27,9 +27,10 @@ body:
       description: Describe the changes you are proposing and provide links to the revelant Cloudflare documentation pages the changes should apply to.
       placeholder: |
         Describe the changes you are proposing.
+        
         Link examples:
-        - https://developers.cloudflare.com/cloudflare-one/
-        - https://developers.cloudflare.com/workers/examples/
+        https://developers.cloudflare.com/cloudflare-one/
+        https://developers.cloudflare.com/workers/examples/
 
   - type: textarea
     id: location
