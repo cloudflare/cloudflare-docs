@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GitHub Enterprise Cloud
-weight: 11
+weight: 12
 ---
 
 

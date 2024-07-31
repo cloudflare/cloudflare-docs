@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: AWS
-weight: 5
+weight: 6
 ---
 
 # Connect to AWS through Access
