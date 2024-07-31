@@ -15,17 +15,18 @@ Before getting started, review the following documentation:
 
 {{<Aside type="note">}}
 
-The examples below are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`.
+The examples below are for zone-scoped datasets. Account-scoped datasets should use `/accounts/{account_id}` instead of `/zone/{zone_id}`.
 
 {{</Aside>}}
 
 ## Step 1 - Get ownership challenge
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
@@ -61,9 +62,12 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 ## Step 2 - Create a job
 
 ```bash
-curl -s -X POST \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--d'{
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
 "name":"<DOMAIN_NAME>",
 "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
 "dataset": "http_requests",
@@ -112,15 +116,17 @@ In the response, you get a newly-created job ID. For example:
   },
   "success": true
 }
-``
+```
 
 ## Step 3 - Enable (update) a job
 
 Start by retrieving information about a specific job, using a job ID:
 
 ```bash
-curl -s -X GET \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/146" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ### Response
@@ -152,15 +158,21 @@ Note that by default a job is not enabled (`"enabled": false`).
 If you do not remember your job ID, you can retrieve it using your zone ID:
 
 ```bash
-curl -s -X GET \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 Next, to enable the job, send an update request:
 
 ```bash
-curl -s -X PUT \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabled":true}' | jq .
+curl --silent --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/146" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"enabled":true}' | jq .
 ```
 
 ### Response
@@ -196,8 +208,10 @@ Once a job has been enabled and has started executing, the **last_complete** fie
 ### Request to get job by ID and see **last_complete** info
 
 ```bash
-curl -s -X GET \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/146" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ### Response
@@ -227,8 +241,10 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 ## Optional - Delete a job
 
 ```bash
-curl -s -X DELETE \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
+curl --silent --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/146" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 Be careful when deleting a job because this action cannot be reversed.
@@ -248,8 +264,11 @@ Be careful when deleting a job because this action cannot be reversed.
 
 Retrieve a specific job, using the job ID:
 
-```sh
-$ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
+```bash
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/146" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ### Response
@@ -280,8 +299,11 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 
 Retrieve all jobs for all datasets:
 
-```sh
-$ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .
+```bash
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" | jq .
 ```
 
 ### Response
@@ -327,9 +349,10 @@ $ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **output_options** for your zone.
 
 ```bash
-curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
-    -H 'X-Auth-Key: <API_KEY>' \
-    -H 'X-Auth-Email: <EMAIL>' | jq .
+curl --silent --request GET \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id}" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" | jq .
 ```
 
 ### Response
@@ -362,15 +385,16 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 Next, edit the **output_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
 
 ```bash
-curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>" \
-    --header "X-Auth-Key: <API_KEY>" \
-    --header "X-Auth-Email: <EMAIL>" \
-    --header "Content-Type: application/json" \
-    --data '{
-    "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
-    },
+curl --silent --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id}" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "Content-Type: application/json" \
+--data '{
+  "output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+  },
 ```
 
 Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.
@@ -390,8 +414,8 @@ Note that at this time, the **CVE-2021-44228** option is not available through t
     "enabled": true,
     "name": null,
     "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
     },
     "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
     "last_complete": "2021-12-14T20:02:19Z",
