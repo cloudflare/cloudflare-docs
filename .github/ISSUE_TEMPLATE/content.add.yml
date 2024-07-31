@@ -24,7 +24,7 @@ body:
       required: true
     attributes:
       label: Proposed changes
-      description: Provide links to the top-level section of `https://developers.cloudflare.com/` or specific proposed pages.
+      description: Explain what changes you would like to be made. Please link to either the documentation page where the changes should be made or the relevant top-level section/s the changes should apply to.
       placeholder: |
         - https://developers.cloudflare.com/cloudflare-one/
         - https://developers.cloudflare.com/workers/examples/
