@@ -4,7 +4,7 @@ summary: Allow or deny a request based on a known pre-shared key in a header. Th
 goal:
   - Authentication
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

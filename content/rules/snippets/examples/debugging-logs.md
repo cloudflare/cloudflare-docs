@@ -4,7 +4,7 @@ summary: Send debugging information in an errored response to a logging service.
 goal:
   - Logging
 operation:
-  - Response manipulation
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

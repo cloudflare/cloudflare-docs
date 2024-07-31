@@ -4,7 +4,7 @@ summary: Remove from response all headers that start with a certain name.
 goal:
   - Manage headers
 operation:
-  - Response manipulation
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

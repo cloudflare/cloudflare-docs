@@ -5,7 +5,7 @@ summary: Set common security headers such as X-XSS-Protection, X-Frame-Options,
 goal:
   - Manage headers
 operation:
-  - Response manipulation
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

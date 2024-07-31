@@ -4,8 +4,8 @@ summary: Adjust [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla
 goal:
   - Manage headers
 operation:
-  - Request manipulation
-  - Response manipulation
+  - Request modification
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

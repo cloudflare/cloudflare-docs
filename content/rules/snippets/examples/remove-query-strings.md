@@ -4,7 +4,7 @@ summary: Remove certain query strings from a request before passing to the origi
 goal:
   - Other
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

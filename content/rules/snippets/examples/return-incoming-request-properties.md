@@ -4,7 +4,7 @@ summary: Respond with information about the incoming request provided by Cloudfl
 goal:
   - Logging
 operation:
-  - Response manipulation
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

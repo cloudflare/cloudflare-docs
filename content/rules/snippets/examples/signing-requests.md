@@ -5,7 +5,7 @@ summary: Verify a signed request using the HMAC and SHA-256 algorithms or
 goal:
   - Authentication
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

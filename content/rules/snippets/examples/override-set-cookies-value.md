@@ -4,7 +4,7 @@ summary: Get a specific `Set-Cookie` header and update it with a certain value.
 goal:
   - Manage headers
 operation:
-  - Response manipulation
+  - Response modification
   - Cookies manipulation
 product:
   - Snippets

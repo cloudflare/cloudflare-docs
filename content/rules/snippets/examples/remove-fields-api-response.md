@@ -4,7 +4,7 @@ summary: If origin responds with `JSON`, parse the response and delete fields to
 goal:
   - Other
 operation:
-  - Response manipulation
+  - Response modification
 product:
   - Snippets
 pcx_content_type: example

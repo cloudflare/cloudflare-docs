@@ -4,7 +4,7 @@ summary: Extract the JWT token from a header, decode it, and implement validatio
 goal:
   - Authentication
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

@@ -4,7 +4,7 @@ summary: Define a delay to be used when incoming requests match a rule you consi
 goal:
   - Other
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

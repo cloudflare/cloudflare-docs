@@ -4,7 +4,7 @@ summary: Send [Bots](/bots/) information to your origin. Refer to [Bot Managenen
 goal:
   - Manage headers
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example

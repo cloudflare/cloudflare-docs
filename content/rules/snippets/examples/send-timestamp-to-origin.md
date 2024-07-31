@@ -4,7 +4,7 @@ summary: Convert timestamp to hexadecimal format and send it as a custom header 
 goal:
   - Manage headers
 operation:
-  - Request manipulation
+  - Request modification
 product:
   - Snippets
 pcx_content_type: example
