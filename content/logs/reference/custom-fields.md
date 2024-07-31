@@ -86,7 +86,7 @@ Perform the following steps to create the rule:
 
     The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
 
-    ```json
+    ```bash
     curl -X PUT \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
     --header "X-Auth-Email: <EMAIL>" \

@@ -394,7 +394,8 @@ curl --silent --request PUT \
   "output_options": {
     "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
     "timestamp_format": "rfc3339"
-  },
+  }
+}
 ```
 
 Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.
