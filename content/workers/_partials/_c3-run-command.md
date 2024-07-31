@@ -9,7 +9,7 @@ _build:
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm create cloudflare hello-ai
+$ npm create cloudflare
 ```
 
 {{</tab>}}
@@ -17,7 +17,7 @@ $ npm create cloudflare hello-ai
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare hello-ai
+$ yarn create cloudflare
 ```
 
 {{</tab>}}
