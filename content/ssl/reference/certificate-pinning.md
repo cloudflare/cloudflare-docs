@@ -17,3 +17,5 @@ For a better solution to the problem that HPKP is trying to solve - preventing c
 To avoid downtime when pinning your certificates, use [custom certificates](/ssl/edge-certificates/custom-certificates/) and select [**user-defined** bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined). This way you can control which CA, intermediate, and certificate will be used after renewal.
 
 [^1]: Key pinning allows a host to instruct a browser to only accept certain public keys when communicating with it for a given period of time.
+
+Also see our blog post on this topic: [Avoiding downtime: modern alternatives to outdated certificate pinning practices](https://blog.cloudflare.com/why-certificate-pinning-is-outdated)
