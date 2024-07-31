@@ -66,25 +66,7 @@ Note that:
 For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
 {{</Aside>}}
 
-{{<tabs labels="Compatible | Modern | PCI DSS | FIPS-140-2">}}
-{{<tab label="compatible" no-code="true">}}
-
-{{<render file="_ciphers-api-general-notes.md">}}
-
-```bash
-# To configure cipher suites per hostname, replace the first two lines by the following
-# curl --request PUT \
-# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
-
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384"]}'
-```
-
-{{</tab>}}
+{{<tabs labels="Modern | Compatible | PCI DSS | FIPS-140-2">}}
 {{<tab label="modern" no-code="true">}}
 
 {{<render file="_ciphers-api-general-notes.md">}}
@@ -100,6 +82,24 @@ curl --request PATCH \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384"]}'
+```
+
+{{</tab>}}
+{{<tab label="compatible" no-code="true">}}
+
+{{<render file="_ciphers-api-general-notes.md">}}
+
+```bash
+# To configure cipher suites per hostname, replace the first two lines by the following
+# curl --request PUT \
+# "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
+
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-RSA-CHACHA20-POLY1305", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-AES128-SHA256", "ECDHE-RSA-AES128-SHA256", "ECDHE-ECDSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA384"]}'
 ```
 
 {{</tab>}}
@@ -119,6 +119,10 @@ curl --request PATCH \
 --header "Content-Type: application/json" \
 --data '{"value": ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-CHACHA20-POLY1305"]}'
 ```
+
+{{<Aside type="warning">}}
+For compliance with PCI DSS, also [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone and make sure to up your [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) to `1.2`.
+{{</Aside>}}
 
 {{</tab>}}
 {{<tab label="fips-140-2" no-code="true">}}
