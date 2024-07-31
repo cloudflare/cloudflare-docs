@@ -29,8 +29,8 @@ body:
         Describe the changes you are proposing.
         
         Link examples:
-        https://developers.cloudflare.com/cloudflare-one/
-        https://developers.cloudflare.com/workers/examples/
+        - https://developers.cloudflare.com/cloudflare-one/
+        - https://developers.cloudflare.com/workers/examples/
 
   - type: textarea
     id: location
