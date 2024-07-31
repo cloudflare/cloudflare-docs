@@ -573,6 +573,19 @@ $ npx wrangler deploy
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV as an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
 
+To test your Worker, you could use the following cURL request to take a screenshot of this documentation page.
+
+```bash
+---
+header: Test with a cURL request
+---
+
+curl <YOUR_WORKER_URL> \
+  -H "Content-Type: application/json" \
+  -d 'https://developers.cloudflare.com/queues/tutorials/web-crawler-with-browser-rendering/'
+
+```
+
 Refer to the [GitHub repository for the complete tutorial](https://github.com/cloudflare/queues-web-crawler), including a front end deployed with Pages to submit URLs and view crawler results.
 
 ## Related resources
