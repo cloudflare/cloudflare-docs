@@ -25,7 +25,6 @@ Running `npm create cloudflare@latest` will prompt you to install the [`create-c
 
 When setting up your `hello-ai` Worker, answer the setup questions as follows:
 
-* Enter `hello-ai` for the directory to create in.
 * Choose `"Hello World" Worker` for the type of application.
 * Select `yes` to using TypeScript.
 * Select `yes` to using Git.
