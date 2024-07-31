@@ -29,6 +29,9 @@ entries:
 - publish_date: '2024-06-12'
   description: |-
     - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
+- publish_date: '2024-06-03'
+  description: |-
+    -  Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
 - publish_date: '2024-05-17'
   description: |-
     - Updated v8 to version 12.6.
