@@ -187,3 +187,12 @@ entries:
   languages: [TypeScript]
   cloudflare: true
   updated: 2024-04-16
+- link: https://github.com/harshil1712/jobs-at-conf-demo
+  name: Jobs At Conf
+  description: A job lisiting website to add jobs you find at in-person conferences. Built with Cloudflare Pages, R2, D1, Queues, and Workers AI.
+  tags: [Next.js]
+  products: [D1, R2, Workers AI, Queues, Pages]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-29
