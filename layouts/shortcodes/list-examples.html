@@ -26,7 +26,7 @@
   {{- range $index, $filter := $filters -}}
 
   {{- $optionsArray := slice -}}
-  {{- range $index, $page := $pages.ByWeight -}}
+  {{- range $index, $page := $examplePages.ByWeight -}}
   {{- with (index $page.Params $filter) }}
   {{- $optionsArray = $optionsArray | append . -}}
   {{- end -}}

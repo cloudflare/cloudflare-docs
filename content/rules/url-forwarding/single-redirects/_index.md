@@ -10,6 +10,8 @@ meta:
 
 Single Redirects allow you to create static or dynamic URL {{<glossary-tooltip term_id="redirect">}}redirects{{</glossary-tooltip>}}. Dynamic URL redirects support advanced features such as string replacement operations, [wildcards](/ruleset-engine/rules-language/operators/#wildcard-matching), and [regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions) (depending on your Cloudflare plan).
 
+{{<render file="_snippets-alternative.md" withParameters="and customized redirect logic">}}<br />
+
 ---
 
 ## Related resources
