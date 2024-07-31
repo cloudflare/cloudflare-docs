@@ -10,10 +10,11 @@ pcx_content_type: get-started
 
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`
 
+### Examples
 
 ```bash
 ---
-header: Example fetch request
+header: fetch request
 ---
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1/messages \
  --header 'x-api-key: {anthropic_api_key}' \
