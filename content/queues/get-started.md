@@ -14,28 +14,11 @@ Cloudflare Queues is a flexible messaging queue that allows you to queue message
 
 To use Queues, you will need:
 
-1. A [Cloudflare account](/fundamentals/setup/account/), if you do not have one already.
-
-2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
-3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.17.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 ## 1. Enable Queues
 
-Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/).
-
-{{<Aside type="note">}}
-
-Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Workers Paid plan to enable Queues.
-
-{{</Aside>}}
-
-To enable Queues:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers & Pages** > **Queues**.
-3. Select **Enable Queues Beta**.
-
-Queues is included in the monthly subscription cost of your Workers Paid plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
+{{<render file="_enable-queues.md">}}
 
 ## 2. Create a Worker project
 
