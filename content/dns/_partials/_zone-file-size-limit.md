@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-The zone file size limit is 256 KiB (262144 bytes)
+The zone file size limit is 256 KiB (262144 bytes).
