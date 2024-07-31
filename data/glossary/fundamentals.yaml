@@ -113,6 +113,10 @@ entries:
   general_definition: |-
     URL redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 
+- term: reference architecture
+  general_definition: |-
+    A reference architecture provides a high-level view of how all or part of the Cloudflare platform is built and how Cloudflare products would fit into a customer's existing infrastructure.
+
 - term: roles
   general_definition: |-
     authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/setup/manage-members/roles/).
