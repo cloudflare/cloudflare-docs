@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Cloudflare Security Architecture"
+products: [Workers]
 ---
 
 # Cloudflare Security Architecture
