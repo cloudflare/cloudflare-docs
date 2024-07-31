@@ -22,11 +22,11 @@ Before you enable China Authoritative DNS, you should confirm that majority (ove
 
 Default vs. In-China Nameserver
 
-| **DNS Option**          | **Zone setup**    | **DNS resolution request sent to** | **HTTP request sent to**                                                                         |
-|---------------------|---------------|--------------------------------|----------------------------------------------------------------------------------------------|
-| Default             | Full or CNAME | Cloudflare data center out of China   | Client out of China: Cloudflare data center out of China<br>Client in China: JD Cloud colo in China |
-| In-China Nameserver | Full or CNAME | JD Cloud data center in China         | JD Cloud data center in China                                                                       |
-|                     |               |                                |                                                                                              |
+| **DNS Option**          | **Behavior** |
+|---------------------|---------------|
+| Default             | Making use of the nearest DNS server available to eyeball. |
+| In-China Nameserver | Only use DNS in Mainland China operated by JD Cloud. |
+|                     |               |
 
 ## General setup
 
