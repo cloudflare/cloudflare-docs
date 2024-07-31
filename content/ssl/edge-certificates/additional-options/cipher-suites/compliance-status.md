@@ -24,9 +24,7 @@ Recommended cipher suites for compliance with the [Payment Card Industry Data Se
 
 * Formatted array to copy:
 
-{{<Aside>}}
-The following array does not included the TLS 1.3 ciphers that are part of the PCI DSS standard. To use them, you should [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) on your zone. For details, refer to  [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
-{{</Aside>}}
+{{<render file="_ciphers-tls-1.3-array-callout.md">}}
 
 ```txt
 ["ECDHE-ECDSA-AES128-GCM-SHA256", "ECDHE-RSA-AES128-GCM-SHA256", "ECDHE-ECDSA-AES256-GCM-SHA384", "ECDHE-RSA-AES256-GCM-SHA384", "ECDHE-ECDSA-CHACHA20-POLY1305", "ECDHE-RSA-CHACHA20-POLY1305"]
