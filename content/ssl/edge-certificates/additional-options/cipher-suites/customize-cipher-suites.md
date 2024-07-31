@@ -40,7 +40,7 @@ Currently, you can only customize cipher suites when using the API:
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
-ECDSA is prioritized over RSA and Cloudflare preserves the specified cipher suites in the order they are set. This means that, if both ECDSA and RSA are used, Cloudflare presents the ECDSA ciphers first - in the order they were set - and then the RSA ciphers, also in the order they were set.
+ECDSA cipher suites are prioritized over RSA, and Cloudflare preserves the specified cipher suites in the order they are set. This means that, if both ECDSA and RSA are used, Cloudflare presents the ECDSA ciphers first - in the order they were set - and then the RSA ciphers, also in the order they were set.
 
 ## Set up
 
@@ -60,7 +60,7 @@ Note that:
 
 2. Log in to the Cloudflare dashboard and get your Global API Key in [**My Profile** > **API Tokens**](https://dash.cloudflare.com/?to=/:account/profile/api-tokens/).
 3. Get the Zone ID from the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/) of the domain you want to specify cipher suites for.
-4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL and listing your array of chosen cipher suites in the `value` field.
+4. Make an API call to either the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint or the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint, specifying `ciphers` in the URL. List your array of chosen cipher suites in the `value` field.
 
     {{<Aside type="warning">}}
 For guidance around custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
@@ -72,7 +72,7 @@ For guidance around custom hostnames, refer to [TLS settings - Cloudflare for Sa
 {{<render file="_ciphers-api-general-notes.md">}}
 
 ```bash
-# Replace the first two lines by the following to configure cipher suites per hostname
+# To configure cipher suites per hostname, replace the first two lines by the following
 # curl --request PUT \
 # "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
 
@@ -90,7 +90,7 @@ curl --request PATCH \
 {{<render file="_ciphers-api-general-notes.md">}}
 
 ```bash
-# Replace the first two lines by the following to configure cipher suites per hostname
+# To configure cipher suites per hostname, replace the first two lines by the following
 # curl --request PUT \
 # "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
 
@@ -108,7 +108,7 @@ curl --request PATCH \
 {{<render file="_ciphers-api-general-notes.md">}}
 
 ```bash
-# Replace the first two lines by the following to configure cipher suites per hostname
+# To configure cipher suites per hostname, replace the first two lines by the following
 # curl --request PUT \
 # "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
 
@@ -126,7 +126,7 @@ curl --request PATCH \
 {{<render file="_ciphers-api-general-notes.md">}}
 
 ```bash
-# Replace the first two lines by the following to configure cipher suites per hostname
+# To configure cipher suites per hostname, replace the first two lines by the following
 # curl --request PUT \
 # "https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/ciphers/{hostname}" \
 
@@ -146,7 +146,7 @@ curl --request PATCH \
 {{<tabs labels="Zone | Per-hostname">}}
 {{<tab label="zone" no-code="true">}}
 
-To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URI path, and send an empty array in the `value` field.
+To reset to the default cipher suites at zone level, use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URL, and send an empty array in the `value` field.
 
 ```bash
 curl --request PATCH \

@@ -1,7 +1,7 @@
 ---
 title: Compliance standards
 pcx_content_type: reference
-weight: 6
+weight: 4
 meta:
   title: Cipher suites compliance standards
 ---

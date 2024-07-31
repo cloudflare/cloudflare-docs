@@ -2,7 +2,7 @@
 title: Supported cipher suites
 pcx_content_type: reference
 layout: wide
-weight: 3
+weight: 5
 meta:
   title: Supported cipher suites
 ---

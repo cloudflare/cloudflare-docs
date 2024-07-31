@@ -3,10 +3,10 @@ title: Recommendations
 pcx_content_type: reference
 weight: 2
 meta:
-  title: Cipher suites recommendations
+  title: Cipher suite recommendations
 ---
 
-# Cipher suites recommendations
+# Cipher suite recommendations
 
 Refer to the sections below for three different security levels and how Cloudflare recommends that you set them up if you need to restrict the [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) used between Cloudflare and clients that access your website or application.
 
@@ -16,7 +16,7 @@ When opting for [compatible](#compatible) or [modern](#modern), make sure to up 
 
 ## Modern
 
-Offers the best security and performance, limiting your range of clients to modern devices and browsers. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret and support authenticated encryption (AEAD)
+Offers the best security and performance, limiting your range of clients to modern devices and browsers. Supports TLS 1.2-1.3 cipher suites. All suites are forward-secret and support authenticated encryption (AEAD).
 
 * Cipher suites:
 
