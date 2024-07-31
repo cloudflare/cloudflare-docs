@@ -77,10 +77,6 @@ binding = "crawler_screenshots"
 id = "<GENERATED_NAMESPACE_ID>"
 ```
 
-{{<Aside type="note">}}
-Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
-{{</Aside>}}
-
 ### Add KV bindings to wrangler.toml
 
 Then, in your `wrangler.toml` file, add the following with the values generated in the terminal:
