@@ -4,7 +4,7 @@ title: Demos and architectures
 weight: 7
 ---
 
-# Demo Applications and Reference Architectures
+# Demo applications and reference architectures
 
 Learn how you can use Queues within your existing application and architecture.
 
