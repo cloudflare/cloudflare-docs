@@ -137,7 +137,7 @@ highlight: [3, 4, 5]
 ---
 import type { APIContext } from "astro";
 
-export async function get({locals}: APIContext) => {
+export async function get({locals}: APIContext) {
   // the type KVNamespace comes from the @cloudflare/workers-types package
   const { MY_KV } = locals.runtime.env;
 

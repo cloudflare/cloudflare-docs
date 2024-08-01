@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Smartsheet
-weight: 17
+weight: 24
 ---
 
 # Connect to Smartsheet through Access
@@ -10,7 +10,7 @@ This guide covers how to configure [Smartsheet](https://help.smartsheet.com/arti
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Smartsheet Enterprise account
 - A [domain](https://help.smartsheet.com/articles/2483051-domain-management) verified in Smartsheet
 
@@ -24,7 +24,7 @@ In Smartsheet, SSO is configured for a domain. If you have multiple plans using 
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Smartsheet` and select the textbox that appears below.
+3. For **Application**, enter `Smartsheet` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:

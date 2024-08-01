@@ -328,10 +328,10 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
   - Path to the SQL file for your export.
 - `--table` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The name of the table within a D1 database to export.
-- `--no-data` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database data.
-- `--no-schema` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Controls whether export SQL file contains database schema.
+- `--no-data` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+- `--no-schema` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
 
 {{</definitions>}}
 
@@ -544,6 +544,22 @@ wrangler hyperdrive create <ID> [OPTIONS]
   - The ID of the Hyperdrive configuration to create.
 - `--connection-string` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The hostname or IP address Hyperdrive should connect to.
+- `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database port to connect to.
+- `--scheme` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The scheme used to connect to the origin database - e.g. postgresql or postgres.
+- `--database` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The database (name) to connect to. For example, Postgres or defaultdb.
+- `--user` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The username used to authenticate to the database.
+- `--password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The password used to authenticate to the database.
+- `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `port`.
+- `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `port`.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -577,6 +593,10 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - The new username used to authenticate to the database.
 - `--origin-password` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The new password used to authenticate to the database.
+- `--access-client-id` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `origin-port`.
+- `--access-client-secret` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `origin-port`.
 - `--caching-disabled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Disables the caching of SQL responses.
 - `--max-age` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -1663,7 +1683,9 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 ## `secret`
 
-Manage the secret variables for a Worker.
+Manage the secret variables for a Worker. 
+
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
 ### `put`
 
@@ -2040,6 +2062,84 @@ This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](
 
 {{</Aside>}}
 
+
+### `secret put`
+
+Create or update a secret for a Pages project.
+
+```txt
+wrangler pages secret put <KEY> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `secret delete`
+
+Delete a secret from a Pages project.
+
+```txt
+wrangler pages secret delete <KEY> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `secret list`
+
+List the names of all the secrets for a Pages project.
+
+```txt
+wrangler pages secret list [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
+### `secret bulk`
+
+Upload multiple secrets for a Pages project at once.
+
+```txt
+wrangler pages secret bulk [<FILENAME>] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The name of your Pages project.
+
+{{</definitions>}}
+
 ---
 
 ## `queues`
@@ -2216,7 +2316,7 @@ wrangler whoami
 ---
 ## `versions`
 
-[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{<Aside type="warning">}}
 
@@ -2262,10 +2362,10 @@ wrangler versions deploy [OPTIONS] --experimental-versions
 
 {{<Aside type="note">}}
 
-The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2    --experimental-versions`
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y --experimental-versions`
 
 For example:
-`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90%    --experimental-versions`
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y --experimental-versions`
 
 {{</Aside>}}
 ### `list`
@@ -2284,22 +2384,65 @@ wrangler versions list [OPTIONS] --experimental-versions
 
 {{</definitions>}}
 
-### `view`
+### `secret put`
 
-Retrieve details for the specified [version](/workers/configuration/versions-and-deployments/#versions). Details include `Version ID`, `Created`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+Create or replace a secret for a Worker.  Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 
 ```txt
-wrangler versions view [OPTIONS] --experimental-versions
+wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
 ```
 
 {{<definitions>}}
 - `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
-- `VERSION_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The ID of the version you wish to view.
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The variable name for this secret to be accessed in the Worker.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+
+
+{{</definitions>}}
+
+### `secret delete`
+
+Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions delete <KEY> [OPTIONS] --experimental-versions
+```
+
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `KEY` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The variable name for this secret to be accessed in the Worker.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
+
+{{</definitions>}}
+
+### `secret bulk`
+
+Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
+```
+
+{{<definitions>}}
+- `--experimental-versions` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `FILENAME` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific environment.
 
 {{</definitions>}}
 

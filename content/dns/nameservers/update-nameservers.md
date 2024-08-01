@@ -24,12 +24,12 @@ If you do not know who your registrar is, you can use a Whois search, such as [
 
 ### You have acquired your domain from a reseller
 
-Some services, such as website builders ([Squarespace](https://support.squarespace.com/hc/en-us/articles/115003671428-Who-s-my-domain-provider), for example), are not registrars but act as a [reseller](https://www.icann.org/resources/pages/reseller-2013-05-03-en), allowing you to buy domains directly from them.
+Some services, such as website builders ([Squarespace](https://support.squarespace.com/hc/articles/115003671428-Who-s-my-domain-provider), for example), are not registrars but act as a [reseller](https://www.icann.org/resources/pages/reseller-2013-05-03-en), allowing you to buy domains directly from them.
 
 In that case, you may have to update your nameservers in the reseller platform, not at the registrar.
 
 {{<Aside type="note">}}
-Refer to [Squarespace documentation](https://support.squarespace.com/hc/en-us/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-open-the-domain-s-advanced-settings) on how to update nameservers in their platform.
+Refer to [Squarespace documentation](https://support.squarespace.com/hc/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-open-the-domain-s-advanced-settings) on how to update nameservers in their platform.
 {{</Aside>}}
 
 ### Your domain is delegated to another zone

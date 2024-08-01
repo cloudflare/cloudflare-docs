@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Private DNS
-weight: 5
+weight: 1
 ---
 
 # Private DNS

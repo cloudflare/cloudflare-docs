@@ -38,7 +38,7 @@ To configure a Workers AI binding in your Pages Function, you must use the Cloud
 `async env.AI.run()` runs a model. Takes a model as the first parameter, and an object as the second parameter.
 
 ```javascript
-const answer = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
     prompt: "What is the origin of the phrase 'Hello, World'"
 });
 ```
@@ -59,7 +59,7 @@ const answer = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
 
 
 ```javascript
-const answer = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
     prompt: "What is the origin of the phrase 'Hello, World'",
     stream: true
 });

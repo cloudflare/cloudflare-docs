@@ -8,30 +8,25 @@ weight: 2
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and API requests and filters undesired traffic based on sets of rules called rulesets.
 
-This page will guide you through some basic concepts and the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
+This page will guide you through the recommended initial steps for configuring the WAF to get immediate protection against the most common attacks.
 
+Refer to [Concepts](/waf/about/) for more information on WAF concepts, main components, and roles.
+
+{{<Aside type="note">}}
 This guide focuses on configuring WAF for individual domains, known as {{<glossary-tooltip term_id="zone">}}zones{{</glossary-tooltip>}}. The WAF configuration is also available at the account level for Enterprise customers with a paid add-on.
+{{</Aside>}}
 
-## Basic WAF concepts
+{{<tutorial>}}
 
-A [rule](/ruleset-engine/about/rules/) includes a filter (which defines the scope) and an action to perform on the incoming requests that match the filter.
-
-The Cloudflare WAF includes:
-- Signature-based rules (for example, the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)) created by Cloudflare that provide immediate protection against known attacks.
-- [Traffic detections](/waf/about/#available-traffic-detections) (for example, bot score and attack score) that enrich requests with metadata.
-- User-defined rules for your specific needs, including [custom rules](/waf/custom-rules/) and {{<glossary-tooltip term_id="rate limiting" link="/waf/rate-limiting-rules/">}}rate limiting rules{{</glossary-tooltip>}}.
-
-Detections do not take any action on incoming traffic – they only add relevant information about each request that you can use in the rules you create. For more information on the detection and mitigation roles of the WAF, refer to [Detection versus mitigation](/waf/about/#detection-versus-mitigation).
-
----
-
-## Before you begin
+{{<tutorial-prereqs>}}
 
 - Make sure that you have [set up a Cloudflare account](/fundamentals/setup/account/) and [added your domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
 
-- Users on the Free plan have access to the Cloudflare Free Managed Ruleset, a subset of the Cloudflare Managed Ruleset. The Free Managed Ruleset is deployed by default on Free plans and is not specifically covered in this guide.<br>If you are on a Free plan, you may skip to [5. Review traffic in security dashboards](#5-review-traffic-in-security-dashboards).
+- Users on the Free plan have access to the Cloudflare Free Managed Ruleset, a subset of the Cloudflare Managed Ruleset. The Free Managed Ruleset is deployed by default on Free plans and is not specifically covered in this guide.<br>If you are on a Free plan, you may skip to [5. Review traffic in security dashboards](#review-traffic-in-security-dashboards).
 
-## 1. Deploy the Cloudflare Managed Ruleset
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Deploy the Cloudflare Managed Ruleset">}}
 
 The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) protects against Common Vulnerabilities and Exposures (CVEs) and known attack vectors. This ruleset is designed to identify common attacks using signatures, while generating low false positives. Rule changes are published on a weekly basis in the [WAF changelog](/waf/change-log/). Cloudflare may also add rules at any time during emergency releases for high profile zero-day protection.
 
@@ -54,10 +49,12 @@ For more information on configuring the Cloudflare Managed Ruleset in the dashbo
 
 {{</details>}}
 
-## 2. Create custom rule based on WAF attack score
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Create custom rule based on WAF attack score">}}
 
 {{<Aside type="note">}}
-This feature is only available to Business customers (limited access to a single field) and Enterprise customers (full access).
+WAF attack score is only available to Business customers (limited access to a single field) and Enterprise customers (full access).
 {{</Aside>}}
 
 [WAF attack score](/waf/about/waf-attack-score/) is a machine-learning layer that complements Cloudflare's managed rulesets, providing additional protection against SQL injection (SQLi), Cross-site scripting (XSS), and many remote code execution (RCE) attacks. It helps identify rule bypasses and potentially new, undiscovered attacks.
@@ -65,17 +62,25 @@ This feature is only available to Business customers (limited access to a single
 If you are an Enterprise customer, do the following:
 
 1. Reach out to your account team to get access to WAF attack score.
-2. Create a custom rule using the {{<glossary-tooltip term_id="attack score">}}Attack Score{{</glossary-tooltip>}} field:
+
+2. [Create a custom rule](/waf/custom-rules/create-dashboard/) using the {{<glossary-tooltip term_id="attack score">}}Attack Score{{</glossary-tooltip>}} field:
 
     1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
     2. Create a rule with the following configuration:
 
-	      - **Expression**: `Attack Score less than 20`
-        - **Action**: _Block_
+	      - **If incoming requests match**:
+
+            | Field        | Operator  | Value |
+            |--------------|-----------|-------|
+            | Attack Score | less than | `20`  |
+
+        - **Choose action**: Block
 
 If you are on a Business plan, create a custom rule as mentioned above but use the [WAF Attack Score Class](/waf/about/waf-attack-score/#available-scores) field instead. For example, you could use the following rule expression: `WAF Attack Score Class equals Attack`.
 
-## 3. Create custom rule based on bot score
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Create custom rule based on bot score">}}
 
 {{<Aside type="note">}}
 Bot score is only available to Enterprise customers with Bot Management. Customers on Pro and Business plans may enable [Super Bot Fight mode](/bots/get-started/pro/) instead.
@@ -84,9 +89,17 @@ Bot score is only available to Enterprise customers with Bot Management. Custome
 Customers with access to [Bot Management](/bots/get-started/bm-subscription/) can block automated traffic (for example, from bots scraping online content) using a custom rule with bot score, preventing this traffic from hitting your application.
 
 1. Go to your domain > **Security** > **WAF** and select the **Custom rules** tab.
-2. Create a rule using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
-    - **Expression**: `Bot Score less than 20 AND Verified Bot equals Off`
-    - **Action**: _Managed Challenge_
+
+2. [Create a custom rule](/waf/custom-rules/create-dashboard/) using the {{<glossary-tooltip term_id="bot score">}}Bot Score{{</glossary-tooltip>}} and {{<glossary-tooltip term_id="verified bot">}}Verified Bot{{</glossary-tooltip>}} fields:
+
+    - **If incoming requests match**:
+
+        | Field        | Operator  | Value | Logic |
+        |--------------|-----------|-------|-------|
+        | Bot Score    | less than | `20`  | And   |
+        | Verified Bot | equals    | Off   |       |
+
+    - **Choose action**: Managed Challenge
 
 For a more comprehensive example of a baseline protection against malicious bots, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection).
 
@@ -94,7 +107,9 @@ For more information about the bot-related fields you can use in expressions, re
 
 Once you have deployed the Cloudflare Managed Ruleset and rules based on attack score and bot score you will have achieved substantial protection, limiting the chance of false positives.
 
-## 4. (Optional) Deploy the Cloudflare OWASP Core Ruleset
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Deploy the Cloudflare OWASP Core Ruleset" optional="true">}}
 
 After configuring the Cloudflare Managed Ruleset and attack score, you can also deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). This managed ruleset is Cloudflare's implementation of the OWASP ModSecurity Core Rule Set. Its attack coverage significantly overlaps with Cloudflare Managed Ruleset by detecting common attack vectors such as SQLi and XSS.
 
@@ -119,7 +134,9 @@ For more information on configuring the Cloudflare OWASP Core Ruleset in the das
 
 {{</details>}}
 
-## 5. Review traffic in security dashboards
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Review traffic in security dashboards">}}
 
 {{<Aside type="note">}}
 Users on the Free plan only have access to Security Events.
@@ -132,9 +149,9 @@ After setting up your WAF configuration, review how incoming traffic is being af
 
 Enterprise customers can also obtain data about HTTP requests and security events using [Cloudflare Logs](/logs/).
 
----
+{{</tutorial-step>}}
 
-## Next steps
+{{<tutorial-step title="Next steps" optional="true">}}
 
 After configuring the WAF based on the information in the previous sections, you should have a strong base protection against possible threats to your applications.
 
@@ -173,3 +190,7 @@ Available to Enterprise customers.
 The Cloudflare WAF protects your APIs from new and known application attacks and exploits such as SQL injection attacks. API-specific security products extend those protections to the unique risks in APIs such as API discovery and authentication management.
 
 For more information on Cloudflare's API security features, refer to [Cloudflare API Shield](/api-shield/).
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

@@ -100,16 +100,8 @@ Service worker syntax is not supported for versions that are uploaded through [`
 
 Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.
 
-### Smart Placement
+### Durable Object migrations
 
-Smart Placement is not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`]. You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you have Smart Placement enabled on a Worker.
+Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
 
-Smart Placement support for versions will be coming in the near future.
-
-### mTLS bindings
-
-[mTLS bindings](/workers/runtime-apis/bindings/mtls/) are not supported for versions that are uploaded through [`wrangler versions upload --experimental-versions`](/workers/wrangler/commands/#upload). You must use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you configured mTLS bindings in your Worker.
-
-mTLS bindings support for versions will be coming in the near future.
-
-
+This will be supported in the near future. 

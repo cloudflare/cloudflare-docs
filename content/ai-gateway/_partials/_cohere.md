@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
+## Endpoint
+
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`
 
 When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`.

@@ -22,14 +22,4 @@ Click a tab under **Reachability summary** to view specific information related 
 
 Under **Reachability by data center**, click a location under Data Centers to filter reachability by a specific location.
 
-## Run a traceroute to origin
-
-Run a traceroute from a specific data center to an origin IP to for information on the number of packets sent and the amount of time it took.
-
-1.  Under **From**, choose a data center.
-2.  Under **To**, choose an origin IP.
-3.  Click **Run**.
-
-The results display in a table below, and you can optionally export the data to a .CSV format by clicking **Export as CSV**.
-
 To view the log fields available for NEL, refer to [NEL reports](/logs/reference/log-fields/zone/nel_reports/).

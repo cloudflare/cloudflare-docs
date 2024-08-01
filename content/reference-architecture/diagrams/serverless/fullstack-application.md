@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Fullstack applications"
+products: [Workers, KV, D1, Durable Objects, Workers AI, Pages, Logs, R2, Stream, Images, WAF, Bots, SSL/TLS, DDoS protection]
 ---
 
 # Fullstack web applications

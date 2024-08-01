@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Greenhouse Recruiting
-weight: 9
+weight: 14
 ---
 
 # Connect to Greenhouse Recruiting through Access
@@ -10,14 +10,14 @@ This guide covers how to configure [Greenhouse Recruiting](https://support.green
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to an Advanced or Expert Greenhouse Recruiting site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, type `Greenhouse` and select the textbox that appears below.
+3. For **Application**, enter `Greenhouse` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 7. Copy the **SAML Metadata endpoint**.

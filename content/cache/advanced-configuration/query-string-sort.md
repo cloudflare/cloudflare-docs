@@ -105,4 +105,4 @@ ___
 ## Related resources
 
 -   [Increasing Cache Hit Rates with Query String Sort](https://blog.cloudflare.com/increasing-cache-hit-rates-with-query-string-sort/)
--   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/troubleshooting/cache-everything-ignore-query-strings/)
+-   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/)

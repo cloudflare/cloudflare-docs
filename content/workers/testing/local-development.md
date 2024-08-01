@@ -84,8 +84,8 @@ The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` 
 | Command                                    |
 | ----------------------------------------------------|
 | [`d1 execute`](/workers/wrangler/commands/#execute) |
-| [`kv:key`](/workers/wrangler/commands/#kvkey) |
-| [`kv:bulk`](/workers/wrangler/commands/#kvbulk) |
+| [`kv:key`](/workers/wrangler/commands/#kv-key) |
+| [`kv:bulk`](/workers/wrangler/commands/#kv-bulk) |
 | [`r2 object`](/workers/wrangler/commands/#r2-object) |
 
 If using `--persist-to` to specify a custom folder with `wrangler dev` you should also add `--persist-to` with the same directory name along with the `--local` flag when running the commands above. For example, to put a custom KV key into a local namespace via the CLI you would run:
