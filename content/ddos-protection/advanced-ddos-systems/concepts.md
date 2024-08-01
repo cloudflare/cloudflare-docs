@@ -1,7 +1,7 @@
 ---
 title: Concepts
 pcx_content_type: concept
-weight: 4
+weight: 3
 meta:
   title: Create an Advanced TCP Protection filter
 ---

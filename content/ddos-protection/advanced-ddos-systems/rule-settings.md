@@ -1,7 +1,7 @@
 ---
 title: Rule settings
 pcx_content_type: reference
-weight: 9
+weight: 6
 ---
 
 # Rule settings

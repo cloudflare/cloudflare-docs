@@ -1,7 +1,7 @@
 ---
 title: Mitigation reasons
 pcx_content_type: reference
-weight: 10
+weight: 2
 meta:
   title: Advanced TCP Protection mitigation reasons
 ---

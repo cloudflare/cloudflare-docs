@@ -1,26 +1,12 @@
 ---
 title: Advanced DNS Protection (beta)
 pcx_content_type: concept
-weight: 7
+weight: 2
 ---
 
 {{<heading-pill style="beta">}} Cloudflare Advanced DNS Protection {{</heading-pill>}}
 
 Cloudflare Advanced DNS Protection, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), provides stateful protection against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/).
-
-## How it works
-
-Cloudflare's Advanced DNS Protection works by first learning your traffic patterns and forming a baseline of the type of DNS queries you normally receive. Later, the system will be able to distinguish between legitimate and malicious queries, protecting your DNS infrastructure without impacting legitimate traffic.
-
-Currently, the protection system only analyzes DNS over UDP (it does not include DNS over TCP).
-
-The [Network Analytics dashboard](/analytics/network-analytics/) will display system-specific analytics for Advanced DNS Protection in the **DNS protection** tab, including the queried domains and record types.
-
-## Availability
-
-Advanced DNS Protection is currently available in beta to [Magic Transit](/magic-transit/) customers.
-
-Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
 ## Setup
 
