@@ -76,8 +76,7 @@ This assigns custom metadata to your custom hostname so that it has a security t
 ```bash
 curl --request PUT \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_ratelimit/entrypoint" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "rules": [

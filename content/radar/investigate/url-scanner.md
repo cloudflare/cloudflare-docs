@@ -12,21 +12,19 @@ To better understand Internet usage around the world, use Cloudflare's URL Scann
 
 To make your first URL scan using the API, you must obtain a URL Scanner specific [API token](/fundamentals/api/get-started/create-token/). Create a Custom Token with _Account_ > _URL Scanner_ in the **Permissions** group, and select _Edit_ as the access level.
 
-Once you have the token, and you know your `accountId`, you are ready to make your first request to the API at `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/`.
+Once you have the token, and you know your `account_id`, you are ready to make your first request to the API at `https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/`.
 
 ### Submit URL to scan
 
 In order to submit a URL to scan, the only required information is the URL to be scanned in the `POST` request body:
 
-
 ```bash
-curl --request POST \
-	--url https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan \
-	--header 'Content-Type: application/json' \
-    --header "Authorization: Bearer <API_TOKEN>" \
-	--data '{
-		"url": "https://www.example.com",
-	}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "url": "https://www.example.com"
+}'
 ```
 
 By default, the report will have a `Public` visibility level, which means it will appear in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
@@ -74,7 +72,7 @@ There will also be three screenshots taken of the webpage, one per target device
 
 ### Get scan report
 
-Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan/<scanId>`. The `scanId` will be the `result.uuid` value returned in the previous response.
+Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan/{scan_id}`. The `scan_id` will be the `result.uuid` value returned in the previous response.
 
 While the scan is in progress, the HTTP status code will be `202`, once it's finished it will be `200`. Clients are advised to poll every 10-30 seconds.
 
@@ -119,22 +117,18 @@ In order to fetch the scan's [screenshots](/api/operations/urlscanner-get-scan-s
 
 `Public` scans can also be searched for. In order to search for scans to the hostname `google.com`, use the query parameter `page_hostname=google.com`:
 
-```
-curl --request GET \
-  --url https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan?page_hostname=google.com \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API_TOKEN>"
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?page_hostname=google.com" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Search results will also include your _own_ `Unlisted` scans.
 
 If, instead, you wanted to search for scans which made at least one request to the hostname `cdnjs.cloudflare.com` - e.g. sites that use a JavaScript library hosted at `cdnjs.cloudflare.com`  - use the query parameter `hostname=cdnjs.cloudflare.com`:
 
-```
-curl --request GET \
-  --url https://api.cloudflare.com/client/v4/accounts/<accountId>/urlscanner/scan?hostname=cdnjs.cloudflare.com \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API_TOKEN>"
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/scan?hostname=cdnjs.cloudflare.com" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Check `https://developers.cloudflare.com/api/operations/urlscanner-search-scans` for the full list of available options.

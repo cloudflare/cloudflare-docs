@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Optimizing Image Delivery with Cloudflare Image Resizing and R2"
+products: [Images, R2, Cache / CDN, Transform Rules]
 ---
 
 # Optimizing Image Delivery with Cloudflare Image Resizing and R2

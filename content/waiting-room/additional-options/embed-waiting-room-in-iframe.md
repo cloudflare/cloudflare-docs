@@ -46,8 +46,7 @@ If you are embedding a waiting room in an iFrame, specify the following values o
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "shop_waiting_room",

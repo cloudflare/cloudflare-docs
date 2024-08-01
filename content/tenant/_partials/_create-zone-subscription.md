@@ -28,8 +28,7 @@ To create a zone subscription, typically used to upgrade a zone's plan from `PAR
 header: Request (without `component_values`)
 ---
 curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/subscription' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "rate_plan": {
@@ -44,8 +43,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/subscription' \
 header: Request (with `component_values`)
 ---
 curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/subscription' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "rate_plan": {

@@ -64,7 +64,7 @@ header: Ownership challenge request example
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --data '{
   "destination_conf": "'${bucket}'"
 }'
@@ -100,7 +100,7 @@ header: Bucket validation example
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/validate \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --data '{
   "destination_conf": "'${bucket}'",
   "ownership_challenge": "'${ownership_text}'"

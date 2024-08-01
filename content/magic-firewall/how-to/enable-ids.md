@@ -32,8 +32,7 @@ To start using IDS via the API, first create a new ruleset in the `magic-transit
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "IDS Execute ruleset",
@@ -61,8 +60,7 @@ With this ruleset added, IDS will start inspecting packets and report any anomal
 ```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}/rules/{rule_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "enabled": false,

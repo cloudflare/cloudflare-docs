@@ -27,7 +27,7 @@ If you are an account owner and your account is part of a tenant that has custom
 
 1. Use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) and specify `ns_type` and `ns_set`.
 
-``` bash
+```bash
 curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_ns \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \

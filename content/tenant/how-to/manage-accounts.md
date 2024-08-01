@@ -49,8 +49,8 @@ You will get back a list of all the accounts you have created plus any accounts 
 header: Request
 ---
 curl https://api.cloudflare.com/client/v4/accounts \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -106,8 +106,8 @@ header: Request
 ---
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/{account_id} \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 A successful request will return the id to confirm the operation:

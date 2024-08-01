@@ -28,7 +28,7 @@ The following steps also apply if you use [Cloudflare as a secondary DNS provide
 
 ```bash
 curl --request PATCH \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -41,7 +41,7 @@ curl --request PATCH \
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -61,7 +61,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
 3. Add your external provider(s) nameservers as NS records on your zone apex.
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -84,7 +84,7 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 
 ```bash
 curl --request PATCH \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -100,7 +100,7 @@ curl --request PATCH \
 API example:
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
