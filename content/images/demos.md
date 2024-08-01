@@ -1,12 +1,18 @@
 ---
 pcx_content_type: navigation
-title: Architectures
+title: Demos and architectures
 weight: 6
 ---
 
-# Reference Architectures
+# Demos applications and reference architectures
 
 Learn how you can use Images within your existing architecture.
+
+## Demos
+
+Explore the following {{<glossary-tooltip term_id="demo application">}}demo applications{{</glossary-tooltip>}} for Images.
+
+{{<external-resources resource_type="apps" products="Images">}}
 
 ## Reference architectures
 

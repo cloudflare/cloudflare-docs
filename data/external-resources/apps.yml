@@ -168,7 +168,7 @@ entries:
   description: This is a demo of the Northwind dataset, running on Cloudflare Workers, and D1 - Cloudflare's SQL database, running on SQLite.
   tags: [Tailwind, React, Remix]
   products: [Workers, D1]
-  languages: [Typescript]
+  languages: [TypeScript]
   cloudflare: true
   updated: 2023-07-12
 - link: https://github.com/cloudflare/workers-chat-demo
@@ -196,3 +196,51 @@ entries:
   author: harshil
   cloudflare: true
   updated: 2024-07-29
+- link: https://github.com/cloudflare/workers-for-platforms-example
+  name: Workers for Platforms Example Project
+  description: Explore how you could manage thousands of Workers with a single Cloudflare Workers account.
+  tags: [Hono]
+  products: [D1, Workers, Workers for Platforms]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-03
+- link: https://github.com/cloudflare/dmarc-email-worker
+  name: DMARC Email Worker
+  description: A Cloudflare worker script to process incoming DMARC reports, store them, and produce analytics.
+  tags: []
+  products: [R2, Workers, Email Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-03-17
+- link: https://github.com/cloudflare/pages-fns-with-wasm-demo
+  name: Pages Functions with WebAssembly
+  description: This is a demo application that exemplifies the use of Wasm module imports inside Pages Functions code.
+  tags: []
+  products: [Pages]
+  languages: [Rust]
+  cloudflare: true
+  updated: 2023-03-22
+- link: https://github.com/cloudflare/orange
+  name: Orange Meets
+  description: Orange Meets is a demo WebRTC application built using Cloudflare Calls.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-07-05
+- link: https://github.com/cloudflare/wildebeest
+  name: Wildebeest
+  description: Wildebeest is an ActivityPub and Mastodon-compatible server whose goal is to allow anyone to operate their Fediverse server and identity on their domain without needing to keep infrastructure, with minimal setup and maintenance, and running in minutes.
+  tags: []
+  products: [Workers, Pages, Durable Objects, Queues, D1, Access, Images]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-07-31
+- link: https://github.com/cloudflare/workers-access-external-auth-example
+  name: Access External Auth Rule Example Worker
+  description: This is a worker that allows you to quickly setup an external evalutation rule in Cloudflare Access.
+  tags: []
+  products: [Workers, Access]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-08-01
