@@ -6,7 +6,7 @@ weight: 4
 
 # China Express
 
-China Express is a suite of connectivity， performance offerings and professional services designed to simplify our global customers' deployment in China. China Express is provided by our partners CMI, CBC and JD Cloud. You may find the China Express offers with each designed scenario:
+China Express is a suite of connectivity, performance offerings and professional services designed to simplify our global customers' deployment in China. China Express is provided by our partners CMI, CBC and JD Cloud. You may find the China Express offers with each designed scenario:
 
 | **Offer** | **Scenarios**                                                                                |
 |--------------------------|----------------------------------------------------------------------------------------------|
