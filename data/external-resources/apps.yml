@@ -228,6 +228,30 @@ entries:
   languages: [TypeScript]
   cloudflare: true
   updated: 2024-07-05
+- link: https://github.com/cloudflare/calls-examples/tree/main/whip-whep-server
+  name: WHIP-WHEP Server
+  description: WHIP and WHEP server implemented on top of Calls API.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2022-06-12
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo
+  name: Calls Echo Demo
+  description: Demonstrates a local stream alongside a remote echo stream.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2025-05-10
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels
+  name: Calls DataChannel Test
+  description: This example establishes two datachannels, one publishes data and the other one subscribes, the test measures how fast a message travels to and from the server.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-06-04
 - link: https://github.com/cloudflare/wildebeest
   name: Wildebeest
   description: Wildebeest is an ActivityPub and Mastodon-compatible server whose goal is to allow anyone to operate their Fediverse server and identity on their domain without needing to keep infrastructure, with minimal setup and maintenance, and running in minutes.
