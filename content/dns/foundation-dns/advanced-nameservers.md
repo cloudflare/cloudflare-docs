@@ -10,6 +10,10 @@ Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) offer 
 
 Consider the sections below for details about advanced nameservers, and refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) to learn how to enable this feature.
 
+{{<Aside type="warning">}}
+{{<render file="_ns-advanced-vs-custom.md">}}
+{{</Aside>}}
+
 ## Anycast network groups
 
 To increase resiliency, advanced nameserver IPs are advertised by only one of two {{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} network groups.
@@ -47,10 +51,6 @@ While standard Cloudflare nameservers are hosted under `ns.cloudflare.com` or `s
 - `foundationdns.org`
 
 Using the different TLDs (`.com`, `.net`, and `.org`) and making these available only to enterprise accounts allows for better predictability and consistency in nameserver assignment.
-
-{{<Aside type="note">}}
-The advantages that come with Foundation DNS advanced nameservers are currently not available for custom nameservers.
-{{</Aside>}}
 
 There should also be less conflicts when guaranteeing that directly descending zones do not have the same nameserver set.
 
