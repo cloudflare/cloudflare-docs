@@ -30,20 +30,31 @@ Before getting started:
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to R2 via the dashboard.
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **R2 Object Storage**.
+5. In **Select a destination**, choose **R2 Object Storage**.
 
-8. Enter the following destination information:
-    - Bucket path, for example, `cloudflare-logs/http_requests/example.com`
-    - R2 access key ID
-    - R2 secret access key
+6. Enter or select the following destination details:
+    - **Bucket** - R2 bucket name
+    - **Path** - bucket location, for example, `cloudflare-logs/http_requests/example.com`
+    - **Organize logs into daily subfolders** (recommended)
+    - Under **Authentication** add your **R2 Access Key ID** and **R2 Secret Access Key**. Refer to [Manage R2 API tokens](https://dash.cloudflare.com/b54f07a6c269ecca2fa60f1ae4920c99/r2/api-tokens) for more information.
 
-9. Select **Validate access**.
+When you are done entering the destination details, select **Continue**.
 
-10. Select **Save and Start Pushing** to finish enabling the Logpush job.
+7. Select the dataset to push to the storage service.
+
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 
@@ -61,7 +72,7 @@ r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_I
 ```
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
 
 Example request using cURL:
 
@@ -72,7 +83,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 -H 'Content-Type: application/json' \
 -d '{
 "name": "<DOMAIN_NAME>",
-"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+"output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+},
 "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
 "dataset": "http_requests",
 "enabled": true

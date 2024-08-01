@@ -13,7 +13,7 @@ _build:
 - **Availability**: Enterprise-only.
 - **Challenges**
   - Client's routers must:
-      - Support Anycast tunneling.
+      - Support anycast tunneling.
       - Allow configuration of at least one tunnel per Internet service provider (ISP).
       - Support maximum segment size (MSS) clamping.
 

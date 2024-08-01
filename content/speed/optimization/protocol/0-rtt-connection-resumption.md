@@ -36,3 +36,5 @@ To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH
 
 {{</tab>}}
 {{</tabs>}}
+
+{{<Aside type="note">}}The 0-RTT Connection Resumption is only established between the client and Cloudflare. It does not extend to the origin server.{{</Aside>}}

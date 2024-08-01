@@ -1,16 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Digicert
-weight: 5
+weight: 8
 ---
 
-# Connect to Digicert through Access (SAML)
+# Connect to Digicert through Access
 
 This guide covers how to configure [Digicert](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/configure-saml-single-sign-on.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Digicert account
 - [SAML](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/saml-single-sign-on-prerequisites.html) enabled in your Digicert account
 
@@ -18,7 +18,7 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Digicert` and select the textbox that appears below.
+3. For **Application**, enter `Digicert` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
@@ -47,7 +47,7 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 
 {{<Aside type="note">}}
 
-Users can sign in using service provider initiated SSO by using the **SP Initiated Custom SSO URL**. Alternatively, users can go to `www.digicert.com/account`, select **Sign in with SSO**, and enter the name of the identity provider configured in step [2. Add a SAML SSO provider in Digicert](#2-add-a-SAML-SSO-provider-in-Digicert).
+Users can sign in using service provider initiated SSO by using the **SP Initiated Custom SSO URL**. Alternatively, users can go to `www.digicert.com/account`, select **Sign in with SSO**, and enter the name of the identity provider configured in step [2. Add a SAML SSO provider in Digicert](#2-add-a-saml-sso-provider-in-digicert).
 
 {{</Aside>}}
 

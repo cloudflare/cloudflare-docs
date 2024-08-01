@@ -1,12 +1,12 @@
 ---
 pcx_content_type: navigation
 title: Tutorials
-weight: 9
+weight: 8
 layout: wide
 ---
 
 # Tutorials
 
-View tutorials to help you get started with R2.
+View {{<glossary-tooltip term_id="tutorial">}}tutorials{{</glossary-tooltip>}} to help you get started with R2.
 
 {{<tutorial-listing>}}

@@ -35,8 +35,8 @@ When creating a changelog, you need a Markdown page file and a corresponding YAM
 
 The combination of these files allows us to:
 
-- Render traditional changelog content on an [HTML page](/stream/changelog/).
-- Programmatically create an [RSS feed](/stream/changelog/index.xml) with the changelog content.
+- Render traditional changelog content on an [HTML page](/stream/platform/changelog/).
+- Programmatically create an [RSS feed](/stream/platform/changelog/index.xml) with the changelog content.
 - Pull all our changelog content into a [Cloudflare-wide changelog](/changelog/).
 
 ### Markdown file
@@ -225,6 +225,6 @@ If the scheduled date gets pushed for a change, update the `publish_date` and `s
 
 ## Examples
 
-- [Stream Changelog](/stream/changelog/)
+- [Stream Changelog](/stream/platform/changelog/)
 - [Pages Changelog](/pages/platform/changelog/)
 - [WAF Changelog](/waf/change-log/)

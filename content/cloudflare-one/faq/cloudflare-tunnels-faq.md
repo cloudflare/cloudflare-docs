@@ -36,7 +36,7 @@ Yes. Cloudflare Tunnel has full support for Websockets.
 
 {{<faq-answer>}}
 
-Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-networks/private-net/). Public hostname deployments are not supported at this time.
+Yes. {{<render file="tunnel/_grpc-support.md">}}
 
 {{</faq-answer>}}
 {{</faq-item>}}

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: ServiceNow (OIDC)
-weight: 11
+weight: 22
 ---
 
 # Connect to ServiceNow through Access (OIDC)
@@ -10,14 +10,14 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 
 ## Prerequisites
 
-- An [OIDC identity provider](/cloudflare-one/identity/idp-integration/generic-oidc/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a ServiceNow account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **SaaS**.
-3. For **Application**, type `ServiceNow` and select the textbox that appears below.
+3. For **Application**, enter `ServiceNow` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **OIDC**.
 5. Select **Add application**.
 6. In **Scopes**, select the attributes that you want Access to send in the ID token.

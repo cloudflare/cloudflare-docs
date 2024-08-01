@@ -73,3 +73,12 @@ The following managed rulesets run in a response phase:
 The managed rulesets you can deploy depend on your Cloudflare plan.
 
 {{<feature-table id="security.waf_a_managed_rules" skipAvailability="true">}}
+
+## Customize the behavior of managed rulesets
+
+To customize the behavior of managed rulesets, do one of the following:
+
+- [Create exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of WAF managed rulesets or some of their rules under certain conditions.
+- [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
+
+Exceptions have priority over overrides.

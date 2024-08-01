@@ -13,8 +13,8 @@ Before setting up a connection between Cisco SD-WAN and Cloudflare, you must hav
 
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
-- Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
-- Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- Received two Cloudflare tunnel endpoints (anycast IP address) assigned to Magic WAN.
+- Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment.
 - The software version for the Cisco SD-WAN edge device should be Cisco SD-WAN Release 20.6.2 or above.
 

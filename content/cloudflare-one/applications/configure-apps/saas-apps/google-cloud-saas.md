@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Google Cloud
-weight: 6
+weight: 12
 ---
 
 # Connect to Google Cloud through Access
@@ -18,7 +18,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 
 ## Prerequistes
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
 - [Cloud Identity Free or Premium](https://support.google.com/cloudidentity/answer/7389973) set up in your organization's Google Cloud account
 
@@ -52,7 +52,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 5. Fill in the following information:
    - **Sign-in page URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
    - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust {{<glossary-tooltip term_id="team name">}}team name{{</glossary-tooltip>}}.
-   - **Verification certificate**: Upload the `.crt` certificate file from step [2. Create a x.509 certificate](#2-create-a-x.509-certificate).
+   - **Verification certificate**: Upload the `.crt` certificate file from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 6. (Optional) Turn on **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Cloud domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 
 ## 4. Test the integration

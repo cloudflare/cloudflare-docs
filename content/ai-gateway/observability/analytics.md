@@ -45,4 +45,4 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 ## Logging
 
-Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs do not persist and are deleted after approximately 1 hour.
+Your AI Gateway dashboard also shows real-time logs of individual requests, such as the prompt, response, provider, timestamps, and whether the request was successful, cached, or if there was an error. These logs do not persist and are deleted after 24 hours.

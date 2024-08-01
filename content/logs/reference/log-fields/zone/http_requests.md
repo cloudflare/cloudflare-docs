@@ -230,7 +230,7 @@ List of content types.
 
 Type: object
 
-String key-value pairs for Cookies.
+String key-value pairs for Cookies. This field is populated based on [Logpush Custom fields](/logs/reference/custom-fields/), which need to be configured.
 
 ## EdgeCFConnectingO2O
 
@@ -446,13 +446,13 @@ ID of the request.
 
 Type: object
 
-String key-value pairs for RequestHeaders.
+String key-value pairs for RequestHeaders. This field is populated based on [Logpush Custom fields](/logs/reference/custom-fields/), which need to be configured.
 
 ## ResponseHeaders
 
 Type: object
 
-String key-value pairs for ResponseHeaders.
+String key-value pairs for ResponseHeaders. This field is populated based on [Logpush Custom fields](/logs/reference/custom-fields/), which need to be configured.
 
 ## SecurityAction
 

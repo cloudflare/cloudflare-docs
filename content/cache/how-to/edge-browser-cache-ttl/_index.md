@@ -11,7 +11,7 @@ Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in 
 
 {{<feature-table id="cache.edge_cache_ttl">}}
 
-For more information on how to set up Edge Cache TTL, refer to [Cache rules](/cache/how-to/cache-rules/).
+For more information on how to set up Edge Cache TTL, refer to [Cache rules](/cache/how-to/cache-rules/settings/#edge-ttl).
 
 ## Browser Cache TTL
 

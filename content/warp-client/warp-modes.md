@@ -43,6 +43,16 @@ If you enable [FIPS compliance](/cloudflare-one/policies/gateway/http-policies/t
 
 While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ subscribers get access to a larger network. More cities to connect to means you are likely to be closer to a Cloudflare data center – which can reduce the latency between your device and Cloudflare, and improve your browsing speed. As a result, sites load faster, both for those on the Cloudflare network and those that are not.
 
+{{<Aside type="note" header="WARP+ referral program concluding">}}
+
+Cloudflare will conclude the referral program for WARP+ on November 1, 2024.
+
+At that time, new referral codes will no longer be provided. When your device consumes the existing referral allotment, you will automatically migrate to the WARP free plan. You will not lose connectivity.
+
+If you would like to continue using WARP+ beyond that point, you can subscribe by following the upgrade instructions in the app.
+
+{{</Aside>}}
+
 ## WARP Unlimited
 
 WARP Unlimited is our monthly subscription offering for WARP+. Currently, WARP Unlimited can only be purchased via iOS and Android devices.

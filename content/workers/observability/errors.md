@@ -92,6 +92,59 @@ async function handleRequest(request) {
 }
 ```
 
+### "Illegal invocation" errors
+
+The error message `TypeError: Illegal invocation: function called with incorrect this reference` can be a source of confusion.
+
+This is typically caused by calling a function that calls `this`, but the value of `this` has been lost.
+
+For example, given an `obj` object with the `obj.foo()` method which logic relies on `this`, executing the method via `obj.foo();` will make sure that `this` properly references the `obj` object. However, assigning the method to a variable, e.g.`const func = obj.foo;` and calling such variable, e.g. `func();` would result in `this` being `undefined`. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript.
+
+In practice, this is often seen when destructuring runtime provided Javscript objects that have functions that rely on the presence of `this`, such as `ctx`.
+
+The following code will error:
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    // destructuring ctx makes waitUntil lose its 'this' reference
+    const { waitUntil } = ctx;
+    // waitUntil errors, as it has no 'this'
+    waitUntil(somePromise);
+
+    return fetch(request);
+  }
+}
+```
+
+Avoid destructuring or re-bind the function to the original context to avoid the error.
+
+The following code will run properly:
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    // directly calling the method on ctx avoids the error
+    ctx.waitUntil(somePromise);
+
+    // alternatively re-binding to ctx via apply, call, or bind avoids the error
+    const { waitUntil } = ctx;
+    waitUntil.apply(ctx, [somePromise]);
+    waitUntil.call(ctx, somePromise);
+    const reboundWaitUntil = waitUntil.bind(ctx);
+    reboundWaitUntil(somePromise);
+
+    return fetch(request);
+  }
+}
+```
+
 ## Errors on Worker upload
 These errors occur when a Worker is uploaded or modified.
 
@@ -105,7 +158,6 @@ These errors occur when a Worker is uploaded or modified.
 | `10026`     | Could not parse request body.                                                                                                |
 | `10035`     | Multiple attempts to modify a resource at the same time                                                                      |
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
-| `10026`     | Could not parse request body.                                                                                                |
 | `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
 | `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                  |
 | `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).  |

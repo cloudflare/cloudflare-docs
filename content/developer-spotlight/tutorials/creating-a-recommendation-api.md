@@ -806,7 +806,7 @@ app.post('/ask', async (c) => {
    * Generate the answer
    */
   const response = await c.env.AI.run(
-    "@cf/meta/llama-3-8b-instruct",
+    "@cf/meta/llama-3.1-8b-instruct",
     {
       messages: [{
         role: 'system',

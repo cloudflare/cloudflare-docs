@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Load balancers
+title: Load balancing
 weight: 51
 ---
 
-# Load balancers
+# Load balancing with public hostnames
 
 {{<render file="tunnel/_dns-record.md" productFolder="cloudflare-one" withParameters="a [Load Balancing endpoint](/load-balancing/understand-basics/load-balancing-components/);;a load balancer pool">}}
 

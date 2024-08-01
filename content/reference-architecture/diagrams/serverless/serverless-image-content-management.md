@@ -4,12 +4,13 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Serverless image content management"
+products: [KV, R2, Workers AI, WAF, DDoS protection, Workers, Bots]
 ---
 
 # Serverless image content management platform
 ## Introduction
 
-In this reference architecture diagram, we reveal how to leverage various components of Cloudflare’s ecosystem to construct a scalable image management solution. This solution integrates moderation principles via Cloudflare's Workers AI platform and performs image classification through inference at the edge. The storage of images is handled by Cloudflare's R2 product, an S3 API-like object storage system, while metadata is stored in a key/value store to enable content augmentation. 
+In this reference architecture diagram, we reveal how to leverage various components of Cloudflare’s ecosystem to construct a scalable image management solution. This solution integrates moderation principles via Cloudflare's Workers AI platform and performs image classification through inference at the edge. The storage of images is handled by Cloudflare's R2 product, an S3 API-like object storage system, while metadata is stored in a key/value store to enable content augmentation.
 
 The servicing of images to requesting clients is secured by link signature, resizing based on device type or requested transformations and leveraging Cloudflare’s native security and performance features.
 
@@ -22,10 +23,10 @@ The servicing of images to requesting clients is secured by link signature, resi
 | [DDoS](https://www.cloudflare.com/application-services/products/bot-management/) | Volumetric attack protection |
 | [Bot Management](https://www.cloudflare.com/ddos/) | Protection against scraping and general sophisticated automated abuse |
 | [Web Application Firewall](https://www.cloudflare.com/application-services/products/waf/) | Protection against web threats |
-| [CDN](https://www.cloudflare.com/application-services/products/cdn/) | Cache spreading of the images | 
+| [CDN](https://www.cloudflare.com/application-services/products/cdn/) | Cache spreading of the images |
 | [Optimization](https://www.cloudflare.com/application-services/products/website-optimization/) | Compression and acceleration of the image delivery |
 | [Workers](https://workers.cloudflare.com/) | Compute of the several serverless micro services |
-| [AI](https://ai.cloudflare.com/) | Image classification | 
+| [AI](https://ai.cloudflare.com/) | Image classification |
 | [R2](https://www.cloudflare.com/developer-platform/r2/) | S3-type object-storage platform |
 | [KV](/kv/) | Image metadata storage |
 

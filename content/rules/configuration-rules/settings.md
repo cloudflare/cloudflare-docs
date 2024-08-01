@@ -115,11 +115,11 @@ header: API configuration example
 
 ## Disable Real User Monitoring (RUM)
 
-[Cloudflare Web Analytics](/analytics/web-analytics/), also known as Real User Monitoring (RUM), is Cloudflare's free, privacy-first analytics for your website.
+[Cloudflare Web Analytics](/web-analytics/), also known as Real User Monitoring (RUM), is Cloudflare's free, privacy-first analytics for your website.
 
 Use this setting to turn off Web Analytics for matching requests.
 
-{{<render file="_configuration-rule-wins-over-rum-rule.md" withParameters="Configuration rules;;[Web Analytics rules](/analytics/web-analytics/configuring-web-analytics/rules/)">}}
+{{<render file="_configuration-rule-wins-over-rum-rule.md" withParameters="Configuration rules;;[Web Analytics rules](/web-analytics/configuration-options/rules/)">}}
 
 {{<details header="API information">}}
 
@@ -356,29 +356,6 @@ header: API configuration example
 ---
 "action_parameters": {
   "security_level": "low"
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
-## Server Side Excludes (deprecated) { #server-side-excludes }
-
-[Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (SSE) allow you to provide specific pieces of content to real website visitors while hiding that content from suspicious visitors.
-
-Use this setting to turn on or off Server Side Excludes for matching requests.
-
-{{<details header="API information">}}
-
-API configuration property name: `"server_side_excludes"` (boolean).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "server_side_excludes": false
 }
 ```
 

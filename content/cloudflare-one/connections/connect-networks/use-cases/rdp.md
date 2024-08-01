@@ -19,7 +19,7 @@ Cloudflare Zero Trust offers two solutions to provide secure access to RDP serve
 
 This example walks through how to set up an RDP server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports RDP connections.
 
-1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).  
+1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).
 2. Go to **Compute Engine** > **VM instances**.
 3. Select **Create instance**.
 4. Name your VM instance, for example `windows-rdp-server`.
@@ -61,8 +61,6 @@ By default, Internet Explorer will be installed and configured in [Enhanced Secu
 {{<render file="tunnel/_warp-to-tunnel-server.md">}}
 
 ### 2. Set up the client
-
-In order for devices to connect to your Zero Trust organization, you will need to:
 
 {{<render file="tunnel/_warp-to-tunnel-client.md">}}
 

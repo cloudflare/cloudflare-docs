@@ -4,6 +4,7 @@ _build:
   render: never
   list: never
 ---
+## Endpoint
 
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`
 

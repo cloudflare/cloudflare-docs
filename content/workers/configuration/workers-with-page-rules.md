@@ -49,7 +49,6 @@ The following Page Rules may not work as expected when an incoming request is ma
 *   [Origin Cache Control](/workers/configuration/workers-with-page-rules/#origin-cache-control)
 *   [Rocket Loader](/workers/configuration/workers-with-page-rules/#rocket-loader)
 *   [Security Level](/workers/configuration/workers-with-page-rules/#security-level)
-*   [Server Side Excludes](/workers/configuration/workers-with-page-rules/#server-side-excludes-deprecated) (deprecated)
 *   [SSL](/workers/configuration/workers-with-page-rules/#ssl)
 
 This is because the default setting of these Page Rules will be disabled when Cloudflare recognizes that the request is headed to a Worker.
@@ -186,14 +185,6 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 | Source     | Target     | Behavior       |
 |------------|------------|----------------|
 | Client     | Worker     | Rule Respected |
-| Worker     | Same Zone  | Rule Ignored   |
-| Worker     | Other Zone | Rule Ignored   |
-
-### Server Side Excludes (deprecated)
-
-| Source     | Target     | Behavior       |
-|------------|------------|----------------|
-| Client     | Worker     | Rule Ignored   |
 | Worker     | Same Zone  | Rule Ignored   |
 | Worker     | Other Zone | Rule Ignored   |
 

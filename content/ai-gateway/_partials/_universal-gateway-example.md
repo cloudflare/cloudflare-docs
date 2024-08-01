@@ -15,7 +15,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id} \
   --data '[
   {
     "provider": "workers-ai",
-    "endpoint": "@cf/meta/llama-3-8b-instruct",
+    "endpoint": "@cf/meta/llama-3.1-8b-instruct",
     "headers": {
       "Authorization": "Bearer {cloudflare_token}",
       "Content-Type": "application/json"

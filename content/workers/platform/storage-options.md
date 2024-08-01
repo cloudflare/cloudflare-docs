@@ -93,7 +93,7 @@ It is ideal for projects that require:
 To get started with R2:
 
 - Read the [Get started guide](/r2/get-started/).
-- Learn about R2 [Limits](/r2/reference/limits/).
+- Learn about R2 [Limits](/r2/platform/limits/).
 - Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 ## Durable Objects

@@ -5,12 +5,23 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-19'
+  description: |-
+    -  Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+- publish_date: '2024-07-11'
+  description: |-
+    -  Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
+    -  Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
+    -  Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
 - publish_date: '2024-07-01'
   description: |-
     - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
 - publish_date: '2024-06-24'
   description: |-
     - [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
+- publish_date: '2024-06-20'
+  description: |-
+    - We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the [Deployments API](/api/operations/worker-deployments-create-deployment) where the value of a secret is different than the currently deployed version. A `?force=true` query parameter can be specified to proceed with the rollback.
 - publish_date: '2024-06-19'
   description: |-
     - When using [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), the `buffer` module now has an implementation of `isAscii()` and `isUtf8()` methods.
@@ -18,6 +29,9 @@ entries:
 - publish_date: '2024-06-12'
   description: |-
     - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
+- publish_date: '2024-06-03'
+  description: |-
+    -  Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
 - publish_date: '2024-05-17'
   description: |-
     - Updated v8 to version 12.6.

@@ -21,7 +21,7 @@ Running gRPC traffic on Cloudflare is compatible with most Cloudflare products.
 However, the following products have limited capabilities with gRPC requests:
 
 - The [Cloudflare WAF](/waf/) will only run for header inspection during the connection phase. WAF Managed Rules will not run on the content of a gRPC stream.
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) currently does not support gRPC.
+- {{<render file="tunnel/_grpc-support.md" productFolder="cloudflare-one">}}
 - [Cloudflare Access](/cloudflare-one/policies/access/) does not support gRPC traffic sent through Cloudflare’s reverse proxy. gRPC traffic will be ignored by Access if gRPC is enabled in Cloudflare. We recommend disabling gRPC for any sensitive origin servers protected by Access or enabling another means of authenticating gRPC traffic to your origin servers.
 
 ## Enable gRPC
@@ -33,8 +33,8 @@ However, the following products have limited capabilities with gRPC requests:
 -   HTTP/2 must be advertised over ALPN.
 -   Use `application/grpc` or `application/grpc+<message type` (for example: `application/grpc+proto`) for the **Content-Type** header of gRPC requests.
 -   Make sure that the hostname that hosts your gRPC endpoint:
-        - Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
-        - Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
+    - Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
+    - Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 
 ### Procedure
 

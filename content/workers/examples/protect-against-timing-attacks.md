@@ -15,11 +15,13 @@ layout: example
 
 The [`crypto.subtle.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function compares two values using a constant-time algorithm. The time taken is independent of the contents of the values.
 
-When strings are compared using the equality operator (`==` or `===`), the comparison will end at the first mismatched character. By using `timingSafeEqual`, an attacker would not be able to use timing to find where at which point in the two strings there is a difference.
+When strings are compared using the equality operator (`==` or `===`), the comparison will end at the first mismatched character. By using `timingSafeEqual`, an attacker would not be able to use timing to find where at which point in the two strings there is a difference. 
 
 The `timingSafeEqual` function takes two `ArrayBuffer` or `TypedArray` values to compare. These buffers must be of equal length, otherwise an exception is thrown.
+Note that this function is not constant time with respect to the length of the parameters and also does not guarantee constant time for the surrounding code.
+Handling of secrets should be taken with care to not introduce timing side channels.
 
-In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API. Since the time taken to encode the values may reveal the length of our secret value, you should check the length of the strings before encoding.
+In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API. 
 
 {{<tabs labels="ts | py">}}
 {{<tab label="ts" default="true">}}

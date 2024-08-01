@@ -30,19 +30,37 @@ TURN protocol, [RFC 8656](https://datatracker.ietf.org/doc/html/rfc8656), does n
 
 Cloudflare Calls TURN server runs on [Cloudflare's global network](https://www.cloudflare.com/network) - a growing global network of thousands of machines distributed across hundreds of locations, with the notable exception of the Cloudflare's [China Network](/china-network/).
 
+### Does Cloudflare Calls TURN use the Cloudflare Backbone or is there any "magic" Cloudflare do to speed connection up?
+
+Cloudflare Calls TURN allocations are homed in the nearest available Cloudflare datacenter to the TURN client via anycast routing. If both ends of a connection are using Cloudflare Calls TURN, Cloudflare will be able to control the routing and, if possible, route TURN packets through the Cloudflare backbone.
+
 ### What is the difference between Cloudflare Calls TURN with a enterprise plan vs self-serve (pay with your credit card) plans?
 
 There is no performance or feature level difference for Cloudflare Calls TURN service in enterprise or self-serve plans, however those on [enterprise plans](https://www.cloudflare.com/enterprise/) will get the benefit of priority support, predictable flat-rate pricing and SLA guarantees.
 
+### Does Cloudflare Calls TURN run in the Cloudflare China Network?
+
+Cloudflare's [China Network](/china-network/) does not participate in serving Calls traffic and TURN traffic from China will connect to Cloudflare locations outside of China.
+
+### How long does it take for TURN activity to be available in analytics?
+TURN usage shows up in analytics in 30 seconds.
+
 ## Technical
 
-### I need to allowlist (whitelist) Cloudflare TURN IP addresses which IP addresses should I use?
+### I need to allowlist (whitelist) Cloudflare Calls TURN IP addresses. Which IP addresses should I use?
+Clouflare Calls TURN is easy to use by IT administrators who have strict firewalls because it requires very few IP addresses to be allowlisted compared to other providers. You must allowlist both IPv6 and IPv4 addresses.
 
-Please allowlist Cloudflare's published [IP address ranges](https://www.cloudflare.com/ips/). Cloudflare's TURN service will use an IP address from this list. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
+Please allowlist the following IP addresses:
+- `2a06:98c1:3200::1/128`
+- `141.101.90.1/32`
+
+Cloudflare tries to, but cannot guarantee that the IP addresses used for the TURN service won't change unless this is in your enterprise contract. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team. Your enterprise account will be able to provide additional addresses to allowlist as future backup to achieve address diversity.
+
+If you are allowlisting IP addresses and do not have a enterprise contract with different instructions, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change.
 
 ### I would like to hardcode IP addresses used for TURN in my application to save a DNS lookup
 
-Although this is not recommended, we understand there is a very small set of circumstances where hardcoding IP addresses might be useful. In this case, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly. Note that this DNS response could return more than one IP address. In addition, you must set up a failover to a DNS query if there is a problem connecting to the hardcoded IP address. Cloudflare tries to, but cannot guarantee that the IP address used for the TURN service won't change without a specific discussion. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
+Although this is not recommended, we understand there is a very small set of circumstances where hardcoding IP addresses might be useful. In this case, you must set up alerting that detects changes the DNS response from `turn.cloudflare.com` (A and AAAA records) and update the hardcoded IP address(es) accordingly within 14 days of the DNS change. Note that this DNS response could return more than one IP address. In addition, you must set up a failover to a DNS query if there is a problem connecting to the hardcoded IP address. Cloudflare tries to, but cannot guarantee that the IP address used for the TURN service won't change unless this is in your enterprise contract. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
 
 ### Does Cloudflare Calls TURN support the expired IETF RFC draft "draft-uberti-behave-turn-rest-00"?
 
@@ -71,3 +89,15 @@ No. Calls TURN will not respect `REQUESTED-ADDRESS-FAMILY` STUN attribute if spe
 ### Does Calls TURN support TCP relaying?
 
 No. Calls does not implement [RFC6062](https://datatracker.ietf.org/doc/html/rfc6062) and will not respect `REQUESTED-TRANSPORT` STUN attribute.
+
+### I am unable to make CreatePermission or ChannelBind requests with certain IP addresses. Why is that?
+
+Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
+
+If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.
+
+### When I send packets to relayed address without using TURN, the packets don't arrive 
+
+Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
+
+If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.

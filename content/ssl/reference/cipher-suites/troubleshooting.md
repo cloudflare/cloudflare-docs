@@ -22,6 +22,10 @@ If you [upload a custom certificate](/ssl/edge-certificates/custom-certificates/
 
 For example, if you upload an RSA certificate, your cipher suite selection cannot only support ECDSA certificates.
 
+## Compatibility with Cloudflare Pages
+
+It is not possible to configure minimum TLS version nor cipher suites for [Cloudflare Pages](/pages) hostnames.
+
 ## API requirements for custom hostname certificate
 
 {{<render file="_edit-custom-hostname-api.md" productFolder="cloudflare-for-platforms" withParameters="When using the [Edit Custom Hostname endpoint](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname)," >}} <br />

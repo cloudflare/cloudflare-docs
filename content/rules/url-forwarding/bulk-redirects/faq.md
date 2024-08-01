@@ -12,7 +12,7 @@ Below you will find answers to the most commonly asked questions regarding Bulk 
 
 To troubleshoot errors related to Bulk Redirects:
 * Refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/) for more information on runtime errors.
-* Use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) {{<inline-pill style="beta">}} to determine if a rule is triggering for a specific URL.
+* Use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to determine if a rule is triggering for a specific URL.
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 

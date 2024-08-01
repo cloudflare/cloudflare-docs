@@ -12,7 +12,7 @@ Total TLS allows Cloudflare to issue individual certificates for your proxied ho
 {{<render file="_total-tls-character-limitation.md">}}
 {{</Aside>}}
 
-When issued, these certificates will have a type of **Advanced - Total TLS**.
+When issued, these certificates will have a type of **Advanced - Total TLS**, and their default validity period is 90 days.
 
 ## Reference
 

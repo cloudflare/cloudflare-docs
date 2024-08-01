@@ -5,6 +5,12 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-23'
+  title: New Live Webhooks for Error States
+  description: |-
+    Stream has added a new notification event for Live broadcasts to alert (via email or webhook) on various error conditions including unsupported codecs, bad GOP/keyframe interval, or quota exhaustion.
+
+    When creating/editing a notification, subscribe to `live_input.errored` to receive the new event type. Existing notification subscriptions will not be changed automatically. For more information, refer to [Receive Live Webhooks](/stream/stream-live/webhooks/).
 - publish_date: '2024-06-20'
   title: Generated Captions to Open beta
   description: |-
@@ -87,13 +93,13 @@ entries:
 - publish_date: '2022-11-22'
   title: VP9 support for WebRTC live streams (beta)
   description: Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9)
-    when streaming using [WebRTC (WHIP)](/stream/webrtc-beta/), currently in beta.
+    when streaming using [WebRTC (WHIP)](/stream/platform/webrtc-beta/), currently in beta.
 - publish_date: '2022-11-08'
   title: Reduced time to start WebRTC streaming and playback with Trickle ICE
   description: |-
     Cloudflare Stream's [WHIP](https://datatracker.ietf.org/doc/draft-ietf-wish-whip/) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
 
-    For more, refer to [the docs](/stream/webrtc-beta/).
+    For more, refer to [the docs](/stream/platform/webrtc-beta/).
 - publish_date: '2022-11-07'
   title: Deprecating the 'per-video' Analytics API
   description: |-
@@ -131,7 +137,7 @@ entries:
   description: |-
     Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.
 
-    For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta).
+    For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/platform/webrtc-beta).
 - publish_date: '2022-09-15'
   title: Manually control when you start and stop simulcasting
   description: You can now enable and disable individual live outputs via the API
@@ -147,7 +153,7 @@ entries:
 
     2. Allowlist only your Stream account subdomain at the network-level to ensure that only videos from a specific Cloudflare account can be accessed on your network.
 
-    No action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the [docs](/stream/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives).
+    No action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the [docs](/stream/reference/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives).
 - publish_date: '2022-08-02'
   title: Clip videos using the Stream API
   description: You can now change the start and end times of a video uploaded to Cloudflare
