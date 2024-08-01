@@ -1,0 +1,101 @@
+---
+pcx_content_type: tutorial
+content_type: 📝 Tutorial
+difficulty: Beginner
+updated: '2024-08-01'
+title: 'Creating Your First AI Gateway Using Workers AI'
+---
+
+# Creating Your First AI Gateway Using Workers AI
+
+{{<tutorial-date-info>}}
+
+This tutorial guides you through creating your first AI Gateway using Workers AI on the Cloudflare dashboard. The intended audience is beginners who are new to AI Gateway and Workers AI.
+
+{{<tutorial>}}
+
+{{<tutorial-prereqs>}}
+
+Before you start, make sure you have:
+
+- A Cloudflare account
+- Access to the Cloudflare dashboard
+- Basic understanding of API requests
+
+{{</tutorial-prereqs>}}
+
+{{<tutorial-step title="Sign Up and Log In">}}
+
+First, you need to sign up and log in to your Cloudflare account.
+
+1. **Sign Up**: If you don't have a Cloudflare account, [sign up here](https:/cloudflare.com/sign-up).
+2. **Log In**: Access the Cloudflare dashboard by logging in [here](https://dash.cloudflare.com/login).
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Create an AI Gateway">}}
+
+Next, create your AI Gateway.
+
+1. **Navigate to AI Gateway**:
+    - Go to **AI** > **AI Gateway** in the dashboard.
+2. **Create a New Gateway**:
+    - Click **Create Gateway**.
+    - Enter a name for your gateway (up to 64 characters).
+    - Click **Create**.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Connect Your AI Provider">}}
+
+Now, connect your AI provider.
+
+1. **Select Your Gateway**:
+    - In the AI Gateway section, select the gateway you created.
+2. **Choose Workers AI**:
+    - Select **Workers AI** as your provider to set up an endpoint specific to Workers AI.
+    - You will receive an endpoint URL for sending requests.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Configure Your Workers AI">}}
+
+Configure your Workers AI to start sending requests.
+
+1. **Retrieve API Credentials**:
+    - Go to **AI** > **Workers AI** in the dashboard.
+    - Select **Use REST API** and follow the steps to create and copy your API token and Account ID.
+
+2. **Send Requests to Workers AI**:
+    - Use the provided API endpoint. For example, you can run a model via the API using a curl command:
+
+    ```bash
+    curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
+    --header 'Authorization: Bearer {cf_api_token}' \
+    --header 'Content-Type: application/json' \
+    --data '{"prompt": "What is Cloudflare?"}'
+    ```
+
+    Replace `{account_id}` and `{cf_api_token}` with your actual account ID and API token.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="View Analytics">}}
+
+Monitor your AI Gateway to view usage metrics.
+
+1. **Monitor Your AI Gateway**:
+    - Go to **AI** > **AI Gateway** in the dashboard.
+    - Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs.
+
+{{</tutorial-step>}}
+
+{{<tutorial-step title="Next steps" optional="true">}}
+
+To build more with Workers, refer to [Tutorials](/workers/tutorials/).
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.
+
+{{</tutorial-step>}}
+
+{{</tutorial>}}

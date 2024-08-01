@@ -40,6 +40,7 @@ If you do not have a provider preference, start with one of our dedicated tutori
 {{<details header="Onboarding tutorials">}}
 
 - [OpenAI](/ai-gateway/tutorials/deploy-aig-worker/)
+- [Worker AI](/ai-gateway/tutorials/create-first-aig-workers/)
 
 {{</details>}}
 
