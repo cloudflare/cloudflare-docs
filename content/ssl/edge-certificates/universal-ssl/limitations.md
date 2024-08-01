@@ -33,7 +33,7 @@ Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you a
 
 ## Load balancing
 
-Due to internal limitations, Universal SSL certificates do not cover [load balancing hostnames](https://developers.cloudflare.com/load-balancing/load-balancers/dns-records/#ssltls-coverage) by default. This behavior will be corrected in the future. 
+Due to internal limitations, Universal SSL certificates do not cover [load balancing hostnames](/load-balancing/load-balancers/dns-records/) by default. This behavior will be corrected in the future. 
 
 ## Certificate authority
 
