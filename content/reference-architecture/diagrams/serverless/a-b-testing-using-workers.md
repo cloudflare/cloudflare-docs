@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "A/B-testing using Workers"
+products: [Workers, KV]
 ---
 
 # A/B-testing using Workers

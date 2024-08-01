@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Egress-free object storage in multi-cloud setups"
+products: [Workers, R2]
 ---
 
 # Egress-free object storage in multi-cloud setups
