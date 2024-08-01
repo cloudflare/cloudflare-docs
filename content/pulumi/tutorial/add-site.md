@@ -219,7 +219,7 @@ go: downloading github.com/pulumi/pulumi-cloudflare ...
 ```
 
 {{</tab>}}
-{{<tab label="Java">}}
+{{<tab label="Java" no-code="true">}}
 
 Below are Apache Maven instructions. For other Java project managers such as Gradle, see the official [Maven repository](https://central.sonatype.com/artifact/com.pulumi/cloudflare/overview)
 
@@ -254,7 +254,7 @@ info : Adding PackageReference for package 'Pulumi.Cloudflare' into project
 ```
 
 {{</tab>}}
-{{<tab label="YAML">}}
+{{<tab label="YAML" no-code="true">}}
 
 There are no dependencies to download for YAML. Skip ahead.
 
@@ -378,7 +378,7 @@ func main() {
 ```
 
 {{</tab>}}
-{{<tab label="Java">}}
+{{<tab label="Java" no-code="true">}}
 
 The entrypoint file is under the `src/main/java/myproject` directory.
 
@@ -568,7 +568,7 @@ ctx.export("status", zone.status());
 ```
 
 {{</tab>}}
-{{<tab label=".NET">}}
+{{<tab label=".NET" no-code="true">}}
 
 1. Add `using System.Collections.Immutable;` at the top of your `Program.cs` file.
 2. Below `this.ZoneId = zone.Id;`, add:
@@ -895,7 +895,7 @@ class Program
             this.ZoneId = zone.Id;
             this.Nameservers = zone.NameServers;
             this.Status = zone.Status;
-            
+
             new Record("my-record", new RecordArgs
             {
                 ZoneId = zone.Id,
