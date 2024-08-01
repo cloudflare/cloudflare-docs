@@ -3,12 +3,14 @@ pcx_content_type: tutorial
 title: DNSSEC
 weight: 3
 meta:
-   title: Set up multi-signer DNSSEC to use with Cloudflare as Primary
+   title: Set up multi-signer DNSSEC with outgoing zone transfers
 ---
 
 # Set up DNSSEC with Cloudflare as Primary
 
-With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
+With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
+
+If you want to use DNSSEC with outgoing zone transfers, you should configure [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/). After setting up [Cloudflare as primary](/dns/zone-setups/zone-transfers/cloudflare-as-primary/setup/), follow the steps below to enable DNSSEC.
 
 ## Before you begin
 
@@ -77,4 +79,4 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 4. Add DS records to your registrar, one for each provider. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
 
-5. Update the nameserver settings at your registrar to include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
+The nameserver settings at your registrar should include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
