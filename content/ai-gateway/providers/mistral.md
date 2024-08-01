@@ -9,7 +9,7 @@ pcx_content_type: get-started
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_tag}/{gateway}/mistral`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mistral`
 
 ## What you need
 
