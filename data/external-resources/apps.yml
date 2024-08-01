@@ -196,3 +196,11 @@ entries:
   author: harshil
   cloudflare: true
   updated: 2024-07-29
+- link: https://github.com/cloudflare/queues-web-crawler
+  name: Queues Web Crawler
+  description: An example use-case for Queues, a web crawler built on Browser Rendering and Puppeteer. The crawler finds the number of links to Cloudflare.com on the site, and archives a screenshot to Workers KV.
+  tags: []
+  products: [KV, Browser Rendering, Workers, Pages, Queues]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-06-15
