@@ -76,3 +76,7 @@ $ curl https://www.example.com -svo /dev/null --tls-max 1.1
 If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
 
 `* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`
+
+## Limitations
+
+* Minimum TLS Version configuration is ignored by Cloudflare R2 Custom Domains. For example, if you enable TLS 1.2 as the minimum TLS version, connections made to the R2 Custom Domain via TLS 1.0 or 1.1 will stil be accepted. This is a potential security risk you may want to consider.
