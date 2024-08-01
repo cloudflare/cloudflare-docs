@@ -15,6 +15,8 @@ pcx_content_type: get-started
 
 When making requests to the Mistral AI Platform, you will need:
 
+- AI Gateway Account ID
+- AI Gateway gateway name
 - Mistral AI account ID
 - Mistral AI gateway name
 - Mistral AI Platform API token
