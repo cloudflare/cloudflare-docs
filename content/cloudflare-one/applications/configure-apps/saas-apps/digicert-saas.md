@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Digicert
-weight: 8
+weight: 9
 ---
 
 # Connect to Digicert through Access

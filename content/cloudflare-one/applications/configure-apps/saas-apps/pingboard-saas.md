@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Pingboard
-weight: 20
+weight: 21
 ---
 
-# Connect to Pingboard through Access (SAML)
+# Connect to Pingboard through Access
 
 This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/en-us/articles/360046585994-Set-Up-a-Custom-SSO-Solution) as a SAML application in Cloudflare Zero Trust.
 
