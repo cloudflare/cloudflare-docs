@@ -11,11 +11,11 @@ meta:
 
 You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN.
 
-## HTTPS Filtering
+## HTTPS filtering
 
-In order to inspect HTTPS traffic, you need to install the Cloudflare root certificate on each client machine. You can use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to [automatically install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) on supported devices. If your device or application does not support certificate installation via WARP, you can [manually install the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/). The certificate is required for Cloudflare to [decrypt TLS](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+In order to inspect HTTPS traffic, you need to install the Cloudflare root certificate on each client device. You can use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to [automatically install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) on supported devices. If your device or application does not support certificate installation via WARP, you can [manually install the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/). The certificate is required for Cloudflare to [decrypt TLS](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
-If you cannot or do not want to install the certificate, you can create [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policies to exempt Magic WAN traffic from inspection or to disable TLS decryption entirely. For example, you can exempt devices running WARP using [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/):
+If you cannot or do not want to install the certificate, you can create [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policies to exempt incompatible Magic WAN traffic from inspection or to disable TLS decryption entirely. Because Gateway cannot discern Magic WAN traffic, you must use [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) or the IP addresses associated with Magic WAN to match traffic with Gateway policies. For example, if your organization onboards devices to Magic WAN via WARP, you can exempt devices not running WARP using [OS version checks](/cloudflare-one/identity/devices/warp-client-checks/os-version/):
 
 | Selector                     | Operator | Value                | Logic | Action         |
 | ---------------------------- | -------- | -------------------- | ----- | -------------- |
@@ -24,8 +24,6 @@ If you cannot or do not want to install the certificate, you can create [Do Not 
 | Passed Device Posture Checks | not in   | Linux (OS version)   | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | iOS (OS version)     | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | Android (OS version) |       | Do Not Inspect |
-
-Gateway will bypass inspection for devices onboarded to Magic WAN via WARP.
 
 ## Outbound Internet traffic
 
