@@ -36,3 +36,49 @@ The Cloudflare Zero Trust PII role should be considered an add-on role, to be co
 {{<Aside type="note">}}
 The Cloudflare Zero Trust PII role does not apply to Access audit logs. PII is always visible in Access logs.
 {{</Aside>}}
+<<<<<<< HEAD
+=======
+
+## Email details
+
+Email Security shows you the following email detail information:
+
+- Details
+- Action log
+- Raw message
+- Mail trace
+
+### Details
+
+Email Security displays the following details:
+
+1. **Threat type**:  Add a link where I explain the most common threat types.
+2. **Validation**: Email validation methods [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/).
+3. **Sender details**: Information include:
+    - IP address
+    - Registered domain
+    - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
+    - Autonomous sys name: This name identifies your autonomous system (AS).
+    - Country
+4. **Links identified**: A list of malicious links identified by Email Security.
+5. **Reasons for detections**: Description of why the email was deemed as Malicious, Suspicious, or Spam.
+
+### Action log
+
+The action log tab allows you to review post-delivery actions performed on your selected message. The action log displays:
+
+- **Date**: Date when the post-delivery action was performed.
+- **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
+
+### Raw message
+
+The raw message tab allows you to view the raw details of the message. You can also choose to download the email message. To download the message, select **Download .EML**.
+
+### Mail trace
+
+The mail trace tab allows you to track the path your selected message took from the sender to the recipient. This tab details:
+
+- **Date**: The date and time when the mail was tracked.
+- **Type**: An email can be inbound (email is sent to you from another email), or outbound (emails sent from your email address).
+- **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
+>>>>>>> 8097d86ba (Apply suggestions from code review)
