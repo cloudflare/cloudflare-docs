@@ -96,7 +96,7 @@ curl --request PATCH \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/tiered_cache_smart_topology_enable \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --data '{ "value": "on" }'
 ```
 
