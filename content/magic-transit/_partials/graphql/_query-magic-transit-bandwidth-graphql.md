@@ -10,7 +10,7 @@ inputParameters: productName
 
 In this example, you are going to use the GraphQL Analytics API to query $1 ingress tunnel traffic over a specified time period.
 
-The following API call will request $1 ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your email and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request $1 ingress tunnel traffic over a one-hour period and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>` with your account ID, `<EMAIL>`, `<API_KEY>`, and `<API_TOKEN>` with your API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 The following example queries for ingress traffic. To query for egress, change the value in the direction filter.
 
@@ -50,16 +50,17 @@ PAYLOAD='{ "query":
 }'
 
 # curl with Legacy API Key
-curl https://api.cloudflare.com/client/v4/graphql/ \
+curl https://api.cloudflare.com/client/v4/graphql \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data "$(echo $PAYLOAD)"
 
-
 # curl with API Token
-curl https://api.cloudflare.com/client/v4/graphql/ \
+curl https://api.cloudflare.com/client/v4/graphql \
 --header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
 --header "Content-Type: application/json" \
 --data "$(echo $PAYLOAD)"
 ```
@@ -69,13 +70,13 @@ The returned values represent the total bandwidth in bits/second during the five
 The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
 
 ```bash
-... | curl \
-  https://api.cloudflare.com/client/v4/graphql/ \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <API_KEY>" \
-  --header "Content-Type: application/json" \
-  --data "$(echo $PAYLOAD)" | jq .
+curl https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data "$(echo $PAYLOAD)" | jq .
 
+## Example response:
 #=> {
 #=>   "data": {
 #=>     "viewer": {

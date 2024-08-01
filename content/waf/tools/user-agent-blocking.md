@@ -53,7 +53,7 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/operatio
 For example:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id/firewall/ua_rules" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/ua_rules" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \

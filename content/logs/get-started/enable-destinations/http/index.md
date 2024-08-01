@@ -74,6 +74,7 @@ $ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X P
   "dataset": "http_requests",
   "enabled": true
 }' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>"
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json"
 ```

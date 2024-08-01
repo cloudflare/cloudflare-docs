@@ -27,7 +27,7 @@ Currently, restricting cipher suites is only possible via API and is not availab
 
 Assuming this is just a one-time change, you can trigger the API call using curl.
 
-1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
+1.  Create an API Token in: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
 3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
@@ -37,18 +37,7 @@ Here is an example value (list of cipher suites) which you can use to replace `<
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
-Run the command to make the API call with the appropriate `{zone_id}`, `<EMAIL>`, `<API_KEY>`, and `<CIPHER_SUITES>`:
-
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{"value": <CIPHER_SUITES>}'
-```
-
-If you choose to use a token, you will not need `<EMAIL>` nor `<API_KEY>`. You would instead need `<API_TOKEN>` and the command will look like this:
+Run the command to make the API call with the appropriate `{zone_id}`, `<API_TOKEN>`, and `<CIPHER_SUITES>`:
 
 ```bash
 curl --request PATCH \

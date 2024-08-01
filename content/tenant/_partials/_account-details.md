@@ -29,9 +29,9 @@ To retrieve a list of accounts associated with a Tenant details, send a `GET` re
 ---
 header: Request
 ---
-curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/accounts?page=1&per_page=10 \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>"
+curl "https://api.cloudflare.com/client/v4/tenants/{tenant_id}/accounts?page=1&per_page=10" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 A successful request will return an HTTP status of `200` and a response body containing account information and feature flags for all accounts managed by the Tenant.

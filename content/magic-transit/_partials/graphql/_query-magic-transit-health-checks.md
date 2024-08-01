@@ -44,26 +44,25 @@ echo '{ "query":
     "datetimeStart": "2022-08-04T00:00:00.000Z",
     "datetimeEnd": "2022-08-04T01:00:00.000Z"
   }
-}' | tr -d '\n' | curl \
-  https://api.cloudflare.com/client/v4/graphql/ \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <API_KEY>" \
-  --header "Content-Type: application/json" \
-  --silent \
-  --data @-
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @-
 ```
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
 
 ```bash
-... | curl \
-  https://api.cloudflare.com/client/v4/graphql/ \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <API_KEY>" \
-  --header "Content-Type: application/json" \
-  --silent \
-  --data @- | jq .
+... | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
 
+## Example response:
 #=> {
 #=>   "data": {
 #=>     "viewer": {

@@ -165,7 +165,7 @@ We recommend adding a catch-all policy to the bottom of your network policy list
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
+--header "Content-Type: application/json" \
 --data '{
   "name": "Catch-all block policy",
   "conditions": [

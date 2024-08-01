@@ -50,8 +50,8 @@ header: Request
 highlight: [8, 10]
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "A",
@@ -130,8 +130,8 @@ header: Request
 highlight: [8, 10]
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "CNAME",
@@ -254,8 +254,8 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "SRV",

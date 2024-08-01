@@ -78,33 +78,39 @@ You can enable Tiered Cache in the dashboard or via API.
 
 To enable Tiered Cache via API use the following cURL example:
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/argo/tiered_caching \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
- ```
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/argo/tiered_caching \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
+--data '{ "value": "on" }'
+```
 
 You can also configure Tiered Cache Topology via API, for instance:
 
 {{<details header="Enable Smart Tiered Cache">}}
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/cache/tiered_cache_smart_topology_enable \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
- ```
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/tiered_cache_smart_topology_enable \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{ "value": "on" }'
+```
 
  {{</details>}}
 
 {{<details header="Enable Regional Tiered Cache">}}
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/cache/regional_tiered_cache \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/regional_tiered_cache \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
+--data '{ "value": "on" }'
 ```
 
 {{</details>}}

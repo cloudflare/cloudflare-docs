@@ -19,6 +19,7 @@ To send Cloudflare logs to QRadar you need to create a [Logpush job to HTTP endp
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "<name>",
   "output_options": {
@@ -39,6 +40,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "<name>",
   "output_options": {
