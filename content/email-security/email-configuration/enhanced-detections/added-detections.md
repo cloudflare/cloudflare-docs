@@ -19,6 +19,8 @@ These settings apply particularly to trusted business partners that your organiz
 | Encrypted Attachment Scanning | Auto-scan encrypted attachments to detect sophisticated malware campaigns. |
 | Anti-Spam Engine | Detect bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions). |
 | Active Fraud Prevention | Inspect and assess new domain traffic that could be launched from third-party partners or similar organizations. |
+| Flag as Malicious | Mark an email with a [Malicious disposition](/email-security/reference/dispositions-and-attributes/). |
+|Flag as Suspicious| Mark an email with a [Suspicious disposition](/email-security/reference/dispositions-and-attributes/). | 
 
 ## Access Added Detections
 
