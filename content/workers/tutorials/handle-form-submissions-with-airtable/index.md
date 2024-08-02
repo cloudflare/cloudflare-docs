@@ -86,11 +86,7 @@ Create a new `airtable-form-handler` Worker project:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="airtable-form-handler">}}
 
-When configuring your Worker:
-
-* Choose `"Hello World" Worker` for the type of application you would like to create.
-* Select `No` to using TypeScript.
-* Select `No` to deploying your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 ## 3. Configure an Airtable base
 

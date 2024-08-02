@@ -29,12 +29,7 @@ First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-s
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
 
-To continue with this guide:
-
-1. Give your new Worker application a name.
-2. Select `"Hello World" Worker` for the type of application.
-3. Choose `Yes` to using TypeScript.
-4. Select `No` to deploying your application.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 

@@ -31,12 +31,7 @@ Create a new project named `d1-tutorial` by running:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="d1-tutorial">}}
 
-When setting up your `d1-tutorial` Worker, answer the questions as below:
-
-- Choose `"Hello World" Worker` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using git.
-- Select `no` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
 

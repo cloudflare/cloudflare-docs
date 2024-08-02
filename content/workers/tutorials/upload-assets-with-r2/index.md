@@ -27,13 +27,7 @@ First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-s
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="upload-r2-assets">}}
 
-To continue with this guide:
-
-1. Select `"Hello World" Worker` for the type of application.
-2. Select `Yes` to using TypeScript.
-3. Select `No` to deploying your application.
-
-If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 Move into your newly created directory:
 

@@ -139,76 +139,71 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 ### 3. Create a new Worker
 
-1. Open a terminal and run the following command:
+Open a terminal and run the following command:
 
-   {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="authentication-worker">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="authentication-worker">}}
 
-   This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
 
-2. In the guided setup flow:
-    1. Name your project directory.
-    2. Select `"Hello World" Worker` as the type of application.
-    3. Select _No_ to using TypeScript.
-    4. Answer `Yes` or `No` to using `git` for version control.
-    5. Select `No` to deploying the Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
-3. Go to your project directory.
+Go to your project directory.
 
-  ```sh
-  $ cd authentication-worker
-  ```
+```sh
+$ cd authentication-worker
+```
 
-4. Open `/src/index.js` and delete the existing code and paste in the following example:
+Open `/src/index.js` and delete the existing code and paste in the following example:
 
-   ```js
-   ---
-   filename: index.js
-   ---
-    // The hostname where your API lives
-    const originalAPIHostname = "api.mysite.com";
+  ```js
+  ---
+  filename: index.js
+  ---
+  // The hostname where your API lives
+  const originalAPIHostname = "api.mysite.com";
 
-    export default {
-      async fetch(request) {
-        // Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
-        const url = new URL(request.url);
-        url.hostname = originalAPIHostname;
+  export default {
+    async fetch(request) {
+      // Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
+      const url = new URL(request.url);
+      url.hostname = originalAPIHostname;
 
-        // If your API is located on api.mysite.com/anyname (without "api/" in the path),
-        // remove the "api/" part of example.com/api/name
+      // If your API is located on api.mysite.com/anyname (without "api/" in the path),
+      // remove the "api/" part of example.com/api/name
 
-        // url.pathname = url.pathname.substring(4)
+      // url.pathname = url.pathname.substring(4)
 
-        // Best practice is to always use the original request to construct the new request
-        // to clone all the attributes. Applying the URL also requires a constructor
-        // since once a Request has been constructed, its URL is immutable.
-        const newRequest = new Request(url.toString(), request);
+      // Best practice is to always use the original request to construct the new request
+      // to clone all the attributes. Applying the URL also requires a constructor
+      // since once a Request has been constructed, its URL is immutable.
+      const newRequest = new Request(url.toString(), request);
 
-        newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
-        newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
-        try {
-          const response = await fetch(newRequest);
+      newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
+      newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
+      try {
+        const response = await fetch(newRequest);
 
-          // Copy over the response
-          const modifiedResponse = new Response(response.body, response);
+        // Copy over the response
+        const modifiedResponse = new Response(response.body, response);
 
-          // Delete the set-cookie from the response so it doesn't override existing cookies
-          modifiedResponse.headers.delete("set-cookie");
+        // Delete the set-cookie from the response so it doesn't override existing cookies
+        modifiedResponse.headers.delete("set-cookie");
 
-          return modifiedResponse;
-        } catch (e) {
-          return new Response(JSON.stringify({ error: e.message }), {
-            status: 500,
-          });
-        }
-      },
-    };
-   ```
+        return modifiedResponse;
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+          status: 500,
+        });
+      }
+    },
+  };
+```
 
-4. Deploy the Worker to your Cloudflare account:
+Then, deploy the Worker to your Cloudflare account:
 
-   ```sh
-   $ npx wrangler deploy
-   ```
+```sh
+$ npx wrangler deploy
+```
 
 ### 4. Configure the Worker
 

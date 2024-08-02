@@ -29,20 +29,9 @@ Open a terminal window and run C3 to create your Worker project:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="rag-ai-tutorial">}}
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
-For this guide, set up a basic Worker:
-
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Worker` as the type of application you want to create.
-3. Answer `no` to using TypeScript.
-
-You will be asked if you would like to deploy the project to Cloudflare.
-
-- If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
-- If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
-
-In your project directory, C3 has generated several files:
+In your project directory, C3 has generated several files.
 
 {{<details header="What files did C3 create?">}}
 

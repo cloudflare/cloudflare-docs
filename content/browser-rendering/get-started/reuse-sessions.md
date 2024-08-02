@@ -18,6 +18,8 @@ Create a new Worker project named `browser-worker` by running:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+
 ## 2. Install Puppeteer
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):

@@ -45,12 +45,7 @@ To create a producer Worker, run:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="producer-worker">}}
 
-In your terminal, you will be asked a series of questions related to your project.
-
-1. Select `"Hello World" Worker` as the type of application you want to create.
-2. Answer `yes` to using TypeScript.
-3. Answer `no` to using Git.
-4. Answer `no` to deploying your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 

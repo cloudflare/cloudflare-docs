@@ -22,11 +22,7 @@ First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new 
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="qr-code-generator">}}
 
-To configure your Worker:
-
-* Choose `"Hello World" Worker` for the type of application you would like to create.
-* Answer `No` to using TypeScript.
-* Answer `No` to deploying your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Then, move into your newly created directory:
 

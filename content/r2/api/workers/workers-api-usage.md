@@ -16,6 +16,8 @@ To get started, open a terminal window and run:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="r2-worker">}}
 
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
 Then, move into your newly created directory:
 
 ```sh

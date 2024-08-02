@@ -30,12 +30,7 @@ First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudf
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="todos">}}
 
-To configure your Worker:
-
-- Choose `"Hello World" Worker` for the type of application you would like to create.
-- Answer `No` to using TypeScript.
-- Answer `Yes` to using Git for version control.
-- Answer `No` to deploying your application.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Move into your newly created directory:
 

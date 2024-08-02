@@ -36,12 +36,7 @@ To get started developing your Worker you will use the [`create-cloudflare` CLI]
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="custom-access-control">}}
 
-Then simply follow the prompts in order to create your new Worker application:
-
-1. Select `"Hello World" Worker` for the type of application, as it creates a simple example Worker which is triggered by an HTTP request.
-2. Select `Yes` to use TypeScript.
-3. Decide if you want to initialize a git repository for this new Worker project. We will select `No`, for this tutorial, but feel free to choose `Yes`.
-4. Choose `No` when asked if you want to deploy your application.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 Then, move into your newly created Worker:
 

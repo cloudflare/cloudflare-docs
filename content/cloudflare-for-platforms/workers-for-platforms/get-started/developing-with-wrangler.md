@@ -17,10 +17,13 @@ Support for Workers for Platforms with `wrangler dev` in local mode is experimen
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="customer-worker-1">}}
 
-When following the interactive prompts, answer the questions as below:
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
+Then, move into the newly created directory:
+
+```sh
+$ cd customer-worker-1
+```
 
 Update the `src/index.js` file for customer-worker-1:
 
@@ -52,10 +55,13 @@ dispatch_namespace = "my-namespace"
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="dispatch-worker">}}
 
-When following the interactive prompts, answer the questions as below:
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
+Then, move into the newly created directory:
+
+```sh
+$ cd dispatch-worker
+```
 
 Update the `src/index.js` file for dispatch-worker:
 
@@ -99,10 +105,13 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="outbound-worker">}}
 
-When following the interactive prompts, answer the questions as below:
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
+Then, move into the newly created directory:
+
+```sh
+$ cd outbound-worker
+```
 
 Update the `src/index.js` file for outbound-worker:
 

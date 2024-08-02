@@ -18,7 +18,7 @@ Create a new Worker project named `browser-worker` by running:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
-You can choose to use either JavaScript or TypeScript for this guide.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript / Typescript">}}
 
 ## 2. Install Puppeteer
 

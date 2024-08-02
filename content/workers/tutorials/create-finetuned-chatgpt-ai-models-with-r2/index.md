@@ -41,14 +41,7 @@ First, use the `c3` CLI to create a new Cloudflare Workers project.
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="finetune-chatgpt-model">}}
 
-In your terminal, you will be asked a series of questions related to your project. Choose the following options:
-
-```txt
-What type of application do you want to create? … "Hello World" Worker
-Do you want to use TypeScript? … Yes
-Do you want to use git for version control? … Yes
-Do you want to deploy your application? › ... No
-```
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 The above options will create the "Hello World" TypeScript project.
 

@@ -83,10 +83,7 @@ Create your dispatch Worker. In this example, the dispatch Worker is called `my-
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="my-dispatcher">}}
 
-When setting up `my-dispatcher`, answer the questions as below:
-
-- Select `no` to using TypeScript.
-- Select `yes` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 Change to your project's directory:
 
