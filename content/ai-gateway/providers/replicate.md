@@ -14,7 +14,7 @@ pcx_content_type: get-started
 
 When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate`.
 
-### Example
+## Example
 
 ```bash
 ---

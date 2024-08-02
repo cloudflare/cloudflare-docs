@@ -10,7 +10,7 @@ pcx_content_type: get-started
 
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai`
 
-### Examples
+## Examples
 
 ```bash
 ---

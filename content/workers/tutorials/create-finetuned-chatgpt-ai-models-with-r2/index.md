@@ -194,7 +194,7 @@ const createModel = async (c: Context, fileId: string) => {
 
 	const body = {
 		training_file: fileId,
-		model: "gpt-3.5-turbo",
+		model: "gpt-4o-mini",
 	}
 
 	return openai.fineTuning.jobs.create(body)
@@ -279,7 +279,7 @@ Use it in any API requests you make to OpenAI's chat completions endpoints. For 
 ```javascript
 openai.chat.completions.create({
   messages: [{ role: "system", content: "You are a helpful assistant." }],
-  model: "ft:gpt-3.5-turbo:my-org:custom_suffix:id",
+  model: "ft:gpt-4o-mini:my-org:custom_suffix:id",
 });
 ```
 

@@ -14,7 +14,7 @@ pcx_content_type: get-started
 
 When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
-### Examples
+## Examples
 
 ```bash
 ---
@@ -52,7 +52,7 @@ const openai = new OpenAI({
 
 try {
   const chatCompletion = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo-0613",
+    model: "gpt-4o-mini",
     messages: [{ role: "user", content: "What is a neuron?" }],
     max_tokens: 100,
   });

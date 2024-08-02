@@ -158,7 +158,7 @@ export default {
       ];
 
       const chatCompletion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo-1106',
+        model: 'gpt-4o-mini',
         messages: messages,
         tools: tools,
         tool_choice: 'auto',
@@ -176,7 +176,7 @@ export default {
 
 Review the arguments you are passing to OpenAI:
 
-- **model**: This is the model you want OpenAI to use for your request. In this case, you are using 'gpt-3.5-turbo-1106'.
+- **model**: This is the model you want OpenAI to use for your request. In this case, you are using `gpt-4o-mini`.
 - **messages**: This is an array containing all messages that are part of the conversation. Initially you provide a message from the user, and we later add the response from the model. The content of the user message is either the `message` query parameter from the request URL or the default "What's in the news today?".
 - **tools**: An array containing the actions available to the AI model. In this example you only have one tool, `read_website_content`, which reads the content on a given website.
   - **name**: The name of your function. In this case, it is `read_website_content`.
@@ -236,7 +236,7 @@ if (assistantMessage.tool_calls) {
   }
 
   const secondChatCompletion = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-1106',
+    model: 'gpt-4o-mini',
     messages: messages,
   });
 

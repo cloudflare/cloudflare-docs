@@ -29,7 +29,7 @@ Then you can append the endpoint you want to hit, for example: `/publishers/goog
 
 So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-1.0-pro-001:generateContent`
 
-### Example
+## Example
 
 ```bash
 ---

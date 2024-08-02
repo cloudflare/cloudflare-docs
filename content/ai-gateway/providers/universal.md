@@ -21,7 +21,7 @@ You can use the Universal endpoint to contact every provider. The payload is exp
 * `query`: the payload as the provider expects it in their official API.
 
 
-### Example
+## Example
 
 {{<render file="_universal-gateway-example.md">}}
 
