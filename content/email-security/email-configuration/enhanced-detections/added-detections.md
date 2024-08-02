@@ -20,7 +20,7 @@ These settings apply particularly to trusted business partners that your organiz
 | Anti-Spam Engine | Detect bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions). |
 | Active Fraud Prevention | Inspect and assess new domain traffic that could be launched from third-party partners or similar organizations. |
 | Blank Email Detection | Blank email detection detects emails with blank bodies and assigns a default disposition. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). |
-| ACH change from free email detection | Detects payroll inquiries or change requests from free email domains. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). | 
+| [ACH](https://en.wikipedia.org/wiki/Automated_clearing_house) change from free email detection | Detects payroll inquiries or change requests from free email domains. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). | 
 | HTML attachment email detection | HTML attachment email detection detects HTM and HTML attachments in emails. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). |
 
 ## Access Added Detections
