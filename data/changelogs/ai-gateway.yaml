@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
-- publish_date: '2024-08-2'
+- publish_date: '2024-08-02'
   title: Mistral AI
   description: |-
     * **Providers**: Added [Mistral AI](/ai-gateway/providers/mistral/) as a new provider.
