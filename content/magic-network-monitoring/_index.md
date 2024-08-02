@@ -23,6 +23,8 @@ Enterprise customers can use Magic Network Monitoring with [Magic Transit on-dem
 
 Magic Network Monitoring is automatically enabled for all Magic Transit and Magic WAN enterprise customers. Any enterprise customers without Magic Transit or Magic WAN that are interested in testing Magic Network Monitoring can receive access to the Magic Network Monitoring [free version](/magic-network-monitoring/magic-network-monitoring-free/) by submitting a request to their Cloudflare account team.
 
+Learn how to [get started](/magic-network-monitoring/get-started/).
+
 ---
 
 ## Features

@@ -22,17 +22,9 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<render file="_c3-run-command.md" productFolder="workers">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="my-first-worker">}}
 
-This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
-
-For this guide:
-
-- For the `In which directory do you want to create your application?` prompt, enter `my-first-worker`.
-- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
-- For the `Do you want to use TypeScript?` prompt, choose `No`.
-- For the `Do you want to use git for version control?` prompt, choose `Yes`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Now, you have a new project set up. Move into that project folder.
 

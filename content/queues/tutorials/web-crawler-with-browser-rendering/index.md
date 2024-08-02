@@ -32,19 +32,14 @@ Additionally, you will need access to Queues.
 
 To get started, create a Worker application using the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). Open a terminal window and run the following command:
 
-```sh
-$ npm create cloudflare web-crawler
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="queues-web-crawler">}}
 
-* Select `"Hello World" Worker` for the type of application.
-* Select `Yes` to use TypeScript.
-* Select `Yes` to initialize a git repository.
-* Choose `No` when asked if you want to deploy your application (this will be done in a later step).
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
-Go to your application directory:
+Then, move into your newly created directory:
 
 ```sh
-$ cd web-crawler
+$ cd queues-web-crawler
 ```
 
 ## 2. Create KV namespace
@@ -118,6 +113,7 @@ Now, we need to set up the Queue.
 ```sh
 $ npx wrangler queues create queues-web-crawler
 ```
+
 ```txt
 ---
 header: Output
@@ -173,7 +169,7 @@ queue = "queues-web-crawler"
 binding = "CRAWLER_QUEUE"
 ```
 
-## 4. Add bindings to environment
+## 5. Add bindings to environment
 
 Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
 
@@ -191,7 +187,7 @@ export interface Env {
 }
 ```
 
-## 5. Submit links to crawl
+## 6. Submit links to crawl
 
 Add a `fetch()` handler to the Worker to submit links to crawl.
 
@@ -218,7 +214,7 @@ export default {
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.
 
-## 6. Crawl with Puppeteer
+## 7. Crawl with Puppeteer
 
 Add a `queue()` handler to the Worker to process the links you send.
 
@@ -556,7 +552,7 @@ export default {
 };
 ```
 
-## 7. Deploy your Worker
+## 8. Deploy your Worker
 
 To deploy your Worker, run the following command:
 

@@ -67,6 +67,8 @@ Product description - What does this product do? Why would you use it? Short ove
 
 Summary - Brief welcoming introductory content. A few sentences describing the product’s benefits to the customer. Focus on customer benefit but can also include general product information.
 
+Learn how to [get started](/<product>/get-started/).
+
 ---
 
 ## Features
