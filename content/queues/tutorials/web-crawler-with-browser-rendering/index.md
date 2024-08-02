@@ -56,21 +56,15 @@ To set up a Queue:
 
 Create a new Worker with the C3 (`create-cloudflare-cli`) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="queues-web-crawler">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+
+Then, move into your newly created directory:
+
 ```sh
----
-header: Create a Worker
----
-$ npm create cloudflare@latest # or yarn create cloudflare
+$ cd queues-web-crawler
 ```
-
-C3 will then prompt you for some information on your Worker.
-
-1. Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question `What type of application do you want to create?`, select `"Hello World" Worker`.
-3. For the question `Would you like to use TypeScript? (y/n)`, select `y`.
-4. For the question `Do you want to deploy your application?`, select `n`.
-
-This will create the crawler Worker.
 
 ## 3. Configure your Worker
 
