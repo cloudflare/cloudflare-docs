@@ -229,14 +229,6 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
-To deploy your D1 database globally, log in with your Cloudflare account by running the following:
-
-```sh
-$ npx wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
-
 ## 6. Deploy your database
 
 To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
