@@ -4,7 +4,7 @@ pcx_content_type: get-started
 ---
 
 # Anthropic
-[Anthropic](https://www.anthropic.com/) helps  build reliable, interpretable, and steerable AI systems.
+[Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
 ## Endpoint
 
