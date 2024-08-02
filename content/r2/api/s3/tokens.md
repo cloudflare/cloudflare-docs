@@ -202,7 +202,7 @@ export R2_BUCKET_NAME=your_bucket_name
 Install the `aws-sdk` package for the S3 API:
 
 ```sh
-npm install aws-sdk
+$ npm install aws-sdk
 ```
 
 Run the following JavaScript (Node.js) script using `node get_r2_object.js`. Ensure you change `objectKey` to point to an existing file in your R2 bucket.
@@ -267,7 +267,7 @@ fetchObject();
 Install the `boto3` S3 API client:
 
 ```sh
-pip install boto3
+$ pip install boto3
 ```
 
 Run the following Python script with `python3 get_r2_object.py`. Ensure you change `object_key` to point to an existing file in your R2 bucket.
@@ -325,10 +325,10 @@ except Exception as e:
 Use `go get` to add the `aws-sdk-go-v2` packages to your Go project:
 
 ```sh
-go get github.com/aws/aws-sdk-go-v2
-go get github.com/aws/aws-sdk-go-v2/config
-go get github.com/aws/aws-sdk-go-v2/credentials
-go get github.com/aws/aws-sdk-go-v2/service/s3
+$ go get github.com/aws/aws-sdk-go-v2
+$ go get github.com/aws/aws-sdk-go-v2/config
+$ go get github.com/aws/aws-sdk-go-v2/credentials
+$ go get github.com/aws/aws-sdk-go-v2/service/s3
 ```
 
 Run the following Go application as a script with `go run main.go`. Ensure you change `objectKey` to point to an existing file in your R2 bucket.
