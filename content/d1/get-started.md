@@ -256,7 +256,7 @@ You can now visit the URL for your newly created project to query your live data
 
 For example, if the URL of your new Worker is `d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages` will send a request to your Worker that queries your live database directly.
 
-## 8. (Optional) Delete your database
+## 7. (Optional) Delete your database
 
 To delete your database, run:
 
