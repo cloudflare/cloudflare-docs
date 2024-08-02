@@ -22,9 +22,9 @@ To submit a phish:
 
 ## PhishNet O365
 
-PhishNet is an add-in button that helps users to submit directly to Email Security {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Email Security's detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Email Security.
+PhishNet is an add-in button that helps users to submit directly to Email Security {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Email Security's detection. 
 
-To set up PhishNet:
+To set up PhishNet O365:
 
 1. Log in to the Microsoft admin panel. Go to **Microsoft 365 admin center** > **Settings** > **Integrated Apps**.
 2. Select **Upload custom apps**.

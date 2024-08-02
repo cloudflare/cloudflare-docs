@@ -6,7 +6,7 @@ weight: 4
 
 # Impersonation registry
 
-The impersonation registry contains all variables of potential emails. If there is an email that is on the impersonation registry not listed as an alternative email address, that email will be reported as potential [business email compromise (BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/).
+The impersonation registry contains combinations of emails which are likely to be impersonated. If there is an email that is on the impersonation registry not listed as an alternative email address, that email will be reported as potential [business email compromise (BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/).
 
 {{<Aside type="note">}}
 
@@ -28,7 +28,7 @@ To add a user to the impersonation registry:
          - **Regular expressions**: Must be valid Java expressions.
    - **Upload manual list**: You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row.
    - **Select from existing directories**:
-       - **Select directory**: Choose MS directory.
+       - **Select directory**: Select your directory.
        - **Add users or groups**: Choose the users or groups you want to register.
 6. Select **Save**.
 

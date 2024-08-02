@@ -1,12 +1,12 @@
 ---
 title: Manage Email Security directories
 pcx_content_type: how-to
-weight: 3
+weight: 5
 ---
 
 # Manage Email Security directories
 
-You can manage your Email Security directory by deleting and editing added users.
+You can manage your Email Security directory by editing and deleting added users.
 
 {{<Aside type="note" header="Registered users">}}
 

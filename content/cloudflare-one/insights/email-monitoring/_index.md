@@ -18,12 +18,12 @@ To monitor your inbox:
 The dashboard will display the following metrics:
 
 - Email activity
-- Disposition evaluation
+- [Disposition evaluation](/cloudflare-one/email-security/reference/dispositions-and-attributes/)
 - Detection details
-- Impersonations
-- Phish submissions
-- Auto-move events
-- Detection settings metrics
+- [Impersonations](/cloudflare-one/email-security/detection-settings/impersonation-registry/)
+- [Phish submissions](/cloudflare-one/insights/email-monitoring/phish-submissions/)
+- [Auto-move events](/cloudflare-one/email-security/auto-moves/)
+- [Detection settings metrics](/cloudflare-one/email-security/detection-settings/)
 
 ## Email activity
 
@@ -37,11 +37,7 @@ Email traffic that flows through Email Security is given a final disposition, wh
 
 Disposition evaluation displays the following dispositions:
 
-- **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
-- **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies ([SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/)) or has mismatching `Envelope From` and `Header From` values.
-- **Suspicious**: Traffic associated with phishing campaigns (and is under further analysis by our automated systems).
-- **Spam**: Traffic associated with non-malicious, commercial campaigns.
-- **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that fall in between the definitions of spam and suspicious. For example, a marketing email that intentionally obscures its unsubscribe link.
+{{<render file="email-security/_dispositions-and-attributes.md">}}
 
 ## Detection details
 
@@ -67,9 +63,9 @@ Impersonations are a form of phishing attack where the actor pretends to be some
 
 **Impersonations** displays the number of targeted users, and a chart describing the total number of impersonation attempts.
 
-To view all targeted users, select **View all targeted users**.
-To view all impersonation emails, select **View all impersonation emails**.
-To view impersonated users, select **View impersonated users**.
+- To view all targeted users, select **View all targeted users**.
+- To view all impersonation emails, select **View all impersonation emails**.
+- To view impersonated users, select **View impersonated users**.
 
 Refer to [Trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/) to add a trusted domain, and [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to add a user to the impersonation registry.
 
@@ -100,8 +96,8 @@ Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure a
 
 Detection settings metric displays information about:
 
-- **Allowed traffic**: Traffic that Email Security will exempt emails that match certain patterns from normal detection scanning.
-- **Blocked traffic**: Traffic that Email Security automatically blocks from senders.
+- **Allowed traffic**: Traffic that Email Security will exempt emails that match certain patterns from normal detection scanning. Allowed traffic shows metrics on emails that were allowed to go through user inboxes.
+- **Blocked traffic**: Traffic that Email Security automatically blocks from senders. Blocked traffic shows metrics on emails that were blocked from user inboxes.
 - **Domain age**: The number of days since domain registration.
 
 Select **Configure** to configure policy and rules for [allowed traffic](/cloudflare-one/email-security/detection-settings/allow-policies/), [blocked traffic](/cloudflare-one/email-security/detection-settings/blocked-senders/) and [domain age](/cloudflare-one/email-security/detection-settings/additional-detections/).

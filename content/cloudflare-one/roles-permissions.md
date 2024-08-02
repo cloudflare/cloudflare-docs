@@ -50,7 +50,7 @@ Email Security shows you the following email detail information:
 
 Email Security displays the following details:
 
-1. **Threat type**.
+1. **Threat type**: Threat type of the email, for example, [credential harvester](/cloudflare-one/email-security/reference/how-es-detects-phish/#credential-harvesters), and [IP-based spam](/cloudflare-one/email-security/reference/how-es-detects-phish/#ip-based-spam).
 2. **Validation**: Email validation methods [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/).
 3. **Sender details**: Information include:
     - IP address
@@ -59,7 +59,7 @@ Email Security displays the following details:
     - Autonomous sys name: This name identifies your autonomous system (AS).
     - Country
 4. **Links identified**: A list of malicious links identified by Email Security.
-5. **Reasons for detections**: Description of why the email was deemed as Malicious, Suspicious, or Spam.
+5. **Reasons for detections**: Description of why the email was deemed as malicious, suspicious, or spam.
 
 ### Action log
 
@@ -79,4 +79,3 @@ The mail trace tab allows you to track the path your selected message took from 
 - **Date**: The date and time when the mail was tracked.
 - **Type**: An email can be inbound (email is sent to you from another email), or outbound (emails sent from your email address).
 - **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
-)
