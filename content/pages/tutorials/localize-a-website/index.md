@@ -37,7 +37,7 @@ Create a new application using the [`create-cloudflare`](/pages/get-started/c3),
 For setup, select the following options:
 
 - For *What would you like to start with*?, select `Framework Starter`.
-- For *Which development framework do you want to use?*, select `React`
+- For *Which development framework do you want to use?*, select `React`.
 - For, *Do you want to deploy your application?*, select `No`.
 
 The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:

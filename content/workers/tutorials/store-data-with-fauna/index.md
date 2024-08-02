@@ -108,7 +108,7 @@ Create a new project by using [C3](https://github.com/cloudflare/workers-sdk/tre
 To continue with this guide:
 
 - For *What would you like to start with*?, select `Framework Starter`.
-- For *Which development framework do you want to use?*, select `Hono`
+- For *Which development framework do you want to use?*, select `Hono`.
 - For, *Do you want to deploy your application?*, select `No`.
 
 Then, move into your newly created directory:

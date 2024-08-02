@@ -100,7 +100,7 @@ To initiate the project, use the command line interface [C3 (create-cloudflare-c
 Follow these steps to create a Hono project.
 
 - For *What would you like to start with*?, select `Framework Starter`.
-- For *Which development framework do you want to use?*, select `Hono`
+- For *Which development framework do you want to use?*, select `Hono`.
 - For, *Do you want to deploy your application?*, select `No`.
 
 Go to the `slack-bot` directory:
