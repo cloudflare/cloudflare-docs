@@ -37,16 +37,9 @@ You will create a new project that will contain a Worker script, which will act 
 
 Open your terminal and create a new project named `embeddings-tutorial` by running the following command:
 
-```sh
-$ npm create cloudflare@latest embeddings-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="embeddings-tutorial">}}
 
-When setting up your `embeddings-tutorial` Worker, answering the questions as below:
-
-1. Choose `"Hello World Worker"` for the type of application.
-2. Select `yes` to using TypeScript.
-3. Select `yes` to using Git.
-4. Select `no` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `embeddings-tutorial` directory. Your new `embeddings-tutorial` directory will include:
 

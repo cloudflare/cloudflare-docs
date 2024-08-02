@@ -19,34 +19,11 @@ You will create a new Worker project using the `create-cloudflare` CLI (C3). [C3
 
 Create a new project named `hello-ai` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm create cloudflare hello-ai
-```
-
-{{</tab>}}
-
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare hello-ai
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="hello-ai">}}
 
 Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI.
 
-When setting up your `hello-ai` Worker, answer the setup questions as follows:
-
-* Choose `"Hello World" Worker` for the type of application.
-* Select `yes` to using TypeScript.
-* Select `yes` to using Git.
-* Select `no` to deploying. [^1]
-
-[^1]: This allows you to complete the setup and test your Worker locally before deploying it.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 

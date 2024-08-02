@@ -66,7 +66,7 @@ Open your command line interface (CLI) and run the following command:
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm create cloudflare@latest cross-sell-api -- --framework hono
+$ npm create cloudflare cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}
