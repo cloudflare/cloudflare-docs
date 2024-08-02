@@ -6,6 +6,12 @@ weight: 4
 
 # Email configuration
 
-Once you have [set up Area 1](/email-security/deployment/), you have several options to customize and fine-tune email behavior.
+{{<Aside type="warning" header="Area 1 has been renamed">}}
+
+{{<render file="rename-area1-to-ces.md">}}
+
+{{</Aside>}}
+
+Once you have [set up Cloud Email Security](/email-security/deployment/), you have several options to customize and fine-tune email behavior.
 
 {{<directory-listing>}}

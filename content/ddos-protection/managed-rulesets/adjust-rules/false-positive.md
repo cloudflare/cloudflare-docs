@@ -45,7 +45,7 @@ To remedy a false positive:
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
-## Updating the adjusted rules later
+## Update the adjusted rules later
 
 Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity-level) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
 
@@ -54,3 +54,13 @@ Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/
 Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
 
 {{</Aside>}}
+
+## Use cases
+
+### Avoid false positives while retaining protection and visibility
+
+To see what DDoS Managed Rules do in a high sensitivity level while remaining protected by blocking attacks at a low sensitivity level, Advanced DDoS protection customers can [create a first override](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override) that blocks attacks at a low sensitivity and a second override to log at a high sensitivity. 
+
+The overrides must be set in that order. Otherwise, it will not work. This is because overrides are evaluated in order and will stop at the first override that matches both expression and sensitivity. Setting the overrides in the wrong order would cause the `Log` override at a high sensitivity to match all instances. As a result, Cloudflare will never evaluate the `Block` override that would be placed behind it, causing all rules to be set in `Log` mode.
+
+If an override without an expression matches, Cloudflare will not evaluate the expressions that follow it. 

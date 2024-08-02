@@ -37,3 +37,7 @@ Each zone that uses advanced nameservers is assigned a set of three nameservers 
 With [custom nameservers](/dns/nameservers/custom-nameservers/), your nameservers are hosted on your own domain (or domains) and, in this sense, are not Cloudflare branded.
 
 You provide fully qualified domain names (`ns1.mydomain.com`) for your nameservers, and Cloudflare assigns one IPv4 and one IPv6 to each of your custom nameservers.
+
+{{<Aside type="warning">}}
+{{<render file="_ns-advanced-vs-custom.md">}}
+{{</Aside>}}

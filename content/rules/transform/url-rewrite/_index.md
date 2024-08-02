@@ -17,7 +17,9 @@ You can manipulate the URL of a request through different operations, namely rew
 Use a URL rewrite to return the content of a URL while displaying a different URL in the browser. You can rewrite the URI path, the query string, or both.
 
 {{<Aside type="warning">}}
-You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/) (deprecated).
+You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/).
+
+{{<render file="_snippets-alternative.md" withParameters="rewrite logic">}}
 {{</Aside>}}
 
 ## Static and dynamic rewrites
@@ -28,5 +30,9 @@ Rewrite URL rules can perform static or dynamic rewrites:
 * **Dynamic rewrite**: Supports more advanced scenarios where you use a rewrite expression to define the resulting path or query string.
 
 Create rewrite URL rules [in the dashboard](/rules/transform/url-rewrite/create-dashboard/) or [via API](/rules/transform/url-rewrite/create-api/).
+
+## Serve images from custom paths
+
+When using Cloudflare Image Optimization, you can use URL rewrites to serve images from a custom path. For more information, refer to [Serve images from custom domains](/images/manage-images/serve-images/serve-from-custom-domains/).
 
 {{<render file="_troubleshoot-rules-with-trace.md" withParameters="URL rewrites">}}

@@ -7,11 +7,9 @@ layout: wide
 
 # Pricing
 
-{{<Aside type="note">}}
-Workers for Platforms will be available as new pay-as-you-go offering on April 16th.
-{{</Aside>}}
+The Workers for Platforms Paid plan is **$25 monthly**. Workers for Platforms can be purchased through the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms).
 
-The Workers for Platforms Paid plan is **$25** monthly and comes with the following usage allotments and overage pricing:
+Workers for Platforms comes with the following usage allotments and overage pricing.
 
 
 {{<table-wrap>}}
@@ -27,8 +25,6 @@ The Workers for Platforms Paid plan is **$25** monthly and comes with the follow
 
 A Workers for Platforms project that serves 100 million requests per month, uses an average of 10 milliseconds (ms) of CPU time per request and uses 1200 scripts would have the following estimated costs:
 
-{{<table-wrap>}}
-
 |                    |  Monthly Costs      |  Formula                                                                                                 |
 | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
 | **Subscription**   |  $25.00              |                                                                                                          |
@@ -36,8 +32,6 @@ A Workers for Platforms project that serves 100 million requests per month, uses
 | **CPU time**       |  $18.80             | ((10 ms of CPU time per request * 100,000,000 requests) - 60,000,000 included CPU ms) / 1,000,000 * $0.02  |
 | **Scripts**       |  $4.00             | 1200 scripts - 1000 included scripts * $0.02  |
 | **Total**          |  $71.80             |                                                                                                          |
-
-{{</table-wrap>}}
 
 {{<Aside type="note" header="Custom limits">}}
 

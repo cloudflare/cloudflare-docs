@@ -4,13 +4,18 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Content-based asset creation"
+products: [Workers AI]
+tags:
+  - AI
 ---
 
 # Content-based asset creation
 
 ## Introduction
 
-Combining text-generation models with text-to-image models can lead to powerful AI systems capable of generating visual content based on input prompts. This integration can be achieved through a collaborative framework where a text-generation model generates prompts for the text-to-image model based on input text. Here's how the process can work:
+Combining text-generation models with text-to-image models can lead to powerful AI systems capable of generating visual content based on input prompts. This integration can be achieved through a collaborative framework where a text-generation model generates prompts for the text-to-image model based on input text.
+
+Here's how the process can work:
 
 - Input Text Processing: The input text is provided to the system, which can be anything from a simple sentence to multiple paragraphs. This text serves as the basis for generating visual content.
 
@@ -28,7 +33,7 @@ Example uses of such compositions of AI models can be employed to generation vis
 
 1. **Client upload**: Send POST request with content to API endpoint.
 2. **Prompt generation**: Generate prompt for later-stage text-to-image model by calling [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) with content as input.
-3. **Safety check**: Check for compliance with safety guidelines by calling [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) with the previously generated prompt as input.
+3. **Safety check**: Check for compliance with safety guidelines by calling [Workers AI](/workers-ai/) [text classification models](/workers-ai/models/#text-classification) with the previously generated prompt as input.
 4. **Image generation**: Generate image by calling [Workers AI](/workers-ai/) [text-to-image models](/workers-ai/models/#text-to-image) previously generated prompt.
 
 ## Related resources

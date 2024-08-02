@@ -23,7 +23,7 @@ Proxied traffic also benefits from the default optimizations of the Cloudflare [
 
 ### Hides origin IP address
 
-Proxying your DNS records in Cloudflare also hides the IP address of your origin server (because requests to your application resolve to Cloudflare Anycast IP addresses instead).
+Proxying your DNS records in Cloudflare also hides the IP address of your origin server (because requests to your application resolve to Cloudflare anycast IP addresses instead).
 
 This obscurity makes it harder for someone to connect directly to your origin, which - by extension - also makes it harder to target your origin with a DDoS attack.
 

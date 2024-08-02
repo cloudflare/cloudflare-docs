@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
-weight: 10
+weight: 11
 ---
 
 # Pricing
@@ -11,7 +11,7 @@ R2 charges based on the total volume of data stored, along with two classes of o
 1. [Class A operations](#class-a-operations) which are more expensive and tend to mutate state.
 2. [Class B operations](#class-b-operations) which tend to read existing state.
 
-There are no charges for egress bandwidth.
+For the Infrequent Access storage class, [data retrieval](#data-retrieval) fees apply. There are no charges for egress bandwidth for any storage class.
 
 All included usage is on a monthly basis.
 
@@ -23,28 +23,44 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 
 ## R2 pricing
 
-|                    | Free                         | Paid - Rates                       |
-| ------------------ | ---------------------------- | ---------------------------------- |
-| Storage            | 10 GB / month                | $0.015 / GB-month                  |
-| Class A Operations | 1 million requests / month   | $4.50 / million requests           |
-| Class B Operations | 10 million requests / month  | $0.36 / million requests           |
-| Egress (data transfer to Internet) | Free [^1] |
+|                             | Standard storage             | Infrequent Access storage{{<inline-pill style="beta">}}         |
+| --------------------------- | ---------------------------- | ---------------------------------- |
+| Storage                     | $0.015 / GB-month            | $0.01 / GB-month                   |
+| Class A Operations          | $4.50 / million requests     | $9.00 / million requests           |
+| Class B Operations          | $0.36 / million requests     | $0.90 / million requests           |
+| Data Retrieval (processing) | None                         | $0.01 / GB                         |
+| Egress (data transfer to Internet) | Free [^1] | Free [^1] |
 
-[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other, metered services to an R2 bucket, you may be charged by those services.
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
+
+### Free tier
+
+You can use the following amount of storage and operations each month for free. The free tier only applies to Standard storage. 
+
+|                    | Free                         |
+| ------------------ | ---------------------------- |
+| Storage            | 10 GB / month                |
+| Class A Operations | 1 million requests / month   |
+| Class B Operations | 10 million requests / month  |
+| Egress (data transfer to Internet) | Free [^1]    |
+
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
 
 ### Storage usage
 
-Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by averaging the _peak_ storage per day over a billing period (30 days)
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by averaging the _peak_ storage per day over a billing period (30 days).
 
 For example:
 
 - Storing 1 GB constantly for 30 days will be charged as 1 GB-month.
 - Storing 3 GB constantly for 30 days will be charged as 3 GB-month.
-- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1GB * 5/30 month + 3GB * 25/30 month = 2.66 GB-month`
+- Storing 1 GB for 5 days, then 3 GB for the remaining 25 days will be charged as `1 GB * 5/30 month + 3 GB * 25/30 month = 2.66 GB-month`
+
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted or moved before the duration specified.
 
 ### Class A operations
 
-Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `ListMultipartUploads`, `UploadPart`, `UploadPartCopy`, `ListParts`, `PutBucketEncryption`, `PutBucketCors` and `PutBucketLifecycleConfiguration`.
+Class A Operations include `ListBuckets`, `PutBucket`, `ListObjects`, `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `CreateMultipartUpload`, `LifecycleStorageTierTransition`, `ListMultipartUploads`, `UploadPart`, `UploadPartCopy`, `ListParts`, `PutBucketEncryption`, `PutBucketCors` and `PutBucketLifecycleConfiguration`.
 
 ### Class B operations
 
@@ -53,6 +69,19 @@ Class B Operations include `HeadBucket`, `HeadObject`, `GetObject`, `UsageSummar
 ### Free operations
 
 Free operations include `DeleteObject`, `DeleteBucket` and `AbortMultipartUpload`.
+
+### Data retrieval
+
+Data retrieval fees apply when you access or retrieve data from the Infrequent Access storage class. This includes any time objects are read or copied.
+
+### Minimum storage duration
+
+For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the specified duration.
+
+| Storage class                                           | Minimum storage duration            |
+| ------------------------------------------------------- | ----------------------------------- |
+| Standard storage                                        | None                                |
+| Infrequent Access storage{{<inline-pill style="beta">}} | 30 days                             |
 
 ## Data migration pricing
 

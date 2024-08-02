@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Run traceroute
-weight: 4
+weight: 5
 meta:
     description: Learn what settings you need to change to perform a useful `traceroute` to an endpoint behind a Cloudflare Tunnel.
 ---

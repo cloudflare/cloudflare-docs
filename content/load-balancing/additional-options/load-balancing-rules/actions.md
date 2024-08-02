@@ -54,8 +54,8 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     </tr>
     <tr>
       <td><em>Override</em></td>
-      <td><em>Origin pools</em></td>
-      <td>Update the <a href="/load-balancing/pools/">origin pools</a> associated with your load balancer.</td>
+      <td><em>Pools</em></td>
+      <td>Update the <a href="/load-balancing/pools/">pools</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>

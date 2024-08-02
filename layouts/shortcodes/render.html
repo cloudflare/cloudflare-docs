@@ -34,7 +34,11 @@
 {{- range $elem_index, $elem_val := $parameterValues -}}
 {{ $elem_val := ((default "" $elem_val) | markdownify) }}
 {{ $elem_index := add $elem_index 1 | string}}
-{{ $regexPlaceholder = print "\\$" $elem_index }}
+<!--
+  We URL encode the contents of code-blocks into a data-code attribute
+  (which happens before `render` gets the page) so we have to look for '%24' as well.
+-->
+{{ $regexPlaceholder = print `(%24|\$)` $elem_index }}
 {{- $replaceArray = $replaceArray | append (dict "elem_value" $elem_val "index" $elem_index "placeholder" $regexPlaceholder) -}}
 {{- end -}}
 

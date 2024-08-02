@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Changelog
-weight: 11
+weight: 13
 meta:
     description: Review recent changes to Magic WAN.
 layout: changelog

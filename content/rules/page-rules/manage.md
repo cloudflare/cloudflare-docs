@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Manage
 meta:
-    title: Manage | Page Rules (deprecated)
+    title: Manage | Page Rules
 weight: 1
 ---
 
@@ -10,7 +10,7 @@ weight: 1
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 ## Create a page rule
 

@@ -20,7 +20,7 @@ If you are a [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/) user, 
 
 ## Advanced features
 
-All standard features are included with the purchase of the advanced features below.
+All standard features are included with the purchase of the advanced features below:
 
 - Customizable IP lists.
 - Managed threat intelligence IP lists (Anonymizer, Botnet, Malware, Open Proxies, VPNs).
@@ -28,5 +28,5 @@ All standard features are included with the purchase of the advanced features be
 - Block or allow packets based on Autonomous System Number (ASN).
 - Packet captures on demand for network troubleshooting.
 - [Protocol validation rules](/magic-firewall/about/protocol-validation-rules/) to inspect traffic validity and enforce a positive security model.
-- Optional upgrade to full stateful Secure Web Gateway using [Cloudflare Zero Trust](/cloudflare-one/) for outbound Internet traffic. The Secure Web Gateway upgrade supports all TCP and UDP ports, as well as traffic sourced from RFC. Gateway will proxy BYOIP traffic to egress via the default Cloudflare IPs or your assigned [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
+- [Secure Web Gateway](/cloudflare-one/policies/gateway/) filtering for outbound Internet traffic (network and HTTP policies). The Secure Web Gateway supports all TCP and UDP ports, as well as traffic sourced from RFC. Gateway will proxy BYOIP traffic to egress via the default Cloudflare IPs or your assigned [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 - Intrusion Detection System (IDS).

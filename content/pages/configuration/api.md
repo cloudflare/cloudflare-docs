@@ -22,12 +22,12 @@ To create an API token:
 
 After creating your token, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
 
-```sh
-$ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
-  -H 'Authorization: Bearer {API_token}'
+```bash
+curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
+--header 'Authorization: Bearer <API_TOKEN>'
 ```
 
-Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `{API_token}`. Refer to [Find your account ID](/fundamentals/setup/find-account-and-zone-ids/) for more information.
+Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `<API_TOKEN>`. Refer to [Find your account ID](/fundamentals/setup/find-account-and-zone-ids/) for more information.
 
 ## Examples
 

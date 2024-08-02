@@ -9,9 +9,11 @@ learning_center:
 
 # Start a live stream
 
-You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
+After you subscribe to Stream, you can create Live Inputs in Dash or via the API. Broadcast to your new Live Input using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
 {{<render file="_srt-supported-modes.md">}}
+
+**First time live streaming?** You will need software to send your video to Cloudflare. [Learn how to go live on Stream using OBS Studio](/stream/examples/obs-from-scratch/).
 
 ## Use the dashboard
 
@@ -36,9 +38,9 @@ To start a live stream programmatically, make a `POST` request to the `/live_inp
 header: Request
 ---
 curl -X POST \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 ```
 
 ```json
@@ -105,25 +107,25 @@ header: Response
 
 You can update live inputs by making a `PUT` request:
 
-```sh
+```bash
 ---
 header: Request
 ---
-$ curl -X PUT \
--H "Authorization: Bearer <API_TOKEN>" \
--d '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+$ curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
 ```
 
 Delete a live input by making a `DELETE` request:
 
-```sh
+```bash
 ---
 header: Request
 ---
-$ curl -X DELETE \
--H "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+$ curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Recommendations, requirements and limitations

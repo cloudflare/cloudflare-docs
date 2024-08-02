@@ -43,22 +43,21 @@ To help this better match the needs of your organization, you can also build a c
 {{<tab label="api" no-code="true">}}
 
 ```bash
-curl --request POST \
-    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header 'Content-Type: application/json' \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <API_KEY>' \
-    --data '{
-    "action": "block",
-    "description": "Detect secrets and AWS keys",
-    "enabled": true,
-    "filters": [
-      "http"
-    ],
-    "name": "Secrets and AWS keys",
-    "precedence": 0,
-    "traffic": "any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)""
-    }'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "action": "block",
+  "description": "Detect secrets and AWS keys",
+  "enabled": true,
+  "filters": [
+    "http"
+  ],
+  "name": "Secrets and AWS keys",
+  "precedence": 0,
+  "traffic": "any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)""
+}'
 ```
 
 {{</tab>}}
@@ -97,23 +96,22 @@ For example, you can use a custom expression to detect when your users share pro
 {{<tab label="api" no-code="true">}}
 
 ```bash
-curl --request POST \
-    --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header 'Content-Type: application/json' \
-    --header 'X-Auth-Email: <EMAIL>' \
-    --header 'X-Auth-Key: <API_KEY>' \
-    --data '{
-    "action": "block",
-    "description": "Detect product SKUs shared by users in organization",
-    "enabled": true,
-    "filters": [
-      "http"
-    ],
-    "name": "Detect product SKU leaks",
-    "precedence": 0,
-    "traffic": "any(dlp.profiles[*] in <SKU_DLP_PROFILE_UUID>)",
-    "identity": "identity.email matches \"[a-z0-9]{0,15}@example.com\""
-    }'
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "action": "block",
+  "description": "Detect product SKUs shared by users in organization",
+  "enabled": true,
+  "filters": [
+    "http"
+  ],
+  "name": "Detect product SKU leaks",
+  "precedence": 0,
+  "traffic": "any(dlp.profiles[*] in <SKU_DLP_PROFILE_UUID>)",
+  "identity": "identity.email matches \"[a-z0-9]{0,15}@example.com\""
+}'
 ```
 
 {{</tab>}}
@@ -164,19 +162,19 @@ Many organizations want to detect and log financial information egressing from u
 header: Block financial information shared with AI
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header 'Content-Type: application/json' \
-    --data '{
-    "action": "block",
-    "description": "Prevent financial information from being shared with AI tools",
-    "enabled": true,
-    "filters": [
-      "http"
-    ],
-    "name": "Block AI financial info",
-    "precedence": 0,
-    "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
-    }'
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "action": "block",
+  "description": "Prevent financial information from being shared with AI tools",
+  "enabled": true,
+  "filters": [
+    "http"
+  ],
+  "name": "Block AI financial info",
+  "precedence": 0,
+  "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
+}'
 ```
 
 {{</tab>}}

@@ -47,10 +47,11 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "status": "active",
   "dnssec_multi_signer": true
@@ -60,10 +61,10 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
 
 ```bash
-$ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "type": "DNSKEY",
   "name": "<ZONE_NAME>",
@@ -80,9 +81,9 @@ $ curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_
 3. Add your external provider(s) nameservers as NS records on your zone apex.
 
 ```bash
-curl --request POST 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records' \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
 --header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <KEY>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "NS",
@@ -99,7 +100,8 @@ This step is required. Without turning on this setting, Cloudflare will ignore a
 {{</Aside>}}
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -137,9 +139,9 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 
 ```bash
 $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "status": "active",
   "dnssec_multi_signer": true
@@ -160,14 +162,14 @@ $ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns
 API example:
 
 ```bash
-$ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 Command line query example:
 
-```bash
+```sh
 $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 

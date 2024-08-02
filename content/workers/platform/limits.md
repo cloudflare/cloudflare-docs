@@ -10,8 +10,6 @@ meta:
 
 ## Account plan limits
 
-{{<table-wrap>}}
-
 | Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model),  [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model)) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
@@ -23,7 +21,6 @@ meta:
 | [Number of Workers](#number-of-workers)<sup>1</sup>                                         | 100       | 500       |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
-{{</table-wrap>}}
 <sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 {{<render file="_limits_increase.md">}}
@@ -40,16 +37,12 @@ Cloudflare has network-wide limits on the request body size. This limit is tied 
 
 Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
-{{<table-wrap>}}
-
 | Cloudflare Plan | Maximum body size  |
 | --------------- | -------------------|
 | Free            | 100 MB             |
 | Pro             | 100 MB             |
 | Business        | 200 MB             |
 | Enterprise      | 500 MB (by default)|
-
-{{</table-wrap>}}
 
 ---
 
@@ -68,7 +61,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
 | [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |     |
-| [Duration](#duration)       |   None                                         |  none                                           | none                                  |
+| [Duration](#duration)       |   None                                         |  none                                           | 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Durable Object Alarm](/durable-objects/api/alarms/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer)                                  |
 
 {{</table-wrap>}}
 

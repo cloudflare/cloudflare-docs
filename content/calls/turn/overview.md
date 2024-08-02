@@ -23,15 +23,9 @@ Using Cloudflare Calls TURN service is available free of charge when used togeth
 
 Calls TURN service is available in every Cloudflare datacenter.
 
-When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using Anycast routing.
+When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using anycast routing.
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
-
-## IP Addresses
-
-Communication between TURN clients and the TURN server (as defined in [RFC5766](https://datatracker.ietf.org/doc/html/rfc5766)) which is the traffic that needs to traverse restrictive network environments, is done over a very small set of IPv6 and IPv4 addresses. If you are making adjustments to your firewalls to allow Calls TURN traffic, you must query `turn.cloudflare.com` (A and AAAA records) regularly and allowlist the resulting IP address(es). For static IPs and guarantees, please discuss with a your enterprise account team.
-
-TURN server relay allocations are done using a larger set of [IP address ranges](https://www.cloudflare.com/ips/). Calls relay allocations will be in the 9024-65535 port range.
 
 ## Protocols and Ciphers for TURN over TLS
 
@@ -57,8 +51,8 @@ There is no specific MTU limit for Cloudflare Calls TURN service.
 
 Cloudflare Calls TURN service places limits on:
 
-- Unique IP address you can communicate with
-- Packet rate outbound and inbound to the relay allocation
-- Data rate outbound and inbound to the relay allocation
+- Unique IP address you can communicate with per relay allocation (>5 new IP/sec)
+- Packet rate outbound and inbound to the relay allocation (>5-10 kpps)
+- Data rate outbound and inbound to the relay allocation (>50-100 Mbps)
 
-These limits are set quite high and suitable for high-demand applications and includes burst rates. Hitting these limits will result in packet drops.
+These limits are suitable for high-demand applications and also have burst rates higher than those documented above. Hitting these limits will result in packet drops.

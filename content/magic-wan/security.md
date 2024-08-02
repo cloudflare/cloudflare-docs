@@ -1,7 +1,7 @@
 ---
 title: Security filters
 pcx_content_type: concept
-weight: 5
+weight: 6
 meta:
     title: Enable security filters
 ---

@@ -7,7 +7,9 @@ layout: learning-unit
 
 ## Enable the block page for DNS policies
 
-{{<render file="gateway/_add-block-page.md" productFolder="cloudflare-one">}}
+For DNS policies, you will need to enable the block page on a per-policy basis.
+
+{{<render file="gateway/_add-block-page.md" productFolder="cloudflare-one" withParameters="**Gateway** > **Firewall Policies** > **DNS**">}}
 
 ## Customize the block page
 

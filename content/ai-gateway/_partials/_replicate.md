@@ -4,17 +4,18 @@ _build:
   render: never
   list: never
 ---
+## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate`
 
-When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate`.
+When making requests to Replicate, replace `https://api.replicate.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate`.
 
 ```bash
 ---
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/replicate/predictions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions \
   --header 'Authorization: Token {replicate_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{

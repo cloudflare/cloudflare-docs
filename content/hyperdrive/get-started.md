@@ -121,7 +121,7 @@ To create your first Hyperdrive, you will need:
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
-```sh
+```txt
 postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 ```
 

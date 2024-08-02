@@ -16,11 +16,7 @@ Cloudflare visualizes the metadata collected by our products in the Cloudflare d
 ## Features
 
 {{<feature header="Workers Analytics Engine" href="/analytics/analytics-engine/">}}
-Provides analytics about anything using Cloudflare Workers.
-{{</feature>}}
-
-{{<feature header="Cloudflare Web Analytics" href="/analytics/web-analytics/">}}
-Provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
+Send unlimited-cardinality data from your Worker to a time-series database. Query it with SQL.
 {{</feature>}}
 
 {{<feature header="Account and zone analytics" href="/analytics/account-and-zone-analytics/">}}
@@ -32,7 +28,7 @@ Provides near real-time visibility into network and transport-layer traffic patt
 {{</feature>}}
 
 {{<feature header="GraphQL Analytics API" href="/analytics/graphql-api/">}}
-Provides all of your performance, security, and reliability data from one endpoint. And you can select exactly what you need, from one metric for a domain to multiple metrics aggregated for your account.
+Provides all of your performance, security, and reliability data from one endpoint. Select exactly what you need, from one metric for a domain to multiple metrics aggregated for your account.
 {{</feature>}}
 
 ---

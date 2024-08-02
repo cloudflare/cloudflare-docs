@@ -51,7 +51,7 @@ When you disable a load balancer, requests to a specific hostname depend on your
 - If you have existing DNS records, these records will be served.
 - If there are no existing records, requests to the hostname will fail.
 
-In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
+In both cases, disabling your load balancer prevents traffic from going to any associated endpoint or fallback pools.
 
 If you already have an existing `A`, `AAAA`, or `CNAME` record, be aware that the change may take some time to propagate due to [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) and any record changes is affected, as your local DNS cache may take longer to update.
 

@@ -67,7 +67,7 @@ The `passThroughOnException` method allows a Worker to [fail open](https://commu
 export default {
   async fetch(request, env, ctx) {
     // Proxy to origin on unhandled/uncaught exceptions
-    context.passThroughOnException();
+    ctx.passThroughOnException();
     throw new Error('Oops');
   },
 };

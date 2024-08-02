@@ -6,7 +6,7 @@ tags:
 title: DNS policy
 weight: 1
 layout: example
-pcx_content_type: configuration
+pcx_content_type: example
 ---
 
 ```json

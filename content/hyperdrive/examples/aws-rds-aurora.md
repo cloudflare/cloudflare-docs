@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Connect to AWS RDS and Aurora
 weight: 11
 ---
@@ -14,7 +14,7 @@ This example shows you how to connect Hyperdrive to an Amazon Relational Databas
 
 To allow Hyperdrive to connect to your database, you will need to ensure that Hyperdrive has valid user credentials and network access.
 
-{{<render file="_beta-public-connectivity.md">}}
+{{<render file="_public-connectivity.md">}}
 
 ### AWS Console
 

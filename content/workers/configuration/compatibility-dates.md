@@ -14,15 +14,9 @@ meta:
 
 Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
 
-Compatibility dates (and flags) are how you, as a developer, opt into these changes. By specifying a `compatibility_date` in your `wrangler.toml` file, that Worker enables all changes that were made before the given date.
+The compatibility date (and flags) are how you, as a developer, opt into these runtime changes. Compatibility flags will often have a date in which they are enabled by default, and so, by specifying a `compatibility_date` for your Worker, you can quickly enable all of these various compatibility flags up to, and including, that date.
 
-Compatibility dates can only be set via your `wrangler.toml` file and by running [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).
-
-```toml
-# (in wrangler.toml)
-# Opt into backwards-incompatible changes through April 5, 2022.
-compatibility_date = "2022-04-05"
-```
+## Setting compatibility date
 
 When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) command.
 
@@ -33,21 +27,61 @@ However, even though you do not need to update the `compatibility_date` field, i
 1.  Sometimes, new features can only be made available to Workers that have a current `compatibility_date`. To access the latest features, you need to stay up-to-date.
 2.  Generally, other than this page, the Workers documentation may only describe the current `compatibility_date`, omitting information about historical behavior. If your Worker uses an old `compatibility_date`, you will need to continuously refer to this page in order to check if any of the APIs you are using have changed.
 
-## Compatibility flags
+#### Via Wrangler
 
-In addition to setting a `compatibility_date` in your `wrangler.toml` file, you may also provide a list of `compatibility_flags`, which enable or disable specific changes.
+The compatibility date can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
 ```toml
-# (in wrangler.toml)
+---
+filename: wrangler.toml
+---
+# Opt into backwards-incompatible changes through April 5, 2022.
+compatibility_date = "2022-04-05"
+```
+
+#### Via the Cloudflare Dashboard
+
+When a Worker is created through the Cloudflare Dashboard, the compatibility date is automatically set to the current date.
+
+The compatibility date cannot be updated on the Cloudflare Dashboard at this time. 
+
+#### Via the Cloudflare API
+
+The compatibility date can be set when uploading a Worker using the [Workers Script API](/api/operations/worker-script-upload-worker-module) or [Workers Versions API](/api/operations/worker-versions-upload-version#request-body) in the request body's `metadata` field. 
+
+If a compatibility date is not specified on upload via the API, it defaults to the oldest compatibility date, before any flags took effect (2021-11-02). When creating new Workers, it is highly recommended to set the compatibility date to the current date when uploading via the API.
+
+## Setting compatibility flags
+
+In addition to setting a `compatibility_date`, you may also provide a list of `compatibility_flags`, which enable or disable specific changes.
+
+Most developers will not need to use `compatibility_flags`. `compatibility_flags` can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+
+#### Via Wrangler
+
+Compatability flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
+
+This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-dates/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
+
+```toml
+---
+filename: wrangler.toml
+---
 # Opt into backwards-incompatible changes through September 14, 2021.
 compatibility_date = "2021-09-14"
 # Also opt into an upcoming fix to the FormData API.
 compatibility_flags = [ "formdata_parser_supports_files" ]
 ```
 
-This example enabled the specific flag `formdata_parser_supports_files`, which is described below. As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but specifying it in this way enables it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
+#### Via the Cloudflare Dashboard
 
-Most developers will not need to use `compatibility_flags`; instead, Cloudflare recommends only specifying `compatibility_date`. `compatibility_flags` can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
+Compatibility flags cannot be set or updated on the Cloudflare Dashboard at this time. 
+
+#### Via the Cloudflare API
+
+Compatibility flags can be set when uploading a Worker using the [Workers Script API](/api/operations/worker-script-upload-worker-module) or [Workers Versions API](/api/operations/worker-versions-upload-version#request-body) in the request body's `metadata` field. 
+
+## Compatibility flags
 
 ### Node.js compatibility flag
 

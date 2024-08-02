@@ -7,7 +7,7 @@ title: Querying Magic Firewall Intrusion Detection System (IDS) samples with Gra
 
 In this example, we are going to use the GraphQL Analytics API to query for IDS samples over a specified time period.
 
-The following API call will request IDS samples over a one hour period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<CLOUDFLARE_EMAIL>`, and `<CLOUDFLARE_API_KEY>` with your account tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
+The following API call will request IDS samples over a one hour period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your account tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
 
 ## API Call
 
@@ -40,27 +40,24 @@ echo '{ "query":
       "outcome": "pass"
     }
   }
-}' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
-  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @-
 ```
 
 The returned values represent the total number of packets and bits that matched IDS rules during the five minute interval. The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
 
 ```bash
-... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+... | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
+
 #=> {
 #=>   "data": {
 #=>     "viewer": {

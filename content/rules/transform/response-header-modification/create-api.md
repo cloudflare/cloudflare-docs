@@ -8,7 +8,7 @@ meta:
 
 # Create an HTTP response header modification rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP response header modification rules via API. Refer to [Response header modification examples](/rules/transform/response-header-modification/examples/) for common use cases.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP response header modification rules via API. Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Response+modification) for common use cases.
 
 ## Basic rule settings
 

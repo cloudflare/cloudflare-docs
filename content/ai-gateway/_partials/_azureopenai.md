@@ -4,8 +4,9 @@ _build:
   render: never
   list: never
 ---
+## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}`
 
 When making requests to Azure OpenAI, you will need:
 - AI Gateway account tag
@@ -14,7 +15,7 @@ When making requests to Azure OpenAI, you will need:
 - Azure OpenAI resource name
 - Azure OpenAI deployment name (aka model name)
 
-Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
+Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
 
 
 ```bash
@@ -22,7 +23,7 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 header: Example fetch request
 ---
 
-curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
   --header 'api-key: {azure_api_key}' \
   --data '{
@@ -50,7 +51,7 @@ import OpenAI from "openai";
 
   const azure_openai = new OpenAI({
     apiKey,
-    baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/azure-openai/${resource}/${model}`,
+    baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/${resource}/${model}`,
     defaultQuery: { 'api-version': apiVersion },
     defaultHeaders: { 'api-key': apiKey },
   });

@@ -4,10 +4,11 @@ _build:
   render: never
   list: never
 ---
+## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`
 
-When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/bigcode/starcoder`.
+When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder`.
 
 
 ```bash
@@ -15,7 +16,7 @@ When making requests to HuggingFace Inference API, replace `https://api-inferenc
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/bigcode/starcoder \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder \
   --header 'Authorization: Bearer {hf_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -32,7 +33,7 @@ filename: index.js
 import { HfInferenceEndpoint } from '@huggingface/inference'
 
 const hf = new HfInferenceEndpoint(
-	"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/huggingface/gpt2",
+	"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/gpt2",
 	env.HF_API_TOKEN
 );
 ```

@@ -4,10 +4,11 @@ _build:
   render: never
   list: never
 ---
+## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai`
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`
 
-When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai`.
+When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
 
 ```bash
@@ -15,7 +16,7 @@ When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL y
 header: Request
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai/chat/completions \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header 'Authorization: Bearer {openai_token}' \
   --header 'Content-Type: application/json' \
   --data ' {
@@ -41,7 +42,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
 	apiKey: 'my api key', // defaults to process.env["OPENAI_API_KEY"]
-	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai"
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
 });
 
 try {

@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 import { HTMLRewriter, type ElementHandlers } from "html-rewriter-wasm";
 import { defineConfig, type PluginOption } from "vite";
-import glob from "glob";
+import { globSync } from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
 
@@ -169,7 +169,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      input: glob.sync("public/**/*.html"),
+      input: globSync("public/**/*.html"),
     },
     reportCompressedSize: false,
   },

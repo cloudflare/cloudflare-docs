@@ -17,7 +17,7 @@ While the default cipher suites provided with [Universal SSL certificates](/ss
 
 If the Universal SSL offering does not meet your business requirements, you can use Cloudflare [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to restrict the cipher suites used in connections between Cloudflare and your visitor's browser.
 
-After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting).
+After you subscribed to Advanced Certificate Manager for your domain, you can restrict Cipher Suites at the Zone-level requests via the API. Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint, specifying `ciphers` as the setting name in the URI path.
 
 {{<Aside>}}
 Currently, restricting cipher suites is only possible via API and is not available via the Cloudflare dashboard.
@@ -27,41 +27,30 @@ Currently, restricting cipher suites is only possible via API and is not availab
 
 Assuming this is just a one-time change, you can trigger the API call using curl.
 
-1.  Get/view Global API Key _(or create Token)_ from: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens)
+1.  Create an API Token in: [https://dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
 2.  Get Zone ID from the bottom right of Overview page for your domain in Cloudflare Dashboard.
 3.  Decide which cipher suites you would like to allow from [the list](/ssl/reference/cipher-suites/supported-cipher-suites/).
 
-Here is an example value (list of cipher suites) which you can use to replace <cipher\_suites> in the commands below:
+Here is an example value (list of cipher suites) which you can use to replace `<CIPHER_SUITES>` in the commands below:
 
 ```json
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
-Run the command to make the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
+Run the command to make the API call with the appropriate `{zone_id}`, `<API_TOKEN>`, and `<CIPHER_SUITES>`:
 
 ```bash
-curl -X PATCH \
-  "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
-  -H "X-Auth-Email: <auth_email>" \
-  -H "X-Auth-Key: <auth_key>" \
-  -H "Content-Type: application/json" \
-  --data '{"value": <cipher_suites>}'
-```
-
-If you choose to use a token, you will not need <auth\_email> nor <auth\_key>. You would instead need <api\_token> and the command will look like this:
-
-```bash
-curl -X PATCH \
-  "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
-  -H "Authorization: Bearer <api_token>" \
-  -H "Content-Type: application/json" \
-  --data '{"value": <cipher_suites>}'
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/ciphers" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"value": <CIPHER_SUITES>}'
 ```
 
 To revert to the default cipher suites, you can send an empty array as the value, as in the following example.
 
 ```bash
-  --data '{"value": []}'
+--data '{"value": []}'
 ```
 
 Refer to [Managing API Tokens and Keys](/fundamentals/api/get-started/) to learn more about API tokens and keys.

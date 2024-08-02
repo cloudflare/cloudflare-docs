@@ -19,7 +19,7 @@ Before running the example, make sure to install the MQTT library:
 
 ```sh
 # Pre-requisite: install MQTT.js
-npm install mqtt --save
+$ npm install mqtt --save
 ```
 
 Copy the following example as `example.js` and run it with `node example.js`. 

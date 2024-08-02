@@ -160,7 +160,7 @@ $ npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Cust
 
 You should see the following output:
 
-```sh
+```txt
 🌀 Mapping SQL input into an array of statements
 🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
 ┌────────────┬─────────────────────┬───────────────────┐

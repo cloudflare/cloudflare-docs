@@ -14,6 +14,8 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 - [**Bulk Redirects**](/rules/url-forwarding/bulk-redirects/): Allow you to define a large number of redirects at the account level. These URL redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure parameters that affect the redirects' URL matching behavior and their runtime behavior.
 
+- [**Snippets**](/rules/snippets/): Use short pieces of JavaScript code for a more flexible way to define complex redirect functionality. Consider a few [examples](/rules/snippets/examples/?operation=Redirect) to get started.
+
 {{<render file="_rules-requirements.md" withParameters="Single Redirects and Bulk Redirects require">}}
 
 ## Availability
@@ -36,6 +38,6 @@ Single Redirects features and quotas are per zone and depend on the zone plan.
 
 ## Execution order
 
-{{<render file="_product_execution_order.md">}}
+{{<render file="_product-execution-order.md">}}
 
 {{<render file="_troubleshoot-rules-with-trace.md" withParameters="URL redirects">}}

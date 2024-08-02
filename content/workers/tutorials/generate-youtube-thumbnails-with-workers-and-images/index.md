@@ -4,19 +4,18 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
+products: [Images]
 ---
 
 # Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
 This tutorial will help you understand how to work with [Images](/images/),[Image Resizing](/images/transform-images/) and [Cloudflare Workers](/workers/).
 
-## Prerequisites
+{{<render file="_tutorials-before-you-start.md">}}
 
 To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/install-and-update/) installed on your machine.
 
@@ -88,7 +87,7 @@ Now that you have uploaded your image, you will use it as the background image f
 
 ## Create a Worker to transform text to image
 
-After uploading your image, create a Worker that will enable you to transform text to image. This image can be used as an overlay on the background image you uploaded. Use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). 
+After uploading your image, create a Worker that will enable you to transform text to image. This image can be used as an overlay on the background image you uploaded. Use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust).
 
 Create a new Worker project called `worker-to-text` using the `worker-rust` template:
 
@@ -96,7 +95,7 @@ Create a new Worker project called `worker-to-text` using the `worker-rust` temp
 $ npx wrangler generate worker-to-text worker-rust
 ```
 
-You will now make a few changes to the files in your project directory. 
+You will now make a few changes to the files in your project directory.
 
 1. In the `lib.rs` file, add the following code block:
 
@@ -376,7 +375,20 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 Create a Worker to serve the image you uploaded to Images by running:
 
 ```sh
-$ npx wrangler init thumbnail-image
+$ npm create cloudflare thumbnail-image
+```
+
+In your terminal, you will be asked a series of questions related to your project:
+
+- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
+- For the `Do you want to use TypeScript?` prompt, choose `No`.
+- For the `Do you want to use git for version control?` prompt, choose `No`.
+- For the `Do you want to deploy your application?` prompt, choose `No`.
+
+To start developing your Worker, `cd` into your new project directory:
+
+```sh
+$ cd thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:
@@ -511,7 +523,7 @@ fetch(imageURL, {
 });
 ```
 
-Image transformations can only be tested when you deploy your Worker. 
+Image transformations can only be tested when you deploy your Worker.
 
 To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 

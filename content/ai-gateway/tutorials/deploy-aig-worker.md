@@ -3,12 +3,14 @@ updated: 2023-09-27
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
+tags: [AI]
 title: Deploy a Worker that connects to OpenAI via AI Gateway
+products: [Workers]
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway
 
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to deploy a Worker that makes calls to OpenAI through AI Gateway. AI Gateway helps you better observe and control your AI applications with more analytics, caching, rate limiting, and logging.
 
@@ -21,8 +23,6 @@ All of the tutorials assume you have already completed the [Get started guide](/
 ## 1. Create an AI Gateway and OpenAI API key
 
 On the AI Gateway page in the Cloudflare dashboard, create a new AI Gateway by clicking the plus button on the top right. You should be able to name the gateway as well as the endpoint. Click on the API Endpoints button to copy the endpoint. You can choose from provider-specific endpoints such as OpenAI, HuggingFace, and Replicate. Or you can use the universal endpoint that accepts a specific schema and supports model fallback and retries.
-
-![AI Gateway onboarding](images/ai-gateway/AIG-onboarding.png)
 
 For this tutorial, we will be using the OpenAI provider-specific endpoint, so select OpenAI in the dropdown and copy the new endpoint.
 
@@ -104,7 +104,7 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai" // paste your AI Gateway endpoint here
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai" // paste your AI Gateway endpoint here
 		});
 	},
 };
@@ -122,14 +122,15 @@ $ npx wrangler secret put OPENAI_API_KEY
 To make this work in local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 
 
-```sh
+```txt
 ---
 header: Save your API key locally
 ---
-OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY_HERE>"
+$ OPENAI_API_KEY = "<YOUR_OPENAI_API_KEY_HERE>"
 ```
 
 ## 4. Make an OpenAI request
+
 Now we can make a request to the OpenAI [Chat Completions API](https://platform.openai.com/docs/guides/gpt/chat-completions-api).
 
 You can specify what model you'd like, the role and prompt, as well as the max number of tokens you want in your total request.
@@ -145,12 +146,12 @@ export default {
 	async fetch(request, env, ctx) {
 		const openai = new OpenAI({
 		  apiKey: env.OPENAI_API_KEY,
-		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_slug}/openai"
+		  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
 		});
 
 		try {
 		  const chatCompletion = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo-0613",
+			model: "gpt-4o-mini",
 			messages: [{role: "user", content: "What is a neuron?"}],
 			max_tokens: 100,
 		  });
@@ -181,6 +182,4 @@ You can now preview your Worker at <YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev.
 
 ## 6. Review your AI Gateway
 
-When you go to AI Gateway in your Cloudflare dashboard, you should see your recent request being logged. You can also [tweak your settings](/ai-gateway/get-started/configuring-settings/) to manage your logs, caching, and rate limiting.
-
-![AI Gateway analytics](images/ai-gateway/analytics.png)
+When you go to AI Gateway in your Cloudflare dashboard, you should see your recent request being logged. You can also [tweak your settings](/ai-gateway/configuration/) to manage your logs, caching, and rate limiting settings.

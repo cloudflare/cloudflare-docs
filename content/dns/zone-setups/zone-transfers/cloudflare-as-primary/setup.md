@@ -148,10 +148,11 @@ If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are 
 Send the following `PATCH` request replacing the placeholders with your zone ID and authentication information:
 
 ```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "multi_provider": true
 }'

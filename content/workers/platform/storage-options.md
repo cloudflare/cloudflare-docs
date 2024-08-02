@@ -52,7 +52,7 @@ The following table highlights the performance and consistency characteristics o
 
 <sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
 
-<sup>2</sup> Free accounts are limited to 10 GiB of R2 storage.
+<sup>2</sup> Free accounts are limited to 10 GB of R2 storage.
 
 <sup>3</sup> Free accounts are limited to 5 GiB of database storage.
 
@@ -93,7 +93,7 @@ It is ideal for projects that require:
 To get started with R2:
 
 - Read the [Get started guide](/r2/get-started/).
-- Learn about R2 [Limits](/r2/reference/limits/).
+- Learn about R2 [Limits](/r2/platform/limits/).
 - Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 ## Durable Objects

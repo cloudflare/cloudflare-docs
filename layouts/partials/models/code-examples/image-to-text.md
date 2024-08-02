@@ -13,7 +13,7 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const res: any = await fetch("https://cataas.com/cat");
+    const res = await fetch("https://cataas.com/cat");
     const blob = await res.arrayBuffer();
     const input = {
       image: [...new Uint8Array(blob)],
@@ -28,3 +28,4 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+</details>

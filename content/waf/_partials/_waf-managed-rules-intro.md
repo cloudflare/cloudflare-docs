@@ -12,4 +12,6 @@ WAF Managed Rules allow you to deploy pre-configured managed rulesets that provi
 * Use of stolen/exposed credentials
 * Extraction of sensitive data
 
-These managed rulesets are regularly updated. You can adjust the behavior of specific rules in these rulesets, choosing from several possible actions.
+These managed rulesets are regularly updated. Each rule has a default action that varies according to the severity of the rule. You can adjust the behavior of specific rules, choosing from several possible actions.
+
+Rules of managed rulesets have associated tags (such as `wordpress`) that allow you to search for a specific group of rules and configure them in bulk.

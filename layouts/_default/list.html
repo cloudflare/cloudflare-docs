@@ -11,17 +11,17 @@
     </div>
 
     <main class="DocsBody">
+      {{- with .Params.changelog_product_area_name -}}
+      <!-- empty block to avoid rendering -->
+      {{- else -}}
       {{ partial "sidebar.toc" . }}
+      {{- $type = "document" -}}
+      {{- end -}}
 
       <div id="docs-content" data-reach-skip-nav-content></div>
 
       {{- partial "breadcrumbs" . -}}
 
-      {{- with .Params.changelog_product_area_name -}}
-      <!-- empty block to avoid rendering -->
-      {{- else -}}
-      {{- $type = "document" -}}
-      {{- end -}}
       <div class="DocsContent" id="main" page-type="{{$type}}">
 
         <article class="DocsMarkdown">

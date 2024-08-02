@@ -106,11 +106,10 @@ echo '{ "query":
     "datetimeStart": "2023-04-17T11:00:00Z",
     "datetimeEnd": "2023-04-24T12:00:00Z"
   }
-}' | tr -d '\n' | curl https://api.cloudflare.com/client/v4/graphql/ \
---header "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
---header "X-Auth-Key: <CLOUDFLARE_API_KEY>" \
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
---silent \
 --data @-
 ```
 

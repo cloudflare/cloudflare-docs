@@ -404,7 +404,7 @@ To use Workers AI in your Pages Function, you can access your Workers AI binding
 export async function onRequest(context) {
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await context.env.AI.run('@cf/meta/llama-3-8b-instruct', input);
+  const answer = await context.env.AI.run('@cf/meta/llama-3.1-8b-instruct', input);
 
   return Response.json(answer);
 }
@@ -413,13 +413,13 @@ export async function onRequest(context) {
 {{<tab label="ts">}}
 ```ts
 interface Env {
-  AI: any;
+  AI: Ai;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
   const input = { prompt: "What is the origin of the phrase Hello, World" }
 
-  const answer = await context.env.AI.run('@cf/meta/llama-3-8b-instruct', input)
+  const answer = await context.env.AI.run('@cf/meta/llama-3.1-8b-instruct', input)
 
   return Response.json(answer);
 }

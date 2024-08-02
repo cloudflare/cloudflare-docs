@@ -33,12 +33,6 @@ Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/r
 
 ## Availability
 
-The rule quota and the available features depend on your Cloudflare plan.
-
-{{<Aside type="note">}}
-Enterprise customers must have application security on their contract to get access to rate limiting rules.
-{{</Aside>}}
-
 {{</content-column>}}
 
 {{<render file="_rate-limiting-availability-by-plan.md" productFolder="waf" >}}

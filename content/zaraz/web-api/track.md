@@ -32,13 +32,9 @@ After using `zaraz.track()` in your website, you will usually want to create a t
 
 **Trigger example: Match `zaraz.track("purchase")`**
 
-{{<table-wrap>}}
-
 | Rule type    | Variable name | Match operation | Match string |
 | ------------ | ------------- | --------------- | ------------ |
 | _Match rule_ | _Event Name_  | _Equals_        | `purchase`   |
-
-{{</table-wrap>}}
 
 In every tool you want to use this trigger, add an action with this trigger [configured as a firing trigger](/zaraz/get-started/create-actions/). Each action that uses this trigger can access the `eventProperties` you have sent. In the **Action** fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.value }}` with `200`. If your key includes special characters or numbers, surround it with backticks like ```{{ client.`<KEY_NAME>` }}```.
 

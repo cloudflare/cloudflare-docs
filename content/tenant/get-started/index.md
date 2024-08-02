@@ -61,17 +61,17 @@ You can also grant access to the Cloudflare dashboard by using the API.
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID>/members' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-    "email": "<customer-email>",
-    "roles": ["<user-role>"]
-    }'
+curl 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID>/members' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "email": "<CUSTOMER_EMAIL>",
+  "roles": ["<USER_ROLE>"]
+}'
 ```
 
-In most cases, you will want to create new users with a role of `Administrator` which always has the id `05784afa30c1afe1440e79d9351c7430`.
+In most cases, you will want to create new users with a role of `Administrator` which always has the ID `05784afa30c1afe1440e79d9351c7430`.
 
 If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](/api/operations/account-roles-list-roles) request to the API.
 
@@ -93,13 +93,13 @@ To grant access via an interface, you need to create a service user, as no one w
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/users' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-    "email": "<ID@youremaildomain.com>"
-    }'
+curl "https://api.cloudflare.com/client/v4/users" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "email": "<ID@example.com>"
+}'
 ```
 
 ```json
@@ -109,7 +109,7 @@ header: Response
 {
   "result": {
     "id": "60758bd48392a06215ae817bc35084b6",
-    "email": "<identifier>@youremaildomain.com>",
+    "email": "<ID@example.com>",
     "first_name": null,
     "last_name": null,
     "username": "17bd2796b374cec14976ac3bced85c05",
@@ -139,15 +139,15 @@ To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` 
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/zones' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-   "name": "example.com",
-   "account": {
-      "id": "<CUSTOMER_ACCOUNT_ID>"
-   }
+curl "https://api.cloudflare.com/client/v4/zones" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "example.com",
+  "account": {
+    "id": "<CUSTOMER_ACCOUNT_ID>"
+  }
 }'
 ```
 

@@ -8,13 +8,13 @@ title: Connect to and query your Turso database using Workers
 
 # Connect to and query your Turso database using Workers
 
+This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
+
 {{<Aside type="note">}}
 
 For a more seamless experience, refer to the [Turso Database Integration guide](/workers/databases/native-integrations/turso/). The Turso Database Integration will connect your Worker to a Turso database by getting the right configuration from Turso and adding it as [secrets](/workers/configuration/secrets/) to your Worker.
 
 {{</Aside>}}
-
-This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
 ## Prerequisites
 
@@ -95,18 +95,15 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
 ```sh
-$ npx wrangler init worker-turso-ts
+$ npm create cloudflare worker-turso-ts
 ```
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 
-```sh
-✔ Would you like to use git to manage this Worker? … no
-✔ No package.json found. Would you like to create one? … yes
-✔ Would you like to use TypeScript? … yes
-✔ Would you like to create a Worker at worker-turso-ts/src/index.ts? › Fetch handler
-✔ Would you like us to write your first test with Vitest? … no
-```
+- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
+- For the `Do you want to use TypeScript?` prompt, choose `Yes`.
+- For the `Do you want to use git for version control?` prompt, choose `No`.
+- For the `Do you want to deploy your application?` prompt, choose `No`.
 
 To start developing your Worker, `cd` into your new project directory:
 
@@ -114,12 +111,12 @@ To start developing your Worker, `cd` into your new project directory:
 $ cd worker-turso-ts
 ```
 
-In your project directory, `wrangler init` has generated the following files:
+In your project directory, you now have the following files:
 
 * `wrangler.toml`: Your Wrangler configuration file.
 * `src/index.ts`: A minimal Hello World Worker written in TypeScript
-* `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
-* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated in `wrangler init` command.
+* `package.json`: A minimal Node dependencies configuration file.
+* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated.
 
 For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
 
@@ -308,7 +305,7 @@ $ npx wrangler dev
 
 You should be able to review output similar to the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"
@@ -363,7 +360,7 @@ The first time you run this command, it will launch a browser, ask you to sign i
 
 The `deploy` command will output the following:
 
-```sh
+```txt
 Your worker has access to the following bindings:
 - Vars:
   - LIBSQL_DB_URL: "your-url"

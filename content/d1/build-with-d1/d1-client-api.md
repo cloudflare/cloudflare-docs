@@ -139,6 +139,8 @@ console.log(results);
 */
 ```
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `all()` to return a typed result object.
+
 ### await stmt.raw()
 
 Returns results as an array of arrays, with each row represented by an array. The return type is an array of arrays, and does not include query metadata.
@@ -168,6 +170,8 @@ console.log(columns);
 */
 ```
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `raw()` to return a typed result array.
+
 ### await stmt.first([column])
 
 Returns the first row of the results. This does not return metadata like the other methods. Instead, it returns the object directly.
@@ -187,31 +191,41 @@ const values = await stmt.first();
 console.log(values); // { total: 50 }
 ```
 
-If the query returns no rows, then `first()` will return `null`.
-
-If the query returns rows, but `column` does not exist, then `first()` will throw the `D1_ERROR` exception.
+If the query returns no rows, then `first()` will return `null`. If the query returns rows, but `column` does not exist, then `first()` will throw the `D1_ERROR` exception. 
 
 `stmt.first()` does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `first()` to return a typed result object.
+
 ### await stmt.run()
 
-Runs the query (or queries), but returns no results. Instead, `run()` returns the metrics only. Useful for write operations like UPDATE, DELETE or INSERT.
+Runs the query (or queries) and returns results. Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type. For write operations like UPDATE, DELETE or INSERT, `results` will be empty.
+
+Run is functionally equivalent to `stmt.all()` and can be treated as an alias.
 
 ```js
-const info = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)')
-                    .bind( "John", 42 )
-                    .run()
-
-console.log(info);
+const stmt = await db.prepare('SELECT name, age FROM users LIMIT 3')
+const { results } = await stmt.run();
+console.log(results);
 /*
-{
-  success: true
-  meta: {
-    duration: 62,
-  }
-}
+[
+  {
+     name: "John",
+     age: 42,
+  },
+   {
+     name: "Anthony",
+     age: 37,
+  },
+    {
+     name: "Dave",
+     age: 29,
+  },
+ ]
 */
 ```
+
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `run()` to return a typed result object.
 
 ### await db.dump()
 

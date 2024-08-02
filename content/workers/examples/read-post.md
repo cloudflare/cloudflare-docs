@@ -7,13 +7,15 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+  - Python
+  - Rust
+pcx_content_type: example
 title: Read POST
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py | rs">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -133,6 +135,83 @@ export default {
     }
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+
+from js import Object, Response, Headers, JSON
+
+async def read_request_body(request):
+    headers = request.headers
+    content_type = headers["content-type"] or ""
+
+    if "application/json" in content_type:
+        return JSON.stringify(await request.json())
+    if "form" in content_type:
+        form = await request.formData()
+        data = Object.fromEntries(form.entries())
+        return JSON.stringify(data)
+    return await request.text()
+
+async def on_fetch(request):
+    def raw_html_response(html):
+        headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
+        return Response.new(html, headers=headers)
+
+    if "form" in request.url:
+        return raw_html_response("")
+
+    if "POST" in request.method:
+        req_body = await read_request_body(request)
+        ret_body = f"The request body sent in was {req_body}"
+        return Response.new(ret_body)
+
+    return Response.new("The request was not POST")
+```
+
+{{</tab>}}
+{{<tab label="rs">}}
+
+```rs
+use serde::{Deserialize, Serialize};
+use worker::*;
+
+fn raw_html_response(html: &str) -> Result<Response> {
+    Response::from_html(html)
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+struct Payload {
+    msg: String,
+}
+
+async fn read_request_body(mut req: Request) -> String {
+    let ctype = req.headers().get("content-type").unwrap().unwrap();
+    match ctype.as_str() {
+        "application/json" => format!("{:?}", req.json::<Payload>().await.unwrap()),
+        "text/html" => req.text().await.unwrap(),
+        "multipart/form-data" => format!("{:?}", req.form_data().await.unwrap()),
+        _ => String::from("a file"),
+    }
+}
+
+#[event(fetch)]
+async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    if String::from(req.url()?).contains("form") {
+        return raw_html_response("some html form");
+    }
+
+    match req.method() {
+        Method::Post => {
+            let req_body = read_request_body(req).await;
+            Response::ok(format!("The request body sent in was {}", req_body))
+        }
+        _ => Response::ok(format!("The resut was a {:?}", req.method())),
+    }
+}
 ```
 
 {{</tab>}}

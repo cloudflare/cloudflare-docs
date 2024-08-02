@@ -76,16 +76,16 @@ For information about running `cloudflared` instances in a Kubernetes deployment
 
 ## Cloudflare Load Balancers
 
-[Cloudflare Load Balancing](/load-balancing/) allows users to proactively steer traffic away from unhealthy origins and intelligently distribute the traffic load based on a multitude of steering algorithms. This process ensures that errors are not served to end users and empowers businesses to tightly couple overall business objectives to their traffic behavior.
+[Cloudflare Load Balancing](/load-balancing/) allows users to proactively steer traffic away from unhealthy origins (or other {{<glossary-tooltip term_id="endpoint" link="/glossary/?term=endpoint">}}endpoints{{</glossary-tooltip>}}) and intelligently distribute the traffic load based on a multitude of steering algorithms. This process ensures that errors are not served to end users and empowers businesses to tightly couple overall business objectives to their traffic behavior.
 
-In this model, more than one tunnel is required with identical configurations. The DNS record (`UUID.cfargotunnel.com`) for each Cloudflare Tunnel can be used at the origin within the Load Balancer. You can then define traffic steering policies to determine how traffic should be routed to each tunnel.
+In this model, more than one tunnel is required with identical configurations. The DNS record (`UUID.cfargotunnel.com`) for each Cloudflare Tunnel can be used at the origin within the load balancer. You can then define traffic steering policies to determine how traffic should be routed to each tunnel.
 
 ### When to use load balancers
 
 - To intelligently steer traffic based on latency, geolocation, or other signals.
 - To implement failover logic if a tunnel reaches an inactive state.
 - To get alerted when a tunnel reaches an inactive state.
-- To distribute traffic more evenly across your Cloudflare Tunnel-accessible origins.
+- To distribute traffic more evenly across your Cloudflare Tunnel-accessible origins or endpoints.
 
 ### Deploy a load balancer
 

@@ -1706,73 +1706,6 @@ html[is-docs-page] body {
   top: auto;
 }
 
-.toggleSidebar {
-  width: 2em;
-  height: 2em;
-}
-
-[theme="dark"] .toggleSidebar {
-  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg)
-    brightness(116%) contrast(100%);
-}
-
-.toggleSidebar button {
-  border: none;
-  background-color: transparent;
-  outline: none;
-  cursor: pointer;
-}
-
-@media (max-width: 769px) {
-  .toggleSidebar {
-    visibility: hidden;
-  }
-}
-
-.toggleSidebar.collapsed button svg {
-  transform: rotate(180deg);
-}
-
-@media (min-width: 769px) {
-  .DocsSidebar.collapsed {
-    width: 4.5em;
-  }
-
-  .DocsToolbar.collapsed {
-    left: 4.5em;
-  }
-
-  .DocsFooter.collapsed {
-    margin-left: 4.5em;
-  }
-
-  .DocsContent.collapsed {
-    padding-left: 0em;
-    padding-right: 0em;
-    margin-left: -10em;
-  }
-
-  .DocsMarkdown.collapsed {
-    padding-right: 0em;
-  }
-
-  .DocsSidebar.collapsed .DocsSidebar--nav-item {
-    position: absolute;
-    height: 1px;
-    width: 1px;
-    padding: 0;
-    border: 0;
-    clip: rect(1px 1px 1px 1px);
-    clip: rect(1px, 1px, 1px, 1px);
-    -webkit-clip-path: inset(0 0 99.9% 99.9%);
-    clip-path: inset(0 0 99.9% 99.9%);
-    overflow: hidden;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-}
-
 [theme="dark"] .DocsSidebar {
   --sidebar-background-color: var(--gray-0F);
 }
@@ -2008,7 +1941,6 @@ html[is-docs-page] body {
   flex-direction: column;
   flex: 1 1;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--color-rgb), 0.1) transparent;
 }
@@ -2477,7 +2409,6 @@ html[is-docs-page] body {
   width: calc(100% + 1em);
   max-height: 100vh;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   padding: 1em 0 0 1em;
   margin: -1em;
   transition: opacity 0.3s ease;
@@ -3244,11 +3175,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown table {
-  word-break: break-word;
   border-collapse: collapse;
   border-spacing: 0;
   border: 0;
   --border-color: rgba(var(--color-rgb), 0.1);
+  display: block;
+  overflow-x: auto;
+}
+
+/* Stop display: block applying to table-wrap shortcode */
+.DocsMarkdown--table-wrap table {
+  display: table;
 }
 
 .DocsMarkdown table.Small {
@@ -3450,7 +3387,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   padding: 0.25em 0;
   border-radius: 0.3125em;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .DocsMarkdown--table-wrap:not(:last-child) {
@@ -3581,7 +3517,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsToolbar--feedback svg {
   width: 1em;
-  margin-right: 0.5em;
+  margin-right: 0.4em;
   height: 1em;
 }
 
@@ -3595,7 +3531,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsToolbar--tools-spacer {
   display: inline-flex;
   height: 1em;
-  width: 1em;
+  width: .5em;
 }
 
 .DocsToolbar--tools-icon-item {
@@ -4611,7 +4547,6 @@ pre {
   position: relative;
   margin-top: 1rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
-  height: 2.4rem;
   border-radius: 0.5em 0.5em 0 0;
   overflow: hidden;
 }
@@ -4627,6 +4562,29 @@ pre {
   display: flex;
   width: 100%;
   background-color: #d9d9d9;
+  overflow-x: auto;
+}
+
+.tabs > ul::-webkit-scrollbar {
+  height: 12px;
+}
+
+.tabs > ul::-webkit-scrollbar-track-piece {
+  background: transparent;
+  border-radius: var(--border-radius);
+}
+
+.tabs > ul::-webkit-scrollbar-thumb {
+  border-radius: var(--border-radius);
+  box-shadow: inset 0 1px 1px rgba(var(--background-color-rgb), 0.1);
+  background-color: var(--code-block-scrollbar-color);
+  background-clip: padding-box;
+  border: 4px solid transparent;
+  border-radius: calc(var(--border-radius) * 20);
+}
+
+[theme="dark"] .tabs > ul::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 1px 1px rgba(var(--color-rgb), 0.1);
 }
 
 [theme="dark"] .tabs > ul {
@@ -4687,12 +4645,6 @@ pre {
 .tab-label > svg {
   width: 15px;
   margin-right: 0.25rem;
-}
-
-@media (max-width: 500px) {
-  .tabs > ul {
-    flex-wrap: wrap;
-  }
 }
 
 .tab {
@@ -4796,7 +4748,8 @@ pre {
 .DocsMarkdown-alpha,
 .DocsMarkdown-beta,
 .DocsMarkdown-deprecated,
-.DocsMarkdown-early-access {
+.DocsMarkdown-early-access,
+.DocsMarkdown-legacy {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
@@ -4832,6 +4785,11 @@ pre {
   /* identical to box height, or 18px */
 }
 
+.DocsMarkdown--pill a {
+  color: inherit !important;
+  text-decoration: underline;
+}
+
 /* Pills on levels lower than H1 */
 
 /* '-lower' unused? */
@@ -4860,8 +4818,8 @@ pre {
 
 .DocsMarkdown--pill-alpha {
   width: 47px;
-  background: var(--orange-8);
-  color: var(--orange-1);
+  background: var(--green-8);
+  color: var(--green-1);
 }
 
 .DocsMarkdown--pill-beta {
@@ -4882,6 +4840,16 @@ pre {
 .DocsMarkdown--pill-early-access {
   background-color: var(--blue-8);
   color: var(--blue-0);
+}
+
+.DocsMarkdown--pill-legacy {
+  background: var(--red-8);
+  color: var(--red-0);
+}
+
+[theme="dark"] .DocsMarkdown--pill-legacy {
+  background: var(--red-6);
+  color: var(--red-0);
 }
 
 /* Product tagline */
@@ -5092,12 +5060,6 @@ pre {
   }
 }
 
-.breadcrumb.collapsed {
-  padding-left: 0em;
-  padding-right: 0em;
-  margin-left: -10em;
-}
-
 .breadcrumb li {
   display: inline;
   white-space: nowrap;
@@ -5147,6 +5109,12 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 
 [theme="dark"] #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
+}
+
+.tutorialDateInfo {
+  margin-bottom: 2em;
+  font-size: .85em;
+  margin-top: -.5em;
 }
 
 .tutorialPreReqs {
