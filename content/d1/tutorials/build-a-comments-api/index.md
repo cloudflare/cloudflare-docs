@@ -18,9 +18,7 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
-```sh
-$ npm create cloudflare d1-example
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="d1-example">}}
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 

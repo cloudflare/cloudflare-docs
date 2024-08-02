@@ -36,9 +36,7 @@ You will create a new project that will contain a Worker, which will act as the 
 
 Create a new project named `vectorize-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest vectorize-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="vectorize-tutorial">}}
 
 When setting up your `vectorize-tutorial` Worker, answering the questions as below:
 

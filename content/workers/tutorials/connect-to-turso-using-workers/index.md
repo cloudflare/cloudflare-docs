@@ -94,9 +94,7 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
-```sh
-$ npm create cloudflare worker-turso-ts
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="worker-turso-ts">}}
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
 

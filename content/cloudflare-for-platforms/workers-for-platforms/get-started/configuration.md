@@ -18,7 +18,7 @@ To enable Workers for Platforms, you will need to purchase the [Workers for Plat
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms), and select your account.
 2. Complete the payment process for the Workers for Platforms Paid plan.
 
-If you are an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms. 
+If you are an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms.
 
 ### Learn about Workers for Platforms
 
@@ -37,7 +37,7 @@ Open a terminal window and run C3 to create your Worker project. This example cr
 
 
 ```sh
-$ npm create cloudflare@latest customer-worker-1 -- --type=hello-world
+$ npm create cloudflare customer-worker-1 -- --type=hello-world
 ```
 
 When following the interactive prompts, answer the questions as below:
@@ -81,9 +81,7 @@ $ cd ..
 
 Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
 
-```sh
-$ npm create cloudflare@latest my-dispatcher
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="my-dispatcher">}}
 
 When setting up `my-dispatcher`, answer the questions as below:
 

@@ -66,21 +66,21 @@ Open your command line interface (CLI) and run the following command:
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm create cloudflare@latest cross-sell-api -- --framework hono
+$ npm create cloudflare cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare@latest cross-sell-api -- --framework hono
+$ yarn create cloudflare cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}
 {{<tab label="pnpm">}}
 
 ```sh
-$ pnpm create cloudflare@latest cross-sell-api -- --framework hono
+$ pnpm create cloudflare cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}

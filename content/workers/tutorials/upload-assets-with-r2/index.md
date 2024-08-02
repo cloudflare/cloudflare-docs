@@ -25,31 +25,21 @@ To continue:
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker. To do this, open a terminal window and run the following command:
 
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm" no-code="true">}}
-
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn" no-code="true">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="upload-r2-assets">}}
 
 To continue with this guide:
 
-1. Give your new Worker application a name.
-2. Select `"Hello World" Worker` for the type of application.
-3. Select `Yes` to using TypeScript.
-4. Select `No` to deploying your application.
+1. Select `"Hello World" Worker` for the type of application.
+2. Select `Yes` to using TypeScript.
+3. Select `No` to deploying your application.
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+Move into your newly created directory:
+
+```sh
+$ cd upload-r2-assets
+```
 
 ## Create an R2 bucket
 

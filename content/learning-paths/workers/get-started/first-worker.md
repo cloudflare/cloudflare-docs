@@ -27,7 +27,7 @@ You must have a Cloudflare account to create a Worker. To get started with Cloud
 
 To create your Worker project, run:
 
-{{<render file="_c3-run-command.md" productFolder="workers">}}
+{{<render file="_c3-run-command-no-directory.md" productFolder="workers">}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 

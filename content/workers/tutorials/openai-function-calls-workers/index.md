@@ -33,16 +33,10 @@ The function calling feature allows the AI model to intelligently decide when to
 
 Create a Worker project in the command line:
 
-```sh
----
-header: Create a Worker project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="openai-function-calling-workers">}}
 
 For setup, select the following options:
 
-- For `In which directory do you want to create your application?`, indicate `openai-function-calling-workers`.
 - For `What type of application do you want to create?`, choose `"Hello World" Worker`.
 - For `Do you want to use TypeScript?`, choose `No`.
 - For `Do you want to use git for version control?`, choose `Yes`.

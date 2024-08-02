@@ -10,12 +10,16 @@ meta:
 
 ## 1. Create a new application with C3
 
-C3 (`create-cloudflare-cli`) is a command-line tool designed to help you set up and deploy Workers & Pages applications to Cloudflare as fast as possible. 
+C3 (`create-cloudflare-cli`) is a command-line tool designed to help you set up and deploy Workers & Pages applications to Cloudflare as fast as possible.
 
 To get started, open a terminal window and run:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="r2-worker">}}
+
+Then, move into your newly created directory:
+
 ```sh
-$ npm create cloudflare@latest
+$ cd r2-worker
 ```
 
 ## 2. Create your bucket

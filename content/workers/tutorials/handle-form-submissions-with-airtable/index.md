@@ -84,12 +84,7 @@ To handle the form submission, create and deploy a Worker that parses the incomi
 
 Create a new `airtable-form-handler` Worker project:
 
-```sh
----
-header: Create a new Worker
----
-$ npm create cloudflare@latest airtable-form-handler
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="airtable-form-handler">}}
 
 When configuring your Worker:
 

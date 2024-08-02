@@ -55,7 +55,7 @@ Before you enable event notifications for `example-upload-bucket`, you need to c
 
 Create a new Worker with C3 (`create-cloudflare` CLI). [C3](/pages/get-started/c3/) is a command-line tool designed to help you set up and deploy new applications, including Workers, to Cloudflare.
 
-{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
+{{<render file="/_c3-run-command-no-directory.md" productFolder="/workers/" >}}
 
 C3 will then prompt you for some information on your Worker.
 1. Provide a name for your consumer Worker. This is also the name of the new directory where the Worker will be created.

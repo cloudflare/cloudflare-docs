@@ -28,12 +28,7 @@ You will learn how to:
 
 Start by using `npm create cloudflare@latest` to create a Worker project in the command line:
 
-```sh
----
-header: Create a project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="github-twilio-notifications">}}
 
 For setup, select the following options:
 * `Where do you want to create your application?`: Input `github-twilio-notifications`.

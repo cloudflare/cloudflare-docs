@@ -32,17 +32,10 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 Create a Worker project in the command line:
 
-```sh
----
-header: Create a Worker project
----
-
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="openai-aig">}}
 
 For setup, select the following options:
 
-* For *Where do you want to create your application?*, indicate openai-aig.
 * For *What type of application do you want to create?*, choose "Hello World" script.
 * For *Do you want to use TypeScript?*, choose no.
 * For *Do you want to deploy your application?*, choose yes.

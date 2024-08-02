@@ -39,11 +39,7 @@ Before you start, make sure you have:
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-```sh
-$ npm create cloudflare@latest <PROJECT_NAME>
-```
-
-Replace `<PROJECT_NAME>` with your desired project name.
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="finetune-chatgpt-model">}}
 
 In your terminal, you will be asked a series of questions related to your project. Choose the following options:
 
@@ -55,6 +51,12 @@ Do you want to deploy your application? › ... No
 ```
 
 The above options will create the "Hello World" TypeScript project.
+
+Move into your newly created directory:
+
+```sh
+$ cd finetune-chatgpt-model
+```
 
 ## 2. Upload a fine-tune document to R2
 

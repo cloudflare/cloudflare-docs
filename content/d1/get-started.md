@@ -2,9 +2,12 @@
 weight: 2
 title: Get started
 pcx_content_type: get-started
+updated: 2024-08-02
 ---
 
 # Get started
+
+{{<tutorial-date-info>}}
 
 This guide will instruct you through:
 
@@ -26,13 +29,10 @@ You will create a new Worker as the means to query your database.
 
 Create a new project named `d1-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest d1-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="d1-tutorial">}}
 
 When setting up your `d1-tutorial` Worker, answer the questions as below:
 
-- Your directory has been titled `d1-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using git.
@@ -45,9 +45,9 @@ This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare`.
 
-For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare d1-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
 {{</Aside>}}
 
@@ -65,7 +65,7 @@ Run the following `wrangler d1` command and give your database a name. In this t
 
 {{<Aside type="note">}}
 
-The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
+The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare` to initialize your new project.
 
 {{</Aside>}}
 

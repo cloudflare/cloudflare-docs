@@ -27,29 +27,7 @@ C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup a
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<tabs labels="npm | yarn | pnpm">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="pnpm">}}
-
-```sh
-$ pnpm create cloudflare@latest
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="rag-ai-tutorial">}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
@@ -64,13 +42,23 @@ You will be asked if you would like to deploy the project to Cloudflare.
 - If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.
 - If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in [step 4](/workers/get-started/guide/#4-deploy-your-project).
 
-In your project directory, C3 has generated the following:
+In your project directory, C3 has generated several files:
+
+{{<details header="What files did C3 create?">}}
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
 2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
+
+{{</details>}}
+
+Now, move into your newly created directory:
+
+```sh
+$ cd rag-ai-tutorial
+```
 
 ## 2. Develop with Wrangler CLI
 

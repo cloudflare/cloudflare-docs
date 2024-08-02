@@ -53,9 +53,7 @@ Refer to [How Workers works](/workers/reference/how-workers-works/) to learn abo
 
 Create a new project named `hyperdrive-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest hyperdrive-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="hyperdrive-tutorial">}}
 
 When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
 
@@ -68,6 +66,12 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
+
+Move into your new directory:
+
+```sh
+$ cd hyperdrive-tutorial
+```
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 

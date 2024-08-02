@@ -28,12 +28,7 @@ If you would like to see the finished code for this project, find the [project o
 
 First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
-```sh
----
-header: Create a new project with C3
----
-$ npm create cloudflare@latest todos
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="todos">}}
 
 To configure your Worker:
 
@@ -41,6 +36,12 @@ To configure your Worker:
 - Answer `No` to using TypeScript.
 - Answer `Yes` to using Git for version control.
 - Answer `No` to deploying your application.
+
+Move into your newly created directory:
+
+```sh
+$ cd todos
+```
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

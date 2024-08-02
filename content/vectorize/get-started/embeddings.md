@@ -37,9 +37,7 @@ You will create a new project that will contain a Worker script, which will act 
 
 Open your terminal and create a new project named `embeddings-tutorial` by running the following command:
 
-```sh
-$ npm create cloudflare@latest embeddings-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="embeddings-tutorial">}}
 
 When setting up your `embeddings-tutorial` Worker, answering the questions as below:
 

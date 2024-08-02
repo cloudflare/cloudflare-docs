@@ -16,20 +16,7 @@ In short, this entails using `browser.disconnect()` instead of `browser.close()`
 
 Create a new Worker project named `browser-worker` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm create cloudflare@latest
-```
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
 ## 2. Install Puppeteer
 

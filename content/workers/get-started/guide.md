@@ -22,7 +22,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 Open a terminal window and run C3 to create your Worker project:
 
-{{<render file="_c3-run-command.md" productFolder="workers">}}
+{{<render file="_c3-run-command-no-directory.md" productFolder="workers">}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 

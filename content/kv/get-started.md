@@ -35,14 +35,10 @@ Create a new Worker to read and write to your KV namespace.
 
 Create a new project named `kv-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest kv-tutorial
-
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="kv-tutorial">}}
 
 When setting up your `kv-tutorial` Worker, answer the questions as below:
 
-- Your directory has been titled `kv-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
 - Select `yes` to using Git.
@@ -52,6 +48,12 @@ This will create a new `kv-tutorial` directory. Your new `kv-tutorial` directory
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker will access your kv database.
+
+Change into the directory you just created for your Worker project:
+
+```sh
+$ cd kv-tutorial
+```
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.

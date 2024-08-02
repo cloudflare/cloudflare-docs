@@ -15,9 +15,7 @@ Support for Workers for Platforms with `wrangler dev` in local mode is experimen
 
 ## 1. Create a user worker
 
-```sh
-$ npm create cloudflare@latest customer-worker-1
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="customer-worker-1">}}
 
 When following the interactive prompts, answer the questions as below:
 
@@ -52,9 +50,7 @@ dispatch_namespace = "my-namespace"
 
 ## 2. Create a dispatch worker
 
-```sh
-$ npm create cloudflare@latest dispatch-worker
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="dispatch-worker">}}
 
 When following the interactive prompts, answer the questions as below:
 
@@ -101,9 +97,7 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 
 ## 3. Create an Outbound Worker
 
-```sh
-$ npm create cloudflare@latest outbound-worker
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="outbound-worker">}}
 
 When following the interactive prompts, answer the questions as below:
 

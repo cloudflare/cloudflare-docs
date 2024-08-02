@@ -141,9 +141,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 1. Open a terminal and run the following command:
 
-   ```sh
-   $ npm create cloudflare@latest
-   ```
+   {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="authentication-worker">}}
 
    This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
 
@@ -154,7 +152,13 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
     4. Answer `Yes` or `No` to using `git` for version control.
     5. Select `No` to deploying the Worker.
 
-3. Go to your project directory and open `/src/index.js`. Delete the existing code and paste in the following example:
+3. Go to your project directory.
+
+  ```sh
+  $ cd authentication-worker
+  ```
+
+4. Open `/src/index.js` and delete the existing code and paste in the following example:
 
    ```js
    ---
@@ -203,7 +207,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 4. Deploy the Worker to your Cloudflare account:
 
    ```sh
-   $ npx wrangler@latest deploy
+   $ npx wrangler deploy
    ```
 
 ### 4. Configure the Worker

@@ -48,17 +48,17 @@ Create a new Worker project using [C3](/pages/get-started/c3/) (`create-cloudfla
 {{<tabs labels="pnpm | npm | yarn">}}
 {{<tab label="pnpm" default="true">}}
 ```sh
-$ pnpm create cloudflare@latest
+$ pnpm create cloudflare
 ```
 {{</tab>}}
 {{<tab label="npm">}}
 ```sh
-$ npm create cloudflare@latest
+$ npm create cloudflare
 ```
 {{</tab>}}
 {{<tab label="yarn">}}
 ```sh
-$ yarn create cloudflare@latest
+$ yarn create cloudflare
 ```
 {{</tab>}}
 {{</tabs>}}
