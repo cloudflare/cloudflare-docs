@@ -50,7 +50,8 @@ If a certificate issuance times out, the error message will indicate where the t
 - Timed Out (Deployment)
 - Timed Out (Deletion)
 
-To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or select **Refresh** for the specific custom hostname in the dashboard. If these return an error, delete and recreate the custom hostname.
+To fix this error, send a [PATCH request](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or select **Refresh** for the specific custom hostname in the dashboard. Please make sure that the `--data` field is not empty in your request.
+If these return an error, delete and recreate the custom hostname.
 
 ---
 

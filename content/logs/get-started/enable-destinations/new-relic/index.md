@@ -96,8 +96,9 @@ curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POS
   "dataset": "http_requests",
   "enabled": true
 }' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" | jq .
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" | jq .
 ```
 
 Response:
@@ -137,8 +138,9 @@ Example request using cURL:
 ```bash
 curl -s -X PUT \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" | jq .
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" | jq .
 ```
 
 Response:

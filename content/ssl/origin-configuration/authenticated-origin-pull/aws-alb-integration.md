@@ -107,7 +107,8 @@ EOF
 
 # Push the certificate
 
-curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates \
+curl --silent \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates" \
 --header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
@@ -117,8 +118,8 @@ curl -sX POST https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_clie
 2.[Associate the certificate with the hostname](/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) that should use it.
 
 ```bash
-curl -s --request PUT \
---url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
+curl --silent --request PUT \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames" \
 --header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
@@ -137,8 +138,9 @@ curl -s --request PUT \
 
 ```bash
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/$ZONEID/settings/tls_client_auth \
---header "Authorization: Bearer undefined" \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/settings/tls_client_auth" \
+--header "X-Auth-Email: $MYAUTHEMAIL" \
+--header "X-Auth-Key: $MYAUTHKEY" \
 --header "Content-Type: application/json" \
 --data '{
   "value": "on"
@@ -157,7 +159,7 @@ Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to
 
 ```bash
 curl -s --request PUT \
---url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames" \
 --header "Content-Type: application/json" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY" \
@@ -175,9 +177,7 @@ curl -s --request PUT \
 2.  (Optional) Use a [`GET` request](/api/operations/per-hostname-authenticated-origin-pull-list-certificates) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
 ```bash
-curl -s --request GET \
---url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates \
---header 'Content-Type: application/json' \
+curl "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY"
 ```
@@ -185,8 +185,8 @@ curl -s --request GET \
 3. Use the [Delete hostname client certificate](/api/operations/per-hostname-authenticated-origin-pull-delete-hostname-client-certificate) endpoint to remove the certificate you had uploaded.
 
 ```bash
-curl -s --request DELETE "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates/$CERTID" \
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames/certificates/$CERTID" \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
---header "X-Auth-Key: $MYAUTHKEY" \
---header "Content-Type: application/json"
+--header "X-Auth-Key: $MYAUTHKEY"
 ```

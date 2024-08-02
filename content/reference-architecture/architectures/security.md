@@ -4,6 +4,8 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Cloudflare Security Architecture"
+    description: This document provides insight into how this network and platform are architected from a security perspective, how they are operated, and what services are available for businesses to address their own security challenges.
+products: [Workers, Turnstile]
 ---
 
 # Cloudflare Security Architecture

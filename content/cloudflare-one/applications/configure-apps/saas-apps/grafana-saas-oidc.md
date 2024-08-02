@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Grafana
-weight: 12
+weight: 14
 ---
 
 # Connect to Grafana through Access

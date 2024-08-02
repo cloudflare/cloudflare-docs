@@ -2,7 +2,6 @@
 pcx_content_type: navigation
 title: Function Calling
 weight: 5
-layout: wide
 ---
 
 {{<heading-pill style="beta">}} Function calling {{</heading-pill>}}
@@ -10,6 +9,8 @@ layout: wide
 Function calling enables people to take Large Language Models (LLMs) and use the model response to execute functions or interact with external APIs. The developer usually defines a set of functions and the required input schema for each function, which we call `tools`. The model then intelligently understands when it needs to do a tool call, and it returns a JSON output which the user needs to feed to another function or API.
 
 In essence, function calling allows you to perform actions with LLMs by executing code or making additional API calls.
+
+{{<stream video_id="603e94c9803b4779dd612493c0dd7125">}}
 
 ## How can I use function calling?
 

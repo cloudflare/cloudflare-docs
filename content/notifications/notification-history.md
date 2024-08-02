@@ -24,8 +24,7 @@ GET accounts/{account_id}/alerting/v3/history
 header: Example
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/alerting/v3/history?page=1&per_page=25" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Availability

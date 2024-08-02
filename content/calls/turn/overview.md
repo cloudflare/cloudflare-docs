@@ -27,15 +27,6 @@ When a client tries to connect to `turn.cloudflare.com`, it _automatically_ conn
 
 To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 
-## IP Addresses
-
-### Traverse restrictive network environments and IP allowlists (whitelists)
-
-Please allowlist Cloudflare's published [IP address ranges](https://www.cloudflare.com/ips/), both IPv4 and IPv6. Cloudflare's TURN service will use an IP address from this list. For more details about static IPs, guarantees and other arrangements please discuss with your enterprise account team.
-
-### Relay allocation IP addresses
-TURN server relay allocations are done using a larger set of [IP address ranges](https://www.cloudflare.com/ips/). Calls relay allocations will be in the 9024-65535 port range.
-
 ## Protocols and Ciphers for TURN over TLS
 
 TLS versions supported include TLS 1.1, TLS 1.2, and TLS 1.3.

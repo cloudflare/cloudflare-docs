@@ -56,6 +56,16 @@ entries:
         - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
         - Your account has Regional Services enabled.
 
+- publish_date: '2024-06-27'
+  title: Cloudflare One Agent for iOS (version 1.4)
+  description: |-
+    A new GA release for the iOS Cloudflare One Agent is now available in the [iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492).
+
+    Notable updates:
+      - Fixed an issue with endpoint IP settings in MDM files
+      - Cleaned up some erroneous links
+      - Updated the Terms of Service
+
 - publish_date: '2024-05-22'
   title: WARP client for Windows (version 2024.5.310.1)
   description: |-

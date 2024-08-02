@@ -7,7 +7,7 @@ _build:
 
 Cloudflare adds CAA records automatically in two situations:
 
-- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and add any CAA records to your zone.
+- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and add any CAA records to your zone.
 - When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and enable [AMP Real URL](/speed/optimization/other/amp-real-url/) or [SXG Signed Exchanges](/speed/optimization/other/signed-exchanges/).
 
 These records make sure Cloudflare can still issue Universal certificates on your behalf.

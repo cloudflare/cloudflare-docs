@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Salesforce (OIDC)
-weight: 20
+weight: 22
 ---
 
 # Connect to Salesforce through Access (OIDC)

@@ -2362,10 +2362,10 @@ wrangler versions deploy [OPTIONS] --experimental-versions
 
 {{<Aside type="note">}}
 
-The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2    --experimental-versions`
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y --experimental-versions`
 
 For example:
-`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90%    --experimental-versions`
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y --experimental-versions`
 
 {{</Aside>}}
 ### `list`

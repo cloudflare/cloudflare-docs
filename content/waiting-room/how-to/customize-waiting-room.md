@@ -139,8 +139,7 @@ In the following `PATCH` request, the `custom_page_html` field contains the HTML
 ```bash
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/{waiting_room_id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"custom_page_html": "<p>Include custom HTML here</p>"}'
 ```
@@ -199,8 +198,7 @@ Example request:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/preview" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"custom_html": "<p>Include custom HTML here</p>"}'
 ```

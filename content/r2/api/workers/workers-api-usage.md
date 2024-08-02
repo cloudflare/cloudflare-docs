@@ -46,19 +46,6 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-Find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
-
-Next, find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/wrangler/commands/#whoami).
-
-```toml
-name = "<YOUR_WORKER_NAME>"
-main = "src/index.js"
-compatibility_date = "2022-06-30"
-
-account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
-workers_dev = true
-```
-
 To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 2](#2-create-your-bucket):
 
 ```toml

@@ -12,6 +12,8 @@ Bulk Redirects allow you to define a large number of URL redirects at the accoun
 
 Unlike dynamic URL redirects created in [Single Redirects](/rules/url-forwarding/single-redirects/), Bulk Redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure URL redirect parameters that affect their URL matching behavior and their runtime behavior.
 
+{{<render file="_snippets-alternative.md" withParameters="and customized redirect logic">}}<br />
+
 ---
 
 ## Related resources

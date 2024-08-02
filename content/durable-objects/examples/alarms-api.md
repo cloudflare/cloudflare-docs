@@ -22,7 +22,7 @@ export default {
   },
 };
 
-const SECONDS = 1000;
+const SECONDS = 10;
 
 // Durable Object
 export class Batcher {
@@ -42,7 +42,7 @@ export class Batcher {
     // Any further POSTs in the next 10 seconds will be part of this batch.
     let currentAlarm = await this.storage.getAlarm();
     if (currentAlarm == null) {
-      this.storage.setAlarm(Date.now() + 10 * SECONDS);
+      this.storage.setAlarm(Date.now() + (1000 * SECONDS));
     }
 
     // Add the request to the batch.

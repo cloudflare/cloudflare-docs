@@ -24,7 +24,7 @@ Using Cloudflare Zero Trust is a simple, (sometimes free!) way for startups to d
 
 Cloudflare has lots of existing content related to migration and implementation of our Zero Trust product set. This document speaks directly to technical founders and founding engineers of young startup organizations who are looking to develop the framework for a modern corporate network, with modern security controls, from their first line of code.
 
-In this document we’ll explore: 
+In this document we’ll explore:
 * Getting started with practical Zero Trust remote access (ZTNA) capabilities
 * Establishing sources of truth for identity, device posture, and learning how to use them
 * Network building, both traditional and mesh
@@ -36,14 +36,14 @@ In this document we’ll explore:
 * Building with Infrastructure as Code
 
 A few things explicitly not covered in this document:
-* Introduction to basic Zero Trust terminology and concepts 
+* Introduction to basic Zero Trust terminology and concepts
 * Recommendations for or against specific third-party vendor usage (while other vendors are mentioned in this document, it’s purely illustrative and should not be taken as a formal recommendation from Cloudflare)
 * Details on why you should explore adopting a Zero Trust security methodology (we have lots of good resources detailing that in the links below)
 * Microsegmentation and autonomous Zero Trust concepts (these may be covered in future updates)
 * Passwordless authentication (this is a cool and emerging space, and we’ll provide some recommendations here in the future)
 
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
-* What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (five-minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU (two minutes)
+* What is Cloudflare? | [Website](https://www.cloudflare.com/what-is-cloudflare/) (five-minute read) or [video](https://www.youtube.com/watch?v=XHvmX3FhTwU) (two minutes)
 * Blog: [Zero Trust, SASE, and SSE: foundational concepts for your next-generation network](https://blog.cloudflare.com/zero-trust-sase-and-sse-foundational-concepts-for-your-next-generation-network/) (14-minute read)
 * Reference architecture: [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/) (three-hour read)
 
@@ -81,8 +81,8 @@ If you’ve already grown to the point that documenting your asset inventory is 
 ### Common goals and outcomes
 Many startups that use Cloudflare are encouraged to adopt a Zero Trust security posture by external sources: investors, partners, vendors, risk analysts, or compliance officers. Even if this is a project or evaluation that is driven by outside parties, you can still establish common goals to ensure it drives a measurable, desirable impact.
 
-Some common goals we hear from customers: 
-* Make internal tooling easy for our users to access securely 
+Some common goals we hear from customers:
+* Make internal tooling easy for our users to access securely
 * Build security into the development pipeline
 * Adopt increased security without sacrificing user and work experience
 * Define and execute a bring your own device (BYOD) strategy
@@ -97,7 +97,7 @@ Goal-setting is also an important exercise for prioritization. If you know that 
 
 ### Identity
 
-Identity is at the core of every Zero Trust strategy. Ultimately, most customer goals revolve around using a central source of identity to authenticate, validate, and log all actions taken by a user, spanning both ‘owned’ (hosted, private network) applications and SaaS applications. Identity (through an SSO provider, for example) can then be used to layer additional security controls like multi-factor authentication, or phishing-resistant authentication. 
+Identity is at the core of every Zero Trust strategy. Ultimately, most customer goals revolve around using a central source of identity to authenticate, validate, and log all actions taken by a user, spanning both ‘owned’ (hosted, private network) applications and SaaS applications. Identity (through an SSO provider, for example) can then be used to layer additional security controls like multi-factor authentication, or phishing-resistant authentication.
 
 One of the most important things you can do early is to coach users to become accustomed to using multi-factor authentication. Phishing-resistant MFA options like physical keys, local authenticators, and biometric authentication have been credited by Cloudflare as a major factor in [stopping the attempted breach](https://blog.cloudflare.com/2022-07-sms-phishing-attacks) that affected Twilio and other SaaS companies in 2022.
 
@@ -116,13 +116,13 @@ Later in this document, we’ll describe using Cloudflare Zero Trust to protect 
 
 Cloudflare _matters_ in this case because once you’ve determined a source of truth for your identity provider, you need tooling to perform continuous authentication against your user population. This tooling is difficult to build and maintain, as evidenced by a number of well-known technology companies who retired their internally-built Zero Trust proxy and switched to Cloudflare in 2023, citing management complexity and an inability to add new security functionality.
 
-Cloudflare can simplify your architecture by becoming the singular enforcement point for your identity against your private applications, your networks, your developer services, and your SaaS applications. Cloudflare is one of the only vendors to be able to provide Zero Trust authentication concepts as a web proxy (layer 7 services), as a VPN replacement (layer 3/4 services), and as a secure web gateway. 
+Cloudflare can simplify your architecture by becoming the singular enforcement point for your identity against your private applications, your networks, your developer services, and your SaaS applications. Cloudflare is one of the only vendors to be able to provide Zero Trust authentication concepts as a web proxy (layer 7 services), as a VPN replacement (layer 3/4 services), and as a secure web gateway.
 
 ![The various ways employees, contractors, vendors, or customers may verify their identity to access your company's resources](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-getting-started-foundational-decisions-identity.svg)
 
 ### Device posture
 
-As your business grows and you begin to operationalize the distribution of endpoints to your user population, device posture is a key component of a strong Zero Trust strategy. Once you’ve validated your users’ identity posture, there are other actions you can take to further reduce the risk of a data breach. Consider this: even if your user is valid and has an active identity session, their device could theoretically be infected, and attackers could benefit from (or _hijack_) their valid identity session. 
+As your business grows and you begin to operationalize the distribution of endpoints to your user population, device posture is a key component of a strong Zero Trust strategy. Once you’ve validated your users’ identity posture, there are other actions you can take to further reduce the risk of a data breach. Consider this: even if your user is valid and has an active identity session, their device could theoretically be infected, and attackers could benefit from (or _hijack_) their valid identity session.
 
 Companies use device posture to prove that a connection is coming from a trusted device. Let’s look at the theory behind device posture before listing some common strategies and approaches to getting started. In this example, you have sensitive data located somewhere in AWS. This data is critical to the operation of your business. It is (rightly) protected behind identity-aware authentication, so you feel confident that it can only be accessed by users with the proper identity posture. Your users are all remote, and connect to AWS from Macbooks that are pre-configured with your endpoint detection and response (EDR) software of choice. Users on their Macbooks, configured with enterprise EDR software, have a lower risk of potential breaches than when they use their personal laptops to access company data. But how do you prove that your users with valid identity posture _only_ access your sensitive data from the devices that contain a lower risk of breach?
 
@@ -132,7 +132,7 @@ Common device posture strategies usually rely on a combination of an endpoint ma
 
 #### Where does Cloudflare fit in?
 
-As you begin to use third-party vendors for Zero Trust security outcomes, those vendors need to ingest first-party signals to help you make the best security decisions. In this case, Cloudflare becomes your point of policy enforcement for device posture — in addition to identity posture. The Cloudflare device agent will evaluate your device ownership or health metrics, and use them in conjunction with policies about user identity to ensure access to sensitive resources both has proper identity verification and is coming from a compliant device with the acceptable level of security control. 
+As you begin to use third-party vendors for Zero Trust security outcomes, those vendors need to ingest first-party signals to help you make the best security decisions. In this case, Cloudflare becomes your point of policy enforcement for device posture — in addition to identity posture. The Cloudflare device agent will evaluate your device ownership or health metrics, and use them in conjunction with policies about user identity to ensure access to sensitive resources both has proper identity verification and is coming from a compliant device with the acceptable level of security control.
 
 ![Cloudflare's device posture enforcement in action](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-getting-started-foundational-decisions-device-posture.svg)
 
@@ -154,8 +154,8 @@ _As you begin establishing patterns in the infrastructure that you build, it’s
 
 This will probably be one of the most common Zero Trust use cases for a majority of startups. You may be asking yourself, How can I get my user access to my internal network or application without managing VPN hardware or exposing my business to risk? As you navigate the best way to connect your users to your private networks and services — while still adhering to Zero Trust principles — there are two important things to consider:
 
-1. **Limiting exposure** — A Zero Trust philosophy encourages organizations to limit the amount of ways in which networks or services can be accessed. Having public IP addresses or ingress paths into your network can introduce unwanted risk. This is typically accomplished by using outbound-only proxies that connect to Zero Trust vendors to only proxy authenticated traffic into your network, and do not require any public IP access of any kind. 
-2. **Limiting lateral movement** — One of the best ways to reduce the radius of a potential data breach is to practice least-privilege access for all resources. Least-privilege access is a core tenet of a Zero Trust architecture, in which users only receive the level of access they need for their role, rather than getting carte blanche access to the entire corporate network. The most analogous concept as it relates to Zero Trust frameworks is that of ‘microtunnels’ — a recommended approach in which each application or service that needs to be accessed receives its own distinct ‘route’. Similar to microtunnels, least-privilege access enables you to build a practice in which only explicit services and users have access to specific resources, helping position future security organizations very favorably. 
+1. **Limiting exposure** — A Zero Trust philosophy encourages organizations to limit the amount of ways in which networks or services can be accessed. Having public IP addresses or ingress paths into your network can introduce unwanted risk. This is typically accomplished by using outbound-only proxies that connect to Zero Trust vendors to only proxy authenticated traffic into your network, and do not require any public IP access of any kind.
+2. **Limiting lateral movement** — One of the best ways to reduce the radius of a potential data breach is to practice least-privilege access for all resources. Least-privilege access is a core tenet of a Zero Trust architecture, in which users only receive the level of access they need for their role, rather than getting carte blanche access to the entire corporate network. The most analogous concept as it relates to Zero Trust frameworks is that of ‘microtunnels’ — a recommended approach in which each application or service that needs to be accessed receives its own distinct ‘route’. Similar to microtunnels, least-privilege access enables you to build a practice in which only explicit services and users have access to specific resources, helping position future security organizations very favorably.
 
 Defining a clear strategy for infrastructure creation and management — along with a predictable internal IP and DNS record structure — will be invaluable for accessing and protecting your assets as your organization continues to grow. A little later in the document, we’ll expand on the ways you can use automated workflows to create infrastructure that can instantly integrates with your chosen Zero Trust security provider. It will be significantly easier to layer security policies over your access control models if you have a continued, clear sense of what infrastructure exists and how it is currently addressed.
 
@@ -167,7 +167,7 @@ With this ‘overlay’ network, a small piece of software sits in your network 
 
 ![Cloudflare providing network and application tunnels to access both company and Internet resources](/images/reference-architecture/zt-for-startups/zero-trust-design-guide-traditional-and-mesh-network-building-connecting-users-to-networks.svg)
 
-This makes it significantly easier to manage user access to multiple, distinct private networking environments without forcing the user to change their profile, switch settings, or constantly disconnect or reconnect from one or multiple clients. It also gives you the capability to easily expose a single private application or service to specific audiences while adhering to Zero Trust principles. 
+This makes it significantly easier to manage user access to multiple, distinct private networking environments without forcing the user to change their profile, switch settings, or constantly disconnect or reconnect from one or multiple clients. It also gives you the capability to easily expose a single private application or service to specific audiences while adhering to Zero Trust principles.
 
 ## Connecting networks to networks
 
@@ -175,7 +175,7 @@ For most startups, networking is not at the top of their list of things to chang
 
 When simplifying the corporate network, some common extensions may include customer networks, partners, multi-cloud, acquisitions, disaster-recovery planning, and more. As your security organization matures, there will be more and more reasons to spread infrastructure across multiple VPCs (even within the same cloud environment). And, as security groups for those VPCs become increasingly complex, you will find that you are managing multiple internal networks with distinct policies and sometimes distinct operations.
 
-As these network extensions become more relevant for your business, it’s worthwhile to review which connectivity options make the most sense, and explore strategies to build a functionally complex, fundamentally secure network. 
+As these network extensions become more relevant for your business, it’s worthwhile to review which connectivity options make the most sense, and explore strategies to build a functionally complex, fundamentally secure network.
 
 ### Traditional connectivity
 
@@ -225,7 +225,7 @@ In an ideal world, we believe that authentication and authorization should be ha
 
 ‘Vendor tokens’ is a concept that does not exist for every Zero Trust or SSE vendor. This is due to Cloudflare’s relatively unique approach; because we’re the world’s largest provider of authoritative DNS, we provide DNS for the ‘external’ path to your internal applications, then create tokens for user access.
 
-These tokens are based on the information Cloudflare receives from your identity provider after a successful authentication event, which matches against custom policies for that application. Each token contains all of the content that would be signed in a user’s authentication event with their IdP: their name, username, email, group membership, and whatever other values are present. It also gets a unique tag to indicate its relevance to a specific application. 
+These tokens are based on the information Cloudflare receives from your identity provider after a successful authentication event, which matches against custom policies for that application. Each token contains all of the content that would be signed in a user’s authentication event with their IdP: their name, username, email, group membership, and whatever other values are present. It also gets a unique tag to indicate its relevance to a specific application.
 
 Once the _Cloudflare_ token has been created, it is passed to your internal applications to validate their requests and authorize access to your internal tooling. This takes minimal additional work per-application, and can be built into application creation workflows where you would otherwise need a complete OAUTH integration or SSO integration.
 
@@ -235,7 +235,7 @@ By using Cloudflare tokens, your users will have a seamless experience both _aut
 
 ### Your Zero Trust vendor as an SSO
 
-Some Zero Trust vendors provide the capability to operate as an SSO provider, integrating directly with your applications (like open-source or self-hosted solutions) which come with a pre-built SSO connector. In this flow, your SSO controls your authorization to the application, and your Zero Trust vendor calls out to your identity provider to make authentication decisions, without needing to manage multiple primary directories. 
+Some Zero Trust vendors provide the capability to operate as an SSO provider, integrating directly with your applications (like open-source or self-hosted solutions) which come with a pre-built SSO connector. In this flow, your SSO controls your authorization to the application, and your Zero Trust vendor calls out to your identity provider to make authentication decisions, without needing to manage multiple primary directories.
 
 For Cloudflare users, this offers a number of advantages: it helps streamline authentication (AuthN) and authorization (AuthZ), reduces your reliance on a specific SSO vendor, and allows you to use multiple simultaneous authentication providers. Most importantly, it enables you to easily adopt or switch to a new identity provider.Businesses may not use the same identity provider at 25-50 users that they use at 300-500+, and there is always significant friction in the hard cutover required to move from one SSO integration to another. This transition can be especially difficult considering the time and frustration present in some applications’ SSO integrations. Using Cloudflare as an SSO provider can help alleviate that friction by aggregating all of your identity, device posture, and risk integrations within a single policy enforcement point — thereby helping you streamline your AuthZ/AuthN and put additional security controls in front of your self-hosted applications.
 
@@ -304,11 +304,11 @@ Cloudflare can help provide scoped secure access for both web and network connec
 
 ## Protecting against Internet threats (or, _is secure web gateway a part of Zero Trust?_)
 
-Traditionally, the concept of Zero Trust access has been explicitly relegated to user or machine access to internal or privileged resources. On a functional level, this requires replacing network extension, reducing over-permissioning, and minimizing lateral movement and threat vectors typically delivered from VPN remote access connectivity. But for many businesses, their VPN didn’t only proxy their private network traffic. It also managed their Internet traffic and allowed them to maintain a unified view of threats — typically, either through a module to send DNS queries to a cloud provider, or by simply backhauling all user traffic to the corporate network to be sent through the corporate firewalls. 
+Traditionally, the concept of Zero Trust access has been explicitly relegated to user or machine access to internal or privileged resources. On a functional level, this requires replacing network extension, reducing over-permissioning, and minimizing lateral movement and threat vectors typically delivered from VPN remote access connectivity. But for many businesses, their VPN didn’t only proxy their private network traffic. It also managed their Internet traffic and allowed them to maintain a unified view of threats — typically, either through a module to send DNS queries to a cloud provider, or by simply backhauling all user traffic to the corporate network to be sent through the corporate firewalls.
 
 The security and complexity challenges introduced by this castle-and-moat model has forced many vendors to address the two primary functions a VPN serves. Now, it is common to hear secure web gateways (SWG) and Zero Trust access (ZTNA) discussed in the same sentence or as part of the same product.
 
-Although this shift was driven by vendors and analysts, rather than security researchers, it has seemed to improve security manageability for customers while simplifying the buying and deployment process for startups. Namely, deploying a single agent to handle both your corporate and Internet traffic is a significant improvement over using multiple device agents to handle all sorts of security tooling. 
+Although this shift was driven by vendors and analysts, rather than security researchers, it has seemed to improve security manageability for customers while simplifying the buying and deployment process for startups. Namely, deploying a single agent to handle both your corporate and Internet traffic is a significant improvement over using multiple device agents to handle all sorts of security tooling.
 
 ### Long Live The New Perimeter
 
@@ -319,7 +319,7 @@ Today, it’s likely that your business has no central ‘perimeter’ at all. I
 #### A perimeter-less model
 In a world in which your Zero Trust provider and your SSO should be able to protect most of your private applications, networks, services, and SaaS applications, users should be more empowered than ever to work from anywhere — and your asynchronous, highly-effective style of work shouldn’t need to be interrupted if you follow best practices. In other words, **your definition of a ‘secure’ endpoint becomes your new corporate perimeter.**
 
-A defined secure endpoint, with clear measurability is significantly better for security posture because, unlike a source IP address, it’s both highly targeted and continually validated. In the old world, this would mean egressing through a firewall and being subject to security controls. In the new world, this typically means verifying encryption, interrogating posture on the device, and determining whether or not the traffic coming from the machine was inspected by a secure web gateway. It could even still include source IP address as a method of validation, but never as the primary control. 
+A defined secure endpoint, with clear measurability is significantly better for security posture because, unlike a source IP address, it’s both highly targeted and continually validated. In the old world, this would mean egressing through a firewall and being subject to security controls. In the new world, this typically means verifying encryption, interrogating posture on the device, and determining whether or not the traffic coming from the machine was inspected by a secure web gateway. It could even still include source IP address as a method of validation, but never as the primary control.
 
 As you think about how you want to manage the usage of BYOD (and how you want to ensure your corporate data is being accessed securely), you just have to make a determination about what constitutes your secure endpoint strategy. Then, consider how you should interrogate requests to sensitive resources to ensure that they are compliant with this strategy. For instance, think about the steps users will need to take in order to access Workday (or another PII-heavy system). Before granting access, you may want to send their traffic through your secure web gateway and apply data loss prevention policies. Now ask yourself, what other steps do you need to take in order to enforce these requirements?
 
@@ -341,7 +341,7 @@ Cloudflare allows you to functionally build a new perimeter by identifying, appl
 
 ## Adopting and securing SaaS applications
 
-The concept of SaaS security means a lot of things to a lot of people. For that reason, it’s a somewhat controversial topic, especially as it relates to Zero Trust. SaaS services saw huge user population booms during the first wave of COVID, due in large part to a significant increase in remote work. Almost overnight, it was easier and more practical for users to connect to services that existed outside of corporate infrastructure than it was to connect to internal services. 
+The concept of SaaS security means a lot of things to a lot of people. For that reason, it’s a somewhat controversial topic, especially as it relates to Zero Trust. SaaS services saw huge user population booms during the first wave of COVID, due in large part to a significant increase in remote work. Almost overnight, it was easier and more practical for users to connect to services that existed outside of corporate infrastructure than it was to connect to internal services.
 
 Some make the argument that SaaS applications are either 1) inherently secure when you’ve integrated SSO, or 2) are the functional responsibility of the SaaS provider to secure. While these arguments address the way in which your SaaS investment is accessed and secured, they do not contextualize why companies use SaaS — which is typically for storing corporate information. The proliferation of ‘places your sensitive data may live’ will be an increasingly important factor in your SaaS security decisions.
 
@@ -367,7 +367,7 @@ How do these apps proliferate within your environment? The logic is simple, espe
 
 Shadow IT is typically addressed as part of a general Internet security program, which sometimes falls within the same consideration set (or the same vendors) as a Zero Trust deployment. De-risking unsanctioned SaaS applications is almost always centered around visibility. The most important thing you can do — without having things like SSO or your CASB tool integrated with an application — is understand the breadth of shadow IT usage.
 
-Documenting unsanctioned applications usually requires using a forward-proxy tool like a DNS filter, secure web gateway, or some email-specific tooling. These tools can provide insights into which users have engaged with unsanctioned SaaS apps, and potentially even how they engaged with them (did they upload/download files, how much bandwidth have they transferred, etc.). 
+Documenting unsanctioned applications usually requires using a forward-proxy tool like a DNS filter, secure web gateway, or some email-specific tooling. These tools can provide insights into which users have engaged with unsanctioned SaaS apps, and potentially even how they engaged with them (did they upload/download files, how much bandwidth have they transferred, etc.).
 
 By implementing policies and strategies to document SaaS usage, you can start to form a better understanding of how your sensitive data is stored, moved, or manipulated within SaaS tools. Some businesses limit the use of SaaS to explicitly-approved corporate tools, while others are more lenient. There’s no wrong approach, but building an early framework for how to capture usage information can help you work backwards in the event that it becomes a pressing matter for your organization.
 

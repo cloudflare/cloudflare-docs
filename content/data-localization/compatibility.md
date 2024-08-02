@@ -21,7 +21,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | --- | --- | --- | --- |
 | Caching/CDN | ✅ | ✅ | ✅ |
 | Cache Reserve | ⚫️ | 🚧{{<fnref num="29">}} | ✅ |
-| DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="1">}} |
+| DNS | ⚫️ | ⚫️ | 🚧{{<fnref num="32">}} |
 | HTTP/3 (with QUIC)  | ⚫️ | ✘ | ⚫️ |
 | Image Resizing | ✅ | ✘ | 🚧{{<fnref num="1">}} |
 | Load Balancing | ✅ | ✅ | 🚧{{<fnref num="1">}} |
@@ -115,8 +115,8 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="9">}}Argo cannot be used with Regional Services.{{</fnentry>}}
 {{<fnentry num="10">}}Argo cannot be used with Customer Metadata Boundary.{{</fnentry>}}
 {{<fnentry num="11">}}Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.{{</fnentry>}}
-{{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2024.{{</fnentry>}}
-{{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.{{</fnentry>}}
+{{<fnentry num="12">}}Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2025.{{</fnentry>}}
+{{<fnentry num="13">}}Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your Customer Success Manager if you need another dataset.{{</fnentry>}}
 {{<fnentry num="14">}}Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.{{</fnentry>}}
 {{<fnentry num="15">}}Can be localized to US FedRAMP region only. More regions coming in 2024.{{</fnentry>}}
 {{<fnentry num="16">}}Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.{{</fnentry>}}
@@ -125,11 +125,12 @@ The table below provides a summary of the Data Localization Suite product's beha
 {{<fnentry num="19">}}Uses Gateway HTTP and CASB.{{</fnentry>}}
 {{<fnentry num="20">}}You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.{{</fnentry>}}
 {{<fnentry num="21">}}Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.{{</fnentry>}}
-{{<fnentry num="22">}}Gateway HTTP and Gateway Network can be used with Customer Metadata Boundary and logs are available via Logpush (logs are still not available in the dashboard when setting the region to the EU).{{</fnentry>}}
+{{<fnentry num="22">}}Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.{{</fnentry>}}
 {{<fnentry num="26">}}Static IP/BYOIP can be used with the legacy Spectrum setup.{{</fnentry>}}
 {{<fnentry num="27">}}Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).{{</fnentry>}}
 {{<fnentry num="28">}}R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.{{</fnentry>}}
 {{<fnentry num="29">}}You cannot yet specify region location for object storage itself.{{</fnentry>}}
 {{<fnentry num="30">}}Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.{{</fnentry>}}
 {{<fnentry num="31">}}DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.{{</fnentry>}}
+{{<fnentry num="32">}}Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.{{</fnentry>}}
 {{</fnsection>}}
