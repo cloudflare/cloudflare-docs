@@ -36,8 +36,6 @@ The Cloudflare Zero Trust PII role should be considered an add-on role, to be co
 {{<Aside type="note">}}
 The Cloudflare Zero Trust PII role does not apply to Access audit logs. PII is always visible in Access logs.
 {{</Aside>}}
-<<<<<<< HEAD
-=======
 
 ## Email details
 
@@ -52,7 +50,7 @@ Email Security shows you the following email detail information:
 
 Email Security displays the following details:
 
-1. **Threat type**:  Add a link where I explain the most common threat types.
+1. **Threat type**.
 2. **Validation**: Email validation methods [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/).
 3. **Sender details**: Information include:
     - IP address
@@ -81,4 +79,4 @@ The mail trace tab allows you to track the path your selected message took from 
 - **Date**: The date and time when the mail was tracked.
 - **Type**: An email can be inbound (email is sent to you from another email), or outbound (emails sent from your email address).
 - **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
->>>>>>> 8097d86ba (Apply suggestions from code review)
+)

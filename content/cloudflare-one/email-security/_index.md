@@ -19,7 +19,7 @@ Email Security secures your email inbox with [API-first email security](/cloudfl
 Email Security allows you to:
 
 - Configure allow policies, blocked senders, trusted domains, and additional detections.
-- Automatically move messages to specific folders based on a certain disposition.
+- Automatically move messages to specific folders based on a [certain disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
 - Manage directories.
 - Monitor your inbox and perform a thorough search of your email.
-- Generate a Phishing Risk Assessment report and submit phishes.
+- Generate a Phishing Risk Assessment report and submit email phishing reports.
