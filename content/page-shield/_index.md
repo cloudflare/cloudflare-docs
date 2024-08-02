@@ -18,6 +18,8 @@ Ensures the safety and privacy of your website visitors' browsing environment.
 
 Page Shield helps manage resources loaded by your website visitors — including scripts, their connections, and cookies — and triggers alert notifications when resources change or are considered malicious.
 
+Learn how to [get started](/page-shield/get-started/).
+
 ---
 
 ## Features
