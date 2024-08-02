@@ -124,7 +124,7 @@ With Email Security, you can export messages to a CSV file.
 To export messages:
 
 1. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
-2. Select **Export messages** on the pop-up message. You can only export up to 1,000 rows from the dashboard. To export all matching messages, use the API. 
+2. Select **Export messages** on the pop-up message. You can only export up to 1,000 rows from the dashboard.
 
 ## Email status
 
