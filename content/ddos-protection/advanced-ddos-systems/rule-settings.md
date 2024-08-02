@@ -20,7 +20,7 @@ Advanced TCP Protection rules can have one of the following scopes:
 
 The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
-Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/tcp-protection/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
+Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
 
 ## Mode
 
@@ -34,7 +34,7 @@ The Advanced TCP Protection system constantly learns your TCP connections to mit
 
 * **​​Mitigation (Enabled)**
 
-    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist).
+    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist).
 
 * **Disabled**
 
@@ -60,7 +60,7 @@ The rate sensitivity is the rule's sensitivity to the sustained packet rate:
 
 The default rate sensitivity is _Medium_.
 
-## Profile sensitivity
+## Profile sensitivity (Advanced DNS Protection only)
 
 The sensitivity to DNS queries that have not been recently seen.
 

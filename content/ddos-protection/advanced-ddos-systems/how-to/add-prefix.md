@@ -8,7 +8,7 @@ meta:
 
 # Add a prefix
 
-To add a [prefix](/ddos-protection/tcp-protection/concepts/#prefixes) to Advanced TCP Protection:
+To add a [prefix](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) to Advanced TCP Protection:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection**.
@@ -18,6 +18,6 @@ Alternatively, enter a prefix and (optionally) a description in **Prefix** and *
 
 {{<Aside type="note" header="Note">}}
 
-The **Add existing prefix** list will not display leased prefixes, but you can add them manually in the Cloudflare dashboard or [using the API](/ddos-protection/tcp-protection/api/). You cannot add [delegated prefixes](/byoip/concepts/prefix-delegations/) to Advanced TCP Protection.
+The **Add existing prefix** list will not display leased prefixes, but you can add them manually in the Cloudflare dashboard or [using the API](/ddos-protection/advanced-ddos-systems/api/). You cannot add [delegated prefixes](/byoip/concepts/prefix-delegations/) to Advanced TCP Protection.
 
 {{</Aside>}}

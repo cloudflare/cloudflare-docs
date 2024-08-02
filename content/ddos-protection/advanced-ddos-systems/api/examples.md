@@ -6,7 +6,7 @@ weight: 2
 
 # Common API calls
 
-The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/tcp-protection/api/#endpoints).
+The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/#endpoints).
 
 ## Get Advanced TCP Protection status
 
@@ -246,7 +246,7 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
 
 ## Create an out-of-state TCP rule
 
@@ -289,11 +289,11 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
 
 ## Create a SYN flood filter
 
-This example `POST` request creates a SYN flood [filter](/ddos-protection/tcp-protection/concepts/#filter), setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
+This example `POST` request creates a SYN flood [filter](/ddos-protection/advanced-ddos-systems/concepts/#filter), setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
 
 ```bash
 ---
@@ -326,11 +326,11 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
 
 ## Create an out-of-state TCP filter
 
-This example `POST` request creates an out-of-state TCP [filter](/ddos-protection/tcp-protection/concepts/#filter), disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
+This example `POST` request creates an out-of-state TCP [filter](/ddos-protection/advanced-ddos-systems/concepts/#filter), disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
 
 ```bash
 ---
@@ -363,5 +363,5 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
 

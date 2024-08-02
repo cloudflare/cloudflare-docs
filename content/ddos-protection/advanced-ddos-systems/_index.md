@@ -8,4 +8,4 @@ meta:
 
 # Cloudflare Advanced DDoS Protection systems
 
-Cloudflare's Advanced DDoS Protection systems, powered by `flowtrackd`, secure your Internet properties against sophisticated DDoS attacks by leveraging stateful inspection and traffic profiling to protect via TCP and DNS protection.
+Cloudflare's Advanced DDoS Protection systems, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), secure your Internet properties against sophisticated DDoS attacks by leveraging stateful inspection and traffic profiling to protect via TCP and DNS protection.

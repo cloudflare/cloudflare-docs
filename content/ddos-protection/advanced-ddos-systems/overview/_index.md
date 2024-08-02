@@ -34,14 +34,14 @@ Enable the Advanced DDoS system and begin routing traffic through it.
 
 Advanced TCP Protection offers two types of protection:
 
-- [SYN Flood Protection](): Protects against attacks such as fully randomized SYN and SYN-ACK floods.
-- [Out-of-state TCP Protection](): Protects against out-of-state TCP DDoS attacks such as fully randomized ACK floods and RST floods.
+- [SYN Flood Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/#syn-flood-protection): Protects against attacks such as fully randomized SYN and SYN-ACK floods.
+- [Out-of-state TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/#out-of-state-tcp-protection): Protects against out-of-state TCP DDoS attacks such as fully randomized ACK floods and RST floods.
 
 Each protection type is configured independently using rules and (optionally) filters. You should configure at least one rule for each type of protection before enabling Advanced TCP Protection.
 
 ### Availability
 
-Advanced TCP Protection is available to all [Magic Transit]() customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset]().
+Advanced TCP Protection is available to all [Magic Transit](/magic-transit/) customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
 ## Advanced DNS Protection
 
@@ -49,10 +49,10 @@ Cloudflare’s Advanced DNS Protection works by first learning your traffic patt
 
 Currently, the protection system only analyzes DNS over UDP (it does not include DNS over TCP).
 
-The [Network Analytics dashboard]() will display system-specific analytics for Advanced DNS Protection in the DNS protection tab, including the queried domains and record types.
+The [Network Analytics dashboard](/analytics/network-analytics/) will display system-specific analytics for Advanced DNS Protection in the DNS protection tab, including the queried domains and record types.
 
 ### Availability
 
-Advanced DNS Protection is currently available in beta to [Magic Transit]() customers.
+Advanced DNS Protection is currently available in beta to [Magic Transit](/magic-transit/) customers.
 
-Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset]().
+Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).

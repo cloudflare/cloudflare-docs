@@ -22,8 +22,8 @@ Currently, the list of onboarded prefixes is shared with Advanced TCP Protection
 5. Go to **Advanced DNS Protection**. 
 6. Select **Create Advanced DNS Protection rule**. 
 7. In **Mode**, select a mode for the rule.
-8. Under **Set scope**, select a [scope](/ddos-protection/tcp-protection/rule-settings/#scope) to determine the range of packets that will be affected by the rule. 
-9. Under **Sensitivity**, define the [burst sensitivity](/ddos-protection/tcp-protection/rule-settings/#burst-sensitivity), [rate sensitivity](/ddos-protection/tcp-protection/rule-settings/#rate-sensitivity), and [profile sensitivity](/ddos-protection/tcp-protection/rule-settings/#profile-sensitivity) to determine when to initiate mitigation. 
+8. Under **Set scope**, select a [scope](/ddos-protection/advanced-ddos-systems/rule-settings/#scope) to determine the range of packets that will be affected by the rule. 
+9. Under **Sensitivity**, define the [burst sensitivity](/ddos-protection/advanced-ddos-systems/rule-settings/#burst-sensitivity), [rate sensitivity](/ddos-protection/advanced-ddos-systems/rule-settings/#rate-sensitivity), and [profile sensitivity](/ddos-protection/advanced-ddos-systems/rule-settings/#profile-sensitivity) to determine when to initiate mitigation. 
 10. Select **Deploy**.
 
 ---
@@ -34,7 +34,7 @@ Currently, the list of onboarded prefixes is shared with Advanced TCP Protection
 
 If you cannot find any data related to Advanced DNS Protection in the **DNS Protection** tab of Network Analytics, it could be because one of these reasons:
 
-* You did not [add your prefixes](/ddos-protection/tcp-protection/how-to/add-prefix/) to Advanced L3/4 DDoS Protection.
+* You did not [add your prefixes](/ddos-protection/advanced-ddos-systems/how-to/add-prefix/) to Advanced L3/4 DDoS Protection.
 * Cloudflare did not enable the Advanced DNS Protection system yet.
 * You do not have any DNS over UDP traffic.
 
@@ -45,7 +45,7 @@ If you cannot find any data related to Advanced DNS Protection in the **DNS Prot
 Cloudflare collects DNS-related data such as query type (for example, `A` record) and the queried domains. For details, refer to [Data collection](/analytics/network-analytics/reference/data-collection/).
 
 {{<Aside type="warning">}}
-Currently, to disable this data collection you must remove your prefixes either in the Cloudflare dashboard or through the [Delete a prefix](/ddos-protection/tcp-protection/api/#prefix-operations) API operation. However, this procedure will remove the prefixes from both Advanced DNS Protection and [Advanced TCP Protection](/ddos-protection/tcp-protection/).
+Currently, to disable this data collection you must remove your prefixes either in the Cloudflare dashboard or through the [Delete a prefix](/ddos-protection/advanced-ddos-systems/api/#prefix-operations) API operation. However, this procedure will remove the prefixes from both Advanced DNS Protection and [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/).
 {{</Aside>}}
 
 ---

@@ -11,11 +11,11 @@ meta:
 {{<render file="_atp-filter-definition.md">}}
 <br>
 
-Each protection system component (SYN flood protection or out-of-state TCP protection) should have at least one [rule](/ddos-protection/tcp-protection/concepts/#rule), but filters are optional.
+Each protection system component (SYN flood protection or out-of-state TCP protection) should have at least one [rule](/ddos-protection/advanced-ddos-systems/concepts/#rule), but filters are optional.
 
 ## Procedure
 
-To create a [filter](/ddos-protection/tcp-protection/concepts/#filter) for one of the system components:
+To create a [filter](/ddos-protection/advanced-ddos-systems/concepts/#filter) for one of the system components:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection** > **Advanced TCP Protection**.

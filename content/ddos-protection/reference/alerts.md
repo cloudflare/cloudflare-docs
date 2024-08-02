@@ -88,7 +88,7 @@ To investigate a possibly ongoing attack, select **View Dashboard**. To go to th
 
 * In some cases, HTTP DDoS attack alerts will reference the attacked zone name instead of the attacked hostname. This occurs when the attack signature does not include information on the attacked hostname because it is not a strong indicator for identifying attack requests. For more information on attack signatures, refer to [How DDoS protection works](/ddos-protection/about/how-ddos-protection-works/).
 
-* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) and the [Advanced DNS Protection](/ddos-protection/dns-protection/) system.
+* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) and the [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/) system.
 
 * You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
