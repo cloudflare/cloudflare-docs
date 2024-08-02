@@ -21,11 +21,8 @@ For example, you can create an object lifecycle rule to delete objects after 90 
 
 When you create an object lifecycle rule, you can specify which prefix you would like it to apply to.
 
-{{<Aside type="note">}}
-
-Object lifecycles has a 1000 rule maximum.
-
-{{</Aside>}}
+* Note that object lifecycles currently has a 1000 rule maximum.
+* Managing object lifecycles is a bucket-level action, and requires an API token with the [`Workers R2 Storage Write`](/r2/api/s3/tokens/#permission-groups) permission group.
 
 ### Dashboard
 
