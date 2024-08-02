@@ -1,5 +1,5 @@
 ---
-title: 1 –  Add a site
+title: Add a site
 pcx_content_type: tutorial
 weight: 1
 meta:

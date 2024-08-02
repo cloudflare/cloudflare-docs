@@ -1,12 +1,12 @@
 ---
-title: 2 –  Deploy a Hello World app
+title: Deploy a Worker
 pcx_content_type: tutorial
-weight: 2
+weight: 3
 meta:
-  title:  Deploy a Hello World app
+  title:  Deploy a Worker
 ---
 
-# Deploy a Hello World app using Cloudflare Workers and Pulumi
+# Deploy a Cloudflare Worker with Pulumi
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
 
