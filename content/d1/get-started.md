@@ -22,19 +22,12 @@ To continue:
 
 ## 1. Create a Worker
 
-{{<Aside type="note" header="New to Workers?">}}
-
-Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
-
-{{</Aside>}}
-
 You will create a new Worker as the means to query your database.
 
 Create a new project named `d1-tutorial` by running:
 
 ```sh
 $ npm create cloudflare@latest d1-tutorial
-
 ```
 
 When setting up your `d1-tutorial` Worker, answer the questions as below:
@@ -42,6 +35,7 @@ When setting up your `d1-tutorial` Worker, answer the questions as below:
 - Your directory has been titled `d1-tutorial`.
 - Choose `"Hello World" Worker` for the type of application.
 - Select `yes` to using TypeScript.
+- Select `yes` to using git.
 - Select `no` to deploying.
 
 This will create a new `d1-tutorial` directory. Your new `d1-tutorial` directory will include:
@@ -227,15 +221,15 @@ After configuring your Worker, you can test your project locally before you depl
 
 While in your project directory, test your database locally by running:
 
+```sh
+$ npx wrangler dev
+```
+
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL: for example, `localhost:8787/api/beverages`. After doing this, you should see your data being displayed in the browser.
 
-## 6. Log in
-
 To deploy your D1 database globally, log in with your Cloudflare account by running the following:
-
-{{
 
 ```sh
 $ npx wrangler login
@@ -243,7 +237,7 @@ $ npx wrangler login
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
-## 7. Deploy your database
+## 6. Deploy your database
 
 To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
 
