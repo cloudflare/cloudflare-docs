@@ -41,7 +41,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id} \
       "Content-Type": "application/json"
     },
     "query": {
-      "model": "gpt-3.5-turbo",
+      "model": "gpt-4o-mini",
       "stream": true,
       "messages": [
         {

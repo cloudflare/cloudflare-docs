@@ -25,7 +25,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
   --header 'Authorization: Bearer {openai_token}' \
   --header 'Content-Type: application/json' \
   --data ' {
-   		 "model": "gpt-3.5-turbo",
+   		 "model": "gpt-4o-mini",
    		 "messages": [
         {
           "role": "user",
