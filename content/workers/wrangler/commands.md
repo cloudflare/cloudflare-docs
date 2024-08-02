@@ -155,7 +155,7 @@ wrangler docs [<COMMAND>]
 
 {{<Aside type="note">}}
 
-This command has been deprecated and will be removed in a future version.
+This command has been deprecated in favor of [C3](/pages/get-started/c3/) and will be removed in a future version.
 
 {{</Aside>}}
 
