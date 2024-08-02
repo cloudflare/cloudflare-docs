@@ -23,7 +23,7 @@ When making requests to Azure OpenAI, you will need:
 
 Your new base URL will use the data above in this structure: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}`. Then, you can append your endpoint and api-version at the end of the base URL, like `.../chat/completions?api-version=2023-05-15`.
 
-### Examples
+## Examples
 
 ```bash
 ---
