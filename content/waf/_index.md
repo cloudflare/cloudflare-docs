@@ -17,6 +17,9 @@ Get automatic protection from vulnerabilities and the flexibility to create cust
 {{<plan type="all">}}
 
 {{<render file="_waf-intro.md">}}
+<br />
+
+Learn how to [get started](/waf/get-started/).
 
 ---
 
