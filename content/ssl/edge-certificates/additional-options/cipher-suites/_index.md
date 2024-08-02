@@ -20,7 +20,7 @@ Cloudflare maintains a [public repository of our SSL/TLS configurations](https:/
 
 ## Cipher suites and edge certificates
 
-While the cipher suites used by default for all Cloudflare domains/zones are meant to balance of security and compatibility, some of them might be considered weak by third-party testing tools, such as the [Qualys SSL Labs test](https://www.ssllabs.com/ssltest/).
+While the cipher suites used by default for all Cloudflare domains/zones are meant to balance security and compatibility, some of them might be considered weak by third-party testing tools, such as the [Qualys SSL Labs test](https://www.ssllabs.com/ssltest/).
 
 If the default option ([Legacy](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/)) does not meet your business requirements, you can [purchase the Advanced Certificate Manager add-on](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/acm/) to be able to [specify more secure cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
