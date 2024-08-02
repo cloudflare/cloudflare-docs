@@ -2,7 +2,7 @@
 pcx_content_type: tutorial
 title: Deploy a Browser Rendering Worker with Durable Objects
 weight: 2
-products: [Durable Objects, R2]
+products: [Workers, Durable Objects, R2]
 difficulty: Beginner
 content_type: 📝 Tutorial
 updated: 2023-09-28

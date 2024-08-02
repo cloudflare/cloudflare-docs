@@ -4,7 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Resend
-tags: [Email]
+tags: [Email, Resend]
 ---
 
 # Send Emails With Resend

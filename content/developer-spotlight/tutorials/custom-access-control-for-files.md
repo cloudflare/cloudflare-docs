@@ -17,17 +17,14 @@ spotlight:
 
 {{<spotlight-author>}}
 
-This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage.
+This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a [D1 database](/d1/) for user management and an [R2 bucket](/r2/) for file storage.
 
 The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.
 
 
 ## Prerequisites
 
-Before you can start with this tutorial, you will need to have the following prerequisites:
-- A Cloudflare account
-- [`npm`](https://docs.npmjs.com/getting-started)
-- [`Node.js`](https://nodejs.org/en/) with version `16.17.0` or later
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 
 ## 1. Create a new Worker application

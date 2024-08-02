@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying Magic Firewall Intrusion Detection System (IDS) samples with GraphQL
 ---
 

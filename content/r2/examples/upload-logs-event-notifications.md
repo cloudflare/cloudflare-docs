@@ -39,7 +39,7 @@ $ npx wrangler r2 bucket create example-log-sink-bucket
 
 {{<Aside type="note">}}
 
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume event notifications.
+You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
 
 {{</Aside>}}
 

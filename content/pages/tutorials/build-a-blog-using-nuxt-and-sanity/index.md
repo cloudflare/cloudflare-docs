@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
 title: Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
+tags: [Nuxt.js]
 ---
 
 # Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages

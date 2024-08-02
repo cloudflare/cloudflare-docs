@@ -8,7 +8,7 @@ pcx_content_type: tutorial
 weight: 1002
 meta:
   title: Cloudflare Queues - Queues & Browser Rendering
-products: [Browser Rendering, KV]
+products: [Workers, Browser Rendering, KV]
 ---
 
 # Build a web crawler with Queues and Browser Rendering

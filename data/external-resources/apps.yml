@@ -268,3 +268,12 @@ entries:
   languages: [JavaScript]
   cloudflare: true
   updated: 2022-08-01
+- link: https://github.com/lauragift21/staff-directory
+  name: Staff Directory demo
+  description: Built using the powerful combination of HonoX for backend logic, Cloudflare Pages for fast and secure hosting, and Cloudflare D1 for seamless database management.
+  tags: [Hono]
+  products: [Pages, D1]
+  languages: [TypeScript]
+  author: gift
+  cloudflare: true
+  updated: 2024-03-18
