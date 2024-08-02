@@ -71,7 +71,7 @@ $ pulumi new javascript --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label="ts">}}
 
-```bash
+```sh
 $ pulumi new typescript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
@@ -79,7 +79,7 @@ $ pulumi new typescript --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label="py">}}
 
-```bash
+```sh
 $ pulumi new python --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
@@ -87,7 +87,7 @@ $ pulumi new python --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label="go">}}
 
-```bash
+```sh
 $ pulumi new go --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
@@ -95,7 +95,7 @@ $ pulumi new go --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label="Java">}}
 
-```bash
+```sh
 $ pulumi new java --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
@@ -103,7 +103,7 @@ $ pulumi new java --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label=".NET">}}
 
-```bash
+```sh
 $ pulumi new csharp --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
@@ -111,7 +111,7 @@ $ pulumi new csharp --name addsite-cloudflare --yes
 {{</tab>}}
 {{<tab label="YAML">}}
 
-```bash
+```sh
 $ pulumi new yaml --name addsite-cloudflare --yes
 ```
 
@@ -130,7 +130,7 @@ You will need:
 A Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/) is a YAML file containing configurations and secrets that pertain to your application and infrastructure. These can be accessed in several ways, including a Pulumi program. All ESC Environments reside in your Pulumi Cloud account.
 {{</Aside>}}
 
-```bash
+```sh
 # Define an ESC Environment name
 $ E=my-dev-env
 
@@ -148,13 +148,13 @@ $ pulumi env set $E --plaintext pulumiConfig.domain example.com
 
 # Review your ESC Environment
 $ pulumi env open $E
-# {
-#   "pulumiConfig": {
-#     "accountId": "111222333",
-#     "cloudflare:apiToken": "abc123abc123",
-#     "domain": "example.com"
-#   }
-# }
+{
+  "pulumiConfig": {
+    "accountId": "111222333",
+    "cloudflare:apiToken": "abc123abc123",
+    "domain": "example.com"
+  }
+}
 ```
 
 ### e. Create a stack
@@ -772,42 +772,42 @@ filename: main.go
 package main
 
 import (
-	cloudflare "github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+  cloudflare "github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare"
+  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		domain, _ := ctx.GetConfig("domain")
+  pulumi.Run(func(ctx *pulumi.Context) error {
+    domain, _ := ctx.GetConfig("domain")
 
-		// Create a Cloudflare resource (Zone)
-		zone, err := cloudflare.NewZone(ctx, "my-zone", &cloudflare.ZoneArgs{
-			Zone:      pulumi.String(domain),
-			Plan:      pulumi.String("free"),
-			JumpStart: pulumi.Bool(true),
-		})
-		if err != nil {
-			return err
-		}
+    // Create a Cloudflare resource (Zone)
+    zone, err := cloudflare.NewZone(ctx, "my-zone", &cloudflare.ZoneArgs{
+      Zone:      pulumi.String(domain),
+      Plan:      pulumi.String("free"),
+      JumpStart: pulumi.Bool(true),
+    })
+    if err != nil {
+      return err
+    }
 
-		// Export the zone ID
-		ctx.Export("zoneId", zone.ID())
-		ctx.Export("nameservers", zone.NameServers)
-		ctx.Export("status", zone.Status)
+    // Export the zone ID
+    ctx.Export("zoneId", zone.ID())
+    ctx.Export("nameservers", zone.NameServers)
+    ctx.Export("status", zone.Status)
 
-		_, err = cloudflare.NewRecord(ctx, "my-record", &cloudflare.RecordArgs{
-			ZoneId:  zone.ID(),
-			Name:    pulumi.String(domain),
-			Value:   pulumi.String("192.0.2.1"),
-			Type:    pulumi.String("A"),
-			Proxied: pulumi.Bool(true),
-		})
-		if err != nil {
-			return err
-		}
+    _, err = cloudflare.NewRecord(ctx, "my-record", &cloudflare.RecordArgs{
+      ZoneId:  zone.ID(),
+      Name:    pulumi.String(domain),
+      Value:   pulumi.String("192.0.2.1"),
+      Type:    pulumi.String("A"),
+      Proxied: pulumi.Bool(true),
+    })
+    if err != nil {
+      return err
+    }
 
-		return nil
-	})
+    return nil
+  })
 }
 
 ```
