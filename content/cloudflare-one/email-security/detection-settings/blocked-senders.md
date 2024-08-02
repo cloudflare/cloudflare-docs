@@ -22,7 +22,7 @@ To configure blocked senders:
              - **Domains**: Must be a valid domain.
              - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email.
          - **Notes**: Provide additional information about the blocked sender policy.
-   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot contain other fields, and the first row must be a header row.
+   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender` and `Notes` fields. The first row must be a header row.
 6. Select **Save**.
    
 ## Export blocked senders
