@@ -58,7 +58,7 @@ The following are common GraphQL queries that can be made to retrieve informatio
 
 #### Operations
 
-To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`date_geq` and `date_leq`), grouped by `date` and `action:
+To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`date_geq` and `date_leq`), grouped by `date` and `action`:
 ```graphql
 query {
     viewer {
