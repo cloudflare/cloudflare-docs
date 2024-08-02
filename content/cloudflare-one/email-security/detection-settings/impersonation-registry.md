@@ -36,7 +36,7 @@ To add a user to the impersonation registry:
 
 {{<Aside type="note">}}
 
-Administrators can edit the name and emails of users if they are from the Email Security directory. Administrators from other integrated directories cannot edit the name and the primary emails of users.
+Administrators can edit the names and emails of users who belong to the Email Security directory. Administrators from other integrated directories cannot edit the name and the primary emails of users.
 
 {{</Aside>}}
 
