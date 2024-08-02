@@ -21,6 +21,8 @@ Magic WAN supports a variety of {{<glossary-tooltip term_id="on-ramp">}}on-ramps
 
 Refer to [On-ramps](/magic-wan/on-ramps/) for a full list of supported on-ramps.
 
+Learn how to [get started](/magic-wan/get-started/).
+
 ---
 
 ## Features
