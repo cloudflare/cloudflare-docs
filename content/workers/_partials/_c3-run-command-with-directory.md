@@ -10,7 +10,7 @@ inputParameters: directoryName
 {{<tab label="npm" default="true">}}
 
 ```sh
-$ npm create cloudflare $1
+$ npm create cloudflare@latest $1
 ```
 
 {{</tab>}}
@@ -18,7 +18,7 @@ $ npm create cloudflare $1
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare $1
+$ yarn create cloudflare@latest $1
 ```
 
 {{</tab>}}
