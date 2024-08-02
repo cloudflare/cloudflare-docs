@@ -13,7 +13,7 @@ pcx_content_type: get-started
 ## What you need
 
 When making requests to Azure OpenAI, you will need:
-- AI Gateway account tag
+- AI Gateway account ID
 - AI Gateway gateway name
 - Azure OpenAI API key
 - Azure OpenAI resource name
