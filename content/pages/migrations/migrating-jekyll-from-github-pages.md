@@ -4,6 +4,7 @@ difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating a Jekyll-based site from GitHub Pages
 tags: [Jekyll]
+languages: [Ruby]
 ---
 
 # Migrating a Jekyll-based site from GitHub Pages

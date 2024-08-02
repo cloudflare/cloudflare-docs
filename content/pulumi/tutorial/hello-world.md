@@ -8,6 +8,7 @@ products: [Workers]
 updated: 2024-01-08
 content_type: 📝 Tutorial
 difficulty: Beginner
+languages: [TypeScript]
 ---
 
 # Deploy a Hello World app using Cloudflare Workers and Pulumi

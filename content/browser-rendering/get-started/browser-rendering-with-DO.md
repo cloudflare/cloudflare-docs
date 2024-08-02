@@ -6,6 +6,7 @@ products: [Workers, Durable Objects, R2]
 difficulty: Beginner
 content_type: 📝 Tutorial
 updated: 2023-09-28
+languages: [JavaScript]
 ---
 
 # Deploy a Browser Rendering Worker with Durable Objects

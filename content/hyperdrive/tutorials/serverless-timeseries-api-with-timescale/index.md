@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
 products: [Workers]
 tags: [PostgreSQL]
+languages: [TypeScript, SQL]
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale

@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
 products: [R2, D1, Workers]
+languages: [TypeScript, SQL]
 spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK

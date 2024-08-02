@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 tags: [AI]
 title: Deploy a Worker that connects to OpenAI via AI Gateway
 products: [Workers]
+languages: [JavaScript]
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway

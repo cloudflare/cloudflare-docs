@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Add a React form with Formspree
 tags: [Forms]
+languages: [JavaScript]
 ---
 
 # Add a React form with Formspree

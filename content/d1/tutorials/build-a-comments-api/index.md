@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 title: Build a Comments API
 products: [Workers]
 tags: [Hono]
+languages: [JavaScript, SQL]
 ---
 
 # Build a Comments API
@@ -20,7 +21,7 @@ Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="d1-example">}}
 
-{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavsScript">}}
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 To start developing your Worker, `cd` into your new project directory:
 

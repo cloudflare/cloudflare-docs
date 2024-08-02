@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 products: [Queues, Workers]
 difficulty: Beginner
 updated: 2024-04-02
+languages: [TypeScript]
 ---
 
 # Log and store upload events in R2 with event notifications

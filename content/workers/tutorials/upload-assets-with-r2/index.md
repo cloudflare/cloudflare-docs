@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Securely access and upload assets with Cloudflare R2
 products: [R2]
+languages: [TypeScript]
 ---
 
 # Securely access and upload assets with Cloudflare R2

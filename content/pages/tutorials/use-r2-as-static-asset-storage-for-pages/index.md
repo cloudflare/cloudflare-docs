@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 title: Use R2 As static asset storage for your Pages app
 products: [R2]
 tags: [Hono]
+languages: [JavaScript]
 ---
 
 # Use R2 as static asset storage for your Pages app

@@ -6,6 +6,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create custom headers for Cloudflare Access-protected origins with Workers
 products: [Workers, Access]
+languages: [JavaScript]
 ---
 
 # Create custom headers for Cloudflare Access-protected origins with Workers
