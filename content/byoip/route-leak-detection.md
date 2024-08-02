@@ -1,7 +1,7 @@
 ---
 title: Route Leak Detection
 pcx_content_type: how-to
-weight: 6
+weight: 7
 ---
 
 # Route Leak Detection
