@@ -196,7 +196,7 @@ export R2_SECRET_ACCESS_KEY=your_secret_access_key
 export R2_BUCKET_NAME=your_bucket_name
 ```
 
-{{<tabs labels="js | python | go">}}
+{{<tabs labels="js | Python | Go">}}
 {{<tab label="js" default="true">}}
 
 Install the `aws-sdk` package for the S3 API:
@@ -262,7 +262,7 @@ fetchObject();
 ```
 
 {{</tab>}}
-{{<tab label="python">}}
+{{<tab label="Python">}}
 
 Install the `boto3` S3 API client:
 
@@ -320,7 +320,7 @@ except Exception as e:
 ```
 
 {{</tab>}}
-{{<tab label="go">}}
+{{<tab label="Go">}}
 
 Use `go get` to add the `aws-sdk-go-v2` packages to your Go project:
 
