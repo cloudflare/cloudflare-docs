@@ -83,7 +83,7 @@ Create your dispatch Worker. In this example, the dispatch Worker is called `my-
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="my-dispatcher">}}
 
-{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Change to your project's directory:
 

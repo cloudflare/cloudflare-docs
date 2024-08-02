@@ -73,14 +73,14 @@ $ npm create cloudflare cross-sell-api -- --framework hono
 {{<tab label="yarn">}}
 
 ```sh
-$ yarn create cloudflare cross-sell-api -- --framework hono
+$ yarn create cloudflare@latest cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}
 {{<tab label="pnpm">}}
 
 ```sh
-$ pnpm create cloudflare cross-sell-api -- --framework hono
+$ pnpm create cloudflare@latest cross-sell-api -- --framework hono
 ```
 
 {{</tab>}}

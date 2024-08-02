@@ -36,7 +36,7 @@ Open your terminal and run the below command:
 ---
 header: Create Astro project
 ---
-npm create cloudflare my-astro-app -- --framework=astro
+npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Follow the prompts to configure your project, selecting your preferred options for TypeScript usage, TypeScript strictness, version control, and deployment.
