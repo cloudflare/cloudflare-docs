@@ -37,7 +37,7 @@ Open a terminal window and run C3 to create your Worker project. This example cr
 
 
 ```sh
-$ npm create cloudflare customer-worker-1 -- --type=hello-world
+$ npm create cloudflare@latest customer-worker-1 -- --type=hello-world
 ```
 
 When following the interactive prompts, answer the questions as below:

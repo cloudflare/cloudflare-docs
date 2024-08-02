@@ -88,6 +88,12 @@ Create a new `airtable-form-handler` Worker project:
 
 {{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
+Then, move into the newly created directory:
+
+```sh
+$ cd airtable-form-handler
+```
+
 ## 3. Configure an Airtable base
 
 When your Worker is complete, it will send data up to an Airtable base via Airtable's REST API.
