@@ -18,7 +18,7 @@ When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east
 
 With Bedrock, you will need to sign the URL before you make requests to AI Gateway. You can try using the [`aws4fetch`](https://github.com/mhart/aws4fetch) SDK.
 
-### Example:
+## Example:
 
 ```typescript
 import { AwsClient } from 'aws4fetch'

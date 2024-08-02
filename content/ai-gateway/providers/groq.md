@@ -14,7 +14,7 @@ pcx_content_type: get-started
 
 When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`.
 
-### Examples
+## Examples
 
 ```bash
 ---

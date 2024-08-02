@@ -6,10 +6,7 @@ pcx_content_type: get-started
 # HuggingFace
 [HuggingFace](https://huggingface.co/) helps users build, deploy and train machine learning models.
 
-
-[HuggingFace](https://huggingface.co/) helps users build, deploy and train machine learning models.
-
-# Endpoint
+## Endpoint
 
 `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`
 
@@ -17,7 +14,7 @@ pcx_content_type: get-started
 
 When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder`.
 
-### Examples
+## Examples
 
 ```bash
 ---

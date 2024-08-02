@@ -14,7 +14,7 @@ pcx_content_type: get-started
 
 When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
-### Examples
+## Examples
 
 ```bash
 ---
