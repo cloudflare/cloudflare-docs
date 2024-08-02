@@ -18,8 +18,8 @@ Email Security secures your email inbox with [API-first email security](/cloudfl
 
 Email Security allows you to:
 
-- Configure allow policies, blocked senders, trusted domains, and additional detections.
-- Automatically move messages to specific folders based on a [certain disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
-- Manage directories.
-- Monitor your inbox and perform a thorough search of your email.
-- Generate a Phishing Risk Assessment report and submit email phishing reports.
+- Configure [allow policies](/cloudflare-one/email-security/detection-settings/allow-policies/), [blocked senders](/cloudflare-one/email-security/detection-settings/blocked-senders/), [trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/), and [additional detections](/cloudflare-one/email-security/detection-settings/additional-detections/).
+- [Automatically move messages](/cloudflare-one/email-security/auto-moves/) to specific folders based on a [certain disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
+- [Manage directories](/cloudflare-one/email-security/directories/).
+- Monitor your inbox and perform a thorough [search of your email](/cloudflare-one/insights/email-monitoring/).
+- Generate a [Phishing Risk Assessment report](/cloudflare-one/insights/email-monitoring/phishing-report/) and [submit email phishing reports](/cloudflare-one/insights/email-monitoring/phish-submissions/).
