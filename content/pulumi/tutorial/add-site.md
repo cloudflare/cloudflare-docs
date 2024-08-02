@@ -63,7 +63,7 @@ To create a program, select your language of choice and run the `pulumi` command
 {{<tabs labels="js | ts | py | Go | Java | .NET | YAML">}}
 {{<tab label="js" default="true">}}
 
-```bash
+```sh
 $ pulumi new javascript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
