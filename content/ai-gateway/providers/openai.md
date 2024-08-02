@@ -52,7 +52,7 @@ const openai = new OpenAI({
 
 try {
   const chatCompletion = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo-0613",
+    model: "gpt-4o-mini",
     messages: [{ role: "user", content: "What is a neuron?" }],
     max_tokens: 100,
   });
