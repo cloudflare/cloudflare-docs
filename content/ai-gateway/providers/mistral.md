@@ -17,8 +17,6 @@ When making requests to the Mistral AI, you will need:
 
 - AI Gateway Account ID
 - AI Gateway gateway name
-- Mistral AI account ID
-- Mistral AI gateway name
 - Mistral AI API token
 - Mistral AI model name
 
