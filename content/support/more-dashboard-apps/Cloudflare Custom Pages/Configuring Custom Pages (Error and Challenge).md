@@ -122,7 +122,7 @@ When publishing the custom error page, the system will ignore query strings. Thi
 To publish an account level custom error page:
 
 1.  Log into your Cloudflare account.
-2.  Click the **Configurations** tab.
+2.  Go to **Manage Account** > **Configurations**.
 3.  In the left navigation, click **Custom Pages**.
 4.  Identify your desired custom error page type, then click the **Custom Pages** button. A **Custom Page** dialog will appear.
 5.  Enter the URL of the custom error page you customized in your origin server, then click **Preview**.

@@ -31,9 +31,15 @@ Follow this workflow to create a custom error response rule for a given zone via
 
 ## Example API calls
 
-### Custom JSON response for all Cloudflare 1xxx errors
+The examples in this section use the following fields in their rule expressions:
 
-This example configures a custom JSON error response for all [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
+- [`http.response.code`](/ruleset-engine/rules-language/fields/#field-http-response-code): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/#field-cf-response-1xxx_code): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+
+### Custom JSON response for all 5xx errors
+
+This example configures a custom JSON error response for all 5xx errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
 
 ```bash
 curl --request PUT \
@@ -45,44 +51,18 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
     {
       "action": "serve_error",
       "action_parameters": {
-        "content": "{\"message\": \"A 1xxx error occurred.\"}",
+        "content": "{\"message\": \"A server error occurred.\"}",
         "content_type": "application/json",
         "status_code": 530
       },
-      "expression": "cf.response.error_type eq \"1xxx\"",
+      "expression": "http.response.code ge 500 and http.response.code lt 600",
       "enabled": true
     }
   ]
 }'
 ```
 
-Note that this `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
-
-### Custom HTML response for 1020 errors
-
-This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
-
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "serve_error",
-      "action_parameters": {
-        "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>",
-        "content_type": "text/html"
-      },
-      "expression": "cf.response.1xxx_code eq 1020",
-      "enabled": true
-    }
-  ]
-}'
-```
-
-Note that this `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
 ### Custom HTML response with updated status code
 
@@ -109,7 +89,33 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom
 }'
 ```
 
-Note that this `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+### Custom HTML response for Cloudflare 1020 errors
+
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "serve_error",
+      "action_parameters": {
+        "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>",
+        "content_type": "text/html"
+      },
+      "expression": "cf.response.1xxx_code eq 1020",
+      "enabled": true
+    }
+  ]
+}'
+```
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/operations/updateZoneEntrypointRuleset) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
 ---
 

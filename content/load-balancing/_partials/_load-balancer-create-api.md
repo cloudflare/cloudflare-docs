@@ -18,8 +18,7 @@ Since load balancers only exist on a zone — and not an account — you may nee
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/load_balancers" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "description": "Load Balancer for lb.example.com",

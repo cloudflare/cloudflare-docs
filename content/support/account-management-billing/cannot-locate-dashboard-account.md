@@ -22,5 +22,6 @@ This process will allow us to link your account inside our new support system.
 If you are a free account customer, you do not have access to this feature, but you can get assistance in many other ways:
 
 - By joining the conversation in our [Community forums](https://community.cloudflare.com/).
+- By joining our [Discord server](https://discord.cloudflare.com/).
 - By checking out our [Documentation](/).
 - By visiting the [Cloudflare Help Center](https://support.cloudflare.com/). There you will find our most frequently asked questions, steps to issue resolution, and more.

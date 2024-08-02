@@ -280,9 +280,3 @@ Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metada
 ### Deployments limit
 
 You can only create a new deployment with the last 10 uploaded versions of your Worker.
-
-### Unsupported features
-
-These Workers features will be supported in the near future.
-
-- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).

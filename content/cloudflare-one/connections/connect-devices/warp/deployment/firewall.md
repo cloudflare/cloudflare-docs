@@ -33,12 +33,25 @@ When you [log in to your Zero Trust organization](/cloudflare-one/connections/co
 
 ## WARP ingress IP
 
-WARP connects to the following IP addresses, depending on which [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) is configured for your device. All network traffic from your device to Cloudflare goes through these IPs and ports over UDP.
+WARP connects to the following IP addresses, depending on which [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) is configured for your device (WireGuard or MASQUE). All network traffic from your device to Cloudflare goes through these IPs and ports over UDP.
 
-| Tunnel protocol | IPv4 | IPv6  | Default port | Fallback ports |
-| ---------------------- | ---- | ---- | ---------- | ------------  |
-| WireGuard             | `162.159.193.0/24` | `2606:4700:100::/48` | `UDP 2408` | `UDP 500` </br> `UDP 1701` </br> `UDP 4500` |
-| MASQUE                | `162.159.197.0/24` | `2606:4700:102::/48` | `UDP 443`| `UDP 4443` </br> `UDP 8443` </br> `UDP 8095`|
+### WireGuard
+
+| | |
+| -- | -- |
+| IPv4 address| `162.159.193.0/24` |
+| IPv6 address| `2606:4700:100::/48` |
+| Default port | `UDP 2408` |
+| Fallback ports |  `UDP 500` </br> `UDP 1701` </br> `UDP 4500` |
+
+### MASQUE
+
+| | |
+| -- | -- |
+| IPv4 address| `162.159.197.0/24`  |
+| IPv6 address| `2606:4700:102::/48` |
+| Default port | `UDP 443` |
+| Fallback ports | `UDP 500` </br> `UDP 1701` </br> `UDP 4500` </br> `UDP 4443` </br> `UDP 8443` </br> `UDP 8095` |
 
 {{<Aside type="note">}}
 Before you [log in to your Zero Trust organization](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.

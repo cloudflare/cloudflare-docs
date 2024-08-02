@@ -38,6 +38,7 @@ If WARP is connected but there are no network logs, it means that your private n
 ## 4. Is the user blocked by a Gateway policy?
 
 To check if a Gateway block event occurred:
+
 1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
 2. Apply the following filters:
     - **Email**: User's email address
@@ -121,7 +122,7 @@ To troubleshoot TLS inspection:
     | -------------- | -------- | ------------- | -------------- |
     | Destination IP | in       | `10.2.3.4/32` | Do Not Inspect |
 
-2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public {{<glossary-tooltip term_id="Certificate Authority (CA)">}}CA{{</glossary-tooltip>}} and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
+2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public {{<glossary-tooltip term_id="Certificate Authority (CA)">}}CA{{</glossary-tooltip>}} and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
 
     To work around the issue:
 

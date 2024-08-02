@@ -10,8 +10,7 @@ To help you manage your customers’ Workers, use tags to better perform create,
 ```bash
 curl --request PUT \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/javascript" \
 --data "['TAG1', 'TAG2', 'TAG3']"
 ```
@@ -27,8 +26,7 @@ You can include script tags and bindings on multipart script uploads in the meta
 ```bash
 curl --request PUT \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: multipart/form-data" \
 --form 'metadata="{\"main_module\": \"worker.js\", \"bindings\": [{\"name\": \"KV\", \"type\": \"kv_namespace\", \"namespace_id\": \"<KV_NAMESPACE_ID>\"}], \"tags\": [\"customer-123\", \"staging\", \"free-user\"]}"' \
 --form 'worker.js=@"/path/to/worker.js";type=application/javascript+module'

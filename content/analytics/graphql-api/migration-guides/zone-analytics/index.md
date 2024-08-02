@@ -11,7 +11,8 @@ The [Zone Analytics API](/api/operations/zone-analytics-(-deprecated)-get-dashbo
 For example, here is a sample curl call to get data for a two minute period:
 
 ```bash
-curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" \
+--header "Authorization: Bearer <API_TOKEN>" --silent | jq .
 ```
 
 {{<details header="Response">}}

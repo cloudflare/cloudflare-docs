@@ -1,12 +1,12 @@
 ---
-pcx_content_type: security
+pcx_content_type: overview
 title: Security
 meta:
     title: Security | Image Optimization
 weight: 9
 ---
 
-# Security Best Practices
+# Security best practices
 
 To further ensure the security and efficiency of image optimization services, you can adopt Cloudflare products that safeguard against malicious activities.
 

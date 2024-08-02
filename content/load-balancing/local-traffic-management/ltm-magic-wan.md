@@ -17,8 +17,9 @@ Consider the following steps to learn how to configure Cloudflare local traffic 
 3. Retrieve the ID of the virtual network you created. To get the VNET ID, send a `GET` request to the following API endpoint:
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/{account_tag}/teamnet/virtual_networks?is_default=true
+https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/virtual_networks?is_default=true
 ```
+
 The VNET ID value will be used to ensure that your load balancer is properly integrated with the specified virtual network.
 
 ## 2. Configure an Account Load Balancer
@@ -33,25 +34,25 @@ https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/load_balancers/
 
 To retrieve a list of all created Account Load Balancers, send a `GET` request to the same endpoint.
 
-3. The `tunnel_id` parameter of the created Load Balancer is necessary for subsequent requests, so make sure to save the `tunnel_id` when you receive it in the response of the POST request. You can also retrieve the `tunnel_id` from the `GET` request if you need it for future operations.
+3. The `tunnel_id` parameter of the created Load Balancer is necessary for subsequent requests, so make sure to save the `tunnel_id` when you receive it in the response of the `POST` request. You can also retrieve the `tunnel_id` from the `GET` request if you need it for future operations.
 
 ## 3. Deploy route to access LB
 
 To access the new load balancer, you need to create a tunnel route. This will be done automatically for you, but in case you would need to create one yourself or add an additional one, you need to:
 
-1. Use the `tunnel_id` of the Account Load Balancer, retrieved in the previous step. By using the tunnel_id of the Account Load Balancer and assigning a private network IP we are making the Load Balancer available at that IP address on the associated virtual network.
+1. Use the `tunnel_id` of the Account Load Balancer, retrieved in the previous step. By using the `tunnel_id` of the Account Load Balancer and assigning a private network IP we are making the Load Balancer available at that IP address on the associated virtual network.
 
 2. To create a route for your Load Balancer, send a [`POST`](/api/operations/tunnel-route-create-a-tunnel-route) request to following endpoint with this sample body:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/teamnet/routes \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: ' \
-  --data '{
- 	"comment": "Example comment - account load balancing",
-  	"network": "<DEFAULT_VNET>,
-  	"tunnel_id": "<TUNNEL_ID>"
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+"comment": "Example comment - account load balancing",
+  "network": "<DEFAULT_VNET>,
+  "tunnel_id": "<TUNNEL_ID>"
 }'
 ```
 

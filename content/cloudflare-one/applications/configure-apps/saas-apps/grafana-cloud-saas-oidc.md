@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Grafana Cloud
-weight: 12
+weight: 13
 ---
 
 # Connect to Grafana Cloud through Access

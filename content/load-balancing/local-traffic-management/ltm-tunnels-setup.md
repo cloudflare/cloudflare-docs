@@ -90,8 +90,7 @@ All origins with private IPs must have `virtual_network_id` specified.
 ```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
 	"origins": [
