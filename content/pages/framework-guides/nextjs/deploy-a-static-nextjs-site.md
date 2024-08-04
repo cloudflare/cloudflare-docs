@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
-title: Static deployment
+title: Static site
 meta:
-  description: Deploy a static Next.js site with static exports.
+  description: Deploy a static site built using Next.js to Cloudflare Pages
 ---
 
 # Deploy a static Next.js site
