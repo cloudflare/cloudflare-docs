@@ -598,15 +598,15 @@
 /images/cloudflare-images/upload-images/direct-creator-upload/ /images/upload-images/direct-creator-upload/ 301
 /images/cloudflare-images/upload-images/images-batch/ /api/operations/cloudflare-images-list-images 301
 /images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
-/images/faq /images/ 301
+/images/faq/ /images/ 301
 /images/image-resizing/ /images/manage-images/create-variants/ 301
 /images/image-resizing/format-limitations/ /images/transform-images/ 301
 /images/image-resizing/url-format/ /images/transform-images/ 301
 /images/image-resizing/resize-with-workers/ /images/transform-images/transform-via-workers/ 301
 /images/image-resizing/responsive-images/ /images/manage-images/create-variants/ 301
-/images/pricing /images/platform/pricing 301
-/images/security /images/reference/security 301
-/images/troubleshooting /images/reference/troubleshooting 301
+/images/pricing/ /images/platform/pricing/ 301
+/images/security/ /images/reference/security/ 301
+/images/troubleshooting/ /images/reference/troubleshooting/ 301
 
 
 # learning-paths
