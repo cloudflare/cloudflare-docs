@@ -15,13 +15,13 @@ $ npm create cloudflare@latest my-next-app -- --framework=next
 
 ## Bring an existing Next.js app to Cloudflare Pages
 
-1. Install [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages)
+**1. Install [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages)**
 
 ```sh
 $ npm install --save-dev @cloudflare/next-on-pages
 ```
 
-2. Add a [`wrangler.toml`](/pages/functions/wrangler-configuration/) file to the root directory of your Next.js app:
+**2. Add a [`wrangler.toml`](/pages/functions/wrangler-configuration/) file to the root directory of your Next.js app:**
 
 ```toml
 name = "my-app"
@@ -32,7 +32,7 @@ pages_build_output_dir = ".vercel/output/static"
 
 This is where you'll configure your Pages project and define what resources it can access via [bindings](/workers/runtime-apis/bindings/).
 
-3. Add the following to `next.config.mjs`:
+**3. Add the following to `next.config.mjs`:**
 
 ```diff
 + import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
@@ -49,7 +49,7 @@ export default nextConfig;
 
 This allows you to access [bindings](/workers/runtime-apis/bindings/) in local development.
 
-4. Add the following to the scripts field of your `package.json`:
+**4. Add the following to the scripts field of your `package.json`:**
 
 ```json
 "pages:build": "npx @cloudflare/next-on-pages",
@@ -61,7 +61,7 @@ This allows you to access [bindings](/workers/runtime-apis/bindings/) in local d
 - `npm run preview` builds your app, and runs it locally in [workerd](https://github.com/cloudflare/workerd), the open-source Workers Runtime. (`next dev` will only run your app in Node.js)
 - `npm run deploy` builds your app, and then deploys it to Cloudflare
 
-5. Deploy to Cloudflare Pages
+**5. Deploy to Cloudflare Pages**
 
 Either deploy via the command line:
 
@@ -71,7 +71,7 @@ $ npm run deploy
 
 Or [connect a Github or Gitlab repository](/pages/configuration/git-integration/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
 
-6. (Optional) Add `eslint-plugin-next-on-pages`
+**6. (Optional) Add `eslint-plugin-next-on-pages`**
 
 ```sh
 $ npm install --save-dev eslint-plugin-next-on-pages
@@ -112,6 +112,8 @@ export async function GET(request) {
   return new Response(foo);
 }
 ```
+
+You can add bindings to your Pages project by [adding them to your `wrangler.toml` configuration file](/pages/functions/wrangler-configuration/).
 
 ## Troubleshooting
 
