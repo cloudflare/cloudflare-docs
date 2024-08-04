@@ -122,7 +122,7 @@ You can add bindings to your Pages project by [adding them to your `wrangler.tom
 You must configure all server-side routes in your Next.js project as [Edge runtime](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) routes, by adding the following to each route::
 
 ```js
-export const runtime = 'edge'
+export const runtime = "edge";
 ```
 
 {{<Aside type="note">}}
@@ -213,7 +213,6 @@ export async function GET(request) {
 When you use [static site generation (SSG)](https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation) in the [`/pages` directory](https://nextjs.org/docs/getting-started/project-structure) and also use the [`getStaticPaths`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths) function, Next.js by default tries to handle requests for non statically generated routes automatically, and creates a [Node.js runtime serverless function](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) that is not compatible with Cloudflare Pages.
 
 You can opt out of this behavior by specifying a [false `fallback`](https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false):
-
 
 ```diff
 ---
