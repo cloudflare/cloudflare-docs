@@ -10,5 +10,5 @@ message: "When referring to [C3](/pages/get-started/c3/), always use `npm create
 level: error
 ignorecase: true
 swap:
-  'npm create cloudflare[^@]': npm create cloudflare@latest
+  npm create cloudflare[^@]: npm create cloudflare@latest
 
