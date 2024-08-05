@@ -1,5 +1,5 @@
 ---
-title: SQL statemetns
+title: SQL statements
 weight: 6
 pcx_content_type: concept
 ---
