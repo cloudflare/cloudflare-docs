@@ -1,0 +1,14 @@
+---
+# Warning: cloudflare.c3Latest
+#
+# Recommends someone to use the @latest flag as part of any 'npm create cloudflare' command
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: substitution
+message: "When referring to [C3](/pages/get-started/c3/), always use `npm create cloudflare@latest`."
+level: error
+ignorecase: true
+swap:
+  'npm create cloudflare\s': npm create cloudflare@latest
+
