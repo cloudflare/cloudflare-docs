@@ -16,6 +16,8 @@ BYOIP is ingress only.
 
 Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type. These requirements are common to all products compatible with BYOIP, such as [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), and [CDN services](/cache/).
 
+Traditionally, BYOIP prefixes can only be bound to one of these services (Magic Transit, Sprectrum, or CDN) at a time. To enable a second service on individual IP addresses or a subnet, refer to [IP address service bindings](/byoip/service-bindings/).
+
 ## Prerequisites
 
 There are two major prerequisites before Cloudflare can begin onboarding your IP space.
@@ -29,7 +31,7 @@ After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/lea
 
 ## Cloudflare IPs
 
-If you are unable to bring your own IP to Cloudflare, you can use an IP address issued by Cloudflare. 
+If you are unable to bring your own IP to Cloudflare, you can use an IP address issued by Cloudflare.
 
 Using a Cloudflare IP may be a good option if you:
 
@@ -40,7 +42,7 @@ Using a Cloudflare IP may be a good option if you:
 - Maintain a large number of locations with a combination of connectivity methods.
 - Own an IP space with a /24 prefix length but do not advertise prefixes from every location.
 
-To protect your network using a Cloudflare IP address, contact your account manager. 
+To protect your network using a Cloudflare IP address, contact your account manager.
 
 {{<Aside type="note">}}
 When you use a Cloudflare-managed IP space, you do not need to provide a Letter of Agency (LOA) and advertise your prefixes that are associated with bringing your own IP.

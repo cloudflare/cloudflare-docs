@@ -10,9 +10,7 @@ meta:
 
 {{<plan type="enterprise">}}
 
-With **Bringing Your Own IPs** (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with Magic Transit, Spectrum, or CDN services.
-
-BYOIP is compatible with [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), and [CDN services](/cache/).
+With **Bringing Your Own IPs** (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), or [CDN services](/cache/).
 
 {{<button-group>}}
   {{<button type="primary" href="/byoip/get-started/">}}Get started{{</button>}}
