@@ -76,7 +76,7 @@ In the following sections, you will use your binding in Service Worker and ES mo
 
 {{<Aside type="note" header="Reference KV from Durable Objects and Workers">}}
 
-To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/kv/reference/kv-bindings/).
+To learn more about how to reference KV from Workers, refer to the [KV bindings documentation](/kv/concepts/kv-bindings/).
 
 {{</Aside>}}
 

@@ -38,7 +38,7 @@ Due to the eventually consistent nature of KV, concurrent writes can end up over
 
 Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. 
 
-Refer to [How KV works](/kv/reference/how-kv-works/) for more information on this topic.
+Refer to [How KV works](/kv/concepts/how-kv-works/) for more information on this topic.
 {{</Aside>}}
 
 ## Write data in bulk
@@ -89,7 +89,7 @@ To use `expiration` or `expirationTtl`, run one of the two commands below to set
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/kv/reference/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/kv/concepts/kv-namespaces/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 ## Metadata
 

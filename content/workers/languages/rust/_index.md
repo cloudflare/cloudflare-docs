@@ -9,7 +9,7 @@ weight: 4
 
 {{<heading-pill style="beta">}}Rust{{</heading-pill>}}
 
-Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/concepts/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
 By following this guide, you will learn how to build a Worker entirely in the Rust programming language.
 
