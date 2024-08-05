@@ -76,8 +76,6 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 If your custom domain is proxied (orange-clouded) through Cloudflare, your zone's settings, like caching, will apply.
 
-If you are experiencing issues with a framework, like Nuxt.js, only on the custom domain, review if Auto Minify (deprecated) is enabled (log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Speed** > **Optimization** > **Content Optimization** > **Auto Minify**) for HTML and disable it.
-
 If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
 
 If you are experiencing errors on your custom domain but not on your `pages.dev` domain, go to **DNS** > **Records** in the Cloudflare dashboard and set the DNS record for your project to be **DNS Only** (grey cloud). If the error persists, review your zone's configuration.

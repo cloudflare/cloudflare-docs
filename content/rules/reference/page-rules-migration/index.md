@@ -89,7 +89,6 @@ The following table summarizes how different Page Rules settings will be migrate
 Page Rules setting          | New implementation uses...           | Migration/Replacement instructions
 ----------------------------|--------------------------------------|--------------------------------------------------------------------
 Always Use HTTPS            | Redirect Rules (dynamic redirects)   | [Migrate Always Use HTTPS](#migrate-always-use-https)
-Auto Minify                 | N/A (deprecated)                     | N/A
 Browser Cache TTL           | Cache Rules                          | [Migrate Browser Cache TTL](#migrate-browser-cache-ttl)
 Browser Integrity Check     | Configuration Rules                  | [Migrate Browser Integrity Check](#migrate-browser-integrity-check)
 Bypass Cache on Cookie      | Cache Rules                          | [Migrate Bypass Cache on Cookie](#migrate-bypass-cache-on-cookie)
@@ -677,7 +676,7 @@ Page Rules configuration | Migrate to a configuration rule
 The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 {{</Aside>}}
 
-This Page Rules setting turned off Auto Minify (deprecated), Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
+This Page Rules setting turned off Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
 
 {{<tabs labels="Dashboard | Visual guide">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -1592,7 +1591,6 @@ Page Rules configuration | Migrate to a configuration rule
 
 The following Page Rules settings will not be migrated to other types of rules:
 
-- **Auto Minify** (this setting is deprecated)
 - **Disable Performance** (this setting is deprecated)
 - **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
 - **Disable Security** (this setting is deprecated)

@@ -32,7 +32,6 @@ The following Page Rules may not work as expected when an incoming request is ma
 
 *   Always Online
 *   [Always Use HTTPS](/workers/configuration/workers-with-page-rules/#always-use-https)
-*   [Auto Minify](/workers/configuration/workers-with-page-rules/#auto-minify-deprecated) (deprecated)
 *   [Automatic HTTPS Rewrites](/workers/configuration/workers-with-page-rules/#automatic-https-rewrites)
 *   [Browser Cache TTL](/workers/configuration/workers-with-page-rules/#browser-cache-ttl)
 *   [Browser Integrity Check](/workers/configuration/workers-with-page-rules/#browser-integrity-check)
@@ -73,14 +72,6 @@ A same zone subrequest is a request the Worker makes to an orange-clouded hostna
 |------------|------------|----------------|
 | Client     | Worker     | Rule Respected |
 | Worker     | Same Zone  | Rule Ignored   |
-| Worker     | Other Zone | Rule Ignored   |
-
-### Auto Minify (deprecated)
-
-| Source     | Target     | Behavior       |
-|------------|------------|----------------|
-| Client     | Worker     | Rule Ignored   |
-| Worker     | Same Zone  | Rule Respected |
 | Worker     | Other Zone | Rule Ignored   |
 
 ### Automatic HTTPS Rewrites

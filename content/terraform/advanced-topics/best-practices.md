@@ -178,11 +178,6 @@ resource "cloudflare_page_rule" "example_page_rule" {
   actions {
     ssl = "flexible"
     email_obfuscation = "on"
-    minify {
-      html = "off"
-      css  = "on"
-      js   = "on"
-    }
   }
 }
 ```

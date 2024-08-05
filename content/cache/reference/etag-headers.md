@@ -54,7 +54,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 
 - The origin server sends a response compressed using GZIP or Brotli, or an uncompressed response.
 - If the origin server sends a compressed response, the visitor accepts the same compression (GZIP, Brotli), according to the `accept-encoding` header.
-- [Rocket Loader](/speed/optimization/content/rocket-loader/), [Minification](/speed/optimization/content/auto-minify/), and [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) features are disabled.
+- [Rocket Loader](/speed/optimization/content/rocket-loader/) and [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) features are disabled.
 
 In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag (for example, when using Minification). For example, given the following conditions:
 

@@ -39,12 +39,6 @@ After **enabling SSL** you must also ensure that users are redirected to the H
 
 Cloudflare's **WordPress plugin** allows you to push necessary assets to your users using HTTP/2 Server Push, dramatically reducing the amount of roundtrips required to load CSS and JavaScript. Refer to [How do I enable HTTP/2 Server Push in WordPress guide](https://support.cloudflare.com/hc/articles/115002816808) for a tutorial on setting it up.
 
-### Minify Assets
-
-Cloudflare is able to effectively minify JS, CSS and HTML without a change to your website. We recommend [enabling minification](/speed/optimization/content/auto-minify/) in your Cloudflare dashboard instead of installing plugins on your site to do the same purpose. Alternatively if you are using Grunt or Gulp as part of a build process you can implement minification as part of this.
-
-Due to HTTP/2 multiplexing requests, we advise against concatenating CSS or JavaScript files together or installing anything on your server which may do this.
-
 ### Advanced Performance Tools
 
 Enterprise users can utilise [Prefetching URLs From HTML Headers](/speed/optimization/content/prefetch-urls/) and [custom cache keys](/cache/how-to/cache-keys/) to enhance caching.

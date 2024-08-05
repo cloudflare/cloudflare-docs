@@ -131,10 +131,6 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
     *   Enables [Image Resizing](/images/transform-images/) for this request. The possible values are described in [Transform images via Workers](/images/transform-images/transform-via-workers/) documentation.
 
-*   `minify` {{<type>}}{ javascript?: boolean; css?: boolean; html?: boolean; }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-    *   Enables or disables [AutoMinify](https://www.cloudflare.com/website-optimization/) for various file types. For example: `{ javascript: true, css: true, html: false }`.
-
 *   `mirage` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Whether [Mirage](https://www.cloudflare.com/website-optimization/mirage/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
