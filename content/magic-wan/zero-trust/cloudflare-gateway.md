@@ -25,7 +25,7 @@ If you cannot or do not want to install the certificate, you can create [Do Not 
 | Passed Device Posture Checks | not in   | iOS (OS version)     | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | Android (OS version) |       | Do Not Inspect |
 
-If your organization onboards users to Magic WAN via an [on-ramp other than WARP](/magic-wan/on-ramps/), you can exempt devices within Magic WAN's IP range from Gateway inspection:
+If your organization onboards users to Magic WAN via an [on-ramp other than WARP](/magic-wan/on-ramps/), you can exempt devices from inspection using the IP addresses for your Magic IPsec tunnels:
 
 | Selector  | Operator | Value            | Action         |
 | --------- | -------- | ---------------- | -------------- |
