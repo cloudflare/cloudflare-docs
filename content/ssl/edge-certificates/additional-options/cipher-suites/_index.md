@@ -10,7 +10,7 @@ meta:
 
 {{<render file="_cipher-suites-definition.md">}}<br />
 
-This section covers cipher suites used in connections between clients - such as your visitor's browser - and the Cloudflare network. For information about cipher suites used between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
+This section covers cipher suites used in connections between clients -- such as your visitor's browser -- and the Cloudflare network. For information about cipher suites used between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 
 {{<Aside type="note">}}
 Cloudflare maintains a [public repository of our SSL/TLS configurations](https://github.com/cloudflare/sslconfig) on GitHub, where you can find changes in the commit history.
