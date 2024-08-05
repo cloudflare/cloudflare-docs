@@ -4,6 +4,7 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a static WordPress site
+tags: [WordPress]
 ---
 
 # Deploy a static WordPress site

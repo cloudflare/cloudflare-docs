@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: navigation
 title: User Guide
 weight: 4
 ---

@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
 tags: [Hono]
+languages: [TypeScript]
 ---
 
 # Create a serverless, globally distributed REST API with Fauna

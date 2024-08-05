@@ -4,6 +4,8 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to a PostgreSQL database with Cloudflare Workers
+tags: [PostgreSQL]
+languages: [TypeScript, SQL]
 ---
 
 # Connect to a PostgreSQL database with Cloudflare Workers

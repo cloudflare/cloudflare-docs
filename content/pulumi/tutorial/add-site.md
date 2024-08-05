@@ -1,5 +1,5 @@
 ---
-title: 1 –  Add a site
+title: Add a site
 pcx_content_type: tutorial
 weight: 1
 meta:
@@ -8,9 +8,12 @@ languages:
   - JavaScript
   - TypeScript
   - Python
+updated: 2024-08-02
 ---
 
 # Add site to Cloudflare
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will go through step-by-step instructions to bring an existing site to Cloudflare using Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Zone and a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add site tutorial](/fundamentals/setup/manage-domains/add-site/).
 
