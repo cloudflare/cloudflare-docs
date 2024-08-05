@@ -8,7 +8,7 @@ meta:
 
 # Using bindings in your Next.js app
 
-Once you have [set up next-on-pages](/pages/framework-guides/nextjs/get-started/), you can access [bindings](/workers/runtime-apis/bindings/) from any route of your Next.js app via `getRequestContext`:
+Once you have [set up next-on-pages](/pages/framework-guides/nextjs/ssr/get-started/), you can access [bindings](/workers/runtime-apis/bindings/) from any route of your Next.js app via `getRequestContext`:
 
 ```js
 import { getRequestContext } from "@cloudflare/next-on-pages";
