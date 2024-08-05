@@ -11,5 +11,6 @@ level: error
 ignorecase: true
 scope: raw
 swap:
-  'npm create cloudflare[^@]': npm create cloudflare@latest
+  "npm create cloudflare[^@]": "npm create cloudflare@latest"
+  "npm create cloudflare$": "npm create cloudflare@latest"
 
