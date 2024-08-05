@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Atlassian Cloud
+updated: 2024-18-06
 weight: 5
 ---
 

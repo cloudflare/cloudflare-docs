@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Asana
+updated: 2024-01-08
 weight: 4
 ---
 

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Greenhouse Recruiting
+updated: 2024-10-07
 weight: 15
 ---
 

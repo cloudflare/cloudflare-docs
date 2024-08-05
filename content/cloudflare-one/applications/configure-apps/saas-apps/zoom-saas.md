@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Zoom
+updated: 2024-17-07
 weight: 30
 ---
 

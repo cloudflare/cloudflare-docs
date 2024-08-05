@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Workday
+updated: 2024-17-07
 weight: 28
 ---
 
