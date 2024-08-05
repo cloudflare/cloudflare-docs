@@ -939,6 +939,7 @@
 /ssl/client-certificates/byo-ca-api-shield/ /ssl/client-certificates/byo-ca/ 301
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/edge-certificates/custom-certificates/caa-records/ /ssl/edge-certificates/caa-records/ 301
+/ssl/edge-certificates/disable-weak-cipher-suites/ /ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/ 301
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/edge-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301
@@ -946,6 +947,7 @@
 /ssl/mutual-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /ssl/reference/certificate-validation-options/ /ssl/concepts/#validation-level 301
 /ssl/reference/cipher-suites/custom-certificates/ /ssl/edge-certificates/custom-certificates/#certificate-packs 301
+/ssl/reference/cipher-suites/matching-on-origin/ /ssl/origin-configuration/cipher-suites/#match-on-origin 301
 /ssl/reference/validation-backoff-schedule/ /ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
@@ -1666,6 +1668,7 @@
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
+/ssl/reference/cipher-suites/* /ssl/edge-certificates/additional-options/cipher-suites/:splat 301
 /support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
