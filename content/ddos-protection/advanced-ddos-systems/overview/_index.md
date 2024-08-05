@@ -12,7 +12,7 @@ Advanced DDoS Protection systems are configured using the general settings, Adva
 
 ## General settings
 
-General settings enable and control the use of the Advanced TCP Protection and the Advanced DNS Protection systems, and are composed of thresholds, prefixes, rules, and enablement. To configure the general settings, refer to Setup.
+General settings enable and control the use of the Advanced TCP Protection and the Advanced DNS Protection systems, and are composed of thresholds, prefixes, rules, and enablement. To configure the general settings, refer to [Setup](/ddos-protection/advanced-ddos-systems/setup/).
 
 ### Thresholds
 
