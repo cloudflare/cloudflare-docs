@@ -2,6 +2,7 @@
 pcx_content_type: how-to
 title: Static site
 meta:
+  title: Get started | Static site | Next.js apps
   description: Deploy a static site built using Next.js to Cloudflare Pages
 ---
 
