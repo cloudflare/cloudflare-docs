@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Google Cloud
+updated: 2024-07-03
 weight: 13
 ---
 

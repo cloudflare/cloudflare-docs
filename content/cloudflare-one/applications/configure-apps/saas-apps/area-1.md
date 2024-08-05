@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Area 1
+updated: 2024-07-18
 weight: 3
 ---
 
