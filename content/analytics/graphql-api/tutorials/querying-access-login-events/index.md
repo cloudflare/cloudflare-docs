@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying Access login events with GraphQL
 ---
 
@@ -52,14 +52,12 @@ echo '{ "query":
     "datetimeStart": "2022-09-20T14:36:38Z",
     "datetimeEnd": "2022-09-22T14:36:38Z"
 }
-}' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-key: <API_KEY>" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
 ```
 
 {{<Aside type="note">}}

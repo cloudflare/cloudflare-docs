@@ -51,7 +51,7 @@ Pulumi ESC provides centralized management of environments, secrets, and configu
 
 {{<resource-group>}}
 
-{{<resource header="Visit Pulumi" href="https://www.pulumi.com/" icon="learning-center-book">}}
+{{<resource header="Visit the Pulumi docs" href="https://www.pulumi.com/docs" icon="learning-center-book">}}
 To learn more about Pulumi.
 {{</resource>}}
 

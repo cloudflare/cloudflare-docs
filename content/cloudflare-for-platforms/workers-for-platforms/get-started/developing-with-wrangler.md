@@ -15,14 +15,15 @@ Support for Workers for Platforms with `wrangler dev` in local mode is experimen
 
 ## 1. Create a user worker
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="customer-worker-1">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into the newly created directory:
+
 ```sh
-$ npm create cloudflare@latest customer-worker-1
+$ cd customer-worker-1
 ```
-
-When following the interactive prompts, answer the questions as below:
-
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
 
 Update the `src/index.js` file for customer-worker-1:
 
@@ -52,14 +53,15 @@ dispatch_namespace = "my-namespace"
 
 ## 2. Create a dispatch worker
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="dispatch-worker">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into the newly created directory:
+
 ```sh
-$ npm create cloudflare@latest dispatch-worker
+$ cd dispatch-worker
 ```
-
-When following the interactive prompts, answer the questions as below:
-
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
 
 Update the `src/index.js` file for dispatch-worker:
 
@@ -101,14 +103,15 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 
 ## 3. Create an Outbound Worker
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="outbound-worker">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into the newly created directory:
+
 ```sh
-$ npm create cloudflare@latest outbound-worker
+$ cd outbound-worker
 ```
-
-When following the interactive prompts, answer the questions as below:
-
-- Select `no` to using TypeScript.
-- Select `no` to deploying your application.
 
 Update the `src/index.js` file for outbound-worker:
 

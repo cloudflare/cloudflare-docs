@@ -141,7 +141,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetu
 {{</tab>}}
 {{<tab label="json output" no-code="true">}}
 
-```sh
+```json
 ---
 header: Example JSON output
 ---

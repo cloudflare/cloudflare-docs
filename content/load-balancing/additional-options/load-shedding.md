@@ -56,22 +56,22 @@ To enable load shedding for a specific pool via the API, [update the values](/ap
 
 {{<details header="Example request">}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/{account-id}/load_balancers/pools/{pool-id}" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json" \
-     --data-binary '{
-         "load_shedding": {
-             "default_percent": 20,
-             "default_policy": "random",
-             "session_percent": 0,
-             "session_policy": "hash"
-         }
-     }'
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data-binary '{
+  "load_shedding": {
+    "default_percent": 20,
+    "default_policy": "random",
+    "session_percent": 0,
+    "session_policy": "hash"
+  }
+}'
 ```
 
 {{</details>}}

@@ -9,13 +9,14 @@ languages:
   - JavaScript
   - TypeScript
   - Python
+  - Rust
 pcx_content_type: example
 title: Cache using fetch
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts | py">}}
+{{<tabs labels="js | ts | py | rs">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -109,6 +110,50 @@ async def on_fetch(request):
     response.headers["Cache-Control"] = "max-age=1500"
 
     return response
+```
+
+{{</tab>}}
+{{<tab label="rs">}}
+
+```rs
+use worker::*;
+
+#[event(fetch)]
+async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    let url = req.url()?;
+
+    // Only use the path for the cache key, removing query strings
+    // and always store using HTTPS, for example, https://www.example.com/file-uri-here
+    let custom_key = format!(
+        "https://{host}{path}",
+        host = url.host_str().unwrap(),
+        path = url.path()
+    );
+
+    let request = Request::new_with_init(
+        url.as_str(),
+        &RequestInit {
+            headers: req.headers().clone(),
+            method: req.method(),
+            cf: CfProperties {
+                // Always cache this fetch regardless of content type
+                // for a max of 5 seconds before revalidating the resource
+                cache_ttl: Some(5),
+                cache_everything: Some(true),
+                // Enterprise only feature, see Cache API for other plans
+                cache_key: Some(custom_key),
+                ..CfProperties::default()
+            },
+            ..RequestInit::default()
+        },
+    )?;
+
+    let mut response = Fetch::Request(request).send().await?;
+
+    // Set cache control headers to cache on browser for 25 minutes
+    let _ = response.headers_mut().set("Cache-Control", "max-age=1500");
+    Ok(response)
+}
 ```
 
 {{</tab>}}

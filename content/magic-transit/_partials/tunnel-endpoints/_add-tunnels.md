@@ -18,14 +18,14 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 {{<details header="GRE tunnel">}}
 
-5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer GRE endpoint**, enter your router’s public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
-9. In **Cloudflare GRE endpoint**, enter the Anycast address you received from your account team.
+9. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
 10. Leave the default values for **TTL** and **MTU**.
-11. _(Optional)_ Enable **Tunnel health checks** if you want to use this feature. If you do not enable Tunnel health checks, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
-12. _(Optional)_ If you enabled **Tunnel health checks**, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_, and _High_.
+11. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
+12. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_, and _High_.
 13. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
 14. The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 15. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
@@ -37,13 +37,13 @@ inputParameters: 1productName;;2productPathDash;;3healthCheck;;4productPathProbe
 
 {{<details header="IPsec tunnel">}}
 
-5. In **Tunnel name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
 6. Give your tunnel a description in **Description**. You do not have character restrictions here.
 7. In **Interface address**, enter the internal IP address for your tunnel along with the interface’s prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 8. In **Customer endpoint**, enter your router’s public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
-9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
-10. _(Optional)_ Enable **Tunnel health checks** if you want to use this feature. If you do not enable Tunnel health checks, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
-11. _(Optional)_ If you enabled **Tunnel health checks**, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
+9. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
+10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks,, your tunnels will appear 100% down in your [tunnel health dashboard]($7) even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to [Tunnel health checks]($4) for more information.
+11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the [**Health check rate**]($3) for your tunnel. Available options are _Low_, _Medium_ and _High_.
 12. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to [Tunnel health checks]($4) for more information.
 13. _(Optional)_ The **Health check direction** defaults to **$6** for $1. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
@@ -78,10 +78,10 @@ Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "gre_tunnels": [
     {
@@ -106,10 +106,10 @@ Note that in example below, replay protection is disabled by default. You can en
 Example:
 
 ```bash
-curl --request https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "ipsec_tunnels": [
     {
@@ -162,9 +162,10 @@ This will generate a response like the following:
 2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
---header 'X-Auth-Email: <EMAIL>'
---header 'X-Auth-Key: <API_KEY>'
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 You will receive a response like the following:
@@ -197,9 +198,9 @@ You can enable bidirectional health checks via the API with `--data '{"health_ch
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"health_check": {"direction": "bidirectional"}}'
 ```
 

@@ -4,6 +4,8 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
+products: [Images]
+languages: [JavaScript, Rust]
 ---
 
 # Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
@@ -373,8 +375,14 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 
 Create a Worker to serve the image you uploaded to Images by running:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="thumbnail-image">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+To start developing your Worker, `cd` into your new project directory:
+
 ```sh
-$ npx wrangler init thumbnail-image
+$ cd thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:

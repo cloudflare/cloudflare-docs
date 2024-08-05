@@ -47,7 +47,8 @@ Each dedicated egress IP assigned to your organization supports 40,000 concurren
 Dedicated egress IPs do not apply to:
 
 - DNS queries resolved through Gateway
-- Zero Trust networks connected via Cloudflare Tunnel or Magic WAN
+- Private networks connected to Zero Trust via Cloudflare Tunnel
+- Traffic destined for private networks connected to Zero Trust via [Magic WAN](/magic-wan/)
 - ICMP traffic (such as `ping`)
 
 These origins will see the default shared IPs instead of the dedicated egress IPs. This is because Cloudflare can filter traffic to these origins by identifiers other than source IP.
@@ -61,18 +62,34 @@ When creating egress policies with dedicated egress IPs, set your secondary IPv4
 ### IP geolocation
 
 {{<Aside type="note">}}
-IP geolocation will take at least six weeks to update.
+IP geolocation will take at least six weeks to update across databases.
 {{</Aside>}}
 
-Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
+Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user. We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
 
-When you turn on dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites, such as Google Search, will check the MaxMind database to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
+When you turn on dedicated egress IPs, Gateway will update third-party IP geolocation databases. Other websites, such as Google Search, will check these databases to geolocate a user's source IP. For example, if your users are in India, Google will direct them to the United States Google landing page instead of the India landing page until Google recognizes the updated IP geolocation.
 
-We recommend you create a [catch-all egress policy](/cloudflare-one/policies/gateway/egress-policies/#catch-all-policy) before dedicated egress IPs are assigned to your account. This will prevent incorrect geolocation for your users' traffic while geolocation databases update.
+To verify that the IP geolocation has updated, check your dedicated egress IP in one of the supported databases:
 
-#### Verify IP geolocation
+{{<details header="Supported IP geolocation databases">}}
 
-To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](https://www.maxmind.com/en/geoip2-precision-demo) and enter your dedicated egress IP.
+- [Google](https://developers.google.com/maps/documentation/geolocation/overview)
+- [MaxMind GeoIP](https://www.maxmind.com/en/geoip-databases)
+- [TransUnion Neustar TruValidate IP Intelligence](https://www.transunion.com/solution/truvalidate/digital-insights/ip-intelligence)
+- [Abstract IP Geolocation API](https://www.abstractapi.com/ip-geolocation-api)
+- [DB-IP](https://db-ip.com/)
+- [Digital Element](https://www.digitalelement.com/)
+- [Geo Targetly](https://geotargetly.com/)
+- [IP-API.com](https://ip-api.com/)
+- [IP2Location](https://lite.ip2location.com/)
+- [IPinfo.io](https://ipinfo.io/)
+- [ip2c.org](https://ip2c.org/)
+- [ipapi](https://ipapi.com/)
+- [ipgeolocation.io](https://ipgeolocation.io/)
+- [ipify](https://www.ipify.org/)
+- [Ipstack](https://ipstack.com/)
+
+{{</details>}}
 
 ### Egress location
 

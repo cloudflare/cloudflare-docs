@@ -10,7 +10,7 @@ meta:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Redirect Rules**.
-3. Under **Single Redirects**, select **Create Redirect Rule**.
+3. To create a new empty redirect rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 4. Enter a descriptive name for the rule in **Rule name**.
 5. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/).
 6. Under **Then**, define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the rule expression.

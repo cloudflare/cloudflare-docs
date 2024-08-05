@@ -6,6 +6,29 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-07-23'
+  title: Meta Llama 3.1 now available on Workers AI
+  description: |-
+    Workers AI now suppoorts [Meta Llama 3.1](/workers-ai/models/llama-3.1-8b-instruct/).
+
+- publish_date: '2024-07-11'
+  title: New community-contributed tutorial
+  description: |-
+    - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/).
+
+- publish_date: '2024-06-27'
+  title: Introducing embedded function calling
+  description: |-
+    - A new way to do function calling with [Embedded function calling](/workers-ai/function-calling/embedded)
+    - Published new [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) npm package
+    - Open-sourced [`ai-utils on Github`](https://github.com/cloudflare/ai-utils)
+
+- publish_date: '2024-06-19'
+  title: Added support for traditional function calling
+  description: |-
+    - [Function calling](/workers-ai/function-calling/) is now supported on enabled models
+    - Properties added on [models](/workers-ai/models/) page to show which models support function calling
+
 - publish_date: '2024-06-18'
   title: Native support for AI Gateways
   description: |-

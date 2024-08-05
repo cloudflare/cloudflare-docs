@@ -13,8 +13,6 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-{{<table-wrap>}}
-
 | Error code | Meaning                                                                                                           |
 | ---------- | ----------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                              |
@@ -28,17 +26,128 @@ When a Worker running in production has an error that prevents it from returning
 | `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
 
-{{</table-wrap>}}
-
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
 ### Loop limit
 
 A Worker cannot call itself or another Worker more than 16 times. In  order to prevent infinite loops between Workers, the [`CF-EW-Via`](/fundamentals/reference/http-request-headers/#cf-ew-via) header's value is an integer that indicates how many invocations are left. Every time a Worker is invoked, the integer will decrement by 1. If the count reaches zero, a [`1019`](#error-pages-generated-by-workers) error is returned.
 
+### "The script will never generate a response" errors
+
+Some requests may return a 1101 error with `The script will never generate a response` in the error message. This occurs when the Workers runtime detects that all the code associated with the request has executed and no events are left in the event loop, but a Response has not been returned.
+
+#### Cause 1: Unresolved Promises
+
+This is most commonly caused by relying on a Promise that is never resolved or rejected, which is required to return a Response. To debug, look for Promises within your code or dependencies' code that block a Response, and ensure they are resolved or rejected.
+
+In browsers and other JavaScript runtimes, equivalent code will hang indefinitely, leading to both bugs and memory leaks. The Workers runtime throws an explicit error to help you debug.
+
+In the example below, the Response relies on a Promise resolution that never happens. Uncommenting the `resolve` callback solves the issue.
+
+```js
+---
+filename: index.js
+highlight: [9]
+---
+export default {
+  fetch(req) {
+    let response = new Response("Example response");
+    let { promise, resolve } = Promise.withResolvers();
+
+    // If the promise is not resolved, the Workers runtime will
+    // recognize this and throw an error.
+
+    // setTimeout(resolve, 0)
+
+    return promise.then(() => response);
+  },
+};
+```
+
+#### Cause 2: WebSocket connections that are never closed
+
+If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
+
+```js
+---
+filename: index.js
+highlight: [10]
+---
+async function handleRequest(request) {
+  let webSocketPair = new WebSocketPair();
+  let [client, server] = Object.values(webSocketPair);
+  server.accept();
+
+  server.addEventListener('close', () => {
+    // This missing line would keep a WebSocket connection open indefinitely
+    // and results in "The script will never generate a response" errors
+
+    // server.close();
+  });
+
+  return new Response(null, {
+    status: 101,
+    webSocket: client,
+  });
+}
+```
+
+### "Illegal invocation" errors
+
+The error message `TypeError: Illegal invocation: function called with incorrect this reference` can be a source of confusion.
+
+This is typically caused by calling a function that calls `this`, but the value of `this` has been lost.
+
+For example, given an `obj` object with the `obj.foo()` method which logic relies on `this`, executing the method via `obj.foo();` will make sure that `this` properly references the `obj` object. However, assigning the method to a variable, e.g.`const func = obj.foo;` and calling such variable, e.g. `func();` would result in `this` being `undefined`. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript.
+
+In practice, this is often seen when destructuring runtime provided Javscript objects that have functions that rely on the presence of `this`, such as `ctx`.
+
+The following code will error:
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    // destructuring ctx makes waitUntil lose its 'this' reference
+    const { waitUntil } = ctx;
+    // waitUntil errors, as it has no 'this'
+    waitUntil(somePromise);
+
+    return fetch(request);
+  }
+}
+```
+
+Avoid destructuring or re-bind the function to the original context to avoid the error.
+
+The following code will run properly:
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request, env, ctx) {
+    // directly calling the method on ctx avoids the error
+    ctx.waitUntil(somePromise);
+
+    // alternatively re-binding to ctx via apply, call, or bind avoids the error
+    const { waitUntil } = ctx;
+    waitUntil.apply(ctx, [somePromise]);
+    waitUntil.call(ctx, somePromise);
+    const reboundWaitUntil = waitUntil.bind(ctx);
+    reboundWaitUntil(somePromise);
+
+    return fetch(request);
+  }
+}
+```
+
 ## Errors on Worker upload
-These errors occur when a Worker is uploaded or modified. 
-{{<table-wrap>}}
+These errors occur when a Worker is uploaded or modified.
+
 | Error code | Meaning                                                                                                                       |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `10006`     | Could not parse your Worker's code.                                                                                          |
@@ -47,17 +156,14 @@ These errors occur when a Worker is uploaded or modified.
 | `10016`     | Invalid Worker name.                                                                                                         |
 | `10021`     | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details. |
 | `10026`     | Could not parse request body.                                                                                                |
-| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |     
+| `10035`     | Multiple attempts to modify a resource at the same time                                                                      |
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
-| `10026`     | Could not parse request body.                                                                                                |
 | `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
 | `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                  |
 | `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).  |
 | `10056`     | [Binding](/workers/runtime-apis/bindings/)  not found.                                                                       |
 | `10068`     | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                     |
 | `10069`     | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.           |
-
-{{</table-wrap>}}
 
 ### Validation Errors (10021)
 
@@ -79,15 +185,11 @@ To analyze what is consuming so much CPU time, you should open Chrome DevTools f
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
 
-{{<table-wrap>}}
-
 | Error message                              | Meaning                                                                                                         |
 | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | `Network connection lost`                  | Connection failure. Catch a `fetch` or binding invocation and retry it.                                         |
 | `Memory limit`</br>`would be exceeded`</br> `before EOF`| Trying to read a stream or buffer that would take you over the [memory limit](/workers/platform/limits/#memory).|
 | `daemonDown`                               | A temporary problem invoking the Worker.                                                                        |
-
-{{</table-wrap>}}
 
 ## Identify errors: Workers Metrics
 
@@ -193,3 +295,4 @@ async function handleRequest(request) {
 
 * [Log from Workers](/workers/observability/logging/) - Learn how to log your Workers.
 * [Logpush](/workers/observability/logging/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
+* [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how to handle errors from remote-procedure calls.

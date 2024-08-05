@@ -50,29 +50,28 @@ To use an IP, it must be assigned to a Spectrum app to create the appropriate A 
 In the example below, the application routes traffic through Cloudflare’s HTTP pipeline, including WAF, Workers and CDN functionality.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
-     -H "X-Auth-Email: USER_EMAIL" \
-     -H "X-Auth-Key: API_KEY" \
-     -H "Content-Type: application/json" \
-     --data '{
-      "protocol": "tcp/80",
-      "dns": {
-        "type": "ADDRESS",
-        "name": "www.example.com"
-      },
-      "origin_direct": [
-        "tcp://192.0.2.1:80"
-      ],
-      "tls": "off",
-      "traffic_type": "http",
-      "edge_ips": {
-        "type": "static",
-        "ips": [
-          "198.51.100.10",
-          "2001:DB8::1"
-        ]
-      }
-    }'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "protocol": "tcp/80",
+  "dns": {
+    "type": "ADDRESS",
+    "name": "www.example.com"
+  },
+  "origin_direct": [
+    "tcp://192.0.2.1:80"
+  ],
+  "tls": "off",
+  "traffic_type": "http",
+  "edge_ips": {
+    "type": "static",
+    "ips": [
+      "198.51.100.10",
+      "2001:DB8::1"
+    ]
+  }
+}'
 ```
 
-Replace `ZONEID`, `USER_EMAIL`, and `API_KEY` with your actual values.
+Replace `{zone_id}`, `<EMAIL>`, and `<API_KEY>` with your actual values.

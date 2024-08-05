@@ -8,6 +8,10 @@ weight: 4
 
 With Enhanced HTTP/2 Prioritization, Cloudflare delivers resources in the optimal order for the fastest experience across all browsers. It also supports control of content delivery when used in conjunction with [Workers](/workers/).
 
+## Availability
+
+{{<feature-table id="speed.enhanced_http2_prioritization">}}
+
 ## How it works
 
 The speed of loading web content, from the user’s perspective, is dependent on the order in which the resources load. With HTTP/2, by default, Cloudflare will follow the order requested by the browser. This ordering varies from browser to browser, causing a significant difference in performance.
@@ -32,7 +36,7 @@ To enable **Enhanced HTTP/2 Prioritization** in the Cloudflare dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Enhanced HTTP/2 Prioritization** using the Cloudflare API, send a [`PATCH` request](/api/operations/zone-settings-change-h2_prioritization-setting) with the `value` parameter set to `"on"`.
+To enable **Enhanced HTTP/2 Prioritization** using the Cloudflare API, send a [`PATCH` request](/api/operations/zone-settings-edit-single-setting) with `h2_prioritization` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

@@ -88,12 +88,11 @@ All origins with private IPs must have `virtual_network_id` specified.
 {{</Aside>}}
 
 ```bash
-$ curl --request PATCH \
-  https://api.cloudflare.com/client/v4/accounts/<account_id>/load_balancers/pools/<pool_id> \
-  --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <email>' \
-  --header 'X-Auth-Key: <key>' \
-  --data '{
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
 	"origins": [
 		{
 			"name": "origin-1",

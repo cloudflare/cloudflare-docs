@@ -36,6 +36,30 @@ The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd
 | --- | --- | --- | --- |
 | `CNAME` | `<YOUR_HOSTNAME>` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
 
+For O2O to be configured properly, make sure your Proxied DNS record targets your SFCC CNAME **directly**. Do not indirectly target the SFCC CNAME by targeting another Proxied DNS record in your Cloudflare zone which targets the SFCC CNAME.
+
+{{<details header="Correct configuration">}}
+
+For example, if the hostnames routing traffic to SFCC are `www.example.com` and `preview.example.com`, the following is a **correct** configuration in your Cloudflare zone:
+
+| Type | Name | Target | Proxy status |
+| --- | --- | --- | --- |
+| `CNAME` | `www.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
+| `CNAME` | `preview.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
+
+{{</details>}}
+
+{{<details header="Incorrect configuration">}}
+
+And, the following is an **incorrect** configuration because `preview.example.com` indirectly targets the SFCC CNAME via the `www.example.com` Proxied DNS record, which means O2O will not be properly enabled for hostname `preview.example.com`:
+
+| Type | Name | Target | Proxy status |
+| --- | --- | --- | --- |
+| `CNAME` | `www.example.com` | `commcloud.prod-abcd-example-com.cc-ecdn.net` | Proxied |
+| `CNAME` | `preview.example.com` | `www.example.com` | Proxied |
+
+{{</details>}}
+
 ## Product compatibility
 
 {{<render file="_provider-guide-compatibility">}}
@@ -49,3 +73,44 @@ The `CNAME` provided by SFCC Business Manager will resemble `commcloud.prod-abcd
 If you encounter SSL errors when attempting to activate a Cloudflare Managed Certificate, verify if you have a `CAA` record on your domain name with command `dig +short example.com CAA`.
 
 If you do have a `CAA` record, verify that it permits SSL certificates to be issued by the [certificate authorities supported by Cloudflare](/ssl/reference/certificate-authorities/).
+
+### Best practice Zone-level configuration
+
+1. Set **Minimum TLS version** to **TLS 1.2**
+   1. Navigate to **SSL/TLS > Edge Certificates**, scroll down the page to find **Minimum TLS Version**, and set it to *TLS 1.2*. This setting applies to every Proxied DNS record in your Zone.
+2. Match the **Security Level** set in **SFCC Business Manager**
+   1. *Option 1: Zone-level* - Navigate to **Security > Settings**, find **Security Level** and set **Security Level** to match what is configured in **SFCC Business Manager**. This setting applies to every Proxied DNS record in your Cloudflare zone.
+   2.  *Option 2: Per Proxied DNS record* - If the **Security Level** differs between the Proxied DNS records targeting your SFCC environment and other Proxied DNS records in your Cloudflare zone, use a **Configuration Rule** to set the **Security Level** specifically for the Proxied DNS records targeting your SFCC environment. For example:
+       1. Create a new **Configuration Rule** by navigating to **Rules > Configuration Rules** and click **Create rule**:
+          1. **Rule name:** `Match Security Level on SFCC hostnames`
+          2. **Field:** *Hostname*
+          3. **Operator:** *is in* (this will match against multiple hostnames specified in the **Value** field)
+          4. **Value:** `www.example.com` `dev.example.com`
+          5. Scroll down to **Security Level** and click **+ Add**
+             1. **Select Security Level:** *Medium* (this should match the **Security Level** set in **SFCC Business Manager**)
+          6. Scroll to the bottom of the page and click **Deploy**
+3. Disable **Browser Integrity Check**
+   1. *Option 1: Zone-level* - Navigate to **Security > Settings**, find **Browser Integrity Check** and toggle it off to disable it. This setting applies to every Proxied DNS record in your Cloudflare zone.
+   2.  *Option 2: Per Proxied DNS record* - If you want to keep **Browser Integrity Check** enabled for other Proxied DNS records in your Cloudflare zone but want to disable it on Proxied DNS records targeting your SFCC environment, keep the Zone-level **Browser Integrity Check** feature enabled and use a **Configuration Rule** to disable **Browser Integrity Check** specifically for the hostnames targeting your SFCC environment. For example:
+       1. Create a new **Configuration Rule** by navigating to **Rules > Configuration Rules** and click **Create rule**:
+          1. **Rule name:** `Disable Browser Integrity Check on SFCC hostnames`
+          2. **Field:** *Hostname*
+          3. **Operator:** *is in* (this will match against multiple hostnames specified in the **Value** field)
+          4. **Value:** `www.example.com` `dev.example.com`
+          5. Scroll down to **Browser Integrity Check** and click the **+ Add** button:
+             1. Set the toggle to **Off** (a grey X will be displayed)
+          6. Scroll to the bottom of the page and click **Deploy**
+4. Bypass **Cache** on Proxied DNS records targeting your SFCC environment
+   1. Your SFCC environment, also called a **Realm**, will contain one to many SFCC Proxy Zones, which is where caching will always occur. In the corresponding SFCC Proxy Zone for your domain, SFCC performs their own cache optimization, so it is recommended to bypass the cache on the Proxied DNS records in your Cloudflare zone which target your SFCC environment to prevent a "double caching" scenario. This can be accomplished with a **Cache Rule**.
+   2. If the **Cache Rule** is not created, caching will occur in both your Cloudflare zone and your corresponding SFCC Proxy Zone, which can cause issues if and when the cache is invalidated or purged in your SFCC environment.
+      1. Additional information on caching in your SFCC environment can be found in [SFCC's Content Cache Documentation](https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-content-cache.html)
+   1. Create a new **Cache Rule** by navigating to **Rules > Cache Rules** and click **Create rule**:
+      1. **Rule name:** `Bypass cache on SFCC hostnames`
+      2. **Field:** *Hostname*
+      3. **Operator:** *is in* (this will match against multiple hostnames specified in the **Value** field)
+      4. **Value:** `www.example.com` `dev.example.com`
+      5. **Cache eligibility:** Select **Bypass cache**
+      6. Scroll to the bottom of the page and click **Deploy**
+5. *Optional* - Upload your Custom Certificate from **SFCC Business Manager** to your Cloudflare zone
+   1. The Custom Certificate you uploaded via **SFCC Business Manager** or **SFCC CDN-API**, which exists within your corresponding SFCC Proxy Zone, will terminate TLS connections for your SFCC storefront hostnames. Because of that, it is optional if you want to upload the same Custom Certificate to your own Cloudflare zone. Doing so will allow Cloudflare users with specific roles in your Cloudflare account to receive expiration notifications for your Custom Certificates. Please read [renew custom certificates](/ssl/edge-certificates/custom-certificates/renewing/#renew-custom-certificates) for further details.
+   2. Additionally, since you now have your own Cloudflare zone, you have access to Cloudflare's various edge certificate products which means you could have more than one certificate covering the same SANs. In that scenario, a certificate priority process occurs to determine which certificate to serve at the Cloudflare edge. If you find your SFCC storefront hostnames are presenting a different certificate compared to what you uploaded via **SFCC Business Manager** or **SFCC CDN-API**, the certificate priority process is likely the reason. Please read [certificate priority](/ssl/reference/certificate-and-hostname-priority/#certificate-deployment) for further details.

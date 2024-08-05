@@ -5,6 +5,23 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-07-23'
+  title:
+  description: |-
+    * **Embeds**: Add support for server-side rendering of X (Twitter) and Instagram embeds
+    * **CSP Compliance**: Remove `eval` dependency
+    * **Google Analytics 4 Managed Component**: Allow customizing the document title and client ID fields
+    * **Custom HTML Managed Component**: Scripts included in a Custom HTML will preserve their running order
+    * **Google Ads Managed Component**: Allow linking data with Google Analytics 4 instances
+    * **TikTok Managed Component**: Use the new TikTok Events API v2 
+    * **Reddit Managed Component**: Support custom events
+    * **Twitter Managed Component**: Support setting the `event_id`, using custom fields, and improve conversion tracking
+    * **Bugfix**: Cookie life-time cannot exceed one year anymore
+    * **Bugfix**: Zaraz Debugger UI does not break when presenting really long lines of information
+- publish_date: '2024-06-21'
+  title:
+  description: |-
+    * **Dashboard**: Add an option to disable the automatic `Pageview` event
 - publish_date: '2024-06-18'
   title:
   description: |-
@@ -19,7 +36,7 @@ entries:
     * **Bugfix**: Cookie values are now decoded
     * **Bugfix**: Ensure context enricher worker can access the `context.system.consent` object
     * **Google Ads Managed Component**: Add conversion linker on pageviews without sending a pageview event
-    * **Pinterest Conversion Api Managed Component**: Bugfix handling of partial e-commerce event payloads
+    * **Pinterest Conversion API Managed Component**: Bugfix handling of partial e-commerce event payloads
 - publish_date: '2024-04-19'
   title:
   description: |-
@@ -78,7 +95,7 @@ entries:
   title:
   description: |-
     * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
-    * **Dashboard**: Improved welcome screen for new Zaraz users".
+    * **Dashboard**: Improved welcome screen for new Zaraz users.
 - publish_date: '2023-10-03'
   title:
   description: |-

@@ -36,7 +36,7 @@ Yes. Cloudflare Tunnel has full support for Websockets.
 
 {{<faq-answer>}}
 
-Yes. Cloudflare Tunnel supports gRPC for services within a [private network](/cloudflare-one/connections/connect-networks/private-net/). Public hostname deployments are not supported at this time.
+Yes. {{<render file="tunnel/_grpc-support.md">}}
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -69,13 +69,13 @@ $ netcat -zv [your-server’s-ip-address] 443
 
 If your server is still responding on those ports, you will see:
 
-```bash
+```txt
 [ip-address] 80 (http) open
 ```
 
 If your server is correctly locked down, you will see:
 
-```bash
+```txt
 [ip-address] 443 (https): Connection refused
 ```
 

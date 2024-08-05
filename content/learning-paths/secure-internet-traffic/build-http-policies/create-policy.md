@@ -17,7 +17,7 @@ To create a new HTTP policy:
 2. In the **HTTP** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-5. Choose an **Action** to take when traffic matches the logical expression. For example, if you have enabled TLS inspection, some applications that use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations) may not support HTTP inspection, such as some Google products. You can create a policy to bypass inspection for these applications:
+5. Choose an **Action** to take when traffic matches the logical expression. For example, if you have enabled TLS inspection, some applications that use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations) may not support HTTP inspection, such as some Google products. You can create a policy to bypass inspection for these applications:
 
    {{<render file="gateway/policies/_do-not-inspect-applications.md" productFolder="cloudflare-one">}}
 

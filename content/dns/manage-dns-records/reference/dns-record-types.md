@@ -44,22 +44,22 @@ When creating `A` or `AAAA` records [using the API](/dns/manage-dns-records/how-
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 highlight: [8, 10]
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "type":"A",
-  "name":"www.example.com",
-  "content":"192.0.2.1",
-  "ttl":3600,
-  "proxied":false
-  }'
+  "type": "A",
+  "name": "www.example.com",
+  "content": "192.0.2.1",
+  "ttl": 3600,
+  "proxied": false
+}'
 ```
 
 ```json
@@ -124,21 +124,21 @@ When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/cre
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 highlight: [8, 10]
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-  "type":"CNAME",
-  "name":"www.example.com",
-  "content":"www.another-example.com",
-  "ttl":3600,
-  "proxied":false
+  "type": "CNAME",
+  "name": "www.example.com",
+  "content": "www.another-example.com",
+  "ttl": 3600,
+  "proxied": false
 }'
 ```
 
@@ -249,14 +249,14 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 {{<render file="_api-field-definitions.md">}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--H "Content-Type: application/json" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "type": "SRV",
   "name": "_xmpp._tcp.example.com",
@@ -339,7 +339,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 

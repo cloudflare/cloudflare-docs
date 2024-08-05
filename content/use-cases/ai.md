@@ -16,17 +16,17 @@ Build and deploy ambitious AI applications to Cloudflare's global network.
 
 Diagrams, design patterns, and detailed best practices to help you generate solutions with Cloudflare products.
 
-{{<resource-by-tag tags="AI" resource_type="reference-architecture,design-guide,reference-architecture-diagram">}}
+{{<resource-by-selector tags="AI" resource_type="reference-architecture,design-guide,reference-architecture-diagram">}}
 
 ## Demo apps
 
-{{<external-resources-by-tag resource_type="apps" tags="AI">}}
+{{<external-resources resource_type="apps" tags="AI">}}
 
 ## Tutorials
 
 Step-by-step guides to help you build and learn.
 
-{{<resource-by-tag tags="AI" resource_type="tutorial">}}
+{{<resource-by-selector tags="AI" resource_type="tutorial">}}
 
 ## Customer spotlights
 
@@ -36,7 +36,7 @@ Explore case studies on [AI companies building on Cloudflare](https://workers.cl
 
 Examples ready to copy and paste.
 
-{{<resource-by-tag tags="AI" resource_type="example">}}
+{{<resource-by-selector tags="AI" resource_type="example">}}
 
 {{<Aside type="note">}}
 

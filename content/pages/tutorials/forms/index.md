@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a HTML form
 tags: [Forms]
+languages: [JavaScript]
 ---
 
 # Create a HTML form

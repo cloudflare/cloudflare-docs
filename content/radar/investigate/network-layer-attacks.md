@@ -24,8 +24,8 @@ When filtering by location or autonomous system (AS), we are filtering by the so
 In the following example, we will examine the worldwide versus Singapore distribution of mitigated attacks by network protocol:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeseries_groups?name=global&dateRange=1d&location=&name=singapore&location=SG&dateRange=1d&aggInterval=1h&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeseries_groups?name=global&dateRange=1d&location=&name=singapore&location=SG&dateRange=1d&aggInterval=1h&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 If we inspect the abbreviated response below, we can conclude that globally, at those timestamps, `UDP` and `TCP` attacks were mostly evenly split.
@@ -71,8 +71,8 @@ For more information refer to the [API reference](/api/operations/radar-get-atta
 We can also filter by source location and examine attacks coming from Russia:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location=RU&name=attacks_ru&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location=RU&name=attacks_ru&dateRange=1d&format=json" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

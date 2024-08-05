@@ -4,12 +4,14 @@ pcx_content_type: reference-architecture
 weight: 1
 meta:
     title: "Cloudflare Security Architecture"
+    description: This document provides insight into how this network and platform are architected from a security perspective, how they are operated, and what services are available for businesses to address their own security challenges.
+products: [Workers, Turnstile]
 ---
 
 # Cloudflare Security Architecture
 
 ## Introduction
-Today, everything and everyone needs to be connected to everything everywhere, all the time, and everything must be secure. However, many businesses are not built on infrastructure that supports this reality. Historically, employees worked in an office where most business systems (file servers, printers, applications) were located on and accessible only from the private office network. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet. 
+Today, everything and everyone needs to be connected to everything everywhere, all the time, and everything must be secure. However, many businesses are not built on infrastructure that supports this reality. Historically, employees worked in an office where most business systems (file servers, printers, applications) were located on and accessible only from the private office network. A security perimeter was created around the network to protect against outsider threats, most of which came from the public Internet.
 
 However, as Internet bandwidth increased and more people needed to do work outside of the office, VPNs allowed employees access to internal systems from anywhere they could get an Internet connection. Applications then started to move beyond the office network, living in the cloud either as SaaS applications or hosted in IaaS platforms. Companies rushed to expand access to their networks and invest in new, dynamic methods to detect, protect, and manage the constantly evolving security landscape. But this has left many businesses with complex policies and fragile networks with many point solutions trying to protect different points of access.
 
@@ -24,12 +26,12 @@ This document is designed for IT and security professionals who are looking at u
 To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
 
 {{<render file="_what-is-cloudflare-link.md">}}
-- [How Cloudflare strengthens security everywhere you do business](https://cf-assets.www.cloudflare.com/slt3lc6tev37/is7XGR7xZ8CqW0l9EyHZR/1b4311823f602f72036385a66fb96e8c/Everywhere_Security-Cloudflare-strengthens-security-everywhere-you_do-business.pdf) (10 minutes) 
+- [How Cloudflare strengthens security everywhere you do business](https://cf-assets.www.cloudflare.com/slt3lc6tev37/is7XGR7xZ8CqW0l9EyHZR/1b4311823f602f72036385a66fb96e8c/Everywhere_Security-Cloudflare-strengthens-security-everywhere-you_do-business.pdf) (10 minutes)
 
 ## Secure global network
-Any cloud security solution needs to be fast and always available. Our network protects over 20% of Internet web properties, operates in over 320 cities, and is 50 ms away from 95% of the Internet-connected population. Each server in each data center runs every service, so that traffic is inspected in one pass and acted upon close to the end user. These servers are connected together by over 13,000 network peering relationships with a total network capacity of 280 Tbps. Cloudflare’s network is also connected to [every Internet exchange](https://bgp.he.net/report/exchanges#_participants) (more than Microsoft, AWS, and Google) to ensure that we are able to peer traffic from any part of the Internet. 
+Any cloud security solution needs to be fast and always available. Our network protects over 20% of Internet web properties, operates in over 320 cities, and is 50 ms away from 95% of the Internet-connected population. Each server in each data center runs every service, so that traffic is inspected in one pass and acted upon close to the end user. These servers are connected together by over 13,000 network peering relationships with a total network capacity of 280 Tbps. Cloudflare’s network is also connected to [every Internet exchange](https://bgp.he.net/report/exchanges#_participants) (more than Microsoft, AWS, and Google) to ensure that we are able to peer traffic from any part of the Internet.
 
-With millions of customers using Cloudflare, the network serves over [57 million HTTP requests](https://radar.cloudflare.com/traffic) per second on average, with more than 77 million HTTP requests per second at peak. As we analyze all this traffic, we detect and block an average of [209 billion cyber threats each day](https://radar.cloudflare.com/security-and-attacks). This network runs at this massive scale to ensure that customers using our security products experience low latency, access to high bandwidth, and a level of reliability that ensures the ongoing security of their business.
+With millions of customers using Cloudflare, the network serves over [57 million HTTP requests](https://radar.cloudflare.com/traffic) per second on average, with more than 77 million HTTP requests per second at peak. As we analyze all this traffic, we detect and block an average of [209 billion cyber threats each day](https://radar.cloudflare.com/security-and-attacks). This network runs at this massive scale to ensure that customers using our security products experience low latency, access to high bandwidth, and a level of reliability that ensures the ongoing security of their business. (Note metrics are correct as of June 2024.)
 
 ### Architecture
 #### Network
@@ -39,9 +41,9 @@ The Cloudflare network is not like a traditional enterprise network. It has been
 
 A unique aspect of the network's security architecture is how we use anycast networking. In every data center we broadcast the entire Cloudflare network range (IPv6 and IPv4) for both UDP and TCP. [Border Gateway Protocol](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) (BGP) ensures routers all around the Internet provide the shortest possible path for any user to the nearest Cloudflare server where traffic is inspected. From a security perspective, this is very important. During distributed denial-of-service (DDoS) attacks to customers behind our network, a combination of high bandwidth capacity and distribution of requests across thousands of local servers helps ensure our network stays performant and available, even during some of the largest attacks in [Internet history](https://blog.cloudflare.com/cloudflare-mitigates-record-breaking-71-million-request-per-second-ddos-attack).
 
-Server updates, such as access policies, rate limiting, and firewall rules, are performed by our [Quicksilver service](https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale). Customer changes are reflected across the entire network in seconds, allowing customers to respond to changing business requirements and ensuring policies are quickly implemented globally. 
+Server updates, such as access policies, rate limiting, and firewall rules, are performed by our [Quicksilver service](https://blog.cloudflare.com/introducing-quicksilver-configuration-distribution-at-internet-scale). Customer changes are reflected across the entire network in seconds, allowing customers to respond to changing business requirements and ensuring policies are quickly implemented globally.
 
-Every level of the network conforms to strict hardened security controls. Processes running on the edge are designed with a need-to-know basis and run with least privilege. We make heavy use of hardware security modules (HSMs) and the keys maintained within them ensure only the right access is given at the right time. To ensure tight control over and detailed visibility of changes to the network, all infrastructure is managed via code ([IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code)). 
+Every level of the network conforms to strict hardened security controls. Processes running on the edge are designed with a need-to-know basis and run with least privilege. We make heavy use of hardware security modules (HSMs) and the keys maintained within them ensure only the right access is given at the right time. To ensure tight control over and detailed visibility of changes to the network, all infrastructure is managed via code ([IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
 
 #### Servers
 Cloudflare designs and owns all the servers in our network. There are two main types.
@@ -57,10 +59,10 @@ Every server runs all Cloudflare products and services that customers use to sec
 Many of our products run on our [serverless runtime](/workers/) environment, which leverages the very latest techniques in service isolation. We anticipated this secure runtime environment could be very valuable to our customers, so we productized it, allowing them to [build](/workers/reference/how-workers-works/) and [run](https://blog.cloudflare.com/cloud-computing-without-containers) their own applications on our network. More about that at the very end of this document.
 
 #### Innovation
-To ensure we are delivering the most secure network and platform possible, we are always innovating. New technologies need to be created to solve the ever-increasing range of security threats and challenges. Cloudflare leads many initiatives, such as further securing BGP using [RPKI](https://isbgpsafeyet.com/), and we regularly contribute to working IETF groups on many common Internet security protocols. We strive to help increase and monitor [IPv6 adoption](https://radar.cloudflare.com/adoption-and-usage), which inherently creates a more secure Internet, and we stay ahead of future challenges by deploying technologies such as [post-quantum cryptography](https://blog.cloudflare.com/post-quantum-for-all) before any increase in computing power from quantum computers threatens existing cryptographic techniques. 
+To ensure we are delivering the most secure network and platform possible, we are always innovating. New technologies need to be created to solve the ever-increasing range of security threats and challenges. Cloudflare leads many initiatives, such as further securing BGP using [RPKI](https://isbgpsafeyet.com/), and we regularly contribute to working IETF groups on many common Internet security protocols. We strive to help increase and monitor [IPv6 adoption](https://radar.cloudflare.com/adoption-and-usage), which inherently creates a more secure Internet, and we stay ahead of future challenges by deploying technologies such as [post-quantum cryptography](https://blog.cloudflare.com/post-quantum-for-all) before any increase in computing power from quantum computers threatens existing cryptographic techniques.
 
 ### Operational security
-Not only must the design of the network be secure, but so should how we run and maintain it. We operate at a massive scale, and the common design of our servers helps optimize software deployments and monitoring. Defining who has access to maintain the network is fully automated, following infrastructure-as-code practices with role-based access controls (RBAC) and least privilege controls used everywhere. 
+Not only must the design of the network be secure, but so should how we run and maintain it. We operate at a massive scale, and the common design of our servers helps optimize software deployments and monitoring. Defining who has access to maintain the network is fully automated, following infrastructure-as-code practices with role-based access controls (RBAC) and least privilege controls used everywhere.
 
 Customers send sensitive information to our products and services. The mission for the Cloudflare compliance team is to ensure the underlying infrastructure that supports these services meets [industry compliance standards](https://www.cloudflare.com/trust-hub/compliance-resources/) such as FedRAMP, SOC II, ISO, PCI certifications, C5, privacy, and regulatory frameworks. The compliance team works with all engineering organizations to help integrate these requirements as part of the way we work. From a compliance perspective, our areas of focus include:
 
@@ -70,7 +72,7 @@ Customers send sensitive information to our products and services. The mission f
 - Monitoring the changes to the regulatory landscape
 - Providing feedback to regulatory bodies on upcoming changes
 
-We also run a [bug bounty program](https://hackerone.com/cloudflare), giving incentives for the community to find and report vulnerabilities to us for financial reward. 
+We also run a [bug bounty program](https://hackerone.com/cloudflare), giving incentives for the community to find and report vulnerabilities to us for financial reward.
 
 In summary, Cloudflare not only has built the right technology to secure our network, but also has well-staffed and mature teams ensuring that the right processes are created, followed, and monitored. As Cloudflare has grown over the past decade, we've accrued some of the best security knowledge in the industry, which in turn has attracted top talent to come work with us. This effect compounds each year, bringing our security skills and knowledge to greater heights. We are also very transparent about how Cloudflare runs and secures its network, and we [often blog](https://blog.cloudflare.com/secure-by-design-principles) about our processes and evolving approach to security.
 
@@ -130,7 +132,7 @@ In general, what customers need to effectively combat and protect against the gr
 - Performance and scale: All Cloudflare services run on every server in every data center on the same global cloud, allowing for maximum performance in terms of global reachability and latency and ability to scale out, leveraging the full capacity of Cloudflare’s global infrastructure.
 - API first: Cloudflare is API first. All configurations and capabilities available from the UI/dashboard are also available from the API. Cloudflare can easily be configured with Terraform to support automation for customer workflows/processes.
 
-Cloudflare’s security services that protect networks, applications, devices, users, and data can be grouped into the following categories. 
+Cloudflare’s security services that protect networks, applications, devices, users, and data can be grouped into the following categories.
 
 ![Cloudflare has a wide range of security services across SASE/SSE, application and network security.](/images/reference-architecture/security/security-ref-arch-2.svg)
 
@@ -161,7 +163,7 @@ Note that SaaS applications could be considered both public and private. For exa
 
 These are general guidelines because with Cloudflare it's possible to have very sensitive internal applications be protected by publicly accessible remote access services. We will explain more as we continue through this document.
 
-### Protecting public resources 
+### Protecting public resources
 Businesses rely on public websites and API endpoints for daily ecommerce transactions and brand awareness, and often the entire business is an online service. High availability, performance, and security are top concerns, and customers use Cloudflare to ensure their businesses stay up and running. Cloudflare security services help prevent fraud, data exfiltration, and attacks that can create liability, cause losses and brand damage, and slow down or halt business.
 
 Public assets need to be protected on multiple fronts and from various attacks; therefore, multiple different security capabilities need to be implemented. Additionally, customers must tackle the operational efficiency of solutions they implement. Managing multiple point products for mitigating different attacks or having multiple vendors to meet company security objectives and requirements creates many operational inefficiencies and issues, such as multiple UIs/dashboards, training, lack of cross-product integrations, etc.
@@ -208,7 +210,7 @@ Additionally, Cloudflare provides for [WAF Attack Score](/waf/about/waf-attack-s
 
 Products: [WAF - Cloudflare Managed Rules](/waf/managed-rules/)
 
-##### Unauthorized access 
+##### Unauthorized access
 Unauthorized access can result from broken authentication or broken access control due to vulnerabilities in authentication, weak passwords, or easily bypassed authorization. Cloudflare mTLS (mutual TLS) and JWT (JSON Web Tokens) validation can be used to bolster authentication. Clients or API requests that don’t have a valid certificate or JWT can be denied access via security policy. Customers can create and manage mTLS certificates from the Cloudflare dashboard or an API. Cloudflare’s WAF and [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) managed ruleset can be used to detect compromised credentials being used in authentication requests. WAF policies can also be used to restrict access to applications/paths based on different request criteria.
 
 Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Gateway (JWT Validation)](/api-shield/security/jwt-validation/), [WAF](/waf/)
@@ -236,7 +238,7 @@ Data exfiltration is the process of acquiring sensitive data through malicious t
 
 Products: [WAF - Sensitive Data Detection](/waf/managed-rules/)
 
-##### Credential stuffing 
+##### Credential stuffing
 Credential stuffing is a cyberattack in which credentials obtained from a data breach on one service are used to attempt to log in to another unrelated service. Usually, automation tools or scripting are used to loop through a vast number of stolen credentials, sometimes augmented with additional data in the hopes of achieving account takeover.
 
 Cloudflare Bot Management can be used to detect potentially malicious bots. Cloudflare challenges can also be used to challenge suspect requests and stop automated attempts to gain access. WAF policies can be used with specific request criteria to prevent attacks. Additionally, Cloudflare’s WAF and Exposed Credentials Check managed ruleset can be used to detect compromised credentials being used in auth requests. Rate limiting can also throttle requests and effectiveness of malicious credential stuffing techniques.
@@ -314,7 +316,7 @@ Using Cloudflare [WAF](/waf/), customers can deploy custom rules based on very g
 - Extraction of sensitive data
 
 ##### Rate limiting
-[Rate limiting](/waf/rate-limiting-rules/) can be used to mitigate various attacks, including volumetric attacks, credential stuffing, web scraping, and DoS attacks. Cloudflare rate limiting allows customers to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached. Rate limiting can be granular based on specific request or header criteria and can also be based on sessions or API tokens. Customers can configure actions including logging, blocking, and challenges for when the specified rate is exceeded. 
+[Rate limiting](/waf/rate-limiting-rules/) can be used to mitigate various attacks, including volumetric attacks, credential stuffing, web scraping, and DoS attacks. Cloudflare rate limiting allows customers to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached. Rate limiting can be granular based on specific request or header criteria and can also be based on sessions or API tokens. Customers can configure actions including logging, blocking, and challenges for when the specified rate is exceeded.
 
 Customers can also configure which request criteria is used as a counter for determining when to throttle or block after a limit is exceeded. Customers can implement two different behaviors for rate limiting:
 
@@ -334,11 +336,12 @@ The Cloudflare [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/h
 
 ![All security detection can be seen from a single dashboard.](/images/reference-architecture/security/security-ref-arch-10.svg)
 
+
 API Gateway’s API Discovery is used to learn all API endpoints in a customer’s environment using machine learning. After this step, customers can save endpoints to Endpoint Management so additional API performance and error information can be collected and security policies can be applied.
 
 Customers can enable a positive security model using mTLS, JWT validation, and schema validation and protect against additional API abuse with rate limiting and volumetric abuse protection as well as sequence mitigation and GraphQL protections.
 
-![The API gateway has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](/images/reference-architecture/security/security-ref-arch-11.svg)
+![The API gateway has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](/images/reference-architecture/security/security-ref-arch-11.svg "Common user workflow for API Gateway")
 
 ##### Bot Management
 [Bot Management](/bots/) is used to mitigate various malicious activities, including web scraping, price scraping, inventory hoarding, and credential stuffing. Cloudflare has multi-layered bot mitigation capabilities that include heuristics, machine learning, anomaly detection, and JS fingerprinting. Bot management also assigns a bot score to every request. WAF rules can be created around bot scores to create very granular security policies.
@@ -397,7 +400,7 @@ All network assets, whether on-premises or in private or public-hosted cloud env
 ![Magic Transit can secure your private network links.](/images/reference-architecture/security/security-ref-arch-16.svg)
 
 ##### Magic WAN
-With [Magic WAN](/magic-wan/), customers can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go. Magic WAN supports a variety of on-ramps, including Anycast GRE and IPsec tunnels, Cloudflare Network Interconnect, Cloudflare Tunnel, WARP, and a variety of network on-ramp partners. Magic WAN can help end reliance on traditional SD-WAN appliances and securely connect users, offices, data centers, and hybrid cloud over the Cloudflare global network without relying on vendor-specific hardware or software.
+With [Magic WAN](/magic-wan/), customers can securely connect any traffic source — data centers, offices, devices, cloud properties — to Cloudflare’s network and configure routing policies to get the bits where they need to go. Magic WAN supports a variety of on-ramps, including anycast GRE and IPsec tunnels, Cloudflare Network Interconnect, Cloudflare Tunnel, WARP, and a variety of network on-ramp partners. Magic WAN can help end reliance on traditional SD-WAN appliances and securely connect users, offices, data centers, and hybrid cloud over the Cloudflare global network without relying on vendor-specific hardware or software.
 
 ##### Magic Firewall
 [Magic Firewall](/magic-firewall/) is Cloudflare’s firewall-as-a-service solution delivered from Cloudflare’s global network and is integrated with Magic Transit and Magic WAN. It allows for enforcing consistent network security policies across customers’ entire WAN, including headquarters, branch offices, and virtual private clouds. Customers can deploy granular rules that globally filter on protocol, port, IP addresses, packet length, and bit field match.
@@ -451,8 +454,8 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 | [Magic WAN](/magic-wan/) | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic. | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare. |
 | [Magic WAN Connector](/magic-wan/configuration/connector/) | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic. | Uses the same technology as Magic WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Magic WAN Connector. |
 | [cloudflared](/cloudflare-one/connections/connect-networks/) | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network. |
-| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks. | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. | 
-| [WARP Desktop Agent](/cloudflare-one/connections/connect-devices/warp/) | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks. | Connecting end user devices like phones and laptops to be part of the Cloudflare network. | 
+| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks. | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
+| [WARP Desktop Agent](/cloudflare-one/connections/connect-devices/warp/) | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks. | Connecting end user devices like phones and laptops to be part of the Cloudflare network. |
 | [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare. | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare. |
 
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).

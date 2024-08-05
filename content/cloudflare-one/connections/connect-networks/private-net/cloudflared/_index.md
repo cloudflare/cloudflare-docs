@@ -10,7 +10,7 @@ A private network has two primary components: the server and the client. The ser
 
 On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling.  When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare’s network to the corresponding tunnel.
 
-![Diagram displaying connections between a device, WireGuard tunnel, Cloudflare Tunnel and a public cloud.](/images/cloudflare-one/connections/private-ips-diagram.png)
+![Diagram displaying connections between a device, Cloudflare, and a public cloud.](/images/cloudflare-one/connections/private-ips-diagram.png)
 
 To enable remote access to your private network, follow the guide below.
 
@@ -21,6 +21,15 @@ To connect your infrastructure with Cloudflare Tunnel:
 1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
 
 2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
+
+{{<Aside type="note">}}
+Cloudflare Tunnel only supports routes in the [private IP address space](https://www.rfc-editor.org/rfc/rfc1918.html#section-3):
+
+- `10.0.0.0` - `10.255.255.255`
+- `172.16.0.0` - `172.31.255.255`
+- `192.168.0.0` - `192.168.255.255`
+
+{{</Aside>}}
 
 ## 2. Set up the client
 

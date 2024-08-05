@@ -43,13 +43,14 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
 
 ```bash
-curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-   "status": "active"
-  }'
+  "status": "active"
+}'
 ```
 
 2. Use the [DNSSEC Details endpoint](/api/operations/dnssec-dnssec-details) to get the necessary values to create a **DS** record at your registrar.
@@ -99,13 +100,14 @@ b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set the `dnssec_presigned` value to `true`.
 
 ```bash
-curl --request PATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <KEY>' \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-   "dnssec_presigned": true
-  }'
+  "dnssec_presigned": true
+}'
 ```
 
 {{</tab>}}

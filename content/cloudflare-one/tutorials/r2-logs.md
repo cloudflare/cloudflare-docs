@@ -4,6 +4,8 @@ category: 🔐 Zero Trust
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Use Cloudflare R2 as a Zero Trust log destination
+products: [R2]
+content_type: 📝 Tutorial
 ---
 
 # Use Cloudflare R2 as a Zero Trust log destination

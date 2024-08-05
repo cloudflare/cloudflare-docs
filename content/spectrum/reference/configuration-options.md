@@ -22,7 +22,7 @@ The application type determines the protocol by which data travels from the edge
 
 When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address, or you can provision the application to be IPv6 only. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
 
-The addresses are Anycasted from all Cloudflare data centers, with the exception of data centers in China. Spectrum is not available in China, but users have the option to use Cloudflare's partner JD Cloud's solution [Starshield](https://www.jdcloud.com/cn/products/starshield).
+The addresses are anycasted from all Cloudflare data centers, with the exception of data centers in China. Spectrum is not available in China, but users have the option to use Cloudflare's partner JD Cloud's solution [Starshield](https://www.jdcloud.com/cn/products/starshield).
 
 ## SMTP
 
@@ -113,7 +113,7 @@ If you have the TLS termination setting configured to **off**, this means that S
 
 ## Origin TLS Termination
 
-Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/reference/cipher-suites/).
+Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 The cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
 

@@ -7,6 +7,7 @@ meta:
   description: By integrating automatic speech recognition technology into video platforms, content creators, publishers, and distributors can reach a broader audience, including individuals with hearing impairments or those who prefer to consume content in different languages.
 tags:
   - AI
+products: [Workers AI, Workers, Cache / CDN, R2]
 ---
 
 # Automatic captioning for video uploads
@@ -26,7 +27,7 @@ The process begins with capturing the audio from the video source, which is then
 3. **Store subtitles**: Store the subtitle file(s) on [R2](/r2/).
 4. **Store video**: Store the video files on [R2](/r2/).
 5. **Client request**: Send GET requests for video and subtitle(s) to origin. Use global [Cache](/cache/) to increase performance.
-6. **Origin request**: Fetch file(s) from [R2](/r2/) on cache miss by using [Public Buckets](/r2/buckets/public-buckets/).
+6. **Origin request**: Fetch file(s) from [R2](/r2/) on cache `MISS` by using [Public Buckets](/r2/buckets/public-buckets/).
 
 ## Related resources
 

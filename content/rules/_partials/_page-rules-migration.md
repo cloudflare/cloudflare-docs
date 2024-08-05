@@ -6,5 +6,7 @@ _build:
 ---
 
 {{<Aside type="warning">}}
-**Page Rules are a legacy product.** Consider alternative [Rules](/rules/) options due to their enhanced configurability. Refer to the [migration guide](/rules/reference/page-rules-migration/) for details.
+Consider alternative [Rules](/rules/) options due to their enhanced configurability. Refer to the [migration guide](/rules/reference/page-rules-migration/) for details.
+
+For more flexibility and customization, consider using [Snippets](/rules/snippets/).
 {{</Aside>}}

@@ -74,7 +74,7 @@ When `Enabled`, the WARP client will [automatically install](/cloudflare-one/con
 
 Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
 
-This setting is primarily used to enable site-to-site connectivity with [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/). You can also use it when the default IP conflicts with other local services on your network.
+This setting is primarily used in conjunction with the [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) and for [MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). You can also use it when the default IP conflicts with other local services on your network.
 
 **Value:**
 
@@ -105,6 +105,34 @@ Since captive portal implementations vary, WARP may not detect all captive porta
 {{</details>}}
 
 When `Enabled`, users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh). This feature does not support switching between any other modes.
+
+### Device tunnel protocol
+
+{{<details header="Feature availability">}}
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -- | -- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+
+| System   | Availability | Minimum WARP version |
+| ---------| -------------| ---------------------|
+| Windows  | ✅           | 2024.6.415.0      |
+| macOS    | ✅           | 2024.6.416.0      |
+| Linux    | Coming soon           |       |
+| iOS      | Coming soon           |      |
+| Android  | Coming soon           |      |
+| ChromeOS | Coming soon           |      |
+
+{{</details>}}
+
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. It may take up to 24 hours for all devices to switch to the new protocol. To check the active protocol on a device, open a terminal and run `warp-cli settings | grep protocol`.
+
+**Value**:
+
+- **WireGuard**: (default) Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`. When switching from MASQUE to WireGuard, users may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) required for WireGuard to function.
+- **MASQUE** {{<inline-pill style="beta">}}: Establishes an HTTP/3 connection to Cloudflare. To use MASQUE, [Override local interface IP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#override-local-interface-ip) must be `Enabled`. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`.
+
+For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
 ### Lock WARP switch
 
@@ -210,7 +238,7 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 | ---------| -------------| ---------------------|
 | Windows  | ✅           | 2024.1.159.0         |
 | macOS    | ✅           | 2024.1.160.0         |
-| Linux    | ❌           |       |
+| Linux    | ✅           | 2024.2.62.0       |
 | iOS      | ❌           |       |
 | Android  | ✅           | 1.4   |
 | ChromeOS | ✅           | 1.4   |
@@ -219,7 +247,7 @@ Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configur
 
 This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
 
-When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires.
+When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user enables **Access local network** in the WARP GUI, WARP will detect the local IP range advertised by the user’s home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires. Setting **Timeout** to `0 minutes` will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep.
 
 {{<Aside type="warning" header="Warning">}}
 Enabling this setting comes with two major consequences:
@@ -228,3 +256,9 @@ Enabling this setting comes with two major consequences:
 - **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
 
 {{</Aside>}}
+
+#### Limitations
+
+- WARP will only exclude local networks in the [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space. Other IP addresses such as CGNAT are not supported.
+- The maximum excluded subnet size is `/24`.
+- If a Windows device has multiple network interfaces with distinct local IP ranges, WARP will only exclude one of those networks. To access a specific local network, disable the other interfaces and disconnect/reconnect WARP.

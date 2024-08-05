@@ -23,18 +23,18 @@ header: Request
 highlight: [11]
 ---
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/access/certificates/settings \
-  --header 'content-type: application/json' \
-  --header 'x-auth-email: <EMAIL>' \
-  --header 'x-auth-key: <API_KEY>' \
-  --data '{
-    "settings": [
-        {
-            "hostname": "<HOSTNAME>",
-            "china_network": false,
-            "client_certificate_forwarding": true
-        }
-    ]
+https://api.cloudflare.com/client/v4/zones/{zone_id}/access/certificates/settings \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "settings": [
+    {
+      "hostname": "<HOSTNAME>",
+      "china_network": false,
+      "client_certificate_forwarding": true
+    }
+  ]
 }'
 ```
 

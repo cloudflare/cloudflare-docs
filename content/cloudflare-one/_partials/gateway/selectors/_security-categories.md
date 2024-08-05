@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Use this selector to match domains (and optionally, [IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
+Use this selector to match domains (and optionally, [IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-traffic-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories).
 
 | UI name             | API example                            | Evaluation phase      |
 | ------------------- | -------------------------------------- | --------------------- |

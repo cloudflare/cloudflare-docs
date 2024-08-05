@@ -20,6 +20,8 @@ When evaluating a rule, Cloudflare compares the values of request/response prope
 
 If the entire expression evaluates to `true`, there is a rule match and Cloudflare triggers the [action](/ruleset-engine/rules-language/actions/) configured in the rule. If the expression evaluates to `false`, the rule does not match and its configured action is not applied.
 
+{{<render file="_rule-terminating-actions.md">}}
+
 When you use `true` as the rule filter expression, this means "apply the rule to every incoming request" at the current [phase](/ruleset-engine/about/phases/) level, which can be zone or account.
 
 {{<Aside type="note" header="Notes">}}

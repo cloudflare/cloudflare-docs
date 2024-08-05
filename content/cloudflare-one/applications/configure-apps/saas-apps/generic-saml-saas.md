@@ -8,6 +8,11 @@ weight: 1
 
 This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the SAML authentication protocol.
 
+## Prerequisites
+
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+- Admin access to the account of the SaaS application
+
 ## 1. Get SaaS application URLs
 
 Obtain the following URLs from your SaaS application account:
@@ -66,7 +71,7 @@ Next, configure your SaaS application to require users to log in through Cloudfl
 You can either manually enter this data into your SaaS application or upload a metadata XML file. The metadata is available at the URL: `<SSO endpoint>/saml-metadata`.
 
 ### Validate SAML Response
-	
+
 When acting as a SAML identity provider, Cloudflare will sign both the SAML Response and the SAML Assertion using the SHA-256 algorithm. The SaaS application can validate this signature using the **Public key** that you upload to the SaaS application.
 
 ## 4. Test the integration

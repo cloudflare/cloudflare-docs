@@ -27,21 +27,11 @@ You must have a Cloudflare account to create a Worker. To get started with Cloud
 
 To create your Worker project, run:
 
-{{<render file="_c3-run-command.md" productFolder="workers">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="first-worker">}}
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
-To set up a basic Worker:
-
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Worker` as the type of application you want to create.
-3. Answer `yes` or `no` to using TypeScript.
-
-{{<Aside type="note">}}
-
-This guide assumes that you will use a JavaScript project. If you are creating a TypeScript project, the files will be `.ts`, a `.tsconfig` file will be created, and proper dependencies will be added.
-
-{{</Aside>}}
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 You will be asked if you would like to deploy the project to Cloudflare.
 

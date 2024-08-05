@@ -34,6 +34,12 @@ Your zone configurations are split up into two areas: **Global Configuration** a
     - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
     - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
 
+{{<Aside type="note">}}
+
+To use the API for a different version, you will need to use a different zone ID.
+
+{{</Aside>}}
+
 ### Editable versions
 
 {{<render file="_edit-version.md">}}
@@ -62,7 +68,10 @@ Once you begin [sending traffic](/version-management/reference/traffic-filters/)
 
 To view metrics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 3. Go to **Version Management**.
 4. On an existing version, select **View Metrics**.
+
+{{<Aside type="note">}}
+You will only see metrics for the specific version that is active in the Cloudflare dashboard during the time frame that you select.
+{{</Aside>}}

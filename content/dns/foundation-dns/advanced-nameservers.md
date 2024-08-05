@@ -10,6 +10,10 @@ Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) offer 
 
 Consider the sections below for details about advanced nameservers, and refer to [Set up advanced nameservers](/dns/foundation-dns/setup/) to learn how to enable this feature.
 
+{{<Aside type="warning">}}
+{{<render file="_ns-advanced-vs-custom.md">}}
+{{</Aside>}}
+
 ## Anycast network groups
 
 To increase resiliency, advanced nameserver IPs are advertised by only one of two {{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} network groups.
@@ -18,13 +22,11 @@ The two groups consist of data centers that are geographically equally distribut
 
 {{<details header="United Kingdom example">}}
 
-{{<table-wrap>}}
 | IPs      | Group   | Data centers |
 |--------- |---------|------------------------------------|
 | `108.162.198.1` | A | London and Edinburgh |
 | `172.64.40.1` | B | Manchester           |
 | `162.159.60.1` | A | London and Edinburgh |
-{{</table-wrap>}}
 
 {{</details>}}
 

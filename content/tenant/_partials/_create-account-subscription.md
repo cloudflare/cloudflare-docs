@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create an account subscription, send a [POST](/api/operations/account-subscriptions-create-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions` endpoint and include the following values:
+To create an account subscription, send a [POST](/api/operations/account-subscriptions-create-subscription) request to the `/accounts/{account_id}/subscriptions` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
 
@@ -19,7 +19,7 @@ To create an account subscription, send a [POST](/api/operations/account-subscri
 
 - `frequency` {{<type>}}string{{</type>}}
 
-    - How often the subscription is renewed automatically (defaults to `"monthly"`)
+    - How often the subscription is renewed automatically (defaults to `"monthly"`).
 
 {{</definitions>}}
 
@@ -27,13 +27,12 @@ To create an account subscription, send a [POST](/api/operations/account-subscri
 ---
 header: Request
 ---
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/subscriptions' \
--H 'Content-Type: application/json' \
--H 'x-auth-email: <EMAIL>' \
--H 'x-auth-key: <API_KEY>' \
--d '{
-   "rate_plan": {
-      "id": "<rate plan name>"
-   }
+curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/subscriptions' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rate_plan": {
+    "id": "<RATE_PLAN_NAME>"
+  }
 }'
 ```

@@ -23,7 +23,7 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
     ![Custom rulesets page in the Cloudflare dashboard](/images/waf/account/custom-rulesets-dashboard.png)
 
-3. Under **Deployed custom rulesets**, select **Create ruleset**.
+3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
 
 4. In the page that displays, enter a name and (optionally) a description for the custom ruleset.
 
@@ -47,7 +47,7 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 11. Select **Deploy**.
 
-12. Add other rules to the custom ruleset, if needed.
+12. Add other rules to the custom ruleset, if needed. You can also duplicate an existing rule in the custom ruleset.
 
 13. Select **Create**.
 

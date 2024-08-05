@@ -38,13 +38,13 @@ Once you identify your registrar, follow the instructions in [change nameserver
 
 ___
 
-## Does Cloudflare limit number of DNS records a domain can have?
+## Does Cloudflare limit the number of DNS records a domain can have?
 
 Yes. All customers have a limit on the number of DNS records they can create.
 
-Pro, Business, and Enterprise have limit of 3,500 DNS records.
+Pro, Business, and Enterprise have a limit of 3,500 DNS records.
 
-If you are an Enterprise customer you can contact your Account team if you require more DNS records.
+If you are an Enterprise customer, contact your account team if you require more DNS records. Cloudflare can support millions of DNS records on a single zone.
 
 ___
 
@@ -194,7 +194,7 @@ ___
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/) (deprecated), or [Cloudflare Workers](/workers/).
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
 
 ___
 

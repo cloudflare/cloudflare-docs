@@ -28,12 +28,12 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "health_check": {"rate":"low"}
-  }'
+}'
 ```
 
 {{</tab>}}
