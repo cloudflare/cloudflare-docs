@@ -138,7 +138,7 @@ Manage key-value pairs within a KV namespace.
 Writes a single key-value pair to a particular KV namespace.
 
 ```sh
-$ wrangler kv key put <KEY> [VALUE] [OPTIONS]
+$ wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
@@ -169,6 +169,10 @@ Exactly one of `VALUE` or `--path` is required.
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -225,6 +229,12 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--text` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Decode the returned value as a UTF-8 string.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -259,6 +269,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with a preview namespace instead of production.
 - `--prefix` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Only list keys that begin with the given prefix.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -302,6 +316,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -341,6 +359,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
@@ -423,6 +445,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Interact with a preview namespace instead of production.
+- `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Interact with locally persisted data.
+- `--persist-to` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specify directory for locally persisted data.
 
 {{</definitions>}}
 
