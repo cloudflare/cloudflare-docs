@@ -47,3 +47,7 @@ Each cipher suite relates to a specific minimum protocol that it supports. This 
 ## Resources
 
 {{<directory-listing>}}
+
+## Limitations
+
+It is not possible to configure cipher suites for [Cloudflare Pages](/pages/) hostnames.

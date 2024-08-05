@@ -22,6 +22,8 @@ For guidance on which TLS version to use, refer to [TLS protocols](/ssl/referenc
 
 {{<feature-table id="ssl.minimum_tls">}}
 
+It is not possible to configure minimum TLS version for [Cloudflare Pages](/pages/) hostnames.
+
 ## How to disable TLS 1.0
 
 You can disable TLS 1.0 by choosing a higher minimum TLS version.
