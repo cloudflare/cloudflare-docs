@@ -70,7 +70,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 1. Open a terminal and clone our example project.
 
    ```sh
-   $ npm create cloudflare risky-users -- --template=https://github.com/cloudflare/msft-risky-user-ad-sync
+   $ npm create cloudflare@latest risky-users -- --template=https://github.com/cloudflare/msft-risky-user-ad-sync
    ```
 
 2. Go to the project directory.
