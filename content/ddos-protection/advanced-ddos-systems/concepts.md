@@ -3,16 +3,16 @@ title: Concepts
 pcx_content_type: concept
 weight: 3
 meta:
-  title: Create an Advanced TCP Protection filter
+  title: Advanced DDoS Protection systems concepts
 ---
 
 # Concepts
 
 ## Prefixes
 
-Advanced TCP Protection protects the IP prefixes you select from sophisticated TCP attacks. A prefix can be an IP address or an IP range in CIDR format. You must add prefixes to Advanced TCP Protection so that Cloudflare can analyze incoming {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} and offer protection against sophisticated TCP DDoS attacks.
+Advanced DDoS Protection protects the IP prefixes you select from sophisticated DDoS attacks. A prefix can be an IP address or an IP range in CIDR format. You must add prefixes to Advanced DDoS Protection so that Cloudflare can analyze incoming {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} and offer protection against sophisticated TCP DDoS attacks.
 
-Prefixes added to Advanced TCP Protection must be one of the following:
+Prefixes added to Advanced DDoS Protection must be one of the following:
 
 * A prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
 * A subset of a prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
@@ -21,15 +21,15 @@ You cannot add a prefix (or a subset of a prefix) that you have not onboarded to
 
 ## Allowlist
 
-The Advanced TCP Protection allowlist is a list of prefixes that will bypass all configured Advanced TCP Protection rules.
+The Advanced DDoS Protection allowlist is a list of prefixes that will bypass all configured Advanced DDoS Protection rules.
 
-For example, you could add prefixes used only by partners of your company to the allowlist so that they are exempt from packet inspection and mitigation actions performed by Advanced TCP Protection.
+For example, you could add prefixes used only by partners of your company to the allowlist so that they are exempt from packet inspection and mitigation actions performed by Advanced DDoS Protection.
 
 {{<render file="_allowlist-ip-spoofing.md">}}
 
 ## Rule
 
-A rule configures Advanced TCP Protection for a given [scope](/ddos-protection/advanced-ddos-systems/rule-settings/#scope), according to several [settings](/ddos-protection/advanced-ddos-systems/rule-settings/): execution mode, burst sensitivity, and rate sensitivity.
+A rule configures Advanced DDoS Protection for a given [scope](/ddos-protection/advanced-ddos-systems/rule-settings/#scope), according to several [settings](/ddos-protection/advanced-ddos-systems/rule-settings/): execution mode and sensitivity.
 
 Each system component (SYN flood protection and out-of-state TCP protection) has its own list of rules, and it should have at least one rule.
 

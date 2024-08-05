@@ -3,12 +3,12 @@ title: Add a prefix
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Add a prefix to Advanced TCP Protection
+  title: Add a prefix to Advanced DDoS Protection
 ---
 
 # Add a prefix
 
-To add a [prefix](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) to Advanced TCP Protection:
+To add a [prefix](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) to Advanced DDoS Protection:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection**.

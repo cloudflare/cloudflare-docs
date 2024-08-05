@@ -16,6 +16,8 @@ Advanced TCP Protection can simultaneously protect against different kinds of at
 
 Advanced TCP Protection can track TCP connections even when they move between Cloudflare data centers.
 
+---
+
 ## SYN Flood Protection
 
 This system protects against attacks such as fully randomized SYN and SYN-ACK floods. You should configure at least one SYN flood rule before enabling Advanced TCP Protection.
@@ -32,10 +34,8 @@ In mitigation mode, out-of-state TCP rules will drop out-of-state packets that d
 
 For more information on the configuration settings of out-of-state TCP rules, refer to [Rule settings](/ddos-protection/advanced-ddos-systems/rule-settings/).
 
+---
+
 ## Setup
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
-2. Go to **L3/4 DDoS** > **Advanced Protection** > **Advanced TCP Protection**.
-3. 
-4.
-5.
+[Create a global configuration](/ddos-protection/advanced-ddos-systems/setup/#3-create-a-global-configuration) to set up SYN Flood and Out-of-state TCP rules and filters for Advanced TCP Protection.

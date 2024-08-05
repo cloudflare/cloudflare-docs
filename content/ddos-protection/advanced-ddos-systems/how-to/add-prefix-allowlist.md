@@ -3,12 +3,12 @@ title: Add an IP or prefix to the allowlist
 pcx_content_type: how-to
 weight: 4
 meta:
-  title: Add an IP address/prefix to the Advanced TCP Protection allowlist
+  title: Add an IP address/prefix to the Advanced DDoS Protection allowlist
 ---
 
 # Add an IP address or prefix to the allowlist
 
-To add an IP address or prefix to the Advanced TCP Protection [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist):
+To add an IP address or prefix to the Advanced DDoS Protection [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection**.

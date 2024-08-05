@@ -60,7 +60,13 @@ The rate sensitivity is the rule's sensitivity to the sustained packet rate:
 
 The default rate sensitivity is _Medium_.
 
-## Profile sensitivity (Advanced DNS Protection only)
+## Profile sensitivity 
+
+{{<Aside type="note">}}
+
+Profile sensitivity is available for Advanced DNS Protection only.
+
+{{</Aside>}}
 
 The sensitivity to DNS queries that have not been recently seen.
 

@@ -16,7 +16,7 @@ Thresholds are based on your network's individual behavior, derived from your tr
 
 Ask your Implementation Manager to configure initial threshold values.
 
-Once thresholds are configured, the Implementation Manager will let you know that Advanced DDoS Protection has been initialized and can be configured and enabled.
+Once thresholds are configured, the Implementation Manager will let you know that Advanced DDoS Protection systems have been initialized and can be configured and enabled.
 
 ## 2. Add prefixes
 
@@ -41,4 +41,4 @@ The {{<glossary-tooltip term_id="allowlist">}}allowlist{{</glossary-tooltip>}} o
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
-3. Under **General settings**, toggle the feature status to **Enabled**.
+3. Under **General settings**, toggle the feature status to **On**.

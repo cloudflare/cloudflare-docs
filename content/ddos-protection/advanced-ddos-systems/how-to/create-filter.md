@@ -13,8 +13,6 @@ meta:
 
 Each protection system component (SYN flood protection or out-of-state TCP protection) should have at least one [rule](/ddos-protection/advanced-ddos-systems/concepts/#rule), but filters are optional.
 
-## Procedure
-
 To create a [filter](/ddos-protection/advanced-ddos-systems/concepts/#filter) for one of the system components:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
