@@ -12,7 +12,7 @@ The following sections cover typical rate limiting configurations for common use
 
 The main use cases for rate limiting are the following:
 
-{{<render file="_rate-limiting-best-practices.md" productFolder="waf" >}}
+{{<render file="_rate-limiting-best-practices.md" productFolder="waf">}}
 
 ## Enforcing granular access control
 
