@@ -1,6 +1,7 @@
 ---
 title: Durability
 pcx_content_type: concept
+weight: 7
 ---
 
 # Durability
