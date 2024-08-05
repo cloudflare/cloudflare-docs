@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Zendesk
+updated: 2024-04-29
 weight: 29
 ---
 

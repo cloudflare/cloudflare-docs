@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Miro
+updated: 2024-07-25
 weight: 19
 ---
 

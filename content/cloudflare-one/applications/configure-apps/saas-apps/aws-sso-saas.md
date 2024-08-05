@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: AWS
+updated: 2024-04-22
 weight: 6
 ---
 

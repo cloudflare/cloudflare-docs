@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Smartsheet
+updated: 2024-07-08
 weight: 25
 ---
 

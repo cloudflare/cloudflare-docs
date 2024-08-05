@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Braintree
+updated: 2024-08-01
 weight: 7
 ---
 

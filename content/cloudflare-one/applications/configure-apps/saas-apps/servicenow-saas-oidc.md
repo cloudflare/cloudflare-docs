@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: ServiceNow (OIDC)
-updated: 2024-21-06
+updated: 2024-06-21
 weight: 23
 ---
 

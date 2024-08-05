@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Dropbox
-updated: 2024-30-07
+updated: 2024-07-30
 weight: 11
 ---
 

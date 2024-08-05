@@ -1,6 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Grafana
+updated: 2024-07-18
 weight: 14
 ---
 
