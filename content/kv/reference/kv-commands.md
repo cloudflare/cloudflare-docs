@@ -11,54 +11,14 @@ The `wrangler kv ...` commands allow you to manage your Workers KV resources in 
 {{<Aside type="warning">}}
 Since version 3.60.0, Wrangler KV commands support the `kv ...` syntax. If you are using versions of Wrangler below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [`kv:...` syntax deprecation](#kv-syntax-deprecation) section.
 
-To update your Wrangler installation, follow the [Wrangler Install and Update guide](/workers/wrangler/install-and-update/). 
+To update your Wrangler installation, follow the [Wrangler Install and Update guide](/workers/wrangler/install-and-update/).
 {{</Aside>}}
 
 ## `kv namespace`
 
 Manage KV namespaces.
 
-### create
-
-Creates a new KV namespace.
-
-```sh
-$ wrangler kv namespace create <NAMESPACE> [OPTIONS]
-```
-
-{{<definitions>}}
-
-- `NAMESPACE` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The name of the new namespace.
-- `--env` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Perform on a specific environment.
-- `--preview` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Interact with a preview namespace (the `preview_id` value).
-
-{{</definitions>}}
-
-#### `create` command to create a KV namespace called `MY_KV`
-
-```sh
-$ wrangler kv namespace create "MY_KV"
-🌀 Creating namespace with title "worker-MY_KV"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-```
-#### `create` command to create a preview KV namespace called `MY_KV`
-
-```sh
-$ wrangler kv namespace create "MY_KV" --preview
-🌀 Creating namespace with title "my-site-MY_KV_preview"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
-]
-```
+{{<render file="/wrangler-commands/kv/_create.md" productFolder="workers">}}
 
 ### list
 
@@ -469,26 +429,26 @@ Success!
 
 # Deprecations
 
-Below are deprecations to Wrangler commands for Workers KV. 
+Below are deprecations to Wrangler commands for Workers KV.
 
 ## `kv:...` syntax deprecation
 
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. 
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax.
 
-The `kv:...` syntax is deprecated in versions 3.60.0 and beyond and will be removed in a future major version. 
+The `kv:...` syntax is deprecated in versions 3.60.0 and beyond and will be removed in a future major version.
 
 For example, commands using the `kv ...` syntax look as such:
 
 ```sh
 $ wrangler kv namespace list
-$ wrangler kv key get <KEY> 
-$ wrangler kv bulk put <FILENAME> 
+$ wrangler kv key get <KEY>
+$ wrangler kv bulk put <FILENAME>
 ```
 
 The same commands using the `kv:...` syntax look as such:
 
 ```sh
 $ wrangler kv:namespace list
-$ wrangler kv:key get <KEY> 
-$ wrangler kv:bulk put <FILENAME> 
+$ wrangler kv:key get <KEY>
+$ wrangler kv:bulk put <FILENAME>
 ```
