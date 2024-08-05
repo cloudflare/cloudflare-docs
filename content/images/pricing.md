@@ -47,6 +47,8 @@ A unique transformation is defined as a request to transform an original image w
 
 The `format` flag being exempted from counting as a unique transformation means that if demo.jpg is resized to 100x100 and is delivered to some of your users as webp and others as avif or png, it will still count as one billable transformation for that month instead of three.
 
+Unique transformations are counted over a 30-day sliding window. For example, if you request an image variant on the 30th of one month, it counts once for that billing period. If you request the same image variant on the 1st of the next month, it does not count towards usage as the same transformation was requested within the last 30 days.
+
 Images Transformed count is not impacted by the cache hit rate. This makes estimating pricing more predictable. For example, 1,000 product images that are resized 5 different ways will result in 5,000 unique transformations per month and cost $2.50.
 
 {{<Aside type="note" header="Note">}}
