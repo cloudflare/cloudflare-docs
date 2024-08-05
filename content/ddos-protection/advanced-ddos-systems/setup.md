@@ -41,4 +41,4 @@ The {{<glossary-tooltip term_id="allowlist">}}allowlist{{</glossary-tooltip>}} o
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
-3. Under **General settings**, toggle the feature status to **On**.
+3. Under **General settings**, toggle the feature status **On**.
