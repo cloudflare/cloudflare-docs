@@ -3,6 +3,7 @@ updated: 2023-06-09
 category: 🔐 Access
 pcx_content_type: tutorial
 title: Validate the Access token with FastAPI
+languages: [Python]
 ---
 
 # Validate the Access token with FastAPI

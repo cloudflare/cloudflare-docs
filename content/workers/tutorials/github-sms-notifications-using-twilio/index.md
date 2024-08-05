@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
+languages: [JavaScript]
 ---
 
 # GitHub SMS notifications using Twilio

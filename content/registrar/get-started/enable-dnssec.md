@@ -1,6 +1,6 @@
 ---
 title: Enable DNSSEC
-pcx_content_type: tutorial
+pcx_content_type: how-to
 meta:
   title: Domain Name System Security Extensions (DNSSEC)
 ---

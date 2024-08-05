@@ -7,6 +7,7 @@ updated: 2024-06-07
 weight: 1
 products: [R2]
 tags: [AI, Hono]
+languages: [TypeScript]
 ---
 
 # Create a fine-tuned OpenAI model with R2

@@ -1,6 +1,7 @@
 ---
 title: Querying Workers Metrics with GraphQL
-pcx_content_type: tutorial
+pcx_content_type: example
+products: [Workers]
 ---
 
 # Querying Workers Metrics with GraphQL

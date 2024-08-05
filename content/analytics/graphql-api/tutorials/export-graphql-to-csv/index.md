@@ -1,6 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Export GraphQL data to CSV
+languages: [Python]
 ---
 
 # Export GraphQL data to CSV

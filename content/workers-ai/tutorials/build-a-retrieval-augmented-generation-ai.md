@@ -7,6 +7,7 @@ title: Build a Retrieval Augmented Generation (RAG) AI
 weight: 2
 products: [Workers, Vectorize]
 tags: [AI, Hono]
+languages: [JavaScript]
 ---
 
 # Build a Retrieval Augmented Generation (RAG) AI
