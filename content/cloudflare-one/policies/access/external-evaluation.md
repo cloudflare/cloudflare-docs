@@ -37,7 +37,7 @@ You can set up External Evaluation rules using any API service, but to get start
    $ cd my-worker
    ```
 
-3. Create a [Workers KV namespace](/kv/reference/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
+3. Create a [Workers KV namespace](/kv/concepts/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
    ```sh
    $ wrangler kv:namespace create "KV"

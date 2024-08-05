@@ -1448,9 +1448,12 @@
 /kv/platform/environments/ /kv/reference/environments/ 301
 /kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
 /kv/learning/ /kv/reference/ 301
-/kv/learning/how-kv-works/ /kv/reference/how-kv-works/ 301
-/kv/learning/kv-bindings/ /kv/reference/kv-bindings/ 301
-/kv/learning/kv-namespaces/ /kv/reference/kv-namespaces/ 301
+/kv/learning/how-kv-works/ /kv/concepts/how-kv-works/ 301
+/kv/learning/kv-bindings/ /kv/concepts/kv-bindings/ 301
+/kv/learning/kv-namespaces/ /kv/concepts/kv-namespaces/ 301
+/kv/reference/how-kv-works/ /kv/concepts/how-kv-works/ 301
+/kv/reference/kv-bindings/ /kv/concepts/kv-bindings/ 301
+/kv/reference/kv-namespaces/ /kv/concepts/kv-namespaces/ 301
 /kv/tutorials/workers-kv-from-rust/ /workers/tutorials/workers-kv-from-rust/ 301
 
 # vectorize
