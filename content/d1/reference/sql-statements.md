@@ -1,16 +1,16 @@
 ---
-title: Database commands
+title: SQL statemetns
 weight: 6
 pcx_content_type: concept
 ---
 
-# Database commands
+# SQL statements
 
-D1 supports a number of database-level commands that allow you to list tables, indexes, and inspect the schema for a given table or index.
+## Database statements
 
-## Commands
+D1 supports a number of database-level statements that allow you to list tables, indexes, and inspect the schema for a given table or index.
 
-You can execute any of these commands via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/d1-client-api/).
+You can execute any of these statements via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/#d1), or with the [D1 client API](/d1/build-with-d1/d1-client-api/).
 
 ### `PRAGMA table_list`
 
@@ -120,7 +120,7 @@ SELECT name, sql FROM sqlite_master
       }
 ```
 
-## `PRAGMA defer_foreign_keys = (on|off)`
+### `PRAGMA defer_foreign_keys = (on|off)`
 
 Allows you to defer the enforcement of [foreign key constraints](/d1/build-with-d1/foreign-keys/) until the end of the current transaction. This can be useful during [database migrations](/d1/reference/migrations/), as schema changes may temporarily violate constraints depending on order in which they are applied.
 
@@ -140,6 +140,12 @@ PRAGMA defer_foreign_keys = off
 ```
 
 Refer to the [foreign key documentation](/d1/build-with-d1/foreign-keys/) to learn more about how to work with foreign keys.
+
+## SQLite Extensions
+
+D1 supports a subset of SQLite extensions for added functionality, including:
+
+* [FTS5 module](https://www.sqlite.org/fts5.html) for full-text search
 
 ## Related resources
 
