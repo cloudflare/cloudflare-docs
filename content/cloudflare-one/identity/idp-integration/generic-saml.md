@@ -33,7 +33,13 @@ The typical setup requirements are:
 
 ### (Optional) Upload SAML metadata
 
-If your identity provider supports metadata file configuration, use the endpoint: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
+If your identity provider supports metadata file configuration, you can use the default or identity provider specific metadata endpoint:
+
+**default:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata`
+
+**identity provider specific:** `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/<identity-provider-id>/saml-metadata` (use this version if your IdP requires a specific configuration not defined in the default metadata file)
+
+ This can be downloaded to generate an XML file. Upload this XML file to the identity provider.
 
 ## 2. Add a SAML identity provider to Zero Trust
 
