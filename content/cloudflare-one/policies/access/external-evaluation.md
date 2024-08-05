@@ -29,7 +29,7 @@ You can set up External Evaluation rules using any API service, but to get start
 1. Open a terminal and clone our example project.
 
    ```sh
-   $ npm create cloudflare my-worker --template=https://github.com/cloudflare/workers-access-external-auth-example
+   $ npm create cloudflare my-worker -- --template=https://github.com/cloudflare/workers-access-external-auth-example
    ```
 
 2. Go to the project directory.
