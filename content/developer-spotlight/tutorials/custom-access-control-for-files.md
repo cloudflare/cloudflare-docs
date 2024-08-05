@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
 products: [R2, D1, Workers]
+languages: [TypeScript, SQL]
 spotlight:
   author: Dominik Fuerst
   author_bio_link: https://github.com/justDMNK
@@ -17,47 +18,29 @@ spotlight:
 
 {{<spotlight-author>}}
 
-This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a D1 database for user management and an R2 bucket for file storage.
+This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a [D1 database](/d1/) for user management and an [R2 bucket](/r2/) for file storage.
 
 The following sections will guide you through the process of creating a Worker using the Cloudflare CLI, creating and setting up a D1 database and R2 bucket, and then implementing the functionality to securely upload and fetch files from the created R2 bucket.
 
 
 ## Prerequisites
 
-Before you can start with this tutorial, you will need to have the following prerequisites:
-- A Cloudflare account
-- [`npm`](https://docs.npmjs.com/getting-started)
-- [`Node.js`](https://nodejs.org/en/) with version `16.17.0` or later
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 
 ## 1. Create a new Worker application
 
 To get started developing your Worker you will use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). To do this, open a terminal window and run the following command:
 
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm" no-code="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="custom-access-control">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+
+Then, move into your newly created Worker:
+
 ```sh
-$ npm create cloudflare@latest -y
+$ cd custom-access-control
 ```
-{{</tab>}}
-
-{{<tab label="yarn" no-code="true">}}
-```sh
-$ yarn create cloudflare
-```
-{{</tab>}}
-{{</tabs>}}
-
-Then simply follow the prompts in order to create your new Worker application:
-
-1. Give your new Worker a concise and descriptive name.
-2. Select `"Hello World" Worker` for the type of application, as it creates a simple example Worker which is triggered by an HTTP request.
-3. Select `Yes` to use TypeScript.
-4. Decide if you want to initialize a git repository for this new Worker project. We will select `No`, for this tutorial, but feel free to choose `Yes`.
-5. Choose `No` when asked if you want to deploy your application.
-
-If you do choose to deploy here, you will be asked to authenticate (if not logged in already) and select an account, then your project will be deployed. You can always (re)deploy your application later on by running `npx wrangler deploy`.
-
 
 ## 2. Create a new D1 database and binding
 

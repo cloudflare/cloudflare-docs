@@ -21,7 +21,7 @@ For these parameters:
 - `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
 - `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
 
-### Examples
+## Examples
 
 First, generate an [API token](/fundamentals/api/get-started/create-token/) with `Workers AI Read` access and use it in your request.
 
@@ -71,7 +71,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v
 '
 ```
 
-## Worker
+### Worker
 
 To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
 

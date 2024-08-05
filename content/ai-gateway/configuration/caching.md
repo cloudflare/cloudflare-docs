@@ -47,7 +47,7 @@ To set the default caching configuration using the API:
 
 This caching behavior will be uniformly applied to all requests that support caching. If you need to modify the cache settings for specific requests, you have the flexibility to override this setting on a per-request basis.
 
-To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`. 
+To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`.
 
 ## Per-request caching
 
@@ -71,7 +71,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
   --header 'Content-Type: application/json' \
   --header 'cf-skip-cache: true' \
   --data ' {
-   		 "model": "gpt-3.5-turbo",
+   		 "model": "gpt-4o-mini",
    		 "messages": [
    			 {
    				 "role": "user",
@@ -100,7 +100,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
   --header 'Content-Type: application/json' \
   --header 'cf-cache-ttl: 3600000' \
   --data ' {
-   		 "model": "gpt-3.5-turbo",
+   		 "model": "gpt-4o-mini",
    		 "messages": [
    			 {
    				 "role": "user",
@@ -113,7 +113,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 ### Custom cache key (cf-aig-cache-key)
 
-Custom cache keys let you override the default cache key in order to precisely set the cacheability setting for any resource. To override the default cache key, you can use the header **cf-aig-cache-key**. 
+Custom cache keys let you override the default cache key in order to precisely set the cacheability setting for any resource. To override the default cache key, you can use the header **cf-aig-cache-key**.
 
 When you use the **cf-aig-cache-key** header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If the **cf-cache-ttl** header is used, responses will be cached according to the specified Cache Time To Live. Otherwise, responses will be cached according to the cache settings in the dashboard. If caching is not enabled for the gateway, responses will be cached for 5 minutes by default.
 
@@ -129,7 +129,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
   --header 'Content-Type: application/json' \
   --header 'cf-aig-cache-key: responseA' \
   --data ' {
-   		 "model": "gpt-3.5-turbo",
+   		 "model": "gpt-4o-mini",
    		 "messages": [
    			 {
    				 "role": "user",

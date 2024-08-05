@@ -316,7 +316,7 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 **Additional checks**
 
 -   Check if you have a certificate installed on your origin server. You can check [this article](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
--   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
+-   [Review the cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
 ___

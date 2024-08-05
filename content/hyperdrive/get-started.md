@@ -53,21 +53,20 @@ Refer to [How Workers works](/workers/reference/how-workers-works/) to learn abo
 
 Create a new project named `hyperdrive-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest hyperdrive-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="hyperdrive-tutorial">}}
 
-When setting up your `hyperdrive-tutorial` Worker, answering the questions as below:
-
-1. Choose `"Hello World" Worker` for the type of application.
-2. Select `yes` to using TypeScript.
-3. Select `yes` to using Git.
-4. Select `no` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
+
+Move into your new directory:
+
+```sh
+$ cd hyperdrive-tutorial
+```
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 

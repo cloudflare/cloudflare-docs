@@ -4,8 +4,8 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
-tags:
-  - AI
+languages: [JavaScript]
+tags: [AI]
 ---
 
 # Use OpenAI GPT function calling with JavaScript and Cloudflare Workers
@@ -33,20 +33,9 @@ The function calling feature allows the AI model to intelligently decide when to
 
 Create a Worker project in the command line:
 
-```sh
----
-header: Create a Worker project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="openai-function-calling-workers">}}
 
-For setup, select the following options:
-
-- For `In which directory do you want to create your application?`, indicate `openai-function-calling-workers`.
-- For `What type of application do you want to create?`, choose `"Hello World" Worker`.
-- For `Do you want to use TypeScript?`, choose `No`.
-- For `Do you want to use git for version control?`, choose `Yes`.
-- For `Do you want to deploy your application?`, choose `Yes`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Go to your new `openai-function-calling-workers` Worker project:
 
@@ -158,7 +147,7 @@ export default {
       ];
 
       const chatCompletion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo-1106',
+        model: 'gpt-4o-mini',
         messages: messages,
         tools: tools,
         tool_choice: 'auto',
@@ -176,7 +165,7 @@ export default {
 
 Review the arguments you are passing to OpenAI:
 
-- **model**: This is the model you want OpenAI to use for your request. In this case, you are using 'gpt-3.5-turbo-1106'.
+- **model**: This is the model you want OpenAI to use for your request. In this case, you are using `gpt-4o-mini`.
 - **messages**: This is an array containing all messages that are part of the conversation. Initially you provide a message from the user, and we later add the response from the model. The content of the user message is either the `message` query parameter from the request URL or the default "What's in the news today?".
 - **tools**: An array containing the actions available to the AI model. In this example you only have one tool, `read_website_content`, which reads the content on a given website.
   - **name**: The name of your function. In this case, it is `read_website_content`.
@@ -236,7 +225,7 @@ if (assistantMessage.tool_calls) {
   }
 
   const secondChatCompletion = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-1106',
+    model: 'gpt-4o-mini',
     messages: messages,
   });
 

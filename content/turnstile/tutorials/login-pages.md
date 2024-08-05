@@ -5,6 +5,8 @@ weight: 2
 updated: 2024-07-09
 difficulty: Beginner
 content_type: 📝 Tutorial
+languages: [JavaScript]
+tags: [Node.js]
 ---
 
 # Protect your login page using Turnstile

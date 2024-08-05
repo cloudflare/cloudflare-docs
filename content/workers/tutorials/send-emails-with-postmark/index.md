@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Postmark
 tags: [Email]
+languages: [JavaScript]
 ---
 
 # Send Emails With Postmark
@@ -43,7 +44,7 @@ $ npm create cloudflare@latest email-with-postmark -- --type=hello-world --ts=fa
 
 This creates a simple hello-world Worker having the following content:
 
-```jsx
+```js
 ---
 filename: src/index.js
 ---

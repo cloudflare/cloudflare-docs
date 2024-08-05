@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 title: Build a Staff Directory Application
 products: [Pages]
 tags: [Hono]
+languages: [TypeScript, SQL]
 ---
 
 # Build a Staff Directory with D1, Cloudflare Pages and HonoX

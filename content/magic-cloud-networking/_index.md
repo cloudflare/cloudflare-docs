@@ -19,6 +19,8 @@ Magic Cloud Networking allows you to connect, accelerate, and manage your virtua
 
 Magic Cloud Networking is in a closed beta. If you are interested in trying out this product, you [can apply](https://www.cloudflare.com/lp/cloud-networking/) to become one of the first customers to try it out.
 
+Learn how to [get started](/magic-cloud-networking/get-started/).
+
 ---
 
 ## Features

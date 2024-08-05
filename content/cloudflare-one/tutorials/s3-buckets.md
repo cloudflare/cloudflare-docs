@@ -4,6 +4,7 @@ category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
 title: Protect access to Amazon S3 buckets with Cloudflare Zero Trust
+tags: [S3]
 ---
 
 # Protect access to Amazon S3 buckets with Cloudflare Zero Trust
@@ -16,7 +17,7 @@ This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudf
 flowchart TB
     cf1[/Agentless and WARP </br>Zero Trust users/]--Access policy-->cf2{{Cloudflare}}
     cf2--Cloudflare Tunnel-->vpc1
-    
+
     subgraph VPC
     vpc1[EC2 VM]-->vpc2[VPC endpoint]
     end
@@ -129,7 +130,7 @@ flowchart TB
     cf1[/WARP users/]--Egress policy-->cf2{{Cloudflare}}
     cf2--Egress with dedicated IP-->i1[Internet]
     i1-->s3_1
-    
+
     subgraph S3 Service
     s3_1([S3 bucket])
     end

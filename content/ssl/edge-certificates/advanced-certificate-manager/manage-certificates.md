@@ -78,7 +78,7 @@ To restart validation for a certificate in a `validation_timed_out` status, send
 
 {{<render file="_cipher-suites-definition.md">}}
 
-For more details, refer to [Disable cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
+For more details, refer to [Disable cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 ---
 
