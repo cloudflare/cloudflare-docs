@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Jamf Pro
-weight: 15
+weight: 18
 ---
 
 # Connect to Jamf Pro through Access

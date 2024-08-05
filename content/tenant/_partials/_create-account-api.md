@@ -52,9 +52,9 @@ All KYC parameters are text fields, have a 120 character limit, and are optional
 ---
 header: Request
 ---
-curl 'https://api.cloudflare.com/client/v4/accounts' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "<ACCOUNT_NAME>",
@@ -89,9 +89,9 @@ A request with a unit ID:
 ---
 header: Request
 ---
-curl 'https://api.cloudflare.com/client/v4/accounts' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "<ACCOUNT_NAME>",
@@ -108,9 +108,9 @@ A request with a unit ID and KYC:
 ---
 header: Request
 ---
-curl 'https://api.cloudflare.com/client/v4/accounts' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "<ACCOUNT_NAME>",

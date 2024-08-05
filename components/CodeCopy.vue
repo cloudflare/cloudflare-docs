@@ -45,6 +45,12 @@ function copyCode(e: MouseEvent) {
       }
     }
   }
+  // Fire zaraz event
+  const codeBlockElement = e.target.parentElement?.parentElement?.firstElementChild;
+  zaraz.track('copy button link click', {
+    title: codeBlockElement?.getAttribute('title') ?? 'title not set',
+    language: codeBlockElement?.getAttribute('language') ?? 'language not set',});
+
 }
 </script>
 

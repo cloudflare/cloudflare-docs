@@ -149,7 +149,7 @@ Below are the most common reasons why turning on WARP blocks a specific applicat
 
 ### TLS Decryption is enabled and the app or site does certificate pinning
 
-Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications).
+Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications).
 
 #### Solution (if the app has a private certificate store)
 

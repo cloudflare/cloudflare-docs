@@ -10,6 +10,10 @@ Use import and export to have more control over your DNS records and make proces
 
 ## Import records
 
+{{<Aside type="warning">}}
+{{<render file="_zone-file-size-limit.md">}}
+{{</Aside>}}
+
 ### Format your zone file
 
 Create a [BIND zone file](https://en.wikipedia.org/wiki/Zone_file) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).

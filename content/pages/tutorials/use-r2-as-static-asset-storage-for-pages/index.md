@@ -1,11 +1,12 @@
 ---
-updated: 2024-07-15
+updated: 2024-07-22
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use R2 As static asset storage for your Pages app
 products: [R2]
 tags: [Hono]
+languages: [JavaScript]
 ---
 
 # Use R2 as static asset storage for your Pages app
@@ -14,110 +15,142 @@ tags: [Hono]
 
 This tutorial will teach you how to use [R2](/r2/) as a static asset bucket for your [Pages](/pages/) app. This is especially helpful if you're hitting the [file limit](/pages/platform/limits/#files) or the [max file size limit](/pages/platform/limits/#file-size) on Pages.
 
-To illustrate how this is done, we will build a simple hello-world app with [Hono](https://hono.dev/), and host its static assets (such as images and JavaScript libraries) in an R2 bucket.
+To illustrate how this is done, we will use R2 as a static asset storage for a fictional cat blog.
+
+## The Cat blog
+
+Imagine you run a static cat blog containing funny cat videos and helpful tips for cat owners. Your blog is growing and you need to add more content with cat images and videos.
+
+The blog is hosted on Pages and currently has the following directory structure:
+
+```
+.
+├── public
+│   ├── index.html
+│   ├── static
+│   │   ├── favicon.ico
+│   │   └── logo.png
+│   └── style.css
+└── wrangler.toml
+```
+
+Adding more videos and images to the blog would be great, but our asset size is above the [file limit on Pages](/pages/platform/limits/#file-size). Let us fix this with R2.
 
 ## Create an R2 bucket
 
-Begin by creating an R2 bucket to store the static assets. A new bucket can be created through the dashboard or via Wrangler.
+The first step is creating an R2 bucket to store the static assets. A new bucket can be created with the dashboard or via Wrangler.
 
-On the dashboard, navigate to the R2 tab using the side bar, click on _Create bucket_ and give your bucket a descriptive name (i.e static-assets).
+Using the dashboard, navigate to the R2 tab, then click on *Create bucket.* We will name the bucket for our blog _cat-media_. Always remember to give your buckets descriptive names:
 
-![Dashboard](/images/workers/tutorials/pages-r2/dash.png)
+![Dashboard](/images/pages/tutorials/pages-r2/dash.png)
 
-After creating a bucket, you can drag and drop files or folders from your computer into it. In the example below, I upload the [Confetti JS library](https://www.kirilv.com/canvas-confetti/) and a folder of cat images from [Unsplash](https://unsplash.com/):
+With the bucket created, we can upload media files to R2. I’ll drag and drop two folders with a few cat images and videos into the R2 bucket:
 
-![Upload](/images/workers/tutorials/pages-r2/upload.gif)
+![Upload](/images/pages/tutorials/pages-r2/upload.gif)
 
-Alternatively, an R2 bucket can be created from the command line with Wrangler by running:
+Alternatively, an R2 bucket can be created with Wrangler from the command line by running:
 
 ```sh
 $ npx wrangler r2 bucket create <bucket_name>
 # i.e
-# npx wrangler r2 bucket create static-assets
+# npx wrangler r2 bucket create cat-media
 ```
 
-And the required files or folders can be uploaded with the command:
+Files can be uploaded to the bucket with the following command:
 
 ```sh
 $ npx wrangler r2 object put <bucket_name>/<file_name> -f <path_to_file>
 # i.e
-# npx wrangler r2 object put static-assets/confetti.js -f ~/Downloads/confetti.js
+# npx wrangler r2 object put cat-media/videos/video1.mp4 -f ~/Downloads/videos/video1.mp4
 ```
 
-## Create a Pages app
+## Bind R2 to Pages
 
-To create a Pages app with Hono, open a terminal window and run the following command. Select `cloudflare-pages` to use the Pages starter template, and then answer the prompts:
+To bind the R2 bucket we have created to the cat blog, we need to update `wrangler.toml`.
 
-```sh
-$ npm create hono@latest <app_name>
-# i.e
-# npm create hono@latest my-app
-```
-
-In the project folder, open `wrangler.toml` and add a binding to the R2 bucket created earlier. The `bucket_name` should be the exact name of the bucket you created in the previous section, while `binding` is a custom name to refer to the resource:
+Open `wrangler.toml`, and add the following binding to the file. `bucket_name` should be the exact name of the bucket created earlier, while `binding` can be any custom name referring to the R2 resource:
 
 ```toml
 [[r2_buckets]]
-binding = "STATIC_ASSETS"
-bucket_name = "static-assets"
+binding = "MEDIA"
+bucket_name = "cat-media"
 ```
 
 {{<Aside type="note">}}
 Note: The keyword `ASSETS` is reserved and cannot be used as a resource binding.
 {{</Aside>}}
 
-Next, open `index.tsx` and add a type definition for the R2 bucket binding. Then, add an `assets` route to fetch and return a given asset from R2. And finally, modify the rendered HTML to return an image and a script fetched from the R2 bucket:
+Save `wrangler.toml` and we are ready to move on to the last step.
 
-```ts
----
-filename: index.tsx
-highlight: [4-6, 8, 12-17, 21, 23-26]
----
-import { Hono } from "hono";
-import { renderer } from "./renderer";
+Alternatively, you can add a binding to your Pages project on the dashboard by navigating to the project’s _Settings_ tab > _Functions_ > _R2 bucket bindings_.
 
-type Bindings = {
-  STATIC_ASSETS: R2Bucket;
-};
+## Serve R2 Assets From Pages
 
-const app = new Hono<{ Bindings: Bindings }>();
+The last step involves serving media assets from R2 on the blog. To do that, we will create a function to handle requests for media files.
 
-app.use(renderer);
+In the project folder, create a _functions_ directory. Then, create a _media_ subdirectory and a file named `[[all]].js` in it. All HTTP requests to `/media` will be routed to this file.
 
-app.get("/assets/*", async (c) => {
-  const path = c.req.path.replace("/assets/", "");
-  const asset = await c.env.STATIC_ASSETS.get(path);
-  if (!asset) return new Response(null, { status: 404 });
-  return new Response(asset.body);
-});
+After creating the folders and JavaScript file, the blog directory structure should look like:
 
-app.get("/", (c) => {
-  return c.render(
-    <>
-      <h1>Hello!</h1>
-      <img src="/assets/images/cat1.jpg" width="300" />
-      <script src="/assets/confetti.js"></script>
-      <script>setTimeout(confetti, 500);</script>
-    </>,
-  );
-});
+```
+.
+├── functions
+│   └── media
+│       └── [[all]].js
+├── public
+│   ├── index.html
+│   ├── static
+│   │   ├── favicon.ico
+│   │   └── icon.png
+│   └── style.css
+└── wrangler.toml
 
-export default app;
 ```
 
-## Deploy your app
+Finally, we will add a handler function to `[[all]].js`. This function receives all media requests, and returns the corresponding file asset from R2:
 
-After saving `index.tsx` , open a new terminal window and run:
+```js
+export async function onRequestGet(ctx) {
+  const path = new URL(ctx.request.url).pathname.replace("/media/", "");
+  const file = await ctx.env.MEDIA.get(path);
+  if (!file) return new Response(null, { status: 404 });
+  return new Response(file.body, {
+    headers: { "Content-Type": file.httpMetadata.contentType },
+  });
+}
+```
+
+## Deploy the blog
+
+Before deploying the changes made so far to our cat blog, let us add a few new posts to `index.html`. These posts depend on media assets served from R2:
+
+```html
+<!doctype html>
+<html lang="en">
+  <body>
+    <h1>Awesome Cat Blog! 😺</h1>
+    <p>Today's post:</p>
+    <video width="320" controls>
+      <source src="/media/videos/video1.mp4" type="video/mp4" />
+    </video>
+    <p>Yesterday's post:</p>
+    <img src="/media/images/cat1.jpg" width="320" />
+  </body>
+</html>
+```
+
+With all the files saved, open a new terminal window to deploy the app:
 
 ```sh
 $ npm run deploy
 ```
 
-Once deployed, your Pages app can pull and serve content from your R2 bucket.
+Once deployed, media assets are fetched and served from the R2 bucket.
 
-![Deployed App](/images/workers/tutorials/pages-r2/deployed.gif)
+![Deployed App](/images/pages/tutorials/pages-r2/deployed.gif)
 
-## Related resources
+## **Related resources**
 
+- [Learn how function routing works in Pages.](/pages/functions/routing/)
 - [Learn how to create public R2 buckets](/r2/buckets/public-buckets/).
 - [Learn how to use R2 from Workers](/r2/api/workers/workers-api-usage/).

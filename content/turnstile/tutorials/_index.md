@@ -1,11 +1,11 @@
 ---
 title: Tutorials
 pcx_content_type: navigation
-weight: 4
+weight: 5
 ---
 
 # Tutorials
 
-Refer to the following pages to learn more about how to implement Turnstile:
+View {{<glossary-tooltip term_id="tutorial">}}tutorials{{</glossary-tooltip>}} to help you get started with Turnstile.
 
-{{<directory-listing>}}
+{{<tutorial-listing>}}

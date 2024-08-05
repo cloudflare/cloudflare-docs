@@ -12,8 +12,7 @@ For a full list of monitor properties, refer to [Create Monitor](/api/operations
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/monitors" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "https",

@@ -50,8 +50,8 @@ header: Request
 highlight: [8, 10]
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "A",
@@ -130,8 +130,8 @@ header: Request
 highlight: [8, 10]
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "CNAME",
@@ -254,8 +254,8 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "SRV",
@@ -339,7 +339,7 @@ If you are using Cloudflare for your [authoritative DNS](/dns/zone-setups/full-s
 
 A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ns-record/) indicates which server should be used for authoritative DNS.
 
-You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
+You only need to add NS records when you are [creating custom or vanity nameservers](/dns/nameservers/custom-nameservers/), using [subdomain setup](/dns/zone-setups/subdomain-setup/), or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
 {{<render file="_api-field-definitions.md">}}
 

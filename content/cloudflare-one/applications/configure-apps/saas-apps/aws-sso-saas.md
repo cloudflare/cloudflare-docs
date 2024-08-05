@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: AWS
-weight: 5
+weight: 6
 ---
 
 # Connect to AWS through Access

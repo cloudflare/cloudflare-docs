@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Google Cloud
-weight: 10
+weight: 13
 ---
 
 # Connect to Google Cloud through Access

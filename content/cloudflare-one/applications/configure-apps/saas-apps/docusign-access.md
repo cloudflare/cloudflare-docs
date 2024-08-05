@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: DocuSign
-weight: 8
+weight: 10
 ---
 
 # Connect to DocuSign through Access

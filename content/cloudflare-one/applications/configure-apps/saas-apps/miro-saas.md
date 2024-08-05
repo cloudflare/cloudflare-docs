@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Miro
-weight: 17
+weight: 19
 ---
 
 # Connect to Miro through Access

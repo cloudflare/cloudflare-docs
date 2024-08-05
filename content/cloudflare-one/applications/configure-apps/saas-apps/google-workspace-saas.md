@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Google Workspace
-weight: 10
+weight: 13
 ---
 
 # Connect to Google Workspace through Access

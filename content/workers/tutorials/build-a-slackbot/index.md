@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Slackbot
 tags: [Hono]
+languages: [TypeScript]
 ---
 
 # Build a Slackbot
@@ -95,38 +96,22 @@ When your webhook is created, it will attempt to send a test payload to your app
 
 To initiate the project, use the command line interface [C3 (create-cloudflare-cli)](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare).
 
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm" >}}
-
-```sh
----
-header: Create a new project
----
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn" >}}
-
-```sh
----
-header: Create a new project
----
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="slack-bot">}}
 
 Follow these steps to create a Hono project.
 
-1. Give your new Worker application a name. `slack-bot`
-2. Select `Website or web app`.
-3. Select `Hono`.
-4. Select `No` to skip Git initialization.
-5. Select `No` to skip deploying your application.
+- For *What would you like to start with*?, select `Framework Starter`.
+- For *Which development framework do you want to use?*, select `Hono`.
+- For, *Do you want to deploy your application?*, select `No`.
 
-Go to the `slack-bot` directory. Open `src/index.ts` in an editor to find the following code.
+Go to the `slack-bot` directory:
+
+```sh
+$ cd slack-bot
+```
+
+
+Open `src/index.ts` in an editor to find the following code.
 
 ```ts
 ---

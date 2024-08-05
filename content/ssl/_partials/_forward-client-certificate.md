@@ -24,9 +24,9 @@ highlight: [11]
 ---
 curl --request PUT \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/access/certificates/settings \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
---header "content-type: application/json" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "settings": [
     {

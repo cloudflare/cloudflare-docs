@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Smartsheet
-weight: 22
+weight: 25
 ---
 
 # Connect to Smartsheet through Access

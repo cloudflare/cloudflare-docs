@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Atlassian Cloud
-weight: 4
+weight: 5
 ---
 
 # Connect to Atlassian Cloud through Access

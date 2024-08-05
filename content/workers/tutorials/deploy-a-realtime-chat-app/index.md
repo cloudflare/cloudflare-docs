@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a real-time chat application
 products: [Durable Objects]
+languages: [JavaScript]
 ---
 
 # Deploy a real-time chat application

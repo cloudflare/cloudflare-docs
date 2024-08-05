@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: PagerDuty
-weight: 17
+weight: 20
 ---
 
 # Connect to PagerDuty through Access

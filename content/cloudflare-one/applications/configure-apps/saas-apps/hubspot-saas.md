@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Hubspot
-weight: 13
+weight: 16
 ---
 
 # Connect to Hubspot through Access

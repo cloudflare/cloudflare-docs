@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Grafana
-weight: 11
+weight: 14
 ---
 
 # Connect to Grafana through Access

@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Handle form submissions with Airtable
 tags: [Forms]
+languages: [JavaScript]
 ---
 
 # Handle form submissions with Airtable
@@ -84,18 +85,15 @@ To handle the form submission, create and deploy a Worker that parses the incomi
 
 Create a new `airtable-form-handler` Worker project:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="airtable-form-handler">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into the newly created directory:
+
 ```sh
----
-header: Create a new Worker
----
-$ npm create cloudflare@latest airtable-form-handler
+$ cd airtable-form-handler
 ```
-
-When configuring your Worker:
-
-* Choose `"Hello World" Worker` for the type of application you would like to create.
-* Select `No` to using TypeScript.
-* Select `No` to deploying your Worker.
 
 ## 3. Configure an Airtable base
 

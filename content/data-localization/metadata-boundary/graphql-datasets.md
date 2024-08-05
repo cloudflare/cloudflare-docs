@@ -46,7 +46,7 @@ The table below shows a non-exhaustive list of GraphQL Analytics API fields that
 | | Magic Firewall |  US only <br> [`magicFirewallSamplesAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/) <br> [`magicFirewallNetworkAnalyticsAdaptiveGroups`](/magic-firewall/tutorials/graphql-analytics/#example-queries-for-magic-firewall) | 
 | | Magic Network Monitoring | US only <br> [`mnmFlowDataAdaptiveGroups`](/magic-network-monitoring/tutorials/graphql-analytics/) |
 | | Magic Transit | US only <br> [`magicTransitNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) <br> [`flowtrackdNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) <br> [`magicTransitTunnelHealthChecksAdaptiveGroups`](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/) <br> [`magicTransitTunnelTrafficAdaptiveGroups`](/magic-transit/analytics/query-bandwidth/) |
-| | Magic WAN | US and EU <br> `MagicWANConnectorMetricsAdaptiveGroups` |
+| | Magic WAN | US only <br> `MagicWANConnectorMetricsAdaptiveGroups` |
 | | Spectrum | US and EU <br> [`spectrumNetworkAnalyticsAdaptiveGroups`](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/) |
 | Platform | GraphQL Analytics API | US and EU <br> [All GraphQL Analytics API datasets](/analytics/graphql-api/features/discovery/introspection/) | 
 | | Logpush | US only <br> [`logpushHealthAdaptiveGroups`](/logs/get-started/alerts-and-analytics/#enable-logpush-health-analytics) <br> |

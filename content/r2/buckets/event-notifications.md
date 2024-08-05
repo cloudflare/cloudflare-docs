@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # Event notifications
 
-Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers. 
+Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers.
 
 
 {{<Aside type="note" header="Open Beta">}}
@@ -248,3 +248,4 @@ During the beta, event notifications has the following limitations:
 - For a given bucket, only one event notification rule can be created per queue.
 - Each bucket can have up to 5 event notification rules.
 - Deletes that occur as a result of object lifecycle policies will not trigger an event notification.
+- Event notifications are not available for buckets with [jursdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).

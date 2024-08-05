@@ -78,8 +78,7 @@ You can also use Regional Services via API. These are some examples of API reque
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regional_hostnames/regions" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" | jq .
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -112,8 +111,7 @@ header: Response
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
 ```
@@ -143,8 +141,7 @@ header: Response
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" | jq .
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -174,8 +171,7 @@ header: Response
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" | jq .
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -204,8 +200,7 @@ header: Request
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"region_key": "eu"}' | jq .
 ```
@@ -236,8 +231,7 @@ header: Request
 ---
 curl --request DELETE \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" | jq .
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json

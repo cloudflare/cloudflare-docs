@@ -174,16 +174,9 @@ We will start with setting up a Cloudflare Worker app.
 
 First, create a new Workers app in a local directory:
 
-```sh
-$ npm create cloudflare hijack-alerts
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="hijack-alerts">}}
 
-In your terminal, you will be asked a series of questions related to your project:
-
-- For the `What type of application do you want to create?` prompt, choose `Scheduled Worker (Cron Trigger)`.
-- For the `Do you want to use TypeScript?` prompt, choose `No`.
-- For the `Do you want to use git for version control?` prompt, choose `No`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Demo application;;Scheduled Worker (Cron Trigger);;JavaScript">}}
 
 To start developing your Worker, `cd` into your new project directory:
 

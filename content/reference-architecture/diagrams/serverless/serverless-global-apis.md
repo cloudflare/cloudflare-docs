@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Serverless global APIs"
+products: [Workers, KV, D1, Hyperdrive]
 ---
 
 # Serverless global APIs

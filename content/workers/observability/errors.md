@@ -158,7 +158,6 @@ These errors occur when a Worker is uploaded or modified.
 | `10026`     | Could not parse request body.                                                                                                |
 | `10035`     | Multiple attempts to modify a resource at the same time                                                                      |
 | `10037`     | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                        |
-| `10026`     | Could not parse request body.                                                                                                |
 | `10052`     | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                     |
 | `10054`     | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                  |
 | `10055`     | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).  |

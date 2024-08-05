@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 title: Build a Comments API
 products: [Workers]
 tags: [Hono]
+languages: [JavaScript, SQL]
 ---
 
 # Build a Comments API
@@ -18,16 +19,9 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
-```sh
-$ npm create cloudflare d1-example
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="d1-example">}}
 
-In your terminal, you will be asked a series of questions related to your project. Choose the following options to use TypeScript to write a `fetch` handler:
-
-- For the `What type of application do you want to create?` prompt, choose `"Hello World" Worker`.
-- For the `Do you want to use TypeScript?` prompt, choose `No`.
-- For the `Do you want to use git for version control?` prompt, choose `No`.
-- For the `Do you want to deploy your application?` prompt, choose `No`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 To start developing your Worker, `cd` into your new project directory:
 

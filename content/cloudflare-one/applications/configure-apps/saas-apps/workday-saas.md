@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Workday
-weight: 24
+weight: 28
 ---
 
 # Connect to Workday through Access

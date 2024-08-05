@@ -45,7 +45,7 @@
 /content/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/cloudflare-one/connections/connect-devices/ @kkrum @ranbel @cloudflare/pcx-technical-writing
+/cloudflare-one/connections/connect-devices/ @kkrum @dh-cf @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/connections/connect-networks/ @janani-cr @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/insights/ @abelinkinbio @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
@@ -54,6 +54,7 @@
 /content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /content/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
+/data/changelogs/warp.yaml @ranbel @dh-cf @cloudflare/pcx-technical-writing
 
 # Consumer products
 /content/1.1.1.1/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
@@ -75,9 +76,12 @@
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer Platform
-/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774
+/content/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
+/assets/images/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/email-routing/ @kodster28 @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing

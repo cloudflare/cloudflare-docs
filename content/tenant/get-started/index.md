@@ -62,8 +62,8 @@ You can also grant access to the Cloudflare dashboard by using the API.
 header: Request
 ---
 curl 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID>/members' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "email": "<CUSTOMER_EMAIL>",
@@ -93,9 +93,9 @@ To grant access via an interface, you need to create a service user, as no one w
 ---
 header: Request
 ---
-curl 'https://api.cloudflare.com/client/v4/users' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/users" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "email": "<ID@example.com>"
@@ -139,9 +139,9 @@ To do this, send a [`POST`](/api/operations/zones-post) request to the `/zones` 
 ---
 header: Request
 ---
-curl 'https://api.cloudflare.com/client/v4/zones' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/zones" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "example.com",

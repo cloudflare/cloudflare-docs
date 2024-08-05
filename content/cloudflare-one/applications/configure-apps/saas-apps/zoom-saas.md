@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Zoom
-weight: 26
+weight: 30
 ---
 
 # Connect to Zoom through Access

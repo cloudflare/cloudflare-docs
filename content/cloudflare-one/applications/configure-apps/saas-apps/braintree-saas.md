@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Braintree
-weight: 6
+weight: 7
 ---
 
 # Connect to Braintree through Access

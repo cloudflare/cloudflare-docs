@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying Magic Firewall Intrusion Detection System (IDS) samples with GraphQL
 ---
 
@@ -40,25 +40,23 @@ echo '{ "query":
       "outcome": "pass"
     }
   }
-}' | tr -d '\n' | curl \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <API_KEY>" \
-  --header "Content-Type: application/json" \
-  --silent \
-  --data @- \
-  https://api.cloudflare.com/client/v4/graphql/
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @-
 ```
 
 The returned values represent the total number of packets and bits that matched IDS rules during the five minute interval. The result will be in JSON (as requested), so piping the output to `jq` will make it easier to read, like in the following example:
 
 ```bash
-... | curl \
-  --header "X-Auth-Email: <EMAIL>" \
-  --header "X-Auth-Key: <API_KEY>" \
-  --header "Content-Type: application/json" \
-  --silent \
-  --data @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+... | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
 
 #=> {
 #=>   "data": {

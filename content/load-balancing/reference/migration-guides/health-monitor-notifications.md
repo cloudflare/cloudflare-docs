@@ -31,8 +31,7 @@ Use the [Cloudflare API](/api/operations/account-load-balancer-pools-list-pools)
 header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 | jq '[.result[] | select(.notification_email != "") | {name, notification_email}]'
 ```
 
@@ -115,8 +114,7 @@ header: Request
 ---
 curl --request PATCH \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "notification_email": ""

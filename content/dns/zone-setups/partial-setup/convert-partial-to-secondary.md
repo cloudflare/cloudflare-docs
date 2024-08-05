@@ -22,7 +22,7 @@ Make sure you consider the following:
 
 ## 1. Prepare a zone file
 
-1. Export a zone file from the authoritatve DNS provider you were using with your partial (CNAME) setup.
+1. Export a zone file from the authoritative DNS provider you were using with your partial (CNAME) setup.
 2. Edit the zone file to remove any occurrences of the `cdn.cloudflare.net` suffix.
 
   * If the `CNAME` target is only appending the Cloudflare suffix to the same hostname at which it is created, replace it by the records on the Cloudflare partial zone.
@@ -82,7 +82,7 @@ Final records adjusted in the zone file:
 
 1. Use the [Import DNS Records endpoint](/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted zone file](/dns/manage-dns-records/how-to/import-and-export/#format-your-zone-file) to import the records into your partial zone.
 
-    Existing and already proxied records will not be overwritten by the import.
+    {{<render file="_zone-file-size-limit.md">}} Existing and already proxied records will not be overwritten by the import.
 
 2. Use the [Update DNS Settings endpoint](/api/operations/dns-settings-for-a-zone-update-dns-settings) with `secondary_overrides` set to `true`, to enable Secondary DNS Override.
 

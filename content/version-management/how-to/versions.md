@@ -34,6 +34,12 @@ Your zone configurations are split up into two areas: **Global Configuration** a
     - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
     - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
 
+{{<Aside type="note">}}
+
+To use the API for a different version, you will need to use a different zone ID.
+
+{{</Aside>}}
+
 ### Editable versions
 
 {{<render file="_edit-version.md">}}

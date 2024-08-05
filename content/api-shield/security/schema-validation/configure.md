@@ -202,10 +202,9 @@ You can add all operations in a schema that do not already exist in Endpoint Man
 header: cURL command
 ---
 curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
---data "$(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=5000" --header "X-Auth-Email: <EMAIL>" --header "X-Auth-Key: <API_KEY>" | jq ".result")"
+--data "$(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=5000" --header "Authorization: Bearer <API_TOKEN>" | jq ".result")"
 ```
 
 {{<Aside type="note">}}

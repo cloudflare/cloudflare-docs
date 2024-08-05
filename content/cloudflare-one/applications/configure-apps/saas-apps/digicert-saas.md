@@ -1,7 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: Digicert
-weight: 7
+weight: 9
 ---
 
 # Connect to Digicert through Access

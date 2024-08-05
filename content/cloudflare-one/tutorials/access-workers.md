@@ -2,11 +2,16 @@
 updated: 2023-11-27
 category: 🔐 Access
 difficulty: Intermediate
+content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create custom headers for Cloudflare Access-protected origins with Workers
+products: [Workers, Access]
+languages: [JavaScript]
 ---
 
 # Create custom headers for Cloudflare Access-protected origins with Workers
+
+{{<tutorial-date-info>}}
 
 This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic, and how to send those custom headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
 
@@ -46,7 +51,7 @@ Some applications and networking implementations require specific custom headers
 
    return await fetch(requestWithID);
    }
-   
+
    ```
 
 6. Select **Save and deploy**.
@@ -68,11 +73,11 @@ The Worker will now insert a custom header into requests that match the defined 
    header: Example custom header
    highlight:4-5
    ---
-   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7", 
-       "Accept-Encoding": "gzip", 
-       "Accept-Language": "en-US,en;q=0.9", 
-       "Cf-Access-Authenticated-User-Email": "user@example.com", 
-       "Company-User-Id": "user@example.com", 
+   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+       "Accept-Encoding": "gzip",
+       "Accept-Language": "en-US,en;q=0.9",
+       "Cf-Access-Authenticated-User-Email": "user@example.com",
+       "Company-User-Id": "user@example.com",
        "Connection": "keep-alive"
    ```
 

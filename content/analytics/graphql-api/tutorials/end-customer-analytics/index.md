@@ -1,15 +1,17 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying HTTP events by hostname with GraphQL
 ---
 
 # Querying HTTP events by hostname with GraphQL
 
+## Aggregated HTTP metrics by hostname over time
+
 In this example, we are going to use the GraphQL Analytics API to query aggregated metrics about HTTP events by hostname over a specific period of time.
 
-The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_ID` AND `CLOUDFLARE_API_TOKEN` with your zone ID and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_ID` AND `API_TOKEN` with your zone ID and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
-## API Call
+### API Call
 
 ```bash
 echo '{ "query":
@@ -29,7 +31,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "zoneTag": "CLOUDFLARE_ZONE_ID",
+    "zoneTag": "<CLOUDFLARE_ZONE_ID>",
     "filter": {
       "datetime_geq": "2022-07-20T11:00:00Z",
       "datetime_lt": "2022-07-24T12:00:00Z",
@@ -37,12 +39,12 @@ echo '{ "query":
       "requestSource": "eyeball"
     }
   }
-}' | tr -d '\n' | curl \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Accept: application/json" \
-  --silent \
-  --data @- \
-  https://api.cloudflare.com/client/v4/graphql | jq .
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
 ```
 
 The returned results will be in JSON format (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
@@ -153,3 +155,40 @@ The returned results will be in JSON format (as requested), so piping the output
 }
 ```
 
+## Top 10 consuming URLs in a zone
+
+We are going to use the GraphQL Analytics API to query the top 10 consuming URLs from a zone, helping you identify the URLs with the highest resource usage. Here are some configuration instructions:
+
+- To filter on a specific hostname, add the line `"clientRequestHTTPHost": "'$2'"` below `"requestSource"`."
+- Replace `API_TOKEN` with your generated API token using the `Read all resources` permissions. The script will only access zones available to the token's creator.
+- Pass the zone ID (`zoneTag`) as a parameter `ARG=$1`.
+- To calculate the current date and the date from 30 days ago, use `gdate` on Mac:
+  - `CURRENTDATE=$(gdate -u +'%FT%TZ')`
+  - `OLDDATE=$(gdate -d '-30 days' -u +'%FT%TZ')`.
+- For specific dates within the last 30 days, set `CURRENTDATE` and `OLDDATE` variables in the format `"YYYY-MM-DDTHH:MM:SSZ"`.
+
+### API call
+
+```bash
+curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "query": "{viewer {zones(filter: {zoneTag: $zoneTag}) {topPaths: httpRequestsAdaptiveGroups(filter: $filter, limit: 10, orderBy: [sum_edgeResponseBytes_DESC]) {count sum {edgeResponseBytes} dimensions {metric: clientRequestPath}}}}}",
+  "variables": {
+    "zoneTag": "'$ARG'",
+    "filter": {
+      "AND": [
+        {
+          "datetime_geq": "'$OLDDATE'",
+          "datetime_leq": "'$CURRENTDATE'"
+        },
+        {
+          "requestSource": "eyeball"
+        }
+      ]
+    }
+  }
+}' | jq -r 'try .data.viewer.zones[].topPaths[] | "\"\(.dimensions.metric)\": \(.sum.edgeResponseBytes)"' | sort
+```

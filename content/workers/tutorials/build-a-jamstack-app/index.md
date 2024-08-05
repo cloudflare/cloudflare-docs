@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list Jamstack application
 products: [KV]
+languages: [JavaScript]
 ---
 
 # Build a todo list Jamstack application
@@ -28,19 +29,15 @@ If you would like to see the finished code for this project, find the [project o
 
 First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="todos">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Move into your newly created directory:
+
 ```sh
----
-header: Create a new project with C3
----
-$ npm create cloudflare@latest todos
+$ cd todos
 ```
-
-To configure your Worker:
-
-- Choose `"Hello World" Worker` for the type of application you would like to create.
-- Answer `No` to using TypeScript.
-- Answer `Yes` to using Git for version control.
-- Answer `No` to deploying your application.
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

@@ -22,10 +22,6 @@ Advanced DNS Protection is currently available in beta to [Magic Transit](/magic
 
 Protection for simpler DNS-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
-{{<Aside type="warning" header="Configuration will be available soon">}}
-Currently, you cannot configure Advanced DNS Protection rules using the Cloudflare dashboard or the Cloudflare API.
-{{</Aside>}}
-
 ## Setup
 
 1. Contact your account team to enable Advanced DNS Protection and make the initial configuration. The initial thresholds are based on your network’s individual behavior.

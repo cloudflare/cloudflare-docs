@@ -7,6 +7,7 @@ meta:
   description: By integrating automatic speech recognition technology into video platforms, content creators, publishers, and distributors can reach a broader audience, including individuals with hearing impairments or those who prefer to consume content in different languages.
 tags:
   - AI
+products: [Workers AI, Workers, Cache / CDN, R2]
 ---
 
 # Automatic captioning for video uploads
