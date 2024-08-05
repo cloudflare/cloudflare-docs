@@ -76,13 +76,15 @@ $ npx wrangler versions deploy --experimental-versions
 
 Run a cURL command on your Worker to test the split deployment.
 
-```sh
+```bash
 for j in {0..10}
 do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
 done
 ```
 You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment).
+
+You can test also target a specific version using [version overrides](#version-overrides).
 
 #### 5. Set your new version to 100% deployment
 
@@ -102,7 +104,7 @@ $ npx wrangler versions deploy --experimental-versions
 6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
 7. cURL your Worker to test the split deployment.
 
-```sh
+```bash
 for j in {0..10}
 do
     curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
@@ -119,7 +121,7 @@ You may want requests associated with a particular identifier (such as user, ses
 You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
-curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
 For a given [deployment](/workers/configuration/versions-and-deployments/#deployments), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
@@ -148,6 +150,57 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 {{</example>}}
 
+## Version overrides
+
+You can use version overrides to send a request to a specific version of your Worker in your gradual deployment.
+
+To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
+
+```sh
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
+`Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
+
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list --experimental-versions`](/workers/wrangler/commands/#list---experimental-versions) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment. 
+
+{{<Aside type="note" header="Verifying that the version override was applied">}}
+
+There are a number of reasons why a request's version override may not be applied. For example:
+* The deployment containing the specified version may not have propagated yet.
+* The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
+
+To make sure that the request's version override was applied correctly, you can [observe](#observability) the version of your Worker that was invoked. You could even automate this check by using the [runtime binding](#runtime-binding) to return the version in the Worker's response.
+
+{{</Aside>}}
+
+### Example
+
+You may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic.
+
+In this example, your deployment is initially configured to route all traffic to a single version:
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Create a new deployment using [`wrangler versions deploy --experimental-versions`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+
+| Version ID                             | Percentage |
+| :------------------------------------: | :--------: |
+| dc8dcd28-271b-4367-9840-6c244f84cb40   | 0%         |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067   | 100%       |
+
+Now test the new version with a version override before gradually progressing the new version to 100%:
+
+```sh
+$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
 ## Gradual deployments for Durable Objects
 
 Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
@@ -155,7 +208,6 @@ Due to [global uniqueness](/durable-objects/platform/known-issues/#global-unique
 When you create a new gradual deployment for a Durable Object Worker, each Durable Object instance is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
 
 ![Gradual Deployments Durable Objects](/images/workers/platform/versions-and-deployments/durable-objects.png)
-
 
 ### Example
 
@@ -194,13 +246,15 @@ When using gradual deployments, you may want to attribute Workers invocations to
 
 A new `ScriptVersion` object is available in [Workers Logpush](/workers/observability/logging/logpush/). `ScriptVersion` can only be added through the [Logpush API](/api/operations/post-accounts-account_identifier-logpush-jobs) right now. Sample API call:
 
-```sh
+```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
 -H 'Authorization: Bearer <TOKEN>' \
 -H 'Content-Type: application/json' \
 -d '{
 "name": "workers-logpush",
-"logpull_options": "fields=Event,EventTimestampMs,Outcome,Exceptions,Logs,ScriptName,ScriptVersion",
+"output_options": {
+    "field_names": ["Event", "EventTimestampMs", "Outcome", "Logs", "ScriptName", "ScriptVersion"],
+},
 "destination_conf": "<DESTINATION_URL>",
 "dataset": "workers_trace_events",
 "enabled": true
@@ -209,7 +263,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 
 `ScriptVersion` is an object with the following structure:
 
-```sh
+```json
 scriptVersion: {
     id: "<UUID>",
     message: "<MESSAGE>",
@@ -226,11 +280,3 @@ Use the [Version metadata binding](/workers/runtime-apis/bindings/version-metada
 ### Deployments limit
 
 You can only create a new deployment with the last 10 uploaded versions of your Worker.
-
-### Unsupported features
-
-These Workers features will be supported in the near future.
-
-- Updating [Secrets via wrangler](/workers/wrangler/commands/#secret) with a split deployment is not supported. You must fully deploy the latest version before using updating secrets.
-- Gradual deployments are not supported for Workers with the [mTLS binding](/workers/runtime-apis/bindings/mtls/). Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) for Workers with an mTLS binding.
-- Creating a gradual deployment with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).

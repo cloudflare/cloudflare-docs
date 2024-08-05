@@ -5,6 +5,7 @@ weight: 1
 meta:
   title: "Reference Architecture Diagram: Composable AI architecture"
   description: The architecture diagram illustrates how AI applications can be built end-to-end on Cloudflare, or single services can be integrated with external infrastructure and services.
+products: [Workers AI, Workers, Vectorize, D1, R2]
 tags:
   - AI
 ---

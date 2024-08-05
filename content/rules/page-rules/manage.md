@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Manage
 meta:
-    title: Manage | Page Rules (legacy)
+    title: Manage | Page Rules
 weight: 1
 ---
 

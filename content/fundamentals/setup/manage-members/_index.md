@@ -8,7 +8,15 @@ meta:
 
 # Account members
 
-With every Cloudflare plan, you can add multiple members to your account and assign them a variety of roles.
+On any Cloudflare account, you can collaborate by adding members to your account and assigning them access via one or several policies.
+
+Every policy has three parts: 
+
+1. The actor
+2. The role
+3. The scope
+
+Refer to the resources below to configure policies to ensure that you can assign only the necessary access permissions to your account members.
 
 ## Resources
 

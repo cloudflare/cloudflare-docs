@@ -34,22 +34,22 @@ To develop more advanced applications or [implement tests](/workers/testing/), s
   {{<tabs labels="npm | yarn | pnpm | bun">}}
   {{<tab label="npm" default="true">}}
   ```sh
-  $ npm create cloudflare [<DIRECTORY>] -- --type=pre-existing
+  $ npm create cloudflare@latest [<DIRECTORY>] -- --type=pre-existing
   ```
   {{</tab>}}
   {{<tab label="yarn">}}
   ```sh
-  $ yarn create cloudflare [<DIRECTORY>] --type=pre-existing
+  $ yarn create cloudflare@latest [<DIRECTORY>] --type=pre-existing
   ```
   {{</tab>}}
   {{<tab label="pnpm">}}
   ```sh
-  $ pnpm create cloudflare [<DIRECTORY>] --type=pre-existing
+  $ pnpm create cloudflare@latest [<DIRECTORY>] --type=pre-existing
   ```
   {{</tab>}}
   {{<tab label="bun">}}
   ```sh
-  $ bun create cloudflare [<DIRECTORY>] --type=pre-existing
+  $ bun create cloudflare@latest [<DIRECTORY>] --type=pre-existing
   ```
   {{</tab>}}
   {{</tabs>}}

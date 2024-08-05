@@ -14,18 +14,18 @@ Start by configuring the [bidirectional health checks](/magic-wan/configuration/
 This can be set up [with the API](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). For example:
 
 ```bash
-$ curl --request PUT \
+curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL> ' \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
-    "health_check": {
-        "enabled":true,
-        "target":"172.64.240.252",
-        "type":"request",
-        "rate":"mid"
-    }
+  "health_check": {
+    "enabled": true,
+    "target": "172.64.240.252",
+    "type": "request",
+    "rate": "mid"
+  }
 }'
 ```
 

@@ -6,13 +6,17 @@ meta:
   title: Changelog for managed rulesets
 sidebar_toc: true
 layout: changelog
-changelog_file_name: [waf]
+changelog_file_name: [waf, waf-general]
 outputs:
     - html
     - rss
 ---
 
-# Changelog for managed rulesets
+# Changelog
+
+The WAF changelog provides information about changes to managed rulesets and general updates to WAF protection.
+
+## Changelog for managed rulesets
 
 Cloudflare has a regular cadence of releasing updates and new rules to WAF managed rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
 

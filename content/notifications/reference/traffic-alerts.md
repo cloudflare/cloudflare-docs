@@ -9,11 +9,11 @@ weight: 1
 
 ## Error Rate
 
-**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5XX error responses. You can select which zones to be alerted on and the sensitivity of the alerts. Edge status codes of `521`, `522`, and `523` also count as origin errors as they indicate issues reaching your origin.
+**Origin Error Rate** alerts allow you to monitor your zones at the origin and be alerted when Cloudflare detects elevated levels of 5xx error responses. You can select which zones to be alerted on and the sensitivity of the alerts. Edge status codes of `521`, `522`, and `523` also count as origin errors as they indicate issues reaching your origin.
 
 **Advanced Error Rate** alerts allow you to monitor either your origin or edge status code. You can select which zones and specific status codes to be alerted on and the sensitivity of the alert. Optionally, you can also filter out certain IP addresses and choose whether to group your alerts by status code.
 
-Once you have set up an alert, Cloudflare checks to see which zones should be monitored for the error rate. The [Clickhouse ABR database](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/) is polled for origin HTTP response codes for those zones. The [service-level objective (SLO)](https://sre.google/workbook/alerting-on-slos/) that is set in the alert is used to determine whether the rate of 5XX response codes to total responses is acceptable.
+Once you have set up an alert, Cloudflare checks to see which zones should be monitored for the error rate. The [Clickhouse ABR database](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/) is polled for origin HTTP response codes for those zones. The [service-level objective (SLO)](https://sre.google/workbook/alerting-on-slos/) that is set in the alert is used to determine whether the rate of 5xx response codes to total responses is acceptable.
 
 Instead of using thresholds to calculate error rates, Cloudflare uses burn rates. When you select your SLO, the “error budget” for a set period of time is calculated to determine the burn rate. The burn rate is how quickly the error budget is used for that time period. For example, a burn rate of 1 means that the entirety of the error budget will be used up within the set time period.
 
@@ -25,9 +25,9 @@ This approach does not work as well for low traffic zones. If there are not many
 
 ### Service-level objective recommendations
 
-SLOs determine the sensitivity of an alert.  For example, if you want to be alerted on all spikes in 5XX errors, you should select high sensitivity. If you want to be alerted on only large spikes, you should select a lower sensitivity.
+SLOs determine the sensitivity of an alert.  For example, if you want to be alerted on all spikes in 5xx errors, you should select high sensitivity. If you want to be alerted on only large spikes, you should select a lower sensitivity.
 
-Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5XX error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
+Your traffic levels impact the accuracy of high sensitivity alerts. High sensitivity alerts are not recommended for zones with low traffic since the Error Rate alert will likely alert on every 5xx error. However, If you have a zone that has very high traffic (hundreds of millions of requests per day), High Sensitivity SLOs are recommended.
 
 ### Alert Grouping recommendations
 

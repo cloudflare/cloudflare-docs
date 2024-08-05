@@ -19,19 +19,19 @@ To migrate, you should update the endpoints you use when [reading from or writin
 
 For example, you might have been using the previous endpoints to interact with your Ethereum Gateway.
 
-```sh
+```bash
 ---
 header: Previous curl
 highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
--H 'Content-Type: application/json' \
+curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
+--header 'Content-Type: application/json' \
 --data '{
-    "jsonrpc":"2.0",
-    "method":"eth_getBlockByNumber",
-    "params":["0x2244", true],
-    "id":1
-    }'
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
 ```
 
 ```js
@@ -59,19 +59,19 @@ await fetch(
 
 To migrate away from Rinkeby, change the end of your endpoint to use another testnet.
 
-```sh
+```bash
 ---
 header: New curl
 highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/sepolia \
--H 'Content-Type: application/json' \
+curl https://web3-trial.cloudflare-eth.com/v1/sepolia \
+--header 'Content-Type: application/json' \
 --data '{
-    "jsonrpc":"2.0",
-    "method":"eth_getBlockByNumber",
-    "params":["0x2244", true],
-    "id":1
-    }'
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
 ```
 
 ```js

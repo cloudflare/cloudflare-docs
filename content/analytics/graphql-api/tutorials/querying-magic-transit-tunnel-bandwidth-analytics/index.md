@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying Magic Transit and Magic WAN tunnel bandwidth analytics with GraphQL
 ---
 

@@ -2,6 +2,7 @@
 title: Glossary
 pcx_content_type: glossary
 layout: wide
+weight: 8
 ---
 
 # Glossary

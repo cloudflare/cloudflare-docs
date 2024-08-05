@@ -14,11 +14,11 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 2. [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 3. Cloudflare associates the tags in the `Cache-Tag` HTTP header with the content being cached.
 4. Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](/api/operations/zone-purge).
-5. Cloudflare forces a [cache miss](/cache/concepts/cache-responses/#miss) on content with the purged cache-tag.
+5. Cloudflare forces a [cache MISS](/cache/concepts/cache-responses/#miss) on content with the purged cache-tag.
 
 {{<Aside type="warning" header="Warning">}}
 
-Be careful when purging. A cache miss can cause execution delays by requiring a fetch from your origin server.
+Be careful when purging. A cache MISS can cause execution delays by requiring a fetch from your origin server.
 
 {{</Aside>}}
 

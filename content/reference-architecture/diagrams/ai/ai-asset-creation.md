@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Content-based asset creation"
+products: [Workers AI]
 tags:
   - AI
 ---

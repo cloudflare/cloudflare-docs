@@ -6,7 +6,7 @@ updated: '{{ time.Now.Format "2006-01-02" }}'
 title: '{{ replace .File.ContentBaseName `-` ` ` | title }}'
 ---
 
-# Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done
+# # Tutorial title. Second-person imperative verb phrase that reflects user goal or job-to-be-done. For example, 'Create a Worker' or 'Build a Pages application'.
 
 {{<tutorial-date-info>}}
 
@@ -30,9 +30,7 @@ Before you start, make sure you have:
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-```sh
-$ npm create cloudflare@latest <PROJECT_NAME>
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="<PROJECT_NAME>">}}
 
 Replace `<PROJECT_NAME>` with your desired project name.
 
@@ -50,6 +48,9 @@ Once you run the command, set up a basic Worker by selecting the following optio
 (JavaScript example)
 
 ```js
+---
+filename: src/index.js
+---
 export default {
   async fetch(request, env, ctx) {
     return new Response("Hello World!");

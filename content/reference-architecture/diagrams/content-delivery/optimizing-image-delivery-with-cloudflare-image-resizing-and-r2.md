@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Optimizing Image Delivery with Cloudflare Image Resizing and R2"
+products: [Images, R2, Cache / CDN, Transform Rules]
 ---
 
 # Optimizing Image Delivery with Cloudflare Image Resizing and R2
@@ -15,7 +16,7 @@ Optimizing image delivery for websites is crucial for enhancing user experience.
 - [Cloudflare CDN](https://www.cloudflare.com/en-gb/application-services/products/cdn/) - Leverage [Cloudflare’s Global Network](https://www.cloudflare.com/en-gb/network/) to cache your transformed images for fast and reliable delivery to your end users.
 - [Cloudflare Images](https://www.cloudflare.com/en-gb/developer-platform/cloudflare-images/) - Leverage Cloudflare Images to resize, optimize and transform your images that are stored in an object storage solution such as Cloudflare R2. Transformations are performed based on a specifically-formatted URL which requires minimal refactoring to your application to support.
 - [Cloudflare R2 Object Storage](https://www.cloudflare.com/en-gb/developer-platform/r2/) - R2 allows users to store a large amount of unstructured data, and in this use case will be used for storing our original images (best quality) for transformation.
-- [Cloudflare Transform Rules](/rules/transform/) - If you’re migrating from another solution to Cloudflare, Transform Rules allows you to Rewrite the URL from the anothers solutions syntax to a Cloudflare specific syntax, which reduces the complexity of migration.
+- [Cloudflare Transform Rules](/rules/transform/) - If you’re migrating from another solution to Cloudflare, Transform Rules allows you to Rewrite the URL from another solutions syntax to a Cloudflare specific syntax, which reduces the complexity of migration.
 
 ## Image Delivery with Cloudflare Image Resizing and R2
 

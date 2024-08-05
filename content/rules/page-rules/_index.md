@@ -5,6 +5,10 @@ title: Page Rules
 weight: 19
 ---
 
+# Page Rules
+
+Page rules trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in **Rules** > **Page Rules**.
+
 ## Availability
 
 The default number of allowed page rules depends on the domain plan as shown below.

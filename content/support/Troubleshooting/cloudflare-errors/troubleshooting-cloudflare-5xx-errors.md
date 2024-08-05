@@ -266,7 +266,7 @@ or
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise customers can increase the 524 timeout up to 6000 seconds using the [proxy\_read\_timeout API endpoint](/api/operations/zone-settings-change-proxy_read_timeout-setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
+-   Enterprise customers can increase the 524 timeout up to 6,000 seconds using the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint (`proxy_read_timeout` setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
 
 {{<Aside type="note">}}
 If the timeouts are on write requests, the [Proxy Write Timeout](/fundamentals/reference/connection-limits/) of 30 seconds cannot be adjusted.
@@ -316,7 +316,7 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 **Additional checks**
 
 -   Check if you have a certificate installed on your origin server. You can check [this article](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
--   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
+-   [Review the cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
 ___

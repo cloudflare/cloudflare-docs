@@ -45,12 +45,12 @@ A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pu
 ```toml
 [[queues.consumers]]
 # Required
-queue = "QUEUE_NAME"
+queue = "QUEUE-NAME"
 type = "http_pull"
 # Optional
 visibility_timeout_ms = 5000
 max_retries = 5
-dead_letter_queue = "SOME_OTHER_QUEUE"
+dead_letter_queue = "SOME-OTHER-QUEUE"
 ```
 
 Omitting the `type` property will default the queue to push-based.
@@ -60,13 +60,13 @@ Omitting the `type` property will default the queue to push-based.
 You can enable a pull-based consumer on any existing queue by using the `wrangler queues consumer http` sub-commands and providing a queue name.
 
 ```sh
-$ npx wrangler queues consumer http add $QUEUE_NAME
+$ npx wrangler queues consumer http add $QUEUE-NAME
 ```
 
 If you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration:
 
 ```sh
-$ wrangler queues consumer worker remove $QUEUE_NAME $SCRIPT_NAME
+$ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 ```
 
 {{<Aside type="note">}}
@@ -85,11 +85,11 @@ Both read _and_ write are required as a pull-based consumer needs to write to th
 
 API tokens are presented as Bearer tokens in the `Authorization` header of a HTTP request in the format `Authorization: Bearer $YOUR_TOKEN_HERE`. The following example shows how to pass an API token using the `curl` HTTP client:
 
-```sh
-$ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
-  --data '{ "visibility_timeout": 10000, "batch_size": 2 }' \
-  -H "Authorization: Bearer ${QUEUES_TOKEN}" \
-  -H "Content-Type: application/json"
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
+--header "Authorization: Bearer ${QUEUES_TOKEN}" \
+--header "Content-Type: application/json" \
+--data '{ "visibility_timeout": 10000, "batch_size": 2 }'
 ```
 
 You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same [rate limit](/queues/platform/limits/) against the Cloudflare API.

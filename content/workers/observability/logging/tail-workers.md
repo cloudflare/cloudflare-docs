@@ -9,7 +9,7 @@ meta:
 
 A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 
-Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. They are priced the same as [Workers](/workers/platform/pricing/#workers).
+Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. Tail Workers are billed by [CPU time](/workers/platform/pricing/#workers), not by the number of requests. 
 
 ![Tail Worker diagram](/images/workers/platform/tail-workers.png)
 

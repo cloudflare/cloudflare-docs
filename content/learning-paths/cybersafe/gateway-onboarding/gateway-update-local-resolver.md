@@ -25,7 +25,7 @@ To configure your device to send traffic to Gateway:
 
 {{<details header="Linux">}}
 
-```bash
+```sh
 $ cat /etc/resolv.conf
 
 nameserver 172.64.X.X

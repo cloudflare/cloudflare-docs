@@ -11,5 +11,10 @@ _build:
   | Rule type | Selector | Value |
   | --------- | ---------| ------ |
   | Include   | Emails ending in    | `@company.com` |
+
+  {{<Aside type="note">}}
+  Device posture checks are not supported in device enrollment policies. WARP can only perform posture checks after the device is enrolled.
+  {{</Aside>}}
+
 4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with. If you have not integrated an identity provider, you can use the [one-time PIN](/cloudflare-one/identity/one-time-pin/).
 5. Select **Save**.

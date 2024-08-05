@@ -13,7 +13,7 @@ Cloudflare classifies scripts and connections (also known as resources) accordin
 * The number of times a script/connection was reported.
 * Whether the script/connection is considered malicious or not.
 
-Use Page Shield's dashboards to review the scripts loaded in your domain and the connections they make. For more information, refer to [Monitor active connections and scripts on your site](/page-shield/detection/monitor-connections-scripts/).
+Use Page Shield's dashboards to review the scripts loaded in your domain and the connections they make. For more information, refer to [Monitor resources and cookies](/page-shield/detection/monitor-connections-scripts/).
 
 ## Available statuses
 

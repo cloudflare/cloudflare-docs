@@ -48,17 +48,11 @@ Host: bucket.account.r2.cloudflarestorage.com
 
 This is only useful if you are creating buckets on demand because you do not know the name of the bucket or the preferred access location ahead of time. For example, you have one bucket per one of your customers and the bucket is created on first upload to the bucket and not during account registration. In these cases, the [`ListBuckets` extension](#listbuckets), which supports accounts with more than 1,000 buckets, may also be useful.
 
-## PutObject
+## PutObject and CreateMultipartUpload
 
 ### cf-create-bucket-if-missing
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
-
-## CreateMultipartUpload
-
-### cf-create-bucket-if-missing
-
-Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a detailed explanation of when to add this header.
 
 ## PutObject
 

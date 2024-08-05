@@ -14,7 +14,7 @@ While reads are periodically revalidated in the background, requests which are n
 
 ## Write data to KV and read data from KV
 
-When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location’s cache, but regional tiers are notified within seconds to do a purge of that key.
+When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location’s cache.
 
 ![Your data is written to central data stores when you write to KV.](/images/kv/kv-write.svg)
 
@@ -40,7 +40,7 @@ To improve KV performance, increase the [`cacheTtl` parameter](/kv/api/read-key-
 
 KV achieves high performance by [caching](https://www.cloudflare.com/en-gb/learning/cdn/what-is-caching/) which makes reads eventually-consistent with writes.
 
-Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out. Changes may take up to 60 seconds or more to see reads to trigger a refresh.
+Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out.
 
 Negative lookups indicating that the key does not exist are also cached, so the same delay exists noticing a value is created as when a value is changed.
 

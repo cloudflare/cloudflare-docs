@@ -31,8 +31,7 @@ header: Example request
 ---
 curl --request POST \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ### Disable WAF content scanning
@@ -45,8 +44,7 @@ header: Example request
 ---
 curl --request POST \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/disable" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ### Get WAF content scanning status
@@ -58,8 +56,7 @@ To obtain the current status of the content scanning feature, use a `GET` reques
 header: Example request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/settings" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Custom expression operations
@@ -75,8 +72,7 @@ To get a list of existing custom scan expressions, use a `GET` request similar t
 header: Example request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -105,8 +101,7 @@ Use a `POST` request similar to the following:
 header: Example request
 ---
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '[
   {
@@ -125,6 +120,5 @@ header: Example request
 ---
 curl --request DELETE \
 "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads/{expression_id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```

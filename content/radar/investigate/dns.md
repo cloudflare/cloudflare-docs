@@ -17,8 +17,8 @@ Access aggregated and anonymized DNS queries to Cloudflare's [1.1.1.1](/1.1.1.1/
 In the next example, we will request the top originating locations for `google.com` DNS queries:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain=google.com&dateRange=1d&format=json&limit=2" \
-     -H "Authorization: Bearer <API_TOKEN>"
+curl "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain=google.com&dateRange=1d&format=json&limit=2" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response shows that most queries come from the United States and Brazil:
@@ -38,9 +38,8 @@ The response shows that most queries come from the United States and Brazil:
 Making the same search request for `yandex.ru`, a Russian search engine:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain=yandex.ru&dateRange=1d&format=json&limit=2" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+curl "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain=yandex.ru&dateRange=1d&format=json&limit=2" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 Returns the following response:

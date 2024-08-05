@@ -14,10 +14,10 @@ Use the following workflow to deploy a custom ruleset at the account level:
 
 You must create a rule with `execute` action in an entry point ruleset to execute the custom ruleset (step 3 in the previous procedure). If you skip this step, the rules of the custom ruleset will not run.
 
-{{<Aside type="note">}}
-
 Custom rulesets are currently only supported by the [Cloudflare WAF](/waf/).
 
+{{<Aside type="warning" header="Warning">}}
+You cannot execute a custom ruleset from another custom ruleset, only from an entry point ruleset.
 {{</Aside>}}
 
 ## Change the behavior of a custom ruleset

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Trace a request
+title: Trace a request (beta)
 meta:
   title: Trace a request with Cloudflare Trace (beta)
 ---

@@ -4,9 +4,13 @@ difficulty: Beginner
 content_type: Tutorial
 pcx_content_type: tutorial
 title: Query D1 using Prisma ORM
+products: [Workers]
+languages: [TypeScript, SQL]
 ---
 
 # Query D1 using Prisma ORM
+
+{{<tutorial-date-info>}}
 
 ## What is Prisma ORM?
 

@@ -1,7 +1,9 @@
-import { learning_paths as paths } from "./json-collector";
+import { learning_paths as paths, type LearningPath } from "./json-collector";
 
-function buildHtml(destination, array) {
-  const numTrails = document.getElementById("numTrails");
+function buildHtml(destination: HTMLElement, array: LearningPath[]) {
+  const numTrails = document.querySelector<HTMLElement>("#numTrails");
+  if(!numTrails) return;
+
   destination.innerHTML = "";
   if (array.length === 0) {
     numTrails.innerText = "0 results";
@@ -24,21 +26,25 @@ function buildHtml(destination, array) {
   }
 }
 
-function getSelectValues(selectElementCollection: HTMLCollectionOf<Element>) {
-  let selectedValues: Record<string, string> = {};
+type Filterable = 'product_group' | 'products';
+type FilterableObj = {
+  [key in Filterable]?: string;
+}
+function getSelectValues(selectElementCollection: NodeListOf<HTMLSelectElement>) {
+  let selectedValues: FilterableObj = {};
   for (const htmlElement of selectElementCollection) {
-    let selectElement = htmlElement as HTMLSelectElement;
+    let selectElement = htmlElement;
     let selectedValue =
       selectElement.options[selectElement.selectedIndex].value;
-    selectedValues[selectElement.id] = selectedValue;
+    selectedValues[selectElement.id as Filterable] = selectedValue;
   }
   return selectedValues;
 }
 
 function filterResults() {
-  const pathGrid = document.getElementById("pathGrid");
+  const pathGrid = document.querySelector<HTMLElement>("#pathGrid");
   if (pathGrid) {
-    const selectorDropdowns = document.getElementsByClassName("selectorFilter");
+    const selectorDropdowns = document.querySelectorAll<HTMLSelectElement>(".selectorFilter");
     let passed = [];
     for (const dropdown of selectorDropdowns) {
       dropdown.addEventListener("change", () => {
@@ -60,7 +66,7 @@ function filterResults() {
               } else if (currentPath["additional_groups"] && filterName === "product_group" && currentPath["additional_groups"].includes(filterValue)) {
                 continue;
               }
-              else if (!currentPath[filterName].includes(filterValue) ) {
+              else if (!currentPath[filterName as Filterable]?.includes(filterValue) ) {
                 keepItem = false;
                 break;
               }

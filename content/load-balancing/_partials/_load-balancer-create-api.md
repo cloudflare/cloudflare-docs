@@ -13,50 +13,48 @@ Since load balancers only exist on a zone — and not an account — you may nee
 
 {{</Aside>}}
 
-```json
+```bash
 ---
 header: Request
 ---
-curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/:zone_id/load_balancers" \
--H "Content-Type: application/json" \
--d '{
-    "description": "Load Balancer for lb.example.com",
-    "name": "lb.example.com",
-    "enabled": true,
-    "ttl": 30,
-    "fallback_pool": "17b5962d775c646f3f9725cbc7a53df4",
-    "default_pools": [
-      "17b5962d775c646f3f9725cbc7a53df4",
-      "9290f38c5d07c2e2f4df57b1f61d4196",
-      "00920f38ce07c2e2f4df50b1f61d4194"
-    ],
-    "proxied": true,
-    "steering_policy": "random_steering",
-    "session_affinity": "cookie",
-    "session_affinity_attributes": {
-      "samesite": "Auto",
-      "secure": "Auto",
-      "drain_duration": 100,
-      "zero_downtime_failover": "sticky"
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/load_balancers" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "description": "Load Balancer for lb.example.com",
+  "name": "lb.example.com",
+  "enabled": true,
+  "ttl": 30,
+  "fallback_pool": "17b5962d775c646f3f9725cbc7a53df4",
+  "default_pools": [
+    "17b5962d775c646f3f9725cbc7a53df4",
+    "9290f38c5d07c2e2f4df57b1f61d4196",
+    "00920f38ce07c2e2f4df50b1f61d4194"
+  ],
+  "proxied": true,
+  "steering_policy": "random_steering",
+  "session_affinity": "cookie",
+  "session_affinity_attributes": {
+    "samesite": "Auto",
+    "secure": "Auto",
+    "drain_duration": 100,
+    "zero_downtime_failover": "sticky"
+  },
+  "session_affinity_ttl": 5000,
+  "adaptive_routing": {
+    "failover_across_pools": true
+  },
+  "location_strategy": {
+    "prefer_ecs": "always",
+    "mode": "resolver_ip"
+  },
+  "random_steering": {
+    "pool_weights": {
+      "de90f38ced07c2e2f4df50b1f61d4194": 0.3,
+      "9290f38c5d07c2e2f4df57b1f61d4196": 0.5
     },
-    "session_affinity_ttl": 5000,
-    "adaptive_routing": {
-      "failover_across_pools": true
-    },
-    "location_strategy": {
-      "prefer_ecs": "always",
-      "mode": "resolver_ip"
-    },
-    "random_steering": {
-      "pool_weights": {
-        "de90f38ced07c2e2f4df50b1f61d4194": 0.3,
-        "9290f38c5d07c2e2f4df57b1f61d4196": 0.5
-      },
-      "default_weight": 0.2
-    }
+    "default_weight": 0.2
+  }
 }'
 ```
 
@@ -100,6 +98,7 @@ header: Response
         "9290f38c5d07c2e2f4df57b1f61d4196": 0.5
       },
       "default_weight": 0.2
+    }
   }
 }
 ```

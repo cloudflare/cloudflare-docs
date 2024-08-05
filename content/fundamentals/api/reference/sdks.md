@@ -35,7 +35,7 @@ The following are examples of how you would query all of the Cloudflare zones yo
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones" \
--H "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ### With the Typescript SDK:

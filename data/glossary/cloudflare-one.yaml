@@ -27,7 +27,11 @@ entries:
 
 - term: cloudflared
   general_definition: |-
-    `cloudflared` is the software powering Cloudflare Tunnel. It runs on origin servers to connect to Cloudflare's network and on client devices for non-HTTP traffic.
+    the software powering Cloudflare Tunnel. It runs on origin servers to connect applications or private networks to Cloudflare.
+
+- term: cloudflared replica
+  general_definition: |-
+    an additional instance of `cloudflared` that points to the same Cloudflare Tunnel. It ensures that your network remains online in case a single host running `cloudflared` goes down.
 
 - term: Cloudflare Access
   general_definition: |-
@@ -45,6 +49,10 @@ entries:
   general_definition: |-
     Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers, financial information, secret keys, and source code.
 
+- term: Cloudflare DEX
+  general_definition: |-
+    Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization.
+
 - term: Cloudflare Gateway
   general_definition: |-
     Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
@@ -55,7 +63,7 @@ entries:
 
 - term: Cloudflare Tunnel
   general_definition: |-
-    Cloudflare Tunnel (formerly Argo Tunnel) establishes a secure outbound connection within your infrastructure to connect applications and machines to Cloudflare.
+    Cloudflare Tunnel uses software agents (`cloudflared` or WARP Connector) to establish a secure connection between a private network and Cloudflare.
 
 - term: Cloudflare Zero Trust
   general_definition: |-
@@ -99,6 +107,10 @@ entries:
   general_definition: |-
     a compact way to securely transmit information between parties as a JSON object, often used for authentication.
 
+- term: locally-managed tunnel
+  general_definition: |-
+    a Cloudflare Tunnel that was created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local `cloudflared` directory.
+
 - term: managed network
   general_definition: |-
     a network location, such as an office, that is associated with a specific WARP client device profile.
@@ -126,6 +138,10 @@ entries:
 - term: policy
   general_definition: |-
     a set of rules that regulate network activity, such as login access and website reachability.
+
+- term: remotely-managed tunnel
+  general_definition: |-
+    a Cloudflare Tunnel that was created in Zero Trust under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the API.
 
 - term: RDP
   general_definition: |-
@@ -170,10 +186,6 @@ entries:
     shadow IT is the unsanctioned use of software, hardware, or other systems and services within an organization, often without the knowledge of that organization's information technology (IT) department.
 
     For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/).
-  associated_products:
-    - Access
-    - CASB
-    - Gateway
 
 - term: SMB
   general_definition: |-
@@ -207,9 +219,9 @@ entries:
   associated_products:
     - Terraform
 
-- term: Tunnel certificate
+- term: tunnel
   general_definition: |-
-    the Cloudflare Tunnel software, `cloudflared`, generates a certificate for secure connections using a service token and an origin certificate.
+    a secure pathway for network traffic to flow between a device and Cloudflare's global network.
 
 - term: User risk score
   general_definition: |-
@@ -219,6 +231,10 @@ entries:
   general_definition: |-
     Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
 
+- term: Virtual network
+  general_definition: |-
+    a software abstraction that allows you to logically segregate resources on a private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes.
+
 - term: Virtual Private Network (VPN)
   general_definition: |-
     a tool that allows users to send and receive data across shared or public networks as if their devices were directly connected to the private network. For example, employees working from home can use a VPN to access files on the corporate network.
@@ -226,6 +242,10 @@ entries:
 - term: WARP client
   general_definition: |-
     an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+
+- term: WARP Connector
+  general_definition: |-
+    an extension of the WARP client used to establish site-to-site, bidirectional, and mesh networking connectivity. WARP Connector software installs on a Linux server within a private network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
 
 - term: Zero Trust Security
   general_definition: |-

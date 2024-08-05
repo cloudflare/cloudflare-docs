@@ -9,13 +9,10 @@ meta:
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
-{{<Aside type="warning">}}
-Page Rules are a legacy product. Consider using [Cache Rules](/cache/how-to/cache-rules/) instead.
-{{</Aside>}}
-
 - Cloudflare **does not** cache the resource when:
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
   - The [`Set-Cookie` header](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
+  - The HTTP request method is anything other than a `GET`.
 - Cloudflare **does** cache the resource when:
   - The `Cache-Control` header is set to `public` and `max-age` is greater than 0.
   - The `Expires` header is set to a future date.
@@ -28,7 +25,7 @@ When [Origin Cache Control](/cache/concepts/cache-control/) is enabled on an Ent
 
 ## Default cached file extensions
 
-Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website’s robots.txt.
+Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML or JSON by default. Additionally, Cloudflare caches a website’s robots.txt.
 
 |       |      |      |      |      |       |     |
 | ----- | ---- | ---- | ---- | ---- | ----- | --- |
@@ -64,3 +61,7 @@ Cloudflare cacheable file limits:
 
 - Free, Pro and Business customers have a limit of 512 MB.
 - For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
+
+## When does Cloudflare cache successfully?
+
+The connection status between visitors and Cloudflare can vary, affecting whether Cloudflare caches the content or not. If Cloudflare has already established a connection to the origin and started fetching the content, it will continue to retrieve and cache the entire content, even if the visitor disconnects midway. However, if a visitor disconnects before the origin responds to Cloudflare's request, no content will have been fetched yet, so Cloudflare will not start caching the content.

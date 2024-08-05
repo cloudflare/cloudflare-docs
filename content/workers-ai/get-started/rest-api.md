@@ -42,10 +42,10 @@ If you choose to [create an API token](/fundamentals/api/get-started/create-toke
 
 After creating your API token, authenticate and make requests to the API using your API token in the request.
 
-You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/) model:
+You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3-8b-instruct \
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{ "prompt": "Where did the phrase Hello World come from" }'
 ```
@@ -65,9 +65,9 @@ The API response will look like the following:
 }
 ```
 
-This example execution uses the `@cf/meta/llama-3-8b-instruct` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). If using another model, you will need to replace `{model}` with your desired model name.
+This example execution uses the `@cf/meta/llama-3.1-8b-instruct` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). If using another model, you will need to replace `{model}` with your desired model name.
 
-By completing this guide, you have created a Cloudflare account (if you did not have one already) and an API token that grants Workers AI read permissions to your account. You executed the [`@cf/meta/llama-3-8b-instruct`](/workers-ai/models/llama-3-8b-instruct/) model using a cURL command from the terminal and received an answer to your prompt in a JSON response.
+By completing this guide, you have created a Cloudflare account (if you did not have one already) and an API token that grants Workers AI read permissions to your account. You executed the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model using a cURL command from the terminal and received an answer to your prompt in a JSON response.
 
 ## Related resources
 

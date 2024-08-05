@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Serverless ETL pipelines"
+products: [Workers, Queues, R2]
 ---
 
 # Serverless ETL pipelines

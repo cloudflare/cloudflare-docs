@@ -161,7 +161,7 @@ First, make sure you [update your nameservers](/dns/zone-setups/full-setup/) and
 
 Then, set up your Squarespace DNS records:
 
-1. Get your Squarespace DNS information by following [these instructions](https://support.squarespace.com/hc/en-us/articles/213469948).
+1. Get your Squarespace DNS information by following [these instructions](https://support.squarespace.com/hc/articles/213469948).
 2. In Cloudflare, [add those records](/dns/manage-dns-records/how-to/create-dns-records/):
     - All `A` records should be [Proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
     - The `CNAME` record for `www` should also be **Proxied**.

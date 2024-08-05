@@ -42,7 +42,7 @@ Templates for each content type are also available in our [Cloudflare-docs GitHu
         <td>No</td>
         <td>The purpose of reference content is to provide supplemental information (a “deep dive”) for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.</td>
     </tr>
-     <tr>
+    <tr>
         <td><a href="/style-guide/documentation-content-strategy/content-types/reference-architecture/">Reference architecture</a></td>
         <td>No</td>
         <td>The purpose of a reference architecture is to provide a high-level view of how all or part of the Cloudflare platform is built and how Cloudflare products would fit into a customer's existing infrastructure.</td>

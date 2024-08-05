@@ -14,20 +14,20 @@ You may also filter outbound traffic based on additional signals from [device po
 
 Gateway checks identity when a user logs in or re-authenticates. To check your users' identities and require re-authentication at regular intervals, you can [enforce a WARP client session duration](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/).
 
-If you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
+Unless you use an [IdP that supports SCIM provisioning](#automatic-scim-idp-updates), Gateway will not detect when you add or remove a user from a group in your IdP until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
 
 - Log out from an Access-protected application and log back in.
 - In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
 
-### View a user's identity
+To view the identity that Gateway will use when evaluating policies, check the [user registry](/cloudflare-one/insights/logs/users/).
 
-To view the identity that Gateway will use when evaluating policies:
+### Automatic SCIM IdP updates
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**. This page lists the users who have authenticated to the WARP client.
-2. Select a user.
-3. Under **User Registry identity**, select the user name.
+Gateway will automatically detect changes in user name, title, and group membership for IdPs configured with System for Cross-domain Identity Management (SCIM) provisioning. IdPs that support SCIM include:
 
-This page shows the information reported by the IdP when the user registered the WARP client.
+{{<render file="access/_scim-supported-idps.md">}}
+
+For more information, refer to [SCIM provisioning](/cloudflare-one/identity/users/scim/).
 
 ### Extended email addresses
 

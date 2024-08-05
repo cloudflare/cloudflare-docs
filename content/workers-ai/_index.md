@@ -21,7 +21,7 @@ Workers AI allows you to run machine learning models, on the Cloudflare network,
 
 With the launch of Workers AI, Cloudflare is slowly rolling out GPUs to its global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
 
-{{<render file="_billing-announcement.md">}}
+{{<render file="_custom_requirements.md">}}
 
 {{<render file="_file_issues.md">}}
 
@@ -37,6 +37,12 @@ Workers AI comes with a curated set of popular open-source models that enable yo
 ---
 
 ## Related products
+
+{{<related header="AI Gateway" href="/ai-gateway/" product="ai-gateway">}}
+
+Observe and control your AI applications with caching, rate limiting, request retries, model fallback, and more.
+
+{{</related>}}
 
 {{<related header="Vectorize" href="/vectorize/" product="vectorize">}}
 

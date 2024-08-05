@@ -30,19 +30,21 @@
         }
       }
       },
-      getMissingResultsUrl({ query }) {
+      getMissingResultsUrl({ query }: {query: string}) {
         return `/search/?q=${query}`;
       },
       searchParameters: {
         optionalFilters: facetFilters
       },
-      transformItems: items => {
-        return items.filter(item => {
+      // TODO: improve types
+      transformItems: (items: any) => {
+        return items.filter((item: any) => {
           const url = new URL(item.url)
           return url.pathname.endsWith('/')
         })
       },
-      resultsFooterComponent({ state }) {
+      // TODO: improve types
+      resultsFooterComponent({ state }: any) {
         return {
           // The HTML `tag`
           type: 'a',
@@ -68,7 +70,8 @@
     let button = $('#MobileSearch')
     if (button) {
       button.addEventListener('click', () => {
-        document.querySelector(".DocSearch.DocSearch-Button").click()
+        const docsSearchButton = document.querySelector<HTMLButtonElement>('.DocSearch.DocSearch-Button')
+        docsSearchButton?.click()
       });
     }
   }

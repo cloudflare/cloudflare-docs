@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: How to
 weight: 4
 meta:
-    title: How to | Page Rules (legacy)
+    title: How to | Page Rules
 ---
 
 # How to

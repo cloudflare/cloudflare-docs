@@ -48,7 +48,7 @@ The purpose of the service should be benign or helpful to both the owner of a zo
 * Scalpers
 * Credential-stuffing
 * Directory-traversal scanning
-* Excessive data scrapping
+* Excessive data scraping
 * DDoS botnets
 
 #### Example

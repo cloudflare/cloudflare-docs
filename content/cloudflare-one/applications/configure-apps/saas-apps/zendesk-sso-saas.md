@@ -1,17 +1,16 @@
 ---
 pcx_content_type: how-to
 title: Zendesk
-weight: 11
+weight: 29
 ---
 
 # Connect to Zendesk through Access
 
-This guide covers how to configure Zendesk SSO with Access for SaaS.
+This guide covers how to configure [Zendesk](https://support.zendesk.com/hc/en-us/articles/4408887505690-Enabling-SAML-single-sign-on#topic_u54_wc3_z2b) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- A Zero Trust Account
-- An integrated identity provider (IdP)
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to your Zendesk account
 
 ## Configure Zendesk and Cloudflare

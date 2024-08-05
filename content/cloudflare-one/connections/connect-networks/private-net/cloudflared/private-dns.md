@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Private DNS
-weight: 5
+weight: 1
 ---
 
 # Private DNS
@@ -33,13 +33,13 @@ The WARP client will now resolve requests through the internal DNS server you se
 For testing, run a `dig` command for the internal DNS service:
 
 ```sh
-dig AAAA www.myorg.privatecorp
+$ dig AAAA www.myorg.privatecorp
 ```
 
 The `dig` command will work because `myorg.privatecorp` was configured above as a fallback domain. If you skip that step, you can still force `dig` to use your private DNS resolver:
 
 ```sh
-dig @10.0.0.25 AAAA www.myorg.privatecorp
+$ dig @10.0.0.25 AAAA www.myorg.privatecorp
 ```
 
 Both `dig` commands will fail if the WARP client is disabled on your end user's device.

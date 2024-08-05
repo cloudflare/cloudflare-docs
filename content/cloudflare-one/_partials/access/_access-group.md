@@ -19,7 +19,7 @@ To create an Access group:
     | ---- | -------- | -----------|
     | Include | Country | `Portugal` |
     | Require | Emails Ending In | `@team.com` |
-6. Select **Save**.
+5. Select **Save**.
 
 {{</tab>}}
 
@@ -29,9 +29,9 @@ Send a `POST` request to the [`/access/groups`](/api/operations/access-groups-cr
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/groups \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "Lisbon-team",
   "include": [
@@ -50,7 +50,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/groups \
     }
   ],
   "is_default": false
-  }'
+}'
 ```
 
 {{</tab>}}

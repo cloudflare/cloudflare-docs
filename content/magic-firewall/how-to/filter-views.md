@@ -15,12 +15,14 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"or\":[{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"},{\"key\":\"Outcome\",\"operator\":\"eq\",\"value\":\"pass\"},{\"key\":\"Verdict\",\"operator\":\"eq\",\"value\":\"drop\"}]}]}}"
 }'
 ```
@@ -29,12 +31,14 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"or\":[{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"},{\"or\":[{\"key\":\"Outcome\",\"operator\":\"eq\",\"value\":\"drop\"},{\"key\":\"Verdict\",\"operator\":\"eq\",\"value\":\"pass\"}]}]}]}}"
 }'
 ```
@@ -47,12 +51,14 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"eq\",\"value\":\"\"}]}}"
 }'
 ```
@@ -61,12 +67,14 @@ The example below only displays fields relevant to Magic Firewall, and the filte
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"}]}}"
 }'
 ```
@@ -77,12 +85,14 @@ Use the examples below to filter out fields that are not relevant to traffic flo
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---request POST \
+--header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"}}"
 }'
 ```

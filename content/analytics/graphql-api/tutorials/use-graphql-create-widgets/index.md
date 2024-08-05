@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Use GraphQL to create widgets
 weight: 46
 ---

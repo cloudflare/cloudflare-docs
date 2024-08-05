@@ -53,9 +53,9 @@ The below diagram describes the default connectivity to origins as requests flow
 
 The origin is connected directly to the Internet and traffic is routed to the origin based on the IP address resolved by Cloudflare DNS. The DNS A record associates the domain name with the IP address of the origin server(s) or typically a load balancer the origin(s) are sitting behind.
 
-In this model, when Cloudflare DNS receives a query for the A record, a Cloudflare Anycast IP address is returned, so all traffic is routed through Cloudflare. However, unless additional precautions are taken, it’s possible for the origin to be reached directly bypassing Cloudflare if someone knows the IP address of the origin(s).
+In this model, when Cloudflare DNS receives a query for the A record, a Cloudflare anycast IP address is returned, so all traffic is routed through Cloudflare. However, unless additional precautions are taken, it’s possible for the origin to be reached directly bypassing Cloudflare if someone knows the IP address of the origin(s).
 
-Additionally, in this model, the customer has to open firewall rules for the origin(s) or web server(s) so they can be accessible on the respective http/https ports. However, customers can choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access.
+Additionally, in this model, the customer has to open firewall rules for the origin(s) or web server(s) so they can be accessible on the respective http/https ports. However, customers can choose to leverage [Cloudflare Aegis](/aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access.
 
 In addition to IP blocking at the origin-side firewall, we also strongly recommend additional verification of traffic via either the ["Full (Strict)" SSL setting](/ssl/origin-configuration/ssl-modes/full-strict/) or [mTLS auth](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all traffic is sourced from requests passing through the customer configured zones.
 
@@ -65,7 +65,7 @@ Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is con
 
 The recommended option when connecting origin(s) over the Internet is to have a private tunnel/connection over the Internet for additional security.
 
-A traditional VPN setup is not optimal due to backhauling traffic to a centralized VPN gateway location which then connects back to the origin; this negatively impacts end-to-end throughput and latency. Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages Anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s) and therefore optimize the end-to-end latency and throughput.
+A traditional VPN setup is not optimal due to backhauling traffic to a centralized VPN gateway location which then connects back to the origin; this negatively impacts end-to-end throughput and latency. Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s) and therefore optimize the end-to-end latency and throughput.
 
 When you run a tunnel, a lightweight daemon in your infrastructure, cloudflared, establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers providing robust resiliency. It is possible to install many cloudflared instances to increase resilience between your origin servers and the Cloudflare network.
 
@@ -197,9 +197,9 @@ In the current setup, the origin server(s) are securely connected to the Cloudfl
 
 Since Cloudflare is already set up and acting as a reverse proxy for the site, traffic is being directed through Cloudflare, so all Cloudflare services can easily be leveraged including CDN, Security Analytics, WAF, API Gateway, Bot Management, Page Shield for client-side security, etc.
 
-When a DNS lookup request is made by a client for the respective website, in this case "cftestsite3.com," Cloudflare returns an Anycast IP address, so all traffic is directed to the closest data center where all services will be applied before the request is forwarded over Cloudflare Tunnel to the origin server(s).
+When a DNS lookup request is made by a client for the respective website, in this case "cftestsite3.com," Cloudflare returns an anycast IP address, so all traffic is directed to the closest data center where all services will be applied before the request is forwarded over Cloudflare Tunnel to the origin server(s).
 
-Cloudflare CDN leverages Cloudflare’s global Anycast edge network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages [Argo Tiered Cache](/cache/how-to/tiered-cache/) to deliver optimized results while saving costs for customers. Customers can also enable [Argo Smart Routing](/argo-smart-routing/) to find the fastest network path to route requests to the origin server. As shown below, the Cloudflare CDN is now caching content globally and granular CDN policies to affect default behavior can be applied.
+Cloudflare CDN leverages Cloudflare’s global anycast edge network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages [Argo Tiered Cache](/cache/how-to/tiered-cache/) to deliver optimized results while saving costs for customers. Customers can also enable [Argo Smart Routing](/argo-smart-routing/) to find the fastest network path to route requests to the origin server. As shown below, the Cloudflare CDN is now caching content globally and granular CDN policies to affect default behavior can be applied.
 
 ![Cloudflare provides analytics for visibility into caching data and performance.](/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25.png "Figure 25 : Cloudflare Caching Analytics.")
 

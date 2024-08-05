@@ -11,7 +11,6 @@ Even when using the same compression algorithm end to end (between your origin s
 
 - [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
 - [Rocket Loader](/speed/optimization/content/rocket-loader/)
-- [Server Side Excludes](/waf/tools/scrape-shield/server-side-excludes/) (deprecated)
 - [Mirage](/speed/optimization/images/mirage/)
 - [HTML Minification](/speed/optimization/content/auto-minify/) (deprecated)
 - [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
@@ -22,5 +21,5 @@ To disable these features for specific URI paths, create a [Configuration Rule](
 Additionally, [Cloudflare Fonts](/speed/optimization/content/fonts/) also requires Cloudflare to decompress the response and compress it again, and cannot be disabled through Rules at this time.
 
 {{<Aside type="note">}}
-If you want to use [Cloudflare Web Analytics](/analytics/web-analytics/), we recommend that you use the [manual mode setup](/analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare) (adding a JavaScript snippet to your HTML pages) to avoid decompression.
+If you want to use [Cloudflare Web Analytics](/web-analytics/), we recommend that you use the [manual mode setup](/web-analytics/get-started/#sites-not-proxied-through-cloudflare) (adding a JavaScript snippet to your HTML pages) to avoid decompression.
 {{</Aside>}}

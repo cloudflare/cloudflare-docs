@@ -8,20 +8,135 @@ weight: 5
 
 Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
-## Page Rules
-**End of life date: Jan 6th, 2025**
+## Firewall Rules API and Filters API
+**End of life date: January 15th, 2025**
 
-The Page Rules API endpoints are deprecated, since Page Rules were deprecated.
+The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
 
 Deprecated APIs:
-- GET /zones/:zone_id/pagerules
-- POST /zones/:zone_id/pagerules
-- DELETE /zones/:zone_id/pagerules/:pagerule_id
-- GET /zones/:zone_id/pagerules/:pagerule_id
-- PATCH /zones/:zone_id/pagerules/:pagerule_id
-- PUT /zones/:zone_id/pagerules/:pagerule_id
+- GET /zones/:zone_id/firewall/rules
+- POST /zones/:zone_id/firewall/rules
+- PATCH /zones/:zone_id/firewall/rules
+- PUT /zones/:zone_id/firewall/rules
+- DELETE /zones/:zone_id/firewall/rules
+- GET /zones/:zone_id/firewall/rules/:rule_id
+- PATCH /zones/:zone_id/firewall/rules/:rule_id
+- PUT /zones/:zone_id/firewall/rules/:rule_id
+- DELETE /zones/:zone_id/firewall/rules/:rule_id
+- GET /zones/:zone_id/filters
+- POST /zones/:zone_id/filters
+- PUT /zones/:zone_id/filters
+- DELETE /zones/:zone_id/filters
+- GET /zones/:zone_id/filters/:filter_id
+- PUT /zones/:zone_id/filters/:filter_id
+- DELETE /zones/:zone_id/filters/:filter_id
 
-Refer to the [migration guide](/rules/reference/page-rules-migration/) for more information on the Rules features that are replacing Page Rules.
+Replacement: [WAF custom rules](/waf/custom-rules/)
+
+## WAF managed rules APIs (previous version)
+**End of life date: January 15th, 2025**
+
+The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
+
+Deprecated APIs:
+- GET /zones/:zone_id/firewall/waf/packages
+- GET /zones/:zone_id/firewall/waf/packages/:package_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules
+- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
+- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
+- GET /zones/:zone_id/firewall/waf/overrides
+- POST /zones/:zone_id/firewall/waf/overrides
+- GET /zones/:zone_id/firewall/waf/overrides/:override_id
+- PUT /zones/:zone_id/firewall/waf/overrides/:override_id
+- DELETE /zones/:zone_id/firewall/waf/overrides/:override_id
+
+Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
+
+## Rate Limiting API (previous version)
+**End of life date: January 15th, 2025**
+
+The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
+
+Deprecated API:
+- GET /zones/:zone_id/rate_limits
+- POST /zones/:zone_id/rate_limits
+- GET /zones/:zone_id/rate_limits/:rate_limit_id
+- PUT /zones/:zone_id/rate_limits/:rate_limit_id
+- DELETE /zones/:zone_id/rate_limits/:rate_limit_id
+
+Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
+
+## DNS Records: Error chains for DNS validation errors
+**End of life date: October 1st, 2024**
+
+Cloudflare is making a minor change to the representation of certain errors when creating DNS records. Currently, when the DNS record to be created is invalid, an error similar to the following may be returned:
+
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1004,
+      "message": "DNS Validation Error",
+      "error_chain": [
+        {
+          "code": 9999,
+          "message": "This is an example."
+        }
+      ]
+    }
+  ],
+  "messages": []
+}
+```
+
+After October 1st, 2024, the `error_chain` will be omitted, returning the root cause directly without wrapping it in another "DNS Validation Error" error:
+
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 9999,
+      "message": "This is an example."
+    }
+  ],
+  "messages": []
+}
+```
+
+## Legacy DNS Settings Endpoints
+**End of life date: September 13th, 2024**
+
+The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
+
+Instead, use the [Show DNS Settings](/api/operations/dns-settings-for-a-zone-list-dns-settings) and [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoints to manage these settings.
+
+- Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
+- Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.
+
+Deprecated APIs:
+- GET /zones/:zone_id/dns_settings/use_apex_ns
+- PATCH /zones/:zone_id/dns_settings/use_apex_ns
+- GET /zones/:zone_id/dns_settings/secondary_overrides
+- PATCH /zones/:zone_id/dns_settings/secondary_overrides
+
+## Brotli
+**End of life date: August 15th, 2024**
+
+The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
+
+Deprecated APIs:
+- GET /zones/:zone_id/settings/brotli
+- PATCH /zones/:zone_id/settings/brotli
+
+Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
 ## Auto Minify
 **End of life date: August 5th, 2024**
@@ -47,7 +162,7 @@ Modified API:
 ## Mobile Redirect
 **End of life date: June 30th, 2024**
 
-This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/single-redirects/examples/#perform-mobile-redirects) to migrate Mobile Redirect to Redirect Rules.
+This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/examples/perform-mobile-redirects/) to migrate Mobile Redirect to Redirect Rules.
 
 Deprecated API:
  - GET /zones/:zone_identifier/settings/mobile_redirect
@@ -55,16 +170,7 @@ Deprecated API:
 
 Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
 
-## Brotli
-**End of life date: June 14th, 2024**
-
-The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
-
-Deprecated APIs:
-- GET /zones/:zone_id/settings/brotli
-- PATCH /zones/:zone_id/settings/brotli
-
-Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
+---
 
 ## Server-side Excludes
 **End of life date: June 14th, 2024**
@@ -113,70 +219,6 @@ Modified API:
  - GET /zones/:zone_id/dns_records/:dns_record_id
  - PATCH /zones/:zone_id/dns_records/:dns_record_id
  - PUT /zones/:zone_id/dns_records/:dns_record_id
-
----
-
-## Firewall Rules API and Filters API
-**End of life date: May 1st, 2024**
-
-The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
-
-Deprecated APIs:
-- GET /zones/:zone_id/firewall/rules
-- POST /zones/:zone_id/firewall/rules
-- PATCH /zones/:zone_id/firewall/rules
-- PUT /zones/:zone_id/firewall/rules
-- DELETE /zones/:zone_id/firewall/rules
-- GET /zones/:zone_id/firewall/rules/:rule_id
-- PATCH /zones/:zone_id/firewall/rules/:rule_id
-- PUT /zones/:zone_id/firewall/rules/:rule_id
-- DELETE /zones/:zone_id/firewall/rules/:rule_id
-- GET /zones/:zone_id/filters
-- POST /zones/:zone_id/filters
-- PUT /zones/:zone_id/filters
-- DELETE /zones/:zone_id/filters
-- GET /zones/:zone_id/filters/:filter_id
-- PUT /zones/:zone_id/filters/:filter_id
-- DELETE /zones/:zone_id/filters/:filter_id
-
-Replacement: [WAF custom rules](/waf/custom-rules/)
-
-## WAF managed rules APIs (previous version)
-**End of life date: May 1st, 2024**
-
-The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
-
-Deprecated APIs:
-- GET /zones/:zone_id/firewall/waf/packages
-- GET /zones/:zone_id/firewall/waf/packages/:package_id
-- PATCH /zones/:zone_id/firewall/waf/packages/:package_id
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
-- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/groups/:group_id
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules
-- GET /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
-- PATCH /zones/:zone_id/firewall/waf/packages/:package_id/rules/:rule_id
-- GET /zones/:zone_id/firewall/waf/overrides
-- POST /zones/:zone_id/firewall/waf/overrides
-- GET /zones/:zone_id/firewall/waf/overrides/:override_id
-- PUT /zones/:zone_id/firewall/waf/overrides/:override_id
-- DELETE /zones/:zone_id/firewall/waf/overrides/:override_id
-
-Replacement: [WAF Managed Rules](/waf/managed-rules/) (new version)
-
-## Rate Limiting API (previous version)
-**End of life date: May 1st, 2024**
-
-The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
-
-Deprecated API:
-- GET /zones/:zone_id/rate_limits
-- POST /zones/:zone_id/rate_limits
-- GET /zones/:zone_id/rate_limits/:rate_limit_id
-- PUT /zones/:zone_id/rate_limits/:rate_limit_id
-- DELETE /zones/:zone_id/rate_limits/:rate_limit_id
-
-Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
 ## Privacy Pass API Removal
 **End of life date: March 31st, 2024**

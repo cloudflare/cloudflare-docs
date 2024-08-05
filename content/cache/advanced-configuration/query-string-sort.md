@@ -15,7 +15,7 @@ By default, Cloudflare’s cache treats resources as distinct if their URL query
 
 Query String Sort changes this behavior. If two query strings exist with the same name, the URL is sorted by the parameter value. For example:
 
-`/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
+`/example/file?word=alpha&word=beta` and `/example/file?word=beta&word=alpha`
 
 would be sorted to:
 
@@ -105,4 +105,4 @@ ___
 ## Related resources
 
 -   [Increasing Cache Hit Rates with Query String Sort](https://blog.cloudflare.com/increasing-cache-hit-rates-with-query-string-sort/)
--   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/troubleshooting/cache-everything-ignore-query-strings/)
+-   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/how-to/cache-rules/examples/cache-everything-ignore-query-strings/)

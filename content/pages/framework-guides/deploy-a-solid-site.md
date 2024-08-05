@@ -9,14 +9,6 @@ title: Solid
 
 In this guide, you will create a new Solid application implemented via [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart) (Solid's meta-framework) and deploy it using Cloudflare Pages.
 
-{{<Aside type="warning" header="Important">}}
-
-At the time of writing SolidStart is in beta, this may make the following guide inaccurate in the event of a breaking change.
-
-_Note: This guide is based on the [SolidStart Beta 2 version](https://github.com/solidjs/solid-start/discussions/1052)_
-
-{{</Aside>}}
-
 ## Create a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Solid's official setup tool, and provide the option to deploy instantly.

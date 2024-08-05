@@ -20,10 +20,10 @@ You can enable IDS through the dashboard or via the API.
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic Firewall** > **IDS**.
 3. Enable IDS.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
+
 To start using IDS via the API, first create a new ruleset in the `magic-transit-ids-managed` phase with a rule which is enabled.
 
 1. Follow instructions in the [Rulesets Engine Page](/ruleset-engine/basic-operations/view-rulesets/) to view all rulesets for your account. You must see a ruleset with phase `magic-transit-ids-managed` and kind `managed`. If not, please contact your account team. The managed ruleset ID will be used in the next step.
@@ -32,9 +32,8 @@ To start using IDS via the API, first create a new ruleset in the `magic-transit
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "name": "IDS Execute ruleset",
   "description": "Ruleset to enable IDS",
@@ -61,9 +60,8 @@ With this ruleset added, IDS will start inspecting packets and report any anomal
 ```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}/rules/{rule_id} \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
   "enabled": false,
   "expression": "true",
@@ -75,7 +73,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_rulese
 ```
 
 Similarly, sending a patch request with the `enabled` field set to `true` will enable IDS.
- 
+
 {{</tab>}}
 {{</tabs>}}
 

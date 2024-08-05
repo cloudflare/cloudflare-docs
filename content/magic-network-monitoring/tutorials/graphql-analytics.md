@@ -5,6 +5,7 @@ weight: 1
 meta:
   title: GraphQL Analytics
 updated: 2023-01-04
+languages: [GraphQL]
 ---
 
 # GraphQL Analytics

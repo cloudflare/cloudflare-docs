@@ -5,7 +5,7 @@ productLink: "/magic-cloud-networking/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-- publish_date: '2024-05-31'
+- publish_date: '2024-07-01'
   title: Closed beta launch
   description: |-
-    Cloudflare launched Magic Cloud Networking in closed beta.
+    The Magic Cloud Networking closed beta release is available, with the managed cloud on-ramps feature.

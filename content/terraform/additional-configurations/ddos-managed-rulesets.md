@@ -114,8 +114,9 @@ In the following example, a customer is concerned about false positives, but wan
 
 The order of the rules is important: the rule with the highest sensitivity level must come after the rule with the lowest sensitivity level, otherwise it will never be evaluated.
 
-{{<Aside type="warning" header="Important notes">}}
-* Since rules are evaluated in order and the first one to match both the expression and the sensitivity level will get applied, take care when editing and reordering existing rules. Changing a rule from _Block_ to _Log_ may allow attack traffic to reach your web property, since the protection system will apply the rule action (_Log_) and skip any other configured HTTP DDoS protection rules.
+{{<Aside type="warning" header="Important considerations">}}
+* When a DDoS attack mitigation is ongoing, Cloudflare will check the rules order and apply the first one that matches both the expression and the sensitivity level. 
+* Since rules are evaluated in order and the first one to match the conditions of both the expression and the sensitivity level will get applied, take care when editing and reordering existing rules. Changing a rule from Block to Log may allow attack traffic to reach your web property.
 * Overrides will not affect read-only rules in the managed ruleset.
 {{</Aside>}}
 

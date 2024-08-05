@@ -17,8 +17,6 @@ When analyzing why Cloudflare DNS Firewall responded in one way or another to a 
 
 The following table provides a description for each of the values that might be returned as a response reason:
 
-{{<table-wrap>}}
-
 | Value     | Description                                                                                                                                |
 |-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | `success`                 | Response was successfully served, either from Cloudflare cache or forwarded from the upstream.|
@@ -30,5 +28,3 @@ The following table provides a description for each of the values that might be 
 | `chaos_success`           | Response for [Chaos class](https://en.wikipedia.org/wiki/Chaosnet) was successfully served.|
 | `attack_mitigation_block` | Query was blocked as part of [random prefix attack mitigation](/dns/dns-firewall/random-prefix-attacks/).|
 | `unknown`                 | There was an unknown error.|
-
-{{</table-wrap>}}

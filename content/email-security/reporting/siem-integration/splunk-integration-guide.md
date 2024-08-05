@@ -36,11 +36,11 @@ When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phi
 
     ![Configure the Input Settings based on your environment](/images/email-security/siem-integration/splunk/step7-input-settings.png)
 
-8. You may also select **Create a new index** to create new settings for Cloud Email Security events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment. 
+8. You may also select **Create a new index** to create new settings for Cloud Email Security events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment.
 
     ![Optionally, create a new index for Cloud Email Security events](/images/email-security/siem-integration/splunk/step8-new-index.png)
 
-9. For this example, we created a new `area1_index` index, and added it to the configuration. 
+9. For this example, we created a new `area1_index` index, and added it to the configuration.
 
     ![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/step9-new-index.png)
 
@@ -56,10 +56,10 @@ To test your the HTTP Event Collector, you can manually inject an event into Spl
 
 ```bash
 curl https://{host}:8088/services/collector/event \
---header 'Authorization: Splunk <YOUR_TOKEN>' \
+--header "Authorization: Splunk <YOUR_TOKEN>" \
 --data '{
-    "sourcetype": "<YOUR_SOURCE_TYPE",
-    "event":"Hello, World!"
+    "sourcetype": "<YOUR_SOURCE_TYPE>",
+    "event": "Hello, World!"
     }'
 ```
 
@@ -70,7 +70,7 @@ When creating requests to Splunk, the URL and port number change according to th
 - **Splunk Cloud Platform**: `<protocol>://http-inputs-<host>.splunkcloud.com:443/<endpoint>`
 - **Splunk Enterprise**: `<protocol>://<host>:8088/<endpoint>`
 
-Refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) for more information. 
+Refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) for more information.
 
  If your instance is on-premise, specify the appropriate hostname and ensure that your firewall allows the configured port through to your instance. The connections will be coming from the following egress IP addresses, if you need them for your access control lists (ACLs):
 
@@ -98,7 +98,7 @@ The next step is to configure Cloud Email Security to push the Email Detection E
 
 1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
-3. In the Add Webhooks page, enter the following settings: 
+3. In the Add Webhooks page, enter the following settings:
     - **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of the previous step.
     - **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
     - For the {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}} (`MALICIOUS`, `SUSPICIOUS`, `SPOOF`, `SPAM`, `BULK`) choose which (if any) you want to send to the webhook. Sending `SPAM` and `BULK` dispositions will generate a high number of events.
@@ -108,4 +108,4 @@ Your Splunk integration will now show up in the All Webhooks panel.
 
 ![The All Webhooks section will show your Splunk webhook](/images/email-security/siem-integration/splunk/splunk-webhook-integrations.png)
 
-It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Cloudflare Cloud Email Security, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk. 
+It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Cloudflare Cloud Email Security, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk.
