@@ -18,7 +18,7 @@ To generate a phishing risk assessment report:
 
 The report will contain the following information:
 
-- **Report time range**: You can generate a report up to the last 7, 30, or 90 days.
+- **Report time range**: You can generate a report up to the last seven, 30, or 90 days.
 - **Company name**.
 - **Overview**: The Overview displays the total number of emails scanned, total number of detections, and a graph displaying emails deemed as malicious, spoof, suspicious, spam, and bulk.
 - **Threat summary**: A summary of malicious threat types, and the top 10 malicious targets, impersonated names, and impersonated targets.

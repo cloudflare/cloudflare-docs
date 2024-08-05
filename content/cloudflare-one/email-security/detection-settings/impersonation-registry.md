@@ -6,7 +6,7 @@ weight: 4
 
 # Impersonation registry
 
-The impersonation registry contains combinations of emails which are likely to be impersonated. If there is an email that is on the impersonation registry not listed as an alternative email address, that email will be reported as potential [business email compromise (BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/).
+The impersonation registry contains combinations of emails of users who are likely to be impersonated. If there is an email that is on the impersonation registry not listed as an alternative email address, that email will be reported as potential [business email compromise (BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/).
 
 {{<Aside type="note">}}
 
@@ -58,7 +58,7 @@ To edit users from other integrations:
 
 {{<Aside type="note">}}
 
-If you added a user to the impersonation registry, and the user was manually added to the Email Security directory, you cannot remove the user from the **Impersonation registry** tab itself. To remove the user:
+If you added a user to the impersonation registry, and the user was manually added to the Email Security directory, you cannot remove the user from the **Impersonation registry**. To remove the user:
 
 1. Select **Directories** on the sidebar.
 2. Select the directory where your user is allocated.
