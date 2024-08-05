@@ -9,6 +9,7 @@ extends: substitution
 message: "When referring to [C3](/pages/get-started/c3/), always use `npm create cloudflare@latest`."
 level: error
 ignorecase: true
+scope: raw
 swap:
   npm create cloudflare[^@]: npm create cloudflare@latest
 
