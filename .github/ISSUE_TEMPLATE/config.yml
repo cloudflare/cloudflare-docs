@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Issue with your website
+    url:  https://developers.cloudflare.com/support/contacting-cloudflare-support/#methods-of-contacting-cloudflare-support
+    about: If you have an issue with your website or Cloudflare applications, please contact Cloudflare through the relevant support channel. 
