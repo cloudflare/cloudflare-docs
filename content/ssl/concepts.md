@@ -62,7 +62,7 @@ This relates to the difference between [edge certificates](#edge-certificate) an
 
 Besides the authentication and integrity aspects that valid certificates guarantee, the other important aspect of SSL/TLS certificates is encryption. Cipher suites determine the set of algorithms that can be used for encryption/decryption and that will be negotiated during an [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
-For the purpose of this documentation, keep in mind that [cipher suites supported at Cloudflare's network](/ssl/reference/cipher-suites/supported-cipher-suites/) may not be the same as [cipher suites presented by Cloudflare to your origin server](/ssl/origin-configuration/cipher-suites/).
+For the purpose of this documentation, keep in mind that [cipher suites supported at Cloudflare's network](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/) may not be the same as [cipher suites presented by Cloudflare to your origin server](/ssl/origin-configuration/cipher-suites/).
 
 ## Trust store
 

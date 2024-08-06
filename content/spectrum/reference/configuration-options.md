@@ -113,7 +113,7 @@ If you have the TLS termination setting configured to **off**, this means that S
 
 ## Origin TLS Termination
 
-Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/reference/cipher-suites/).
+Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 The cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
 

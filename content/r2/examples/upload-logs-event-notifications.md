@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 products: [Queues, Workers]
 difficulty: Beginner
 updated: 2024-04-02
+languages: [TypeScript]
 ---
 
 # Log and store upload events in R2 with event notifications
@@ -39,7 +40,7 @@ $ npx wrangler r2 bucket create example-log-sink-bucket
 
 {{<Aside type="note">}}
 
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume event notifications.
+You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
 
 {{</Aside>}}
 

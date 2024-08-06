@@ -4,6 +4,7 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a QR code generator
+languages: [JavaScript]
 ---
 
 # Build a QR code generator

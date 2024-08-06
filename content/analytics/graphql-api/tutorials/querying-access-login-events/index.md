@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: example
 title: Querying Access login events with GraphQL
 ---
 

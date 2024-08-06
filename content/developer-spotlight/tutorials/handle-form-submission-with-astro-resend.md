@@ -5,7 +5,8 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send form submissions using Astro and Resend
 products: [Workers]
-tags: [Forms]
+tags: [Forms, Resend, Astro]
+languages: [TypeScript]
 spotlight:
   author: Cody Walsh
   author_bio_link: https://www.linkedin.com/in/cody-walsh-616a979/

@@ -6,7 +6,7 @@ weight: 2
 
 # Integrate with Workers
 
-Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
+Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers/) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
 There are three ways to integrate a Worker with Pub/Sub:
 
@@ -221,6 +221,7 @@ You should receive a success response that resembles the example below, with the
   "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
   "on_publish": {
     "url": "https://your-worker.your-account.workers.dev"
+  }
 }
 ```
 

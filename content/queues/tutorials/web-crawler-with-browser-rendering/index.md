@@ -5,7 +5,11 @@ title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
 content_type:  📝 Tutorial
 pcx_content_type: tutorial
+weight: 1002
+meta:
+  title: Cloudflare Queues - Queues & Browser Rendering
 products: [Workers, Browser Rendering, KV]
+languages: [TypeScript]
 ---
 
 # Build a web crawler with Queues and Browser Rendering

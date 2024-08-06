@@ -14,7 +14,7 @@ meta:
 
 {{<Aside type="note">}}
 
-If your website or application requires an SSL certificate prior to migrating traffic to Cloudflare, or if you need to [customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/), refer to [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
+If your website or application requires an SSL certificate prior to migrating traffic to Cloudflare, or if you need to [customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/), refer to [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
 
 {{</Aside>}}
 
