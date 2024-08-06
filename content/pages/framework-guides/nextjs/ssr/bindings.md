@@ -5,7 +5,6 @@ meta:
   title: Using bindings in your Next.js app
 ---
 
-
 # Using bindings in your Next.js app
 
 Once you have [set up next-on-pages](/pages/framework-guides/nextjs/ssr/get-started/), you can access [bindings](/workers/runtime-apis/bindings/) from any route of your Next.js app via `getRequestContext`:
@@ -54,5 +53,21 @@ interface CloudflareEnv {
 	MY_KV_2: KVNamespace;
 	MY_R2: R2Bucket;
 	MY_DO: DurableObjectNamespace;
+}
+```
+
+## Other Cloudflare APIs (`cf`, `ctx`)
+
+You can access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
+
+```js
+import { getRequestContext } from '@cloudflare/next-on-pages';
+
+export const runtime = "edge";
+
+export async function GET(request) {
+  const { env, cf, ctx } = getRequestContext();
+
+  // ...
 }
 ```
