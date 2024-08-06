@@ -1,6 +1,7 @@
 ---
 title: Data location
 pcx_content_type: concept
+weight: 7
 ---
 
 # Data location
