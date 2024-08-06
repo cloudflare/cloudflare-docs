@@ -1,6 +1,6 @@
 ---
 title: Log and store upload events in R2 with event notifications
-pcx_content_type: how-to
+pcx_content_type: how-to 
 ---
 
 # Log and store upload events in R2 with event notifications
