@@ -4,9 +4,14 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Staff Directory Application
+products: [Pages]
+tags: [Hono]
+languages: [TypeScript, SQL]
 ---
 
 # Build a Staff Directory with D1, Cloudflare Pages and HonoX
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app.
 To do this, you will first need to set up a [D1 database](/d1/get-started/) to manage data seamlessly, then you will develop and deploy your application using the [HonoX Framework](https://github.com/honojs/honox) and [Cloudflare Pages](/pages).
@@ -444,7 +449,7 @@ With your application ready for deployment, you can use Wrangler to build and de
 
 After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
 
-```sh
+```toml
 name = "staff-directory"
 compatibility_date = "2023-12-01"
 

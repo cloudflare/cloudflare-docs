@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 weight: 1
 meta:
   title: GraphQL Analytics
+languages: [GraphQL]
 ---
 
 # GraphQL Analytics

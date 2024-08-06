@@ -9,7 +9,13 @@ meta:
 
 # Turnstile
 
-Turnstile is Cloudflare’s smart CAPTCHA alternative. It can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
+{{<description>}}
+Cloudflare’s smart CAPTCHA alternative. 
+{{</description>}}
+
+Turnstile can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
+
+{{<plan type="all">}}
 
 ![Turnstile Overview](/images/turnstile/turnstile-overview.png)
 
@@ -21,19 +27,11 @@ With Turnstile, we adapt the actual challenge outcome to the individual visitor 
 
 Turnstile also includes machine learning models that detect common features of end visitors who were able to pass a challenge before. The computational hardness of those initial challenges may vary by visitor, but is targeted to run fast.
 
-You can choose the widget type via Turnstile. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
-
 Turnstile [widget types](/turnstile/concepts/widget-types/) include:
 
 * A non-interactive challenge.
-* A non-intrusive interactive challenge (such as clicking a button), if the visitor is a suspected bot.
+* A non-intrusive interactive challenge (such as checking a box), if the visitor is a suspected bot.
 * An invisible challenge to the browser.
-
-<div class="medium-img">
-
-![Turnstile challenge](/images/turnstile/turnstile-gif.gif)
-
-</div>
 
 ---
 
@@ -63,6 +61,10 @@ Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/produc
 
 {{<feature header="Turnstile analytics" href="/turnstile/turnstile-analytics/">}}
 Assess the number of challenges issued, evaluate the challenge solve rate, and view the metrics of issued challenges.
+{{</feature>}}
+
+{{<feature header="Pre-Clearance" href="/turnstile/concepts/pre-clearance-support/">}}
+Integrate Cloudflare challenges on single-page applications (SPAs) by allowing Turnstile to issue a Pre-Clearance cookie.
 {{</feature>}}
 
 ---

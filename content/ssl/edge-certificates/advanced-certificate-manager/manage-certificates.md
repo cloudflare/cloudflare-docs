@@ -78,7 +78,7 @@ To restart validation for a certificate in a `validation_timed_out` status, send
 
 {{<render file="_cipher-suites-definition.md">}}
 
-For more details, refer to [Disable cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
+For more details, refer to [Disable cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 ---
 
@@ -96,3 +96,13 @@ For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/ch
 Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/reference/migration-guides/dcv-update/).
 
 {{</Aside>}}
+
+---
+
+## Set up alerts
+
+You can configure alerts to receive notifications for changes in your certificates.
+
+{{<available-notifications product="SSL/TLS" notificationName="Advanced Certificate Alert">}}
+
+{{<render file="_get-started.md" productFolder="notifications" >}}

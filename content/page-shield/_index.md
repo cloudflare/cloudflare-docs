@@ -5,18 +5,20 @@ weight: 1
 layout: overview
 meta:
   title: Cloudflare Page Shield
-  description: Page Shield is a comprehensive client-side security solution that allows you to ensure the safety of your website visitors' browser environment.
+  description: Page Shield is a comprehensive client-side security and privacy solution that allows you to ensure the safety of your website visitors' browsing environment.
 ---
 
 # Cloudflare Page Shield
 
 {{<description>}}
-Ensures the safety of your website visitors' browser environment.
+Ensures the safety and privacy of your website visitors' browsing environment.
 {{</description>}}
 
 {{<plan type="paid">}}
 
-Page Shield simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. Page Shield also tracks the connections made by scripts on your domain’s pages and checks if they are malicious based on their destination.
+Page Shield helps manage resources loaded by your website visitors — including scripts, their connections, and cookies — and triggers alert notifications when resources change or are considered malicious.
+
+Learn how to [get started](/page-shield/get-started/).
 
 ---
 
@@ -26,7 +28,7 @@ Page Shield simplifies external script management by tracking loaded resources l
 Displays information about loaded scripts in your domain's pages and the connections they make.
 {{</feature>}}
 
-{{<feature header="Page attribution" href="/page-shield/detection/monitor-connections-scripts/#view-script-or-connection-details" cta="Find resource occurrences">}}
+{{<feature header="Page attribution" href="/page-shield/detection/monitor-connections-scripts/#view-details" cta="Find resource occurrences">}}
 Find in which page a resource first appeared, and view a list of the latest occurrences of the resource in your pages.
 {{</feature>}}
 

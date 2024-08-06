@@ -4,34 +4,32 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a QR code generator
+languages: [JavaScript]
 ---
 
 # Build a QR code generator
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build and publish a Worker application that generates QR codes.
 
 If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/kristianfreeman/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
+{{<render file="_tutorials-before-you-start.md">}}
+
 ## 1. Create a new Workers project
 
 First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="qr-code-generator">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into your newly created directory:
+
 ```sh
----
-header: Create a new project with C3
----
-$ npm create cloudflare@latest qr-code-generator
+$ cd qr-code-generator
 ```
-
-To configure your Worker:
-
-* Choose `"Hello World" Worker` for the type of application you would like to create.
-* Answer `No` to using TypeScript.
-* Answer `No` to deploying your Worker.
 
 Inside of your new `qr-code-generator` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

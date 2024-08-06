@@ -4,11 +4,15 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Securely access and upload assets with Cloudflare R2
+products: [R2]
+languages: [TypeScript]
 ---
 
 # Securely access and upload assets with Cloudflare R2
 
-This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+{{<tutorial-date-info>}}
+
+This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2/) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 ## Prerequisites
 
@@ -22,31 +26,15 @@ To continue:
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker. To do this, open a terminal window and run the following command:
 
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm" no-code="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="upload-r2-assets">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+
+Move into your newly created directory:
 
 ```sh
-$ npm create cloudflare@latest
+$ cd upload-r2-assets
 ```
-
-{{</tab>}}
-{{<tab label="yarn" no-code="true">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-To continue with this guide:
-
-1. Give your new Worker application a name.
-2. Select `"Hello World" Worker` for the type of application.
-3. Select `Yes` to using TypeScript.
-4. Select `No` to deploying your application.
-
-If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
 ## Create an R2 bucket
 

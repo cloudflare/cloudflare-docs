@@ -20,3 +20,4 @@ Recipes are examples that help demonstrate how to write unit tests and integrati
 - [Tests using declarative/imperative outbound request mocks](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/request-mocking)
 - [Tests using multiple auxiliary workers and request mocks](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/multiple-workers)
 - [Tests importing WebAssembly modules](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/web-assembly)
+- [Tests using JSRPC with entrypoints and Durable Objects](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc)

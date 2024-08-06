@@ -4,13 +4,13 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Resend
+tags: [Email, Resend]
+languages: [JavaScript]
 ---
 
 # Send Emails With Resend
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to send transactional emails from Workers using [Resend](https://resend.com/). At the end of this tutorial, you’ll be able to:
 
@@ -44,7 +44,7 @@ $ npm create cloudflare@latest email-with-resend -- --type=hello-world --ts=fals
 
 This creates a simple hello-world Worker having the following content:
 
-```jsx
+```js
 ---
 filename: src/index.js
 ---

@@ -30,12 +30,12 @@ This section contains generic instructions on how to transfer your domain to Clo
 
 To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for detailed transfer instructions from some of the most popular registrars:
 
-- [Enom](https://help.enom.com/hc/articles/360040309012)
+- [Enom](https://support.enom.com/support/solutions/articles/201000065324-preparing-your-domain-for-transfer)
 - [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
+- [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
 - [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
 - [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
-- [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
-- [Google](https://support.google.com/domains/answer/3251178?hl=en)
+- [Squarespace](https://support.squarespace.com/hc/articles/205812338-Transferring-a-domain-away-from-Squarespace)
 
 ### 1. Log in to your registrar account
 

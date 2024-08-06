@@ -46,8 +46,6 @@ https://myproject.pages.dev/*
 
 An incoming request which matches multiple rules' URL patterns will inherit all rules' headers. Using the previous `_headers` file, the following requests will have the following headers applied:
 
-{{<table-wrap>}}
-
 | Request URL                                     | Headers                                                                                                                               |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `https://custom.domain/secure/page`             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
@@ -55,8 +53,6 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 | `https://myproject.pages.dev/home`              | `X-Robots-Tag: noindex`                                                                                                               |
 | `https://myproject.pages.dev/secure/page`       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
 | `https://myproject.pages.dev/static/styles.css` | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
-
-{{</table-wrap>}}
 
 A project is limited to 100 header rules. Each line in the `_headers` file has a 2,000 character limit. The entire line, including spacing, header name, and value, counts towards this limit.
 

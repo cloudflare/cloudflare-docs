@@ -2,7 +2,7 @@
 type: example
 summary: Send a GET request and read in JSON from the response. Use to fetch
   external data.
-pcx_content_type: configuration
+pcx_content_type: example
 title: Fetch JSON
 tags:
   - JSON

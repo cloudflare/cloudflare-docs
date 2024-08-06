@@ -677,7 +677,17 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-ja4">
+        <td><p><code>cf.bot_management.ja4</code><br />{{<type>}}String{{</type>}}</p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
           </p>
         </td>
     </tr>
@@ -1457,6 +1467,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <p>Represents HTTP request headers as a Map (or associative array).</p>
          <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
          <p>When there are repeating headers, the array includes them in the order they appear in the request.</p>
+         <p>The request header values are not pre-processed and retain the original case used in the request.</p>
          <p><em><em>Decoding:</em></em> no decoding performed
          <br /><em>Whitespace:</em> preserved
          <br /><em>Non-ASCII:</em> preserved

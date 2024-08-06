@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Environments
-weight: 2
+weight: 3
 ---
 
 # Environments
@@ -31,14 +31,18 @@ In the `staging` environment, `MY_KV.get("KEY")` will read from the namespace ID
 To insert a value into a `staging` KV namespace, run:
 
 ```sh
-$ wrangler kv:key put --env=staging --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
+$ wrangler kv key put --env=staging --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
 ```
 
 Since `--namespace-id` is always unique (unlike binding names), you do not need to specify an `--env` argument:
 
 ```sh
-$ wrangler kv:key put --namespace-id=<YOUR_ID> "<KEY>" "<VALUE>"
+$ wrangler kv key put --namespace-id=<YOUR_ID> "<KEY>" "<VALUE>"
 ```
+
+{{<Aside type="warning">}}
+Since version 3.60.0, Wrangler KV commands support the `kv ...` syntax. If you are using versions of Wrangler below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+{{</Aside>}}
 
 Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. 
 
@@ -72,5 +76,5 @@ With the `wrangler.toml` file above, you can specify `--env production` when you
 For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
 
 ```sh
-$ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
+$ wrangler kv key get --binding "MY_KV" --env=production "<KEY>"
 ```

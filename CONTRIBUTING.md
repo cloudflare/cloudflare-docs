@@ -1,28 +1,26 @@
-# Contributing to Cloudflare's Documentation
+# Contributing to Cloudflare's documentation
 
-## Issues
+Before contributing code to Cloudflare's documentation, please read the following guidelines carefully.
 
-[Open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) when something in the content is incorrect, out-of-date, or if the documentation doesn’t match the actual functionality. The items below are covered in our issue template.
+## Have feedback for our documentation? Open an issue
 
-- What is the expected behavior?
-  - Link to the documentation or explain the expected outcome of following the documentation.
-- What is the actual behavior?
-  - Explain what actually happens when you follow the documentation.
-- Which part of the documentation requires an update?
-  - Provide a link to the page that needs an update and be specific about which section requires the update.
-- Additional information
-  - Any other details or screenshots you think are relevant.
-- Issue Labels
+[Open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) when something in our documentation is incorrect, out-of-date, or if the documentation doesn’t match the actual functionality.
 
-## Pull Requests
+## Before submitting a PR, open an issue
 
-Before proposing significant changes, open an issue so that we can discuss your approach first. Only members of the Cloudflare organization can open a pull request on the repository, and they should follow the same guidance on opening an issue for significant changes. If you’re not part of the Cloudflare organization but want to contribute, fork the repository and then create a pull request.
+Before proposing significant changes, such as adding a new page, [open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) so that we can discuss your approach first. Only members of the Cloudflare organization can open a pull request on the repository, and they should follow the same guidance on opening an issue for significant changes. If you’re not part of the Cloudflare organization but want to contribute, fork the repository and then create a pull request.
+
+A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
+
+If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
+
+If we require more information to address your pull request, the `more-information-needed` label will be applied to the pull request. If more information has not been provided within fourteen days, the pull request will automatically close.
 
 ### Pull Request Guidelines
 
 - Commits and commit messages
   - Use smaller commits for your work to make it easier to review. In your commit messages, be specific about what you changed in the files.
-  - If you are proposing a new page, use one of the [content type templates](https://github.com/cloudflare/cloudflare-docs/tree/production/static/_templates).
+  - If you are proposing a new page, review our [content type guidelines](https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/) for options and templates.
 - Pull request titles
   - Follow the title structure of [Product Name] + work you did + affected file(s)
   - Example: [Access] fix broken link in example_file.md
@@ -32,11 +30,8 @@ Before proposing significant changes, open an issue so that we can discuss your 
 
 ## Package manager
 
-- [Yarn](https://classic.yarnpkg.com/en/docs/install) is the recommended package manager that must be used in installing dependencies.
-- Generated yarn.lock files must be committed to git.
-
-A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
-If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
+- [npm](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager#introduction-to-npm) is the recommended package manager that must be used in installing dependencies.
+- The generated `package-lock.json` file must be committed to git.
 
 
 ## Workers Playground

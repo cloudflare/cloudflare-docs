@@ -36,20 +36,20 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 ```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"status": "active"}'
 ```
 
 4. Go to **DNS** > **Settings**, and enable **Multi-signer DNSSEC**. Or use the following [API request](/api/operations/dnssec-edit-dnssec-status).
 
 ```bash
-$ curl --request PATCH \
+curl --request PATCH \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"dnssec_multi_signer": true}'
 ```
 
@@ -60,10 +60,10 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
 You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/operations/dns-records-for-a-zone-create-dns-record), as in the following example.
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
     "type": "DNSKEY",
     "name": "<ZONE_NAME>",
@@ -82,14 +82,14 @@ $ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
 API example:
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>'
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 Command line query example:
 
-```bash
+```sh
 $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 
@@ -99,7 +99,7 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 You can check if both providers are responding with both ZSKs by running one `dig` command for each, as in the following example. You can also use [Dig Web Interface](https://www.digwebinterface.com/?type=DNSKEY).
 
-```bash
+```sh
 $ dig <ZONE_NAME> dnskey @<PREVIOUS_PROVIDER_NAMESERVER> +noall +answer
 
 $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer
@@ -109,7 +109,7 @@ Both queries should return both ZSKs (identified with tag `256`).
 
 {{<details header="Example">}}
 
-```bash
+```sh
 $ dig multisigner.info dnskey @dns1.p01.nsone.net. +noall +answer
 multisigner.info.    3600    IN    DNSKEY    257 3 13 t+4D<bla_bla_bla>JBmA==
 multisigner.info.    3600    IN    DNSKEY    256 3 13 pxEU<bla_bla_bla>0xOg==
@@ -142,7 +142,7 @@ At this point your zone is in a [multi-signer DNSSEC setup](/dns/dnssec/multi-si
 
 You can find out the TTL of your previous provider DS record by running a `dig` command, as in the following example, or by using this [Dig Web Interface link](https://www.digwebinterface.com/?type=DS).
 
-```bash
+```sh
 $ dig multisigner.info ds +noall +answer
 multisigner.info. 3600 IN DS 2371 13 2 227B4C7FF3E1D49D59BAF39BDA54CA0839DE700DD9896076AA3E6AD7 19A0CF55
 multisigner.info. 3600 IN DS 48553 13 2 893709B51A9C53D011A4054B15FC5454BEDF68E739BB3B3FA1E333DA 7B8DACFE

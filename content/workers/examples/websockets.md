@@ -5,7 +5,7 @@ tags:
   - WebSockets
 languages:
   - JavaScript
-pcx_content_type: configuration
+pcx_content_type: example
 title: Using the WebSockets API
 weight: 10000
 layout: example

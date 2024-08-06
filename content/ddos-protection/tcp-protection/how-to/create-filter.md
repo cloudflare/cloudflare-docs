@@ -18,7 +18,7 @@ Each protection system component (SYN flood protection or out-of-state TCP prote
 To create a [filter](/ddos-protection/tcp-protection/concepts/#filter) for one of the system components:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to Account Home > **L3/4 DDoS** > **Advanced TCP Protection**.
+2. Go to **L3/4 DDoS** > **Advanced Protection** > **Advanced TCP Protection**.
 3. Under the system component for which you are creating the filter (**SYN Flood Protection** or **Out-of-state TCP Protection**), select **Create** next to the type of filter you want to create:
 
     * **Mitigation Filter**: The protection system will drop {{<glossary-tooltip term_id="data packet">}}packets{{</glossary-tooltip>}} matching the filter expression.

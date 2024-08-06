@@ -9,7 +9,7 @@ languages:
   - TypeScript
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: HTTP Basic Authentication
 weight: 1001
 layout: example

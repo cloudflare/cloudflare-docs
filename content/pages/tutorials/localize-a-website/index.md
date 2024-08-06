@@ -4,19 +4,24 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Localize a website with HTMLRewriter
+languages: [JavaScript]
+tags:
+  - HTMLRewriter
 ---
 
 # Localize a website with HTMLRewriter
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
-
-The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based on your visitors’ location in the world.
 
+This tutorial uses the [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime, which allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
+
 ![An example site that has been successfully localized in Japanese, German and English](/images/workers/tutorials/localize-website/i18n.jpg)
+
+---
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Prerequisites
 
@@ -28,17 +33,13 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 Create a new application using the [`create-cloudflare`](/pages/get-started/c3), a CLI for creating and deploying new applications to Cloudflare.
 
-```sh
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="i18n-example">}}
 
 For setup, select the following options:
 
-- Where do you want to create your application?: Input i18n-example.
-- What type of application do you want to create?: Select "Website or web app".
-- Which development framework do you want to use? Select "React"
-- Do you want to use TypeScript?: Select No.
-- Do you want to deploy your application?: Select No.
+- For *What would you like to start with*?, select `Framework Starter`.
+- For *Which development framework do you want to use?*, select `React`.
+- For, *Do you want to deploy your application?*, select `No`.
 
 The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:
 
@@ -50,7 +51,7 @@ $ public src package.json
 
 We have to make a few adjustments to the generated project, first we want to the replace the content inside of the `public` directory, with the default generated HTML code for the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
-Next, let's create a functions directory with an `index.js` file, this will be where the logic of the application will be written. 
+Next, let's create a functions directory with an `index.js` file, this will be where the logic of the application will be written.
 
 ```sh
 $ mkdir functions
@@ -92,7 +93,7 @@ Another feature of this project is based on the `Accept-Language` header, which 
 
 Begin with the `functions/index.js` file. Your application in this tutorial will live entirely in this file.
 
-Inside of this file, start by adding the default code for running a [Pages Function](/pages/functions/get-started/#create-a-function). 
+Inside of this file, start by adding the default code for running a [Pages Function](/pages/functions/get-started/#create-a-function).
 
 ```js
 ---

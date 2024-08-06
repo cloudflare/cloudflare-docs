@@ -289,13 +289,13 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 ### Enhanced file detection
 
-Enhanced file detection is an optional feature to extract more file information from HTTP traffic. When enabled, Gateway will read file information from the HTTP body rather than the HTTP headers, offering greater accuracy and reliability. This feature may have a minor impact on performance for file-heavy organizations.
+Enhanced file detection is an optional feature to extract more file information from HTTP traffic. When turned on, Gateway will read file information from the HTTP body rather than the HTTP headers to provide greater accuracy and reliability. This feature may have a minor impact on performance for file-heavy organizations.
 
-To enable:
+To turn on enhanced file detection:
 
-1. Go to **Settings** > **Network**.
-2. Enable **TLS decryption**.
-3. Turn on **Enable enhanced file detection**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
+2. In **Firewall**, turn on **TLS decryption**.
+3. In **Gateway Logging**, turn on **Enable enhanced file detection**.
 
 ### Isolate requests
 

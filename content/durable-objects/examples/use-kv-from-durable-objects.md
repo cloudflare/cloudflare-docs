@@ -8,12 +8,12 @@ meta:
   title: Durable Objects - Use KV within Durable Objects
 ---
 
-The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/kv/reference/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
+The following Worker script shows you how to configure a [Durable Object](/durable-objects/) to read from and/or write to a [Workers KV namespace](/kv/concepts/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/api/websockets/).
 
 Prerequisites:
 
 * A [KV namespace](/kv/api/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-* A [configured binding](/kv/reference/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
+* A [configured binding](/kv/concepts/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
 Configure your `wrangler.toml` file as follows:
@@ -48,8 +48,8 @@ export default {
     // Assume each Durable Object is mapped to a roomId in a query parameter
     // In a production application, this will likely be a roomId defined by your application
     // that you validate (and/or authenticate) first.
-    let url = new URL(req.url)
-    let roomIdParam = url.searchParams.get("roomId")
+    let url = new URL(req.url);
+    let roomIdParam = url.searchParams.get("roomId");
 
     if (roomIdParam) {
       // Create (or get) a Durable Object based on that roomId.
@@ -73,11 +73,10 @@ export default {
 
 export class YourDurableObject implements DurableObject {
   constructor(public state: DurableObjectState, env: Env) {
-      this.state = state;
-      // Ensure you pass your bindings and environmental variables into
-      // each Durable Object when it is initialized
-      this.env = env;
-    }
+    this.state = state;
+    // Ensure you pass your bindings and environmental variables into
+    // each Durable Object when it is initialized
+    this.env = env;
   }
 
   async fetch(request: Request) {
@@ -88,8 +87,8 @@ export class YourDurableObject implements DurableObject {
     // Fetch from KV
     let val = await this.env.YOUR_KV_NAMESPACE.get("some-other-key");
 
-    return Response.json(val)
+    return Response.json(val);
   }
+}
 ```
-
 

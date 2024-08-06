@@ -10,8 +10,11 @@ You can initialize and customize the Turnstile widget on your web page via impli
 
 ## Implicitly render the Turnstile widget
 
-The HTML is scanned for elements that have a `cf-turnstile` class name:
+{{<Aside type="note">}}
+Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
+{{</Aside>}}
 
+The HTML is scanned for elements that have a `cf-turnstile` class name:
 
 <div>
 
@@ -22,13 +25,13 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
+{{<render file="_siteverify-warning.md">}}
+
 {{<Aside type="note">}}
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.
 {{</Aside>}}
 
 To configure the challenge, refer to [Configurations](/turnstile/get-started/client-side-rendering/#configurations) containing data attributes and render parameters.
-
-Refer to the [demo](https://demo.turnstile.workers.dev/) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/implicit.html).
 
 ### Protect forms
 
@@ -84,6 +87,10 @@ When using `render=explicit`, HTML elements with the `cf-turnstile` class will n
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
 
 ## Explicitly render the Turnstile widget
+
+{{<Aside type="note">}}
+Refer to the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
+{{</Aside>}}
 
 1. Insert the JavaScript tag and the related code below. Ensure that you have renamed the class name of `.cf-turnstile` to `#example-container` (if you do not set the `render=explicit` query string option as shown above, it will still render otherwise). Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.
 
@@ -149,8 +156,6 @@ Turnstile can be programmatically loaded by invoking the `turnstile.render()` fu
 The `turnstile.render: function (container: string | HTMLElement, params: RenderParameters)` render takes an argument to a HTML widget.
 
 If the invocation is successful, the function returns a `widgetId (string)`. If the invocation is unsuccessful, the function returns `undefined`.
-
-Refer to the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 
 ## Access a widget's state
 

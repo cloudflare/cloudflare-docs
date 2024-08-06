@@ -11,7 +11,7 @@ title: Caching Static HTML with Magento (Business and Enterprise only)
 ## Overview
 
 {{<Aside type="note">}}
-All Cloudflare customers can configure caching HTML files. However, only customers in the Business and Enterprise plans are able to bypass HTML caching when a cookie is sent with Bypass Cache on Cookie request using Cloudflare Page Rules (deprecated).
+All Cloudflare customers can configure caching HTML files. However, only customers in the Business and Enterprise plans are able to bypass HTML caching when a cookie is sent with Bypass Cache on Cookie request using Cloudflare Page Rules.
 {{</Aside>}}
 
 Business and Enterprise customers using Magento can cache anonymous page views with our _Bypass Cache on Cookie_ page rule. This setting caches static HTML at the Cloudflare edge with no need for regeneration from request to request.

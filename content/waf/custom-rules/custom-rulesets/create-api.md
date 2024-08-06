@@ -2,6 +2,8 @@
 title: Use the API
 pcx_content_type: how-to
 weight: 3
+meta:
+  title: Work with custom rulesets using the API
 ---
 
 # Work with custom rulesets using the API

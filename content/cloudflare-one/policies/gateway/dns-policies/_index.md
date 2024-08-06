@@ -20,10 +20,6 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
-{{<Aside type="warning">}}
-Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
-{{</Aside>}}
-
 ## Actions
 
 Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
@@ -40,6 +36,43 @@ These are the action types you can choose from:
 
 API value: `allow`
 
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Authoritative Nameserver IP](#authoritative-nameserver-ip)
+- [Content Categories](#content-categories)
+- [DNS CNAME Response Value](#dns-cname-record)
+- [DNS MX Response Value](#dns-mx-record)
+- [DNS PTR Response Value](#dns-ptr-record)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DNS TXT Response Value](#dns-txt-record)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Indicator Feeds](#indicator-feeds)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Resolved IP](#resolved-ip)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
+
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
 | Selector           | Operator | Value     | Action |
@@ -53,6 +86,43 @@ When you select **Disable DNSSEC validation**, Gateway will resolve DNS queries 
 ### Block
 
 API value: `block`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Authoritative Nameserver IP](#authoritative-nameserver-ip)
+- [Content Categories](#content-categories)
+- [DNS CNAME Response Value](#dns-cname-record)
+- [DNS MX Response Value](#dns-mx-record)
+- [DNS PTR Response Value](#dns-ptr-record)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DNS TXT Response Value](#dns-txt-record)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Indicator Feeds](#indicator-feeds)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Resolved IP](#resolved-ip)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
@@ -72,17 +142,77 @@ When choosing the Block action, turn on **Display custom block page** to respond
 
 API value: `override`
 
+{{<details header="Available selectors">}}
+
+The Override action cannot be used with selectors evaluated during or after DNS resolution.
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
+
 Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to `www.example.com` with the following policy:
 
 | Selector | Operator | Value             | Action   | Override Hostname |
 | -------- | -------- | ----------------- | -------- | ----------------- |
 | Hostname | is       | `www.example.com` | Override | `1.2.3.4`         |
 
-{{<Aside type="note">}}The Override action cannot be used with selectors evaluated during or after DNS resolution, including **Authoritative Nameserver IP**, **Resolved IP**, **Resolved Continent**, **Resolved Country**, and any DNS response values.{{</Aside>}}
-
 ### Safe Search
 
 API value: `safesearch`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
 
@@ -95,6 +225,36 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 ### YouTube Restricted Mode
 
 API value: `ytrestricted`
+
+{{<details header="Available selectors">}}
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [DNS Resolver IP](#dns-resolver-ip)
+- [DOH Subdomain](#doh-subdomain)
+- [Domain](#domain)
+- [Host](#host)
+- [Location](#location)
+- [Query Record Type](#query-record-type)
+- [Resolved Continent IP Geolocation](#resolved-continent)
+- [Resolved Country IP Geolocation](#resolved-country)
+- [Security Categories](#security-categories)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source IP](#source-ip)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+{{</details>}}
 
 Similarly, you can enforce YouTube Restricted mode by choosing the _YouTube Restricted_ action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
@@ -122,7 +282,9 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-{{<render file="gateway/selectors/_content-categories.md" withParameters="When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/gateway/domain-categories/#filter-by-resolved-ip-category).">}}
+{{<render file="gateway/selectors/_content-categories.md">}}
+
+{{<render file="gateway/selectors/_category-options.md">}}
 
 ### DNS CNAME Record
 
@@ -176,9 +338,9 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 {{<render file="gateway/selectors/_host.md">}}
 
-### Indicator Feed
+### Indicator Feeds
 
-{{<render file="gateway/selectors/_indicator-feed.md" withParameters="dns">}}
+{{<render file="gateway/selectors/_indicator-feeds.md" withParameters="dns">}}
 
 ### Location
 
@@ -225,6 +387,8 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 {{<render file="gateway/selectors/_security-categories.md">}}
 
+{{<render file="gateway/selectors/_category-options.md">}}
+
 ### Source Continent
 
 Use this selector to filter based on the continent where the query arrived to Gateway from.
@@ -254,3 +418,13 @@ Use this selector to filter based on the country where the query arrived to Gate
 ## Logical operators
 
 {{<render file="gateway/_logical-operators.md" withParameters="**Identity**">}}
+
+## Limitations
+
+### Third-party filtering conflict
+
+Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/102602). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
+
+### Magic WAN forwarding
+
+To apply DNS policies to queries forwarded through [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/).

@@ -4,11 +4,14 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
+products: [Workers]
+tags: [PostgreSQL]
+languages: [TypeScript, SQL]
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
 
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -30,19 +33,9 @@ You can learn more about Timescale by reading their [documentation](https://docs
 
 Run the following command to create a Worker project from the command line:
 
-```sh
----
-header: Create a project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="timescale-api">}}
 
-For setup, select the following options:
-
-- `Where do you want to create your application?`: Input `timescale-api`.
-- `What type of application do you want to create?`: Select `"Hello World" Worker`.
-- `Do you want to use TypeScript?`: Select `Yes`.
-- `Do you want to deploy your application?`: Select `Yes`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
@@ -83,7 +76,7 @@ You should ensure that you do not break any existing clients if when you reset t
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):
 
-```sh
+```txt
 postgres://tsdbadmin:YOURPASSWORD@...
 ```
 
@@ -263,13 +256,13 @@ This tutorial omits the `ts` (the timestamp) and `metadata` (the JSON blob) so t
 
 Once you have sent the `POST` request you can also issue a `GET` request to your Worker’s URL with the `/readings` path. Set the `limit` parameter to control the amount of returned records.
 
-If you have **curl** installed you can test with the following commands (replace **<YOUR_SUBDOMAIN>** with your subdomain from the deploy command above):
+If you have **curl** installed you can test with the following commands (replace `<YOUR_SUBDOMAIN>` with your subdomain from the deploy command above):
 
-```sh
+```bash
 ---
 header: Ingest some data
 ---
-$ curl -X POST -d @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
+curl --request POST --data @- 'https://timescale-api.<YOUR_SUBDOMAIN>.workers.dev/readings' <<EOF
 [
   { "sensor": "6f3e43a4-d1c1-4cb6-b928-0ac0efaf84a5", "value":0.3},
   { "sensor": "d538f9fa-f6de-46e5-9fa2-d7ee9a0f0a68", "value":10.8},

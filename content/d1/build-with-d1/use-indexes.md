@@ -70,7 +70,7 @@ SELECT name, type, sql FROM sqlite_schema WHERE type IN ('index');
 
 This will return output resembling the below:
 
-```sh
+```txt
 ┌──────────────────────────────────┬───────┬────────────────────────────────────────┐
 │ name                             │ type  │ sql                                    │
 ├──────────────────────────────────┼───────┼────────────────────────────────────────┤

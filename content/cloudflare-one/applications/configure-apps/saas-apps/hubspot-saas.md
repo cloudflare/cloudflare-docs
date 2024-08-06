@@ -1,16 +1,18 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Hubspot
-weight: 7
+updated: 2024-06-18
+weight: 16
 ---
 
 # Connect to Hubspot through Access
 
-This guide covers how to set up Cloudflare as the SSO provider for Hubspot.
+This guide covers how to configure [Hubspot](https://knowledge.hubspot.com/account-security/set-up-single-sign-on-sso) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-- Hubspot Enterprise license
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+- Admin access to a Hubspot Enterprise plan account
 
 ## 1. Configure Hubspot
 

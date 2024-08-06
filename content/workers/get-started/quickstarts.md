@@ -82,8 +82,6 @@ description="Measure download/upload connection speed from the client side, usin
 
 ## Frameworks
 
-{{<worker-starter title="Hono" repo="honojs/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, Miniflare, and Jest.">}}
-
 {{<worker-starter title="Apollo GraphQL Server" repo="cloudflare/workers-graphql-server" description="Lightning-fast, globally distributed Apollo GraphQL server, deployed on the Cloudflare global network using Cloudflare Workers.">}}
 
 {{<worker-starter title="GraphQL Yoga" repo="the-guild-org/yoga-cloudflare-workers-template" description="The most flexible, fastest, and lightest GraphQL server for all environments, Cloudflare Workers included.">}}

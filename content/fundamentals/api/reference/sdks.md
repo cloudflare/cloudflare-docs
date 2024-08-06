@@ -14,11 +14,11 @@ Cloudflare currently offers the following SDKs:
 - [Typescript](https://github.com/cloudflare/cloudflare-typescript)
 - [Python](https://github.com/cloudflare/cloudflare-python)
 
-## When to use curl vs SDK
+## When to use cURL vs SDK
 
-There is no definite answer on which you should use. Instead, consider your use case and determine whether curl or an SDK is the best fit.
+There is no definite answer on which you should use. Instead, consider your use case and determine whether cURL or an SDK is the best fit.
 
-| Use case                                                    | curl | SDK  |
+| Use case                                                    | cURL | SDK  |
 | ----------------------------------------------------------- | ---- | ---- |
 | Quick testing within the CLI                                | ✅   | ❌   |
 | Use within bash scripts or CI                               | ✅   | ❌\* |
@@ -31,11 +31,11 @@ There is no definite answer on which you should use. Instead, consider your use 
 
 The following are examples of how you would query all of the Cloudflare zones you have access to.
 
-### With curl:
+### With cURL:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones" \
--H "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ### With the Typescript SDK:

@@ -25,10 +25,20 @@ jobs:
           hugo-version: '0.125.6'
           extended: true
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
-      - run: pnpm install
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
 
       - run: make build
         env:

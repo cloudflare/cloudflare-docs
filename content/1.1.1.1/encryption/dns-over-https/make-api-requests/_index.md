@@ -37,7 +37,7 @@ You can learn more about how DoH works in RFC 8484, more specifically [the HTTP 
 Example request:
 
 ```sh
-$ curl --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=cloudflare.com" --next --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=example.com"
+$ curl --http2 --header "accept: application/dns-json" "https://1.1.1.1/dns-query?name=cloudflare.com" --next --http2 --header "accept: application/dns-json" "https://1.1.1.1/dns-query?name=example.com"
 ```
 
 ## Authentication
@@ -50,13 +50,9 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 
 ## Return codes
 
-{{<table-wrap>}}
-
 | HTTP Status | Meaning |
 | ------------|----------- |
 | `400` | DNS query not specified or too small. |
 | `413` | DNS query is larger than maximum allowed DNS message size. |
 | `415` | Unsupported content type. |
 | `504` | Resolver timeout while waiting for the query response. |
-
-{{</table-wrap>}}

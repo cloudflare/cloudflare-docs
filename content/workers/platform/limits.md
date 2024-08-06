@@ -10,8 +10,6 @@ meta:
 
 ## Account plan limits
 
-{{<table-wrap>}}
-
 | Feature                                                                         | Workers Free      | Workers Paid ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model),  [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model)) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model)      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request ([Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model)),<br> 1000/request ([Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model), [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model))|
@@ -23,8 +21,7 @@ meta:
 | [Number of Workers](#number-of-workers)<sup>1</sup>                                         | 100       | 500       |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account| 5         | 250       |
 
-{{</table-wrap>}}
-<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). 
+<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 {{<render file="_limits_increase.md">}}
 
@@ -40,16 +37,12 @@ Cloudflare has network-wide limits on the request body size. This limit is tied 
 
 Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to have a request body limit beyond 500 MB.
 
-{{<table-wrap>}}
-
 | Cloudflare Plan | Maximum body size  |
 | --------------- | -------------------|
 | Free            | 100 MB             |
 | Pro             | 100 MB             |
 | Business        | 200 MB             |
 | Enterprise      | 500 MB (by default)|
-
-{{</table-wrap>}}
 
 ---
 
@@ -68,7 +61,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                        |
 | [Worker memory](#memory)    | 128 MB                                     | 128 MB                                      | 128 MB                                      |
 | [CPU time](#cpu-time) | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/) | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |     |
-| [Duration](#duration)       |   None                                         |  none                                           | none                                  |
+| [Duration](#duration)       |   None                                         |  none                                           | 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Durable Object Alarm](/durable-objects/api/alarms/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer)                                  |
 
 {{</table-wrap>}}
 
@@ -81,7 +74,11 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 {{</Aside>}}
 
 ### CPU time
+
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
+
+{{<render file="_isolate-cpu-flexibility">}}
+<br/>
 
 {{<Aside type="note">}}
 On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
@@ -180,7 +177,7 @@ If you make a subrequest from your Worker to a target Worker that runs on a [Cus
 
 The limit for subrequests a Worker can make is 50 per request on the Bundled usage model or 1,000 per request on the Unbound usage model. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Worker makes could be greater than the number of `fetch(request)` calls in the Worker.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker. 
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1,000 per request, regardless of the [usage model](/workers/platform/pricing/#workers) configured for the Worker.
 
 ### How long can a subrequest take?
 
@@ -258,7 +255,7 @@ $ wrangler deploy --outdir bundled/ --dry-run
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code. 
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
 {{<render file="_limits_increase.md">}}
 

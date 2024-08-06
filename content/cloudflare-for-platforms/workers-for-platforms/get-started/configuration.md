@@ -13,14 +13,19 @@ title: Configure Workers for Platforms
 
 ### Enable Workers for Platforms
 
-Workers for Platforms is available for Enterprise customers only. To enable Workers for Platforms, contact your Cloudflare account team.
+To enable Workers for Platforms, you will need to purchase the [Workers for Platforms Paid plan](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms), and select your account.
+2. Complete the payment process for the Workers for Platforms Paid plan.
+
+If you are an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms.
 
 ### Learn about Workers for Platforms
 
 Refer to [How Workers for Platforms works](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/) to learn more about Workers for Platforms terminology and architecture.
 
 ---
-This guide will instruct you on setting up Workers for Platforms. You will configure a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace), a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) to test a request end to end. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
+This guide will instruct you on setting up Workers for Platforms. You will configure a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace), a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) to test a request end to end.
 
 ### 1. Create a user Worker
 
@@ -76,14 +81,9 @@ $ cd ..
 
 Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
 
-```sh
-$ npm create cloudflare@latest my-dispatcher
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="my-dispatcher">}}
 
-When setting up `my-dispatcher`, answer the questions as below:
-
-- Select `no` to using TypeScript.
-- Select `yes` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Change to your project's directory:
 

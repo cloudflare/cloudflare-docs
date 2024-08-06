@@ -38,7 +38,7 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 
 ### Via the API
 
-[Update your logpush job](/logs/reference/log-output-options/) by adding `BotDetectionIDs` to the  `logpull_options:`  parameters.
+[Update your logpush job](/logs/reference/log-output-options/) by adding `BotDetectionIDs` to the  `output_options:`  parameters.
 
 ## Create or edit an expression
 

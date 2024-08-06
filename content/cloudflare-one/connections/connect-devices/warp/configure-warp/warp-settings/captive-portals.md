@@ -12,7 +12,13 @@ Captive portals are used by public Wi-Fi networks (such as airports, coffee shop
 
 To allow users to connect through a captive portal, administrators can configure the following WARP settings:
 
+### No user interaction required
+
 - Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection). This allows WARP to temporarily turn off when it detects a captive portal on the network. For more details, refer to [how captive portal detection works](#how-captive-portal-detection-works) and its [limitations](#limitations).
+- Set [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) to **MASQUE**. When using MASQUE, WARP traffic will look like standard HTTPS traffic and is therefore less likely to be blocked by captive portals.
+
+### User interaction required
+
 - Enable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch) and enable [Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override). Users can contact the IT administrator for a one-time code that allows them to manually turn off WARP and connect to a portal.
 - For employees who travel, disable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch) and set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) duration. This allows the user to manually turn off WARP without contacting IT.
 
@@ -21,7 +27,7 @@ To allow users to connect through a captive portal, administrators can configure
 If WARP cannot establish a connection to Cloudflare, it will:
 1. Temporarily open the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) so that the device can send traffic outside of the WARP tunnel. The firewall only allows the following traffic:
 
-    - HTTP/HTTPS on TCP ports `80`, `443`, and `8080`
+    - HTTP/HTTPS on TCP ports `80`, `443`, `8080`, and `8443`
     - DNS on UDP port `53`
 
 2. Send a series of requests to the [captive portal test URLs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#captive-portal). If the HTTPS request is intercepted, WARP assumes the network is behind a captive portal.
@@ -47,4 +53,4 @@ B --Succeed--> G[No captive portal]--> H[Retry connection to Cloudflare]
 - Some public Wi-Fi networks are incompatible with running WARP:
 
   - Captive portals that intercept all DNS traffic will block WARP's [DoH connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_NO_NETWORK](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_no_network) error after they login to the captive portal.
-  - Captive portals that only allow HTTPS traffic will block WARP's [Wireguard UDP connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_HAPPY_EYEBALLS_MITM_FAILURE](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_happy_eyeballs_mitm_failure) error after they login to the captive portal.
+  - Captive portals that only allow HTTPS traffic will block WARP's [Wireguard UDP connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_HAPPY_EYEBALLS_MITM_FAILURE](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_happy_eyeballs_failure) error after they login to the captive portal.

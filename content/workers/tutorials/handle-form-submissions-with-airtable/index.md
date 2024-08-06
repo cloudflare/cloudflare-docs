@@ -4,17 +4,19 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Handle form submissions with Airtable
+tags: [Forms]
+languages: [JavaScript]
 ---
 
 # Handle form submissions with Airtable
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
 ![GIF of a complete Airtable and serverless function integration](/images/workers/tutorials/airtable/example.gif)
+
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## 1. Create a form
 
@@ -83,18 +85,15 @@ To handle the form submission, create and deploy a Worker that parses the incomi
 
 Create a new `airtable-form-handler` Worker project:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="airtable-form-handler">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Then, move into the newly created directory:
+
 ```sh
----
-header: Create a new Worker
----
-$ npm create cloudflare@latest airtable-form-handler
+$ cd airtable-form-handler
 ```
-
-When configuring your Worker:
-
-* Choose `"Hello World" Worker` for the type of application you would like to create.
-* Select `No` to using TypeScript.
-* Select `No` to deploying your Worker.
 
 ## 3. Configure an Airtable base
 
@@ -115,7 +114,7 @@ After you have created a new base, set it up for use with the front-end form. De
 
 Note that the field names are case-sensitive. If you change the field names, you will need to exactly match your new field names in the API request you make to Airtable later in the tutorial. Finally, you can optionally rename your table -- by defaulte it will have a name like Table 1. In the below code, we assume the table has been renamed with a more descriptive name, like `Form Submissions`.
 
-Next, navigate to [Airtable's API page](https://airtable.com/api) and select your new base. Note that you must be logged into Airtable to see your base information. In the API documentation page, find your **Airtable base ID**. 
+Next, navigate to [Airtable's API page](https://airtable.com/api) and select your new base. Note that you must be logged into Airtable to see your base information. In the API documentation page, find your **Airtable base ID**.
 
 You will also need to create a **Personal access token** that you'll use to access your Airtable base. You can do so by visiting the [Personal access tokens](https://airtable.com/create/tokens) page on Airtable's website and creating a new token. Make sure that you configure the token in the following way:
 
@@ -224,7 +223,7 @@ async function createAirtableRecord(env, body) {
       body: JSON.stringify(body),
       headers: {
         Authorization: `Bearer ${env.AIRTABLE_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
       }
     })
     return result;

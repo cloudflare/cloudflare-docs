@@ -1,7 +1,7 @@
 ---
 title: Turnstile analytics
 pcx_content_type: how-to
-weight: 5
+weight: 6
 meta:
     description: Use Turnstile analytics to view the number of challenges issued, the challenge solve rate, and the metrics of issued challenges.
 ---
@@ -44,11 +44,11 @@ Visitor Solve Rate is the percentage of tokens that were solved but have not nec
 
 ### API Solve Rate
 
-API Solve Rate is the share of tokens that were siteverified compared to issued. It focuses only on humans who interacted with the widget through the website's API. It measures the percentage of successful widget completions among all visitors detected through the API. This metric looks specifically at the number of people who successfully completed the widget. For example, if 100 people viewed the widget, 20 of them completed it successfully, and only 15 of them used their token, the API Solve Rate would be 15%.
+API Solve Rate is the share of tokens that were siteverified compared to issued. It focuses only on humans who interacted with the widget through the website’s API. It measures the percentage of successful widget completions among all visitors detected through the API. This metric looks specifically at the number of people who successfully completed the widget. For example, if 100 people viewed the widget, 20 of them completed it successfully, and only 15 of them had their token siteverified, the API Solve Rate would be 15%.
 
 ## Widget traffic
 
-Widget traffic metrics provide you with data on the number of widgets displayed, interactive widgets solved, and non-interactive widgets solved on your website over time.
+Widget traffic metrics provide you with data on the number of instances where the widget was displayed, the number of instances where interactive widget was solved, and the number of instances where non-interactive widget was solved on your website over time.
 
 ## Top Actions
 

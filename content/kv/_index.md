@@ -29,7 +29,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{</feature>}}
 
-{{<feature header="Bindings" href="/kv/reference/kv-bindings/">}}
+{{<feature header="Bindings" href="/kv/concepts/kv-bindings/">}}
 
 Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
@@ -69,6 +69,6 @@ Built on SQLite, D1 is Cloudflare’s first queryable relational database. Creat
 
 {{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 
-{{<resource header="Twitter" href="https://twitter.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Developer Platform. {{</resource>}}
+{{<resource header="Twitter" href="https://x.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Developer Platform. {{</resource>}}
 
 {{</resource-group>}}

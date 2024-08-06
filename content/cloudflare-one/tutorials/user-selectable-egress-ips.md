@@ -55,9 +55,9 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
     ```bash
     curl https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/virtual_networks \
-      --header "Authorization: Bearer <API_TOKEN>" \
-      --header 'Content-Type: application/json' \
-      --data '{
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "comment": "Virtual network to egress from the Americas",
       "is_default": false,
       "name": "vnet-AMER"
@@ -99,10 +99,10 @@ After creating your virtual networks, route your private network CIDRs over each
 
     ```bash
     curl --request PATCH \
-    https:https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
-      --header "Authorization: Bearer <API_TOKEN>" \
-      --header 'Content-Type: application/json' \
-      --data '{
+    https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "network": "10.0.0.0/8",
       "tunnel_id": <TUNNEL_UUID>,
       "virtual_network_id": <VNET_AMER_UUID>
@@ -115,10 +115,10 @@ After creating your virtual networks, route your private network CIDRs over each
 
     ```bash
     curl --request PATCH \
-    https:https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
-      --header "Authorization: Bearer <API_TOKEN>" \
-      --header 'Content-Type: application/json' \
-      --data '{
+    https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "network": "10.0.0.0/8",
       "tunnel_id": <TUNNEL_UUID>,
       "virtual_network_id": <VNET_EMEA_UUID>
@@ -169,9 +169,9 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
     ```bash
     curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-      --header "Authorization: Bearer <API_TOKEN>" \
-      --header 'Content-Type: application/json' \
-      --data '{
+    --header "Authorization: Bearer <API_TOKEN>" \
+    --header "Content-Type: application/json" \
+    --data '{
       "action": "egress",
       "description": "Egress via North America by connecting to vnet-AMER",
       "enabled": true,

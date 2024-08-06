@@ -26,9 +26,13 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 4. From the **Region** dropdown, select the region you would like to use on your domain. This value will be applied to all DNS records on the same hostname. This means that if you have two DNS records of the same hostname and change the region for one of them, both records will have the same region.
 
-Refer to the table below for the complete list of available regions and their definitions.
+{{<Aside type="note">}}
 
-{{<table-wrap style="font-size: 87%">}}
+Some regions may not appear on the dropdown because newly announced regions mentioned in the [blog post](https://blog.cloudflare.com/expanding-regional-services-configuration-flexibility-for-customers) are subject to approval by Cloudflare's internal team. For more information and entitlement reach out to your account team.
+
+{{</Aside>}}
+
+Refer to the table below for the complete list of available regions and their definitions.
 
 | Region | Definition |
 | --- | --- |
@@ -43,8 +47,25 @@ Refer to the table below for the complete list of available regions and their de
 | Germany | Cloudflare will only use data centers that are physically located within Germany to decrypt and service HTTPS traffic. |
 | Singapore | Cloudflare will only use data centers that are physically located within Singapore to decrypt and service HTTPS traffic. |
 | South Korea | Cloudflare will only use data centers that are physically located within South Korea to decrypt and service HTTPS traffic. |
-
-{{</table-wrap>}}
+| Austria | Cloudflare will only use data centers that are physically located within Austria to decrypt and service HTTPS traffic. |
+| Brazil | Cloudflare will only use data centers that are physically located within Brazil to decrypt and service HTTPS traffic. |
+| Cloudflare Green Energy | Cloudflare will only use data centers that are committed to powering their operations with renewable energy. |
+| Exclusive of Hong Kong and Macau | Cloudflare will only use data centers that are NOT physically located within Hong Kong and Macau to decrypt and service HTTPS traffic. |
+| Exclusive of Russia and Belarus | Cloudflare will only use data centers that are NOT physically located within Russia and Belarus to decrypt and service HTTPS traffic. |
+| France | Cloudflare will only use data centers that are physically located within Metropolitan France (the European territory of France) to decrypt and service HTTPS traffic. |
+| Hong Kong | Cloudflare will only use data centers that are physically located within Hong Kong to decrypt and service HTTPS traffic. |
+| Italy | Cloudflare will only use data centers that are physically located within Italy to decrypt and service HTTPS traffic. |
+| NATO | Cloudflare will only use data centers that are physically located within North Atlantic Treaty Organization (NATO) countries. For more details, refer to the [list of NATO countries](https://www.nato.int/nato-welcome/).
+| Netherlands | Cloudflare will only use data centers that are physically located within the Netherlands to decrypt and service HTTPS traffic. |
+| Russia | Cloudflare will only use data centers that are physically located within Russia to decrypt and service HTTPS traffic. |
+| Saudi Arabia | Cloudflare will only use data centers that are physically located within Saudi Arabia to decrypt and service HTTPS traffic. |
+| South Africa | Cloudflare will only use data centers that are physically located within South Africa to decrypt and service HTTPS traffic. |
+| Spain | Cloudflare will only use data centers that are physically located within Spain to decrypt and service HTTPS traffic. |
+| Switzerland | Cloudflare will only use data centers that are physically located within Switzerland to decrypt and service HTTPS traffic. |
+| Taiwan | Cloudflare will only use data centers that are physically located within Taiwan to decrypt and service HTTPS traffic. |
+| US State of California | Cloudflare will only use data centers that are physically located within the US State of California to decrypt and service HTTPS traffic. |
+| US State of Florida | Cloudflare will only use data centers that are physically located within the US State of Florida to decrypt and service HTTPS traffic. |
+| US State of Texas | Cloudflare will only use data centers that are physically located within the US State of Texas to decrypt and service HTTPS traffic. |
 
 ## Configure Regional Services via API
 
@@ -56,10 +77,8 @@ You can also use Regional Services via API. These are some examples of API reque
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/addressing/regional_hostnames/regions" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regional_hostnames/regions" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -91,11 +110,10 @@ header: Response
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" \
-     -d '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
 ```
 
 ```json
@@ -122,10 +140,8 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -154,10 +170,8 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json
@@ -184,11 +198,11 @@ header: Response
 ---
 header: Request
 ---
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" \
-     -d '{"region_key": "eu"}' | jq .
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"region_key": "eu"}' | jq .
 ```
 
 ```json
@@ -215,10 +229,9 @@ header: Response
 ---
 header: Request
 ---
-curl -X DELETE "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
-     -H "Content-Type:application/json" \
-     -H "X-Auth-Key:<API_KEY>" \
-     -H "X-Auth-Email:<EMAIL>" | jq .
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
 ```
 
 ```json

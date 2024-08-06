@@ -25,6 +25,14 @@ Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is 
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
+{{<Aside type="info" header="Empty queues">}}
+
+When a queue is empty, a push-based (Worker) consumer's `queue` handler will not be invoked until there are messages to deliver. A queue does not attempt to push empty batches to a consumer and thus does not invoke unnecessary reads.
+
+[Pull-based consumers](/queues/configuration/pull-consumers/) that attempt to pull from a queue, even when empty, will incur a read operation.
+
+{{</Aside>}}
+
 When determining what size and timeout settings to configure, you will want to consider latency (how long can you wait to receive messages?), overall batch size (when writing to external systems), and cost (fewer-but-larger batches).
 
 ### Batch settings
@@ -37,7 +45,7 @@ The following batch-level settings can be configured to adjust how Queues delive
 | ----------------------------------------- | ------------- | ------------ | ------------- |
 | Maximum Batch Size `max_batch_size`       | 10 messages   | 1 message    | 100 messages  |
 | Maximum Batch Timeout `max_batch_timeout` | 5 seconds     | 0 seconds    | 30 seconds    |
-  
+
 {{</table-wrap>}}
 
 ## Explicit acknowledgement and retries
@@ -47,11 +55,11 @@ You can acknowledge individual messages within a batch by explicitly acknowledgi
 * Each message can be acknowledged as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing.
 * Acknowledging individual messages is useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent (state changing) actions on individual messages.
 
-To explicitly acknowledge a message as delivered, call the `ack()` method on the message. 
+To explicitly acknowledge a message as delivered, call the `ack()` method on the message.
 
 ```ts
 ---
-header: index.js 
+header: index.js
 ---
 export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
@@ -107,7 +115,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `.retry()` or calling `.retryAll()` on a batch will cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
+Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more.
 
 {{</Aside>}}
 
@@ -117,9 +125,11 @@ When publishing messages to a queue, or when [marking a message or batch for ret
 
 Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
 
+Messages can be delayed by upto 12 hours.
+
 {{<Aside type="note">}}
 
-Configuring delivery and retry delays via the `wrangler` CLI requires `wrangler` version `3.38.0` or greater. Use `npx wrangler@latest` to always use the latest version of `wrangler`.
+Configuring delivery and retry delays via the `wrangler` CLI or when [developing locally](/queues/configuration/local-development/) requires `wrangler` version `3.38.0` or greater. Use `npx wrangler@latest` to always use the latest version of `wrangler`.
 
 {{</Aside>}}
 
@@ -143,7 +153,7 @@ You can also configure a default, global delay on a per-queue basis by passing `
 
 ```sh
 # Delay all messages by 5 minutes as a default
-$ npx wrangler queues create $QUEUE_NAME --delivery-delay-secs=300
+$ npx wrangler queues create $QUEUE-NAME --delivery-delay-secs=300
 ```
 
 ### Delay on retry
@@ -190,11 +200,11 @@ Delays can be configured via the `wrangler` CLI:
 ```sh
 # Push-based consumers
 # Delay any messages that are retried by 60 seconds (1 minute) by default.
-$ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
+$ npx wrangler@latest queues consumer worker add $QUEUE-NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
 
 # Pull-based consumers
 # Delay any messages that are retried by 60 seconds (1 minute) by default.
-$ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
+$ npx wrangler@latest queues consumer http add $QUEUE-NAME --retry-delay-secs=60
 ```
 
 Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
@@ -205,7 +215,7 @@ header: wrangler.toml
 ---
 [[queues.producers]]
   binding = "<BINDING_NAME>"
-  queue = "<QUEUE_NAME>"
+  queue = "<QUEUE-NAME>"
   delivery_delay = 60 # delay every message delivery by 1 minute
 
 [[queues.consumers]]
@@ -217,13 +227,21 @@ If you use both the `wrangler` CLI and `wrangler.toml` to change the settings as
 
 Refer to the [Queues REST API documentation](/api/operations/queue-v2-list-queue-consumers) to learn how to configure message delays and retry delays programmatically.
 
-## Apply a backoff algorithm
+### Message delay precedence
+
+Messages can be delayed by default at the queue level, or per-message (or batch).
+
+* Per-message/batch delay settings take precedence over queue-level settings.
+* Setting `delaySeconds: 0` on a message when sending or retrying will ignore any queue-level delays and cause the message to be delivered in the next batch.
+* A message sent or retried with `delaySeconds: <any positive integer>` to a queue with a shorter default delay will still respect the message-level setting.
+
+### Apply a backoff algorithm
 
 You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
 
 Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
 
-For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
+For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you:
 
 ```ts
 const calculateExponentialBackoff = (attempts: number, baseDelaySeconds: number) => { return baseDelaySeconds**attempts }

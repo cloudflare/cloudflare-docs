@@ -20,6 +20,11 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
 
+{{<button-group>}}
+{{<button type="primary" href="/workers/get-started/">}}Get started{{</button>}}
+{{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create">}}Workers dashboard{{</button>}}
+{{</button-group>}}
+
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals">}}
 
 ---
@@ -34,7 +39,7 @@ The Workers command-line interface, Wrangler, allows you to [create](/workers/wr
 
 {{<feature header="Bindings" href="/workers/runtime-apis/bindings/">}}
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
 
 {{</feature>}}
 
@@ -120,6 +125,6 @@ Offload third-party tools and services to the cloud and improve the speed and se
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, share what you are building, and discuss the platform with other developers.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{</resource-group>}}

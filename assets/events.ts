@@ -15,6 +15,7 @@ export function $focus(elem: HTMLElement, bool: boolean) {
   if (SEARCH_ID && SEARCH_ID.test(elem.id)) {
     SEARCH_INPUT = elem;
 
+    if (!elem.parentElement || !elem.parentElement.parentElement) return;
     elem.parentElement.parentElement.toggleAttribute("is-focused", bool);
     elem.setAttribute("aria-expanded", "" + bool);
 
@@ -35,12 +36,19 @@ export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
 // but only on load if `#hash` in URL
 export function load() {
   let hash = location.hash.substring(1);
-  let item = hash && document.getElementById(hash.toLowerCase());
+
+  if (!hash) return;
+
+  const headerID = CSS.escape(hash.toLowerCase());
+  let item = document.querySelector(`#${headerID}`);
+
   let timer =
     item &&
     setInterval(() => {
       if (document.readyState !== "complete") return;
-      clearInterval(timer);
+      if (timer) {
+        clearInterval(timer);
+      }
       setTimeout(() => {
         item.scrollIntoView({ behavior: "smooth" });
       }, 250);
@@ -51,7 +59,7 @@ export function load() {
 export function mobile() {
   let root = document.documentElement;
   let btn = document.querySelector(
-    ".DocsMobileTitleHeader--sidebar-toggle-button"
+    ".DocsMobileTitleHeader--sidebar-toggle-button",
   );
   if (btn)
     btn.addEventListener("click", () => {
@@ -59,9 +67,9 @@ export function mobile() {
     });
 
   // clicking on mobile search icon
-  let input: HTMLInputElement =
-    document.querySelector("#DocsSearch--input") ||
-    document.querySelector("#SiteSearch--input");
+  let input =
+    document.querySelector<HTMLInputElement>("#DocsSearch--input") ||
+    document.querySelector<HTMLInputElement>("#SiteSearch--input");
 
   // register init handler
   if (input)
@@ -94,20 +102,27 @@ function $tab(ev: MouseEvent) {
     .closest("[data-id]")
     ?.getAttribute("data-id");
 
-  let tabs = document.querySelectorAll(
-    `div[tab-wrapper-id="${tabBlockId}"] > .tab`
+  let tabs = document.querySelectorAll<HTMLElement>(
+    `div[tab-wrapper-id="${tabBlockId}"] > .tab`,
   );
 
   for (let i = 0; i < tabs.length; i++) {
-    (tabs[i] as HTMLElement).style.display = "none";
+    tabs[i].style.display = "none";
   }
 
   let link = (ev.target as HTMLElement)
     .closest("[data-link]")
     ?.getAttribute("data-link");
 
-  document.getElementById(`${link}-${tabBlockId}`).style.display = "block";
-  zaraz.track("tab click", {selected_option: ev.target.innerText})
+  // escape ID for use in querySelector
+  const tabID = CSS.escape(`${link}-${tabBlockId}`);
+  const linkElement = document.querySelector<HTMLElement>(`#${tabID}`);
+  if (linkElement) {
+    linkElement.style.display = "block";
+  }
+  zaraz.track("tab click", {
+    selected_option: (ev.target as HTMLElement).innerText,
+  });
 }
 
 export function tabs() {
@@ -116,9 +131,10 @@ export function tabs() {
 
   addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < wrappers.length; i++) {
-      const labels = wrappers[i].querySelectorAll(".tab-label");
-      const tabs = wrappers[i].querySelectorAll(".tab");
-      const defaultTab = wrappers[i].querySelector(".tab.tab-default");
+      const labels = wrappers[i].querySelectorAll<HTMLElement>(".tab-label");
+      const tabs = wrappers[i].querySelectorAll<HTMLElement>(".tab");
+      const defaultTab =
+        wrappers[i].querySelector<HTMLElement>(".tab.tab-default");
 
       if (tabs.length > 0) {
         // if a tab has been specified as default, set that
@@ -130,14 +146,16 @@ export function tabs() {
           const tabId = parts.slice(0, parts.length - 1).join("-");
 
           const defaultTabLabel = wrappers[i].querySelector(
-            `a[data-link=${tabId}]`
+            `a[data-link="${tabId}"]`,
           );
 
-          (defaultTab as HTMLElement).style.display = "block";
-          (defaultTabLabel as HTMLElement).classList.add("active");
+          defaultTab.style.display = "block";
+          if (defaultTabLabel) {
+            defaultTabLabel.classList.add("active");
+          }
         } else {
-          (tabs[0] as HTMLElement).style.display = "block";
-          (labels[0] as HTMLElement).classList.add("active");
+          tabs[0].style.display = "block";
+          labels[0].classList.add("active");
         }
 
         for (let i = 0; i < labels.length; i++)
@@ -148,16 +166,18 @@ export function tabs() {
 }
 
 export function activeTab() {
-  const blocks = document.getElementsByClassName("tab-active");
+  const blocks = document.querySelectorAll(".tab-active");
   if (blocks) {
     for (const block of blocks) {
       const blockId = block.getAttribute("block-id");
 
-      var tabs = block.querySelectorAll(`.tab-label`);
+      var tabs = block.querySelectorAll<HTMLElement>(`.tab-label`);
       for (var i = 0; i < tabs.length; i++) {
-        (tabs[i] as HTMLElement).addEventListener("click", function name() {
+        tabs[i].addEventListener("click", function name() {
           let current = block.querySelector(`.active`);
-          current.classList.remove("active");
+          if (current) {
+            current.classList.remove("active");
+          }
           this.classList.add("active");
         });
       }
@@ -169,13 +189,13 @@ export function dropdowns() {
   let attr = "data-expanded";
 
   document.querySelectorAll(".Dropdown").forEach((div) => {
-
     let btn = div.querySelector("button");
     let links = div.querySelectorAll<HTMLAnchorElement>("li>a");
     let focused = 0; // index
 
     if (btn && links.length > 0) {
-      let arrows: EventListener = (ev: KeyboardEvent) => {
+      let arrows: EventListener = (rawEv: Event) => {
+        const ev = rawEv as KeyboardEvent;
         let key = ev.which;
         let isTAB = key === 9;
 
@@ -235,155 +255,112 @@ export function dropdowns() {
   });
 }
 
-export function toggleSidebar() {
-  const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if (toggleButton.length > 0) {
-    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
-    let btn = div.querySelector("button");
-    btn.addEventListener("click", () => {
-      let classToggleList = [
-        ".DocsSidebar",
-        ".DocsToolbar",
-        ".DocsFooter",
-        ".DocsContent",
-        ".DocsMarkdown",
-        ".DocsSidebar--sections .toggleSidebar",
-        ".breadcrumb",
-      ];
-
-      classToggleList.forEach(function (querySelector) {
-        let item = document.querySelector(querySelector);
-        item.classList.toggle("collapsed");
-      });
-
-      let attr = "is-visually-hidden";
-      let attrToggleList = [
-        ".DocsSidebar--nav-item",
-        ".DocsSidebar--section-more",
-        ".DocsSidebar--docs-title-section a div span span",
-        ".DocsSidebar--header-section a div span",
-      ];
-
-      attrToggleList.forEach(function (querySelector) {
-        let item = document.querySelector(querySelector);
-        let isHidden = item.hasAttribute(attr);
-        item.toggleAttribute(attr, !isHidden);
-      });
-
-      let moduleCounters = document.getElementsByClassName("moduleCounter")
-      if (moduleCounters) {
-        for (const counter of moduleCounters) {
-          let isHidden2 = counter.hasAttribute(attr);
-          counter.toggleAttribute(attr, !isHidden2)
-        }
-      }
-    });
-  }
-}
-
 export function zarazTrackDocEvents() {
-  const links = document.getElementsByClassName("DocsMarkdown--link");
-  const dropdowns = document.getElementsByTagName("details")
-  const glossaryTooltips = document.getElementsByClassName("glossary-tooltip")
-  const playgroundLinks = document.getElementsByClassName("playground-link")
-  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
+  const links = document.querySelectorAll<HTMLAnchorElement>(
+    ".DocsMarkdown--link",
+  );
+  const dropdowns = document.querySelectorAll("details");
+  const glossaryTooltips = document.querySelectorAll(".glossary-tooltip");
+  const playgroundLinks =
+    document.querySelectorAll<HTMLAnchorElement>(".playground-link");
+
   addEventListener("DOMContentLoaded", () => {
     if (links.length > 0) {
-      for (const link of links as any) {  // Type cast to any for iteration
-        const linkURL = new URL(link)
-        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`)
+      for (const link of links) {
+        const linkURL = new URL(link.href);
+        const cfSubdomainRegex = new RegExp(`^[^.]+?\.cloudflare\.com`);
         if (linkURL.hostname !== "developers.cloudflare.com") {
-          if (linkURL.hostname === "workers.cloudflare.com" && linkURL.pathname.startsWith("/playground#")) {
+          if (
+            linkURL.hostname === "workers.cloudflare.com" &&
+            linkURL.pathname.startsWith("/playground#")
+          ) {
             link.addEventListener("click", () => {
-              $zarazLinkEvent('playground link click', link);
+              $zarazLinkEvent("playground link click", link);
             });
           } else if (cfSubdomainRegex.test(linkURL.hostname)) {
             link.addEventListener("click", () => {
-              $zarazLinkEvent('Cross Domain Click', link);
+              $zarazLinkEvent("Cross Domain Click", link);
             });
           } else {
             link.addEventListener("click", () => {
-              $zarazLinkEvent('external link click', link);
+              $zarazLinkEvent("external link click", link);
             });
           }
         }
       }
     }
     if (dropdowns.length > 0) {
-      for (const dropdown of dropdowns as any) {
+      for (const dropdown of dropdowns) {
         dropdown.addEventListener("click", () => {
-          $zarazDropdownEvent(dropdown.getElementsByTagName("summary")[0]);
+          $zarazDropdownEvent(dropdown.querySelectorAll("summary")[0]);
         });
+      }
     }
-  }
-  if (glossaryTooltips.length > 0) {
-    for (const tooltip of glossaryTooltips as any) {
-      tooltip.addEventListener("pointerleave", () => {
-        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
-      });
-      tooltip.addEventListener("blur", () => {
-        $zarazGlossaryTooltipEvent(tooltip.getAttribute('aria-label'))
-      });
-  }
-}
-  if (playgroundLinks.length > 0) {
-    for (const playgroundLink of playgroundLinks as any) {
-      playgroundLink.addEventListener("click", () => {
-        $zarazLinkEvent('playground link click', playgroundLink);
-      });
-  }
-  }
-  if (copyCodeBlockButtons.length > 0) {
-    for (const copyButton of copyCodeBlockButtons as any) {
-      copyButton.addEventListener("click", () => {
-        const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
-        zaraz.track('copy button link click', {
-          title: codeBlockElement.getAttribute('title') ?? 'title not set',
-          language: codeBlockElement.getAttribute('language') ?? 'language not set',});
-      });
-    }
-  }
-  });
-}
-
-function $zarazLinkEvent(type: string, link: Element) {
-  zaraz.track(type, {href: link.href, hostname: link.hostname})
-}
-
-function $zarazDropdownEvent(summary: string) {
-  zaraz.track('dropdown click', {text: summary.innerText})
-}
-
-function $zarazGlossaryTooltipEvent(term: string) {
-  zaraz.track('glossary tooltip view', {term: term})
-}
-
-export function zarazTrackHomepageLinks() {
-  const links = document.getElementsByClassName("DocsMarkdown--link");
-  const playgroundLinks = document.getElementsByClassName("playground-link")
-  const copyCodeBlockButtons = document.getElementsByClassName("copyCode-button")
-  addEventListener("DOMContentLoaded", () => {
-    if (links.length > 0) {
-      for (const link of links as any) {  // Type cast to any for iteration
-        link.addEventListener("click", () => {
-          zaraz.track('homepage link click', {href: link.href})
+    if (glossaryTooltips.length > 0) {
+      for (const tooltip of glossaryTooltips) {
+        tooltip.addEventListener("pointerleave", () => {
+          $zarazGlossaryTooltipEvent(tooltip.getAttribute("aria-label"));
+        });
+        tooltip.addEventListener("blur", () => {
+          $zarazGlossaryTooltipEvent(tooltip.getAttribute("aria-label"));
         });
       }
     }
     if (playgroundLinks.length > 0) {
-      for (const playgroundLink of playgroundLinks as any) {
+      for (const playgroundLink of playgroundLinks) {
         playgroundLink.addEventListener("click", () => {
-          $zarazLinkEvent('playground link click', playgroundLink);
+          $zarazLinkEvent("playground link click", playgroundLink);
         });
+      }
     }
+  });
+}
+
+function $zarazLinkEvent(type: string, link: HTMLAnchorElement) {
+  zaraz.track(type, { href: link.href, hostname: link.hostname });
+}
+
+function $zarazDropdownEvent(summary: HTMLElement) {
+  zaraz.track("dropdown click", { text: summary.innerText });
+}
+
+function $zarazGlossaryTooltipEvent(term: string | null) {
+  zaraz.track("glossary tooltip view", { term: term });
+}
+
+export function zarazTrackHomepageLinks() {
+  const links = document.querySelectorAll<HTMLAnchorElement>(
+    ".DocsMarkdown--link",
+  );
+  const playgroundLinks =
+    document.querySelectorAll<HTMLAnchorElement>(".playground-link");
+  const copyCodeBlockButtons =
+    document.querySelectorAll<HTMLButtonElement>(".copyCode-button");
+  addEventListener("DOMContentLoaded", () => {
+    if (links.length > 0) {
+      for (const link of links) {
+        link.addEventListener("click", () => {
+          zaraz.track("homepage link click", { href: link.href });
+        });
+      }
+    }
+    if (playgroundLinks.length > 0) {
+      for (const playgroundLink of playgroundLinks) {
+        playgroundLink.addEventListener("click", () => {
+          $zarazLinkEvent("playground link click", playgroundLink);
+        });
+      }
     }
     if (copyCodeBlockButtons.length > 0) {
-      for (const copyButton of copyCodeBlockButtons as any) {
+      for (const copyButton of copyCodeBlockButtons) {
         copyButton.addEventListener("click", () => {
-          const codeBlockElement = copyButton.parentElement.parentElement.firstElementChild;
-          zaraz.track('copy button link click', {
-            title: codeBlockElement.getAttribute('title') ?? 'title not set',
-            language: codeBlockElement.getAttribute('language') ?? 'language not set',});
+          const codeBlockElement =
+            copyButton?.parentElement?.parentElement?.firstElementChild;
+          zaraz.track("copy button link click", {
+            title: codeBlockElement?.getAttribute("title") ?? "title not set",
+            language:
+              codeBlockElement?.getAttribute("language") ?? "language not set",
+          });
         });
       }
     }

@@ -111,7 +111,7 @@ Text in this font denotes text or characters that you should enter from the keyb
 | Filenames, filename extensions (if used), and paths        | `wrangler.toml`                                                    |
 | Folders and directories                                    | `~/Downloads/Cloudflare_CA.crt`                                    |
 | HTTP verbs                                                 | `POST`, `GET`, `HEAD`, `PUT`,`DELETE`                              |
-| HTTP status codes                                          | `400`, `200`, `500`                                                |
+| HTTP status codes                                          | `400`, `200`, `500`<br/>However, error ranges using `x` placeholders should not be monospaced: 5xx, 1xxxx. |
 | HTTP content-type values                                   | `text/html`, `application/javascript; charset=utf-8`               |
 | HTTP header names                                          | `Content-Length`                                                   |
 | URLs that are used as input or output in commands and code | `VERSION-dot-SERVICE-dot-PROJECT_ID.REGION_ID.r.appspot.com`       |
@@ -119,6 +119,6 @@ Text in this font denotes text or characters that you should enter from the keyb
 | Language keywords                                          | `in`, `await`                                                      |
 | Method and function names                                  | `handleRequest`                                                    |
 | Namespace aliases                                          | `numpy`                                                            |
-| Placeholder variables                                      | `2xx` for HTTP status codes or `<YOUR_BUILD_DIR>` for input values |
+| Placeholder variables                                      | `<YOUR_BUILD_DIR>`                                                 |
 | Query parameter names and values                           | `/api/v4/{account_id}`                                             |
 | Text input                                                 | `"Hello Worker"`                                                   |

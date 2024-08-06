@@ -30,7 +30,7 @@
 {{- $item_dict := (dict "publish_date" ($item.published_at | time.Format "2006-01-02")
 "title" (replaceRE `wrangler@` "" $item.name) "link" $item.html_url
 "description" (replaceRE `###[^-]+` "" $item.body) "url" $productChangelogLink
-"product" "Wrangler" "productArea" $productArea "productAreaLink" $productAreaLink) -}}
+"product" "Wrangler" "productLink" "/workers/wrangler/" "productArea" $productArea "productAreaLink" $productAreaLink) -}}
 {{- $results = $results | append $item_dict -}}
 {{- end -}}
 {{- end -}}

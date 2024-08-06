@@ -8,7 +8,7 @@ pcx_content_type: how-to
 
 You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](/api/operations/listAccountRulesets). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
-By default, you can create a maximum of 100 rules. We recommend you create lists of IP addresses to reference within rules to streamline rule management.
+By default, you can create a maximum of 200 rules. We recommend you create lists of IP addresses to reference within rules to streamline rule management.
 
 ## Add a rule
 
@@ -60,27 +60,26 @@ The example below blocks all TCP ports, but allows one port (`8080`) by using th
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "skip",
-        "action_parameters": { "ruleset": "current" },
-        "expression": "tcp.dstport in { 8080 } ",
-        "description": "Allow port 8080"
-      },
-      {
-        "action": "block",
-        "expression": "tcp.dstport in { 1..65535 }",
-        "description": "Block all TCP ports"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "skip",
+      "action_parameters": { "ruleset": "current" },
+      "expression": "tcp.dstport in { 8080 } ",
+      "description": "Allow port 8080"
+    },
+    {
+      "action": "block",
+      "expression": "tcp.dstport in { 1..65535 }",
+      "description": "Block all TCP ports"
+    }
+  ]
 }'
 ```
 
@@ -90,21 +89,20 @@ The example below blocks all packets with a source or destination IP address com
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "block",
-        "expression": "ip.geoip.country == \"BR\"",
-        "description": "Block traffic from Brazil"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "block",
+      "expression": "ip.geoip.country == \"BR\"",
+      "description": "Block traffic from Brazil"
+    }
+  ]
 }'
 ```
 
@@ -119,21 +117,20 @@ Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-exp
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header 'Content-Type: application/json' \
---header 'X-Auth-Email: <YOUR_EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{
-    "name": "Example ruleset",
-    "kind": "root",
-    "phase": "magic_transit",
-    "description": "Example ruleset description",
-    "rules": [
-      {
-        "action": "block",
-        "expression": "ip.src in $cf.anonymizer",
-        "description": "Block traffic from anonymizer proxies"
-      }
-    ]
+  "name": "Example ruleset",
+  "kind": "root",
+  "phase": "magic_transit",
+  "description": "Example ruleset description",
+  "rules": [
+    {
+      "action": "block",
+      "expression": "ip.src in $cf.anonymizer",
+      "description": "Block traffic from anonymizer proxies"
+    }
+  ]
 }'
 ```
 

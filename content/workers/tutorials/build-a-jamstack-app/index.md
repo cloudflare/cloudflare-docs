@@ -4,13 +4,13 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a todo list Jamstack application
+products: [KV]
+languages: [JavaScript]
 ---
 
 # Build a todo list Jamstack application
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
@@ -23,23 +23,21 @@ Before starting this project, you should have some experience with HTML, CSS, an
 
 If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/lauragift21/cloudflare-workers-todos) and refer to the [live demo](https://todos.examples.workers.dev/) to review what you will be building.
 
+{{<render file="_tutorials-before-you-start.md">}}
+
 ## 1. Create a new Workers project
 
 First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="todos">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+Move into your newly created directory:
+
 ```sh
----
-header: Create a new project with C3
----
-$ npm create cloudflare@latest todos
+$ cd todos
 ```
-
-To configure your Worker:
-
-- Choose `"Hello World" Worker` for the type of application you would like to create.
-- Answer `No` to using TypeScript.
-- Answer `Yes` to using Git for version control.
-- Answer `No` to deploying your application.
 
 Inside of your new `todos` Worker project directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -56,7 +54,7 @@ export default {
 };
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `fetch` constructs a new `Response` with the body text `'Hello World!'`. 
+In your default `index.js` file, you can see that request/response pattern in action. The `fetch` constructs a new `Response` with the body text `'Hello World!'`.
 
 When a Worker receives a `request`, the Worker returns the newly constructed response to the client. Your Worker will serve new responses directly from [Cloudflare's global network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond by constructing responses directly on the Cloudflare global network.
 
@@ -145,9 +143,9 @@ export default {
     };
     const setCache = data => env.TODOS.put('data', data);
     const getCache = () => env.TODOS.get('data');
-    
+
     let data;
-    
+
     const cache = await getCache();
     if (!cache) {
       await setCache(JSON.stringify(defaultData));
@@ -310,7 +308,7 @@ export default {
       } catch (err) {
         return new Response(err, { status: 500 });
       }
-    }	
+    }
     // previous code
   },
 };

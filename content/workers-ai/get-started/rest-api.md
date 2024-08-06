@@ -23,16 +23,14 @@ To get these values:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **AI** > **Workers AI**.
-3. Select **Using the Workers AI API**.
+3. Select **Use REST API**.
 4. Get your API token:
-    1. Select **Get API Token**.
+    1. Select **Create a Workers AI API Token**.
     2. Review the prefilled information.
-    3. Select **Continue to summary**.
-    4. Select **Create Token**.
-    5. Copy the token value for future steps.
-5. Get your account ID:
-    1. Go back to the **Using the Workers AI API screen** (your original tab).
-    2. For **Get Account ID**, copy the value for **Account ID**.
+    3. Select **Create API Token**.
+    4. Select **Copy API Token**.
+    5. Save that value for future use.
+5. For **Get Account ID**, copy the value for **Account ID**. Save that value for future use.
 
 {{<Aside type="note">}}
 
@@ -44,10 +42,10 @@ If you choose to [create an API token](/fundamentals/api/get-started/create-toke
 
 After creating your API token, authenticate and make requests to the API using your API token in the request.
 
-You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model:
+You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-2-7b-chat-int8 \
+$ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{ "prompt": "Where did the phrase Hello World come from" }'
 ```
@@ -67,9 +65,9 @@ The API response will look like the following:
 }
 ```
 
-This example execution uses the `@cf/meta/llama-2-7b-chat-int8` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). If using another model, you will need to replace `{model}` with your desired model name.
+This example execution uses the `@cf/meta/llama-3.1-8b-instruct` model, but you can use any of the models in the [Workers AI models catalog](/workers-ai/models/). If using another model, you will need to replace `{model}` with your desired model name.
 
-By completing this guide, you have created a Cloudflare account (if you did not have one already) and an API token that grants Workers AI read permissions to your account. You executed the [`@cloudflare/meta-llama/llama-2-7b-chat-int8`](/workers-ai/models/llama-2-7b-chat-int8/) model using a cURL command from the terminal and received an answer to your prompt in a JSON response.
+By completing this guide, you have created a Cloudflare account (if you did not have one already) and an API token that grants Workers AI read permissions to your account. You executed the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model using a cURL command from the terminal and received an answer to your prompt in a JSON response.
 
 ## Related resources
 

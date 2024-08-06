@@ -16,17 +16,11 @@ By default, reports are sent to a Cloudflare-owned endpoint:
 https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?<QUERY_STRING>
 ```
 
-You can change the reporting endpoint so that the CSP reports are sent to the same hostname:
+Enterprise customers with a paid add-on can change the reporting endpoint so that the CSP reports are sent to the same hostname:
 
 ```txt
 <YOUR-HOSTNAME>/cdn-cgi/script-monitor/report?<QUERY_STRING>
 ```
-
-{{<Aside type="note">}}
-
-Only available to Enterprise customers with a paid add-on.
-
-{{</Aside>}}
 
 ### Prerequisites for using the same hostname for CSP reports
 
@@ -57,16 +51,16 @@ By default, Page Shield will only check the domain against malicious threat inte
 3.  Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Page Shield.
 4.  Select **Apply settings**.
 
-## Disable Page Shield
+## Turn off Page Shield
 
-When you disable Page Shield, you lose visibility on the scripts running on your zone and the outbound connections made from pages in your domain.
+When you turn off Page Shield, you lose visibility on the scripts running on your zone, the outbound connections made from pages in your domain, and cookies detected in HTTP traffic.
 
-To disable Page Shield:
+To turn off Page Shield:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Settings**.
-3. Select **Disable Page Shield**.
+3. In **Disable Page Shield**, select **Disable**.
 
 {{<Aside type="note">}}
-Disabling Page Shield will also disable all [policies](/page-shield/policies/). After reenabling Page Shield, re-enable any required policies.
+Turning off Page Shield will not turn off [policies](/page-shield/policies/). To turn off policies, go to **Page Shield** > **Policies**.
 {{</Aside>}}

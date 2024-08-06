@@ -38,6 +38,7 @@ If WARP is connected but there are no network logs, it means that your private n
 ## 4. Is the user blocked by a Gateway policy?
 
 To check if a Gateway block event occurred:
+
 1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
 2. Apply the following filters:
     - **Email**: User's email address
@@ -58,7 +59,7 @@ Determine whether the user is matching any policy, or if they are matching a pol
 2. Go to **Gateway** > **Firewall Policies** and compare the [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/) of the matched policy versus the expected policy.
 3. Compare the Gateway log values with the expected policy criteria.
 
-    - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/policies/gateway/identity-selectors/#view-a-users-identity) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).
+    - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/insights/logs/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).
 
     - If the mismatched value is related to device posture, [view posture check results](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) for the user's device. Verify that the device passes the posture checks configured in the policy.
 
@@ -121,7 +122,7 @@ To troubleshoot TLS inspection:
     | -------------- | -------- | ------------- | -------------- |
     | Destination IP | in       | `10.2.3.4/32` | Do Not Inspect |
 
-2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public {{<glossary-tooltip term_id="Certificate Authority (CA)">}}CA{{</glossary-tooltip>}} and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#limitations).
+2. If the `Do Not Inspect` policy enables the user to connect, verify that the TLS certificate used by your application is trusted by a public {{<glossary-tooltip term_id="Certificate Authority (CA)">}}CA{{</glossary-tooltip>}} and not self-signed. Cloudflare Gateway is unable to negotiate TLS with applications that use self-signed certificates. For more information, refer to [TLS inspection limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
 
     To work around the issue:
 

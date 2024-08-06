@@ -48,10 +48,18 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-* `1dot1` — Gateway enforcement of DNS policies only through {{<glossary-tooltip term_id="DoH subdomain">}}DoH{{</glossary-tooltip>}}. All other traffic is handled by your device's default mechanisms.
-* `warp` — (default) All traffic sent through {{<glossary-tooltip term_id="Cloudflare Gateway">}}Cloudflare Gateway{{</glossary-tooltip>}} via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
+- `warp` — (default) [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
+- `1dot1` — [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh).
+- `proxy` — [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
+  ```xml
+  <key>service_mode</key>
+  <string>proxy</string>
+  <key>proxy_port</key>
+  <integer>44444</integer>
+  ```
+- `postureonly` — [Device Information Only](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only).
 
-New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.
+The service mode [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) is not currently supported as a value and must be configured in Zero Trust.
 
 ### `onboarding`
 
@@ -61,8 +69,8 @@ Controls the visibility of the onboarding screens that ask the user to review th
 
 **Value:**
 
-* `false` — Screens hidden.
-* `true` — (default) Screens visible.
+- `false` — Screens hidden.
+- `true` — (default) Screens visible.
 
 ### `switch_locked`
 
@@ -72,8 +80,8 @@ Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value:**
 
-* `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-* `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
+- `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+- `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
@@ -91,8 +99,8 @@ If switch has been turned off by user, the client will automatically turn itself
 
 **Value:**
 
-* `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
-* `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
+- `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
+- `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
 
 {{<Aside>}}
 This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
@@ -106,8 +114,8 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 **Value:**
 
-* `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
-* `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
+- `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
+- `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
 
 ### `override_api_endpoint`
 

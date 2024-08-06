@@ -6,7 +6,7 @@ _build:
 inputParameters: productName;;mssValue
 ---
 
-## Set maximum segment size
+### Set maximum segment size
 
 ```mermaid
 sequenceDiagram

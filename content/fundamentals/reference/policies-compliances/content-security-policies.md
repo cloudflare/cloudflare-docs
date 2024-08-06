@@ -27,6 +27,10 @@ Cloudflare does not:
 * Modify URLs (besides adding the [`/cdn-cgi/` endpoint](/fundamentals/reference/cdn-cgi-endpoint/) and [Cloudflare Fonts](/speed/optimization/content/fonts/#cloudflare-fonts) that rewrites Google Fonts urls).
 * Interfere with locations specified in your CSP.
 
+If you require the CSP headers to be changed or added, you can change them using some Cloudflare products:
+* If your website is [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare, you can use a [Response Header Modification rule](/rules/transform/response-header-modification/) to modify or add CSP headers.
+* If your website is hosted using [Cloudflare Pages](/pages/), you can set a [`_headers file`](/pages/configuration/headers/) to modify or add CSP headers.
+
 ### Product requirements
 
 To use certain Cloudflare features, however, you may need to update the headers in your CSP:
@@ -35,7 +39,7 @@ To use certain Cloudflare features, however, you may need to update the headers 
 | --- | --- |
 | [Rocket Loader](/speed/optimization/content/rocket-loader/), [Mirage](/speed/optimization/images/mirage/) | `script-src 'self' ajax.cloudflare.com;` |
 | [Cloudflare Apps](https://cloudflareapps.com/apps/developer/docs/getting-started), [Scrape Shield](/waf/tools/scrape-shield/) | `script-src 'self' 'unsafe-inline'`|
-| [Web Analytics](/analytics/web-analytics) | `script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com` |
+| [Web Analytics](/web-analytics/) | `script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com` |
 | [Bot products](/bots/) | Refer to [JavaScript detections and CSPs](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp).|
 | [Page Shield](/page-shield/) | Refer to [Page Shield CSP Header format](/page-shield/reference/csp-header/). |
 | [Zaraz](/zaraz/) | No updates required ([details](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/)).|

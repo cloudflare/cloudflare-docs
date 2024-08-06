@@ -3,14 +3,14 @@ pcx_content_type: configuration
 source: https://support.cloudflare.com/hc/en-us/articles/224509547-Recommended-Page-Rules-to-consider
 title: Recommended rules
 meta:
-    title: Recommended rules | Page Rules (deprecated)
+    title: Recommended rules | Page Rules
 ---
 
 # Recommended rules
 
 Use Cloudflare Page Rules to improve the user experience of your domain with hardened security and enhanced site performance, while increasing reliability and minimizing bandwidth usage for your origin server.
 
-{{<render file="_page-rules-deprecation.md">}}
+{{<render file="_page-rules-migration.md">}}
 
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 

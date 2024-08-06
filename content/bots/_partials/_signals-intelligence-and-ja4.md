@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-If you want to use JA4 fingerprints and Signals Intelligence, your script must be able to handle the absence of any field in the array, including:
+If you want to use JA4 fingerprints and Signals Intelligence, your Workers script must be able to handle the absence of any field in the array, including:
 
 - The possibility that the JA4 fingerprint could be missing.
 - The possibility that the `ja4Signals` array could be missing.
