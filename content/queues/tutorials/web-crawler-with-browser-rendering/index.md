@@ -18,7 +18,7 @@ languages: [TypeScript]
 
 This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
 
-Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to KV as an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
+Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to [Workers KV](/kv/).
 
 You can use Puppeteer to request all images on a page, save the colors used on a site, and more.
 
@@ -55,7 +55,7 @@ $ npx wrangler kv namespace create crawler_links
 $ npx wrangler kv namespace create crawler_screenshots
 ```
 
-The `wrangler kv namespace create assets` subcommand creates a KV namespace by concatenating your Worker's name and the value provided for `assets`. An `id` will be randomly generated for the KV namespace.
+After running the `wrangler kv namespace create` subcommand, you will get the following output.
 
 ```txt
 ---
@@ -564,7 +564,7 @@ To deploy your Worker, run the following command:
 $ npx wrangler deploy
 ```
 
-You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV as an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
+You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
 
 To test your Worker, you could use the following cURL request to take a screenshot of this documentation page.
 
