@@ -45,10 +45,10 @@ This configuration will use the [IP address management service bindings](/byoip/
 
 At this point, continuing the example mentioned above, you should have a mapping similar to the following:
 
-| Variables  | Description                                        | Example |
-|-------------------------------|----------------------------------------------------| --- |
-| `{service_id}`                  | ID of the CDN service within Cloudflare            | `969xxxxxxxx000xxx0000000x00001bf` |
-| `{prefix_id}`                   | ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure | `6b25xxxxxxx000xxx0000000x0000cfc` |
+| Variables  | Description                                        |
+|-------------------------------|----------------------------------------------------|
+| `{service_id}`                  | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`           |
+| `{prefix_id}`                   | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
 
 
 {{</example>}}
