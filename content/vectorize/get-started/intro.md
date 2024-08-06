@@ -36,16 +36,9 @@ You will create a new project that will contain a Worker, which will act as the 
 
 Create a new project named `vectorize-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest vectorize-tutorial
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="vectorize-tutorial">}}
 
-When setting up your `vectorize-tutorial` Worker, answering the questions as below:
-
-1. Choose `"Hello World Worker"` for the type of application.
-2. Select `yes` to using TypeScript.
-3. Select `yes` to using Git.
-4. Select `no` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Coupa
+updated: 2024-07-26
 weight: 8
 ---
 

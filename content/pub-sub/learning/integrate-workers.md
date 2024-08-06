@@ -6,11 +6,11 @@ weight: 2
 
 # Integrate with Workers
 
-Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
+Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers/) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
 There are three ways to integrate a Worker with Pub/Sub:
 
-1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/reference/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
+1. **As an “On Publish” hook that receives all messages published to a Broker**. This allows the Worker to modify, copy to other destinations (such as [R2](/r2/) or [KV](/kv/concepts/how-kv-works/)), filter and/or drop messages before they are delivered to subscribers.
 2. (Not yet available in beta) **Publishing directly to a Pub/Sub topic from a Worker.** You can publish telemetry and events to Pub/Sub topics from your Worker code.
 3. (Not yet available in beta) **Subscribing to a Pub/Sub topic (or topics) from within a Worker**. This allows the Worker to act as any other subscriber and consume messages published either from external clients (over MQTT) or from other Workers.
 
@@ -221,6 +221,7 @@ You should receive a success response that resembles the example below, with the
   "endpoint": "mqtts://example-broker.namespace.cloudflarepubsub.com:8883",
   "on_publish": {
     "url": "https://your-worker.your-account.workers.dev"
+  }
 }
 ```
 

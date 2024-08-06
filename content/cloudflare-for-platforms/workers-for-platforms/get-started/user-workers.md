@@ -34,4 +34,4 @@ Since you will be deploying Workers on behalf of your users, you will likely wan
 
 You can use any Workers [bindings](/workers/runtime-apis/bindings/) with the dynamic dispatch Worker or any user Workers.
 
-Bindings for your user Workers can be defined on [multipart script uploads](/api/operations/namespace-worker-put-script-content) in the [metadata.json](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/) file.
+Bindings for your user Workers can be defined on [multipart script uploads](/api/operations/namespace-worker-put-script-content) in the [metadata](/workers/configuration/multipart-upload-metadata/) part.

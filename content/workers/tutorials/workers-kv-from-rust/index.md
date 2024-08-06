@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Use Workers KV directly from Rust
 products: [KV]
+languages: [Rust]
 ---
 
 # Use Workers KV directly from Rust

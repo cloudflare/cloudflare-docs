@@ -6,8 +6,8 @@ pcx_content_type: tutorial
 title: Explore Workers AI Models Using a Jupyter Notebook
 meta:
   description: This notebook explores the Workers AI REST API using Python and the requests library.
-tags:
-  - AI
+tags: [AI]
+languages: [Python]
 ---
 
 # Explore Workers AI Models Using a Jupyter Notebook
@@ -196,7 +196,7 @@ print(data["description"])
 
 ### Automatic Speech Recognition
 
-Explore all [Speech Recognition models](/workers-ai/models#speech-recognition)
+Explore all [Speech Recognition models](/workers-ai/models/#automatic-speech-recognition)
 
 
 ```python
@@ -362,7 +362,7 @@ result
 
 ### Image Classification
 
-Explore all [Image Classification models](/workers-ai/models#image-classification/)
+Explore all [Image Classification models](/workers-ai/models/#image-classification)
 
 
 ```python

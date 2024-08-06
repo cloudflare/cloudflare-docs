@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: PagerDuty
+updated: 2024-07-10
 weight: 20
 ---
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Environments
-weight: 2
+weight: 3
 ---
 
 # Environments

@@ -4,6 +4,7 @@ difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Localize a website with HTMLRewriter
+languages: [JavaScript]
 tags:
   - HTMLRewriter
 ---
@@ -32,17 +33,13 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 Create a new application using the [`create-cloudflare`](/pages/get-started/c3), a CLI for creating and deploying new applications to Cloudflare.
 
-```sh
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="i18n-example">}}
 
 For setup, select the following options:
 
-- Where do you want to create your application?: Input i18n-example.
-- What type of application do you want to create?: Select "Website or web app".
-- Which development framework do you want to use? Select "React"
-- Do you want to use TypeScript?: Select No.
-- Do you want to deploy your application?: Select No.
+- For *What would you like to start with*?, select `Framework Starter`.
+- For *Which development framework do you want to use?*, select `React`.
+- For, *Do you want to deploy your application?*, select `No`.
 
 The newly generated `i18n-example` project will contain two folders: `public` and `src` these contain files for a React application:
 
