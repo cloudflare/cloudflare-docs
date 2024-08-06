@@ -15,12 +15,12 @@ $ wrangler r2 bucket create your-tfstate-bucket-name
 {{</tab>}}
 {{<tab label="api">}}
 
-```sh
-$ curl --request POST \
-$  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/r2/buckets \
-$  --header 'Authorization: Bearer <token>' \
-$  --header 'Content-Type: application/json' \
-$  --data '{"name": "your-tfstate-bucket-name"}'
+```bash
+ curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/r2/buckets \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"name": "your-tfstate-bucket-name"}'
 ```
 {{</tab>}}
 {{</tabs>}}
