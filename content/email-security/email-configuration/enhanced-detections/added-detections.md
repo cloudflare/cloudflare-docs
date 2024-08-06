@@ -19,6 +19,9 @@ These settings apply particularly to trusted business partners that your organiz
 | Encrypted Attachment Scanning | Auto-scans encrypted attachments to detect sophisticated malware campaigns. |
 | Anti-Spam Engine | Detects bulk emails or unsolicited commercial emails and marks them with a **Bulk** [disposition](/email-security/reference/dispositions-and-attributes/#dispositions). |
 | Active Fraud Prevention | Inspects and assesses new domain traffic that could be launched from third-party partners or similar organizations. |
+| Blank Email Detection | Detects emails with blank bodies and assigns a default disposition. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). |
+| [ACH](https://en.wikipedia.org/wiki/Automated_clearing_house) change from free email detection | Detects payroll inquiries or change requests from free email domains. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). | 
+| HTML attachment email detection | Detects HTM and HTML attachments in emails. You can choose between **Malicious** and **Suspicious** as [dispositions](/email-security/reference/dispositions-and-attributes/#dispositions). |
 
 ## Access Added Detections
 
