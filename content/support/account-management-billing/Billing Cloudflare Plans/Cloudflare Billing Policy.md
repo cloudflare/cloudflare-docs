@@ -109,7 +109,7 @@ For services subject to usage-based billing, Cloudflare may pre authorize your c
 
 If your payment method fails, we may suspend your access to the usage-based billing services for which we conducted the preauthorization. In the case of [R2](/r2/), you will not be able to access your R2 buckets and requests will return errors, but your data will remain secure. If you do not update your payment method within 30 days, the data related to any usage-based billing service(s) may be deleted.
 
-To regain access, you must settle any outstanding balances and pass preauthorization with a new, valid payment method. To update your primary payment method, navigate to the Manage Account -> Billing -> Payment section of your account. Upon confirmation of your updated payment details, we will promptly reactivate your subscription(s), which will restore access to your data and services.
+To regain access, you must settle any outstanding balances and pass preauthorization with a valid payment method. To update your primary payment method, navigate to the Manage Account -> Billing -> Payment section of your account. Upon validation of your updated payment details, we will promptly reactivate your subscription(s), which will restore access to the relevant data and services.
 
 For assistance, visit our [Support Portal](https://support.cloudflare.com/hc/en-us) and submit a Billing request (category: “Payment issue”) to our Support team. They will assist you in verifying your updated payment information.
 
