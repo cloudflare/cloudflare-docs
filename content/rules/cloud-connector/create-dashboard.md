@@ -1,0 +1,37 @@
+---
+title: Configure in the dashboard
+pcx_content_type: how-to
+weight: 2
+meta:
+  title: Configure a Cloud Connector rule in the dashboard
+---
+
+# Configure a rule in the dashboard
+
+To configure a Cloud Connector rule in the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+
+2. Go to **Rules** > **Cloud Connector**.
+
+3. Select your [cloud provider](/rules/cloud-connector/providers/) (Cloudflare R2 or an external provider).
+
+4. If you selected Cloudflare R2 in the previous step, select your bucket and your custom domain, and select **Next**.<br/>
+    If you selected a different storage provider, enter the bucket URL and select **Next**.
+
+    {{<Aside type="warning">}}
+The bucket URL must follow a [specific format](/rules/cloud-connector/providers/) according to your provider.
+    {{</Aside>}}
+
+5. Enter a descriptive name for the rule in **Cloud Connector name**.
+
+6. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
+
+    - To route all requests under `example.com/images/*` you would enter the following expression:<br/>
+    `starts_with(http.request.uri.path, "/images")`
+    - To route all requests under `images.example.com/*` you would enter the following expression:<br/>
+    `http.host eq "images.example.com"`
+
+    Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
+
+To save and deploy your rule, select **Deploy**. If you are not ready to deploy the rule, select **Save as Draft**.
