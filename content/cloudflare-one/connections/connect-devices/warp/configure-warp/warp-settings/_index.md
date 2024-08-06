@@ -157,10 +157,7 @@ On MDM deployments, you must also include the `auto_connect` parameter with at l
 
 {{<render file="warp/_all-systems-modes-plans.md">}}
 
-**Value:**
-
-- `Enabled`: (default) Users who manually enrolled their device are allowed to log out from your Zero Trust organization.
-- `Disabled`: Users who manually enrolled their device are prevented from leaving your Zero Trust organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
+When `Enabled`, users can log out from your Zero Trust organization by selecting **Logout from Zero Trust** in the WARP client UI. The **Logout from Zero Trust** button is only available for devices that were [enrolled manually](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/). Devices that enrolled using an {{<glossary-tooltip term_id="MDM file">}}MDM file{{</glossary-tooltip>}} are always prevented from leaving your Zero Trust organization.
 
 ### Allow updates
 
