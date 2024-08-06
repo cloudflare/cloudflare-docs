@@ -42,10 +42,10 @@ To remove multiple users from the registry at once:
 
 To edit a user in the Microsoft directory:
 
-- Under **Display name**, select the user you want to edit. From here, you can either:
-   - Select **Edit**: Enter a **Secondary email**, then select **Save**.
-   - Select **Add to registry** to add a user to your registry (this option is displayed if the user is not part of the impersonation registry).
-   - Select **Remove from registry** to remove a user from the registry (this option is displayed if the user is part of the impersonation registry).
+1. Under **Display name**, select the user you want to edit. 
+2. Select **Edit**: Enter a **Secondary email**.
+3. Select **Save**.
+
 
 ## Filter a user
 

@@ -28,7 +28,7 @@ To edit a user in the Email Security directory:
 
 1. Select the user you want to edit.
 2. Select the three dots > **Edit**.
-3. Enter an email in **Secondary email**.
+3. Enter a user name and/or email.
 4. Select **Save**.
 
 ## Delete a user
@@ -41,4 +41,4 @@ To delete a user from the Email Security directory:
 To delete multiple users from the registry at once:
 
 1. Select the users you want to delete.
-2. Select the **Action** drop-down list > **Delete users**.
+2. Select the **Action** dropdown list > **Delete users**.

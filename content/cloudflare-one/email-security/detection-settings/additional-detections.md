@@ -18,7 +18,7 @@ To configure additional detections:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**.
-4. On the **Settings** page, go to **Detection settings** > **Additional detections** tab, and select **Edit**.
+4. On the **Settings** page, go to **Detection settings** > **Additional detections**, and select **Edit**.
 
 ## Configure domain age
 
@@ -37,7 +37,7 @@ Blank email detection detects emails with blank bodies and assigns a default dis
 
 To enable blank email detection:
 
-1. On the **Edit additional detections** page, select the **Blank email detection** toggle.
+1. On the **Edit additional detections** page, enable **Blank email detection**.
 2. Choose between **Malicious** and **Suspicious**.
 3. Select **Save**.
 

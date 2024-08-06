@@ -63,19 +63,19 @@ Email Security displays the following details:
 
 ### Action log
 
-The action log tab allows you to review post-delivery actions performed on your selected message. The action log displays:
+Action log allows you to review post-delivery actions performed on your selected message. The action log displays:
 
 - **Date**: Date when the post-delivery action was performed.
 - **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
 
 ### Raw message
 
-The raw message tab allows you to view the raw details of the message. You can also choose to download the email message. To download the message, select **Download .EML**.
+Raw message allows you to view the raw details of the message. You can also choose to download the email message. To download the message, select **Download .EML**.
 
 ### Mail trace
 
-The mail trace tab allows you to track the path your selected message took from the sender to the recipient. This tab details:
+Mail trace allows you to track the path your selected message took from the sender to the recipient. Mail trace displays:
 
 - **Date**: The date and time when the mail was tracked.
-- **Type**: An email can be inbound (email is sent to you from another email), or outbound (emails sent from your email address).
+- **Type**: An email can be inbound (email sent to you from another email), or outbound (emails sent from your email address).
 - **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
