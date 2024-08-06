@@ -98,7 +98,7 @@ These small pattern assessments are dynamic in nature and — in many cases — 
 ### Name Spoof Attacks / Executive Attacks (BEC)
 
 - **Example**: Campaigns targeting executives and high-value targets within the organization or using the high-value targets as sources to attack other employees within the organization.
-- **Detections applied**: Display names compared with known executive names for similarity using several matching models including the Levenshtein Algorithm, and if matched, flagged when sender is originating from an unknown domain.
+- **Detections applied**: Display names compared with known executive names for similarity using several matching models including the Levenshtein algorithm, and if matched, flagged when sender is originating from an unknown domain.
 
 ### Fileless / Linkless campaigns (BEC)
 
