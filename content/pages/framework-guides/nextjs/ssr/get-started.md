@@ -70,7 +70,17 @@ export default nextConfig;
 
 These changes allows you to access [bindings](/pages/framework-guides/nextjs/ssr/bindings/) in local development.
 
-### 4. Update `package.json`
+### 4. Ensure all server-rendered routes use the Edge Runtime
+
+Next.js has [two "runtimes"](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) — "Edge" and "Node.js". When you run your Next.js app on Cloudflare, you [can use available Node.js APIs](/workers/runtime-apis/nodejs/) — but you currently can only use Next.js' "Edge" runtime.
+
+This means that for each server-rendered route — ex: an API route or one that uses `getServerSideProps` — you must configure it to use the "Edge" runtime:
+
+```js
+export const runtime = "edge";
+```
+
+### 5. Update `package.json`
 
 Add the following to the scripts field of your `package.json` file:
 
@@ -87,7 +97,7 @@ header: package.json
 - `npm run preview`: Builds your app, and runs it locally in [workerd](https://github.com/cloudflare/workerd), the open-source Workers Runtime. (`next dev` will only run your app in Node.js)
 - `npm run deploy`: Builds your app, and then deploys it to Cloudflare
 
-### 5. Deploy to Cloudflare Pages
+### 6. Deploy to Cloudflare Pages
 
 Either deploy via the command line:
 
@@ -97,7 +107,7 @@ $ npm run deploy
 
 Or [connect a Github or Gitlab repository](/pages/get-started/git-integration/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
 
-### 6. (Optional) Add `eslint-plugin-next-on-pages`
+### 7. (Optional) Add `eslint-plugin-next-on-pages`
 
 Optionally, you might want to add `eslint-plugin-next-on-pages`, which lints your Next.js app to ensure it is configured correctly to run on Cloudflare Pages.
 
