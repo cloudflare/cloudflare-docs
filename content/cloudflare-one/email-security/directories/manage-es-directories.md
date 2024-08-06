@@ -16,11 +16,10 @@ The Email Security directory contains registered users only. A registered user i
 
 To manually modify or delete added users:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email security**.
-4. Select **Directories**.
-5. Select **ES directory (manual)**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Select **Directories**.
+4. Select **ES directory (manual)**.
 
 ## Edit a user
 

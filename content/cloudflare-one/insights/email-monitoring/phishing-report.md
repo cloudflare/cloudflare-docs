@@ -10,11 +10,10 @@ Email Security allows you to generate a Phishing Risk Assessment Report (PRA) to
 
 To generate a phishing risk assessment report:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Monitoring**.
-4. Select **Generate summary report**.
-5. Select **Generate and download**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Monitoring**.
+3. Select **Generate summary report**.
+4. Select **Generate and download**.
 
 The report will contain the following information:
 

@@ -14,11 +14,10 @@ Submitting missed phish samples to Cloudflare is of paramount importance and nec
 
 To submit a phish:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email Security**.
-4. Select **Settings**.
-5. Under **Phish submission**, select **View**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**.
+4. Under **Phish submission**, select **View**.
 
 ## PhishNet O365
 

@@ -19,10 +19,9 @@ This guide will instruct you through setting up Microsoft Office 365 with Email 
 
 To enable Email Security:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email Security**.
-4. Select **Monitoring**. If you are a first time user, select **Contact sales**. Otherwise, select **Connect an integration**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Monitoring**. If you are a first time user, select **Contact sales**. Otherwise, select **Connect an integration**.
 
 Continue with [Enable Microsoft integration](/cloudflare-one/email-security/setup/api-deployment/office365-api/#enable-microsoft-integration) for the next steps.
 

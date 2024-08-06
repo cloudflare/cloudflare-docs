@@ -15,7 +15,7 @@ Email Security allows you to configure the following additional detections:
 
 To configure additional detections:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**.
 4. On the **Settings** page, go to **Detection settings** > **Additional detections**, and select **Edit**.

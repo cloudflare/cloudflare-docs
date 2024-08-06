@@ -10,7 +10,7 @@ Email Security allows you to exempt known partner and internal domains from typi
 
 To configure a trusted domain:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, go to **Detection settings** > **Trusted domains**.
 4. On the **Detection settings** page, select **+ Add a domain**.

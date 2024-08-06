@@ -10,7 +10,7 @@ Email Security marks all messages from these senders with a [disposition](/cloud
 
 To configure blocked senders:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, go to **Detection settings** > **Blocked senders**.
 4. On the **Detection settings** page, select **+ Add a sender**.

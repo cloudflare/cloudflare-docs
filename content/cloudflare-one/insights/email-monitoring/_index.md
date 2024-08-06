@@ -10,10 +10,9 @@ Once you have chosen a [domain to scan](/cloudflare-one/email-security/setup/api
 
 To monitor your inbox:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email Security**.
-4. Under **Email Security**, select **Monitoring**. 
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Under **Email Security**, select **Monitoring**. 
 
 The dashboard will display the following metrics:
 

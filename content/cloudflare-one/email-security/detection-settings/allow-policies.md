@@ -10,7 +10,7 @@ Email Security allows you to configure allow policies. An allow policy exempts m
 
 To configure allow policies:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, then go to **Detection settings** > **Allow policies**.
 4. On the **Detection settings** page, select **+ Add a policy**.

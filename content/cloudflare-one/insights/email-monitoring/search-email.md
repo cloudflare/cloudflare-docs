@@ -14,11 +14,10 @@ Email Security allows you to use popular, regular, and advanced screening criter
 
 To screen through your email traffic:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email Security**.
-4. Select **Investigation**, then **Run new screen**.
-5. Choose between **Popular**, **Regular**, and **Advanced** screen methods. Refer to the explanation below to learn what each method does.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Investigation**, then **Run new screen**.
+4. Choose between **Popular**, **Regular**, and **Advanced** screen methods. Refer to the explanation below to learn what each method does.
 
 The results will be displayed on a table. The table allows you to review and take action on the messages that match your chosen screening criteria.
 

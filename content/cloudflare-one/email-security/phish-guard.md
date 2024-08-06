@@ -10,10 +10,9 @@ PhishGuard is a managed email security service that provides resources for end-t
 
 To use PhishGuard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Zero Trust**.
-3. Select **Email security**.
-4. Select **PhishGuard**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Select **PhishGuard**.
 
 The dashboard will display the following metrics:
 

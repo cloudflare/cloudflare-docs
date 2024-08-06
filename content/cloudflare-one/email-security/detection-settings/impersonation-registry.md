@@ -16,7 +16,7 @@ The impersonation registry should contain a list of users who are likely to be i
 
 To add a user to the impersonation registry:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings** > **Impersonation registry**.
 4. Select **+ Add a user**.
