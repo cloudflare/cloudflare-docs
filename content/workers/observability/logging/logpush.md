@@ -96,8 +96,74 @@ curl --request PUT \
 
 ## Limits
 
-The `logs` and `exceptions` fields have the following limits in place.
+The `logs` and `exceptions` fields have a combined limit of 16,384 characters before fields will start being truncated. Characters are counted in the order of all `exception.name`s, `exception.message`s, and then `log.message`s.
 
-* Message size: Maximum of 2056 characters per log line
-* Array limit: 20 elements
-* Log message array: A nested array with a limit of 20 elements
+Once that character limit is reached all fields will be truncated with `"<<<Logpush: *field* truncated>>>"` for one message before dropping logs or exceptions.
+
+### Example
+
+To illustrate this, suppose our Logpush event looks like the JSON below and the limit is 50 characters (rather than the actual limit of 16,384). The algorithm will:
+
+1. Count the characters in `exception.names`:
+    1. `"SampleError"` and `"AuthError"` as 20 characters.
+1. Count the characters in `exception.message`:
+    1. `"something went wrong"` counted as 20 characters leaving 10 characters remaining.
+    1. The first 10 characters of `"unable to process request authentication from client"` will be taken and counted before being truncated to `"unable to <<<Logpush: exception messages truncated>>>"`.
+1. Count the characters in `log.message`:
+    1. We've already begun truncation, so `"Hello "` will be replaced with `"<<<Logpush: messages truncated>>>"` and `"World!"` will be dropped.
+
+#### Sample Input
+
+```json
+{
+  "Exceptions": [
+    {
+      "Name": "SampleError",
+      "Message": "something went wrong",
+      "TimestampMs": 0
+    },
+    {
+      "Name": "AuthError",
+      "Message": "unable to process request authentication from client",
+      "TimestampMs": 1
+    },
+  ],
+  "Logs": [
+    {
+      "Level": "log",
+      "Message": ["Hello "],
+      "TimestampMs": 0
+    },
+    {
+      "Level": "log",
+      "Message": ["World!"],
+      "TimestampMs": 0
+    }
+  ]
+}
+```
+
+#### Sample Output
+
+```json
+{
+  "Exceptions": [
+    {
+      "name": "SampleError",
+      "message": "something went wrong",
+      "TimestampMs": 0
+    },
+    {
+      "name": "AuthError",
+      "message": "unable to <<<Logpush: exception messages truncated>>>",
+      "TimestampMs": 1
+    },
+  ],
+  "Logs": [
+    {
+      "Level": "log",
+      "Message": ["<<<Logpush: messages truncated>>>"],
+      "TimestampMs": 0
+    }
+  ]
+}
