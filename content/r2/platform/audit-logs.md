@@ -5,7 +5,7 @@ title: Audit Logs
 
 # Audit Logs
 
-[Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/) provide a comprehensive summary of changes made within your Cloudflare account, including those made to R2 buckets. This functionality is available on all plan types, free of charge, and is enabled by default.
+[Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/) provide a comprehensive summary of changes made within your Cloudflare account, including those made to R2 buckets. This functionality is available on all plan types, free of charge, and is always enabled.
 
 ## Viewing audit logs
 
