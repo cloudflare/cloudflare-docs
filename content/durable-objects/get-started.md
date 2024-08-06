@@ -30,7 +30,7 @@ To create a Worker project, run:
 
 {{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="durable-object-starter">}}
 
-Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
+Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
 {{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker Using Durable Objects;;JavaScript / Typescript">}}
 

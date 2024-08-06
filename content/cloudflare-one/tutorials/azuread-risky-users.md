@@ -21,7 +21,8 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
-- (Recommended) [`wrangler`](/workers/wrangler/install-and-update/) installation
+- [npm](https://docs.npmjs.com/getting-started) installation
+- [Node.js](https://nodejs.org/en/) installation
 
 ## 1. Set up Azure AD as an identity provider
 
@@ -66,25 +67,19 @@ Next, configure an automated script that will populate an Azure AD security grou
 
 To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can implement the script using [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) or any other tool.
 
-1. Authenticate `wrangler`.
+1. Open a terminal and clone our example project.
 
    ```sh
-   $ wrangler login
+   $ npm create cloudflare@latest risky-users -- --template https://github.com/cloudflare/msft-risky-user-ad-sync
    ```
 
-2. Open a terminal and clone our example project.
-
-   ```sh
-   $ wrangler generate risky-users https://github.com/cloudflare/msft-risky-user-ad-sync
-   ```
-
-3. Go to the project directory.
+2. Go to the project directory.
 
    ```sh
    $ cd risky-users
    ```
 
-4. Modify `wrangler.toml` to include the following values:
+3. Modify `wrangler.toml` to include the following values:
 
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
@@ -113,13 +108,13 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 The [Cron Trigger](/workers/configuration/cron-triggers/) in this example schedules the script to run every minute. Learn more about [supported cron expressions](/workers/configuration/cron-triggers/#supported-cron-expressions).
 {{</Aside>}}
 
-5. Deploy the Worker to Cloudflare's global network.
+4. Deploy the Worker to Cloudflare's global network.
 
    ```sh
    $ npx wrangler deploy
    ```
 
-6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
+5. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
 
    ```sh
    $ wrangler secret put AZURE_AD_CLIENT_SECRET
