@@ -38,8 +38,31 @@ This configuration will use the [IP address management service bindings](/byoip/
 ## 1. Get account information
 
 1. Log in to your Cloudflare account and your account ID and API token.
-2. Make a `GET` request to the [List Services](/api/operations/ip-address-management-service-bindings-list-services) endpoint and take note of the `id` associated with the CDN service. Example below.
+2. Make a `GET` request to the [List Services](/api/operations/ip-address-management-service-bindings-list-services) endpoint and take note of the `id` associated with the CDN service.
 3. Use the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
+
+{{<example>}}
+
+At this point, continuing the example mentioned above, you should have a mapping similar to the following:
+
+| Variables  | Description                                        | Example |
+|-------------------------------|----------------------------------------------------| --- |
+| `{service_id}`                  | ID of the CDN service within Cloudflare            | `969xxxxxxxx000xxx0000000x00001bf` |
+| `{prefix_id}`                   | ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure | `6b25xxxxxxx000xxx0000000x0000cfc` |
+
+
+{{</example>}}
+
+4. To confirm you currently have Magic Transit across your entire prefix, make a `GET` request to the  [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint, replacing the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
+
+{{<example>}}
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings \
+  --header "Authorization: Bearer <API_TOKEN>" \
+```
+
+{{</example>}}
 
 ## 2. Create service binding
 
