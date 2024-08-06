@@ -183,7 +183,7 @@ export default {
 };
 ```
 
-You can learn more about how to configure D1 in the [D1 documentation](/d1/get-started/#4-bind-your-worker-to-your-d1-database).
+You can learn more about how to configure D1 in the [D1 documentation](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
 
 You can try out a complete example of this to do app, as well as a Discord bot built with named entrypoints, by cloning the [cloudflare/js-rpc-and-entrypoints-demo repository](https://github.com/cloudflare/js-rpc-and-entrypoints-demo) from GitHub.
 
