@@ -2,4 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Issue with your website
     url:  https://developers.cloudflare.com/support/contacting-cloudflare-support/#methods-of-contacting-cloudflare-support
-    about: If you have an issue with your website or Cloudflare applications, please contact Cloudflare through the relevant support channel. 
+    about: If you need support with your website or Cloudflare applications, please contact Cloudflare through the relevant support channel.
+  - name: Issue with Cloudflare Workers
+    url:  https://github.com/cloudflare/workers-sdk/issues/new/choose
+    about: Issues relating to Cloudflare Workers should be made in the workers-sdk repo.
