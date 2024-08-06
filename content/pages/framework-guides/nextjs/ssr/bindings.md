@@ -27,3 +27,32 @@ export async function GET(request) {
 ```
 
 You can add bindings to your Pages project by [adding them to your `wrangler.toml` configuration file](/pages/functions/wrangler-configuration/).
+
+## TypeScript type declarations for bindings
+
+To ensure that the `env` object from `getRequestContext().env` above has accurate TypeScript types, you need to install [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) and create a [TypeScript declaration file](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html).
+
+Install Workers Types:
+
+```sh
+$ npm install --save-dev @cloudflare/workers-types
+```
+
+Add Workers Types to your `tsconfig.json` file, replacing the date below with your project's [compatibility date](/workers/configuration/compatibility-dates/):
+
+```diff
+    "types": [
++        "@cloudflare/workers-types/2024-07-29"
+    ]
+```
+
+Create an `env.d.ts` file in the root directory of your Next.js app, and explicitly declare the type of each binding:
+
+```ts
+interface CloudflareEnv {
+	MY_KV_1: KVNamespace;
+	MY_KV_2: KVNamespace;
+	MY_R2: R2Bucket;
+	MY_DO: DurableObjectNamespace;
+}
+```
