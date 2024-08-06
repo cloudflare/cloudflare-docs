@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: Atlassian Confluence
+title: Bitbucket Cloud
 rss: file
 ---
 
-# Atlassian Confluence
+# Bitbucket Cloud
 
-{{<render file="casb/_integration-description.md" withParameters="Atlassian Confluence;;Atlassian Confluence Cloud account">}}
+{{<render file="casb/_integration-description.md" withParameters="Bitbucket Cloud;;Bitbucket Cloud account">}}
 
 {{<Aside type="note">}}
 The CASB integration for Confluence is currently only compatible with Confluence Cloud accounts.
@@ -34,7 +34,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-{{<render file="casb/_security-findings.md" withParameters="Atlassian Confluence;;atlassian-confluence">}}
+{{<render file="casb/_security-findings.md" withParameters="Bitbucket Cloud;;atlassian-confluence">}}
 
 ### Access security
 
