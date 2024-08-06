@@ -105,7 +105,7 @@ ___
 
 ## Account Payment Method Preauthorization
 
-For services subject to usage-based billing, Cloudflare may preauthorize your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. If your payment method succeeds, service will continue normally.
+For services subject to usage-based billing, Cloudflare may pre authorize your credit card at any point in a billing period to confirm the payment method on file can cover accrued fees. This is a temporary hold and you will not be charged until the end of your billing period. If your payment method is validated, service will continue normally.
 
 If your payment method fails, we will remove access to any usage-based billing services that use preauthorization. In the case of [R2](/r2/), you will not be able to access your R2 buckets and requests will return errors, but your data will remain secure and unaffected.
 
