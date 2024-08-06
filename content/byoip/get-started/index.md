@@ -16,7 +16,7 @@ BYOIP is ingress only.
 
 Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type. These requirements are common to all products compatible with BYOIP, such as [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), and [CDN services](/cache/).
 
-Traditionally, BYOIP prefixes can only be bound to one of these services (Magic Transit, Sprectrum, or CDN) at a time. To enable a second service on individual IP addresses or a subnet, refer to [IP address service bindings](/byoip/service-bindings/).
+Traditionally, BYOIP prefixes can only be bound to one of these services (Magic Transit, Sprectrum, or CDN) at a time. To enable a second service on individual IP addresses or on a subnet, refer to [IP address service bindings](/byoip/service-bindings/).
 
 ## Prerequisites
 

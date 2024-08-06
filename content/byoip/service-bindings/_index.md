@@ -6,7 +6,7 @@ weight: 6
 
 # IP address service bindings
 
-In the IP management context, service binding refers to the association of an IP (or a range of IPs) to specific Cloudflare services.
+Within IP address management, service binding refers to the association of an IP (or a range of IPs) to specific Cloudflare services.
 
 Currently, if you have BYOIP configured with [Magic Transit](/magic-transit/), you can use the [service bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoints to add CDN or Spectrum capabilities on top of Magic Transit.
 
