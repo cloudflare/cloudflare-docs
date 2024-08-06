@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Bindings
+weight: 2
 meta:
   title: Using bindings in your Next.js app
 ---
@@ -40,6 +41,9 @@ $ npm install --save-dev @cloudflare/workers-types
 Add Workers Types to your `tsconfig.json` file, replacing the date below with your project's [compatibility date](/workers/configuration/compatibility-dates/):
 
 ```diff
+---
+header: tsconfig.json
+---
     "types": [
 +        "@cloudflare/workers-types/2024-07-29"
     ]
@@ -48,6 +52,9 @@ Add Workers Types to your `tsconfig.json` file, replacing the date below with yo
 Create an `env.d.ts` file in the root directory of your Next.js app, and explicitly declare the type of each binding:
 
 ```ts
+---
+header: env.d.ts
+---
 interface CloudflareEnv {
 	MY_KV_1: KVNamespace;
 	MY_KV_2: KVNamespace;
