@@ -23,55 +23,32 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 
 ## Example API requests using cURL
 
-### Check whether log retention is turned on:
+### Check log retention status:
 
-```sh
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
-```
+In the linux examples below we use optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response.
 
-#### Response:
-
-```json
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "flag": false
-  },
-  "success": true
-}
-```
+{{<render file="_check-log-retention.md">}}
 
 ### Turn on log retention:
 
-On Linux or macOS:
+{{<render file="_enable-log-retention.md">}}
 
-```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
-```
-
-On Windows in Command Prompt:
-
-```
-curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
-```
-
-For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).
-
-#### Parameters
-
-- _flag_ - can be either `true` or `false`
-
-#### Response:
+#### Enabled Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "flag": true
-  },
-  "success": true
+  "flag": true
+}
+```
+### Turn off log retention:
+
+{{<render file="_disable-log-retention.md">}}
+
+#### Disable Response:
+
+```json
+{
+  "flag": false
 }
 ```
 
