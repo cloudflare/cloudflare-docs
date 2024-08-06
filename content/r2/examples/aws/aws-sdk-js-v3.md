@@ -1,5 +1,5 @@
 ---
-title: aws-sdk-js-v3
+title: aws-sdk-js-v3 
 pcx_content_type: configuration
 ---
 
