@@ -1,8 +1,34 @@
 entries:
+- link: https://www.youtube.com/watch?v=Id5oKCa__IA
+  title: Tool Calling Also Known as Function Calling on Cloudflare Workers AI
+  description: Tool calling, also known as function calling, is a powerful concept that lets you build Large Language Model based applications that can perform actions and retrieve external information from defined tools.
+  tags: [AI]
+  languages: [TypeScript]
+  products: [Workers AI]
+  cloudflare: true
+  stream_id: 603e94c9803b4779dd612493c0dd7125
+  author: craig
+  updated: 2024-06-20
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=MlV9Kvkh9hw
+  title: Build a URL Shortener with an AI-based admin section
+  description: We are building a URL Shortener, shrty.dev, on Cloudflare. The apps uses Workers KV and Workers Analytics engine. Craig decided to build with Workers AI runWithTools to provide a chat interface for admins.
+  tags: [Workers Analytics Engine, AI]
+  products: [Workers AI, KV]
+  languages: [TypeScript]
+  cloudflare: true
+  author: craig
+  updated: 2024-07-01
+  difficulty: Beginner
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=dttu4QtKkO0
   title: Build Rust Powered Apps
   description: In this video, we will show you how to build a global database using workers-rs to keep track of every country and city you’ve visited.
   tags: []
+  languages: [Rust]
   products: [Workers, KV]
   cloudflare: true
   author: confidence
@@ -14,6 +40,7 @@ entries:
   title: API Roll (Father's Day)
   description: This walks through how to use Workers AI with Hono and Zod to create a streaming pun generating API.
   tags: [AI, Hono]
+  languages: [TypeScript]
   products: [Workers AI]
   cloudflare: true
   author: craig
@@ -25,6 +52,7 @@ entries:
   title: AI can see clearly now - Build Vision Apps on Cloudflare Workers AI
   description: The LlaVa model is hosted on Cloudflare Workers AI. Which means you are an API call away from brand new powerful vision use cases in all of your applications.
   tags: [AI]
+  languages: [TypeScript]
   products: [Workers AI]
   cloudflare: true
   author: craig
@@ -36,6 +64,7 @@ entries:
   title: Stateful Apps with Cloudflare Workers
   description: Learn how to access external APIs, cache and retrieve data using Workers KV, and create SQL-driven applications with Cloudflare D1.
   tags: []
+  languages: [TypeScript, SQL]
   products: [Workers, KV, D1]
   cloudflare: true
   author: kristian
@@ -47,6 +76,7 @@ entries:
   title: Workers AI - Getting Started - Vanilla Chat App
   description: Get started building AI apps on Cloudflare using Pages and the GitHub starter template for a Vanilla JavaScript Chat App.
   tags: [AI]
+  languages: [TypeScript]
   products: [Workers AI]
   cloudflare: true
   author: craig
@@ -59,6 +89,7 @@ entries:
   description: Learn how to build your first Cloudflare Workers application and deploy it to Cloudflare's global network.
   tags: []
   products: [Workers]
+  languages: [TypeScript]
   cloudflare: true
   author: kristian
   updated: 2024-03-12
@@ -70,6 +101,7 @@ entries:
   description: Is that person you are about to swipe right on, actually real? Are they AI Generated?
   tags: [AI]
   products: [Workers AI]
+  languages: [Python]
   cloudflare: true
   author: craig
   updated: 2024-03-08
@@ -92,9 +124,22 @@ entries:
   description: In this workshop, Kristian Freeman, Cloudflare Developer Advocate, shows how to optimize your existing AI applications with Cloudflare AI Gateway, and how to finetune OpenAI models using R2.
   tags: [AI]
   products: [Workers, R2, AI Gateway]
+  languages: [JavaScript]
   cloudflare: true
   author: kristian
   updated: 2023-12-14
   difficulty: Advanced
+  content_type: 🎥 Video
+  pcx_content_type: tutorial
+- link: https://www.youtube.com/watch?v=CHfKeFakGAI
+  title: How to use Cloudflare AI models and inference in Python with Jupyter Notebooks
+  description: Cloudflare Workers AI provides a ton of AI models and inference capabilities. In this video, we will explore how to make use of Cloudflare’s AI model catalog using a Python Jupyter Notebook.
+  tags: [AI]
+  languages: [Python]
+  products: [Workers, AI Gateway]
+  cloudflare: true
+  author: craig
+  updated: 2023-12-14
+  difficulty: Intermediate
   content_type: 🎥 Video
   pcx_content_type: tutorial

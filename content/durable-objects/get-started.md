@@ -28,33 +28,19 @@ You will access your Durable Object from a [Worker](/workers/). Your Worker appl
 
 To create a Worker project, run:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="durable-object-starter">}}
 
-```sh
-$ npm create cloudflare@latest
-```
+Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-Running `create cloudflare` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
-
-In your terminal, you will be asked a series of questions related to your project:
-
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `Co-ordination / multiplayer API (using Durable Objects)` as the type of application you want to create.
-3. Answer `yes` or `no` to using TypeScript.
-4. Answer `no` to deploying your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker Using Durable Objects;;JavaScript / Typescript">}}
 
 This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
+
+Move into your new directory:
+
+```sh
+$ cd durable-object-starter
+```
 
 ## 3. Write a class to define a Durable Object
 

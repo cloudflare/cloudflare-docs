@@ -8,7 +8,7 @@ meta:
   title: Cloudflare Queues (beta)
 ---
 
-# {{<heading-pill style="beta">}}Cloudflare Queues{{</heading-pill>}}
+{{<heading-pill style="beta">}}Cloudflare Queues{{</heading-pill>}}
 
 {{<description>}}
 

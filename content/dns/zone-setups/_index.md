@@ -15,7 +15,7 @@ When using Cloudflare DNS, you have a few options for your DNS zone setup:
 
 {{<Aside type="note" header="Note:">}}
 
-If you run your own authoritative nameservers but still want to benefit from Cloudflare's global Anycast network, check out [DNS Firewall](/dns/dns-firewall/).
+If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).
 
 {{</Aside>}}
 

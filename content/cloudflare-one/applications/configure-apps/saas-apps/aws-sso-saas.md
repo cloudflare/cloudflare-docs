@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: AWS
-weight: 4
+updated: 2024-04-22
+weight: 6
 ---
 
 # Connect to AWS through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesigno
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to an AWS account
 
 ## 1. Get AWS URLs

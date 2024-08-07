@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Area 1
-weight: 2
+updated: 2024-07-18
+weight: 3
 ---
 
 # Connect to Cloudflare Area 1 through Access
@@ -10,7 +11,7 @@ weight: 2
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to your Area 1 account
 - Your user's email in Area 1 matches their email in Zero Trust
 

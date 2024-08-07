@@ -23,18 +23,18 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 {{<render file="_disable_dnssec.md" productFolder="dns" >}}
 
-## 1 — Add site in Cloudflare
+## 1. Add site in Cloudflare
 
 {{<render file="_add-site.md" productFolder="fundamentals" >}}
 
-## 2 — Update nameservers
+## 2. Update nameservers
 
 {{<render file="_update-nameservers.md" productFolder="fundamentals" >}}
 
-## 3 — Complete SSL/TLS setup
+## 3. Complete SSL/TLS setup
 
-To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/).
+To prevent insecure connections and visitor browser errors, [make sure you have SSL/TLS protection](/ssl/get-started/) and go through the **Quick Start Guide** to improve security.
 
-## 4 — Go beyond the basics
+## 4. Go beyond the basics
 
 For suggestions and guidance about getting the most out of your Cloudflare account, refer to our [Fundamental Tasks](/fundamentals/basic-tasks/).

@@ -8,11 +8,11 @@ weight: 13
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
-For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 ([if enabled](/ssl/edge-certificates/additional-options/tls-13/)) will be allowed to connect.
+For example, if TLS 1.1 is selected, visitors attempting to connect using TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 ([if enabled](/ssl/edge-certificates/additional-options/tls-13/)) will be allowed to connect.
 
 {{<Aside type="note">}}
 
-If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
+If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
 
@@ -21,6 +21,8 @@ For guidance on which TLS version to use, refer to [TLS protocols](/ssl/referenc
 ## Availability
 
 {{<feature-table id="ssl.minimum_tls">}}
+
+It is not possible to configure minimum TLS version for [Cloudflare Pages](/pages/) hostnames.
 
 ## How to disable TLS 1.0
 

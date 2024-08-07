@@ -36,9 +36,9 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 ```bash
 curl --request PATCH \
 https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header 'X-Auth-Email: <EMAIL>' \
---header 'X-Auth-Key: <API_KEY>' \
---header 'Content-Type: application/json' \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"status": "active"}'
 ```
 

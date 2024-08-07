@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Slack
-weight: 16
+updated: 2024-06-18
+weight: 24
 ---
 
 # Connect to Slack through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Slack](https://slack.com/help/articles/20377
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Slack Business+ or Enterprise Grid plan account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

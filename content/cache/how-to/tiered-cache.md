@@ -21,13 +21,13 @@ Cloudflare allows you to select your cache topology so that you have control ove
 
 Smart Tiered Cache dynamically selects the single closest upper tier for each of your website’s origins with no configuration required, using our in-house performance and routing data. Cloudflare collects latency data for each request to an origin, and uses the latency data to determine how well any upper-tier data center is connected with an origin. As a result, Cloudflare can select the data center with the lowest latency to be the upper-tier for an origin.
 
-#### Smart Tiered Cache and Anycast network
+#### Smart Tiered Cache and anycast network
 
-Smart Tiered Cache does not work when an origin is behind an [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier and latency may be negatively impacted.
+Smart Tiered Cache does not work when an origin is behind an [anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) because that will prevent us from knowing where the origin is located. As a result, we are unable to select the optimal upper tier and latency may be negatively impacted.
 
-You need to be careful when updating your origin IPs/DNS records while Smart Tiered Cache is enabled. Depending on the changes made, it may cause the existing assigned upper tiers to change, resulting in an increased `MISS` rate as cache is refilled in the new upper tiers. If the origin is switched to a network behind Anycast, it will significantly reduce the effectiveness of Smart Tiered Cache.
+You need to be careful when updating your origin IPs/DNS records while Smart Tiered Cache is enabled. Depending on the changes made, it may cause the existing assigned upper tiers to change, resulting in an increased `MISS` rate as cache is refilled in the new upper tiers. If the origin is switched to a network behind anycast, it will significantly reduce the effectiveness of Smart Tiered Cache.
 
-If you need to use Anycast and want to use Smart Tiered cache, contact your account team.
+If you need to use anycast and want to use Smart Tiered cache, contact your account team.
 
 ### Generic Global Tiered Cache
 
@@ -35,7 +35,7 @@ Generic Global topology allows for all of Cloudflare’s global data centers to 
 
 ### Regional Tiered Cache
 
-Regional Tiered Cache provides an additional layer of caching for Enterprise customers who have a global traffic footprint and want to serve content faster by avoiding network latency when there is a cache MISS in a lower-tier, resulting in an upper-tier fetch in a data center located far away.
+Regional Tiered Cache provides an additional layer of caching for Enterprise customers who have a global traffic footprint and want to serve content faster by avoiding network latency when there is a cache `MISS` in a lower-tier, resulting in an upper-tier fetch in a data center located far away.
 
 Regional Cache instructs Cloudflare to check a regional hub data center near the lower tier before going to the upper tier that may be outside of the region. This can help improve performance for **Smart** and **Custom Tiered Cache** topologies with upper-tiers in one or two regions. Regional Tiered Cache is not beneficial for customers with many upper tiers in many regions like Generic Global Tiered Cache.
 
@@ -78,33 +78,39 @@ You can enable Tiered Cache in the dashboard or via API.
 
 To enable Tiered Cache via API use the following cURL example:
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/argo/tiered_caching \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
- ```
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/argo/tiered_caching \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
+--data '{ "value": "on" }'
+```
 
 You can also configure Tiered Cache Topology via API, for instance:
 
 {{<details header="Enable Smart Tiered Cache">}}
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/cache/tiered_cache_smart_topology_enable \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
- ```
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/tiered_cache_smart_topology_enable \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{ "value": "on" }'
+```
 
  {{</details>}}
 
 {{<details header="Enable Regional Tiered Cache">}}
 
-```json
-curl --request GET \
- --url https://api.cloudflare.com/client/v4/zones/zone_identifier/cache/regional_tiered_cache \
- --header 'Content-Type: application/json' \
- --header 'X-Auth-Email: '
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/regional_tiered_cache \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header 'Content-Type: application/json' \
+--data '{ "value": "on" }'
 ```
 
 {{</details>}}

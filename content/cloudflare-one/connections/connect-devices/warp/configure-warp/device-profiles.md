@@ -52,7 +52,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
   "name": "Cloudflare basic device profile",
   "precedence": 101,
   "service_mode_v2": {
-    "mode": "warp"},
+    "mode": "warp"
+  },
   "support_url": "https://it.company.com/help",
   "switch_locked": true
 }'

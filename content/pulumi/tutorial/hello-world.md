@@ -1,12 +1,19 @@
 ---
-title: 2 –  Deploy a Hello World app
+title: Deploy a Hello World app with Pulumi
 pcx_content_type: tutorial
 weight: 2
 meta:
   title:  Deploy a Hello World app
+products: [Workers]
+updated: 2024-01-08
+content_type: 📝 Tutorial
+difficulty: Beginner
+languages: [TypeScript]
 ---
 
 # Deploy a Hello World app using Cloudflare Workers and Pulumi
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will go through step-by-step instructions to deploy a Hello World web application using Cloudflare Workers and Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Worker, a Route, and a DNS Record to access the application before cleaning up all the resources.
 
@@ -27,7 +34,7 @@ Ensure you have:
 * A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
 * A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
 * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and the [Pulumi CLI](/pulumi/installing/) installed on your machine.
-* A Cloudflare Zone. Complete the [Add a Site tutorial](/pulumi/tutorial/add-site/) to create one. 
+* A Cloudflare Zone. Complete the [Add a Site tutorial](/pulumi/tutorial/add-site/) to create one.
 
 {{</tutorial-prereqs>}}
 
@@ -36,7 +43,7 @@ Ensure you have:
 You can find the complete solution of this tutorial under [this Pulumi repo and branch](https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end). To deploy the final version, run the following:
 
 ```sh
-$ mkdir serverless-cloudflare && cd serverless-cloudflare 
+$ mkdir serverless-cloudflare && cd serverless-cloudflare
 $ pulumi new https://github.com/pulumi/tutorials/tree/cloudflare-typescript-hello-world-end
 $ npm install
 $ pulumi up --yes
@@ -323,6 +330,7 @@ $ curl "https://$(pulumi stack output url)"
 </body>
   </html>
 ```
+
 {{<Aside type="note">}}
 
 Depending on your domain settings, you may need to use "http" instead.

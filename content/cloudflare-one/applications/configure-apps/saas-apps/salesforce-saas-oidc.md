@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Salesforce (OIDC)
-weight: 14
+updated: 2024-07-29
+weight: 22
 ---
 
 # Connect to Salesforce through Access (OIDC)
@@ -10,7 +11,7 @@ This guide covers how to configure [Salesforce](https://help.salesforce.com/s/ar
 
 ## Prerequisites
 
-- An [OIDC identity provider](/cloudflare-one/identity/idp-integration/generic-oidc/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Salesforce account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

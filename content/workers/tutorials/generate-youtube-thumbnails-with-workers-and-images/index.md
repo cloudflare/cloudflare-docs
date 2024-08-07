@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 products: [Images]
+languages: [JavaScript, Rust]
 ---
 
 # Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
@@ -68,7 +69,7 @@ You will then receive a response similar to this:
  "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
  "filename": "image.jpeg",
  "metadata": {
-   "key": "value":
+   "key": "value",
  },
  "uploaded": "2022-01-31T16:39:28.458Z",
  "requireSignedURLs": false,
@@ -89,10 +90,19 @@ Now that you have uploaded your image, you will use it as the background image f
 
 After uploading your image, create a Worker that will enable you to transform text to image. This image can be used as an overlay on the background image you uploaded. Use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust).
 
-Create a new Worker project called `worker-to-text` using the `worker-rust` template:
+You will need the following before you begin:
+
+- A recent version of [Rust](https://rustup.rs/).
+- Access to the `cargo-generate` subcommand:
+
+  ```sh
+  $ cargo install cargo-generate
+  ```
+
+Create a new Worker project using the `worker-rust` template:
 
 ```sh
-$ npx wrangler generate worker-to-text worker-rust
+$ cargo generate https://github.com/cloudflare/rustwasm-worker-template
 ```
 
 You will now make a few changes to the files in your project directory.
@@ -374,8 +384,14 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 
 Create a Worker to serve the image you uploaded to Images by running:
 
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="thumbnail-image">}}
+
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
+
+To start developing your Worker, `cd` into your new project directory:
+
 ```sh
-$ npx wrangler init thumbnail-image
+$ cd thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:

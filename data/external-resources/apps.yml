@@ -121,3 +121,167 @@ entries:
   author: lizzie
   cloudflare: true
   updated: 2024-06-29
+- link: https://github.com/harshil1712/nextjs-r2-demo
+  name: Upload Image to R2 starter
+  description: Upload images to Cloudflare R2 from a Next.js application.
+  tags: [NextJS]
+  products: [R2, Pages]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-06-21
+- link: https://github.com/harshil1712/remix-d1-auth-template
+  name: Remix Authentication Starter
+  description: Implement authenticating to a Remix app and store user data in Cloudflare D1.
+  tags: [Remix]
+  products: [D1]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-09
+- link: https://github.com/cloudflare/turnstile-demo-workers
+  name: Turnstile Demo
+  description: A simple demo with a Turnstile-protected form, using Cloudflare Workers. With the code in this repository, we demonstrate implicit rendering and explicit rendering.
+  tags: []
+  products: [Turnstile, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-02-15
+- link: https://github.com/cloudflare/doom-workers
+  name: Multiplayer Doom Workers
+  description: A WebAssembly Doom port with multiplayer support running on top of Cloudflare's global network using Workers, WebSockets, Pages, and Durable Objects.
+  tags: [WebSockets]
+  products: [Pages, Durable Objects, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2023-06-15
+- link: https://github.com/cloudflare/hyperdrive-demo
+  name: Hyperdrive demo
+  description: A Remix app that connects to a database behind Cloudflare's Hyperdrive, making regional databases feel like they're globally distributed.
+  tags: [Remix]
+  products: [Hyperdrive]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-04
+- link: https://github.com/cloudflare/d1-northwind
+  name: D1 Northwind Demo
+  description: This is a demo of the Northwind dataset, running on Cloudflare Workers, and D1 - Cloudflare's SQL database, running on SQLite.
+  tags: [Tailwind, React, Remix]
+  products: [Workers, D1]
+  languages: [TypeScript, SQL]
+  cloudflare: true
+  updated: 2023-07-12
+- link: https://github.com/cloudflare/workers-chat-demo
+  name: Cloudflare Workers Chat Demo
+  description: This is a demo app written on Cloudflare Workers utilizing Durable Objects to implement real-time chat with stored history.
+  tags: [WebSockets]
+  products: [Workers, Durable Objects]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-03-05
+- link: https://github.com/cloudflare/js-rpc-and-entrypoints-demo
+  name: JavaScript-native RPC on Cloudflare Workers <> Named Entrypoints
+  description: This is a collection of examples of communicating between multiple Cloudflare Workers using the remote-procedure call (RPC) system that is built into the Workers runtime.
+  tags: [RPC, Discord]
+  products: [Workers, D1, Access]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-16
+- link: https://github.com/harshil1712/jobs-at-conf-demo
+  name: Jobs At Conf
+  description: A job lisiting website to add jobs you find at in-person conferences. Built with Cloudflare Pages, R2, D1, Queues, and Workers AI.
+  tags: [Next.js]
+  products: [D1, R2, Workers AI, Queues, Pages]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-29
+- link: https://github.com/cloudflare/queues-web-crawler
+  name: Queues Web Crawler
+  description: An example use-case for Queues, a web crawler built on Browser Rendering and Puppeteer. The crawler finds the number of links to Cloudflare.com on the site, and archives a screenshot to Workers KV.
+  tags: []
+  products: [KV, Browser Rendering, Workers, Pages, Queues]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-06-15
+- link: https://github.com/cloudflare/workers-for-platforms-example
+  name: Workers for Platforms Example Project
+  description: Explore how you could manage thousands of Workers with a single Cloudflare Workers account.
+  tags: [Hono]
+  products: [D1, Workers, Workers for Platforms]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-03
+- link: https://github.com/cloudflare/dmarc-email-worker
+  name: DMARC Email Worker
+  description: A Cloudflare worker script to process incoming DMARC reports, store them, and produce analytics.
+  tags: []
+  products: [R2, Workers, Email Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-03-17
+- link: https://github.com/cloudflare/pages-fns-with-wasm-demo
+  name: Pages Functions with WebAssembly
+  description: This is a demo application that exemplifies the use of Wasm module imports inside Pages Functions code.
+  tags: []
+  products: [Pages]
+  languages: [Rust]
+  cloudflare: true
+  updated: 2023-03-22
+- link: https://github.com/cloudflare/orange
+  name: Orange Meets
+  description: Orange Meets is a demo WebRTC application built using Cloudflare Calls.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-07-05
+- link: https://github.com/cloudflare/calls-examples/tree/main/whip-whep-server
+  name: WHIP-WHEP Server
+  description: WHIP and WHEP server implemented on top of Calls API.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2022-06-12
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo
+  name: Calls Echo Demo
+  description: Demonstrates a local stream alongside a remote echo stream.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2025-05-10
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels
+  name: Calls DataChannel Test
+  description: This example establishes two datachannels, one publishes data and the other one subscribes, the test measures how fast a message travels to and from the server.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-06-04
+- link: https://github.com/cloudflare/wildebeest
+  name: Wildebeest
+  description: Wildebeest is an ActivityPub and Mastodon-compatible server whose goal is to allow anyone to operate their Fediverse server and identity on their domain without needing to keep infrastructure, with minimal setup and maintenance, and running in minutes.
+  tags: []
+  products: [Workers, Pages, Durable Objects, Queues, D1, Access, Images]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-07-31
+- link: https://github.com/cloudflare/workers-access-external-auth-example
+  name: Access External Auth Rule Example Worker
+  description: This is a worker that allows you to quickly setup an external evalutation rule in Cloudflare Access.
+  tags: []
+  products: [Workers, Access]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-08-01
+- link: https://github.com/lauragift21/staff-directory
+  name: Staff Directory demo
+  description: Built using the powerful combination of HonoX for backend logic, Cloudflare Pages for fast and secure hosting, and Cloudflare D1 for seamless database management.
+  tags: [Hono]
+  products: [Pages, D1]
+  languages: [TypeScript]
+  author: gift
+  cloudflare: true
+  updated: 2024-03-18

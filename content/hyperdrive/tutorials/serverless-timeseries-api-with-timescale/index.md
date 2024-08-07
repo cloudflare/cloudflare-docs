@@ -5,6 +5,8 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
 products: [Workers]
+tags: [PostgreSQL]
+languages: [TypeScript, SQL]
 ---
 
 # Create a serverless, globally distributed time-series API with Timescale
@@ -31,19 +33,9 @@ You can learn more about Timescale by reading their [documentation](https://docs
 
 Run the following command to create a Worker project from the command line:
 
-```sh
----
-header: Create a project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="timescale-api">}}
 
-For setup, select the following options:
-
-- `Where do you want to create your application?`: Input `timescale-api`.
-- `What type of application do you want to create?`: Select `"Hello World" Worker`.
-- `Do you want to use TypeScript?`: Select `Yes`.
-- `Do you want to deploy your application?`: Select `Yes`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 

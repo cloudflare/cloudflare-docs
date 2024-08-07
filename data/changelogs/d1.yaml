@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-07-26"
+    title: Fixed bug in TypeScript typings for run() API
+    description: |-
+      The `run()` method as part of the [D1 Client API](/d1/build-with-d1/d1-client-api/) had an incorrect (outdated) type definition, which has now been addressed as of [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) version `4.20240725.0`.
+
+      The correct type definition is `stmt.run<T>(): D1Result`, as `run()` returns the result rows of the query. The previously _incorrect_ type definition was `stmt.run(): D1Response`, which only returns query metadata and no results.
+
   - publish_date: "2024-06-17"
     title: HTTP API now returns a HTTP 429 error for overloaded D1 databases
     description: |-
@@ -136,11 +143,11 @@ entries:
   - publish_date: "2023-08-09"
     title: Bind D1 from the Cloudflare dashboard
     description: |-
-      You can now [bind a D1 database](/d1/get-started/#4-bind-your-worker-to-your-d1-database) to your Workers directly in the [Cloudflare dashboard](https://dash.cloudflare.com). To bind D1 from the Cloudflare dashboard, select your Worker project -> **Settings** -> **Variables** -> and select **D1 Database Bindings**.
+      You can now [bind a D1 database](/d1/get-started/#3-bind-your-worker-to-your-d1-database) to your Workers directly in the [Cloudflare dashboard](https://dash.cloudflare.com). To bind D1 from the Cloudflare dashboard, select your Worker project -> **Settings** -> **Variables** -> and select **D1 Database Bindings**.
 
       Note: If you have previously deployed a Worker with a D1 database binding with a version of `wrangler` prior to `3.5.0`, you must upgrade to [`wrangler v3.5.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.5.0) first before you can edit your D1 database bindings in the Cloudflare dashboard. New Workers projects do not have this limitation.
 
-      Legacy D1 alpha users who had previously prefixed their database binding manually with `__D1_BETA__` should remove this as part of this upgrade. Your Worker scripts should call your D1 database via `env.BINDING_NAME` only. Refer to the latest [D1 getting started guide](/d1/get-started/#4-bind-your-worker-to-your-d1-database) for best practices.
+      Legacy D1 alpha users who had previously prefixed their database binding manually with `__D1_BETA__` should remove this as part of this upgrade. Your Worker scripts should call your D1 database via `env.BINDING_NAME` only. Refer to the latest [D1 getting started guide](/d1/get-started/#3-bind-your-worker-to-your-d1-database) for best practices.
 
       We recommend all D1 alpha users begin using wrangler `3.5.0` (or later) to benefit from improved TypeScript types and future D1 API improvements.
   - publish_date: "2023-08-01"

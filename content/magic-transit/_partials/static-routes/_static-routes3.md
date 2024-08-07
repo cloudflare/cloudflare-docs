@@ -6,13 +6,13 @@ _build:
 inputParameters: createPath;;tunnelEndpoints;;ipRanges
 ---
 
-## Scoped routes for Anycast GRE or IPsec tunnels
+## Scoped routes for anycast GRE or IPsec tunnels
 
-To reduce latency for your {{<glossary-tooltip term_id="anycast">}}Anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnel configurations, especially if you operate your own Anycast network, Cloudflare can steer your traffic by scoping it to specific Cloudflare data center regions. Equal cost routes maintain an equal cost on a global scale so long as the routes are not scoped to specific regions. For example, if you use region-scoped routes, traffic from end users in New York will always land at their Ashburn network unless that tunnel is unhealthy.
+To reduce latency for your {{<glossary-tooltip term_id="anycast">}}anycast{{</glossary-tooltip>}} {{<glossary-tooltip term_id="GRE tunnel">}}GRE{{</glossary-tooltip>}} or {{<glossary-tooltip term_id="IPsec tunnel">}}IPsec{{</glossary-tooltip>}} tunnel configurations, especially if you operate your own anycast network, Cloudflare can steer your traffic by scoping it to specific Cloudflare data center regions. Equal cost routes maintain an equal cost on a global scale so long as the routes are not scoped to specific regions. For example, if you use region-scoped routes, traffic from end users in New York will always land at their Ashburn network unless that tunnel is unhealthy.
 
 When you scope static routes to specific regions, the routes will only exist in the specified regions, and traffic that lands outside the specified regions will not have anywhere to go.
 
-To configure scoping for your traffic, you must provide static routes to Cloudflare with Anycast GRE or IPsec tunnel data such that all Cloudflare regions have a route for your prefixes.
+To configure scoping for your traffic, you must provide static routes to Cloudflare with anycast GRE or IPsec tunnel data such that all Cloudflare regions have a route for your prefixes.
 
 {{<Aside type="note">}}Regions and regional objects are automatically updated. If you route traffic through specific data centers, you will need to manually update your rules when Cloudflare adds or removes data centers.{{</Aside>}}
 

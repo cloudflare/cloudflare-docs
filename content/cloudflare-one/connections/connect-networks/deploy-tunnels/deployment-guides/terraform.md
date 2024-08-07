@@ -68,42 +68,42 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 
 1. In your configuration directory, create a `.tf` file:
 
-    ```sh
-    $ touch providers.tf
-    ```
+   ```sh
+   $ touch providers.tf
+   ```
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
-    ```txt
-    ---
-    filename: providers.tf
-    ---
-    terraform {
-      required_providers {
-        cloudflare = {
-          source = "cloudflare/cloudflare"
-          version = ">= 4.9.0"
-        }
-        google = {
-          source = "hashicorp/google"
-        }
-        random = {
-          source = "hashicorp/random"
-        }
-      }
-      required_version = ">= 0.13"
-    }
+   ```txt
+   ---
+   filename: providers.tf
+   ---
+   terraform {
+     required_providers {
+       cloudflare = {
+         source = "cloudflare/cloudflare"
+         version = ">= 4.9.0"
+       }
+       google = {
+         source = "hashicorp/google"
+       }
+       random = {
+         source = "hashicorp/random"
+       }
+     }
+     required_version = ">= 0.13"
+   }
 
-    # Providers
-    provider "cloudflare" {
-      api_token    = var.cloudflare_token
-    }
-    provider "google" {
-      project    = var.gcp_project_id
-    }
-    provider "random" {
-    }
-    ```
+   # Providers
+   provider "cloudflare" {
+     api_token    = var.cloudflare_token
+   }
+   provider "google" {
+     project    = var.gcp_project_id
+   }
+   provider "random" {
+   }
+   ```
 
 ### Configure Cloudflare resources
 
@@ -152,6 +152,14 @@ The following configuration will modify settings in your Cloudflare account.
       ingress_rule {
         hostname = "${cloudflare_record.http_app.hostname}"
         service  = "http://httpbin:8080"
+        origin_request {
+          connect_timeout = "2m0s"
+          access {
+            required  = true
+            team_name = "myteam"
+            aud_tag   = [cloudflare_access_application.http_app.aud]
+          }
+        }
       }
       ingress_rule {
         service  = "http_status:404"

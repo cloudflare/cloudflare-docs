@@ -12,7 +12,7 @@ The following sections cover typical rate limiting configurations for common use
 
 The main use cases for rate limiting are the following:
 
-{{<render file="_rate-limiting-best-practices.md" productFolder="waf" >}}
+{{<render file="_rate-limiting-best-practices.md" productFolder="waf">}}
 
 ## Enforcing granular access control
 
@@ -330,7 +330,7 @@ Rate (Requests / Period) | As suggested by API Discovery or assessed by analyzin
 Action                   | Block
 {{</table-wrap>}}
 
-_This example rule requires Advanced Rate Limiting._
+_This example rule requires Advanced Rate Limiting. API Discovery requires an additional license._
 
 The counting characteristic can be any header, key, token, cookie, query parameter, or even JSON body field, since some APIs include a session ID or user ID as part of the JSON body. Refer to the following sections for additional information:
 * If your unique identifier is in the URI path, refer to [Protect resources](#protect-resources).

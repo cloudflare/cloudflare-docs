@@ -1,7 +1,7 @@
 ---
-title: Install Pulumi
+title: Get started
 pcx_content_type: how-to
-weight: 2
+weight: 1
 meta:
   title: Install Pulumi
 ---

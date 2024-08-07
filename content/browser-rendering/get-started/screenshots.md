@@ -16,24 +16,9 @@ By following this guide, you will create a Worker that uses the Browser Renderin
 
 Create a new Worker project named `browser-worker` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-You can choose to use either JavaScript or TypeScript for this guide.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript / Typescript">}}
 
 ## 2. Install Puppeteer
 
@@ -47,7 +32,7 @@ $ npm install @cloudflare/puppeteer --save-dev
 
 Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronous.
 
-For the purpose of this guide, you are going to use a [KV store](/kv/reference/kv-namespaces/) to cache your screenshots.
+For the purpose of this guide, you are going to use a [KV store](/kv/concepts/kv-namespaces/) to cache your screenshots.
 
 Create two namespaces, one for production, and one for development.
 

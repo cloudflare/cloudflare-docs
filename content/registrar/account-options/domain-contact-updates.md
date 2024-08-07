@@ -5,7 +5,7 @@ title: Registrant contact updates
 
 # Registrant contact updates
 
-It is important that you keep your contact details accurate and up-to-date. [ICAAN rules state](https://www.icann.org/resources/pages/registrant-contact-information-wdrp-2017-08-31-en) that if you do not have updated contact information, your domain name registration may be suspended or even cancelled.
+It is important that you keep your contact details accurate and up-to-date. [ICANN rules state](https://www.icann.org/resources/pages/registrant-contact-information-wdrp-2017-08-31-en) that if you do not have updated contact information, your domain name registration may be suspended or even cancelled.
 
 To update your registrant contacts:
 

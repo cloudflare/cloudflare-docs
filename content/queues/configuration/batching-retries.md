@@ -45,7 +45,7 @@ The following batch-level settings can be configured to adjust how Queues delive
 | ----------------------------------------- | ------------- | ------------ | ------------- |
 | Maximum Batch Size `max_batch_size`       | 10 messages   | 1 message    | 100 messages  |
 | Maximum Batch Timeout `max_batch_timeout` | 5 seconds     | 0 seconds    | 30 seconds    |
-  
+
 {{</table-wrap>}}
 
 ## Explicit acknowledgement and retries
@@ -55,11 +55,11 @@ You can acknowledge individual messages within a batch by explicitly acknowledgi
 * Each message can be acknowledged as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing.
 * Acknowledging individual messages is useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent (state changing) actions on individual messages.
 
-To explicitly acknowledge a message as delivered, call the `ack()` method on the message. 
+To explicitly acknowledge a message as delivered, call the `ack()` method on the message.
 
 ```ts
 ---
-header: index.js 
+header: index.js
 ---
 export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
@@ -115,7 +115,7 @@ When a single message within a batch fails to be delivered, the entire batch is 
 
 {{<Aside type="warning" header="Retried messages and consumer concurrency">}}
 
-Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more. 
+Retrying messages with `retry()` or calling `retryAll()` on a batch will **not** cause the consumer to autoscale down if consumer concurrency is enabled. Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) to learn more.
 
 {{</Aside>}}
 
@@ -124,6 +124,8 @@ Retrying messages with `retry()` or calling `retryAll()` on a batch will **not**
 When publishing messages to a queue, or when [marking a message or batch for retry](#explicit-acknowledgement-and-retries), you can choose to delay messages from being processed for a period of time.
 
 Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue. For example, if an upstream API you are calling to returns a `HTTP 429: Too Many Requests`, you can delay messages to slow down how quickly you are consuming them before they are re-processed.
+
+Messages can be delayed by upto 12 hours.
 
 {{<Aside type="note">}}
 
@@ -151,7 +153,7 @@ You can also configure a default, global delay on a per-queue basis by passing `
 
 ```sh
 # Delay all messages by 5 minutes as a default
-$ npx wrangler queues create $QUEUE_NAME --delivery-delay-secs=300
+$ npx wrangler queues create $QUEUE-NAME --delivery-delay-secs=300
 ```
 
 ### Delay on retry
@@ -198,11 +200,11 @@ Delays can be configured via the `wrangler` CLI:
 ```sh
 # Push-based consumers
 # Delay any messages that are retried by 60 seconds (1 minute) by default.
-$ npx wrangler@latest queues consumer worker add $QUEUE_NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
+$ npx wrangler@latest queues consumer worker add $QUEUE-NAME $WORKER_SCRIPT_NAME --retry-delay-secs=60
 
 # Pull-based consumers
 # Delay any messages that are retried by 60 seconds (1 minute) by default.
-$ npx wrangler@latest queues consumer http add $QUEUE_NAME --retry-delay-secs=60
+$ npx wrangler@latest queues consumer http add $QUEUE-NAME --retry-delay-secs=60
 ```
 
 Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
@@ -213,7 +215,7 @@ header: wrangler.toml
 ---
 [[queues.producers]]
   binding = "<BINDING_NAME>"
-  queue = "<QUEUE_NAME>"
+  queue = "<QUEUE-NAME>"
   delivery_delay = 60 # delay every message delivery by 1 minute
 
 [[queues.consumers]]
@@ -239,7 +241,7 @@ You can apply a backoff algorithm to increasingly delay messages based on the cu
 
 Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
 
-For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you: 
+For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you:
 
 ```ts
 const calculateExponentialBackoff = (attempts: number, baseDelaySeconds: number) => { return baseDelaySeconds**attempts }

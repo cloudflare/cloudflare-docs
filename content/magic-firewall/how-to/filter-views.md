@@ -20,7 +20,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
 --header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"or\":[{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"},{\"key\":\"Outcome\",\"operator\":\"eq\",\"value\":\"pass\"},{\"key\":\"Verdict\",\"operator\":\"eq\",\"value\":\"drop\"}]}]}}"
 }'
 ```
@@ -34,7 +36,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
 --header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"or\":[{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"},{\"or\":[{\"key\":\"Outcome\",\"operator\":\"eq\",\"value\":\"drop\"},{\"key\":\"Verdict\",\"operator\":\"eq\",\"value\":\"pass\"}]}]}]}}"
 }'
 ```
@@ -52,7 +56,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
 --header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"eq\",\"value\":\"\"}]}}"
 }'
 ```
@@ -66,7 +72,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
 --header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"and\":[{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"},{\"key\":\"RulesetID\",\"operator\":\"!eq\",\"value\":\"\"}]}}"
 }'
 ```
@@ -82,7 +90,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs \
 --header "Content-Type: application/json" \
 --data '{
   ...
-  "logpull_options": "fields=ColoName,Datetime,Direction,IPDestinationAddress,IPDestinationSubnet,IPProtocol,IPSourceAddress,IPSourceSubnet,Outcome,RuleID,RulesetID,SampleInterval,Verdict",
+  "output_options": {
+      "field_names": ["ColoName", "Datetime", "Direction", "IPDestinationAddress", "IPDestinationSubnet", "IPProtocol","IPSourceAddress", "IPSourceSubnet", "Outcome", "RuleID", "RulesetID", "SampleInterval", "Verdict"],
+  },
   "filter": "{\"where\":{\"key\":\"MitigationSystem\",\"operator\":\"eq\",\"value\":\"magic-firewall\"}}"
 }'
 ```

@@ -22,6 +22,15 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range of your private network (for example `10.0.0.0/8`). This makes the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
+{{<Aside type="note">}}
+Cloudflare Tunnel only supports routes in the [private IP address space](https://www.rfc-editor.org/rfc/rfc1918.html#section-3):
+
+- `10.0.0.0` - `10.255.255.255`
+- `172.16.0.0` - `172.31.255.255`
+- `192.168.0.0` - `192.168.255.255`
+
+{{</Aside>}}
+
 ## 2. Set up the client
 
 {{<render file="tunnel/_warp-to-tunnel-client.md">}}

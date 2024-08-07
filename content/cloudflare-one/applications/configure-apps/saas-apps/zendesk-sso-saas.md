@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Zendesk
-weight: 19
+updated: 2024-04-29
+weight: 29
 ---
 
 # Connect to Zendesk through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Zendesk](https://support.zendesk.com/hc/en-u
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to your Zendesk account
 
 ## Configure Zendesk and Cloudflare

@@ -4,7 +4,7 @@ pcx_content_type: overview
 weight: 0
 ---
 
-# Cloudflare Pub/Sub
+{{<heading-pill style="beta">}}Cloudflare Pub/Sub{{</heading-pill>}}
 
 {{<Aside>}}
 
@@ -22,7 +22,7 @@ Pub/Sub:
 - Is global. Cloudflare's Pub/Sub infrastructure runs in [hundreds of cities worldwide](https://www.cloudflare.com/network/). Every edge location is part of one, globally distributed Pub/Sub system.
 - Is secure by default. Clients must authenticate and connect over TLS, and clients are issued credentials that are scoped to a specific broker.
 - Allows you to create multiple brokers to isolate clients or use cases, for example, staging vs. production or customers A vs. B vs. C — as needed. Each broker is addressable by a unique DNS hostname.
-- Integrates with Cloudflare Workers to enable programmable messaging capabilities: parse, filter, aggregate, and re-publish MQTT messages directly from your serverless code. 
+- Integrates with Cloudflare Workers to enable programmable messaging capabilities: parse, filter, aggregate, and re-publish MQTT messages directly from your serverless code.
 - Supports MQTT v5.0, the most recent version of the MQTT specification, and one of the most ubiquitous messaging protocols in use today.
 
 If you are new to the MQTT protocol, visit the [How Pub/Sub works](/pub-sub/learning/how-pubsub-works/) to better understand how MQTT differs from other messaging protocols.

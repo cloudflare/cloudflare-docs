@@ -35,23 +35,20 @@ Create a new Worker to read and write to your KV namespace.
 
 Create a new project named `kv-tutorial` by running:
 
-```sh
-$ npm create cloudflare@latest kv-tutorial
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="kv-tutorial">}}
 
-```
-
-When setting up your `kv-tutorial` Worker, answer the questions as below:
-
-- Your directory has been titled `kv-tutorial`.
-- Choose `"Hello World" Worker` for the type of application.
-- Select `yes` to using TypeScript.
-- Select `yes` to using Git.
-- Select `no` to deploying.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new `kv-tutorial` directory. Your new `kv-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
 - A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `kv-tutorial` Worker will access your kv database.
+
+Change into the directory you just created for your Worker project:
+
+```sh
+$ cd kv-tutorial
+```
 
 {{<Aside type="note" heading="Familiar with Workers?">}}
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
@@ -62,7 +59,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 ## 2. Create a KV namespace
 
-A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
+A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
 You can create a KV namespace via Wrangler or the dashboard.
 
@@ -113,7 +110,7 @@ Binding names do not need to correspond to the namespace you created. Binding na
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/reference/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
 
 Refer to [Environment](/kv/reference/environments/) for more information.
 
@@ -185,7 +182,7 @@ This can be combined with `--preview` flag to interact with a preview namespace 
 Exactly one of `--binding` or `--namespace-id` is required.
 {{</Aside>}}
 
-Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kvbulk) to write a file of multiple key-value pairs to a given KV namespace.
+Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to write a file of multiple key-value pairs to a given KV namespace.
 
 ## 4. Access your KV namespace from a Worker
 

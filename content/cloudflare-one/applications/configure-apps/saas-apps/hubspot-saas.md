@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Hubspot
-weight: 10
+updated: 2024-06-18
+weight: 16
 ---
 
 # Connect to Hubspot through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Hubspot](https://knowledge.hubspot.com/accou
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Hubspot Enterprise plan account
 
 ## 1. Configure Hubspot

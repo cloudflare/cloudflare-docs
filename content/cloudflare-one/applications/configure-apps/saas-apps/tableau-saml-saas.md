@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
-title: Tableau Cloud (SAML)
-weight: 18
+pcx_content_type: integration-guide
+title: Tableau Cloud
+updated: 2024-07-03
+weight: 27
 ---
 
 # Connect to Tableau Cloud through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Tableau Cloud site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

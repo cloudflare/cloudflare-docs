@@ -22,7 +22,7 @@ The Network Analytics dashboard is only available for customers on an Enterprise
 
 ### Web Analytics
 
-Web Analytics (formerly known as Browser Insights) [provides free, privacy-first analytics for your website](/analytics/web-analytics/). Web Analytics does not collect your visitor's personal data, and allows you to have a detailed view into the performance of web pages as experienced by your visitors.
+Web Analytics (formerly known as Browser Insights) [provides free, privacy-first analytics for your website](/web-analytics/). Web Analytics does not collect your visitor's personal data, and allows you to have a detailed view into the performance of web pages as experienced by your visitors.
 
 
 ### Carbon Impact Report

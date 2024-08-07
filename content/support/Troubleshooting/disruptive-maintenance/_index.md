@@ -3,7 +3,7 @@ pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360060050511-Disruptive-Maintenance-Windows
 title: Disruptive Maintenance
 ---
- 
+
 # Disruptive Maintenance
 
 ## Scheduled Maintenance Windows
@@ -31,7 +31,7 @@ Scheduled maintenances can also be sent out via [Cloudflare Notifications](/noti
 
 ## Unplanned Maintenance
 
-Cloudflare operates a redundant [Anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) that is capable of automatically removing locations from our network if they require unplanned maintenance or experience an emergency event. In such cases, traffic will be rerouted automatically to alternative locations.
+Cloudflare operates a redundant [anycast network](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) that is capable of automatically removing locations from our network if they require unplanned maintenance or experience an emergency event. In such cases, traffic will be rerouted automatically to alternative locations.
 
 To check for unplanned maintenance, you can confirm at all times if a location was re-routed by verifying if its status is listed as "Re-routed" in our status page https://www.cloudflarestatus.com. Exceptionally, an incident may be declared for maintenance at a location, in which case updates will be available in our status page at https://www.cloudflarestatus.com.
 

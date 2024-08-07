@@ -8,6 +8,10 @@ weight: 1
 
 You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering.
 
+{{<Aside type= "warning">}}
+`api.js` must be fetched from the exact URL stated below. Proxying or caching this file will likely result in Turnstile failing when future updates are released.
+{{</Aside>}}
+
 ## Implicitly render the Turnstile widget
 
 {{<Aside type="note">}}
@@ -24,6 +28,8 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 </div>
 
 Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
+
+{{<render file="_siteverify-warning.md">}}
 
 {{<Aside type="note">}}
 Once a token has been issued, it can be validated within the next 300 seconds. After 300 seconds, the token is no longer valid and another challenge needs to be solved.

@@ -6,9 +6,11 @@ weight: 5
 
 # IP Address Maps
 
-The {{<glossary-tooltip term_id="address map">}}address map{{</glossary-tooltip>}} is  a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to a domain or zone’s DNS records when they are proxied through Cloudflare.
+{{<glossary-definition term_id="address map" prepend="The address map is ">}}
 
-For an address map to take effect, DNS records within the mapped zone must be set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare. When a zone is proxied, [Cloudflare authoritative DNS](/dns/manage-dns-records/how-to/create-dns-records/) will respond with the address(es) on the address map. Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy); the IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
+When DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/), [Cloudflare authoritative DNS](/dns/) will respond with the address(es) on the address map.
+
+Address maps do not change [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy). The IP addresses defined on the **DNS** > **Records** under your zone continue to instruct Cloudflare how to reach the origin.
 
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
 
@@ -20,15 +22,19 @@ If you do not have BYOIP or static IPs and you want to use Address Maps, contact
 
 ## How to use Address Maps
 
-For domains using Cloudflare authoritative DNS, we typically respond to DNS queries with [Cloudflare anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses), by leasing static Cloudflare IPs or bringing your own IPs (BYOIP), use address maps to specify which IPs to return for which hostnames.
+For zones using Cloudflare authoritative DNS, Cloudflare typically responds to DNS queries for proxied hostnames with [anycast IPs](/fundamentals/concepts/cloudflare-ip-addresses/). If you [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) - by leasing static Cloudflare IPs or bringing your own IPs (BYOIP) - use Address Maps to specify which IPs to return for proxied hostnames.
 
-| Leased static IPs | BYOIPs |
-| --- | --- |
-| <div style="width:350px">Use a set of specifically assigned Cloudflare IPs to ensure they do not change. Cloudflare creates an address map with your static IPs that you may edit. You cannot create another map using your static IPs.</div> | <div style="width:350px">Use your IPs by bringing an address space you lease/own and creating an address map.</div> |
+### Static IPs or BYOIP
+
+Depending on whether you use Static IPs or BYOIP, the process to create an address map is different.
+
+Leased static IPs allow you to use a set of specifically assigned Cloudflare IPs to ensure they do not change. Cloudflare creates an address map with your static IPs that you may edit. You cannot create another map using your static IPs.
+
+With BYOIP, you use your IPs by bringing an address space that you lease or own and creating an address map.
 
 ### Create address maps
 
-To avoid any errors if you have static IPs, Cloudflare creates an address map during the static IP onboarding process where you can instead add or edit your domains. You cannot create a new address map with your static IPs, you may only edit the Cloudflare-created map.
+To avoid any errors if you have static IPs, Cloudflare creates an address map during the static IP onboarding process where you can instead add or edit your zones. You cannot create a new address map with your static IPs, you may only edit the Cloudflare-created map.
 
 Refer to [Static IPs](#static-ips) for more information.
 
@@ -36,7 +42,7 @@ Refer to [Static IPs](#static-ips) for more information.
 2. Go to **IP Addresses** > **Address Maps**.
 3. Select **Create an address map**.
 4. Choose the scope of the address map.
-5. Add the domains and IP addresses that you want to map.
+5. Add the zones and IP addresses that you want to map.
 6. Name your address map.
 7. Review the information and select **Save and Deploy**.
 
@@ -62,11 +68,11 @@ To specify different addresses for certain zones, [create a new address map](#cr
 
 ## Static IPs
 
-Static IPs are allocated to the account, but can be assigned to a single zone. This means that you can place multiple zones on the same static IPs. You can also specify which zones are mapped to your static IPs and control when the IPs for your zones change. 
+Static IPs are allocated to the account, but can be assigned to a single zone. This means that you can place multiple zones on the same static IPs. You can also specify which zones are mapped to your static IPs and control when the IPs for your zones change.
 
 If you need to allowlist your IPs or to communicate your IPs to third parties, allocating static IPs to your account allows you to know them ahead of time.
 
-Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request. 
+Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request.
 
 If you have a static IP, Cloudflare creates an address map which you can edit and add zones to. You cannot create a new address map using the static IP assigned to your account.
 

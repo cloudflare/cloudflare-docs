@@ -28,8 +28,7 @@ To create an account subscription, send a [POST](/api/operations/account-subscri
 header: Request
 ---
 curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/subscriptions' \
---header "x-auth-email: <EMAIL>" \
---header "x-auth-key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
   "rate_plan": {

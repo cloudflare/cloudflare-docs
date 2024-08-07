@@ -23,3 +23,5 @@ To use custom nameservers, a zone must be using Cloudflare as [Primary (Full set
 ## Restrictions
 
 Custom nameservers are organized in different sets (`ns_set`). Each namesever set must have at least two and no more than five custom nameserver names.
+
+{{<render file="_ns-advanced-vs-custom.md">}}<br />

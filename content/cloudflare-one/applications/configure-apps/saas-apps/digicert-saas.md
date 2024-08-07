@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Digicert
-weight: 6
+updated: 2024-06-18
+weight: 9
 ---
 
 # Connect to Digicert through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Digicert account
 - [SAML](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/saml-single-sign-on-prerequisites.html) enabled in your Digicert account
 
@@ -18,7 +19,7 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, type `Digicert` and select the textbox that appears below.
+3. For **Application**, enter `Digicert` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:

@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
 tags: [Hono]
+languages: [TypeScript]
 ---
 
 # Create a serverless, globally distributed REST API with Fauna
@@ -103,38 +104,21 @@ Server keys can read and write all documents in all collections and can call all
 
 Create a new project by using [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare).
 
-{{<tabs labels="NPM | Yarn">}}
-{{<tab label="npm" >}}
-
-```sh
----
-header: Create a new project
----
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn" >}}
-
-```sh
----
-header: Create a new project
----
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="fauna-workers">}}
 
 To continue with this guide:
 
-1. Give your new Worker application a name.
-2. Select `Website or web app`.
-3. Select `Hono`.
-4. Select `No` to skip Git initialization.
-5. Select `No` to skip deploying your application.
+- For *What would you like to start with*?, select `Framework Starter`.
+- For *Which development framework do you want to use?*, select `Hono`.
+- For, *Do you want to deploy your application?*, select `No`.
 
-Next, go to your Worker project directory and update the `wrangler.toml` file to set the name for the Worker.
+Then, move into your newly created directory:
+
+```sh
+$ cd fauna-workers
+```
+
+Update the `wrangler.toml` file to set the name for the Worker.
 
 ```toml
 ---
@@ -147,7 +131,7 @@ name = "fauna-workers"
 
 Before developing your Worker, add your Fauna secret key as a [secret](/workers/configuration/secrets/).
 
-There are two types of secrets for [development](/workers/configuration/secrets/#secrets-in-development) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
+There are two types of secrets for [development](/workers/configuration/secrets/#local-development-with-secrets) or [production](/workers/configuration/secrets/#secrets-on-deployed-workers).
 
 For development, add a `.dev.vars` file on the project root and write your secret.
 

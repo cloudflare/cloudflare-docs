@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Local Development 
+title: Local Development
 weight: 7
 ---
 
@@ -8,10 +8,10 @@ weight: 7
 
 Queues support local development workflows using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Wrangler runs the same version of Queues as Cloudflare runs globally.
 
-## Prerequisites 
+## Prerequisites
 
 To develop locally with Queues, you will need:
-- [Wrangler v3.1.0](https://blog.cloudflare.com/wrangler3/) or later. 
+- [Wrangler v3.1.0](https://blog.cloudflare.com/wrangler3/) or later.
 
 - Node.js version of `18.0.0` or later. Consider using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node versions.
 
@@ -41,7 +41,6 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Known Issues
 
-Wrangler does not yet support running separate producer and consumer Workers bound to the same Queue locally. To develop locally with Queues, you can temporarily put your consumer's `queue()` handler in the same Worker as your producer, so the same Worker acts as both a producer and consumer. 
+Wrangler does not yet support running separate producer and consumer Workers bound to the same Queue locally. To develop locally with Queues, you can temporarily put your consumer's `queue()` handler in the same Worker as your producer, so the same Worker acts as both a producer and consumer.
 
 Wrangler also does not yet support `wrangler dev --remote`.
-

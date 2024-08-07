@@ -8,10 +8,10 @@ weight: 42
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/<account_identifier>` and Zone-scoped use `/zone/<zone_identifier>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `<zone_identifier>` argument is the zone id (hexadecimal string). The `<account_identifier>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
-The `<job_identifier>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
+The `{zone_id}` argument is the zone id (hexadecimal string). The `{account_id}` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/setup/find-account-and-zone-ids/).
+The `{job_id}` argument is the numeric job id. The `{dataset_id}` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 {{<table-wrap>}}
 
@@ -38,8 +38,9 @@ For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutori
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" \
-    'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/jobs'
+curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ## Ownership
@@ -49,10 +50,11 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/ownership \
--H "X-Auth-Email: <EMAIL>" \ 
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \ 
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
@@ -108,7 +110,12 @@ For more information on the value for your cloud storage provider, consult the f
 To check if a destination is already in use:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{"destination_conf":"s3://foo"}' | jq .
 ```
 
 Response
@@ -138,20 +145,25 @@ The kind parameter (optional) is used to differentiate between Logpush and Edge 
 
 {{<Aside type="note" header="Note">}}
 
-The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job. 
+The kind parameter cannot be used to update existing Logpush jobs. You can only specify the kind parameter when creating a new job.
 
 {{</Aside>}}
 
 ```bash
-curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/jobs' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--d '{
- "name":"<DOMAIN_NAME>",
- "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2",
- "dataset": "http_requests",
- "logpull_options":"fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
- "kind":"edge"
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
+  "dataset": "http_requests",
+  "output_options": {
+    "field_names": ["ClientIP", "ClientRequesrHost", "ClientRequestMethod", " ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp","RayID"],
+    "timestamp_format": "rfc3339"
+  },
+  "kind": "edge"
 }' | jq .
 ```
 
@@ -161,7 +173,7 @@ Logpull_options has been replaced with Custom Log Formatting output_options. Ple
 
 If you are still using logpull_options, here are the options that you can customize:
 
-1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/datasets/{dataset}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/datasets/{dataset}/fields/default`.
+1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields/default`.
 2.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 3.  **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 
@@ -172,13 +184,15 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull_options** are valid:
 
 ```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_identifier}/logpush/validate/origin \
+curl --silent --request POST \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data '{
   "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
   "dataset": "http_requests"
-}'
+}' | jq .
 ```
 
 Response
@@ -201,7 +215,7 @@ Use filters to select the events to include and/or remove from your logs. For mo
 
 ## Sampling rate
 
-Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled. 
+Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`. The default value is `1`, meaning logs will be unsampled.
 
 ## Max Upload Parameters
 

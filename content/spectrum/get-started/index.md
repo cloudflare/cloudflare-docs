@@ -36,8 +36,7 @@ Below is a curl example and the associated data being posted to the API.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"protocol":"tcp/22","dns":{"type":"CNAME","name":"ssh.example.com"},"origin_direct":["tcp://192.0.2.1:22"],"proxy_protocol":"off","ip_firewall":true,"tls":"full","edge_ips":{"type":"dynamic","connectivity":"all"},"traffic_type":"direct","argo_smart_routing":true}'
 ```
@@ -101,8 +100,7 @@ Below is a curl example and the associated data being posted to the API.
 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":"off","tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
 ```

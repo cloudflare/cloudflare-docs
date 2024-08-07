@@ -7,6 +7,7 @@ updated: 2024-06-07
 weight: 1
 products: [R2]
 tags: [AI, Hono]
+languages: [TypeScript]
 ---
 
 # Create a fine-tuned OpenAI model with R2
@@ -39,22 +40,17 @@ Before you start, make sure you have:
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-```sh
-$ npm create cloudflare@latest <PROJECT_NAME>
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="finetune-chatgpt-model">}}
 
-Replace `<PROJECT_NAME>` with your desired project name.
-
-In your terminal, you will be asked a series of questions related to your project. Choose the following options:
-
-```txt
-What type of application do you want to create? … "Hello World" Worker
-Do you want to use TypeScript? … Yes
-Do you want to use git for version control? … Yes
-Do you want to deploy your application? › ... No
-```
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 The above options will create the "Hello World" TypeScript project.
+
+Move into your newly created directory:
+
+```sh
+$ cd finetune-chatgpt-model
+```
 
 ## 2. Upload a fine-tune document to R2
 
@@ -77,7 +73,7 @@ $ npx wrangler r2 object put <PATH> -f <FILE_NAME>
 
 ## 3. Bind your bucket to the Worker
 
-A binding is a how your Worker interacts with external resources such as the R2 bucket.
+A binding is how your Worker interacts with external resources such as the R2 bucket.
 
 To bind the R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the binding property to a valid JavaScript variable identifier. Replace `<YOUR_BUCKET_NAME>` with the name of the bucket you created in [step 2](#2-upload-a-fine-tune-document-to-r2):
 
@@ -194,7 +190,7 @@ const createModel = async (c: Context, fileId: string) => {
 
 	const body = {
 		training_file: fileId,
-		model: "gpt-3.5-turbo",
+		model: "gpt-4o-mini",
 	}
 
 	return openai.fineTuning.jobs.create(body)
@@ -279,7 +275,7 @@ Use it in any API requests you make to OpenAI's chat completions endpoints. For 
 ```javascript
 openai.chat.completions.create({
   messages: [{ role: "system", content: "You are a helpful assistant." }],
-  model: "ft:gpt-3.5-turbo:my-org:custom_suffix:id",
+  model: "ft:gpt-4o-mini:my-org:custom_suffix:id",
 });
 ```
 

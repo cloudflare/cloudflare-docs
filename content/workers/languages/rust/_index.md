@@ -9,7 +9,7 @@ weight: 4
 
 {{<heading-pill style="beta">}}Rust{{</heading-pill>}}
 
-Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/reference/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
+Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/concepts/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
 By following this guide, you will learn how to build a Worker entirely in the Rust programming language.
 
@@ -20,30 +20,26 @@ Before starting this guide, make sure you have:
 * A recent version of [`Rust`](https://rustup.rs/)
 * [`npm`](https://docs.npmjs.com/getting-started)
 * The Rust `wasm32-unknown-unknown` toolchain:
-
 ```sh
 $ rustup target add wasm32-unknown-unknown
 ```
+* And `cargo-generate` sub-command by running:
+```sh
+$ cargo install cargo-generate
+```
+
 
 ## 1. Create a new project with Wrangler
 
-Use [`wrangler generate`](/workers/wrangler/commands/#generate) to create a new project from Cloudflare's `workers-rs` template.
+Open a terminal window, and run the following command to generate a Worker project template in Rust:
 
 ```sh
-$ npx wrangler generate hello-world-rust https://github.com/cloudflare/workers-sdk/templates/experimental/worker-rust
+$ cargo generate cloudflare/workers-rs
 ```
 
-Your project will be created in a new directory (`hello-world-rust`). To view the new directory's files:
-
-```sh
-$ cd hello-world-rust
-```
-
-You will find the following files and folders in the `hello-world-rust` directory:
+Your project will be created in a new directory that you named, in which you will find the following files and folders:
 
 * `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
-* `README.md` - Boilerplate readme for working with the template project.
-* `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
 * `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
 * `src` - Rust source directory, pre-populated with Hello World Worker.
 

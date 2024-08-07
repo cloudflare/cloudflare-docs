@@ -14,28 +14,11 @@ Cloudflare Queues is a flexible messaging queue that allows you to queue message
 
 To use Queues, you will need:
 
-1. A [Cloudflare account](/fundamentals/setup/account/), if you do not have one already.
-
-2. C3 ([`create-cloudflare-cli`](https://www.npmjs.com/package/create-cloudflare)) to help you setup and deploy Workers to Cloudflare as fast as possible. C3 will also install [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers and accessing Queues. To install `create-cloudflare`, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
-3. A Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.17.0` or later. You will install these tools as part of creating a new project in [step 2](/queues/get-started/#2-create-a-worker-project).
+{{<render file="_prereqs.md" productFolder="workers">}}
 
 ## 1. Enable Queues
 
-Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/).
-
-{{<Aside type="note">}}
-
-Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Workers Paid plan to enable Queues.
-
-{{</Aside>}}
-
-To enable Queues:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers & Pages** > **Queues**.
-3. Select **Enable Queues Beta**.
-
-Queues is included in the monthly subscription cost of your Workers Paid plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
+{{<render file="_enable-queues.md">}}
 
 ## 2. Create a Worker project
 
@@ -43,32 +26,17 @@ You will access your queue from a Worker, the producer Worker. You must create a
 
 To create a producer Worker, run:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="producer-worker">}}
 
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-
-{{</tab>}}
-{{</tabs>}}
-
-In your terminal, you will be asked a series of questions related to your project.
-
-1. Name your new Worker directory by specifying where you want to create your application.
-2. Select `"Hello World" Worker` as the type of application you want to create.
-3. Answer `yes` to using TypeScript.
-4. Answer `no` to using Git.
-5. Answer `no` to deploying your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
+
+Move into the newly created directory:
+
+```sh
+$ cd producer-worker
+```
 
 ## 3. Create a queue
 
@@ -77,7 +45,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-$ npx wrangler queues create <MY_FIRST_QUEUE>
+$ npx wrangler queues create <MY-QUEUE-NAME>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`.
@@ -97,11 +65,11 @@ To create a binding, open your newly generated `wrangler.toml` configuration fil
 filename: wrangler.toml
 ---
 [[queues.producers]]
- queue = "YOUR_QUEUE_NAME"
+ queue = "MY-QUEUE-NAME"
  binding = "MY_QUEUE"
 ```
 
-Replace `YOUR_QUEUE_NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
+Replace `MY-QUEUE-NAME` with the name of the queue you created in [step 3](/queues/get-started/#3-create-a-queue). Next, replace `MY_QUEUE` with the name you want for your `binding`. The binding must be a valid JavaScript variable name. This is the variable you will use to reference this queue in your Worker.
 
 ### Write your producer Worker
 
@@ -226,14 +194,14 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
 filename: wrangler.toml
 ---
 [[queues.consumers]]
- queue = "<YOUR_QUEUE_NAME>"
+ queue = "<MY-QUEUE-NAME>"
  # Required: this should match the name of the queue you created in step 3.
  # If you misspell the name, you will receive an error when attempting to publish your Worker.
  max_batch_size = 10 # optional: defaults to 10
  max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
 
-Replace `YOUR_QUEUE_NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
+Replace `MY-QUEUE-NAME` with the queue you created in [step 3](/queues/get-started/#3-create-a-queue).
 
 In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first.
 

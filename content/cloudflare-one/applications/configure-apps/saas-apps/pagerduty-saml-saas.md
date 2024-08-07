@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: PagerDuty
-weight: 12
+updated: 2024-07-10
+weight: 20
 ---
 
 # Connect to PagerDuty through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [PagerDuty](https://support.pagerduty.com/doc
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a PagerDuty site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust

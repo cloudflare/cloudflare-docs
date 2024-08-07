@@ -5,6 +5,7 @@ content_type: 📝 Tutorial
 products: [Queues, Workers]
 difficulty: Beginner
 updated: 2024-04-02
+languages: [TypeScript]
 ---
 
 # Log and store upload events in R2 with event notifications
@@ -39,7 +40,7 @@ $ npx wrangler r2 bucket create example-log-sink-bucket
 
 {{<Aside type="note">}}
 
-You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use Queues and Cloudflare Workers to consume event notifications.
+You will need a [Workers Paid plan](/workers/platform/pricing/) to create and use [Queues](/queues/) and Cloudflare Workers to consume event notifications.
 
 {{</Aside>}}
 
@@ -55,14 +56,15 @@ Before you enable event notifications for `example-upload-bucket`, you need to c
 
 Create a new Worker with C3 (`create-cloudflare` CLI). [C3](/pages/get-started/c3/) is a command-line tool designed to help you set up and deploy new applications, including Workers, to Cloudflare.
 
-{{<render file="/_c3-run-command.md" productFolder="/workers/" >}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="consumer-worker">}}
 
-C3 will then prompt you for some information on your Worker.
-1. Provide a name for your consumer Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question “What type of application do you want to create?”, select **"Hello World" Worker**.
-3. For the question “Would you like to use TypeScript? (y/n)”, select **y**.
-4. For the question “Do you want to deploy your application?”, select **n**.
-This will create your Worker.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
+
+Then, move into your newly created directory:
+
+```sh
+$ cd consumer-worker
+```
 
 ## 5. Configure your Worker
 
@@ -100,7 +102,7 @@ export interface Env {
 }
 
 export default {
-	async queue(batch: MessageBatch, env: Env): Promise<void> {
+	async queue(batch, env): Promise<void> {
 		const batchId = new Date().toISOString().replace(/[:.]/g, '-');
 		const fileName = `upload-logs-${batchId}.json`;
 
@@ -114,7 +116,7 @@ export default {
 			}
 		});
 	}
-};
+} satisfies ExportedHandler<Env>;;
 ```
 
 ## 7. Deploy your Worker

@@ -21,5 +21,5 @@ To disable these features for specific URI paths, create a [Configuration Rule](
 Additionally, [Cloudflare Fonts](/speed/optimization/content/fonts/) also requires Cloudflare to decompress the response and compress it again, and cannot be disabled through Rules at this time.
 
 {{<Aside type="note">}}
-If you want to use [Cloudflare Web Analytics](/analytics/web-analytics/), we recommend that you use the [manual mode setup](/analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare) (adding a JavaScript snippet to your HTML pages) to avoid decompression.
+If you want to use [Cloudflare Web Analytics](/web-analytics/), we recommend that you use the [manual mode setup](/web-analytics/get-started/#sites-not-proxied-through-cloudflare) (adding a JavaScript snippet to your HTML pages) to avoid decompression.
 {{</Aside>}}

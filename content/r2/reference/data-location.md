@@ -1,6 +1,7 @@
 ---
 title: Data location
 pcx_content_type: concept
+weight: 7
 ---
 
 # Data location
@@ -91,7 +92,7 @@ bindings = [
 ]
 ```
 
-For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/). 
+For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/).
 
 ### Using jurisdictions with the S3 API
 
@@ -140,6 +141,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 During the beta, the following services will not interact with R2 resources with assigned jurisdictions:
 * [Super Slurper](/r2/data-migration/)
 * [Logpush](/logs/get-started/enable-destinations/r2/)
+* [Event Notifications](/r2/buckets/event-notifications/)
 
 ### Additional considerations
 

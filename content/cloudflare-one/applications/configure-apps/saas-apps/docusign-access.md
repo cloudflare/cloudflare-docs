@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: DocuSign
-weight: 7
+updated: 2024-06-18
+weight: 10
 ---
 
 # Connect to DocuSign through Access
@@ -10,7 +11,7 @@ This guide covers how to configure [Docusign](https://support.docusign.com/s/doc
 
 ## Prerequisites
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Docusign account that has Single Sign-On available
 - A [domain](https://support.docusign.com/s/document-item?language=en_US&bundleId=rrf1583359212854&topicId=gso1583359141256.html&_LANG=enus) verified in Docusign
 

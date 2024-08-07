@@ -6,6 +6,7 @@ pcx_content_type: tutorial
 tags: [AI]
 title: Deploy a Worker that connects to OpenAI via AI Gateway
 products: [Workers]
+languages: [JavaScript]
 ---
 
 # Deploy a Worker that connects to OpenAI via AI Gateway
@@ -32,20 +33,9 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 Create a Worker project in the command line:
 
-```sh
----
-header: Create a Worker project
----
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="openai-aig">}}
 
-$ npm create cloudflare@latest
-```
-
-For setup, select the following options:
-
-* For *Where do you want to create your application?*, indicate openai-aig.
-* For *What type of application do you want to create?*, choose "Hello World" script.
-* For *Do you want to use TypeScript?*, choose no.
-* For *Do you want to deploy your application?*, choose yes.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Go to your new open Worker project:
 
@@ -151,7 +141,7 @@ export default {
 
 		try {
 		  const chatCompletion = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo-0613",
+			model: "gpt-4o-mini",
 			messages: [{role: "user", content: "What is a neuron?"}],
 			max_tokens: 100,
 		  });

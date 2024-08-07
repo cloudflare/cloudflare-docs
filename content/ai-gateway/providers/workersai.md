@@ -21,7 +21,7 @@ For these parameters:
 - `{gateway_id}` refers to the name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway).
 - `{model_id}` refers to the model ID of the [Workers AI model](/workers-ai/models/).
 
-### Examples
+## Examples
 
 First, generate an [API token](/fundamentals/api/get-started/create-token/) with `Workers AI Read` access and use it in your request.
 
@@ -30,7 +30,7 @@ First, generate an [API token](/fundamentals/api/get-started/create-token/) with
 header: Request to Workers AI llama model
 ---
 
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3-8b-instruct \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{"prompt": "What is Cloudflare?"}'
@@ -60,7 +60,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v
  --header 'Authorization: Bearer {cf_api_token}' \
  --header 'Content-Type: application/json' \
  --data '{
-      "model": "@cf/meta/llama-3-8b-instruct",
+      "model": "@cf/meta/llama-3.1-8b-instruct",
       "messages": [
         {
           "role": "user",
@@ -71,7 +71,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v
 '
 ```
 
-## Worker
+### Worker
 
 To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
 
@@ -83,7 +83,7 @@ export interface Env {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await env.AI.run(
-      "@cf/meta/llama-3-8b-instruct",
+      "@cf/meta/llama-3.1-8b-instruct",
       {
         prompt: "Why should you use Cloudflare for your AI inference?"
       },

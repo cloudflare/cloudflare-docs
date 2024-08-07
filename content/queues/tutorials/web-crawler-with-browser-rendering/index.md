@@ -1,6 +1,6 @@
 ---
-updated: 2023-07-17
-difficulty: Beginner
+updated: 2024-08-06
+difficulty: Intermediate
 title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
 content_type:  📝 Tutorial
@@ -8,111 +8,172 @@ pcx_content_type: tutorial
 weight: 1002
 meta:
   title: Cloudflare Queues - Queues & Browser Rendering
-products: [Browser Rendering, KV]
+products: [Workers, Browser Rendering, KV]
+languages: [TypeScript]
 ---
 
 # Build a web crawler with Queues and Browser Rendering
 
 {{<tutorial-date-info>}}
 
-This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer.
+This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
 
-Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to Cloudflare.com and take a screenshot of the site, saving results to KV.
+Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to [Workers KV](/kv/).
 
 You can use Puppeteer to request all images on a page, save the colors used on a site, and more.
 
 ## Prerequisites
-To continue, you will need:
-1. A recent version of [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
-2. A subscription to Workers Paid, required for using Queues.
-3. Access to the [Browser Rendering](https://www.cloudflare.com/lp/workers-browser-rendering-api/) API, currently in open beta.
 
-{{<Aside type="note">}}
-Queues today works with local development mode in wrangler. `wrangler dev --remote` is not supported.
-{{</Aside>}}
+{{<render file="_prereqs.md" productFolder="workers">}}
 
-## 1. Build the crawler Worker
-You will first need to create KV namespaces and queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.
+### Queues access
 
-### Set up KV namespaces
+Additionally, you will need access to Queues.
 
-To set up KV namespaces:
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** > **KV**.
-3. Select **Create a namespace**, enter `crawler_links`, and select **Add**. Repeat to create another KV namespace called `crawler_screenshots`.
+{{<render file="_enable-queues.md">}}
 
-![Creating a KV namespace named crawler_links](/queues/tutorials/web-crawler-with-browser-rendering/create-kv-namespaces.png)
+## 1. Create new Workers application
 
-### Set up a Queue
-To set up a Queue:
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** > **Queues**.
-3. Select **Create queue**.
-4. Enter a queue name and select **Create queue**.
+To get started, create a Worker application using the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). Open a terminal window and run the following command:
 
-![Creating a queue named queues-web-crawler](/queues/tutorials/web-crawler-with-browser-rendering/create-queue.png)
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="queues-web-crawler">}}
 
-## 2. Create a Worker
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
-Create a new Worker with the C3 (`create-cloudflare-cli`) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+Then, move into your newly created directory:
 
 ```sh
----
-header: Create a Worker
----
-$ npm create cloudflare@latest # or yarn create cloudflare
+$ cd queues-web-crawler
 ```
 
-C3 will then prompt you for some information on your Worker.
+## 2. Create KV namespace
 
-1. Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.
-2. For the question `What type of application do you want to create?`, select `"Hello World" Worker`.
-3. For the question `Would you like to use TypeScript? (y/n)`, select `y`.
-4. For the question `Do you want to deploy your application?`, select `n`.
+We need to create a KV store. This can be done through the Cloudflare dashboard or the Wrangler CLI. For this tutorial, we will use the Wrangler CLI.
 
-This will create the crawler Worker.
+```sh
+$ npx wrangler kv namespace create crawler_links
+$ npx wrangler kv namespace create crawler_screenshots
+```
 
-## 3. Configure your Worker
+After running the `wrangler kv namespace create` subcommand, you will get the following output.
 
-In the `wrangler.toml` file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and queue you created previously, which will allow you to access KV and the queue from the Worker.
+```txt
+---
+header: Output
+---
+🌀 Creating namespace with title "web-crawler-crawler-links"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
+[[kv_namespaces]]
+binding = "crawler_links"
+id = "<GENERATED_NAMESPACE_ID>"
+
+🌀 Creating namespace with title "web-crawler-crawler-screenshots"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
+[[kv_namespaces]]
+binding = "crawler_screenshots"
+id = "<GENERATED_NAMESPACE_ID>"
+```
+
+### Add KV bindings to wrangler.toml
+
+Then, in your `wrangler.toml` file, add the following with the values generated in the terminal:
 
 ```toml
 ---
 filename: wrangler.toml
-highlight: [7, 9, 10, 11, 12, 14, 15, 16, 18, 19, 20]
 ---
-name = "queues-web-crawler"
-main = "src/index.ts"
-compatibility_date = "2023-06-09"
-node_compat = true
-
-browser = { binding = "CRAWLER_BROWSER", type = "browser" }
-
 kv_namespaces = [
-  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<crawler_screenshots namespace ID here>" },
-  { binding = "CRAWLER_LINKS_KV", id = "<crawler_links namespace ID here>" }
+  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
+  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
 ]
-
-[[queues.consumers]]
-  queue = "<queue name here>"
-  max_batch_timeout = 60
-
-[[queues.producers]]
- queue = "<queue name here>"
- binding = "CRAWLER_QUEUE"
 ```
 
-To find the KV namespace IDs in the [Cloudflare dashboard](https://dash.cloudflare.com/), select **Workers & Pages** > **KV**. The namespace IDs are shown to the right of each KV namespace.
+## 3. Set up Browser Rendering
 
-![List namespace IDs](/queues/tutorials/web-crawler-with-browser-rendering/list-namespace-id.png)
+Now, you need to set up your Worker for Browser Rendering.
 
-Add a `max_batch_timeout` of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
+In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
-Change the `usage_model` to unbound. This allows your crawler to take advantage of higher CPU time limits.
+```sh
+$ npm install @cloudflare/puppeteer --save-dev
+$ npm install robots-parser
+```
 
-Refer to [Worker limits](/workers/platform/limits/#worker-limits) to learn more about usage models.
+Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
-## 4. Add bindings to environment
+```toml
+---
+filename: wrangler.toml
+---
+browser = { binding = "CRAWLER_BROWSER" }
+```
+
+## 4. Set up a Queue
+
+Now, we need to set up the Queue.
+
+```sh
+$ npx wrangler queues create queues-web-crawler
+```
+
+```txt
+---
+header: Output
+---
+Creating queue queues-web-crawler.
+Created queue queues-web-crawler.
+```
+
+### Add Queue bindings to wrangler.toml
+
+Then, in your `wrangler.toml` file, add the following:
+
+```toml
+---
+filename: wrangler.toml
+---
+[[queues.consumers]]
+queue = "queues-web-crawler"
+max_batch_timeout = 60
+
+[[queues.producers]]
+queue = "queues-web-crawler"
+binding = "CRAWLER_QUEUE"
+```
+
+Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
+
+Your final `wrangler.toml` file should look similar to the one below.
+
+```toml
+---
+filename: wrangler.toml
+---
+#:schema node_modules/wrangler/config-schema.json
+name = "web-crawler"
+main = "src/index.ts"
+compatibility_date = "2024-07-25"
+compatibility_flags = ["nodejs_compat"]
+
+kv_namespaces = [
+  { binding = "CRAWLER_SCREENSHOTS_KV", id = "<GENERATED_NAMESPACE_ID>" },
+  { binding = "CRAWLER_LINKS_KV", id = "<GENERATED_NAMESPACE_ID>" }
+]
+
+browser = { binding = "CRAWLER_BROWSER" }
+
+[[queues.consumers]]
+queue = "queues-web-crawler"
+max_batch_timeout = 60
+
+[[queues.producers]]
+queue = "queues-web-crawler"
+binding = "CRAWLER_QUEUE"
+```
+
+## 5. Add bindings to environment
 
 Add the bindings to the environment interface in `src/index.ts`, so TypeScript correctly types the bindings. Type the queue as `Queue<any>`. The following step will show you how to change this type.
 
@@ -130,7 +191,7 @@ export interface Env {
 }
 ```
 
-## 5. Submit links to crawl
+## 6. Submit links to crawl
 
 Add a `fetch()` handler to the Worker to submit links to crawl.
 
@@ -157,7 +218,7 @@ export default {
 
 This will accept requests to any subpath and forwards the request's body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a `POST` request and contains a well-formed URL in its body. This has been omitted for simplicity.
 
-## 6. Crawl with Puppeteer
+## 7. Crawl with Puppeteer
 
 Add a `queue()` handler to the Worker to process the links you send.
 
@@ -256,7 +317,7 @@ To enable recursively crawling links, add a snippet after checking the number of
 ```ts
 ---
 filename: src/index.ts
-highlight: [3,4,5,6,7,8,9,10,11,12,13,14]
+highlight: [3-14]
 ---
 // const numCloudflareLinks = await page.$$eval("a", (links) => { ...
 
@@ -281,7 +342,7 @@ Then, in the `queue` handler, call `crawlPage` on the URL.
 ```ts
 ---
 filename: src/index.ts
-highlight: [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+highlight: [8-23]
 ---
 // in the `queue` handler:
 // ...
@@ -319,7 +380,7 @@ Add a snippet before checking `robots.txt` to check KV for a crawl within the la
 ```ts
 ---
 filename: src/index.ts
-highlight: [12,13,14,15,16,17,18,19,20,21,22,23]
+highlight: [12-23]
 ---
 type KeyMetadata = {
   date: number;
@@ -349,7 +410,153 @@ for (const message of batch.messages) {
   // ...
 ```
 
-## 7. Deploy your Worker
+The final script is included below.
+
+```ts
+---
+filename: src/index.ts
+---
+import puppeteer, { BrowserWorker } from "@cloudflare/puppeteer";
+import robotsParser from "robots-parser";
+
+type Message = {
+  url: string;
+};
+
+export interface Env {
+  CRAWLER_QUEUE: Queue<Message>;
+  CRAWLER_SCREENSHOTS_KV: KVNamespace;
+  CRAWLER_LINKS_KV: KVNamespace;
+  CRAWLER_BROWSER: BrowserWorker;
+}
+
+type Result = {
+  numCloudflareLinks: number;
+  screenshot: ArrayBuffer;
+};
+
+type KeyMetadata = {
+  date: number;
+};
+
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+    // util endpoint for testing purposes
+    await env.CRAWLER_QUEUE.send({ url: await req.text() });
+    return new Response("Success!");
+  },
+  async queue(batch: MessageBatch<Message>, env: Env): Promise<void> {
+    const crawlPage = async (url: string): Promise<Result> => {
+      const page = await (browser as puppeteer.Browser).newPage();
+
+      await page.goto(url, {
+        waitUntil: "load",
+      });
+
+      const numCloudflareLinks = await page.$$eval("a", (links) => {
+        links = links.filter((link) => {
+          try {
+            return new URL(link.href).hostname.includes("cloudflare.com");
+          } catch {
+            return false;
+          }
+        });
+        return links.length;
+      });
+
+      // to crawl recursively - uncomment this!
+      /*await page.$$eval("a", async (links) => {
+        const urls: MessageSendRequest<Message>[] = links.map((link) => {
+          return {
+            body: {
+              url: link.href,
+            },
+          };
+        });
+        try {
+          await env.CRAWLER_QUEUE.sendBatch(urls);
+        } catch {} // do nothing, might've hit subrequest limit
+      });*/
+
+      await page.setViewport({
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 1,
+      });
+
+      return {
+        numCloudflareLinks,
+        screenshot: ((await page.screenshot({ fullPage: true })) as Buffer)
+          .buffer,
+      };
+    };
+
+    let browser: puppeteer.Browser | null = null;
+    try {
+      browser = await puppeteer.launch(env.CRAWLER_BROWSER);
+    } catch {
+      batch.retryAll();
+      return;
+    }
+
+    for (const message of batch.messages) {
+      const { url } = message.body;
+      const timestamp = new Date().getTime();
+      const resultKey = `${encodeURIComponent(url)}-${timestamp}`;
+
+      const sameUrlCrawls = await env.CRAWLER_LINKS_KV.list({
+        prefix: `${encodeURIComponent(url)}`,
+      });
+
+      let shouldSkip = false;
+      for (const key of sameUrlCrawls.keys) {
+        if (timestamp - (key.metadata as KeyMetadata)?.date < 60 * 60 * 1000) {
+          // if crawled in last hour, skip
+          message.ack();
+          shouldSkip = true;
+          break;
+        }
+      }
+      if (shouldSkip) {
+        continue;
+      }
+
+      let isAllowed = true;
+      try {
+        const robotsTextPath = new URL(url).origin + "/robots.txt";
+        const response = await fetch(robotsTextPath);
+
+        const robots = robotsParser(robotsTextPath, await response.text());
+        isAllowed = robots.isAllowed(url) ?? true; // respect robots.txt!
+      } catch {}
+
+      if (!isAllowed) {
+        message.ack();
+        continue;
+      }
+
+      try {
+        const { numCloudflareLinks, screenshot } = await crawlPage(url);
+        await env.CRAWLER_LINKS_KV.put(
+          resultKey,
+          numCloudflareLinks.toString(),
+          { metadata: { date: timestamp } }
+        );
+        await env.CRAWLER_SCREENSHOTS_KV.put(resultKey, screenshot, {
+          metadata: { date: timestamp },
+        });
+        message.ack();
+      } catch {
+        message.retry();
+      }
+    }
+
+    await browser.close();
+  },
+};
+```
+
+## 8. Deploy your Worker
 
 To deploy your Worker, run the following command:
 
@@ -357,7 +564,20 @@ To deploy your Worker, run the following command:
 $ npx wrangler deploy
 ```
 
-You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV.
+You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
+
+To test your Worker, you could use the following cURL request to take a screenshot of this documentation page.
+
+```bash
+---
+header: Test with a cURL request
+---
+
+curl <YOUR_WORKER_URL> \
+  -H "Content-Type: application/json" \
+  -d 'https://developers.cloudflare.com/queues/tutorials/web-crawler-with-browser-rendering/'
+
+```
 
 Refer to the [GitHub repository for the complete tutorial](https://github.com/cloudflare/queues-web-crawler), including a front end deployed with Pages to submit URLs and view crawler results.
 
@@ -367,4 +587,3 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 - [Queues Batching and Retries](/queues/configuration/batching-retries/)
 - [Browser Rendering](/browser-rendering/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)
-

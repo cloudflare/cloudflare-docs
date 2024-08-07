@@ -2,10 +2,11 @@
 pcx_content_type: tutorial
 title: Deploy a Browser Rendering Worker with Durable Objects
 weight: 2
-products: [Durable Objects, R2]
+products: [Workers, Durable Objects, R2]
 difficulty: Beginner
 content_type: 📝 Tutorial
 updated: 2023-09-28
+languages: [JavaScript]
 ---
 
 # Deploy a Browser Rendering Worker with Durable Objects
@@ -24,22 +25,7 @@ Using Durable Objects to persist browser sessions improves performance by elimin
 
 Create a new Worker project named `browser-worker` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
-
-```sh
-$ npm create cloudflare@latest
-```
-
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare@latest
-```
-
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
 
 ## 2. Enable Durable Objects in the dashboard

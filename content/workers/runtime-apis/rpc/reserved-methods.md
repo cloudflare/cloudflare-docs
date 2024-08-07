@@ -13,7 +13,7 @@ Some method names are reserved or have special semantics.
 
 ## Special Methods
 
-For backwards compatibility, when extending `WorkerEntrypoint` or `DurableObject`, the following method names have special semantics. Not that this does *not* apply to `RpcTarget`. On `RpcTarget`, these methods work like any other RPC method.
+For backwards compatibility, when extending `WorkerEntrypoint` or `DurableObject`, the following method names have special semantics. Note that this does *not* apply to `RpcTarget`. On `RpcTarget`, these methods work like any other RPC method.
 
 ### `fetch()`
 

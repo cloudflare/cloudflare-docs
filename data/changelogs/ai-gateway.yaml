@@ -6,6 +6,16 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
 
+- publish_date: '2024-08-02'
+  title: Mistral AI
+  description: |-
+    * **Providers**: Added [Mistral AI](/ai-gateway/providers/mistral/) as a new provider.
+    
+- publish_date: '2024-07-23'
+  title: Google AI Studio
+  description: |-
+    * **Providers**: Added [Google AI Studio](/ai-gateway/providers/google-ai-studio/) as a new provider.
+
 - publish_date: '2024-07-10'
   title: Custom metadata
   description: |-

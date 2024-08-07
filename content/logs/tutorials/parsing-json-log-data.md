@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Parse Cloudflare Logs JSON data
 weight: 86
 ---
@@ -8,7 +8,7 @@ weight: 86
 
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
-In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://jqlang.github.io/jq/).
+One of those tools used to parse your JSON log data is _jq_. To get started with _jq_, visit the [_jq_ official site](https://jqlang.github.io/jq/).
 
 {{<Aside type="note" header="Note">}}
 

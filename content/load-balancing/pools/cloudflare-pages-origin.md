@@ -94,7 +94,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
   * The endpoint IP address or hostname.
 
     {{<Aside type="warning">}}
-As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's Anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
+As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
 {{</Aside>}}
   * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
   * A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.

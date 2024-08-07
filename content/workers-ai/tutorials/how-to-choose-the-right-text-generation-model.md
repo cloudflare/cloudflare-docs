@@ -7,8 +7,8 @@ title: Choose the Right Text Generation Model
 meta:
   description: There's a wide range of text generation models available through Workers AI. In an effort to aid you in your journey of finding the right model, this notebook will help you get to know your options in a speed dating type of scenario.
 weight: 1
-tags:
-  - AI
+tags: [AI]
+languages: [Python]
 ---
 
 # Choose the Right Text Generation Model

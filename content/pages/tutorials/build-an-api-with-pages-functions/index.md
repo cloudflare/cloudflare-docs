@@ -4,6 +4,7 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
+languages: [JavaScript]
 ---
 
 # Build an API for your front end using Pages Functions

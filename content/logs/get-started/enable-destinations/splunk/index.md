@@ -12,27 +12,32 @@ Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare d
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Splunk via the dashboard.
-
-To enable the Cloudflare Logpush service:
-
 {{<render file="_enable-logpush-job.md">}}
 
-7. In **Select a destination**, choose **Splunk**.
+5.  In **Select a destination**, choose **Splunk**.
 
-8. Enter or select the following destination information:
-
+6. Enter or select the following destination information:
     - **Splunk raw HTTP Event Collector URL**
-    - **Channel ID**
+    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](http://guidgenerator.com/).
     - **Auth Token**
-    - **Source Type**
-    - **Use insecure skip verify option**
+    - **Source Type** - For example, `cloudflare:json`.
+    - **Use insecure skip verify option** (not recommended).
 
-9. Select **Validate access**.
+When you are done entering the destination details, select **Continue**.
 
-10. Select **Save and Start Pushing** to finish enabling Logpush.
+7. Select the dataset to push to the storage service.
 
-Once connected, Cloudflare lists Splunk as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
+8. In the next step, you need to configure your logpush job:
+    - Enter the **Job name**.
+    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/reference/filters/) for more information. Not all datasets have this option available.
+    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+9. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 
@@ -79,17 +84,24 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/reference/log-output-options/). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
--d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+"name":"<DOMAIN_NAME>",
+"destination_conf":"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+"output_options": {
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
+    },
+"dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -103,7 +115,10 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
     "last_complete": null,
     "last_error": null,
@@ -135,7 +150,10 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "output_options": {
+        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+        "timestamp_format": "rfc3339"
+    },
     "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
     "last_complete": null,
     "last_error": null,

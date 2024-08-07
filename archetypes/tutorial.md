@@ -30,9 +30,7 @@ Before you start, make sure you have:
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-```sh
-$ npm create cloudflare@latest <PROJECT_NAME>
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="<PROJECT_NAME>">}}
 
 Replace `<PROJECT_NAME>` with your desired project name.
 

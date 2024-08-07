@@ -45,7 +45,7 @@
 /content/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/cloudflare-one/connections/connect-devices/ @kkrum @ranbel @cloudflare/pcx-technical-writing
+/cloudflare-one/connections/connect-devices/ @kkrum @dh-cf @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/connections/connect-networks/ @janani-cr @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/insights/ @abelinkinbio @ranbel @cloudflare/pcx-technical-writing
 /content/cloudflare-one/applications/scan-apps/ @maxvp @cloudflare/pcx-technical-writing
@@ -54,6 +54,7 @@
 /content/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /content/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /data/changelogs/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
+/data/changelogs/warp.yaml @ranbel @dh-cf @cloudflare/pcx-technical-writing
 
 # Consumer products
 /content/1.1.1.1/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
@@ -75,17 +76,20 @@
 /content/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing
 
 # Developer Platform
-/content/calls/ @cloudflare/pcx-technical-writing @renandincer @third774
+/content/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
+/assets/images/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
 /content/d1/ @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/durable-objects/ @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
+/data/changelogs/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/email-routing/ @kodster28 @cloudflare/pcx-technical-writing
 /content/hyperdrive/ @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/d1.yaml @elithrar @rozenmd @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
-/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
-/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
+/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
+/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @thomasgauvin @rts-rob @kodster28 @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @kodster28 @dcpena @cloudflare/pcx-technical-writing
@@ -138,7 +142,7 @@
 /content/argo-smart-routing/ @dcpena @cloudflare/pcx-technical-writing
 /content/automatic-platform-optimization/ @kodster28 @cloudflare/pcx-technical-writing
 /content/cache/ @angelampcosta @cloudflare/pcx-technical-writing
-/content/health-checks/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
+/content/health-checks/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/load-balancing/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing
 /content/speed/ @angelampcosta @cloudflare/pcx-technical-writing
@@ -173,3 +177,6 @@
 # Waiting Room
 /content/waiting-room/ @aolache @angelampcosta @cloudflare/pcx-technical-writing
 /data/changelogs/waiting-room.yaml @aolache @angelampcosta @cloudflare/pcx-technical-writing
+
+# Web Analytics
+/content/web-analytics/ @angelampcosta @cloudflare/pcx-technical-writing

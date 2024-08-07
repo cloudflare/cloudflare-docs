@@ -36,13 +36,29 @@ The evaluation and execution order of Rules features is different from Page Rule
 - A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
 - Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
 
+### Behavior change in Cache Rules
+
+There is a behavior change between Page Rules and Cache Rules: when you select **Eligible for cache** in a cache rule, the Cache Everything feature is now enabled by default.
+
+If you need to keep the exact same behavior you had with Page Rules, you will need to make some additional configurations. For details, refer to [Migration from Page Rules](/cache/how-to/cache-rules/page-rules-migration/) in the Cache documentation.
+
 ## Convert Page Rules URLs to filter expressions
 
 When migrating a Page Rule you will need to write a filter expression equivalent to your Page Rules URL using the Rules language.
 
 Rule filter expressions are built differently from Page Rules URLs. You can use different elements of the Rules language in a filter expression, including [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
 
-Strings in filter expressions do not support wildcards yet. You will need to adapt your Page Rules URLs when migrating them to modern rules. While Enterprise and Business customers can use regular expressions, it will also require adapting the original URLs in your Page Rules to regular expressions.
+You will need to adapt your Page Rules URLs when migrating them to modern rules. In the Rules language, use the `wildcard` and `strict wildcard` operators (case insensitive and case sensitive operator, respectively) for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching). Enterprise and Business customers can use regular expressions, but it will also require adapting the original URLs in your Page Rules to regular expressions.
+
+### Matching full URIs with wildcards
+
+The Page Rules URL matching does not take into account the URI scheme (for example, `https://`) and the query string of incoming requests, unless included in the rule URL. However, the `http.request.full_uri` field used in filter expressions includes the URI scheme and the query string (when the incoming request includes one). When writing a filter expression equivalent to a Page Rule URL, you may want to perform wildcard matching on the full URI. To check for a match regardless of the URI scheme and query string, you can add a `*` wildcard at the beginning and at the end of the literal string with wildcards.
+
+For example, if you were using the Page Rules URL `example.com/*/downloads/*.txt`, in modern Rules features you could use an expression such as `http.request.full_uri wildcard *example.com/*/downloads/*.txt*` to make sure it matches any scheme and any query string.
+
+Alternatively, you could match on individual hostname and URI path fields instead of the full URI field. For example, `http.host eq "example.com" and http.request.uri.path wildcard "/*/downloads/*.txt"`. This was the conversion method followed in the table with example conversions from Page Rules URLs to filter expressions.
+
+### Example conversions from Page Rules URLs to filter expressions
 
 The following table lists the most common Page Rule URLs and their equivalent filters:
 
@@ -228,6 +244,8 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -315,6 +333,8 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -360,6 +380,8 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -404,6 +426,8 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -447,6 +471,8 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -489,6 +515,8 @@ You configured a Page Rule turning on caching for responses that contained cooki
         - **Cache eligibility**: Eligible for cache
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -540,6 +568,8 @@ You configured a Page Rule turning on caching of every response with status code
                 - **Duration**: _1 day_
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -583,6 +613,8 @@ You configured a Page Rule setting a custom cache key for all query string param
         - **Setting**: Cache key
             - **Query string**: All query string parameters
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -802,6 +834,8 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
             - Ignore cache-control header and use this TTL
             - **Input time-to-live (TTL)**: _1 day_
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1149,6 +1183,8 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1193,6 +1229,8 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
             - **Use Origin error page pass-thru**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
@@ -1284,6 +1322,8 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     </div>
 
+    {{<render file="_page-rules-cache-rules-difference.md">}}
+
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.
 
@@ -1371,6 +1411,8 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
             - **Use strong ETag headers**: On
 
     </div>
+
+    {{<render file="_page-rules-cache-rules-difference.md">}}
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 3. If your tests succeed, delete the existing Page Rule.

@@ -19,3 +19,4 @@ You can now configure an [Access policy](/cloudflare-one/policies/access/) to co
    - [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
 
 5. Select **Next**.
+

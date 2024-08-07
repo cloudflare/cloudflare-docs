@@ -1,7 +1,8 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Google Cloud
-weight: 8
+updated: 2024-07-03
+weight: 13
 ---
 
 # Connect to Google Cloud through Access
@@ -18,7 +19,7 @@ When configuring Google Cloud with Access, the following limitations apply:
 
 ## Prerequistes
 
-- A [SAML identity provider](/cloudflare-one/identity/idp-integration/generic-saml/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
 - [Cloud Identity Free or Premium](https://support.google.com/cloudidentity/answer/7389973) set up in your organization's Google Cloud account
 

@@ -10,7 +10,7 @@ This page provides generic instructions for setting up a SaaS application in Clo
 
 ## Prerequisites
 
-- An [OIDC identity provider](/cloudflare-one/identity/idp-integration/generic-oidc/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to the account of the SaaS application
 
 ## 1. Get SaaS application URL

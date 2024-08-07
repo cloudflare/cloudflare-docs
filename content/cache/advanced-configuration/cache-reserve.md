@@ -19,13 +19,22 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or [via API](/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
+A paid Cache Reserve Plan is required for the enablement.
 
-To enable Cache Reserve through the dashboard:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2.  Go to **Caching** > **Cache Reserve**.
 3.  Select **Enable storage sync**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Refer to the [Change Cache Reserve setting API](/api/operations/zone-cache-settings-change-cache-reserve-setting) for more information.
+
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
 
@@ -42,7 +51,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
@@ -102,11 +111,11 @@ Operations are performed by Cache Reserve on behalf of the user to write data fr
 
 #### Class A operations (writes)
 
-Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor. 
+Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor.
 
 #### Class B operations (reads)
 
-Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache. 
+Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache.
 
 #### Purge
 
@@ -181,23 +190,22 @@ Be aware that the deletion may take up to 24 hours to complete.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
- 
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
 2. Go to **Caching** > **Cache Reserve**.
 3. In **Delete Cache Reserve Data**, select **Delete Storage**.
- 
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
- 
-To delete Cache Reserve data via API use the following example request. For more information, refer to the [API documentation](/api/operations/zone-cache-settings-start-cache-reserve-clear).
 
-```json
+To delete Cache Reserve data via API use the following example requests. For more information, refer to the [API documentation](/api/operations/zone-cache-settings-start-cache-reserve-clear).
+
+```bash
 ---
-header: Request
+header: Request 1: Get Cache Reserve status
 ---
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve/ \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API_TOKEN>"
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -209,6 +217,33 @@ header: Response
     "editable": true,
     "id": "cache_reserve",
     "value": "off"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+If Cache Reserve is turned off, you can proceed to the Cache Reserve Clear operation.
+
+```bash
+---
+header: Request 2: Start Cache Reserve Clear
+---
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve_clear \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "cache_reserve_clear",
+    "start_ts": "2024-06-02T10:00:00.12345Z",
+    "state": "In-progress"
   },
   "success": true,
   "errors": [],

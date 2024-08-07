@@ -19,7 +19,7 @@ The two available types of URL normalization are:
 
 The location where URL normalization will occur depends on the [configured settings](/rules/normalization/settings/).
 
-For examples of the different settings and their impact on request URLs, refer to [URL normalization examples](/rules/normalization/examples/).
+For examples of the different settings and their impact on request URLs, refer to the [URL normalization examples](/rules/normalization/examples/).
 
 ## RFC 3986 normalization
 

@@ -30,7 +30,8 @@ To enable advanced nameservers on an existing zone:
 Use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to send a PATCH request like the following:
 
 ```bash
-curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings' \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
