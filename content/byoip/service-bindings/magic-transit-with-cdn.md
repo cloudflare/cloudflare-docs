@@ -155,4 +155,10 @@ Make sure you have the correct Key/Token and permissions.
 Total TLS
 {{</Aside>}}
 
-## 5.(Optional) Add more layer 7 functionality
+## 5.(Optional) Add layer 7 functionality
+
+Leverage other features according to your needs:
+
+* [Cache](/cache/)
+* [WAF custom rules](/waf/custom-rules/#custom-rules)
+* [Security analytics](/waf/analytics/security-analytics/#security-analytics)
