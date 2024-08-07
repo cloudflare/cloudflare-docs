@@ -69,7 +69,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 Once this step is completed, a four to six-hour propagation state will initiate. Only after the service binding reaches an **active** state, all traffic will be processed through the CDN pipeline.
 {{</Aside>}}
 
-1. Make a `POST` request to the [Create Service Binding](/api/operations/ip-address-management-service-bindings-create-service-binding/) endpoint, indicating the IP address you want to bind to CDN. Don't forget to specify the **corresponding network mask**.
+1. Make a `POST` request to the [Create Service Binding](/api/operations/ip-address-management-service-bindings-create-service-binding/) endpoint, indicating the IP address you want to bind to the CDN. Don't forget to specify the **corresponding network mask**.
 
 {{<example>}}
 
@@ -120,10 +120,10 @@ You can choose between two different scopes:
 
 * Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
 
-* Zone-Level: uses the address map for all proxied DNS records within a zone.
+* Zone-level: uses the address map for all proxied DNS records within a zone.
 
 {{<Aside type="note">}}
-If you need to map only specific hostnames to specific IP addresses - and not all proxied DNS records -, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+If you need to map only specific subdomains to specific IP addresses - and not all proxied DNS records -, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 {{</Aside>}}
 
 {{<tabs labels="Dashboard | API">}}
@@ -149,11 +149,50 @@ Make sure you have the correct Key/Token and permissions.
 
 ## 4. Create DNS records
 
-* Proxied
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To create a DNS record in the dashboard:
+
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
+2.  Go to **DNS** > **Records**.
+3.  Select **Add record**.
+4.  Choose an address (`A`/`AAAA`) record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
+5.  Complete the required fields, indicating an IP address that has CDN service binding and setting the proxy status to **proxied**.
+6.  Select **Save**.
+
+{{</tab>}}
+
+{{<tab label="api" no-code="true">}}
+
+To create records with the API, use a [POST request](/api/operations/dns-records-for-a-zone-create-dns-record). For field definitions, select a record type under the request body specification.
+
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="note">}}
-Total TLS
+As you create the necessary DNS records, [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) can help making sure that you have SSL/TLS certificates in place for all your hostnames.
 {{</Aside>}}
+
+While the DNS record proxy status and address map will determine how Cloudflare's authoritative DNS responds to requests for your hostnames, the IP addresses specified in `A`/`AAAA` records will determine [how Cloudflare reaches the configured origin](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy).
+
+{{<details header="Example" >}}
+
+| Type | Name | IP address | Proxy status | TTL |
+| --- | --- | --- | --- | --- |
+| `A` | `www` | `203.0.113.150` | `Proxied` | `Auto` |
+
+At this point, if an address map for a zone `example.com` specifies that Cloudflare should use `203.0.113.100` for proxied records and the above record exists in the same zone, you can expect the following:
+
+1. Cloudflare responds to DNS requests with `203.0.113.100`.
+2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/#gre-and-ipsec-tunnels) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
+3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnels/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
+
+    * Directly over the Internet in a Magic Transit in a direct server return model
+    * Back through the Magic GRE tunnel(s) in a Magic Transit egress model
+4. As the HTTP response egresses the Cloudflare network back to the client side, the source IP address of the response becomes `203.0.113.100` (the IP address that the HTTP request originally landed on).
+
+{{</details>}}
 
 ## 5.(Optional) Add layer 7 functionality
 
