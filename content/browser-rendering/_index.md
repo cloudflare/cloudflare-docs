@@ -13,7 +13,7 @@ meta:
 Browser automation for [Cloudflare Workers](/workers/).
 {{</description>}}
 
-{{<plan type="workers_all">}}
+{{<plan type="workers-paid">}}
 
 The Workers Browser Rendering API allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products. Once you configure the service, Workers Browser Rendering gives you access to a WebSocket endpoint that speaks the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/). DevTools is what allows Cloudflare to instrument a Chromium instance running in the Cloudflare global network.
 
