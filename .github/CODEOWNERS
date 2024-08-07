@@ -88,8 +88,8 @@
 /data/changelogs/d1.yaml @elithrar @rozenmd @kodster28 @cloudflare/pcx-technical-writing
 /data/changelogs/durable-objects.yaml @elithrar @vy-ton @joshthoward @kodster28 @cloudflare/pcx-technical-writing
 /content/images/ @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
-/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
-/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
+/content/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
+/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @aninibread @cloudflare/pcx-technical-writing
 /data/changelogs/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @kodster28 @cloudflare/pcx-technical-writing
 /content/kv/ @elithrar @thomasgauvin @rts-rob @kodster28 @cloudflare/pcx-technical-writing
 /content/pub-sub/ @elithrar @kodster28 @dcpena @cloudflare/pcx-technical-writing
