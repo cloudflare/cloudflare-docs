@@ -9,6 +9,8 @@ weight: 4
 
 # Additional reference
 
+{{<render file="_page-rules-migration.md">}}
+
 ## Bypass Cache on Cookie setting
 
 This setting is available to Business and Enterprise customers.

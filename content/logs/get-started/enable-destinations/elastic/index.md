@@ -37,16 +37,18 @@ Add the same custom header along with its value on both sides for additional sec
 For example, while creating a job along with a header and value for a particular dataset:
 
 ```bash
-curl --location --request POST 'https://api.cloudflare.com/client/v4/zones/<ZONE ID>/logpush/jobs' \
---header 'X-Auth-Key: <X-AUTH-KEY>' \
---header 'X-Auth-Email: <X-AUTH-EMAIL>' \
---header 'Authorization: <BASIC AUTHORIZATION>' \
---header 'Content-Type: application/json' \
+curl --location --request POST "https://api.cloudflare.com/client/v4/zones/<ZONE ID>/logpush/jobs" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
 --data-raw '{
     "name":"<public domain>",
     "destination_conf": "https://<public domain>:<public port>?header_<secret_header>=<secret_value>",
     "dataset": "http_requests",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339"
+    "output_options": {
+        "field_names": ["RayID","EdgeStartTimestamp"],
+        "timestamp_format": "rfc3339"
+    },
 }'
 ```
 

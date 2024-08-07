@@ -57,6 +57,6 @@ If you want to host `example.com/blog` separately from your main website, for ex
 
 | Action    | Options      | Value           |
 |-----------|--------------|-----------------|
-| Overrides | Origin pools | `<BLOG_SERVER>` |
+| Overrides | Pools | `<BLOG_SERVER>` |
 
 {{</example>}}

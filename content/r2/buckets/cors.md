@@ -19,7 +19,7 @@ CORS is used when you interact with a bucket from a web browser, and you have tw
 ## Prerequisites
 
 Before you configure CORS, you must have:
- 
+
 - An R2 bucket with at least one object. If you need to create a bucket, refer to [Create a public bucket](/r2/buckets/public-buckets/).
 - A domain you can use to access the object. This can also be a `localhost`.
 - (Optional) Access keys. An access key is only required when creating a presigned URL.
@@ -70,7 +70,7 @@ console.log(url);
 Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
 
 ```sh
-$ curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
+$ curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
 ```
 
 ## Add CORS policies from the dashboard
@@ -103,11 +103,11 @@ This example shows a CORS policy added for a bucket that contains the `Roboto-Li
 The `AllowedOrigins` specify the web server being used, and `localhost:3000` is the hostname where the web server is running. The `AllowedMethods` specify that only `GET` requests are allowed and can read objects in your bucket.
 
 ```json
-[ 
-  { 
-    "AllowedOrigins": [ 
-       "http://localhost:3000" 
-    ],  
+[
+  {
+    "AllowedOrigins": [
+       "http://localhost:3000"
+    ],
     "AllowedMethods": [
        "GET"
     ]

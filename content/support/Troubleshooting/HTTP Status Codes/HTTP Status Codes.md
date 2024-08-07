@@ -12,7 +12,7 @@ title: HTTP Status Codes
 
 The status codes below detail how Cloudflare interprets the Internet standards track protocol for HTTP response codes. Please refer to the current edition of the "Internet Official Protocol Standards" (STD 1) for the standardization state and status of this protocol.
 
-Any HTTP status code that is cacheable by default will also be considered to be cacheable by Cloudflare unless otherwise indicated by the method definition or explicit cache controls. Cloudflare caches HTTP responses similarly to how any request is cached. Cloudflare considers page rules, edge TTL, and origin headers when deciding whether to cache.
+Any HTTP status code that is cacheable by default will also be considered to be cacheable by Cloudflare unless otherwise indicated by the method definition or explicit cache controls. Cloudflare caches HTTP responses similarly to how any request is cached. Cloudflare considers Page Rules, edge TTL, and origin headers when deciding whether to cache.
 
 ___
 

@@ -12,3 +12,5 @@ weight: 10
 Use the following resources to help you troubleshoot issues with Page Rules.
 
 {{<directory-listing>}}
+
+{{<render file="_page-rules-migration.md">}}

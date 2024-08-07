@@ -1,4 +1,5 @@
 {{- $filters := split (.Get "filters") "," -}}
+{{- $examplePages := slice -}}
 
 {{- $target := printf "%sexamples/" .Page.FirstSection.RelPermalink -}}
 {{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
@@ -7,13 +8,25 @@
 {{- $target = . -}}
 {{- end -}}
 
+<!-- Get the list of examples -->
+
+{{- range $index, $page := $pages.ByWeight -}}
+  {{- $x := $page.RelPermalink -}}
+  {{- $isExample := (strings.HasPrefix $x $target) -}}
+  {{- if and (ne $x $target) $isExample -}}
+  {{- $examplePages = $examplePages | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $examplesLength := len $examplePages }}
+
 <!-- Build out the filters dynamically -->
 {{ if ne (index $filters 0) "" }}
 <div class="selectorDropdowns">
   {{- range $index, $filter := $filters -}}
 
   {{- $optionsArray := slice -}}
-  {{- range $index, $page := $pages.ByWeight -}}
+  {{- range $index, $page := $examplePages.ByWeight -}}
   {{- with (index $page.Params $filter) }}
   {{- $optionsArray = $optionsArray | append . -}}
   {{- end -}}
@@ -34,12 +47,14 @@
 </div>
 {{ end }}
 
+<!-- Only show the # of examples if filters are set -->
+{{ if ne (index $filters 0) "" }}
+<p id="totalExamples">{{$examplesLength}} examples</p>
+{{ end }}
+
 <!-- Add list of examples, with optional filterable properties -->
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
-  {{- range $index, $page := $pages.ByWeight -}}
-  {{- $x := $page.RelPermalink -}}
-  {{- $isExample := (strings.HasPrefix $x $target) -}}
-  {{- if and (ne $x $target) $isExample -}}
+  {{- range $index, $page := $examplePages -}}
   <li class="DocsCodeExamplesOverview--example" {{ if ne (index $filters 0) "" }} {{ range $index2, $filter := $filters
     }} {{ with (index $page.Params $filter) }} data-{{$filter}}="{{ delimit (.) "|" }}" {{ end }} {{ end }} {{ end }}>
     <div class="DocsCodeExamplesOverview--example-title">
@@ -51,13 +66,14 @@
     </div>
   </li>
   {{- end -}}
-  {{- end -}}
 </ul>
 
 <script>
   // Grab persistent items from DOM
   const selectorDropdowns = document.getElementsByClassName("selectorFilter");
   const examples = document.getElementsByClassName("DocsCodeExamplesOverview--example")
+  const numExamplesText = document.getElementById("totalExamples")
+  let numExamples = 0
 
   // Add listener for filtering by search params
   document.addEventListener('DOMContentLoaded', () => {
@@ -95,6 +111,7 @@
   }
 
   function filterList() {
+    numExamples = 0
     let selectedOptions = getSelectValues(selectorDropdowns);
     for (const example of examples) {
 
@@ -106,6 +123,7 @@
       }
       if (keepValue) {
         example.style.display = "";
+        numExamples += 1;
       } else {
         example.style.display = "none";
       }
@@ -117,6 +135,7 @@
       newUrl.searchParams.set(option, selectedOptions[option])
     }
     history.pushState({}, '', newUrl.toString());
+    numExamplesText.textContent = `${numExamples} examples`
   }
 
   // Add listeners for tracking events

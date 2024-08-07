@@ -8,7 +8,7 @@ title: PCI compliance and vulnerabilities mitigation
 
 Both [TLS 1.0 and TLS 1.1](/ssl/reference/protocols/) are insufficient for protecting information due to known vulnerabilities. Specifically for Cloudflare customers, the primary impact of PCI is that TLS 1.0 and TLS 1.1 are insufficient to secure payment card related traffic.
 
-PCI standards recommend using TLS 1.2 or higher. Refer to [Compliance status](/ssl/reference/cipher-suites/compliance-status/) for a list of recommended cipher suites.
+PCI standards recommend using TLS 1.2 or higher. Refer to [Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) for a list of recommended cipher suites.
 
 Cloudflare also [implements mitigations against known vulnerabilities](#known-vulnerabilities-mitigations) for TLS 1.0 and 1.1.
 

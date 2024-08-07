@@ -6,7 +6,7 @@ weight: 3
 
 # Reuse sessions
 
-The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](../browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
+The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](/browser-rendering/get-started/browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
 
 In short, this entails using `browser.disconnect()` instead of `browser.close()`, and, if there are available sessions, using `puppeteer.connect(env.MY_BROWSER, sessionID)` instead of launching a new browser session.
 
@@ -16,20 +16,9 @@ In short, this entails using `browser.disconnect()` instead of `browser.close()`
 
 Create a new Worker project named `browser-worker` by running:
 
-{{<tabs labels="npm | yarn">}}
-{{<tab label="npm" default="true">}}
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="browser-worker">}}
 
-```sh
-$ npm create cloudflare@latest
-```
-{{</tab>}}
-{{<tab label="yarn">}}
-
-```sh
-$ yarn create cloudflare
-```
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;TypeScript">}}
 
 ## 2. Install Puppeteer
 
@@ -64,7 +53,7 @@ interface Env {
 }
 
 export default {
-	async fetch(request: Request, env: Env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 		let reqUrl = url.searchParams.get("url") || 'https://example.com';
 		reqUrl = new URL(reqUrl).toString(); // normalize

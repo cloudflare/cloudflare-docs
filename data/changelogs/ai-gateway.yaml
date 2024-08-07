@@ -1,9 +1,55 @@
 ---
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
+productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+
+- publish_date: '2024-08-02'
+  title: Mistral AI
+  description: |-
+    * **Providers**: Added [Mistral AI](/ai-gateway/providers/mistral/) as a new provider.
+    
+- publish_date: '2024-07-23'
+  title: Google AI Studio
+  description: |-
+    * **Providers**: Added [Google AI Studio](/ai-gateway/providers/google-ai-studio/) as a new provider.
+
+- publish_date: '2024-07-10'
+  title: Custom metadata
+  description: |-
+    AI Gateway now supports adding [custom metadata](/ai-gateway/configuration/custom-metadata/) to requests, improving tracking and analysis of incoming requests.
+
+- publish_date: '2024-07-09'
+  title: Logs
+  description: |-
+    [Logs](/ai-gateway/observability/analytics/#logging) are now available for the last 24 hours.
+
+- publish_date: '2024-06-24'
+  title: Custom cache key headers
+  description: |-
+    AI Gateway now supports [custom cache key headers](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key).
+
+- publish_date: '2024-06-18'
+  title: Access an AI Gateway through a Worker
+  description: |-
+    Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+
+- publish_date: '2024-05-22'
+  title: AI Gateway is now GA
+  description: |-
+    AI Gateway is moving from beta to GA.
+
+- publish_date: '2024-05-16'
+  title:
+  description: |-
+    * **Providers**: Added [Cohere](/ai-gateway/providers/cohere/) and [Groq](/ai-gateway/providers/groq/) as new providers.
+
+- publish_date: '2024-05-09'
+  title:
+  description: |-
+    * Added new endpoints to the [REST API](/api/operations/aig-config-create-gateway).
 
 - publish_date: '2024-03-26'
   title:

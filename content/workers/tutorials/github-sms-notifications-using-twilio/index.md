@@ -4,14 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: GitHub SMS notifications using Twilio
+languages: [JavaScript]
 ---
 
 # GitHub SMS notifications using Twilio
 
-
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
@@ -25,22 +23,15 @@ You will learn how to:
 
 ---
 
+{{<render file="_tutorials-before-you-start.md">}}
+
 ## Create a Worker project
 
 Start by using `npm create cloudflare@latest` to create a Worker project in the command line:
 
-```sh
----
-header: Create a project
----
-$ npm create cloudflare@latest
-```
+{{<render file="_c3-run-command-with-directory.md" productFolder="workers" withParameters="github-twilio-notifications">}}
 
-For setup, select the following options:
-* `Where do you want to create your application?`: Input `github-twilio-notifications`.
-* `What type of application do you want to create?`: Select `"Hello World" Worker`.
-* `Do you want to use TypeScript?`: Select `No`.
-* `Do you want to deploy your application?`: Select `Yes`.
+{{<render file="_c3-post-run-steps.md" productFolder="workers" withParameters="Hello World example;;Hello World Worker;;JavaScript">}}
 
 Make note of the URL that your application was deployed to. You will be using it when you configure your GitHub webhook.
 
@@ -74,7 +65,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dashboard](/images/workers/tutorials/github-sms/github-config-screenshot.png)
 
 ---
 

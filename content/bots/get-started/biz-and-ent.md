@@ -33,6 +33,16 @@ If you have an Enterprise subscription without Bot Management, your application 
 
 {{<render file="_flexible-sbfm.md">}}
 
+## Block AI bots
+
+{{<render file="_ai-bots-definition.md" >}}
+
+{{<render file="_block-ai-bots-enable.md" withParameters="Super Bot Fight Mode">}}
+
+{{<Aside type="note">}}
+You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
+{{</Aside>}}
+
 ## Analytics
 
 For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).

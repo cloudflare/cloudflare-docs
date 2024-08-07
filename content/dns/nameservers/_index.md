@@ -26,7 +26,7 @@ To know the reason behind these nameserver names, refer to [our blog](https://bl
 
 ### Advanced nameservers
 
-If you are on an Enterprise plan, you have [Foundation DNS](/dns/foundation-dns/), which includes advanced nameservers.
+Enterprise accounts on [Foundation DNS](/dns/foundation-dns/) have access to advanced nameservers.
 
 [Advanced nameservers](/dns/foundation-dns/advanced-nameservers/) are hosted on `foundationdns.com`, `foundationdns.net`, and `foundationdns.org`.
 
@@ -37,3 +37,7 @@ Each zone that uses advanced nameservers is assigned a set of three nameservers 
 With [custom nameservers](/dns/nameservers/custom-nameservers/), your nameservers are hosted on your own domain (or domains) and, in this sense, are not Cloudflare branded.
 
 You provide fully qualified domain names (`ns1.mydomain.com`) for your nameservers, and Cloudflare assigns one IPv4 and one IPv6 to each of your custom nameservers.
+
+{{<Aside type="warning">}}
+{{<render file="_ns-advanced-vs-custom.md">}}
+{{</Aside>}}

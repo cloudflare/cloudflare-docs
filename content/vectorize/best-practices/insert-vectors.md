@@ -22,7 +22,7 @@ In most cases, a `number[]` array is the easiest when dealing with other APIs, a
 
 Metadata is an optional set of key-value pairs that can be attached to a vector on insert or upsert, and allows you to embed or co-locate data about the vector itself.
 
-Metadata keys cannot be empty, contain the dot character (.), contain the double-quote character ("), or start with the dollar character ($).
+Metadata keys cannot be empty, contain the dot character (`.`), contain the double-quote character (`"`), or start with the dollar character (`$`).
 
 Metadata can be used to:
 
@@ -42,7 +42,7 @@ Namespaces provide a way to segment the vectors within your index. For example, 
 
 To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation. When querying, you can pass the namespace to search within as an optional parameter to your query.
 
-A namespace can be up to 63 characters (bytes) in length and you can have up to 1000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
+A namespace can be up to 63 characters (bytes) in length and you can have up to 1,000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
 
 When a namespace is provided, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, not after.
 
@@ -119,7 +119,7 @@ Refer to [Vectorize API](/vectorize/reference/client-api/) for additional exampl
 
 You can bulk upload vector embeddings directly:
 
-- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object. 
+- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
 - Vectors must be complete and include a unique string `id` per vector.
 
 An example NDJSON formatted file:
@@ -142,7 +142,7 @@ $ wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
 
 ### HTTP API
 
-Vectorize also supports inserting vectors via the [REST API](https://developers.cloudflare.com/api/operations/vectorize-update-vectorize-index), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
+Vectorize also supports inserting vectors via the [REST API](/api/operations/vectorize-insert-vector), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
 
 For example, to insert embeddings in [NDJSON format](#workers-api) directly from a Python script:
 

@@ -14,7 +14,7 @@ If your domain sends many small packets, it may be faster to buffer the file and
 
 ## How it works
 
-By default, Cloudflare **streams** data. This means that each packet is sent as it becomes available. Streaming can improve the delivery of large files.
+By default, Cloudflare **streams** data. This means that each packet is sent as it becomes available. Streaming can improve the delivery of large files. If the responses are cached there will still be some buffering.
 
 If your domain sends many small packets, however, it might be faster to **buffer** the file. This approach waits to send the full file until all packets are ready, preventing a client browser from having to re-assemble packets.
 
@@ -32,7 +32,7 @@ To enable **Response Buffering** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable **Response Buffering** with the API, send a [`PATCH`](/api/operations/zone-settings-change-response-buffering-setting) request with the `value` parameter set to `"on"`.
+To enable **Response Buffering** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `response_buffering` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 {{</tab>}}
 {{</tabs>}}

@@ -48,7 +48,7 @@ Once decompressed, the integration package includes:
 2.  Create a new Lambda function and specify a _function name_ of your choice and the _Java-8 runtime_.
 3.  Create or specify an execution role with the following permissions. You can also further restrict the resource permissions as desired for your specific set-up.
 
-```bash
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -62,7 +62,7 @@ Once decompressed, the integration package includes:
         "logs:PutLogEvents"
       ],
       "Resource": [
-        "arn:aws:logs:your-region:your-account-number:*"
+        "arn:aws:logs:your-region:your-account-number:*",
         "arn:aws:s3:your-region::cloudflare-bucket-name/*"
       ]
     }

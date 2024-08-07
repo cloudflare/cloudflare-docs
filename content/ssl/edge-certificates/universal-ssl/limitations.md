@@ -1,7 +1,7 @@
 ---
 title: Limitations
 pcx_content_type: reference
-weight: 4
+weight: 5
 meta:
   title: Limitations for Universal SSL
 ---
@@ -30,6 +30,10 @@ For more on browser support, see [Browser compatibility](/ssl/reference/browser-
 ## Spectrum
 
 Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you are trying to use Spectrum, use either [an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [a custom certificate](/ssl/edge-certificates/custom-certificates/).
+
+## Load balancing
+
+Due to internal limitations, Universal SSL certificates do not cover [load balancing hostnames](/load-balancing/load-balancers/dns-records/) by default. This behavior will be corrected in the future. 
 
 ## Certificate authority
 

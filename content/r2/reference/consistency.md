@@ -1,6 +1,7 @@
 ---
 title: Consistency model
 pcx_content_type: concept
+weight: 7
 ---
 
 # Consistency model

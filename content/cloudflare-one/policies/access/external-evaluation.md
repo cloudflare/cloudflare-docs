@@ -20,7 +20,8 @@ You can set up External Evaluation rules using any API service, but to get start
 ### Prerequisites
 
 - [Workers account](/workers/get-started/guide/)
-- `wrangler` installation
+- Install [npm](https://docs.npmjs.com/getting-started)
+- Install [Node.js](https://nodejs.org/en/)
 - Application protected by Access
 
 ### 1. Create a new Worker
@@ -28,7 +29,7 @@ You can set up External Evaluation rules using any API service, but to get start
 1. Open a terminal and clone our example project.
 
    ```sh
-   $ wrangler generate my-worker https://github.com/cloudflare/workers-access-external-auth-example
+   $ npm create cloudflare@latest my-worker -- --template https://github.com/cloudflare/workers-access-external-auth-example
    ```
 
 2. Go to the project directory.
@@ -37,7 +38,7 @@ You can set up External Evaluation rules using any API service, but to get start
    $ cd my-worker
    ```
 
-3. Create a [Workers KV namespace](/kv/reference/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
+3. Create a [Workers KV namespace](/kv/concepts/kv-namespaces/) to store the key. The binding name should be `KV` if you want to run the example as written.
 
    ```sh
    $ wrangler kv:namespace create "KV"

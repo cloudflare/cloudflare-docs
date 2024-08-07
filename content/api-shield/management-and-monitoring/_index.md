@@ -104,7 +104,7 @@ For each saved endpoint, customers can view:
 * **Request count**: The total number of requests to the endpoint over time.
 * **Rate limiting recommendation**: per 10 minutes. This is guided by the request count.
 * **Latency**: The average origin response time in milliseconds (ms). This metric shows how long it takes from the moment a visitor makes a request to the moment the visitor gets a response back from the origin.
-* **Error rate** vs. overall traffic: grouped by `4xx`, `5xx`, and their sum.
+* **Error rate** vs. overall traffic: grouped by 4xx, 5xx, and their sum.
 * **Response size**: The average size of the response (in bytes) returned to the request.
 
 {{<Aside type="note">}}
@@ -119,9 +119,9 @@ You can interact with Endpoint Management through the Cloudflare API. Refer to [
 
 Sensitive data comprises various personally identifiable information and financial data. Cloudflare created this ruleset to address common data loss threats, and the WAF can search for this data in HTTP response bodies from your origin.
 
-API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/#managed-rulesets).
+API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/reference/sensitive-data-detection/).
 
-Sensitive Data Detection is currently available in beta to Enterprise customers on our Advanced application security plan.
+Sensitive Data Detection is available to Enterprise customers on our Advanced application security plan.
 
 Once Sensitive Data Detection is enabled for your zone, API Shield queries firewall events from the WAF for the last seven days and places a notification icon on the Endpoint Management table row if there are any matched sensitive responses for your endpoint.
 

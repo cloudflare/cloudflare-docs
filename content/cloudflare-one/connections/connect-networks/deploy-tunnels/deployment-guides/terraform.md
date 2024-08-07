@@ -13,7 +13,7 @@ meta:
 
 In this guide, you will use Terraform to deploy:
 
-- A Google Cloud Project (GCP) virtual machine that runs a simple HTTP test server
+- A Google Cloud Project (GCP) virtual machine that runs an HTTP test server
 - A Cloudflare Tunnel that makes the server available over the Internet
 - A Cloudflare Access policy that defines who can connect to the server
 
@@ -255,39 +255,41 @@ The following script will install `cloudflared`, create a permissions and config
 
 2. Open the file in a text editor and copy and paste the following bash script:
 
-   ```bash
-   ---
-   filename: install-tunnel.tftpl
-   ---
-   # Script to install Cloudflare Tunnel and Docker resources
+    ```bash
+    ---
+    filename: install-tunnel.tftpl
+    ---
+    # Script to install Cloudflare Tunnel and Docker resources
 
-   # Docker configuration
-   cd /tmp
-   sudo apt-get install software-properties-common
-   # Retrieving the docker repository for this OS
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-   # The OS is updated and docker is installed
-   sudo apt update -y && sudo apt upgrade -y
-   sudo apt install docker docker-compose -y
-   # Add the HTTPBin application and run it on localhost:8080.
-   cat > /tmp/docker-compose.yml << "EOF"
-   version: '3'
-   services:
-     httpbin:
-       image: kennethreitz/httpbin
-       restart: always
-       container_name: httpbin
+    # Docker configuration
+    cd /tmp
+    sudo apt-get install software-properties-common
+    # Retrieving the docker repository for this OS
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    # The OS is updated and docker is installed
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt install docker docker-compose -y
+    # Add the HTTPBin application and run it on localhost:8080.
+    cat > /tmp/docker-compose.yml << "EOF"
+    version: '3'
+    services:
+      httpbin:
+        image: kennethreitz/httpbin
+        restart: always
+        container_name: httpbin
+        ports:
+          - 8080:80
 
-     cloudflared:
-       image: cloudflare/cloudflared:latest
-       restart: always
-       container_name: cloudflared
-       command: tunnel run --token ${tunnel_token}
-   EOF
-   cd /tmp
-   sudo docker-compose up -d
-   ```
+      cloudflared:
+        image: cloudflare/cloudflared:latest
+        restart: always
+        container_name: cloudflared
+        command: tunnel run --token ${tunnel_token}
+    EOF
+    cd /tmp
+    sudo docker-compose up -d
+    ```
 
 ## 6. Deploy Terraform
 

@@ -9,13 +9,13 @@ weight: 6
 
 # General troubleshooting
 
+{{<render file="_page-rules-migration.md">}}
+
 ## Why is a page rule not working?
 
 The most common reason that a page rule is not working — such as URL forwarding — is that the page rule you created is on a record that is not proxied by Cloudflare in your [DNS settings](/dns/manage-dns-records/how-to/create-dns-records/).
 
 Consider an example where you have a page rule that redirects a subdomain (`subdomain.yoursitename.com`) back to your apex domain (`yoursitename.com`). If you do not have that record proxied in your DNS settings for the subdomain record, Cloudflare's proxy is not running over the record and a page rule will not work because it is going direct to your server.
-
----
 
 ## Error 500 (Internal server error)
 

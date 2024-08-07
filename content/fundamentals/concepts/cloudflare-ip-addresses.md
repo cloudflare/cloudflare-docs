@@ -1,5 +1,5 @@
 ---
-pcx_content_type: tutorial
+pcx_content_type: how-to
 title: Cloudflare IP addresses
 weight: 4
 ---
@@ -40,4 +40,4 @@ For further recommendations on securing your origin server, refer to our guide o
 
 ### IP range updates
 
-Cloudflare's IP ranges do not change frequently. When they do change, they are added to our [list of IP ranges](https://www.cloudflare.com/en-in/ips/) before being put into production. An email notification will be sent out in advance to give you enough time to make configuration changes. You can also use the Cloudflare API to programmatically keep your configuration updated.
+Cloudflare's IP ranges do not change frequently. When they do change, they are added to our [list of IP ranges](https://www.cloudflare.com/en-in/ips/) before being put into production. You can also use the Cloudflare API to programmatically keep your configuration updated.

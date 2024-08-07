@@ -10,7 +10,7 @@ meta:
 
 These are the settings that you can configure when creating a cache rule.
 
-## Fields 
+## Fields
 
 The fields available for Cache Rule matching expressions in the Expression Builder are:
 
@@ -37,11 +37,11 @@ Not all fields are available as a trigger for Cache Rules due to incompatibility
 
 The operators available for Cache Rule expressions are:
 
-* equals 
-* does not equal 
-* contains 
-* does not contain 
-* matches regex 
+* equals
+* does not equal
+* contains
+* does not contain
+* matches regex
 * does not match regex
 * is in
 * is not in
@@ -67,10 +67,10 @@ When creating a cache rule, you have the option to select **Bypass cache** if yo
 When you select **Eligible for cache**, you can change the configuration settings described below.
 
 {{<Aside type="note">}}
-Currently, Cache Rules are not compatible with image transformations . Cache Rules will not be applied to image transformation requests. Page Rules are supported.
+If you use cache rules, image transformations, and zone versioning simultaneously, some settings may not be applied correctly.
 {{</Aside>}}
 
-#### Edge TTL 
+#### Edge TTL
 
 Edge Cache TTL refers to the maximum cache time-to-live (TTL), or how long an asset should be considered fresh or available to serve from Cloudflare’s cache in response to requests. This setting has three primary options:
 
@@ -169,11 +169,11 @@ Cache keys refer to the criteria that Cloudflare uses to determine how to store 
 
 Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/), customizing the following options:
 
-* You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Ignore query string](/cache/troubleshooting/cache-everything-ignore-query-strings/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
+* You can switch on or off [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
 
 Enterprise customers have these additional options for custom cache keys:
 
-* In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
+* In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
 * In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
 * In the **Cookie** section, you can include cookie names and their values, and check for the presence of another cookie.
 * In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**.
@@ -282,7 +282,7 @@ API configuration property name: `"additional_cacheable_ports"` (array of intege
 header: API configuration example
 ---
 "action_parameters": {
-    "cache": true 
+    "cache": true
     "additional_cacheable_ports": [8443, 8080]
   }
 }
@@ -294,7 +294,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Proxy Read Timeout (Enterprise-only)
 
-Define a timeout value between two successive read operations to your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce `HTTP 524` errors because of timeouts from an origin server, try increasing this timeout value.
+Defines a timeout value between two successive read operations to your origin server. The default value can be found in the [Connection limits](/fundamentals/reference/connection-limits/) table. If you are attempting to reduce [`HTTP 524`](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-524-a-timeout-occurred) errors because of timeouts from an origin server, try increasing this timeout value using the API endpoint below.
 
 {{<details header="API information">}}
 

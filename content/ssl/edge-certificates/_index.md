@@ -18,17 +18,17 @@ Issuing and renewing certificates can take up a lot of time from your technical 
 
 Advanced certificates offer more customization than Universal SSL.
 
-With [custom certificates](/ssl/edge-certificates/custom-certificates/), you have full control in terms of certificate authority (CA) or certificate [validation level](/ssl/concepts/#validation-level), for example, but you need to handle issuance and renewal on your own.
+With [custom certificates](/ssl/edge-certificates/custom-certificates/), you have full control in terms of certificate authority (CA) or certificate {{<glossary-tooltip term_id="validation level" link="/ssl/concepts/#validation-level">}}validation level{{</glossary-tooltip>}}, but you need to handle issuance and renewal on your own.
 
 ### Meet cipher suites requirements
 
 The different algorithms used in SSL/TLS encryption can vary in terms of how secure they are.
 
-Through [cipher suites customization](/ssl/reference/cipher-suites/customize-cipher-suites/) you can have control over which ciphers are used for your domain and/or specific hostnames, making it possible to achieve balance between highly available marketing websites (`www.example.com`) - that even legacy devices can access - and highly secure services or applications (`shop.example.com`) - that require [standards compliance](/ssl/reference/cipher-suites/compliance-status/).
+Through [cipher suites customization](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) you can control which ciphers are used for your domain and/or specific hostnames, making it possible to achieve balance between highly available marketing websites (`www.example.com`) that even legacy devices can access and highly secure services or applications (`shop.example.com`) that require [standards compliance](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/).
 
 Cipher suites customization applies to any edge certificate used in connections to a given hostname. However, to enable [custom cipher suites and other features](/ssl/edge-certificates/advanced-certificate-manager/#advanced-certificate-manager), you must [purchase the Advanced Certificate Manager add-on](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/acm/).
 
-If you already have Advanced Certificate Manager, use the API to set up custom cipher suites. Refer to [Customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/) for more guidance.
+If you already have Advanced Certificate Manager, use the API to set up custom cipher suites. Refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) for more guidance.
 
 ### Automate domain control validation (DCV)
 

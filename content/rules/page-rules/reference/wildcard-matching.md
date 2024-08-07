@@ -16,6 +16,8 @@ You can use the asterisk (`*`) in any URL segment to match certain patterns. For
 
 `example.com/foo/* `does not match `example.com/foo`, but `example.com/foo*` does match.
 
+{{<render file="_page-rules-migration.md">}}
+
 ## Helpful tips
 
 - To match both `http` and `https`, write `example.com`. Writing `*example.com` is unnecessary.

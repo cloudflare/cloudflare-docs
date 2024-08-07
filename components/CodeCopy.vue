@@ -26,8 +26,12 @@ function copyCode(e: MouseEvent) {
     lines.forEach((line) =>
       textLines.push((line as HTMLElement).innerText.trimEnd())
     );
-    const text = textLines.join("\n");
+    let text = textLines.join("\n");
     if (text) {
+      // Remove extraneous newlines at the end of shell
+      // codeblocks, that persist after removing comment/output
+      // lines.
+      text = text.replaceAll(/\n{1,}$/g, "");
       try {
         //copy to clipboard
         navigator.clipboard.writeText(text);
@@ -41,6 +45,12 @@ function copyCode(e: MouseEvent) {
       }
     }
   }
+  // Fire zaraz event
+  const codeBlockElement = e.target.parentElement?.parentElement?.firstElementChild;
+  zaraz.track('copy button link click', {
+    title: codeBlockElement?.getAttribute('title') ?? 'title not set',
+    language: codeBlockElement?.getAttribute('language') ?? 'language not set',});
+
 }
 </script>
 

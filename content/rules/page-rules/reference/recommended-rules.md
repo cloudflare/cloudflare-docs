@@ -10,6 +10,8 @@ meta:
 
 Use Cloudflare Page Rules to improve the user experience of your domain with hardened security and enhanced site performance, while increasing reliability and minimizing bandwidth usage for your origin server.
 
+{{<render file="_page-rules-migration.md">}}
+
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 
 - 301/302 Forwarding URL

@@ -4,13 +4,18 @@ pcx_content_type: reference-architecture-diagram
 weight: 1
 meta:
   title: "Reference Architecture Diagram: Retrieval Augmented Generation (RAG)"
+tags:
+  - AI
+products: [Workers AI, Workers, Queues, Vectorize, D1]
 ---
 
 # Retrieval Augmented Generation (RAG) Architecture
 
 ## Introduction
 
-Retrieval-Augmented Generation (RAG) is an innovative approach in natural language processing that integrates retrieval mechanisms with generative models to enhance text generation. By incorporating external knowledge from pre-existing sources, RAG addresses the challenge of generating contextually relevant and informative text. This integration enables RAG to overcome the limitations of traditional generative models by ensuring that the generated text is grounded in factual information and context. RAG aims to solve the problem of information overload by efficiently retrieving and incorporating only the most relevant information into the generated text, leading to improved coherence and accuracy. Overall, RAG represents a significant advancement in NLP, offering a more robust and contextually aware approach to text generation.
+Retrieval-Augmented Generation (RAG) is an innovative approach in natural language processing that integrates retrieval mechanisms with generative models to enhance text generation.
+
+By incorporating external knowledge from pre-existing sources, RAG addresses the challenge of generating contextually relevant and informative text. This integration enables RAG to overcome the limitations of traditional generative models by ensuring that the generated text is grounded in factual information and context. RAG aims to solve the problem of information overload by efficiently retrieving and incorporating only the most relevant information into the generated text, leading to improved coherence and accuracy. Overall, RAG represents a significant advancement in NLP, offering a more robust and contextually aware approach to text generation.
 
 Examples for application of these technique includes for instance customer service chat bots that use a knowledge base to answer support requests.
 
@@ -36,7 +41,7 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 2. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/#text-embeddings) for the incoming query.
 3. **Vector search**: Query [Vectorize](/vectorize/) using the vector representation of the query to retrieve related vectors.
 4. **Document lookup**: Retrieve related documents from [D1](/d1/) based on search results from [Vectorize](/vectorize/).
-5. **Text generation**: Pass both the original query and the retrieved documents as context to [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) to generation a response.
+5. **Text generation**: Pass both the original query and the retrieved documents as context to [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) to generate a response.
 
 ## Related resources
 

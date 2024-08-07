@@ -50,8 +50,8 @@ This example deletes a single filter with ID `{filter_id}`.
 header: Request
 ---
 curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/filters/{filter_id}"
---header "X-Auth-Email: <EMAIL>"
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/filters/{filter_id}" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
 

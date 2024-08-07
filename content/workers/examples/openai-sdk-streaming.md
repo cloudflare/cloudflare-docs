@@ -1,12 +1,14 @@
 ---
 type: example
 summary: Use the OpenAI v4 SDK to stream responses from OpenAI.
+meta:
+  description: Use the OpenAI v4 SDK to stream responses from OpenAI.
 tags:
   - AI
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+pcx_content_type: example
 title: Stream OpenAI API Responses
 weight: 1001
 layout: example
@@ -36,7 +38,7 @@ export default {
 
     ctx.waitUntil((async () => {
         const stream = await openai.chat.completions.create({
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-4o-mini',
           messages: [{ role: 'user', content: 'Tell me a story' }],
                 stream: true,
         });

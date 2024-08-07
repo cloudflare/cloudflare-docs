@@ -24,6 +24,6 @@ The number of available configuration rules varies according to your Cloudflare 
 
 ## Execution order
 
-{{<render file="_product_execution_order.md">}}
+{{<render file="_product-execution-order.md">}}
 
 {{<render file="_troubleshoot-rules-with-trace.md" withParameters="configuration rules">}}

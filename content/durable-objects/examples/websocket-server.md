@@ -4,7 +4,7 @@ summary: Build a WebSocket server using Durable Objects and Workers.
 tags:
   - Durable Objects
 pcx_content_type: example
-title: Build a WebSocket server 
+title: Build a WebSocket server
 weight: 3
 layout: example
 ---
@@ -73,7 +73,7 @@ export class WebSocketServer extends DurableObject {
     // Creates two ends of a WebSocket connection.
     const webSocketPair = new WebSocketPair();
     const [client, server] = Object.values(webSocketPair);
-  
+
     // Calling `accept()` tells the runtime that this WebSocket is to begin terminating
     // request within the Durable Object. It has the effect of "accepting" the connection,
     // and allowing the WebSocket to send and receive messages.
@@ -115,7 +115,7 @@ export interface Env {
 
 // Worker
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     if (request.url.endsWith("/websocket")) {
       // Expect to receive a WebSocket Upgrade request.
       // If there is one, accept the request and return a WebSocket Response.
@@ -140,7 +140,7 @@ export default {
       },
     });
   }
-};
+} satisfies ExportedHandler<Env>;
 
 // Durable Object
 export class WebSocketServer extends DurableObject {
@@ -160,7 +160,7 @@ export class WebSocketServer extends DurableObject {
     // Creates two ends of a WebSocket connection.
     const webSocketPair = new WebSocketPair();
     const [client, server] = Object.values(webSocketPair);
-  
+
     // Calling `accept()` tells the runtime that this WebSocket is to begin terminating
     // request within the Durable Object. It has the effect of "accepting" the connection,
     // and allowing the WebSocket to send and receive messages.

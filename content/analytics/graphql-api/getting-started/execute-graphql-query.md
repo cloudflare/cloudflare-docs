@@ -66,14 +66,11 @@ echo '{ "query":
       "datetime_leq": "2022-07-24T12:00:00Z"
     }
   }
-}' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data @-
 ```
 
 [1]: </analytics/graphql-api/tutorials/export-graphql-to-csv/>

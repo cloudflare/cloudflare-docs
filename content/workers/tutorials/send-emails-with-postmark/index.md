@@ -4,13 +4,13 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Postmark
+tags: [Email]
+languages: [JavaScript]
 ---
 
 # Send Emails With Postmark
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to send transactional emails from Workers using [Postmark](https://postmarkapp.com/). At the end of this tutorial, you’ll be able to:
 
@@ -32,26 +32,19 @@ To continue with this tutorial, you’ll need:
 
 Start by using [C3](/pages/get-started/c3/) to create a Worker project in the command line, then, answer the prompts:
 
-```bash
----
-header: Create a new Worker
----
+```sh
 $ npm create cloudflare@latest
 ```
 
 Alternatively, you can use CLI arguments to speed things up:
 
-```bash
----
-header: Create a new Worker with CLI args
----
-
+```sh
 $ npm create cloudflare@latest email-with-postmark -- --type=hello-world --ts=false --git=true --deploy=false
 ```
 
 This creates a simple hello-world Worker having the following content:
 
-```jsx
+```js
 ---
 filename: src/index.js
 ---
@@ -99,8 +92,7 @@ filename: src/index.js
 ---
 export default {
 	async fetch(request, env, ctx) {
-
-		const response = await fetch('https://api.postmarkapp.com/email', {
+		return await fetch('https://api.postmarkapp.com/email', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -113,18 +105,13 @@ export default {
 				HtmlBody: '<p>Hello from Workers</p>',
 			}),
 		});
-
-		return Response.json(await response.json());
 	},
 };
 ```
 
 To test your code locally, run the following command and navigate to [http://localhost:8787/](http://localhost:8787/) in a browser:
 
-```bash
----
-header: Local development server
----
+```sh
 $ npm start
 ```
 
@@ -136,7 +123,7 @@ Sensitive information such as API keys and token should always be stored in secr
 
 To add secrets for local development, create a `.dev.vars` file which works exactly like a `.env` file:
 
-```bash
+```txt
 ---
 filename: .dev.vars
 ---
@@ -145,7 +132,7 @@ POSTMARK_API_TOKEN=your_postmark_api_token_here
 
 Also ensure the secret is added to your deployed worker by running:
 
-```bash
+```sh
 ---
 header: Add secret to deployed Worker
 ---
@@ -160,8 +147,7 @@ filename: src/index.js
 ---
 export default {
 	async fetch(request, env, ctx) {
-
-		const response = await fetch('https://api.postmarkapp.com/email', {
+		return await fetch('https://api.postmarkapp.com/email', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -174,8 +160,6 @@ export default {
 				HtmlBody: '<p>Hello from Workers</p>',
 			}),
 		});
-
-		return Response.json(await response.json());
 	},
 };
 ```

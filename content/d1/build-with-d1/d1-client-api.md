@@ -28,10 +28,10 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 
 D1 follows the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently, D1 only supports Ordered (`?NNNN`) and Anonymous (`?`) parameters. In the future, D1 will support named parameters as well.
 
-| Syntax | Type | Description |
-| ----- | ----- | -----|
-| `?NNN`| Ordered | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER` |
-| `?` | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
+| Syntax | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `?NNN` | Ordered   | A question mark followed by a number `NNN` holds a spot for the `NNN`-th parameter. `NNN` must be between `1` and `SQLITE_MAX_VARIABLE_NUMBER`                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `?`    | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
 
 To bind a parameter, use the `stmt.bind()` method.
 
@@ -54,15 +54,15 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 
 D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the client API to their associated D1 types. The type conversion is as follows:
 
-| JavaScript          | D1          |
-| ------------------- | ----------- |
-| null                | `NULL`      |
-| Number              | `REAL`      |
-| Number <sup>1</sup> | `INTEGER`   |
-| String              | `TEXT`      |
-| Boolean <sup>2</sup>| `INTEGER`   |
-| ArrayBuffer         | `BLOB`      |
-| undefined           | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+| JavaScript           | D1                                                                           |
+| -------------------- | ---------------------------------------------------------------------------- |
+| null                 | `NULL`                                                                       |
+| Number               | `REAL`                                                                       |
+| Number <sup>1</sup>  | `INTEGER`                                                                    |
+| String               | `TEXT`                                                                       |
+| Boolean <sup>2</sup> | `INTEGER`                                                                    |
+| ArrayBuffer          | `BLOB`                                                                       |
+| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
 <sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) are not currently supported in the API yet. JavaScript integers are safe up to [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
@@ -139,6 +139,8 @@ console.log(results);
 */
 ```
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `all()` to return a typed result object.
+
 ### await stmt.raw()
 
 Returns results as an array of arrays, with each row represented by an array. The return type is an array of arrays, and does not include query metadata.
@@ -168,6 +170,8 @@ console.log(columns);
 */
 ```
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `raw()` to return a typed result array.
+
 ### await stmt.first([column])
 
 Returns the first row of the results. This does not return metadata like the other methods. Instead, it returns the object directly.
@@ -187,31 +191,41 @@ const values = await stmt.first();
 console.log(values); // { total: 50 }
 ```
 
-If the query returns no rows, then `first()` will return `null`.
-
-If the query returns rows, but `column` does not exist, then `first()` will throw the `D1_ERROR` exception.
+If the query returns no rows, then `first()` will return `null`. If the query returns rows, but `column` does not exist, then `first()` will throw the `D1_ERROR` exception. 
 
 `stmt.first()` does not alter the SQL query. To improve performance, consider appending `LIMIT 1` to your statement.
 
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `first()` to return a typed result object.
+
 ### await stmt.run()
 
-Runs the query (or queries), but returns no results. Instead, `run()` returns the metrics only. Useful for write operations like UPDATE, DELETE or INSERT.
+Runs the query (or queries) and returns results. Returns all rows as an array of objects, with each result row represented as an object on the `results` property of the `D1Result` type. For write operations like UPDATE, DELETE or INSERT, `results` will be empty.
+
+Run is functionally equivalent to `stmt.all()` and can be treated as an alias.
 
 ```js
-const info = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)')
-                    .bind( "John", 42 )
-                    .run()
-
-console.log(info);
+const stmt = await db.prepare('SELECT name, age FROM users LIMIT 3')
+const { results } = await stmt.run();
+console.log(results);
 /*
-{
-  success: true
-  meta: {
-    duration: 62,
-  }
-}
+[
+  {
+     name: "John",
+     age: 42,
+  },
+   {
+     name: "Anthony",
+     age: 37,
+  },
+    {
+     name: "Dave",
+     age: 29,
+  },
+ ]
 */
 ```
+
+When using TypeScript, you can pass a [type parameter](/d1/build-with-d1/d1-client-api/#typescript-support) to `run()` to return a typed result object.
 
 ### await db.dump()
 
@@ -373,11 +387,11 @@ console.log(rows[1].results);
 
 D1 supports the following [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements:
 
-| PRAGMA | Description |
-| ---- | ---- |
-| `table_list` | Returns information about the tables and views in the schema, one table per row of output. |
-| `table_info` | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column. |
-| `foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. |
+| PRAGMA               | Description                                                                                                                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `table_list`         | Returns information about the tables and views in the schema, one table per row of output.                                                                                                                 |
+| `table_info`         | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column. |
+| `defer_foreign_keys` | Query, set, or clear the enforcement of foreign key constraints. For more information, refer to [Define foreign key](/d1/build-with-d1/foreign-keys/)                                                      |
 
 
 
@@ -457,10 +471,10 @@ The code above would throw the following error message:
 
 D1 will return the following error constants, in addition to the extended (detailed) error message:
 
-| Message | Cause |
-| ---- | ---- |
-| `D1_ERROR` | Generic error. |
-| `D1_TYPE_ERROR` | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. | 
-| `D1_COLUMN_NOTFOUND` | Column not found. |
-| `D1_DUMP_ERROR` | Database dump error. |
-| `D1_EXEC_ERROR` | Exec error in line x: y error. |
+| Message              | Cause                                                                                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1_ERROR`           | Generic error.                                                                                                                                                   |
+| `D1_TYPE_ERROR`      | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. |
+| `D1_COLUMN_NOTFOUND` | Column not found.                                                                                                                                                |
+| `D1_DUMP_ERROR`      | Database dump error.                                                                                                                                             |
+| `D1_EXEC_ERROR`      | Exec error in line x: y error.                                                                                                                                   |

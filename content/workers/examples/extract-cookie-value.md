@@ -7,13 +7,14 @@ tags:
 languages:
   - JavaScript
   - TypeScript
-pcx_content_type: configuration
+  - Python
+pcx_content_type: example
 title: Cookie parsing
 weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js | ts">}}
+{{<tabs labels="js | ts | py">}}
 {{<tab label="js" default="true">}}
 
 ```js
@@ -49,6 +50,26 @@ export default {
     return new Response("No cookie with name: " + COOKIE_NAME);
   },
 } satisfies ExportedHandler;
+```
+
+{{</tab>}}
+{{<tab label="py">}}
+
+```py
+from http.cookies import SimpleCookie
+from js import Response
+
+async def on_fetch(request):
+    # Name of the cookie
+    cookie_name = "__uid"
+
+    cookies = SimpleCookie(request.headers["Cookie"] or "")
+
+    if cookie_name in cookies:
+        # Respond with cookie value
+        return Response.new(cookies[cookie_name].value)
+
+    return Response.new("No cookie with name: " + cookie_name)
 ```
 
 {{</tab>}}

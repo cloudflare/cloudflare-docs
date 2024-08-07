@@ -18,7 +18,7 @@ By default, all queues have concurrency enabled. Queue consumers will automatica
 
 ## How concurrency works
 
-The number of consumers concurrently invoked for a queue will autoscale based on several factors, including:
+After processing a batch of messages, Queues will check to see if the number of concurrent consumers should be adjusted. The number of concurrent consumers invoked for a queue will autoscale based on several factors, including:
 
 * The number of messages in the queue (backlog) and its rate of growth.
 * The ratio of failed (versus successful) invocations. A failed invocation is when your `queue()` handler returns an uncaught exception instead of `void` (nothing).
@@ -38,6 +38,13 @@ If you are writing 100 messages/second to a queue with a single concurrent consu
 
 In this scenario, Queues will notice the growing backlog and will scale the number of concurrent consumer Workers invocations up to a steady-state of (approximately) five (5) until the rate of incoming messages decreases, the consumer processes messages faster, or the consumer begins to generate errors.
 
+### Why are my consumers not autoscaling?
+If your consumers are not autoscaling, there are a few likely causes:
+
+- `max_concurrency` has been set to 1.
+- Your consumer Worker is returning errors rather than processing messages. Inspect your consumer to make sure it is healthy.
+- A batch of messages is being processed. Queues checks if it should autoscale consumers only after processing an entire batch of messages, so it will not autoscale while a batch is being processed. Consider reducing batch sizes or refactoring your consumer to process messages faster.
+
 ## Limit concurrency
 
 {{<Aside type="warning" header="Recommended concurrency setting">}}
@@ -48,7 +55,14 @@ Cloudflare recommends leaving the maximum concurrency unset, which will allow yo
 
 If you have a workflow that is limited by an upstream API and/or system, you may prefer for your backlog to grow, trading off increased overall latency in order to avoid overwhelming an upstream system.
 
-Concurrency settings can be configured in each projects' `wrangler.toml` file and/or the Cloudflare dashboard. To set concurrency settings in the Cloudflare dashboard:
+You can configure the concurrency of your consumer Worker in two ways:
+
+1. Set concurrency settings in the Cloudflare dashboard
+2. Set concurrency settings via `wrangler.toml`
+
+### Set concurrency settings in the Cloudflare dashboard
+
+To configure the concurrency settings for your consumer Worker from the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** > **Queues**.

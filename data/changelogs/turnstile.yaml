@@ -1,6 +1,9 @@
 ---
 link: "/turnstile/changelog/"
 productName: Turnstile
+productLink: "/turnstile/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
 - publish_date: '2024-04-10'
   description: |-

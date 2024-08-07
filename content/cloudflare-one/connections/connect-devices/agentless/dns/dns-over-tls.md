@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: DNS over TLS
-weight: 3
+title: DNS over TLS (DoT)
+weight: 2
 ---
 
 # Configure DNS over TLS
@@ -43,10 +43,10 @@ Alternatively, stub resolvers (e.g., Unbound) support DoT natively. An example c
 tls-cert-bundle: "/etc/ssl/cert.pem"
 # Forwarding Config
 forward-zone:
-	name: "."
-	forward-tls-upstream: yes
-	forward-addr: 172.64.36.1@853#9y65g5srsm.cloudflare-gateway.com
-	forward-addr: <IPv6 address>#<DoT hostname>
+ name: "."
+ forward-tls-upstream: yes
+ forward-addr: 172.64.36.1@853#9y65g5srsm.cloudflare-gateway.com
+ forward-addr: <IPv6 address>#<DoT hostname>
 ```
 
 {{<Aside>}}

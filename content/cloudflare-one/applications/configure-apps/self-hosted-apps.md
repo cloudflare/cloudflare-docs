@@ -47,4 +47,4 @@ However, the following products are not supported:
 - [Automatic Platform Optimization](/automatic-platform-optimization)
 - [Zaraz](/zaraz)
 
-If these products are enabled for your Access application, disable them using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
+You can disable Automatic Signed Exchanges and Zaraz for a specific application - instead of across your entire zone - using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.

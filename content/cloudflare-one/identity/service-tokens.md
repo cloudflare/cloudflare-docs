@@ -12,20 +12,7 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a service token
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service Auth** > **Service Tokens**.
-
-2. Select **Create Service Token**.
-
-3. Name the service token. The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
-
-4. Choose a **Service Token Duration**. This sets the expiration date for the token.
-
-5. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
-
-6. Copy the Client Secret.
-
-   {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
-   {{</Aside>}}
+{{<render file="access/_create-service-token.md">}}
 
 You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/policies/access/#service-auth); otherwise, Access will prompt for an identity provider login.
 
@@ -97,6 +84,8 @@ When editing an Access application, selecting **Revoke existing tokens** revokes
 ## Set a token expiration alert
 
 An alert can be configured to notify a week before a service token expires to allow an administrator to invoke a token refresh.
+
+{{<available-notifications product="Cloudflare Access">}}
 
 To configure a service token expiration alert:
 

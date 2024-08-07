@@ -5,10 +5,10 @@ pcx_content_type: overview
 weight: 1
 layout: overview
 meta:
-  title: Cloudflare Queues
+  title: Cloudflare Queues (beta)
 ---
 
-# Cloudflare Queues
+{{<heading-pill style="beta">}}Cloudflare Queues{{</heading-pill>}}
 
 {{<description>}}
 
@@ -76,7 +76,7 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 {{<resource header="Try the Demo" href="https://github.com/Electroid/queues-demo#cloudflare-queues-demo" icon="learning-center-book">}}Try Cloudflare Queues which can run on your local machine.{{</resource>}}
 
-{{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+{{<resource header="@CloudflareDev" href="https://x.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
 {{<resource header="Developer Discord" href="https://discord.cloudflare.com" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
 

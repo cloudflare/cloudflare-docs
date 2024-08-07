@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS orders (
 )
 ```
 
-To create the index on the `customer_id` column, execute the below statement against your database: 
+To create the index on the `customer_id` column, execute the below statement against your database:
 
 {{<Aside type="note">}}
 A common naming format for indexes is `idx_TABLE_NAME_COLUMN_NAMES`, so that you can identify the table and column(s) your indexes are for when managing your database.
@@ -70,7 +70,7 @@ SELECT name, type, sql FROM sqlite_schema WHERE type IN ('index');
 
 This will return output resembling the below:
 
-```sh
+```txt
 ┌──────────────────────────────────┬───────┬────────────────────────────────────────┐
 │ name                             │ type  │ sql                                    │
 ├──────────────────────────────────┼───────┼────────────────────────────────────────┤
@@ -84,7 +84,7 @@ Note that you cannot modify this table, or an existing index. To modify an index
 
 Validate that an index was used for a query by prepending a query with [`EXPLAIN QUERY PLAN`](https://www.sqlite.org/eqp.html). This will output a query plan for the succeeding statement, including which (if any) indexes were used.
 
-For example, if you assume the `users` table has an `email_address TEXT` column and you created an index `CREATE UNIQUE INDEX idx_email_address ON users(email_address)`, any query with a predicate on `email_address` should use your index. 
+For example, if you assume the `users` table has an `email_address TEXT` column and you created an index `CREATE UNIQUE INDEX idx_email_address ON users(email_address)`, any query with a predicate on `email_address` should use your index.
 
 ```sql
 EXPLAIN QUERY PLAN SELECT * FROM users WHERE email_address = 'foo@example.com';
@@ -100,14 +100,14 @@ This is also a fairly common use-case for an index. Finding a user based on thei
 
 For a multi-column index (an index that specifies multiple columns), queries will only use the index if they specify either _all_ of the columns, or a subset of the columns provided all columns to the "left" are also within the query.
 
-Given an index of `CREATE INDEX idx_customer_date_transaction_date ON transactions(customer_id, transaction_date)`, the following table shows when the index is used (or not):
+Given an index of `CREATE INDEX idx_customer_id_transaction_date ON transactions(customer_id, transaction_date)`, the following table shows when the index is used (or not):
 
 | Query                                                             | Index Used?   |
 | ----------------------------------------------------------------- | ------------- |
 | `SELECT * FROM transactions WHERE customer_id = '1234' AND transaction_date = '2023-03-25'` | Yes: specifies both columns in the index. |
 | `SELECT * FROM transactions WHERE transaction_date = '2023-03-28'` | No: only specifies `transaction_date`, and does not include other leftmost columns from the index. |
 | `SELECT * FROM transactions WHERE customer_id = '56789'` | Yes: specifies `customer_id`, which is the leftmost column in the index. |
-  
+
 Notes:
 
 * If you created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".

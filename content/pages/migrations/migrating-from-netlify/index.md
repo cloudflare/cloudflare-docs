@@ -3,6 +3,7 @@ updated: 2022-07-26
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Netlify to Pages
+languages: [JavaScript]
 ---
 
 # Migrating from Netlify to Pages

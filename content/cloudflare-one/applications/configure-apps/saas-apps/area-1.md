@@ -1,17 +1,19 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Area 1
+updated: 2024-07-18
 weight: 3
 ---
 
 # Connect to Cloudflare Area 1 through Access
 
-[Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. You can set up Cloudflare Access as a single sign-on provider for your Cloudflare Area 1 portal.
+[Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. This guide covers how to configure Area 1 as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to your Area 1 account
-- Your user's email in Area 1 matches their email in Zero Trust.
+- Your user's email in Area 1 matches their email in Zero Trust
 
 ## 1. Add Area 1 to Zero Trust
 

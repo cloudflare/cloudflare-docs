@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Brunch site
+title: Brunch
 ---
 
-# Deploy a Brunch site
+# Brunch
 
 [Brunch](https://brunch.io/) is a fast front-end web application build tool with simple declarative configuration and seamless incremental compilation for rapid development.
 

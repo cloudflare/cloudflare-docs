@@ -220,7 +220,7 @@ All plans have access to:
 
 *   `botManagement` {{<type>}}Object | null{{</type>}}
 
-    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, `ja3Hash`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
+    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, `ja3Hash`, `ja4`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
 
 *   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
 

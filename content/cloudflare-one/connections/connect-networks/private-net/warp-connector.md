@@ -12,7 +12,7 @@ meta:
 
 | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | -- | -- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>| All plans  |
+| Gateway with WARP | All plans  |
 
 | System   | Availability |
 | ---------| -------------|
@@ -246,8 +246,8 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
 
     1. Create a bash script that writes the `iptable` rules to a file:
 
-      ```sh
-      $ echo '#!/bin/bash
+      ```bash
+      echo '#!/bin/bash
       # Define your rules
       RULES=(
         "-A FORWARD -i CloudflareWARP -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu"
@@ -273,8 +273,8 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
 
     3. Create a systemd service to restore the rules at startup:
 
-    ```sh
-    $ echo '[Unit]
+    ```bash
+    echo '[Unit]
     Description=Load iptables rules at startup
 
     [Service]

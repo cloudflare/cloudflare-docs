@@ -34,9 +34,18 @@ The connection pool operates in transaction mode, where the client that executes
 
 When that transaction has completed, the connection is returned to the pool.
 
-{{<Aside type="warning">}}
-Named prepared statements (which are rarely used), `SET` commands, and advisory locks are not supported. Use features such as `LOCAL` and `pg_advisory_xact_lock` which are scoped to single transactions. In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
-{{</Aside>}}
+Hyperdrive supports named prepared statements as implemented in the `postgres.js` and `node-postgres` drivers. Named prepared statements in other drivers may have worse performance.
+
+Hyperdrive does not support the following PostgreSQL features:
+
+- `SET` statements.
+- SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
+- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
+- `LISTEN` and `NOTIFY`.
+- `PREPARE` and `DEALLOCATE`.
+- Any modification to per-session state not explicitly documented as supported elsewhere.
+
+In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 
 ## Query Caching
 

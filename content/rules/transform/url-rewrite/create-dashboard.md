@@ -8,7 +8,7 @@ meta:
 
 # Create a rewrite URL rule in the dashboard
 
-Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for examples of rule definitions.
+Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Rewrite+URL) for examples of rule definitions.
 
 To create a rule:
 
@@ -16,9 +16,7 @@ To create a rule:
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/images/rules/transform/transform-rules-tab.png)
-
-3. In the **Rewrite URL** tab, select **Create rule**.
+3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
     ![The rewrite URL rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-url-rewrite-rule.png)
 

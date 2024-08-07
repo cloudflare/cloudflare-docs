@@ -9,3 +9,5 @@ weight: 9
 # Reference
 
 {{<directory-listing>}}
+
+{{<render file="_page-rules-migration.md">}}

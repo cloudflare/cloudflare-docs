@@ -1,12 +1,24 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Google Workspace
-weight: 6
+updated: 2024-06-04
+weight: 13
 ---
 
 # Connect to Google Workspace through Access
 
-This guide covers how to configure Cloudflare Access as a single sign-on provider for your Google Workspace account.
+This guide covers how to configure [Google Workspace](https://support.google.com/a/topic/7579248?hl=en&ref_topic=7556686&sjid=14539485562330725560-NA) as a SAML application in Cloudflare Zero Trust.
+
+{{<Aside type="note">}}
+
+The integration of Access as a single sign-on provider for your Google Workspace account does not work for Google super admins. It will work for other users.
+
+{{</Aside>}}
+
+## Prerequistes
+
+- An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+- Admin access to a Google Workspace account
 
 ## 1. Create an application in Zero Trust
 

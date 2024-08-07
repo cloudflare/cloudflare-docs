@@ -7,7 +7,7 @@ entries:
 
 - term: disposition
   general_definition: |-
-    represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of `malicious`. Email messages with this disposition exibit characteristics typical of malicious emails.
+    represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of `malicious`. Email messages with this disposition exhibit characteristics typical of malicious emails.
 
 - term: phishing
   general_definition: |-

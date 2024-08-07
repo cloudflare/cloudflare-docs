@@ -8,13 +8,19 @@ weight: 2
 
 {{<Aside type="warning">}}
 
-D1 alpha databases will stop accepting live SQL queries on July 1, 2024.
+D1 alpha databases will stop accepting live SQL queries on August 15, 2024.
 
 {{</Aside>}}
 
 D1's open beta launched in October 2023, and newly created databases use a different underlying architecture that is significantly more reliable and performant, with increased database sizes, improved query throughput, and reduced latency.
 
 This guide will instruct you to recreate alpha D1 databases on our production-ready system.
+
+## Prerequisites
+
+1. You have the [`wrangler` command-line tool](/workers/wrangler/install-and-update/) installed
+2. You are using `wrangler` version `3.33.0` or later (released March 2024) as earlier versions do not have the [`--remote` flag](/d1/platform/changelog/#change-in-wrangler-d1-execute-default) required as part of this guide
+3. An 'alpha' D1 database. All databases created before July 27th, 2023 ([release notes](/d1/platform/changelog/#new-default-storage-subsystem)) use the alpha storage backend, which is no longer supported and was not recommended for production.
 
 ## 1. Verify that a database is alpha
 

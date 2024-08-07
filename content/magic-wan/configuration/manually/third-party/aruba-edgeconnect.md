@@ -20,7 +20,7 @@ Note that north-south traffic routed through Cloudflare's Secure Web Gateway is 
 Before setting up a connection between EdgeConnect and Cloudflare, you must have:
 
 - A contract that includes Magic WAN and Secure Web Gateway.
-- Received two Cloudflare endpoints (Anycast IP address).
+- Received two Cloudflare endpoints (anycast IP address).
 - Determined a private static /31 IP pair to use with each tunnel. The /31 pairs should be from a different private subnet, separate from the private subnets used behind each EdgeConnect appliance.
 - The EdgeConnect devices used in this tutorial and on v9.0.
 
@@ -32,8 +32,8 @@ For the purpose of this tutorial, the integration will refer to a scenario with 
 
 There are 2 branch offices each with distinct subnets.
 
-- The east branch office has a `10.3.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
-- The west branch office has a `10.30.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The east branch office has a `10.3.0.0/16` network with an EdgeConnect terminating the anycast GRE tunnel.
+- The west branch office has a `10.30.0.0/16` network with an EdgeConnect terminating the anycast GRE tunnel.
 
 ![Table of branch subnet information](/images/magic-wan/third-party/aruba-edge-connect/branch-subnets.png)
 
@@ -54,9 +54,9 @@ The Deployment screenshot displays several different IP addresses and interfaces
 
 For the purpose of this tutorial, the integration will refer to a scenario with two branch offices, each with distinct subnets.
 
-The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the Anycast IPsec tunnel.
+The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the anycast IPsec tunnel.
 
-The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPsec tunnel.
+The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the anycast IPsec tunnel.
 
 ![IPsec tunnel values for east and west branches](/images/magic-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
@@ -127,7 +127,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
 
-1. Create a tunnel on the EdgeConnect using Cloudflare's assigned public Anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
+1. Create a tunnel on the EdgeConnect using Cloudflare's assigned public anycast IP and the service used in the overlay policy in the [previous step](#2-configure-overlay-policies).
 2. Create a Virtual Tunnel Interface (VTI) using the private IP pair shared with CF GRE tunnel endpoint and the passthrough tunnel to match the newly created tunnel alias (**CF_GRE_east** in our example).
 
 ![Modify Passthrough Tunnel screen](/images/magic-wan/third-party/aruba-edge-connect/modify-passthrough.png)
@@ -155,21 +155,21 @@ For additional information on creating IPsec tunnels, refer to [API documentatio
 ---
 header: Request
 ---
-curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tunnels?validate_only=true" \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels?validate_only=true" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "ipsec_tunnels":[
-      {
-        "name":"EdgeConnect_IPSEC_1",
-        "customer_endpoint":"35.188.72.56",
-        "cloudflare_endpoint":"172.64.241.205",
-        "interface_address":"192.168.10.11/31",
-        "description":"Tunnel for EdgeConnect - GCP Central"
-        }
-      ]
-  }'
+  "ipsec_tunnels": [
+    {
+      "name": "EdgeConnect_IPSEC_1",
+      "customer_endpoint": "35.188.72.56",
+      "cloudflare_endpoint": "172.64.241.205",
+      "interface_address": "192.168.10.11/31",
+      "description": "Tunnel for EdgeConnect - GCP Central"
+    }
+  ]
+}'
 ```
 
 2. Create a new IPsec tunnel
@@ -179,20 +179,20 @@ curl "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/ipsec_tun
 header: Request
 ---
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header "X-Auth-Email: <YOUR_EMAIL>" \
+--header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-  "ipsec_tunnels":[
+  "ipsec_tunnels": [
     {
-      "name":"EdgeConnect_IPSEC_1",
-      "customer_endpoint":"35.188.72.56",
-      "cloudflare_endpoint":"172.64.241.205",
-      "interface_address":"192.168.10.11/31",
-      "description":"Tunnel for EdgeConnect - GCP Central"
-      }
-    ]
-  }'
+      "name": "EdgeConnect_IPSEC_1",
+      "customer_endpoint": "35.188.72.56",
+      "cloudflare_endpoint": "172.64.241.205",
+      "interface_address": "192.168.10.11/31",
+      "description": "Tunnel for EdgeConnect - GCP Central"
+    }
+  ]
+}'
 ```
 
 ```json
@@ -233,10 +233,10 @@ Use the tunnel ID from the response in Step 2. Save the pre-shared key generated
 ---
 header: Request
 ---
-curl --request POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
---header "X-Auth-Email: <YOUR_EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json"
+curl --request POST \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{tunnel_id}/psk_generate?validate_only=true" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 ```json

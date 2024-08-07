@@ -60,17 +60,6 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 
 For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
-## I see error 504 or timeouts when browsing to a website.
-
-Gateway may present an **HTTP response code: 504** error page - or your browser may display generic timeout errors - when a website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
-
-| Selector          | Operator | Value         | Logic | Action |
-| ----------------- | -------- | ------------- | ----- | ------ |
-| Host              | is       | `example.com` | And   | Block  |
-| Query Record Type | is       | `AAAA`        |       |        |
-
-For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-502-bad-gateway-or-error-504-gateway-timeout).
-
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
 ![An error displayed in the Gateway Overview page instead of analytics.](/images/cloudflare-one/faq/gateway-dash-overview-empty.png)
@@ -146,38 +135,26 @@ $ sudo systemctl restart systemd-resolved.service
 To resolve the issue, you will need to edit two Windows registry keys:
 
 1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
+
     ```txt
     HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator
     Type: DWORD
     Value: UseGlobalDNS
     Data: 1
     ```
+
 2. Configure NCSI to use active probing mode, as WARP may be obscuring the number of hops expected by the [passive probe](https://learn.microsoft.com/en-us/windows-server/networking/ncsi/ncsi-frequently-asked-questions#how-does-passive-probing-determine-connectivity).
+
     ```txt
     HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet
     Type: DWORD
     Value: EnableActiveProbing
     Data: 1
     ```
-If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).  
 
-## I see Storage Partitioned Error.
+If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).
 
-Chrome is rolling out an [experimental feature](https://developer.chrome.com/en/docs/privacy-sandbox/storage-partitioning/) that partitions local storage in browsers. When third-party storage partitioning is enabled, Cloudflare Browser Isolation can inadvertently store data in the wrong remote browser instance, most notably when rapidly switching between tabs.
-
-To determine if your browser is impacted:
-
-1. Go to `chrome://version/?show-variations-cmd`.
-2. Search for `ThirdPartyStoragePartitioning/Enabled`.
-3. If you find a match, you likely need to disable this feature (see below).
-
-To disable third-party storage partitioning:
-
-1. Go to `chrome://flags/#third-party-storage-partitioning`.
-2. Set **Experimental third-party storage partitioning** to _Disabled_.
-3. Select **Relaunch** to apply the change.
-
-## I see `WebGL context creation error occurred`.
+## I see `WebGL Rendering Error`.
 
 Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported.
 

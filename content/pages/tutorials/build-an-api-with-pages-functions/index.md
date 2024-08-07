@@ -4,10 +4,12 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
+languages: [JavaScript]
 ---
 
 # Build an API for your front end using Pages Functions
-## Introduction
+
+{{<tutorial-date-info>}}
 
 In this tutorial, you will build a full-stack Pages application. Your application will contain:
 

@@ -6,17 +6,11 @@ meta:
 ---
 {{<heading-pill style="beta">}}Source maps and stack traces{{</heading-pill>}}
 
-[Stack traces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) help with debugging your code when the Worker encounters an unhandled exception. Stack traces show you the specific functions that were called, in what order, from which line and file, and with what arguments.
-
-Most JavaScript code – not just on Workers, but across platforms – is first bundled, often transpiled, and then minified before being deployed to production. This process creates smaller bundles to optimize performance and converts code from Typescript to Javascript if needed.
-
-Source maps translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
+{{<render file="_source-maps.md" productFolder="workers">}}
 
 {{<Aside type="warning">}}
 
-Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0. 
-
-Stack traces support is going to be in open beta on April 15. 
+Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0.
 
 {{</Aside>}}
 
@@ -48,6 +42,8 @@ You can then view the stack trace in when streaming [real-time logs](/workers/ob
 The source map is retrieved after your Worker invocation completes — it's an asynchronous process that does not impact your Worker's CPU utilization or performance. Source maps are not accessible inside the Worker at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack) within a Worker, you will not get a deobfuscated stack trace. 
 
 {{</Aside>}}
+
+When Cloudflare attempts to remap a stack trace to the Worker's source map, it does so line-by-line, remapping as much as possible. If a line of the stack trace cannot be remapped for any reason, Cloudflare will leave that line of the stack trace unchanged, and continue to the next line of the stack trace.
 
 ## Related resources
 

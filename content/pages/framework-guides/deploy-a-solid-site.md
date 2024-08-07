@@ -1,21 +1,13 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Solid site
+title: Solid
 ---
 
-# Deploy a Solid Site
+# Solid
 
 [Solid](https://www.solidjs.com/) is an open-source web application framework focused on generating performant applications with a modern developer experience based on JSX.
 
 In this guide, you will create a new Solid application implemented via [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart) (Solid's meta-framework) and deploy it using Cloudflare Pages.
-
-{{<Aside type="warning" header="Important">}}
-
-At the time of writing SolidStart is in beta, this may make the following guide inaccurate in the event of a breaking change.
-
-_Note: This guide is based on the [SolidStart Beta 2 version](https://github.com/solidjs/solid-start/discussions/1052)_
-
-{{</Aside>}}
 
 ## Create a new project
 

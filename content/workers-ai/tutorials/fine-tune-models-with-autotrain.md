@@ -4,9 +4,12 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Fine Tune Models With AutoTrain from HuggingFace
+tags: [AI]
 ---
 
 # Fine Tune Models With AutoTrain from HuggingFace
+
+{{<tutorial-date-info>}}
 
 Fine tuning an AI model gives you the opportunity to add additional training data to the model. Workers AI allows for [Low-Rank Adaptation, LoRA, adapters](/workers-ai/fine-tunes/loras/) that will allow you to finetune our models.
 

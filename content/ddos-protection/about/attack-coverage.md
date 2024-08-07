@@ -13,22 +13,15 @@ The [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/
 
 [Advanced TCP Protection](/ddos-protection/tcp-protection/) and [Advanced DNS Protection](/ddos-protection/dns-protection/), available to [Magic Transit](/magic-transit/) customers, provide additional protection against sophisticated TCP-based DDoS attacks and sophisticated and fully randomized DNS attacks, respectively.
 
-As a general guideline, Cloudflare customers are protected up to the layer on which their service operates. For example, a WAF customer is protected against DDoS attacks on Layer 7 (HTTP/HTTPS) all the way down including L3/4 attacks.
+As a general guideline, various Cloudflare products operate on different open systems interconnection (OSI) layers and you are protected up to the layer on which your service operates. You can customize the DDoS settings on the layer in which you onboarded. For example, since the CDN/WAF service is a Layer 7 (HTTP/HTTPS) service, Cloudflare provides protection from DDoS attacks on L7 downwards, including L3/4 attacks. 
+
+{{<Aside type="note">}}
+For Magic Transit customers, Cloudflare provides some L7 protection with a L3 service (like the Advanced DNS Protection system that is available for Magic Transit customers. DNS is considered a L7 protocol).
+{{</Aside>}}
 
 The following table includes a sample of covered attack vectors:
 
-{{<table-wrap>}}
-
-| OSI Layer       | Ruleset / Feature                                                                  | Example of covered DDoS attack vectors |
-| --------------- | ---------------------------------------------------------------------------------- | -------------------------------------- |
-| L3/4            | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) | UDP flood attack<br/>SYN floods<br/>SYN-ACK reflection attack<br/>ACK floods<br/>Mirai and Mirai-variant L3/4 attacks<br/>{{<glossary-tooltip term_id="ICMP">}}ICMP{{</glossary-tooltip>}} flood attack<br/>SNMP flood attack<br/>QUIC flood attack<br/>Out of state TCP attacks<br/>Protocol violation attacks<br/>SIP attacks<br/>ESP flood<br/>DNS amplification attack<br/>DNS Garbage Flood<br/>DNS NXDOMAIN flood<br/>DNS Query flood<br/><br/>For more DNS protection options, refer to [Getting additional DNS protection](#getting-additional-dns-protection). |
-| L3/4            | [Advanced TCP Protection](/ddos-protection/tcp-protection/) [^1]                   | Fully randomized and spoofed ACK floods, SYN floods, SYN-ACK reflection attacks, and other sophisticated TCP-based DDoS attacks |
-| L7              | [Advanced DNS Protection](/ddos-protection/dns-protection/) {{<markdown>}}{{< inline-pill style="beta" >}}{{</markdown>}} [^1]                  | Sophisticated and fully randomized DNS attacks, including random-prefix attacks and DNS laundering attacks |
-| L7 (HTTP/HTTPS) | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)             | HTTP flood attack<br/>WordPress pingback attack<br/>HULK attack<br/>LOIC attack<br/>Slowloris attack<br/>Mirai and Mirai-variant HTTP attacks |
-
-[^1]: Available to Magic Transit customers.
-
-{{</table-wrap>}}
+{{<render file=_ddos-attack-coverage.md productFolder="ddos-protection">}}
 
 ## Getting additional DNS protection
 

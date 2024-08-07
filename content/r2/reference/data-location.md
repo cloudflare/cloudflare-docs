@@ -1,6 +1,7 @@
 ---
 title: Data location
 pcx_content_type: concept
+weight: 7
 ---
 
 # Data location
@@ -70,7 +71,7 @@ This feature is currently in beta. If you have feedback, reach out to us on the 
 
 Jurisdictional Restrictions guarantee objects in a bucket are stored within a specific jurisdiction.
 
-Use Jurisdictional Restrictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/).
+Use Jurisdictional Restrictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 ### Set jurisdiction via the Cloudflare dashboard
 
@@ -91,7 +92,7 @@ bindings = [
 ]
 ```
 
-For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/). 
+For more information on getting started, refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/).
 
 ### Using jurisdictions with the S3 API
 
@@ -129,12 +130,18 @@ The following jurisdictions are supported:
 | Jurisdiction | Jurisdiction description      |
 | ---- | --------------------- |
 | eu | European Union |
+| fedramp | FedRAMP |
+
+{{<Aside type="note">}}
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to get access to the FedRAMP jurisdiction.
+{{</Aside>}}
 
 ### Limitations
 
 During the beta, the following services will not interact with R2 resources with assigned jurisdictions:
 * [Super Slurper](/r2/data-migration/)
 * [Logpush](/logs/get-started/enable-destinations/r2/)
+* [Event Notifications](/r2/buckets/event-notifications/)
 
 ### Additional considerations
 

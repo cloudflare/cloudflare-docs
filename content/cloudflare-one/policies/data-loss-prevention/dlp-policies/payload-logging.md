@@ -6,7 +6,7 @@ weight: 2
 
 # Log the payload of matched rules
 
-Data Loss Prevention allows you to log the data that triggered a specific DLP policy. This data is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP rules. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 20 characters of additional context on both sides of the match.
+Data Loss Prevention allows you to log the data that triggered a specific DLP policy. This data is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP rules. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 20 bytes of additional context on both sides of the match.
 
 ## 1. Generate a key pair
 
@@ -60,4 +60,6 @@ Neither the key nor the decrypted payload will be stored by Cloudflare.
 
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 
-- You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). All EDM-matched alphanumeric characters in the log will be redacted. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+- DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+  
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.

@@ -4,13 +4,13 @@ difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Send Emails With Resend
+tags: [Email, Resend]
+languages: [JavaScript]
 ---
 
 # Send Emails With Resend
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Overview
+{{<tutorial-date-info>}}
 
 In this tutorial, you will learn how to send transactional emails from Workers using [Resend](https://resend.com/). At the end of this tutorial, you’ll be able to:
 
@@ -32,26 +32,19 @@ To continue with this tutorial, you’ll need:
 
 Start by using [C3](/pages/get-started/c3/) to create a Worker project in the command line, then, answer the prompts:
 
-```bash
----
-header: Create a new Worker
----
+```sh
 $ npm create cloudflare@latest
 ```
 
 Alternatively, you can use CLI arguments to speed things up:
 
-```bash
----
-header: Create a new Worker with CLI args
----
-
+```sh
 $ npm create cloudflare@latest email-with-resend -- --type=hello-world --ts=false --git=true --deploy=false
 ```
 
 This creates a simple hello-world Worker having the following content:
 
-```jsx
+```js
 ---
 filename: src/index.js
 ---
@@ -87,10 +80,7 @@ Lastly, navigate to `API Keys` with the side menu, to create an API key. Give yo
 
 The final step is putting it all together in a Worker. Open up a terminal in the directory of the Worker you created earlier. Then, install the Resend SDK:
 
-```bash
----
-header: Install Resend's SDK
----
+```sh
 $ npm i resend
 ```
 
@@ -120,10 +110,7 @@ export default {
 
 To test your code locally, run the following command and navigate to [http://localhost:8787/](http://localhost:8787/) in a browser:
 
-```bash
----
-header: Local development server
----
+```sh
 $ npm start
 ```
 
@@ -135,7 +122,7 @@ Sensitive information such as API keys and token should always be stored in secr
 
 To add secrets for local development, create a `.dev.vars` file which works exactly like a `.env` file:
 
-```bash
+```txt
 ---
 filename: .dev.vars
 ---
@@ -144,7 +131,7 @@ RESEND_API_KEY=your_resend_api_key
 
 Also ensure the secret is added to your deployed worker by running:
 
-```bash
+```sh
 ---
 header: Add secret to deployed Worker
 ---

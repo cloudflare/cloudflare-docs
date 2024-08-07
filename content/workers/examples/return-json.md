@@ -9,16 +9,17 @@ languages:
   - JavaScript
   - TypeScript
   - Python
+  - Rust
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Return JSON
 weight: 2
 layout: example
 updated: 2024-01-11
 ---
 
-{{<tabs labels="js | ts | py">}}
+{{<tabs labels="js | ts | py | rs">}}
 {{<tab label="js" default="true">}}
 
 {{<render file="_return-json-example-js.md">}}
@@ -49,6 +50,27 @@ def on_fetch(request):
     data = json.dumps({"hello": "world"})
     headers = Headers.new({"content-type": "application/json"}.items())
     return Response.new(data, headers=headers)
+```
+
+{{</tab>}}
+{{<tab label="rs">}}
+
+```rs
+use serde::{Deserialize, Serialize};
+use worker::*;
+
+#[derive(Deserialize, Serialize, Debug)]
+struct Json {
+    hello: String,
+}
+
+#[event(fetch)]
+async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    let data = Json {
+        hello: String::from("world"),
+    };
+    Response::from_json(&data)
+}
 ```
 
 {{</tab>}}

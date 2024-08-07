@@ -3084,11 +3084,17 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocsMarkdown table {
-    word-break: break-word;
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    --border-color: rgba(var(--color-rgb), .1)
+    --border-color: rgba(var(--color-rgb), .1);
+    display: block;
+    overflow-x: auto;
+}
+
+/* Stop display: block applying to table-wrap shortcode */
+.DocsMarkdown--table-wrap table {
+    display: table;
 }
 
 .DocsMarkdown th {
@@ -3251,7 +3257,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     padding: .25em 0;
     border-radius: .3125em;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch
 }
 
 .DocsMarkdown--table-wrap:not(:last-child) {
@@ -3926,3 +3931,106 @@ td>code,
     top: 55px !important;
   }
 }
+
+/* Alpha, Beta, and Deprecated pills */
+.DocsMarkdown-alpha,
+.DocsMarkdown-beta,
+.DocsMarkdown-deprecated,
+.DocsMarkdown-early-access,
+.DocsMarkdown-legacy {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.inline-pill {
+  display: inline !important;
+  margin-left: 4px;
+}
+
+.DocsMarkdown--pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+
+  position: relative;
+  margin-bottom: 0.75em;
+
+  height: 18px;
+  border-radius: 20px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+}
+
+/* Pills on levels lower than H1 */
+
+/* '-lower' unused? */
+.DocsMarkdown-pill-lower {
+  margin-bottom: initial;
+  margin-top: 2.25em;
+}
+
+.DocsMarkdown--pill-h2 {
+  margin-bottom: initial;
+  margin-top: 2.6em;
+}
+.DocsMarkdown--pill-h3 {
+  margin-bottom: initial;
+  margin-top: 2.75em;
+}
+.DocsMarkdown--pill-h4 {
+  margin-bottom: initial;
+  margin-top: 1.75em;
+}
+
+.DocsMarkdown--pill-tab {
+  top: 0;
+  margin-left: 0.8em;
+}
+
+.DocsMarkdown--pill-alpha {
+  width: 47px;
+  background: var(--green-8);
+  color: var(--green-1);
+}
+
+.DocsMarkdown--pill-beta {
+  background: var(--orange-8);
+  color: var(--orange-1);
+}
+
+.DocsMarkdown--pill-deprecated {
+  background: var(--red-8);
+  color: var(--red-0);
+}
+
+[theme="dark"] .DocsMarkdown--pill-deprecated {
+  background: var(--red-6);
+  color: var(--red-0);
+}
+
+.DocsMarkdown--pill-early-access {
+  background-color: var(--blue-8);
+  color: var(--blue-0);
+}
+
+.DocsMarkdown--pill-legacy {
+    background: var(--red-8);
+    color: var(--red-0);
+  }
+
+  [theme="dark"] .DocsMarkdown--pill-legacy {
+    background: var(--red-6);
+    color: var(--red-0);
+  }

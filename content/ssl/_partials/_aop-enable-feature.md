@@ -27,7 +27,7 @@ Note that this step means Authenticated Origin Pulls will be available, but you 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `tls_client_auth` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{<Aside type="warning">}}
 

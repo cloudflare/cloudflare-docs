@@ -7,7 +7,7 @@ title: Cisco IOS XE
 
 This tutorial contains a configuration example for setting up an IPsec tunnel between Cisco IOS XE and Cloudflare. For this tutorial, the tested Cisco IOS XE software was version 17.03.07.
 
-You should replace peer addresses with the Anycast IP addresses assigned to your account. For example:
+You should replace peer addresses with the anycast IP addresses assigned to your account. For example:
 - **Anycast 01**: `162.159.###.###`
 - **Anycast 02**: `172.64.###.###`
 

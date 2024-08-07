@@ -8,9 +8,9 @@
   <!-- Evaluate content type against standards -->
 
   {{- $availableContentTypes := slice
-    "changelog" "concept" "configuration" "faq" "get-started" "glossary"
+    "changelog" "concept" "configuration" "design-guide" "example" "faq" "get-started" "glossary"
     "how-to" "integration-guide" "learning-path" "learning-unit" "migration"
-    "navigation" "overview" "reference" "reference-architecture" "troubleshooting"
+    "navigation" "overview" "reference" "reference-architecture" "reference-architecture-diagram" "troubleshooting"
     "tutorial"
     -}}
 
@@ -117,6 +117,10 @@
   {{- end -}}
   {{- end -}}
 
+  {{- with .Context.Params.tags -}}
+  <meta name="pcx_tags" content="{{- delimit . "," -}}">
+  {{- end -}}
+
   <meta name="algolia_page_title" content="{{- $pt -}}">
   <meta name="pcx_word_count" content="{{- $.Context.FuzzyWordCount -}}">
   {{- $lastMod := $.Context.Lastmod.Format "2006-01-02"  | time -}}
@@ -213,28 +217,6 @@
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.64.0/dist/instantsearch.production.min.js" integrity="sha256-OtorR+6G6evpfgqzuOJjl5iH4JW+87ETzSpLZiVPTDg=" crossorigin="anonymous"></script>
   {{- partial "script" (dict "src" "instantsearch.js" "defer" true) -}}
   <link rel="stylesheet preconnect" href="/algolia-serp.css" />
-  {{- end -}}
-
-  {{- $coveo := index $.Context.Site.Params "coveo" -}}
-  {{- if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
-  <link rel="stylesheet preconnect" href="/tutorial-coveo.css" />
-  <link rel="stylesheet preconnect"
-    href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css"
-    integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA=="
-    crossorigin="anonymous" />
-  <script defer async class="coveo-script"
-    src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js"
-    integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw=="
-    crossorigin="anonymous"></script>
-
-  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $script := (resources.Get "tutorial-coveo.ts") | js.Build $opts -}}
-
-  {{- if hugo.IsProduction -}}
-  {{- $script = $script | minify | fingerprint "md5" -}}
-  {{- end -}}
-  <script src="{{ $script.RelPermalink }}" defer data-token="{{ $coveo.tutorial_token }}"
-    data-org="{{ $coveo.org }}"></script>
   {{- end -}}
 
   {{- if (in $.Context.RelPermalink "/learning-paths/") -}}

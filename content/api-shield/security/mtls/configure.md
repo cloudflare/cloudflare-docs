@@ -25,15 +25,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 ## Create an mTLS rule
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **SSL/TLS** > **Client Certificates**.
-3. Select **Create a mTLS rule**.
-4. In **Custom rules**, several rule parameters have already been filled in. Enter the URI path you want to protect in **Value**.
-5. (Optional) Add a `Hostname` field and enter the mTLS-enabled hostnames you wish to protect in **Value**.
-6. In **Choose action**, select `Block`.
-7. Select **Deploy** to make the rule active.
-
-Once you have deployed your mTLS rule, any requests without a [valid client certificate](/ssl/client-certificates/) will be blocked.
+{{<render file="_mtls-create-rule.md" productFolder="api-shield" >}}
 
 ### Expression Builder
 
@@ -58,5 +50,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 ```
 
 {{<Aside type="warning">}}
-This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca-api-shield/).
+This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
 {{</Aside>}}

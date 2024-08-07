@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-## Follow router vendor guidelines
+### Follow router vendor guidelines
 
 Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.
 

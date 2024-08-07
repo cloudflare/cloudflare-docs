@@ -1,6 +1,8 @@
 ---
 title: Mastodon
 pcx_content_type: tutorial
+difficulty: Beginner
+content_type: 📝 Tutorial
 updated: 2023-01-31
 ---
 

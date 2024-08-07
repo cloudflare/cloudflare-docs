@@ -6,9 +6,7 @@ weight: 39
 
 # Log Output Options
 
-Jobs in Logpush now have a new key **output_options** which replaces **logpull_options** and allows more flexible formatting.
-
-You can modify log output options via the Cloudflare dashboard when creating or editing a Logpush job, or via the API as shown below.
+Jobs in Logpush now have a new key, **output_options**, which replaces **logpull_options** and allows for more flexible formatting. You can modify **output_options** via the API.
 
 ## Replace logpull_options
 
@@ -267,6 +265,6 @@ For example, if logpull_options are `fields=ClientIP,EdgeStartTimestamp,RayID&sa
     "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
     "sample_rate": 0.1,
     "timestamp_format": "rfc3339",
-    "CVE-2021-4428": true
+    "CVE-2021-44228": true
 }
 ```

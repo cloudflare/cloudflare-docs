@@ -12,10 +12,10 @@ For basic uploads, you will need to add the Creator ID after you upload the vide
 ## Upload from URL
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json" \
-     --data '{"url":"https://example.com/myvideo.mp4","creator": "<CREATOR_ID>","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"url":"https://example.com/myvideo.mp4","creator": "<CREATOR_ID>","thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
 
 **Response**
@@ -83,10 +83,10 @@ highlight: [35]
 You can associate videos with a single creator by setting a default creator ID value, which you can later use for searching for videos by creator ID or for analytics data.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/live_inputs"
-–header 'X-Auth-Email: --'
-–header 'X-Auth-Key: --'
-–data '{"DefaultCreator":"1234"}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"DefaultCreator":"1234"}'
 ```
 
 If you have multiple creators who start live streams, [create a live input](/stream/get-started/#step-1-create-a-live-input) for each creator who will live stream and then set a `DefaultCreator` value per input. Setting the default creator ID for each input ensures that any recorded videos streamed from the creator's input will inherit the `DefaultCreator` value.
@@ -95,21 +95,22 @@ At this time, you can only manage the default creator ID values via the API.
 
 ## Update creator in existing videos
 
-To update the creator property in existing videos, make a POST request to the video object endpoint with a JSON payload specifying the creator property as show in the example below.
+To update the creator property in existing videos, make a `POST` request to the video object endpoint with a JSON payload specifying the creator property as show in the example below.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" \
-  -H "Authorization: Bearer <AUTH_TOKEN>" \
-  -d '{"creator":"test123"}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/<VIDEO_UID>" \
+--header "Authorization: Bearer <AUTH_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"creator":"test123"}'
 ```
 
 ## Direct creator upload
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload" \
-     -H "Authorization: Bearer <AUTH_TOKEN>" \
-     -H "Content-Type: application/json" \
-     --data '{"maxDurationSeconds":300,"expiry":"2021-01-02T02:20:00Z","creator": "<CREATOR_ID>", "thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload" \
+--header "Authorization: Bearer <AUTH_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"maxDurationSeconds":300,"expiry":"2021-01-02T02:20:00Z","creator": "<CREATOR_ID>", "thumbnailTimestampPct":0.529241,"allowedOrigins":["example.com"],"requireSignedURLs":true,"watermark":{"uid":"ea95132c15732412d22c1476fa83f27a"}}'
 ```
 
 **Response**
@@ -146,9 +147,8 @@ highlight: [8]
 ## Get videos by Creator ID
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=<CREATOR_ID>&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream?after=2014-01-02T02:20:00Z&before=2014-01-02T02:20:00Z&include_counts=false&creator=<CREATOR_ID>&limit=undefined&asc=false&status=downloading,queued,inprogress,ready,error" \
+--header "Authorization: Bearer <API_TOKEN>"
 ```
 
 **Response**

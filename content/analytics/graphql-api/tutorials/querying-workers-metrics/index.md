@@ -1,13 +1,14 @@
 ---
 title: Querying Workers Metrics with GraphQL
-pcx_content_type: tutorial
+pcx_content_type: example
+products: [Workers]
 ---
 
 # Querying Workers Metrics with GraphQL
 
 In this example, we are going to use the GraphQL Analytics API to query for Workers Metrics over a specified time period. We can query up to one month of data for dates up to three months ago.
 
-The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your API credentials, and adjust the `datetimeStart`, `datetimeEnd`, and `scriptName` variables as needed.
+The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your API credentials, and adjust the `datetimeStart`, `datetimeEnd`, and `scriptName` variables as needed.
 
 ## API Call
 
@@ -40,32 +41,29 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "accountTag": "CLOUDFLARE_ACCOUNT_ID",
+    "accountTag": "<CLOUDFLARE_ACCOUNT_ID>",
     "datetimeStart": "2022-08-04T00:00:00.000Z",
     "datetimeEnd": "2022-08-04T01:00:00.000Z",
     "scriptName": "worker-subrequest-test-client"
   }
-}' | tr -d '\n' | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @-
 ```
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
 
 ```bash
-... | curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
+... | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
+
 #=> {
 #=>   "data": {
 #=>     "viewer": {

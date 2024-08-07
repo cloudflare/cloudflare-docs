@@ -35,11 +35,10 @@ Below is a curl example and the associated data being posted to the API.
 **API example:**
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/spectrum/apps" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     -H "Content-Type: application/json" \
-     --data '{"protocol":"tcp/22","dns":{"type":"CNAME","name":"ssh.example.com"},"origin_direct":["tcp://192.0.2.1:22"],"proxy_protocol":"off","ip_firewall":true,"tls":"full","edge_ips":{"type":"dynamic","connectivity":"all"},"traffic_type":"direct","argo_smart_routing":true}'
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"protocol":"tcp/22","dns":{"type":"CNAME","name":"ssh.example.com"},"origin_direct":["tcp://192.0.2.1:22"],"proxy_protocol":"off","ip_firewall":true,"tls":"full","edge_ips":{"type":"dynamic","connectivity":"all"},"traffic_type":"direct","argo_smart_routing":true}'
 ```
 
 **Example data:**
@@ -100,10 +99,9 @@ Below is a curl example and the associated data being posted to the API.
 **API example:**
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
--H "Content-Type: application/json" \
--H "X-Auth-Email: email" \
--H "X-Auth-Key: key" \
+curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/apps' \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
 --data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":"off","tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
 ```
 

@@ -3,6 +3,7 @@ title: Configure JWT Validation
 pcx_content_type: how-to
 type: overview
 layout: wide
+weight: 1
 meta:
   title: Configure JWT Validation
 ---
@@ -84,13 +85,13 @@ header: Example
 
 ## Create a Token Configuration using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 ```bash
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation" \
 --header 'Content-Type: application/json' \
 --data '{
     "title": "Production JWT configuration",
@@ -274,26 +275,27 @@ You can use the `POST /zones/{zone_id}/api_gateway/token_validation/rules/previe
 ---
 header: Example using cURL
 ---
-curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules/preview' \
+curl --request PUT \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules/preview' \
 --header 'Content-Type: application/json' \
---data {
-        "include": [
-            {
-                "host": [
-                    "v1.example.com",
-                    "v2.example.com"
-                ]
-            }
-        ],
-        "exclude": [
-            {
-                "operation_ids": [
-                    "f9c5615e-fe15-48ce-bec6-cfc1946f1bec", // POST v1.example.com/login
-                    "56828eae-035a-4396-ba07-51c66d680a04"  // POST v2.example.com/login
-                ]
-            }
-        ]
-    }'
+--data '{
+    "include": [
+        {
+            "host": [
+                "v1.example.com",
+                "v2.example.com"
+            ]
+        }
+    ],
+    "exclude": [
+        {
+            "operation_ids": [
+                "f9c5615e-fe15-48ce-bec6-cfc1946f1bec", // POST v1.example.com/login
+                "56828eae-035a-4396-ba07-51c66d680a04"  // POST v2.example.com/login
+            ]
+        }
+    ]
+}'
 ```
 
 The response will include all operations on a zone with an additional `state` field.
@@ -399,9 +401,10 @@ You can also send an empty object in the request body:
 ---
 header: Example using cURL
 ---
-curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules/preview' \
+curl --request PUT \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules/preview' \
 --header 'Content-Type: application/json' \
---data { }'
+--data '{ }'
 ```
 
 The response will show all zone operations and all possible hosts, which you can use to build your own selector.
@@ -447,7 +450,7 @@ header: Token Validation Rule JSON example
 
 ## Create a Token Validation Rule using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 Replace any Token Configurations IDs and operation IDs with the IDs that exist in your zone.
 
@@ -457,7 +460,7 @@ A single request can create multiple rules. To do so, pass multiple rule objects
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request POST \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
 --header 'Content-Type: application/json' \
 --data '[
     {
@@ -534,7 +537,7 @@ header: Result
 
 ## Maintenance
 
-### Update Token Configuration 
+### Update Token Configuration
 
 It is best practice to rotate keys after some time. To support updating the keys, Cloudflare allows up to four keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
 
@@ -552,31 +555,32 @@ Use the `PUT` command to update keys.
 ---
 header: Example using cURL
 ---
-curl --request PUT 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/{configID}/credentials' \
+curl --request PUT \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/{config_id}/credentials' \
 --header 'Content-Type: application/json' \
 --data '{
-        "keys": [
-            {
-                "kty": "EC",
-                "use": "sig",
-                "kid": "test",
-                "x": "-0LNzBheJPn-Zy6JmanTIUX7xc3jgqU714IQY0oU6mw",
-                "y": "KONxBybUcRsJQmtu17jMAHsILSw009AuU3ulfUGv3FI",
-                "alg": "ES256"
-            },
-            {
-                "kty": "EC",
-                "crv": "P-256",
-                "kid": "test-2",
-                "x": "iIbPRbOeLzjGPvv7iwmzCOTU03R0xDqbenp2D6GUcWo",
-                "y": "tDkEh95PnfWwIXciCtdBBVA7wfghx_egmZ1Zcvu2lWw",
-                "alg": "ES256"
-            }
-         ]
-    }'
+    "keys": [
+        {
+            "kty": "EC",
+            "use": "sig",
+            "kid": "test",
+            "x": "-0LNzBheJPn-Zy6JmanTIUX7xc3jgqU714IQY0oU6mw",
+            "y": "KONxBybUcRsJQmtu17jMAHsILSw009AuU3ulfUGv3FI",
+            "alg": "ES256"
+        },
+        {
+            "kty": "EC",
+            "crv": "P-256",
+            "kid": "test-2",
+            "x": "iIbPRbOeLzjGPvv7iwmzCOTU03R0xDqbenp2D6GUcWo",
+            "y": "tDkEh95PnfWwIXciCtdBBVA7wfghx_egmZ1Zcvu2lWw",
+            "alg": "ES256"
+        }
+    ]
+}'
 ```
 
-Make sure to replace `{zoneID}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 ### Update Token Validation Rules
 
@@ -590,14 +594,16 @@ The following example updates one rule and disables another:
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
---header 'Content-Type: application/json' \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules"  \
+--header "Content-Type: application/json" \
 --data '[
     {
         "id": "714d3dd0-cc59-4911-862f-8a27e22353cc",
         "action": "log",
         "title": "updated title"
-    }, {
+    },
+    {
         "id": "7124f9bc-d6b5-430d-b488-b6bc2892f2fb",
         "enabled": false
     }
@@ -612,7 +618,8 @@ This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
 --header 'Content-Type: application/json' \
 --data '[
     {
@@ -630,7 +637,8 @@ This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` before rule `712
 ---
 header: Example using cURL
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/token_validation/rules" --request PATCH \
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
 --header 'Content-Type: application/json' \
 --data '[
     {

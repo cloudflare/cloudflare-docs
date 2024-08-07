@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Remix site
+title: Remix
 ---
 
-# Deploy a Remix site
+# Remix
 
 [Remix](https://remix.run/) is a framework that is focused on fully utilizing the power of the web. Like Cloudflare Workers, it uses modern JavaScript APIs, and it places emphasis on web fundamentals such as meaningful HTTP status codes, caching and optimizing for both usability and performance.
 
@@ -73,7 +73,7 @@ $ npm run deploy
 ## Create and add a binding to your Remix application
 
 To add a binding to your Remix application, refer to [Bindings](/pages/functions/bindings/).
-A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
+A [binding](/pages/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV namespaces](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), [R2 storage buckets](/r2/), and [D1 databases](/d1/).
 
 ### Binding resources in local development
 
@@ -142,7 +142,7 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader = ({ context, params }: LoaderFunctionArgs) => {
+export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   let { results } = await env.DB.prepare(
     "SELECT * FROM products where id = ?1"

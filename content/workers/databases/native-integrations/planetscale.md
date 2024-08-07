@@ -45,7 +45,7 @@ To set up an integration with PlanetScale:
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
 
     ```sh
-    npm install @planetscale/database
+    $ npm install @planetscale/database
     ```
 
 6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration. 

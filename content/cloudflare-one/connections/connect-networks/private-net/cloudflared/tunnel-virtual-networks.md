@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Virtual networks
-weight: 5
+weight: 2
 ---
 
 # Virtual networks

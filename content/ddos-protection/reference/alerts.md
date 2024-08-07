@@ -42,8 +42,9 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 100 requests per second.
-* **Layer 3/4 DDoS Attack Alert**: Alert for Layer 3/4 attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more.
+{{<available-notifications product="DDoS Protection" notificationName="HTTP DDoS Attack Alert">}}
+
+{{<available-notifications product="DDoS Protection" notificationName="Layer 3/4 DDoS Attack Alert">}}
 
 ### Advanced alerts
 
@@ -53,19 +54,8 @@ The availability of advanced DDoS attack alerts depends on your Cloudflare plan 
 
 Advanced DDoS attack alerts support additional configuration, allowing you to filter the notifications you wish to receive.
 
-* **Advanced HTTP DDoS Attack Alert**: Customizable alert for HTTP attacks that generate more than the configured number of requests per second (100 rps by default). Supports the following configuration parameters:
-
-    * The zones in your account for which you wish to receive notifications.
-    * The specific hostnames for which you wish to receive notifications.
-    * The minimum requests-per-second rate that will trigger the alert (100 rps by default).
-
-* **Advanced Layer 3/4 DDoS Attack Alert**: Customizable alert for Layer 3/4 attacks that generate more than the configured number of packets per second (12,000 pps by default). Supports the following configuration parameters:
-
-    * The IP prefixes for which you wish to receive notifications.
-    * The specific IP addresses for which you wish to receive notifications.
-    * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
-    * The minimum megabits-per-second rate that will trigger the alert.
-    * The protocols for which you wish to receive notifications (all protocols by default).
+{{<available-notifications product="DDoS Protection" notificationName="Advanced HTTP DDoS Attack Alert">}}
+{{<available-notifications product="DDoS Protection" notificationName="Advanced Layer 3/4 DDoS Attack Alert">}}
 
 You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
 
@@ -98,10 +88,8 @@ To investigate a possibly ongoing attack, select **View Dashboard**. To go to th
 
 * In some cases, HTTP DDoS attack alerts will reference the attacked zone name instead of the attacked hostname. This occurs when the attack signature does not include information on the attacked hostname because it is not a strong indicator for identifying attack requests. For more information on attack signatures, refer to [How DDoS protection works](/ddos-protection/about/how-ddos-protection-works/).
 
-* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
+* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS managed rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) and the [Advanced DNS Protection](/ddos-protection/dns-protection/) system.
 
 * You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
 * If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
-
-* Events listed under [Security Events](/waf/analytics/security-events/paid-plans/) with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, `captcha`, or `log`.

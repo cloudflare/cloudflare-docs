@@ -40,6 +40,8 @@ Through HTTP response header modification rules you can:
 
 You can create an HTTP response header modification rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/) or [via API](/rules/transform/response-header-modification/create-api/).
 
+{{<render file="_snippets-alternative.md" withParameters="response header modifications">}}<br />
+
 ## Important remarks
 
 * The response header values are calculated using the field values from the corresponding HTTP request. For example, the value of `ip.src.country` will be the country of the website visitor, not the origin where the response was sent from.

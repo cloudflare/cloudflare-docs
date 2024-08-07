@@ -10,6 +10,8 @@ Workers AI is now Generally Available. We've updated our rate limits to reflect 
 
 Note that model inferences in local mode using Wrangler will also count towards these limits. Beta models may have lower rate limits while we work on performance and scale.
 
+{{<render file="_custom_requirements.md">}}
+
 Rate limits are default per task type, with some per-model limits defined as follows:
 
 ## Rate limits by task type
@@ -51,9 +53,3 @@ Rate limits are default per task type, with some per-model limits defined as fol
 
 ### [Translation](/workers-ai/models/#translation)
 - 720 requests per minute
-
-## Limitations
-
-Streaming during local development is currently unsupported.
-
-You will see all messages come in at once. When deployed, the server will properly stream the messages.

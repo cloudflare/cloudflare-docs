@@ -17,6 +17,8 @@ Origin Rules allow you to customize where the incoming traffic will go and with 
 
 The origin rule expression will determine when these overrides will be applied.
 
+{{<render file="_snippets-alternative.md" withParameters="and customized modifications">}}<br />
+
 {{<render file="_rules-requirements.md" withParameters="Origin Rules require">}}
 
 ## Availability
@@ -25,7 +27,7 @@ The origin rule expression will determine when these overrides will be applied.
 
 ## Execution order
 
-{{<render file="_product_execution_order.md">}}
+{{<render file="_product-execution-order.md">}}
 
 ## Important remarks
 

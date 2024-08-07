@@ -9,14 +9,7 @@ layout: wide
 
 # WAF Managed Rules
 
-WAF Managed Rules allow you to deploy pre-configured managed rulesets that provide immediate protection against:
-
-* Zero-day vulnerabilities
-* Top-10 attack techniques
-* Use of stolen/exposed credentials
-* Extraction of sensitive data
-
-These managed rulesets are regularly updated. You can adjust the behavior of specific rules in these rulesets, choosing from several possible actions.
+{{<render file="_waf-managed-rules-intro.md" productFolder="waf">}}
 
 ## Managed rulesets
 
@@ -67,7 +60,7 @@ The following managed rulesets run in a response phase:
   </thead>
   <tbody>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Sensitive Data Detection</td>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href="/waf/managed-rules/reference/sensitive-data-detection/">Cloudflare Sensitive Data Detection</a></td>
       <td><p>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Security</strong> > <strong>Sensitive Data</strong>.</p>
       <p>Ruleset ID: {{<rule-id>}}e22d83c647c64a3eae91b71b499d988e{{</rule-id>}}</td>
     </tr>
@@ -80,3 +73,12 @@ The following managed rulesets run in a response phase:
 The managed rulesets you can deploy depend on your Cloudflare plan.
 
 {{<feature-table id="security.waf_a_managed_rules" skipAvailability="true">}}
+
+## Customize the behavior of managed rulesets
+
+To customize the behavior of managed rulesets, do one of the following:
+
+- [Create exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of WAF managed rulesets or some of their rules under certain conditions.
+- [Configure overrides](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) to override the default rule action or disable one or more rules of managed rulesets. Overrides can affect an entire managed ruleset, specific tags, or specific rules in the managed ruleset.
+
+Exceptions have priority over overrides.

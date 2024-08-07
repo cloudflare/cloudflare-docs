@@ -39,9 +39,13 @@ Through HTTP request header modification rules you can:
 
 You can create an HTTP request header modification rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/) or [via API](/rules/transform/request-header-modification/create-api/).
 
+{{<render file="_snippets-alternative.md" withParameters="request header modifications">}}<br />
+
 ## Important remarks
 
 *   You cannot modify or remove HTTP request headers whose name starts with `x-cf-` or `cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
+
+*   Due to protocol compliance reasons, modifying or removing request headers with [forbidden header names](https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name) (such as `Accept-Encoding`) is generally not allowed in request header modification rules.
 
 *   You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`. Additionally, you cannot remove the `x-forwarded-for` header.
 
@@ -52,5 +56,7 @@ You can create an HTTP request header modification rule [in the dashboard](/rule
 *   The HTTP request header removal operation will remove all request headers with the provided name.
 
 *   Currently, there is a limited number of HTTP request headers that you cannot modify. Cloudflare may remove restrictions for some of these HTTP request headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
+
+*   To use [claims inside a JSON Web Token (JWT)](/api-shield/security/jwt-validation/transform-rules/), you must first set up a token validation configuration in API Shield.
 
 {{<render file="_troubleshoot-rules-with-trace.md" withParameters="HTTP request header modification rules">}}

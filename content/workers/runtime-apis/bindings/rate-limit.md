@@ -22,7 +22,8 @@ The Rate Limiting API is backed by the same infrastructure that serves the [Rate
 
 - You must use version 3.45.0 or later of the [Wrangler CLI](/workers/wrangler)
 
-We want your feedback. Tell us what you'd like to see in the #rate-limiting-beta channel of the [Cloudflare Developers Discord](https://discord.cloudflare.com/)
+We want your feedback. Tell us what you'd like to see in the [#workers-discussions](https://discord.com/channels/595317990191398933/779390076219686943) or [#workers-help](https://discord.com/channels/595317990191398933/1052656806058528849) channels of the [Cloudflare Developers Discord](https://discord.cloudflare.com/). You can find the an archive of the previous discussion in [#rate-limiting-beta](https://discord.com/channels/595317990191398933/1225429769219211436)
+
 {{</Aside>}}
 
 ## Get started
@@ -180,3 +181,4 @@ For example, if many requests come in to your Worker in a single Cloudflare loca
 ## Examples
 
 - [`@elithrar/workers-hono-rate-limit`](https://github.com/elithrar/workers-hono-rate-limit) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application.
+- [`@hono-rate-limiter/cloudflare`](https://github.com/rhinobase/hono-rate-limiter) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application, with multiple data stores to choose from.

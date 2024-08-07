@@ -12,7 +12,7 @@ Cloudflare compresses content in two ways: between Cloudflare and your website v
 
 ## Compression between Cloudflare and website visitors
 
-In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/) and [auto minification](/speed/optimization/content/auto-minify/) of CSS, JavaScript, and HTML content, Cloudflare supports Gzip and Brotli compression when delivering content to website visitors.
+In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/) and [auto minification](/speed/optimization/content/auto-minify/) (deprecated) of CSS, JavaScript, and HTML content, Cloudflare supports Gzip and Brotli compression when delivering content to website visitors.
 
 ```mermaid
 flowchart LR
@@ -117,7 +117,7 @@ B((Cloudflare))
 C[(Origin server)]
 
 A -.-> B == "Request<br>Accept-Encoding: gzip, br" ==> C
-C == "Response<br>Accept-Encoding: (Gzip / Brotli / No compression)" ==> B -.-> A
+C == "Response<br>(Gzip / Brotli / No compression)" ==> B -.-> A
 
 style A stroke-dasharray: 5 5
 style B stroke: orange,fill: orange,color: black
