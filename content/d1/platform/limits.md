@@ -19,7 +19,7 @@ weight: 2
 | Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1 MB)                        |
 | Maximum SQL statement length                       | 100,000 bytes (100 KB)                        |
 | Maximum bound parameters per query                 | 100                                          |
-| Maximum arguments per SQL function                 | 32                                           |
+| Maximum arguments per SQL function                 | 127                                          |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                               |
 | Maximum bindings per Workers script                 | Approximately 5,000 <sup>2</sup>     |
 | Maximum SQL query duration                    | 30 seconds                        |
