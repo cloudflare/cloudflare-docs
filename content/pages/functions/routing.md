@@ -23,7 +23,7 @@ Functions utilize file-based routing. Your `/functions` directory structure dete
 The following routes will be generated based on the above file structure. These routes map the URL pattern to the `/functions` file that will be invoked when a visitor goes to the URL:
 
 | File path                   | Route                     |
-|-----------------------------|---------------------------|
+| --------------------------- | ------------------------- |
 | /functions/index.js         | example.com               |
 | /functions/helloworld.js    | example.com/helloworld    |
 | /functions/howdyworld.js    | example.com/howdyworld    |
@@ -48,7 +48,7 @@ Dynamic routes allow you to match URLs with parameterized segments. This can be 
 To create a dynamic route, place one set of brackets around your filename – for example, `/users/[user].js`. By doing this, you are creating a placeholder for a single path segment:
 
 | Path               | Matches? |
-|--------------------|----------|
+| ------------------ | -------- |
 | /users/nevi        | Yes      |
 | /users/daniel      | Yes      |
 | /profile/nevi      | No       |
@@ -60,7 +60,7 @@ To create a dynamic route, place one set of brackets around your filename – fo
 By placing two sets of brackets around your filename – for example, `/users/[[user]].js` – you are matching any depth of route after `/users/`:
 
 | Path                  | Matches? |
-|-----------------------|----------|
+| --------------------- | -------- |
 | /users/nevi           | Yes      |
 | /users/daniel         | Yes      |
 | /profile/nevi         | No       |
@@ -90,15 +90,14 @@ Review the following `/functions/` directory structure:
 
 The following requests will match the following files:
 
-| Request               | File                                             |
-|-----------------------|--------------------------------------------------|
-| /foo                  | Will route to a static asset if one is available.|
-| /date                 | /date.js                                         |
-| /users/daniel         | /users/[user].js                                 |
-| /users/nevi           | /users/[user].js                                 |
-| /users/special        | /users/special.js                                |
-| /users/daniel/xyz/123 | /users/[[catchall]].js                           |
-
+| Request               | File                                              |
+| --------------------- | ------------------------------------------------- |
+| /foo                  | Will route to a static asset if one is available. |
+| /date                 | /date.js                                          |
+| /users/daniel         | /users/[user].js                                  |
+| /users/nevi           | /users/[user].js                                  |
+| /users/special        | /users/special.js                                 |
+| /users/daniel/xyz/123 | /users/[[catchall]].js                            |
 
 The URL segment(s) that match the placeholder (`[user]`) will be available in the request [`context`](/pages/functions/api-reference/#eventcontext) object. The [`context.params`](/pages/functions/api-reference/#params) object can be used to find the matched value for a given filename placeholder.
 
@@ -114,7 +113,6 @@ export function onRequest(context) {
 ```
 
 The above logic will return `daniel` for requests to `/users/daniel`.
-
 
 For files which match against multiple URL segments (use a double set of brackets), the values are returned as an array:
 
@@ -145,9 +143,9 @@ Create a `_routes.json` file to control when your Function is invoked. It should
 
 This file will include three different properties:
 
-* **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
-* **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
-* **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
+- **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
+- **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
+- **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
 {{<Aside type="note">}}
 
@@ -189,6 +187,6 @@ filename: _routes.json
 
 Functions invocation routes have the following limits:
 
-* You must have at least one include rule.
-* You may have no more than 100 include/exclude rules combined.
-* Each rule may have no more than 100 characters.
+- You must have at least one include rule.
+- You may have no more than 100 include/exclude rules combined.
+- Each rule may have no more than 100 characters.
