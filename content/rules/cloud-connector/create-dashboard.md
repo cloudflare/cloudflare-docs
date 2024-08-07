@@ -27,10 +27,10 @@ The bucket URL must follow a [specific format](/rules/cloud-connector/providers/
 
 6. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
 
-    - To route all requests under `example.com/images/*` you would enter the following expression:<br/>
-    `starts_with(http.request.uri.path, "/images")`
-    - To route all requests under `images.example.com/*` you would enter the following expression:<br/>
-    `http.host eq "images.example.com"`
+    - To route all requests under `https://example.com/images/*` you could enter the following expression:<br/>
+    `http.request.full_uri wildcard "https://example.com/images/*"`
+    - To route all requests under `https://images.example.com/*` you could enter the following expression:<br/>
+    `http.request.full_uri wildcard "https://images.example.com/*"`
 
     Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
 
