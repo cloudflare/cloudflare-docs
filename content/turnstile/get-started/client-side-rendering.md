@@ -8,6 +8,10 @@ weight: 1
 
 You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering.
 
+{{<Aside type= "warning">}}
+`api.js` must be fetched from the exact URL stated below. Proxying or caching this file will likely result in Turnstile failing when future updates are released.
+{{</Aside>}}
+
 ## Implicitly render the Turnstile widget
 
 {{<Aside type="note">}}
