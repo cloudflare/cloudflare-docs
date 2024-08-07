@@ -10,7 +10,7 @@ Within IP address management, service binding refers to the association of an IP
 
 ## Scope
 
-Currently, if you have BYOIP configured with [Magic Transit](/magic-transit/), you can use the [service bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoints to add CDN or Spectrum capabilities on top of Magic Transit.
+Currently, if you have BYOIP configured with [Magic Transit](/magic-transit/), you can use the [service binding](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoints to add CDN or Spectrum capabilities on top of Magic Transit.
 
 ### CDN (Cache)
 

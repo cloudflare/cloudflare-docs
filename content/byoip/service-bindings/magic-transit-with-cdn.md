@@ -33,11 +33,11 @@ This configuration will use the [IP address management service bindings](/byoip/
 
 {{</details>}}
 
-* Note that a transitional state will take place for four to six hours after you complete all the steps. During this time, traffic destined to your origins will slowly transition from the Magic Transit pipeline to the CDN pipeline.
+* Note that a transitional state will take place for four to six hours after you create the service binding. During this time, traffic destined to your origins will slowly transition from the Magic Transit pipeline to the CDN pipeline.
 
 ## 1. Get account information
 
-1. Log in to your Cloudflare account and your account ID and API token.
+1. Log in to your Cloudflare account and get your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/create-token/). The token permissions should include `Account` - `IP Prefixes` - `Edit`.
 2. Make a `GET` request to the [List Services](/api/operations/ip-address-management-service-bindings-list-services) endpoint and take note of the `id` associated with the CDN service.
 3. Use the [List Prefixes](/api/operations/ip-address-management-prefixes-list-prefixes) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
 
@@ -49,7 +49,6 @@ At this point, continuing the example mentioned above, you should have a mapping
 |-------------------------------|----------------------------------------------------|
 | `{service_id}`                  | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`           |
 | `{prefix_id}`                   | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
-
 
 {{</example>}}
 
@@ -113,15 +112,40 @@ In the response body, the initial provisioning state should be `provisioning`.
 
 2.(Optional) Through the four to six hours that your change will take to propagate, you can use the [List Service Bindings](/api/operations/ip-address-management-service-bindings-list-service-bindings) endpoint to programmatically check for the `active` provisioning state.
 
-## 3. Create address map
+## 3. Create address maps
 
-* Account-level: for all proxied DNS records across all of the zones within an account
+Once you have configured your IPs to have CDN service, you can use {{<glossary-tooltip term_id="address map" link="/byoip/address-maps/">}}address maps{{</glossary-tooltip>}} to specify which IPs should be used by Cloudflare in DNS responses when a record is [proxied](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records).
 
-* Zone-Level: all proxied DNS records within a zone
+You can choose between two different scopes:
+
+* Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
+
+* Zone-Level: uses the address map for all proxied DNS records within a zone.
 
 {{<Aside type="note">}}
-Subdomain setup alternative
+If you need to map only specific hostnames to specific IP addresses - and not all proxied DNS records -, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 {{</Aside>}}
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **IP Addresses** > **Address Maps**.
+3. Select **Create an address map**.
+4. Choose the scope of the address map.
+5. Add the zones and IP addresses that you want to map.
+6. Name your address map.
+7. Review the information and select **Save and Deploy**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Use the [Create Address Map](/api/operations/ip-address-management-address-maps-create-address-map) endpoint.
+
+Make sure you have the correct Key/Token and permissions.
+
+{{</tab>}}
+{{</tabs>}}
 
 ## 4. Create DNS records
 
