@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-08-30"
+    title: Increased SQL function argument limit
+    description: |-
+      D1 now allows up to 127 arguments (parameters) to be passed to SQL functions, up from the previous limit of 32. This enables more complex queries, including those that [operate over JSON data](/d1/build-with-d1/query-json/), to run against D1 databases.
+
+      Visit the [limits documentation](/d1/platform/limits/) to review D1's limits.
+
   - publish_date: "2024-07-26"
     title: Fixed bug in TypeScript typings for run() API
     description: |-
