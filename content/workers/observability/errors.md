@@ -177,7 +177,7 @@ A Worker can be up to 10 MB in size after compression on the Workers Paid plan, 
 
 To reduce the upload size of a Worker, you should consider removing unnecessary dependencies and/or using Workers KV, a D1 database or R2 to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
-Another method to reduce a Worker's filzesize is to split its functionality across multiple Workers and connect them using [Service bindings] (/workers/runtime-apis/bindings/service-bindings/#service-bindings).
+Another method to reduce a Worker's filzesize is to split its functionality across multiple Workers and connect them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/#service-bindings).
 
 #### Script startup exceeded CPU time limit
 
