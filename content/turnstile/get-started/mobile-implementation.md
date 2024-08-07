@@ -12,4 +12,4 @@ On native mobile applications, Turnstile can be used with web views. This applie
 
 When using pre-clearance with Turnstile, make sure it is executed in the same environment where the challenges will occur, including the same browser or device configuration. If pre-clearance is done in a different environment, the clearance cookie may become invalid, leading to failed challenges.
 
-Any modifications to the environment, such as user agent settings, CSP configurations, or domain allowlisting, can disrupt the successful completion of Turnstile challenges. To ensure compatibility, it is recommended to start with a default, unmodified environment and gradually introduce changes, validating Turnstile’s functionality after each adjustment.
+Any modifications to the environment, such as the User Agent, Content Security Policy settings, or domain allowlisting, can disrupt the successful completion of Turnstile challenges. To ensure compatibility, it is recommended to start with a default, unmodified environment and gradually introduce changes, validating Turnstile’s functionality after each adjustment.
