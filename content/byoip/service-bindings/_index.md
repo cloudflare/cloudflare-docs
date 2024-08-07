@@ -20,12 +20,14 @@ Refer to [Use BYOIP with Magic Transit and CDN](/byoip/service-bindings/magic-tr
 
 ### Spectrum
 
+Adding [Spectrum](/spectrum/) allows you benefit from Cloudflare security and performance for Layer 4 traffic.
+
 ## API
 
-(Links to the API docs)
+Service binding operations are currently only available via API. You can find all endpoints and their specifications in the [Cloudflare API documentation](/api/operations/ip-address-management-service-bindings-list-service-bindings).
 
 ## Limitations
 
-(Cannot use both Spectrum _and_ CDN)
-(Need to keep Magic Transit as base/ spanning all addresses in the prefix)
-(Propagation is not immediate)
+* It is currently not possible to use both Spectrum and CDN together with the Magic Transit service. You must choose one or the other when upgrading your IPs.
+* You must keep Magic Transit as a common base service, spanning all addresses in your prefix.
+* Once a service binding is created, its propagation across the Cloudflare network will take four to six hours to complete.
