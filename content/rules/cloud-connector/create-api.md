@@ -16,9 +16,30 @@ The [API token](/fundamentals/api/get-started/create-token/) used in API request
 
 - _Zone_ > _Cloud Connector_ > _Write_
 
+{{<Aside type="note" header="Note">}}
+A token with this permission is only valid for the Cloud Connector endpoints described in this page. You cannot use it to interact with the `http_cloud_connector` phase via [Rulesets API](/ruleset-engine/rulesets-api/).
+{{</Aside>}}
+
+## Endpoints
+
+To obtain the complete endpoint, append the Cloud Connector endpoints listed below to the Cloudflare API base URL:
+
+```txt
+https://api.cloudflare.com/client/v4
+```
+
+The `{zone_id}` argument is the [zone ID](/fundamentals/setup/find-account-and-zone-ids/) (a hexadecimal string). You can find this value in the Cloudflare dashboard.
+
+The following table summarizes the available operations.
+
+Operation | Verb + Endpoint
+----------|----------------
+List Cloud Connector rules | `GET zones/{zone_id}/cloud_connector/rules`
+Create/update/delete Cloud Connector rules | `PUT /zones/{zone_id}/cloud_connector/rules`
+
 ## Example API calls
 
-### Get list of Cloud Connector rules
+### List of Cloud Connector rules
 
 The following example returns a list of existing Cloud Connector rules:
 
