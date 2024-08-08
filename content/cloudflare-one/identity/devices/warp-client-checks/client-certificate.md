@@ -55,7 +55,7 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
 | ------- | -------------------- |
 | Windows | - Local machine trust store </br> - User trust store|
 | macOS   | - System keychain      |
-| Linux   | - NSSDB </br> - To search a custom location, enter the absolute file path(s) to the certificate and private key (for example `/usr/local/mycompany/certs/client.pem` and `/usr/local/mycompany/certs/client_key.pem`). The certificate and private key must be in `PEM` format. They can either be in two different files or the same file. |
+| Linux   | - NSSDB (`/etc/pki/nssdb`) </br> - To search a custom location, enter the absolute file path(s) to the certificate and private key (for example `/usr/local/mycompany/certs/client.pem` and `/usr/local/mycompany/certs/client_key.pem`). The certificate and private key must be in `PEM` format. They can either be in two different files or the same file. |
    4. **Certificate ID**: Enter the UUID of the root CA.
    5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
