@@ -17,7 +17,7 @@ When you enable Authenticated Origin Pulls per hostname, all proxied traffic to 
 First, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
 {{<Aside type="note">}}
-You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will retun a `missing leaf certificate` error.
+You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
 {{</Aside>}}
 
 In the API response, save the certificate `id` since it will be required in step 4.
