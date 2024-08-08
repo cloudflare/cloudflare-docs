@@ -209,7 +209,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
             let req_body = read_request_body(req).await;
             Response::ok(format!("The request body sent in was {}", req_body))
         }
-        _ => Response::ok(format!("The resut was a {:?}", req.method())),
+        _ => Response::ok(format!("The result was a {:?}", req.method())),
     }
 }
 ```

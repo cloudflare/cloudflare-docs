@@ -40,7 +40,7 @@ At a minimum, the `main_module` key is required to upload a Worker.
 
   - The part name that contains the module entry point of the Worker that will be executed. For example, `main.js`.
 
-- `bindings` {{<type>}}array[objec]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `bindings` {{<type>}}array[object]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - [Bindings](#bindings) to expose in the Worker.
 
