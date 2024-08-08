@@ -14,6 +14,15 @@ $1
 
 {{<Aside type="note">}} Make sure you have configured a [Cloud Integration](/magic-cloud-networking/get-started/) before adding a Magic WAN Cloud on-ramp.{{</Aside>}}
 
+## Available on-ramps
+
+Magic Cloud Networking has the following cloud on-ramps integrations:
+- AWS
+- Azure
+- GCP
+
+Refer to [Reference](/magic-cloud-networking/reference/) to learn more about how Cloudflare orchestrates VPN connectivity to your cloud networks.
+
 ## Create a Magic WAN cloud on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
