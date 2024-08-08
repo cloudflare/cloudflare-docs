@@ -29,7 +29,7 @@ const S3 = new S3Client({
 
 console.log(
   await S3.send(
-    new ListBucketsCommand('')
+    new ListBucketsCommand({})
   )
 );
 // {
