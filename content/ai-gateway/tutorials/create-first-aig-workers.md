@@ -20,7 +20,7 @@ Before you start, make sure you have:
 
 - A Cloudflare account
 - Access to the Cloudflare dashboard
-- Basic understanding of API requests
+- A basic understanding of API requests
 
 {{</tutorial-prereqs>}}
 
