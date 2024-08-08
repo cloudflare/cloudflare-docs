@@ -73,7 +73,7 @@ You will receive an endpoint URL for sending requests.
 Monitor your AI Gateway to view usage metrics.
 
 1. Go to **AI** > **AI Gateway** in the dashboard.
-Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs. You can also turn on additional configurations like logging and rate limiting.
+2. Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs. You can also turn on additional configurations like logging and rate limiting.
 
 {{</tutorial-step>}}
 
