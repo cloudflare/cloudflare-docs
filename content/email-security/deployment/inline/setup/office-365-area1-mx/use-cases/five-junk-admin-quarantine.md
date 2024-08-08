@@ -21,4 +21,4 @@ In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to 
 
 ## Create transport rules
 
-{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="Cloud Email Security Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 Admin Managed Host Quarantine`;; `MALICIOUS`, `UCE`, `SPOOF`;;_Redirect the message to_ > _hosted quarantine_;;step10-hosted-quarantine-case5.png">}}
+{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="Email Security Deliver to Junk Email folder`;;`SUSPICIOUS`, `BULK`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules.png;;`Area 1 Admin Managed Host Quarantine`;; `MALICIOUS`, `UCE`, `SPOOF`;;_Redirect the message to_ > _hosted quarantine_;;step10-hosted-quarantine-case5.png">}}

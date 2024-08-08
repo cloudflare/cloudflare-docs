@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-With an **Inline deployment** for your [Cloud Email Security (formerly Area 1) setup](/email-security/deployment/), Cloud Email Security evaluates email messages before they reach a user's inbox.
+With an **Inline deployment** for your [Email Security (formerly Area 1) setup](/email-security/deployment/), Cloud Email Security evaluates email messages before they reach a user's inbox.
 
 More technically, Cloud Email Security becomes a hop in the {{<glossary-tooltip term_id="SMTP">}}SMTP{{</glossary-tooltip>}} processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 

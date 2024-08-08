@@ -30,7 +30,7 @@ To configure anti-spam policies:
         - **Select quarantine policy**: $2.
     - **High confidence phishing**: _Quarantine message_.
         - **Select quarantine policy**: $3.
-    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Cloud Email Security (formerly Area 1) recommends 15-30 days.
+    - **Retain spam in quarantine for this many days**: Default is 15 days. Email Security (formerly Area 1) recommends 15-30 days.
 
     <div class="large-img">
 

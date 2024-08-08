@@ -49,7 +49,7 @@ To configure anti-spam policies:
         - **Select quarantine policy**: _UserNotifyAdminRelease_.
     - **High confidence phishing**: _Quarantine message_.
         - **Select quarantine policy**: _UserNotifyAdminRelease_.
-    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Cloud Email Security recommends 15-30 days.
+    - **Retain spam in quarantine for this many days**: Default is 15 days. Email Security recommends 15-30 days.
 
     <div class="large-img">
 
@@ -61,4 +61,4 @@ To configure anti-spam policies:
 
 ## Create transport rules
 
-{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="`Cloud Email Security User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Cloud Email Security User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}
+{{<render file="deployment/_o365-use-case-transport-rules.md" withParameters="`Email Security User Quarantine Message`;;`UCE`, `SPOOF`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_;;step4-rules-case4.png;;`Email Security User Quarantine Message Admin Release`;;`MALICIOUS`;;_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_;;step10-admin-release-case4.png">}}

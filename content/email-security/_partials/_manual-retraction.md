@@ -7,7 +7,7 @@ _build:
 
 When retraction is enabled, you can manually retract messages that were not automatically retracted.
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/). 
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/). 
 
 2. Select the search bar and enter the search parameters to find the emails you are looking for.
 
@@ -21,4 +21,4 @@ When retraction is enabled, you can manually retract messages that were not auto
 
     </div>
 
-5. If the retraction was successful, there will be positive confirmation on Cloud Email Security's dashboard.
+5. If the retraction was successful, there will be positive confirmation on Email Security (formerly Area 1) dashboard.

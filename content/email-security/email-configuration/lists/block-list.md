@@ -6,13 +6,13 @@ weight: 3
 
 # Block lists
 
-When you add **blocked senders**, Cloud Email Security automatically marks all messages from these senders with a `MALICIOUS` {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}}.
+When you add **blocked senders**, Email Security automatically marks all messages from these senders with a `MALICIOUS` {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}}.
 
 ## Add a blocked sender
 
 To create a new blocked pattern:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Block List** > **Blocked Senders**.
 4. Select **+ New Sender**.

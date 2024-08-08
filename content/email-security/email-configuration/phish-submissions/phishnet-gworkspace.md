@@ -5,7 +5,7 @@ pcx_content_type: how-to
 
 # PhishNet for Google Workspace
 
-PhishNet is an add-in button that helps users to submit directly to Cloud Email Security (formerly Area 1) {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Cloud Email Security.
+PhishNet is an add-in button that helps users to submit directly to Email Security (formerly Area 1) {{<glossary-tooltip term_id="phishing">}}phish{{</glossary-tooltip>}} samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Email Security.
 
 ## Prerequisites
 
@@ -72,4 +72,4 @@ Cloudflare PhishNet is now installed.
 
 5. Select **Submit Report**.
 
-PhishNet will show you a **Submission Complete** message once the email has been successfully submitted to Cloudflare Cloud Email Security for review. 
+PhishNet will show you a **Submission Complete** message once the email has been successfully submitted to Email Security (formerly Area 1) for review. 

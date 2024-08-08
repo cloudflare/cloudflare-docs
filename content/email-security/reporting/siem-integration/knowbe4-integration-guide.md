@@ -7,11 +7,11 @@ updated: 2023-08-04
 ---
 # KnowBe4
 
-When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to KnowBe4. For this tutorial, you will need a working KnowBe4 account with the SecurityCoach add-on. You will also need to create an organization key to use in Cloud Email Security. This organization key will let you integrate KnowBe4 with Cloud Email Security. Refer to [KnowBe4 documentation](https://support.knowbe4.com/hc/articles/13129840202643) for more information on this subject.
+When Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to KnowBe4. For this tutorial, you will need a working KnowBe4 account with the SecurityCoach add-on. You will also need to create an organization key to use in Email Security. This organization key will let you integrate KnowBe4 with Email Security. Refer to [KnowBe4 documentation](https://support.knowbe4.com/hc/articles/13129840202643) for more information on this subject.
 
-After creating your organization key and authorizing Cloud Email Security:
+After creating your organization key and authorizing Email Security:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.

@@ -8,9 +8,9 @@ updated: 2023-01-26
 
 # Splunk Cloud integration guide
 
-When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
+When Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
 
-![A diagram outlining what happens when Cloud Email Security detects a phishing email and sends it to Splunk.](/images/email-security/siem-integration/splunk/open-splunk.png)
+![A diagram outlining what happens when Email Security detects a phishing email and sends it to Splunk.](/images/email-security/siem-integration/splunk/open-splunk.png)
 
 ## 1. Configure Splunk HTTP Event Collector
 
@@ -26,7 +26,7 @@ When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phi
 
 4. Select the **New Token** button to start the configuration.
 
-5. Provide a descriptive name for the Cloud Email Security (formerly Area 1) token (for example, `Cloud Email Security (formerly Area 1) Email Detections`), and leave the **Enable indexer acknowledgement** unchecked.
+5. Provide a descriptive name for the Email Security (formerly Area 1) token (for example, `Email Security (formerly Area 1) Email Detections`), and leave the **Enable indexer acknowledgement** unchecked.
 
     ![Enter a descriptive name for your new token, but leave Enable indexer acknowledgement checkbox unchecked.](/images/email-security/siem-integration/splunk/step5-token.png)
 
@@ -36,9 +36,9 @@ When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phi
 
     ![Configure the Input Settings based on your environment](/images/email-security/siem-integration/splunk/step7-input-settings.png)
 
-8. You may also select **Create a new index** to create new settings for Cloud Email Security events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment.
+8. You may also select **Create a new index** to create new settings for Email Security events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment.
 
-    ![Optionally, create a new index for Cloud Email Security events](/images/email-security/siem-integration/splunk/step8-new-index.png)
+    ![Optionally, create a new index for Email Security events](/images/email-security/siem-integration/splunk/step8-new-index.png)
 
 9. For this example, we created a new `area1_index` index, and added it to the configuration.
 
@@ -46,7 +46,7 @@ When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phi
 
 10. Select **Review** > **Submit** to review your settings and create the collector.
 
-11. Take note of the token value in this next screen. This value is required for the Cloud Email Security configuration in the next step. You can also retrieve the token from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
+11. Take note of the token value in this next screen. This value is required for the Email Security configuration in the next step. You can also retrieve the token from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
 
     ![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/step11-token-value.png)
 
@@ -92,11 +92,11 @@ Additionally, you can search your instance of Splunk for the test event with `in
 ![Example of a new index added to the configuration](/images/email-security/siem-integration/splunk/search-instance.png)
 
 
-## 3. Configure Cloud Email Security
+## 3. Configure Email Security
 
-The next step is to configure Cloud Email Security to push the Email Detection Event to the Splunk HTTP Event Collector.
+The next step is to configure Email Security to push the Email Detection Event to the Splunk HTTP Event Collector.
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
 3. In the Add Webhooks page, enter the following settings:
     - **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of the previous step.
@@ -108,4 +108,4 @@ Your Splunk integration will now show up in the All Webhooks panel.
 
 ![The All Webhooks section will show your Splunk webhook](/images/email-security/siem-integration/splunk/splunk-webhook-integrations.png)
 
-It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Cloudflare Cloud Email Security, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk.
+It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Email Security (formerly Area 1), and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk.

@@ -6,11 +6,11 @@ weight: 2
 
 # Trusted domains
 
-**Trusted domains** allows you to identify domains that should be exempted from Cloud Email Security (formerly Area 1) detections.
+**Trusted domains** allows you to identify domains that should be exempted from Email Security (formerly Area 1) detections.
 
 ## Default behavior
 
-When messages come to your recipients from certain domains, Cloud Email Security triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
+When messages come to your recipients from certain domains, Email Security triggers certain [detections](/email-security/reference/dispositions-and-attributes/) by default:
 
 - **Proximity Domains**: Domains with similar spelling to your existing domain. Will trigger a `SPOOF` detection.
 - **Recent Domains**: Domains created recently (exact definition set in [Added Detections](/email-security/email-configuration/enhanced-detections/added-detections/)). Will trigger a `MALICIOUS` or `SUSPICIOUS` detection.
@@ -23,7 +23,7 @@ To exempt specific domains from these detections, you can add trusted domains.
 
 To add a trusted domain:
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Allow List** > **Trusted Domains**.
 4. Select **+ Add Domain**.

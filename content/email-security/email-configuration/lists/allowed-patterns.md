@@ -6,13 +6,13 @@ weight: 1
 
 # Allowed patterns
 
-When you set up **allowed patterns**, Cloudflare Cloud Email Security email security exempts messages that match certain patterns from normal detection scanning.
+When you set up **allowed patterns**, Email Security email security exempts messages that match certain patterns from normal detection scanning.
 
 ## Add an allowed pattern
 
 To create a new allowed pattern:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Allow List** > **Allowed Patterns**.
 4. Select **+ New Pattern**.
@@ -26,8 +26,8 @@ To create a new allowed pattern:
 
     - **Allow Type**: Choose one or more of the following types:
 
-        - **Trusted Sender**: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Cloud Email Security. Typically, only applies to {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} simulations from vendors such as KnowBe4.
-        - **Exempt Recipient**: Will exempt messages from all Cloud Email Security [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
+        - **Trusted Sender**: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Email Security. Typically, only applies to {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} simulations from vendors such as KnowBe4.
+        - **Exempt Recipient**: Will exempt messages from all Email Security [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
         - **Acceptable Sender**: Will exempt messages from the `SPAM`, `SPOOF`, and `BULK` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `MALICIOUS` or `SUSPICIOUS`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
 
     - **Notes**: Provide additional notes about the allowed pattern.
