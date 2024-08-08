@@ -58,7 +58,9 @@ To edit users from other integrations:
 
 {{<Aside type="note">}}
 
-If you added a user to the impersonation registry, and the user was manually added to the Email Security directory, you cannot remove the user from the **Impersonation registry**. To remove the user:
+Adiministrators can remove users who belong to the Email Security directory from the **Impersonation registry**. Users who come from an integrated directory cannot be removed from the **Impersonation registry** directly. 
+
+To remove a user from an integrated directory:
 
 1. Select **Directories** on the sidebar.
 2. Select the directory where your user is allocated.
