@@ -15,9 +15,9 @@ updated: 2022-09-30
 
 {{</Aside>}}
 
-![A schematic showing where Email Security security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/cisco-cisco-mx/cisco-mx.png)
+![A schematic showing where Email Security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/cisco-cisco-mx/cisco-mx.png)
 
-In this tutorial, you will learn how to configure Email Security email security with Cisco as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Email Security with Cisco as MX record. This tutorial is broken down into several steps.
 
 ## 1. Add a Sender Group for Email Security Email Protection IPs
 

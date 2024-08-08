@@ -99,7 +99,7 @@ Now that the application configuration is complete, update **User Assignments** 
 
 ## 3. Test SSO configuration
 
-After completing both the Azure and Email Security set ups, you can test your SSO access.
+After completing both the Azure and Email Security setups, you can test your SSO access.
 In this example, the logo for Email Security has been updated.
 
 {{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
@@ -121,7 +121,7 @@ If you have trouble connecting your Azure account to Email Security, make sure t
 - The user exists in the Email Security dashboard.
 - The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
 - **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
-- The SAML SSO Domain is set correctly in the Email Security dashboard (refer to step 6 in [Configure Email Security to connect to Azure](#2-configure-cloud-email-security-to-connect-to-azure)).
+- The SAML SSO Domain is set correctly in the Email Security dashboard (refer to step 6 in [Configure Email Security to connect to Azure](#2-configure-email-security-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

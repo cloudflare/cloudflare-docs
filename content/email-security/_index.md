@@ -60,7 +60,7 @@ Stop brand impersonation. Track and manage every source that is sending emails f
 {{<resource-group>}}
  
 {{<resource header="Pricing" href="https://www.cloudflare.com/products/zero-trust/email-security/" icon="price">}}
-Email Security (formerly Area 1) Email Security is available as a standalone product purchase.
+Email Security (formerly Area 1) is available as a standalone product purchase.
 {{</resource>}}
  
 {{</resource-group>}}

@@ -62,7 +62,7 @@ You will need to manually create an app for Email Security in Okta.
 
     ![Copy and save the SSO URL to use later in the Email Security dashboard](/images/email-security/sso/okta/step12-sso-url.png)
 
-13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Email Security dashboard. The start of the metadata should be similar to the following:
+13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to finish configuration in the Email Security dashboard. The start of the metadata should be similar to the following:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...

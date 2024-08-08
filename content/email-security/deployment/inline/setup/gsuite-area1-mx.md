@@ -15,7 +15,7 @@ updated: 2022-09-30
 
 {{</Aside>}}
 
-![A schematic showing where Email Security security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/gsuite-area1-mx/gsuite-area1-mx.png)
+![A schematic showing where Email Security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/gsuite-area1-mx/gsuite-area1-mx.png)
 
 In this tutorial, you will learn how to configure Google Workspace with Email Security as MX record. This tutorial is broken down into several steps.
 

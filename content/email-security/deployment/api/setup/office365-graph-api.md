@@ -47,7 +47,7 @@ The Enterprise Applications that Email Security registers are not tied to any ad
 
     <div class="medium-img">
 
-    ![Select Authorize access to give the correct permissions do Email Security](/images/email-security/deployment/api-setup/ms-graph/step5.png)
+    ![Select Authorize access to give the correct permissions to Email Security](/images/email-security/deployment/api-setup/ms-graph/step5.png)
 
     </div>
 

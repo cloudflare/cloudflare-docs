@@ -15,7 +15,7 @@ updated: 2023-01-12
 
 {{</Aside>}}
 
-![A schematic showing where Email Security security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/o365-area1-mx/office365-mx.png)
+![A schematic showing where Email Security is in the life cycle of an email received](/images/email-security/deployment/inline-setup/o365-area1-mx/office365-mx.png)
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Email Security as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 

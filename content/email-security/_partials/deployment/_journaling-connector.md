@@ -7,7 +7,7 @@ _build:
 
 ### 1. Configure connector for delivery to Email Security (formerly Area 1) (if required)
 
-{{<Aside type="note">}} Email Security only scans inbound emails.{{</Aside>}}
+{{<Aside type="note">}}Email Security only scans inbound emails.{{</Aside>}}
 
 If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 

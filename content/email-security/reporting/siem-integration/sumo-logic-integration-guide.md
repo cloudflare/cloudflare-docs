@@ -63,7 +63,7 @@ Your Sumo Logic integration will now show up in the All Webhooks panel.
 
 ![Your Sumo Logic webhook will display in the All Webhooks panel.](/images/email-security/siem-integration/sumo-logic/all-webhooks.png)
 
-It will take about ten minutes for the configuration to fully propagate through the infrastructure of Cloudflare Email Security, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Sumo Logic. 
+It will take about ten minutes for the configuration to fully propagate through the infrastructure of Email Security, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Sumo Logic. 
 
 To view logs, hover your mouse over the Email Security Collector, and select **Open in Log Search**.
 
