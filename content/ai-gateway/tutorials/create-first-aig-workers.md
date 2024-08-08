@@ -6,11 +6,11 @@ updated: '2024-08-01'
 title: 'Creating Your First AI Gateway Using Workers AI'
 ---
 
-# Creating Your First AI Gateway Using Workers AI
+# Create your first AI Gateway using Workers AI
 
 {{<tutorial-date-info>}}
 
-This tutorial guides you through creating your first AI Gateway using Workers AI on the Cloudflare dashboard. The intended audience is beginners who are new to AI Gateway and Workers AI.
+This tutorial guides you through creating your first AI Gateway using Workers AI on the Cloudflare dashboard. The intended audience is beginners who are new to AI Gateway and Workers AI. Creating an AI Gateway enables the user to efficiently manage and secure AI requests, allowing them to utilize AI models for tasks such as content generation, data processing, or predictive analysis with enhanced control and performance.
 
 {{<tutorial>}}
 
@@ -24,50 +24,41 @@ Before you start, make sure you have:
 
 {{</tutorial-prereqs>}}
 
-{{<tutorial-step title="Sign Up and Log In">}}
+{{<tutorial-step title="Sign up and log in">}}
 
-First, you need to sign up and log in to your Cloudflare account.
 
-1. **Sign Up**: If you don't have a Cloudflare account, [sign up here](https:/cloudflare.com/sign-up).
-2. **Log In**: Access the Cloudflare dashboard by logging in [here](https://dash.cloudflare.com/login).
+1. **Sign up**: If you do not have a Cloudflare account, [sign up](https:/cloudflare.com/sign-up).
+2. **Log in**: Access the Cloudflare dashboard by logging in [ Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Create an AI Gateway">}}
 
-Next, create your AI Gateway.
 
-1. **Navigate to AI Gateway**:
-    - Go to **AI** > **AI Gateway** in the dashboard.
-2. **Create a New Gateway**:
-    - Click **Create Gateway**.
+1. Go to **AI** > **AI Gateway** in the[ Cloudflare dashboard](https://dash.cloudflare.com/).
+2. **Select Create Gateway**:
     - Enter a name for your gateway (up to 64 characters).
-    - Click **Create**.
+    - Select **Create**.
 
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Connect Your AI Provider">}}
 
-Now, connect your AI provider.
+1. In the AI Gateway section, select the gateway you created.
+2. Select **Workers AI** as your provider to set up an endpoint specific to Workers AI.
+You will receive an endpoint URL for sending requests.
 
-1. **Select Your Gateway**:
-    - In the AI Gateway section, select the gateway you created.
-2. **Choose Workers AI**:
-    - Select **Workers AI** as your provider to set up an endpoint specific to Workers AI.
-    - You will receive an endpoint URL for sending requests.
+
 
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Configure Your Workers AI">}}
 
-Configure your Workers AI to start sending requests.
-
-1. **Retrieve API Credentials**:
-    - Go to **AI** > **Workers AI** in the dashboard.
-    - Select **Use REST API** and follow the steps to create and copy your API token and Account ID.
+1. Go to **AI** > **Workers AI** in the Cloudflare dashboard.
+   - Select **Use REST API** and follow the steps to create and copy the API token and Account ID.
 
 2. **Send Requests to Workers AI**:
-    - Use the provided API endpoint. For example, you can run a model via the API using a curl command:
+    - Use the provided API endpoint. For example, you can run a model via the API using a curl command.  Replace `{account_id}`, `{gateway_id}` and `{cf_api_token}` with your actual account ID and API token:
 
     ```bash
     curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
@@ -76,7 +67,6 @@ Configure your Workers AI to start sending requests.
     --data '{"prompt": "What is Cloudflare?"}'
     ```
 
-    Replace `{account_id}` and `{cf_api_token}` with your actual account ID and API token.
 
 {{</tutorial-step>}}
 
@@ -84,9 +74,8 @@ Configure your Workers AI to start sending requests.
 
 Monitor your AI Gateway to view usage metrics.
 
-1. **Monitor Your AI Gateway**:
-    - Go to **AI** > **AI Gateway** in the dashboard.
-    - Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs.
+1. Go to **AI** > **AI Gateway** in the dashboard.
+ Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs. You can also turn on additional configurations like logging and rate limiting.
 
 {{</tutorial-step>}}
 
