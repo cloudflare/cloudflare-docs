@@ -310,7 +310,7 @@ The _in_ operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Value
 
-{{<render file="gateway/_value.md">}}
+{{<render file="gateway/_value.md" withParameters="SNI hosts;;SNI">}}
 
 ## Logical operators
 
