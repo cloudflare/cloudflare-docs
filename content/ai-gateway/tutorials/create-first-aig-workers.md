@@ -3,7 +3,7 @@ pcx_content_type: tutorial
 content_type: 📝 Tutorial
 difficulty: Beginner
 updated: '2024-08-01'
-title: 'Creating Your First AI Gateway Using Workers AI'
+title: 'Create your first AI Gateway using Workers AI'
 ---
 
 # Create your first AI Gateway using Workers AI
