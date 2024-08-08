@@ -57,7 +57,7 @@ The payload contains the actual claim and user information to pass to the applic
 | Field           | Description                               |
 |-----------------|-------------------------------------------|
 | aud             | [Application audience (AUD) tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
-| email           | The email address of the authenticated user, sent by the IdP. |
+| email           | The email address of the authenticated user, verified by the identity provider. |
 | exp             | The expiration timestamp for the token. |
 | iat             | The issuance timestamp for the token. |
 | nbf             | The not-before timestamp for the token, used to check if the token was received before it should be used.|
