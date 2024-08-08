@@ -28,7 +28,7 @@ Before you start, make sure you have:
 
 
 1. **Sign up**: If you do not have a Cloudflare account, [sign up](https:/cloudflare.com/sign-up).
-2. **Log in**: Access the Cloudflare dashboard by logging in [ Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. **Log in**: Access the Cloudflare dashboard by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 {{</tutorial-step>}}
 
