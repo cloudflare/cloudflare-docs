@@ -37,8 +37,8 @@ Before you start, make sure you have:
 
 1. Go to **AI** > **AI Gateway** in the[ Cloudflare dashboard](https://dash.cloudflare.com/).
 2. **Select Create Gateway**:
-    - Enter a name for your gateway (up to 64 characters).
-    - Select **Create**.
+3. Enter a name for your gateway (up to 64 characters).
+4. Select **Create**.
 
 {{</tutorial-step>}}
 
@@ -55,10 +55,8 @@ You will receive an endpoint URL for sending requests.
 {{<tutorial-step title="Configure Your Workers AI">}}
 
 1. Go to **AI** > **Workers AI** in the Cloudflare dashboard.
-   - Select **Use REST API** and follow the steps to create and copy the API token and Account ID.
-
-2. **Send Requests to Workers AI**:
-    - Use the provided API endpoint. For example, you can run a model via the API using a curl command.  Replace `{account_id}`, `{gateway_id}` and `{cf_api_token}` with your actual account ID and API token:
+2. Select **Use REST API** and follow the steps to create and copy the API token and Account ID.
+3. **Send Requests to Workers AI**: Use the provided API endpoint. For example, you can run a model via the API using a curl command.  Replace `{account_id}`, `{gateway_id}` and `{cf_api_token}` with your actual account ID and API token:
 
     ```bash
     curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
@@ -75,7 +73,7 @@ You will receive an endpoint URL for sending requests.
 Monitor your AI Gateway to view usage metrics.
 
 1. Go to **AI** > **AI Gateway** in the dashboard.
- Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs. You can also turn on additional configurations like logging and rate limiting.
+Select your gateway to view metrics such as request counts, token usage, caching efficiency, errors, and estimated costs. You can also turn on additional configurations like logging and rate limiting.
 
 {{</tutorial-step>}}
 
