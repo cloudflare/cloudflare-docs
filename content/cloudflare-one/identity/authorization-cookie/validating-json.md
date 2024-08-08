@@ -80,7 +80,7 @@ To verify the token manually:
 4. Paste the JWT into the **Encoded** box.
 
 5. In the **Payload** box, ensure that the `iss` field points to your team domain (`https://<your-team-name>.cloudflareaccess.com`). `jwt.io` uses the `iss` value to fetch the public key for token validation.
-   
+
 6. Ensure that the page says **Signature Verified**.
 
 You can now trust that this request was sent by Access.
@@ -91,11 +91,15 @@ You can run an automated script on your origin server to validate incoming reque
 
 ### Get your AUD tag
 
+Cloudflare Access assigns a unique AUD tag to each application. The `aud` claim in the token payload specifies which application the JWT is valid for.
+
+To get the AUD tag:
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Select **Configure** for your application.
 3. On the **Overview** tab, copy the **Application Audience (AUD) Tag**.
 
-You can now paste the AUD into your token validation script.
+You can now paste the AUD tag into your token validation script. The AUD tag will never change unless you delete or recreate the Access application.
 
 ### Golang example
 
