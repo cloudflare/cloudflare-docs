@@ -27,7 +27,9 @@ The Workers runtime [supports a broad set of Node.js APIs](/workers/runtime-apis
 
 ### Routers
 
-Both the older [Pages](https://nextjs.org/docs/pages) router and newer [App](https://nextjs.org/docs/app) router from Next.js are supported. Cloudlflare recommends using the App router.
+Cloudlflare recommends using the [App router](https://nextjs.org/docs/app) from Next.js.
+
+Cloudflare also supports the older [Pages](https://nextjs.org/docs/pages) router from Next.js.
 
 ### next.config.mjs Properties
 
