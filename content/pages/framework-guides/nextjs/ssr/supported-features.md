@@ -15,7 +15,7 @@ meta:
 
 Next.js has [two "runtimes"](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) — "Edge" and "Node.js". When you run your Next.js app on Cloudflare, you [can use available Node.js APIs](/workers/runtime-apis/nodejs/) — but you currently can only use Next.js' "Edge" runtime.
 
-The Workers runtime [supports a broad set of Node.js APIs](workers/platform/nodejs-compatibility/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs work in a Next.js app:
+The Workers runtime [supports a broad set of Node.js APIs](/workers/platform/nodejs-compatibility/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs work in a Next.js app:
 
 - `buffer`
 - `events`
@@ -79,7 +79,7 @@ Both the older [Pages](https://nextjs.org/docs/pages) router and newer [App](htt
     - ❌: Not supported
     - N/A: Not applicable
 
-- _1_ - **compression**: [Cloudflare applies gzip or brotli compression](/support/speed/optimization-file-size/what-will-cloudflare-compress) automatically. When developing locally with Wrangler, no compression is applied.
+- _1_ - **compression**: [Cloudflare applies gzip or brotli compression](/speed/optimization/content/brotli/) automatically. When developing locally with Wrangler, no compression is applied.
 
 - _2_ - **dev indicators**: If you're developing using `wrangler pages dev`, it hard refreshes your application the dev indicator doesn't appear. If you run your app locally using `next dev`, this option works fine.
 
@@ -125,9 +125,9 @@ In case the Vercel build process generates prerendered pages for your applicatio
 
 For more details see:
 
-- [troubleshooting `generateStaticParams`](/pages/framework-guides/nextjs/deploy-a-nextjs-site/#generatestaticparams)
-- [troubleshooting `getStaticPaths` ](/pages/framework-guides/nextjs/deploy-a-nextjs-site/#getstaticpaths)
+- [troubleshooting `generateStaticParams`](/pages/framework-guides/nextjs/ssr/troubleshooting/#generatestaticparams)
+- [troubleshooting `getStaticPaths` ](/pages/framework-guides/nextjs/ssr/troubleshooting/#getstaticpaths)
 
 #### Caching and Data Revalidation
 
-Revalidation and `next/cache` are supported on Cloudflare Pages, and can use various bindings. For more information, see our [caching documentation](./caching.md).
+Revalidation and `next/cache` are supported on Cloudflare Pages, and can use various bindings. For more information, see our [caching documentation](/pages/framework-guides/nextjs/ssr/caching/).
