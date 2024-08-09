@@ -26,11 +26,11 @@ export async function GET(request) {
 }
 ```
 
-You can add bindings to your Pages project by [adding them to your `wrangler.toml` configuration file](/pages/functions/wrangler-configuration/).
+Add bindings to your Pages project by [adding them to your `wrangler.toml` configuration file](/pages/functions/wrangler-configuration/).
 
 ## TypeScript type declarations for bindings
 
-To ensure that the `env` object from `getRequestContext().env` above has accurate TypeScript types, you need to install [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) and create a [TypeScript declaration file](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html).
+To ensure that the `env` object from `getRequestContext().env` above has accurate TypeScript types, install [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) and create a [TypeScript declaration file](https://www.typescriptlang.org/docs/handbook/2/type-declarations.html).
 
 Install Workers Types:
 
@@ -65,7 +65,7 @@ interface CloudflareEnv {
 
 ## Other Cloudflare APIs (`cf`, `ctx`)
 
-You can access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
+Access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
 
 ```js
 import { getRequestContext } from '@cloudflare/next-on-pages';
