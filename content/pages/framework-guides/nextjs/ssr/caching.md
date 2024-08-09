@@ -5,33 +5,30 @@ meta:
   title: Caching and data revalidation in your Next.js app
 ---
 
-
 # Caching and data revalidation
 
-`@cloudflare/next-on-pages` comes with support for data revalidation and caching for fetch requests. This is done in our router and acts as an extension to Next.js' built-in functionality.
+[`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) supports [caching](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#caching-data) and [revalidating](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data) data returned by subrequests you make in your app by calling [`fetch()`](/workers/runtime-apis/fetch/).
 
-Caching in Next.js applications (thus applications built using `@cloudflare/next-on-pages` as well) is enabled by default. If you wish to opt-out of this caching please refer to the [official Next.js documentation](https://nextjs.org/docs/app/building-your-application/caching#opting-out-1).
+By default, all `fetch()` subrequests you make in your Next.js app are cached. Refer to the [Next.js documentation](https://nextjs.org/docs/app/building-your-application/caching#opting-out-1) for information about how to disable caching for an individual subrequest, or for an entire route.
 
-Cache is persisted across deployments, which mirrors the [Next.js documented behavior](https://nextjs.org/docs/app/building-your-application/caching#data-cache). You are responsible for revalidating/purging this cache. It is not handled for you by `@cloudflare/next-on-pages` or Cloudflare Pages.
+[The cache persists across deployments](https://nextjs.org/docs/app/building-your-application/caching#data-cache). You are responsible for revalidating/purging this cache.
 
-## Storage Options
+## Storage options
 
-There are currently two different storage options that `@cloudflare/next-on-pages` supports, the Cache API and Workers KV.
-
-In the future, support will be available for creating custom cache interfaces and using different bindings.
+You can configure your Next.js app to write cache entries to and read from either [Workers KV](/kv/) or the [Cache API](/workers/runtime-apis/cache/).
 
 ### Workers KV (recommended)
 
-[Workers KV](/kv/) is a low-latency key-value store that is ideal for storing data that should be globally distributed. KV is eventually consistent, which means that it will take up to 60 seconds for updates to be reflected globally.
+It takes an extra step to enable, but Cloudflare recommends caching data using [Workers KV](/kv/).
 
-Contrary to the Vercel Data Cache and [Workers Cache API](#cache-api), the KV storage is global (and not regional), this naturally changes the data availability and the effect of operations such as the on-demand revalidation.
+When you write cached data to Workers KV, you write to storage that can be read by any Cloudflare location. This means your app can fetch data, cache it in KV, and then subsequent requests anywhere around the world can read from this cache.
 
-To use Workers KV for caching all you need to do is to [add a KV binding](/pages/functions/bindings/#kv-namespaces) to your Pages project with the name `__NEXT_ON_PAGES__KV_SUSPENSE_CACHE`.
+Note that Workers KV is eventually consistent, which means that it can take up to 60 seconds for updates to be reflected globally.
 
-We recommend KV as a caching solution because it offers the same performance benefits, but is easier to inspect the cache content and purge or invalidate outdated entries.
+To use Workers KV as the cache for your Next.js app, [add a KV binding](/pages/functions/bindings/#kv-namespaces) to your Pages project, and set the name of the binding to `__NEXT_ON_PAGES__KV_SUSPENSE_CACHE`.
 
-### Cache API
+### Cache API (default)
 
-The [Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/) is a per data-center cache that is ideal for storing data that is not required to be accessible globally.
+The [Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/) is the default option for caching data in your Next.js app. You do not need to take any action to enable the Cache API.
 
-It is worth noting that Vercel's Data Cache is regional (and not global) the same applies to Workers Cache API, so with this storage option there is no difference in terms of data availability. This includes cache related operations such as the [Next.js' on-demand revalidation](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#on-demand-revalidation).
+In contrast with Workers KV, when you write data using the Cache API, data is only cached in the Cloudflare location that you are writing data from.
