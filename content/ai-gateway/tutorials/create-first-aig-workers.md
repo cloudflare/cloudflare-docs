@@ -35,7 +35,7 @@ Before you start, make sure you have:
 {{<tutorial-step title="Create an AI Gateway">}}
 
 
-1. Go to **AI** > **AI Gateway** in the[ Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Go to **AI** > **AI Gateway** in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. **Select Create Gateway**:
 3. Enter a name for your gateway (up to 64 characters).
 4. Select **Create**.
