@@ -19,6 +19,8 @@ For this configuration to be possible, a few conditions apply:
 
 {{<render file="_acns-tcns-byoip.md" withParameters="Account;;account" >}}
 
+* Choosing a set from `ns_set 1` through `ns_set 5` will influence how Cloudflare assigns nameservers to your new zones if you configure [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults).
+
 ## Enable account custom nameservers
 
 ### 1. Set up ACNS names and sets
@@ -95,7 +97,7 @@ Use the [Set ACNS Related Zone Metadata endpoint](/api/operations/account-level-
 
 ### 3. (Optional) Make ACNS default for new zones
 
-To make an ACNS set the default nameservers for all new zones added to your account from now on:
+To make ACNS the default option for all new zones added to your account from now on:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -105,7 +107,7 @@ To make an ACNS set the default nameservers for all new zones added to your acco
 3. For **DNS zone defaults**, select **Configure defaults**.
 4. Change the **Nameserver assignment method** to **Account custom nameservers**.
 
-Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for more details.
+Refer to [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults) for details.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
