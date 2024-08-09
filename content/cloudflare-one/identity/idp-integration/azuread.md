@@ -1,18 +1,18 @@
 ---
 pcx_content_type: how-to
-title: Azure AD®
+title: Microsoft Entra®
 weight: 6
 ---
 
-# Microsoft Azure AD®
+# Microsoft Entra®
 
-You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero Trust and build policies based on user identity and group membership. Users will authenticate to Zero Trust using their Azure AD credentials.
+You can integrate Microsoft Entra® with Cloudflare Zero Trust and build policies based on user identity and group membership. Users will authenticate to Zero Trust using their Microsoft Entra ID credentials.
 
-## Set up Azure AD as an identity provider
+## Set up Microsoft Entra as an identity provider
 
-### 1. Obtain Azure AD settings
+### 1. Obtain Microsoft Entra settings
 
-The following Azure AD values are required to set up the integration:
+The following Microsoft Entra values are required to set up the integration:
 
 - Application (client) ID
 - Directory (tenant) ID
@@ -22,15 +22,15 @@ To retrieve those values:
 
 1. Log in to the [Azure dashboard](https://portal.azure.com/).
 
-2. Go to **All services** > **Azure Active Directory**.
+2. Go to **All services** > **Microsoft Entra ID**.
 
-3. In the Azure Active Directory menu, go to **Enterprise applications**.
+3. In the Microsoft Entra ID menu, go to **Enterprise applications**.
 
 4. Select **New application** > **Create your own application**.
 
 5. Name your application.
 
-6. Select **Register an application to integrate with Azure AD (App you're developing)** and then select **Create**.
+6. Select **Register an application to integrate with Microsoft Entra (App you're developing)** and then select **Create**.
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
@@ -44,7 +44,7 @@ To retrieve those values:
 
 8. Select **Register**.
 
-9. Next, return to the Azure Active Directory menu and go to **App registrations**.
+9. Next, return to the Microsoft Entra ID menu and go to **App registrations**.
 
 10. Select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 
@@ -86,23 +86,23 @@ More narrow permissions may be used, however this is the set of permissions that
 
    ![Configured permissions list in Azure](/images/cloudflare-one/identity/azure/configured-perms.png)
 
-### 3. Add Azure AD as an identity provider
+### 3. Add Microsoft Entra as an identity provider
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
-3. Select **Azure AD**.
+3. Select **Microsoft Entra**.
 
 4. Enter the **Application (client) ID**, **Client secret**, and **Directory (tenant) ID** obtained from the Azure dashboard.
 
 5. (Optional) Configure the following settings:
 
     - **Proof Key for Code Exchange**: Perform [PKCE](https://www.oauth.com/oauth2-servers/pkce/) on all login attempts.
-    - **Support Groups**: Allow Cloudflare to read a user's Azure AD group membership.
-    - **Azure AD Policy Sync**: Refer to our [Azure AD Conditional Access tutorial](/cloudflare-one/tutorials/azuread-conditional-access/).
+    - **Support Groups**: Allow Cloudflare to read a user's Microsoft Entra group membership.
+    - **Microsoft Entra Policy Sync**: Refer to our [Microsoft Entra Conditional Access tutorial](/cloudflare-one/tutorials/azuread-conditional-access/).
     - **Enable SCIM**: Refer to [Synchronize users and groups](#synchronize-users-and-groups).
-    - **Email claim**: Enter the Azure AD claim that you wish to use for user identification (for example, `preferred_username`).
+    - **Email claim**: Enter the Microsoft Entra claim that you wish to use for user identification (for example, `preferred_username`).
     - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
 
 6. Select **Save**.
@@ -111,11 +111,11 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 ## Synchronize users and groups
 
-The Azure AD integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
+The Microsoft Entra integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
 
 ### Prerequisites
 
-- Microsoft Entra ID P1 or P2 license
+- Microsoft Entra P1 or P2 license
 
 ### 1. Enable SCIM in Zero Trust
 
@@ -155,11 +155,11 @@ To check which users and groups were synchronized, select **View provisioning lo
 
 ### Provisioning attributes
 
-Provisioning attributes define the user properties that Azure AD will synchronize with Cloudflare Access. To modify your provisioning attributes, go to the **Provisioning** page in Azure AD and select **Edit attribute mappings**.
+Provisioning attributes define the user properties that Microsoft Entra will synchronize with Cloudflare Access. To modify your provisioning attributes, go to the **Provisioning** page in Microsoft Entra and select **Edit attribute mappings**.
 
 We recommend enabling the following user attribute mappings:
 
-| customappsso Attribute | Azure AD Attribute | Recommendation |
+| customappsso Attribute | Microsoft Entra Attribute | Recommendation |
 | -------------------------|--------------------|--------- |
 | `emails[type eq "work"].value` | `mail` | Required |
 | `name.givenName` | `givenName` | Recommended |
@@ -178,9 +178,9 @@ If building a Gateway policy, choose the [_User Group Names_](/cloudflare-one/po
 
 ### Manual entry
 
-You can create Access and Gateway policies for groups that are not synchronized with SCIM. Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
+You can create Access and Gateway policies for groups that are not synchronized with SCIM. Microsoft Entra exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
 
-1. Make sure you enable **Support groups** as you set up Azure AD in Zero Trust.
+1. Make sure you enable **Support groups** as you set up Microsoft Entra in Zero Trust.
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
@@ -198,7 +198,7 @@ Access and Gateway policies for an Azure group will also apply to all [nested gr
 
 ## Force user interaction during WARP reauthentication
 
-You can require users to re-enter their credentials into Azure AD whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
+You can require users to re-enter their credentials into Microsoft Entra whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting, make a [`PUT` request](/api/operations/access-identity-providers-update-an-access-identity-provider) and set the `prompt` parameter to either `login` or `select_account`.
 
 ## Example API Configuration
 
