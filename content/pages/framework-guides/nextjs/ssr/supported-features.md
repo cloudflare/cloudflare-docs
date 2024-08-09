@@ -79,7 +79,7 @@ Both the older [Pages](https://nextjs.org/docs/pages) router and newer [App](htt
     - ❌: Not supported
     - N/A: Not applicable
 
-- _1_ - **compression**: [Cloudflare applies gzip or brotli compression](https://developers.cloudflare.com/support/speed/optimization-file-size/what-will-cloudflare-compress) automatically. When developing locally with Wrangler, no compression is applied.
+- _1_ - **compression**: [Cloudflare applies gzip or brotli compression](/support/speed/optimization-file-size/what-will-cloudflare-compress) automatically. When developing locally with Wrangler, no compression is applied.
 
 - _2_ - **dev indicators**: If you're developing using `wrangler pages dev`, it hard refreshes your application the dev indicator doesn't appear. If you run your app locally using `next dev`, this option works fine.
 
@@ -125,8 +125,8 @@ In case the Vercel build process generates prerendered pages for your applicatio
 
 For more details see:
 
-- [troubleshooting `generateStaticParams`](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-nextjs-site/#generatestaticparams)
-- [troubleshooting `getStaticPaths` ](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-nextjs-site/#getstaticpaths)
+- [troubleshooting `generateStaticParams`](/pages/framework-guides/nextjs/deploy-a-nextjs-site/#generatestaticparams)
+- [troubleshooting `getStaticPaths` ](/pages/framework-guides/nextjs/deploy-a-nextjs-site/#getstaticpaths)
 
 #### Caching and Data Revalidation
 
