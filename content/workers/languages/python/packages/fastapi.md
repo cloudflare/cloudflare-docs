@@ -21,7 +21,7 @@ Clone the `cloudflare/python-workers-examples` repository and run the FastAPI ex
 
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
-cd 03-fastapi
+cd python-workers-examples/03-fastapi
 npx wrangler@latest dev
 ```
 
