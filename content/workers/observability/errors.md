@@ -100,7 +100,7 @@ This is typically caused by calling a function that calls `this`, but the value 
 
 For example, given an `obj` object with the `obj.foo()` method which logic relies on `this`, executing the method via `obj.foo();` will make sure that `this` properly references the `obj` object. However, assigning the method to a variable, e.g.`const func = obj.foo;` and calling such variable, e.g. `func();` would result in `this` being `undefined`. This is because `this` is lost when the method is called as a standalone function. This is standard behavior in JavaScript.
 
-In practice, this is often seen when destructuring runtime provided Javscript objects that have functions that rely on the presence of `this`, such as `ctx`.
+In practice, this is often seen when destructuring runtime provided Javascript objects that have functions that rely on the presence of `this`, such as `ctx`.
 
 The following code will error:
 

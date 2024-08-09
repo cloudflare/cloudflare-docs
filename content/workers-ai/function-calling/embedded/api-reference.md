@@ -40,7 +40,7 @@ This method lets you automatically create tool schemas based on OpenAPI specs, s
 {{<definitions>}}
 
 - `spec`{{<type>}}string {{</type>}}
-  - The OpenAPI specifiction in either JSON or YAML format, or a URL to a remote OpenAPI specification.
+  - The OpenAPI specification in either JSON or YAML format, or a URL to a remote OpenAPI specification.
 - `config`{{<type>}}Config {{</type>}}{{<prop-meta>}} optional {{</prop-meta>}} - Configuration options for the createToolsFromOpenAPISpec function
   - `overrides`{{<type>}}ConfigRule[] {{</type>}}{{<prop-meta>}} optional {{</prop-meta>}}
   - `matchPatterns`{{<type>}}RegExp[] {{</type>}}{{<prop-meta>}} optional {{</prop-meta>}}
