@@ -109,7 +109,7 @@ Cloudflare also supports the older [Pages](https://nextjs.org/docs/pages) router
 
 ### Internationalization
 
-Besides the above mentioned `next.config.js` properties, there is also the `i18n` one, that is also fully supported meaning that `@cloudflare/next-on-pages` does support Next.js' built-in internationalization system. For more details on the option see the [Next.js Internationalization documentation](https://nextjs.org/docs/pages/building-your-application/routing/internationalization).
+Cloudflare also supports Next.js' [internationalized (`i18n`) routing](https://nextjs.org/docs/pages/building-your-application/routing/internationalization).
 
 ### Rendering and Data Fetching
 
