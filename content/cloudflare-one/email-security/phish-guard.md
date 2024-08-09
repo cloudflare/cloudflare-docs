@@ -31,14 +31,14 @@ Use the ROI Calculator to compare triage durations and hourly rates to calculate
 The ROI Calculator displays:
 
 - Total aggregated saved number in USD dollars.
-- Triage duration.
+- Triage duration: The amount of time in minutes spent triaging the message.
 - Hourly rate.
 
 ## Insider threat defense
 
 An [insider threat](https://www.cloudflare.com/en-gb/learning/access-management/what-is-an-insider-threat/) is a risk to an organization's security stemming from someone associated with the organization.
 
-Insider threat defense on the dashboard displays **Insider leads** and **Insider reports generated**.
+Insider threat defense on the dashboard displays **Insider leads** and **Insider reports generated**. **Insider leads** displays the number of emails identified as potential insider threat email. **Insider reports generated** displays the number of reports created based on insider leads.
 
 ## Email threat hunting
 
