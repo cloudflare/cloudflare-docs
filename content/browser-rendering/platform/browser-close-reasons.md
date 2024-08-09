@@ -6,7 +6,9 @@ weight: 30
 
 # Browser close reasons
 
-When using the Browser Rendering API, browser sessions may close for a variety of reasons. When Cloudflare begins charging for this API, we will not charge when errors occur on our end.
+A browser session may close for a variety of reasons, occasionally due to connection errors or errors in the headless browser instance. As a best practice, wrap `puppeteer.connect` or `puppeteer.launch` in a [`try/catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) statement. 
+
+The reason that a browser closed can be found on the Browser Rendering Dashboard in the [logs tab](https://dash.cloudflare.com/?to=/:account/workers/browser-renderingl/logs). When Cloudflare begins charging for the Browser Rendering API, we will not charge when errors are due to underlying Browser Rendering infrastructure. 
 
 | Reasons a session may end                            |
 | ---------------------------------------------------- |
