@@ -13,7 +13,7 @@ Only Super Administrators can manage changes to domain plans.
 
 If you decide to downgrade or remove a domain, Cloudflare does not issue refunds. Refer to our [billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/) for more information.
 
-Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
+Upgrades are processed immediately, but downgrades are not processed until the end of the billing period. You will not be able to upgrade if you have an unpaid invoice. When downgrading, you are allowed to continue using the higher plans' products until the new billing period begins.
 
 If you downgrade your plan, your plan may have access to [fewer Page Rules](/rules/page-rules/). If you continue to use more page rules than is allowed by your plan limit, you may be charged for additional rules. Remove excess rules and [cancel additional subscriptions](/fundamentals/subscriptions-and-billing/cancel-subscription/) if you do not want to be charged.
 
