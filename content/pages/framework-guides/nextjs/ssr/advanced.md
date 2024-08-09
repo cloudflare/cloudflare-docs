@@ -39,5 +39,5 @@ This looks like a Worker — but it does not need its own `wrangler.toml` file.
 2. Pass the entrypoint argument to the next-on-pages CLI with the path to your handler.
 
 ```sh
-npx @cloudflare/next-on-pages --custom-entrypoint=./custom-entrypoint.ts
+$ npx @cloudflare/next-on-pages --custom-entrypoint=./custom-entrypoint.ts
 ```
