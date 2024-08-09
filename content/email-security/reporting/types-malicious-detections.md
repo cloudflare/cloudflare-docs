@@ -9,7 +9,7 @@ meta:
 
 To review the number and type of malicious detections made on your account:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/users/login).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/users/login).
 2. Select the **Email** tab.
 3. The **Overview** section will show you graphs with the total number of emails processed, as well as how many of those pertain to different threat categories - such as Malicious or Spam, among others. Refer to [Dispositions and attributes](/email-security/reference/dispositions-and-attributes/) for more information. Select **View Details**.
 4. You will open the **Detections** page. This page breaks down the information regarding the various types of threats detected. You have access to:

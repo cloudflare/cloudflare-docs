@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Timestamps in the dashboard of Cloud Email Security (formerly Area 1) are localized to your timezone. Cloud Email Security reads this information from the clock of your computer when you log in.
+Timestamps in the dashboard of Email Security (formerly Area 1) are localized to your timezone. Email Security reads this information from the clock of your computer when you log in.

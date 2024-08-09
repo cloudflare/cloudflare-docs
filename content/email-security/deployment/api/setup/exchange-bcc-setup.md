@@ -3,11 +3,11 @@ title: Exchange BCC setup
 pcx_content_type: integration-guide
 weight: 2
 meta:
-    title: Setup phishing risk assessment for Microsoft Exchange with Cloud Email Security (formerly Area 1)
+    title: Setup phishing risk assessment for Microsoft Exchange with Email Security (formerly Area 1)
 updated: 2022-10-11
 ---
 
-# Microsoft Exchange BCC setup with Cloud Email Security (formerly Area 1)
+# Microsoft Exchange BCC setup with Email Security (formerly Area 1)
 
 {{<Aside type="warning" header="Area 1 has been renamed">}}
 
@@ -15,9 +15,9 @@ updated: 2022-10-11
 
 {{</Aside>}}
 
-For customers using Microsoft Exchange, setting up Cloud Email Security via BCC is quick and easy. You need to configure an inbound rule to send emails to Cloud Email Security via BCC for processing and detection of potential {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks. The following email flow shows how this works:
+For customers using Microsoft Exchange, setting up Email Security via BCC is quick and easy. You need to configure an inbound rule to send emails to Email Security via BCC for processing and detection of potential {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks. The following email flow shows how this works:
 
-![Email flow when setting up a phishing assessment risk for Microsoft Exchange with Cloud Email Security.](/images/email-security/deployment/api-setup/exchange/exchange-bcc-flow.png)
+![Email flow when setting up a phishing assessment risk for Microsoft Exchange with Email Security.](/images/email-security/deployment/api-setup/exchange/exchange-bcc-flow.png)
 
 ## Configure Inbound Rule
 
@@ -70,9 +70,9 @@ For customers using Microsoft Exchange, setting up Cloud Email Security via BCC 
     ![Select finish](/images/email-security/deployment/api-setup/exchange/step14.png)
 
 {{<Aside type="note">}}
-If you have multiple rules, you may need to change the order of the BCC rule and move it to the right location in your rule sequence. This is needed so you can send BCC messages to Cloud Email Security. Usually, the Cloud Email Security BCC rule will be at the top of the ruleset. The configured conditions of the Cloud Email Security BCC rule will only trigger for inbound messages.
+If you have multiple rules, you may need to change the order of the BCC rule and move it to the right location in your rule sequence. This is needed so you can send BCC messages to Email Security (formerly Area 1). Usually, the Email Security BCC rule will be at the top of the ruleset. The configured conditions of the Email Security BCC rule will only trigger for inbound messages.
 {{</Aside>}}
 
 ## Email processing and reports
 
-In BCC mode, all emails are put through automated phishing detections by Cloud Email Security. Emails that trigger phishing detections are logged for reporting via product portal, email and Slack. Emails that do not trigger any detections are deleted.
+In BCC mode, all emails are put through automated phishing detections by Email Security. Emails that trigger phishing detections are logged for reporting via product portal, email and Slack. Emails that do not trigger any detections are deleted.

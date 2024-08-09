@@ -6,7 +6,7 @@ weight: 1
 
 # Egress IPs
 
-When you set up Cloud Email Security (formerly Area 1) using an [inline deployment](/email-security/deployment/inline/), you need to tell your existing email providers to accept messages coming from Cloud Email Security's egress IP addresses.
+When you set up Email Security (formerly Area 1) using an [inline deployment](/email-security/deployment/inline/), you need to tell your existing email providers to accept messages coming from Email Security's egress IP addresses.
 
 Refer to this page for reference on what IP subnet mask ranges to use.
 

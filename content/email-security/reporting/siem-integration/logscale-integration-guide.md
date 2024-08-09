@@ -7,11 +7,11 @@ updated: 2023-08-04
 ---
 # Crowdstrike Falcon LogScale
 
-When Cloud Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to Falcon LogScale. For this tutorial, you will need a working Falcon LogScale account. You will also need to create a new Ingest Token in your LogScale account. Ingest Tokens identify repositories and are used to configure data ingestion to your repository. Refer to [Falcon LogScale documentation](https://library.humio.com/falcon-logscale-cloud/ingesting-data-tokens.html) for more information.
+When Email Security detects a {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} email, the metadata of the detection can be sent directly to Falcon LogScale. For this tutorial, you will need a working Falcon LogScale account. You will also need to create a new Ingest Token in your LogScale account. Ingest Tokens identify repositories and are used to configure data ingestion to your repository. Refer to [Falcon LogScale documentation](https://library.humio.com/falcon-logscale-cloud/ingesting-data-tokens.html) for more information.
 
 After creating your Ingest Token:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Alert Webhooks**.
 4. Select **New Webhook**.

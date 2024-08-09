@@ -6,6 +6,6 @@ layout: wide
 
 # Glossary
 
-Review the definitions for terms used across Cloudflare's Cloud Email Security (formerly Area 1) documentation.
+Review the definitions for terms used across Email Security (formerly Area 1) documentation.
 
-{{<glossary product="Cloud Email Security (formerly Area 1)">}}
+{{<glossary product="Email Security (formerly Area 1)">}}

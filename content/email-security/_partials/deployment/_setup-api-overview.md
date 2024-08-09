@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-When you choose an **API deployment** for your [Cloud Email Security (formerly Area 1) setup](/email-security/deployment/), email messages only reach Cloud Email Security after they have already reached a user's inbox.
+When you choose an **API deployment** for your [Email Security (formerly Area 1) setup](/email-security/deployment/), email messages only reach Cloud Email Security after they have already reached a user's inbox.
 
 Then, through on integrations with your email provider, Cloud Email Security can [retract messages](/email-security/email-configuration/retract-settings/) based on your organization's policies.
 

@@ -5,13 +5,13 @@ _build:
   list: never
 ---
 
-### 1. Configure connector for delivery to Cloud Email Security (formerly Area 1) (if required)
+### 1. Configure connector for delivery to Email Security (formerly Area 1) (if required)
 
-{{<Aside type="note">}}Cloud Email Security only scans inbound emails.{{</Aside>}}
+{{<Aside type="note">}}Email Security only scans inbound emails.{{</Aside>}}
 
 If your email architecture does not include an outbound gateway, you can skip this step and [proceed to the next one](#2-configure-journal-rule).
 
-On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Cloud Email Security.
+On the other hand, if your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Email Security.
 
 1. Log in to the [Exchange admin center](https://admin.exchange.microsoft.com), and go to **Mail flow** > **Connectors**.
 

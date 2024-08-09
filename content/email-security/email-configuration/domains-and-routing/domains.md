@@ -6,13 +6,13 @@ weight: 1
 
 # Domains
 
-Cloud Email Security works through a system of domain-based routing, where Cloudflare receives and evaluates incoming email from a domain.
+Email Security works through a system of domain-based routing, where Cloudflare receives and evaluates incoming email from a domain.
 
 ## Create a domain
 
-To create a new domain in Cloud Email Security:
+To create a new domain in Email Security:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
 4. Select **New Domain**.
@@ -34,7 +34,7 @@ To create a new domain in Cloud Email Security:
 
 To edit an existing domain:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
 4. On a specific domain, select **...** > **Edit**.
@@ -47,7 +47,7 @@ To edit an existing domain:
 
 To delete a domain:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
 4. On a specific domain, select **...** > **Delete**.

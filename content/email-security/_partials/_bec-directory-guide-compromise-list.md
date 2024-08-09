@@ -5,13 +5,13 @@ _build:
   list: never
 ---
 
-Now that Cloud Email Security (formerly Area 1) has been authorized to access and retrieve directory information, you will need to configure the Business Email Compromise list.
+Now that Email Security (formerly Area 1) has been authorized to access and retrieve directory information, you will need to configure the Business Email Compromise list.
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **Enhanced Detections** > **Business Email Compromise**.
 
-    ![Access Business Email Compromise in Cloud Email Security dashboard to start setting up this feature](/images/email-security/bec/o365/step2-business-email-compromise.png)
+    ![Access Business Email Compromise in Email Security (formerly Area 1) dashboard to start setting up this feature](/images/email-security/bec/o365/step2-business-email-compromise.png)
 
 3. Open the drop-down menu and select the directory you have created in the previous step 3.
 

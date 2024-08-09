@@ -24,7 +24,7 @@ To add a user:
 
 To edit a user's settings:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Users and Actions**.
 4. On a specific user, select **...** > **Edit**.
@@ -35,7 +35,7 @@ To edit a user's settings:
 
 To delete a user:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Users and Actions**.
 4. On a specific user, select **...** > **Delete**.
@@ -44,7 +44,7 @@ To delete a user:
 
 To reset a user's two-factor authentication (2FA):
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Users and Actions**.
 4. On a specific user, select **...** > **Reset 2FA**.

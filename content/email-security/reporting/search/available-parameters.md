@@ -40,10 +40,10 @@ In addition to the message parameters above, you can use these additional detect
 - auto-retraction
 - browser_isolation_rewrite
 
-For {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Cloud Email Security dashboard. 
+For {{<glossary-tooltip term_id="disposition">}}disposition{{</glossary-tooltip>}}-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Email Security dashboard. 
 
 ## Data retention
 
-For Cloud Email Security Horizon Enterprise customers, detections search would index for a period of 12 months and rotate over to a rolling 12-month period.
+For Email Security Horizon Enterprise customers, detections search would index for a period of 12 months and rotate over to a rolling 12-month period.
 
-For Cloud Email Security Horizon Advantage customers, detections search would index for three months and rotate over to a rolling 3-month period.
+For Email Security Horizon Advantage customers, detections search would index for three months and rotate over to a rolling 3-month period.

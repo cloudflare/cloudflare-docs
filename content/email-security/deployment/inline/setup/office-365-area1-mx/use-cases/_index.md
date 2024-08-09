@@ -8,9 +8,9 @@ meta:
 
 # Office 365 use cases
 
-Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Cloud Email Security dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation), before setting up Office 365.
+Before following our use case tutorials, read through this how-to guide related to best practices. This will show you how to prepare your Email Security dashboard and enable options such as tagging and [defanging emails](/email-security/email-configuration/email-policies/link-actions/), as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation), before setting up Office 365.
 
-1. Log in to the [Cloud Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 

@@ -18,4 +18,4 @@ Microsoft 365 Government Community Cloud (GCC) is designed to meet the requireme
 
 GCC Low is intended for use by US government organizations that handle sensitive but unclassified data, and have less stringent compliance requirements.
 
-Cloud Email Security supports GCC Low environments.
+Email Security supports GCC Low environments.

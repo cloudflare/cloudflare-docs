@@ -5,11 +5,11 @@ _build:
   list: never
 ---
 
-When the Business Email Compromise list is configured, Cloud Email Security (formerly Area 1) will enforce the proper match of the sender’s display name and email address. Any variation from this strict requirement will raise a detection event. The reason of detection will be `Protected Name <NAME> should not appear as <non-configured email address>`. 
+When the Business Email Compromise list is configured, Email Security (formerly Area 1) will enforce the proper match of the sender’s display name and email address. Any variation from this strict requirement will raise a detection event. The reason of detection will be `Protected Name <NAME> should not appear as <non-configured email address>`. 
 
 In some instances, you may want to allow your protected users to send emails from an alternate email address (like their personal email address). To configure this alternate address, you will have to add it to their directory entry.
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **Enhanced Detections** > **Business Email Compromise**.
 

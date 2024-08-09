@@ -9,7 +9,7 @@ meta:
 
 To access an overview of your account, total number of emails processed, a breakdown of types of threads detected, among other types of information:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/users/login).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/users/login).
 2. Make sure you are in the Home section to review information regarding your account:
 
 Field <div style="width:180px">  | Description

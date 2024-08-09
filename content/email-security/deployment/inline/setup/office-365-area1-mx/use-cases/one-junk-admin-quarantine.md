@@ -1,15 +1,15 @@
 ---
-title: 1 - Junk email and Cloud Email Security (formerly Area 1) Admin Quarantine
+title: 1 - Junk email and Email Security (formerly Area 1) Admin Quarantine
 pcx_content_type: integration-guide
 weight: 1
 meta:
-    title: Junk email and Cloud Email Security (formerly Area 1) Admin Quarantine - Office 365
+    title: Junk email and Email Security (formerly Area 1) Admin Quarantine - Office 365
 updated: 2023-01-12
 ---
 
-# Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Cloud Email Security
+# Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Email Security
 
-In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Cloud Email Security.
+In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Email Security.
 
 ## Configure domains
 
@@ -30,13 +30,13 @@ In this tutorial, you will learn how to deliver emails to the Office 365 junk em
 
 ## Create transport rules
 
-To create the transport rules that will send emails with certain dispositions to Cloud Email Security:
+To create the transport rules that will send emails with certain dispositions to Email Security:
 
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
 4. Set the following rule conditions:
-    - **Name**: `Cloud Email Security Deliver to Junk Email folder`.
+    - **Name**: `Email Security Deliver to Junk Email folder`.
     - **Apply this rule if**: _The message headers_ > _includes any of these words_.
         - **Enter text**: `X-Area1Security-Disposition` > **Save**.
         - **Enter words**: `SUSPICIOUS`, `BULK` > **Add** > **Save**.
@@ -49,4 +49,4 @@ To create the transport rules that will send emails with certain dispositions to
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule `Cloud Email Security Deliver to Junk Email folder` you have just created, and select **Enable**.
+8. Select the rule `Email Security Deliver to Junk Email folder` you have just created, and select **Enable**.
