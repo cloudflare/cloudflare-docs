@@ -21,7 +21,7 @@ accTitle: An example of Connector in DHCP Relay mode
     classDef orange fill:#f48120,color: black
     class a orange
 ```
-_The above graph shows Connector sending DCHP discover messages to a DHCP server offsite._
+_The above graph shows Connector sending DHCP discover messages to a DHCP server offsite._
 
 To configure DHCP relay:
 
