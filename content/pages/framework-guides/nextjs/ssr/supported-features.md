@@ -15,7 +15,7 @@ meta:
 
 Next.js has [two "runtimes"](https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) — "Edge" and "Node.js". When you run your Next.js app on Cloudflare, you [can use available Node.js APIs](/workers/runtime-apis/nodejs/) — but you currently can only use Next.js' "Edge" runtime.
 
-The Workers runtime [supports a broad set of Node.js APIs](/workers/platform/nodejs-compatibility/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs work in a Next.js app:
+The Workers runtime [supports a broad set of Node.js APIs](/workers/runtime-apis/nodejs/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs work in a Next.js app:
 
 - `buffer`
 - `events`
