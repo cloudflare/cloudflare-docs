@@ -20,9 +20,12 @@ Support for Cloudflare R2 will be added soon.
 
 The hostname of your S3 bucket URL must have one of the following formats (where `*` is a wildcard character):
 
-- `*.s3.*.amazonaws.com`
-- `*.s3-website-*.amazonaws.com`
-- `*.s3-website.*.amazonaws.com`
+- `*s3.amazonaws.com`
+- `*s3-website.<region>.amazonaws.com`
+- `*s3.<region>.amazonaws.com`
+- `*s3-website-<region>.amazonaws.com`
+
+Cloud Connector supports both subdomain and URI path bucket URLs.
 
 ### Get the bucket URL
 
@@ -37,7 +40,10 @@ For more information, refer to the [Amazon S3 documentation](https://docs.aws.am
 
 The hostname of your Cloud Storage bucket URL must be the following:
 
-- `storage.googleapis.com`
+- `*storage.googleapis.com`
+- `*storage.cloud.google.com`
+
+Cloud Connector supports both subdomain and URI path bucket URLs.
 
 ### Get the bucket URL
 
