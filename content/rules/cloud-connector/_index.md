@@ -6,7 +6,11 @@ weight: 10
 
 {{<heading-pill style="beta">}}Cloud Connector{{</heading-pill>}}
 
-Cloud Connector allows you to route matching incoming traffic from your website to a public cloud provider that you define: Cloudflare R2 object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
+Cloud Connector allows you to route matching incoming traffic from your website to a public cloud provider that you define such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
+
+{{<Aside type="note">}}
+Support for Cloudflare R2 will be added soon.
+{{</Aside>}}
 
 ## How it works
 

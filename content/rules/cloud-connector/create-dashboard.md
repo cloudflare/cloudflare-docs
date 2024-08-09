@@ -14,10 +14,9 @@ To configure a Cloud Connector rule in the dashboard:
 
 2. Go to **Rules** > **Cloud Connector**.
 
-3. Select your [cloud provider](/rules/cloud-connector/providers/) (Cloudflare R2 or an external provider).
+3. Select your [cloud provider](/rules/cloud-connector/providers/).
 
-4. If you selected Cloudflare R2 in the previous step, select your bucket and your custom domain, and select **Next**.<br/>
-    If you selected a different storage provider, enter the bucket URL and select **Next**.
+4. Enter the bucket URL and select **Next**.
 
     {{<Aside type="warning">}}
 The bucket URL must follow a [specific format](/rules/cloud-connector/providers/) according to your provider.

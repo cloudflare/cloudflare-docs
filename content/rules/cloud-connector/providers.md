@@ -8,16 +8,13 @@ weight: 10
 
 Cloud Connector currently supports the following cloud providers and services:
 
-- [Cloudflare R2](#r2)
-- [Amazon Web Services - S3](#s3)
-- [Google Cloud Platform - Cloud Storage](#gcp)
-- [Microsoft Azure - Blob Storage](#azure)
+- Amazon Web Services - S3
+- Google Cloud Platform - Cloud Storage
+- Microsoft Azure - Blob Storage
 
-## Cloudflare R2 { #r2 }
-
-The Cloudflare R2 bucket must be public and [exposed using a custom domain](/r2/buckets/public-buckets/). Buckets exposed using an `r2.dev` subdomain are not supported.
-
-Additionally, the custom domain must be defined in the same zone where you are configuring the Cloud Connector rule.
+{{<Aside type="note">}}
+Support for Cloudflare R2 will be added soon.
+{{</Aside>}}
 
 ## Amazon Web Services - S3 { #s3 }
 

@@ -57,7 +57,7 @@ header: Example response
     {
       "id": "<RULE_1_ID>",
       "provider": "aws_s3",
-      "expression": "starts_with(http.request.uri.path, \"/images\")",
+      "expression": "http.request.uri.path wildcard \"/images/*\"",
       "description": "Connect to S3 bucket containing images",
       "enabled": true,
       "parameters": {
@@ -67,7 +67,7 @@ header: Example response
     {
       "id": "<RULE_2_ID>",
       "provider": "cloudflare_r2",
-      "expression": "starts_with(http.request.uri.path, \"/videos\")",
+      "expression": "http.request.uri.path wildcard \"/videos/*\"",
       "description": "Connect to R2 bucket containing videos",
       "enabled": true,
       "parameters": {
@@ -92,10 +92,11 @@ curl --request PUT \
 --header "Content-Type: application/json" \
 --data '[
   {
-    expression: "starts_with(http.request.uri.path, \"/videos\")",
-    provider: "cloudflare_r2",
-    parameters: {
-      host: "mybucketcustomdomain.example.com",
+    "expression": "http.request.uri.path wildcard \"/images/*\"",
+    "provider": "aws_s3",
+    "description": "Connect to S3 bucket containing images",
+    "parameters": {
+      "host": "examplebucketwithimages.s3.north-eu.amazonaws.com"
     }
   }
 ]'
@@ -103,7 +104,7 @@ curl --request PUT \
 
 The required body parameters for each rule are: `expression`, `provider`, and `parameters.host`.
 
-The `provider` value must be one of the following: `aws_s3`, `cloudflare_r2`, `azure_storage`, and `gcp_storage`.
+The `provider` value must be one of the following: `aws_s3`, `azure_storage`, `gcp_storage`, and `cloudflare_r2`.
 
 {{<Aside type="warning" header="Warning">}}
 To create a new rule and keep all existing rules, you must include them all in your request body. Omitting an existing rule in the request body will delete the corresponding Cloud Connector rule.
