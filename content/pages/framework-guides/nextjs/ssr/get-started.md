@@ -25,7 +25,6 @@ For more guidance on developing your app, refer to [Bindings](/pages/framework-g
 
 ## Existing apps
 
-For existing apps, you need to perform a few more steps.
 
 ### 1. Install next-on-pages
 
