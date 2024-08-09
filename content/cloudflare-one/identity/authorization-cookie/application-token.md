@@ -58,9 +58,9 @@ The payload contains the actual claim and user information to pass to the applic
 |-----------------|-------------------------------------------|
 | aud             | [Application audience (AUD) tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
 | email           | The email address of the authenticated user, verified by the identity provider. |
-| exp             | The expiration timestamp for the token. |
-| iat             | The issuance timestamp for the token. |
-| nbf             | The not-before timestamp for the token, used to check if the token was received before it should be used.|
+| exp             | The expiration timestamp for the token (Unix time). |
+| iat             | The issuance timestamp for the token (Unix time). |
+| nbf             | The not-before timestamp for the token (Unix time), used to check if the token was received before it should be used.|
 | iss             | The Cloudflare Access domain URL for the application. |
 | type            | The type of Access token (`app` for application token or `org` for global session token).|
 | identity_nonce  | A cache key used to get the [user's identity](#user-identity).|
@@ -124,10 +124,10 @@ Access will return a JSON structure containing the following data:
 |-----------------|-------------------------------------------|
 | type            | The type of Access token (`app` for application token or `org` for global session token).|
 | aud             | The [application audience (AUD) tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
-| exp             | The expiration timestamp of the JWT. |
+| exp             | The expiration timestamp of the JWT (Unix time). |
 | iss             | The Cloudflare Access domain URL for the application. |
 | common_name     | The Client ID of the service token (`CF-Access-Client-Id`). |
-| iat             | The issuance timestamp of the JWT. |
+| iat             | The issuance timestamp of the JWT (Unix time). |
 | sub             | Contains an empty string when authentication was through a service token. |
 
 ## Signature
