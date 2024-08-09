@@ -132,4 +132,4 @@ For more details see:
 
 #### Caching and Data Revalidation
 
-Revalidation and `next/cache` are supported on Cloudflare Pages, and can use various bindings. For more information, see our [caching documentation](/pages/framework-guides/nextjs/ssr/caching/).
+Revalidation and `next/cache` are supported on Cloudflare Pages and can use various bindings. For more information, see our [caching documentation](/pages/framework-guides/nextjs/ssr/caching/).
