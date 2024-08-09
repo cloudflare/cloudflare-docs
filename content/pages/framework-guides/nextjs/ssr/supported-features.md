@@ -123,7 +123,9 @@ In case the Vercel build process generates prerendered pages for your applicatio
 
 #### Dynamic handling of static routes
 
-`@cloudflare/next-on-pages` supports standard statically generated routes, it does however not support dynamic Node.js-based on-demand handling of such routes.
+`@cloudflare/next-on-pages` supports standard statically generated routes. 
+
+ It does not support dynamic Node.js-based on-demand handling of such routes.
 
 For more details see:
 
