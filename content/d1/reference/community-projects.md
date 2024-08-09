@@ -94,6 +94,12 @@ Staff Directory is a demo project using D1, [HonoX](https://github.com/honojs/ho
 * [Documentation](https://hub.nuxt.com)
 * [Example](https://github.com/Atinux/nuxt-todos-edge)
 
+### DBCode
+
+DBCode is a Visual Studio Code extension for working with databases. It includes full support for D1 databases, including visual editing of data, entity relationship diagrams and more. 
+
+* [DBCode](https://dbcode.io)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository.
