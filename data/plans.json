@@ -1972,20 +1972,6 @@
         }
       }
     },
-    "auto_minify": {
-      "title": "Auto Minify (deprecated)",
-      "link": "/speed/optimization/content/auto-minify/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
     "brotli": {
       "title": "Brotli compression",
       "link": "/speed/optimization/content/brotli/",

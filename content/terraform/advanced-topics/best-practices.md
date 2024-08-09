@@ -89,7 +89,7 @@ example-tf/
 
 ## Avoid modules (or use them sparingly)
 
-Terraform modules are ways of encapsulating multiple resources with logic in an abstracted interface. Consider the example where a module sets up up default load balancer with a pool, some DNS entries, and perhaps a page rule. The end user may use it like this:
+Terraform modules are ways of encapsulating multiple resources with logic in an abstracted interface. Consider the example where a module sets up default load balancer with a pool, some DNS entries, and perhaps a page rule. The end user may use it like this:
 
 ```hcl
 module "example" "an_example_site" {
@@ -178,11 +178,6 @@ resource "cloudflare_page_rule" "example_page_rule" {
   actions {
     ssl = "flexible"
     email_obfuscation = "on"
-    minify {
-      html = "off"
-      css  = "on"
-      js   = "on"
-    }
   }
 }
 ```
