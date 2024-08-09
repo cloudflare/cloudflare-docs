@@ -24,27 +24,15 @@ $ openssl x509 -in certificate.crt -noout -text
 
 Then, make sure all the information is correct before uploading.
 
-## xxx. (Code: xxx)
-
-### Root cause
-
-xxx
-
-### Solution
-
-xxx
-
-
 ## Invalid certificate. (Code: 1002)
 
 ### Root cause
 
-The certificate you are trying to upload is invalid. For example there might be extra lines, or the BEGIN/END text is not correct, or extra characters are added following a copy/paste.
+The certificate you are trying to upload is invalid. For example, there might be extra lines, or the BEGIN/END text is not correct, or extra characters are added following a copy/paste.
 
 ### Solution
 
-Carefuly check the content of the certificate.
-You may use `openssl` to check all the details of your certificate:
+Carefully check the content of the certificate. You may use `openssl` to check all the details of your certificate:
 
 ```bash
 $ openssl x509 -in certificate.crt -noout -text
@@ -54,21 +42,21 @@ $ openssl x509 -in certificate.crt -noout -text
 
 ### Root cause
 
-You have used up your custom certificate quota. 
+You have used up your custom certificate quota.
 
 ### Solution
 
-You'll need to delete some existing certificates to add a new one. For Enterprise customers you can contact your account team to acquire more custom certificates.
+Delete some existing certificates to add a new one. If you are an Enterprise customer, you can contact your account team to acquire more custom certificates.
 
 ## This certificate has already been submitted. (Code: 1220)
 
 ### Root cause
 
-You are trying to upload a custom certificate that you already have uploaded.
+You are trying to upload a custom certificate that you have already uploaded.
 
 ### Solution
 
-You'll need to delete the existing one and try again.
+Delete the existing one and try again.
 
 ## The SSL attribute is invalid. Please refer to the API documentation, check your input and try again. (Code: 1434)
 
@@ -78,7 +66,7 @@ You are trying to upload a custom certificate that does not support any cipher t
 
 ### Solution
 
-You'll need modify the certificate so that it supports chromium-supported ciphers	and try again.
+Modify the certificate so that it supports chromium-supported ciphers	and try again.
 
 ## You have reached your quota for the requested resource. (Code: 2005)
 
@@ -92,7 +80,7 @@ If you try to upload a certificate **type** but have already reached your quota,
 
 First, check your custom certificate entitlements at **SSL/TLS** > **Edge Certificates**.
 
-Then, when actually uploading or editing the certificate, make sure you select the appropriate option in the **Legacy Client Support** dropdown at the bottom.
+Then, when actually uploading or editing the certificate, make sure you select the appropriate option for **Legacy Client Support**.
 
 ## The certificate chain you uploaded cannot be bundled using Cloudflare's trust store. Please check your input and try again. (Code: 2100)
 
@@ -102,7 +90,7 @@ You are trying to upload a custom certificate that contains the root and leaf ce
 
 ### Solution
 
-You'll need to upload leaf certificate only.
+Upload the leaf certificate only.
 
 ## 	The certificate chain you uploaded has no leaf certificates. Please check your input and try again. (Code: 2101)
 
@@ -112,7 +100,7 @@ You are trying to upload a root + intermediate + intermediate `.crt` file, but t
 
 ### Solution
 
-You'll need to add the leaf to the `.crt` file, or just use the leaf by itself since the Certificate Authority has public chain of trust in our trust store.
+Add the leaf to the `.crt` file, or just use the leaf by itself since the Certificate Authority has a public chain of trust in our trust store.
 
 ## The certificate chain you uploaded does not include any hostnames from your zone. Please check your input and try again. (Code: 2103)
 
@@ -132,16 +120,14 @@ If it does not exist, you will need to request a new certificate.
 
 ## The private key you uploaded is invalid. Please check your input and try again. (Code: 2106)
 
-### Problem description
-
-You receive the error "The private key you uploaded is invalid. Please check your input and try again. (Code: 2106)" when trying to upload a new custom certificate or edit an existing one.
-
 ### Root cause
 
-Cloudflare requires separate, pem-encoded files for the SSL private key and certificate. 
-Contact your Certificate Authority (CA) to confirm whether your current certificate meets this requirement or request your CA to assist with certificate format conversion.
+Cloudflare requires separate, pem-encoded files for the SSL private key and certificate.
 
 ### Solution
 
+Contact your Certificate Authority (CA) to confirm whether your current certificate meets this requirement or request your CA to assist with certificate format conversion.
+
 Make sure your certificate complies with these [requirements](/ssl/edge-certificates/custom-certificates/uploading/#certificate-requirements).
+
 Check that the certificate and private keys match before uploading the certificate in the Cloudflare dashboard. This [external resource](https://www.sslshopper.com/article-most-common-openssl-commands.html) might help.
