@@ -1024,7 +1024,7 @@ $ npx wrangler kv namespace list | jq "."
 Delete a given namespace.
 
 ```txt
-wrangler kv namespace delete {--bindings=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}
