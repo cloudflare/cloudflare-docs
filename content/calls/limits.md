@@ -1,20 +1,25 @@
 ---
 pcx_content_type: get-started
-title: Limits and timeouts
+title: Limits, timeouts and quotas
 weight: 6
 ---
 
-# Limits and Timeouts
+# Limits, Timeouts and Quotas
 
-Understanding the limits and timeouts of Cloudflare Calls is crucial for optimizing the performance and reliability of your real-time applications. This section outlines the key constraints and behaviors you should be aware of when integrating Cloudflare Calls into your solution.
+Understanding the limits and timeouts of Cloudflare Calls is crucial for optimizing the performance and reliability of your applications. This section outlines the key constraints and behaviors you should be aware of when integrating Cloudflare Calls into your app.
 
-## API Rate Limits
+## Free
 
-- **API Calls per Session**: You can make up to 50 API calls per second for each session. There is no limit on a App basis.
+- Each account gets 1,000GB/month of data transfer from Cloudflare to your client for free.
+- Data transfer from your client to Cloudflare is always free of charge.
 
-## Track Limits
+## Limits
 
-- **Tracks per API Call**: Up to 64 tracks can be added with a single API call. If you need to add more tracks to a session, you should distribute them across multiple API calls. Although there's no upper limit to the number of tracks a session can contain, the practical limit is governed by your connection's bandwidth to and from Cloudflare.
+- **API Calls per Session**: You can make up to 50 API calls per second for each session. There is no ratelimit on a App basis, just sessions.
+
+- **Tracks per API Call**: Up to 64 tracks can be added with a single API call. If you need to add more tracks to a session, you should distribute them across multiple API calls.
+
+- **Tracks per Session**: There's no upper limit to the number of tracks a session can contain, the practical limit is governed by your connection's bandwidth to and from Cloudflare.
 
 ## Inactivity Timeout
 
@@ -29,7 +34,3 @@ Understanding the limits and timeouts of Cloudflare Calls is crucial for optimiz
 - **Internet Connectivity Considerations**: The potential for internet connectivity loss between the client and Cloudflare is an operational reality that must be addressed. Implementing a detection and reconnection strategy is recommended to maintain session continuity. This could involve periodic 'heartbeat' signals to your backend server to monitor connectivity status. Upon detecting connectivity issues, automatically attempting to reconnect and establish a new session is advised. Sessions and tracks will remain available for reuse for 30 seconds before timing out, providing a brief window for reconnection attempts.
 
 Adhering to these limits and understanding the timeout behaviors will help ensure that your applications remain responsive and stable while providing a seamless user experience.
-
-## Beta Limitations
-
-- **Ice-Restart Not Available**: During the beta, ice-restart is not supported. Following a disconnection caused by a network change such as moving from WiFi to Cellular on mobile devices, a new Session should be created.
