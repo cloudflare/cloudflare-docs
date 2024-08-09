@@ -159,3 +159,19 @@ For example, if you have a list of policies arranged as follows:
 - Allow E
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.
+
+## Common misconfigurations
+
+If you add any of the following rules to an Allow policy, anyone will be able to access your application.
+
+### Include everyone
+
+| Rule type    | Selector | Value                       |
+| ------- | -------- | --------------------------- |
+| Include | Everyone | `Everyone` |
+
+### Include all valid emails
+
+| Rule type| Selector | Value                       |
+| ------- | -------- | --------------------------- |
+| Include | Login Methods | `One-time PIN` |
