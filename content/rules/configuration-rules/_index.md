@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Configuration Rules
-weight: 7
+weight: 2
 meta:
   title: Configuration Rules
 ---

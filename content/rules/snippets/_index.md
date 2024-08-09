@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Snippets
-weight: 9
+weight: 3
 meta:
   title: Cloudflare Snippets (alpha)
 ---
