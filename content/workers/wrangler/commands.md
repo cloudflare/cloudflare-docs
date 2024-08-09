@@ -313,7 +313,7 @@ You must provide either `--command` or `--file` for this command to run successf
 ### `export`
 
 {{<Aside type="warning">}}
-This command does not apply on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
 Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
 {{</Aside>}}
