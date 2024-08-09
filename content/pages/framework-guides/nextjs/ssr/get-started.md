@@ -9,11 +9,11 @@ meta:
 
 # Next.js
 
-Learn how to deploy your Full-stack (SSR) Next.js on Cloudflare.
+Learn how to deploy full-stack (SSR) Next.js apps to Cloudflare Pages.
 
 ## New apps
 
-For new Next.js apps, use the following command to launch an interactive building experience:
+To create a new Next.js app, pre-configured to run on Cloudflare, run:
 
 ```sh
 $ npm create cloudflare@latest my-next-app -- --framework=next
