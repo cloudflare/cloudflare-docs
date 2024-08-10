@@ -126,7 +126,7 @@ export default {
     newRequest.headers.set("Content-Type", "application/json");
     try {
       return await fetch(newRequest);
-    } catch (e) {
+    } catch (e: ErrorEvent) {
       return new Response(JSON.stringify({ error: e.message }), {
         status: 500,
       });
