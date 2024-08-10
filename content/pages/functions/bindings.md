@@ -691,7 +691,7 @@ When developing locally, add secrets by creating a `.dev.vars` file in the root 
 
 ```
 ---
-filename:  `.dev.vars`
+filename: .dev.vars
 ---
 SECRET_NAME=<SECRET_VALUE>
 ```
