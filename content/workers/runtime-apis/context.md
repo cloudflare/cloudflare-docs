@@ -16,7 +16,7 @@ Context is exposed via the following places:
 
 ## `waitUntil`
 
-`ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking or returning a response, and that may continue after a response is returned. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
+`ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking a returned response. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
 
 `waitUntil` is commonly used to:
 
@@ -26,7 +26,7 @@ Context is exposed via the following places:
 {{<Aside type="note" header="Alternatives to waitUntil">}}
 If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logging/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
 
-[Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker.
+[Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking a returned response to the client Worker.
 {{</Aside>}}
 
 You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
