@@ -182,7 +182,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 4. In **Host and Port**, enter the private IP address and port number of your [TLS endpoint](#create-a-new-tls-endpoint) (for example, `192.168.185.198:3333`).
 5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
 
-WARP will automatically exclude the IP address of the TLS endpoint from all [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configurations. This prevents remote users from accessing the endpoint through the WARP tunnel on any port.
+WARP will automatically exclude the TLS endpoint from all device profiles. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, make sure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
 
 ## 4. Configure device profile
 
