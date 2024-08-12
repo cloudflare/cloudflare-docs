@@ -88,7 +88,7 @@ If you have an issue that you do not see listed, let the team know in the Cloudf
 
 ## Delete a project with a high number of deployments
 
-You may not be able to delete your Pages project if it has a high number (over 800) of deployments. The Cloudflare team is tracking this issue.
+You may not be able to delete your Pages project if it has a high number (over 100) of deployments. The Cloudflare team is tracking this issue.
 
 As a workaround, review the following steps to delete all deployments in your Pages project. After you delete your deployments, you will be able to delete your Pages project.
 
