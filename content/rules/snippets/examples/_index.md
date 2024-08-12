@@ -11,6 +11,6 @@ layout: wide
 
 Refer to the following examples to get started creating your snippet code.
 
-Refer to [How it works](/rules/snippets/#how-it-works) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/) for overall guidance.
+Refer to [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/) for overall guidance.
 
 {{<list-examples filters="goal,operation" directory="/rules/snippets/examples/">}}
