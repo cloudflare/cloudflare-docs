@@ -2187,7 +2187,7 @@ wrangler queues create <name> [OPTIONS]
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the queue to create.
 - `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - How long a published message should be delayed for, in seconds. Must be a positive integer.
+  - How long a published message should be delayed for, in seconds. Must be between 0 and 42300.
 - `--message-retention-period-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long to retain a message, in seconds. Must be between 60 and 1209600.
 
@@ -2206,7 +2206,7 @@ wrangler queues update <name> [OPTIONS]
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the queue to update.
 - `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - How long a published message should be delayed for, in seconds. Must be a positive integer.
+  - How long a published message should be delayed for, in seconds. Must be between 0 and 42300.
 - `--message-retention-period-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long to retain a message, in seconds. Must be between 60 and 1209600.
 
