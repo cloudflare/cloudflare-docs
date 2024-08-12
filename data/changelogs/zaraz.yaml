@@ -5,6 +5,11 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-08-12'
+  title:
+  description: |
+    * **Automatic Actions**: New tools now support Automatic Pageview tracking
+    * **HTTP Events API**: Respect Google consent signals
 - publish_date: '2024-07-23'
   title:
   description: |-
