@@ -789,9 +789,12 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Path to a custom certificate.
 - `--local-upstream` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Host to act as origin in local mode, defaults to `dev.host` or route.
-- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--legacy-assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
+  - Root folder of static assets to be served.
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -863,9 +866,12 @@ None of the options for this command are required. Also, many can be set in your
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Use the latest version of the Workers runtime.
-- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `--legacy-assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `npx wrangler deploy --name personal_blog --assets dist/ --latest`.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
+  - Root folder of static assets to be served.
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
