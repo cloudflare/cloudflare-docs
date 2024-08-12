@@ -794,7 +794,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -871,7 +871,7 @@ None of the options for this command are required. Also, many can be set in your
   - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
 - `--assets` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}experimental{{</prop-meta>}}
   - Root folder of static assets to be served.
-  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead.{{</Aside>}}
+  - {{<Aside type="warning">}}This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.{{</Aside>}}
 - `--site` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
