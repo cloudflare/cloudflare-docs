@@ -33,7 +33,7 @@ That decision itself depends on two factors: [admin-defined thresholds](/waiting
 For admin-defined thresholds, the two measures that matter are `total active users` and `new users per minute`:
 
 - `total active users` is a target threshold for how many simultaneous users you want to allow on the pages covered by your waiting room.
-- `New users per minute` defines the target threshold for the maximum rate of user influx to your website per minute.
+- `new users per minute` defines the target threshold for the maximum rate of user influx to your website per minute.
 
 A sharp spike in either of these values might result in queuing. Another configuration that affects how we calculate `the total active users` is `session duration`. A user is considered active for `session duration` minutes since the request is made to any page covered by a waiting room.
 
