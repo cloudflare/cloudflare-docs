@@ -180,7 +180,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
 4. In **Host and Port**, enter the private IP address and port number of your [TLS endpoint](#create-a-new-tls-endpoint) (for example, `192.168.185.198:3333`).
-5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
+5. (Optional) In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate. This field is only needed for self-signed certificates. If a TLS fingerprint is not supplied, WARP validates the certificate against the local certificate store and checks that it is signed by a public certificate authority.
 
 WARP will automatically exclude the IP address of the TLS endpoint from all [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configurations. This prevents remote users from accessing the endpoint through the WARP tunnel on any port.
 
