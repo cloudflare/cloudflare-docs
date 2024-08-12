@@ -18,7 +18,7 @@ This error occurs when a Snippet attempts to call `fetch(request)` more than onc
 
 Ensure that your Snippet code only calls `fetch(request)` once. This method is used to send the modified request to the origin server, and it should be called only once per Snippet to avoid conflicts.
 
-## Error 1202: Snippets exceeded subrequests limit:
+## Error 1202: Snippets exceeded subrequests limit
 
 This error occurs when the number of {{<glossary-tooltip term_id="Snippets subrequest" prepend="A subrequest is ">}}subrequests{{</glossary-tooltip>}} exceeds [the limit](/rules/snippets/#availability) for your Cloudflare plan.
 
