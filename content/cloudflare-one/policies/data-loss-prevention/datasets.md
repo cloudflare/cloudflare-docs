@@ -50,7 +50,7 @@ For information on dataset limits, refer to [Account limits](/cloudflare-one/acc
 6. Name your dataset. Optionally, add a description. Select **Next**.
 7. Review the details for your uploaded dataset. Select **Save dataset**.
 
-DLP will save your encrypted dataset.
+DLP will encrypt your dataset and save its hash.
 
 {{</details>}}
 
@@ -70,6 +70,12 @@ DLP will save your dataset in cleartext.
 To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing datasets
+
+{{<Aside type="note">}}
+
+To use Exact Data Match columns, you will need to reupload any EDM datasets added prior to column support.
+
+{{</Aside>}}
 
 Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
 

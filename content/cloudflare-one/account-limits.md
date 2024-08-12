@@ -44,12 +44,13 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## Data Loss Prevention (DLP)
 
-| Feature                                  | Limit   |
-| ---------------------------------------- | ------- |
-| Custom entries                           | 25      |
-| Exact Data Match cells per spreadsheet   | 100,000 |
-| Custom Wordlist keywords per spreadsheet | 200     |
-| Custom Wordlist keywords per account     | 1,000   |
+| Feature                                  | Limit     |
+| ---------------------------------------- | --------- |
+| Custom entries                           | 25        |
+| Exact Data Match cells per spreadsheet   | 100,000   |
+| Custom Wordlist keywords per spreadsheet | 200       |
+| Custom Wordlist keywords per account     | 1,000     |
+| Dataset cells per account                | 1,000,000 |
 
 ## Cloudflare Tunnel
 
