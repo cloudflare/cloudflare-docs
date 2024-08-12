@@ -2195,7 +2195,7 @@ wrangler queues create <name> [OPTIONS]
 
 ### `update`
 
-Update an existing queue.
+Update an existing Queue.
 
 ```txt
 wrangler queues update <name> [OPTIONS]
