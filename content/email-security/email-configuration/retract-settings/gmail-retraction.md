@@ -14,7 +14,7 @@ In this tutorial you will learn how to set up email retraction for Gmail.
 
 ## 1. Configure project and service account in Google Cloud Platform
 
-For Cloud Email Security to be able to retract messages from Gmail inboxes, you first need to create a service account in a Google Cloud Platform (GCP) project.
+For Email Security to be able to retract messages from Gmail inboxes, you first need to create a service account in a Google Cloud Platform (GCP) project.
 
 1. Access the [Google Cloud Console](https://console.cloud.google.com). From the Dashboard, select **CREATE PROJECT**.
 
@@ -67,7 +67,7 @@ For Cloud Email Security to be able to retract messages from Gmail inboxes, you 
 13. In **Service account details** provide the following information:
     - **Service account name**: `Message Retraction Service Account`
     - **Service account ID**: This value is automatically generated.
-    - **Service account description**: A description for this service. For example, `Cloud Email Security Message Retraction`
+    - **Service account description**: A description for this service. For example, `Email Security Message Retraction`
 
     Select **CREATE AND CONTINUE** when you are done.
 
@@ -135,17 +135,17 @@ For Cloud Email Security to be able to retract messages from Gmail inboxes, you 
 
     ![Select JSON as the key type](/images/email-security/email-retraction/gmail/step26-json-key.png)
 
-{{<Aside type="warning" header="Important">}}Save this key in a secure location as it allows access to your cloud resources. You will need to share it with Cloud Email Security as part of the configuration process in the next step.{{</Aside>}}
+{{<Aside type="warning" header="Important">}}Save this key in a secure location as it allows access to your cloud resources. You will need to share it with Email Security as part of the configuration process in the next step.{{</Aside>}}
 
-## 2. Share the service account JSON key with Cloud Email Security
+## 2. Share the service account JSON key with Email Security
 
-You have to upload the private key generated in the previous step to Cloud Email Security. This is needed to execute retractions on your Gmail inboxes.
+You have to upload the private key generated in the previous step to Email Security. This is needed to execute retractions on your Gmail inboxes.
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **RETRACT SETTINGS** > **Authorize Gmail**.
 
-    ![Go to Authorize Gmail in your Cloud Email Security dashboard](/images/email-security/email-retraction/gmail/step2-authorize-gmail.png)
+    ![Go to Authorize Gmail in your Email Security dashboard](/images/email-security/email-retraction/gmail/step2-authorize-gmail.png)
 
 3. Select **New Authorization** and configure the following settings:
     - Select **AUTHORIZATION DATA (JWT)**, and find and upload your JSON private key.
@@ -154,33 +154,33 @@ You have to upload the private key generated in the previous step to Cloud Email
 
     ![Select New authorization and configure its settings](/images/email-security/email-retraction/gmail/step3-private-key.png)
 
-## 3. Configure auto-retraction actions in Cloud Email Security
+## 3. Configure auto-retraction actions in Email Security
 
 {{<Aside type="warning" header="Important">}}If you choose the hard delete retraction for Gmail, email messages will be permanently deleted. These messages cannot be recovered, even by admins.{{</Aside>}}
 
 {{<render file="_auto-retraction.md" withParameters="Google Gmail messages cannot be recovered, even by the admin.">}}
 
-## 4. Adjust the hop count in Cloud Email Security
+## 4. Adjust the hop count in Email Security
 
-Since Cloud Email Security is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order.
+Since Email Security is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order.
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **DOMAINS & ROUTING**.
 
 3. Select the three-dots menu on the domain you want to verify the position, and then select **Edit**.
 
-    ![Go to Domain to verify Cloud Email Security's hop position](/images/email-security/email-retraction/gmail/step3-hop-position.png)
+    ![Go to Domain to verify Email Security's hop position](/images/email-security/email-retraction/gmail/step3-hop-position.png)
 
 4. For standalone Gmail only deployments, the value should be set to `2`. If it is not, adjust the **Hops** count to `2`, and select **Update Domain**.
 
-    ![Go to Domain to verify Cloud Email Security's hop position](/images/email-security/email-retraction/gmail/step4-hops-count.png)
+    ![Go to Domain to verify Email Security's hop position](/images/email-security/email-retraction/gmail/step4-hops-count.png)
 
 {{<Aside type="note">}}If you have an existing secure email gateway (SEG) deployed as the MX record, you will need to adjust the hop count accordingly.{{</Aside>}}
 
 ## 5. Configure BCC rule in Google Workspaces
 
-You must send copies of inbound email messages to Cloud Email Security for inspection, so that Cloud Email Security can automatically retract messages. Messages can be sent to Cloud Email Security using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Cloud Email Security is deployed as MX.
+You must send copies of inbound email messages to Email Security for inspection, so that Email Security can automatically retract messages. Messages can be sent to Email Security using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Email Security is deployed as MX.
 
 {{<render file="deployment/_gmail-bcc-setup.md">}}
 

@@ -194,12 +194,6 @@ Terraform will perform the following actions:
           + websockets                  = (known after apply)
           + zero_rtt                    = (known after apply)
 
-          + minify {
-              + css  = (known after apply)
-              + html = (known after apply)
-              + js   = (known after apply)
-            }
-
           + mobile_redirect {
               + mobile_subdomain = (known after apply)
               + status           = (known after apply)

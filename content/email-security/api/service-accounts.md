@@ -8,11 +8,11 @@ weight: 1
 
 A **service account** allows admins to create and maintain API credentials separate from a single username and password combination. It also allows you to create and control additional API access for different use cases.
 
-When you connect to the [Cloud Email Security (formerly Area 1) API](/email-security/api/), the **Public Key** is used for the *username* and the **Private Key** for the *password*.
+When you connect to the [Email Security (formerly Area 1) API](/email-security/api/), the **Public Key** is used for the *username* and the **Private Key** for the *password*.
 
 ## Create service account
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Service Accounts**.
 4. Select **Add Service Account**.

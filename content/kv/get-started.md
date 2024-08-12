@@ -59,7 +59,7 @@ For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --g
 
 ## 2. Create a KV namespace
 
-A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
+A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare’s global network.
 
 You can create a KV namespace via Wrangler or the dashboard.
 
@@ -110,7 +110,7 @@ Binding names do not need to correspond to the namespace you created. Binding na
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/reference/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
 
 Refer to [Environment](/kv/reference/environments/) for more information.
 

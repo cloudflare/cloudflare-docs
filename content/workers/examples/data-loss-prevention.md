@@ -210,7 +210,7 @@ async def on_fetch(request):
         if match:
             # Alert a data breach
             await post_data_breach(request)
-            # Respond with a block if credit card, therwise replace sensitive text with `*`s
+            # Respond with a block if credit card, otherwise replace sensitive text with `*`s
             card_resp = Response.new(kind + " found\nForbidden\n", status=403,statusText="Forbidden")
             sensitive_resp = Response.new(re.sub(regex, "*"*10, text, flags=re.IGNORECASE), response)
             return card_resp if kind == "credit_card" else  sensitive_resp

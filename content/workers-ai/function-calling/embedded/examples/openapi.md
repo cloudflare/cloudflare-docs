@@ -8,7 +8,7 @@ tags: [AI]
 
 # Example using tools based on OpenAPI Spec
 
-Oftentimes APIs are defined and documented via [OpenAPI specification](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI spec, which the LLM can then leverage to fullfil the prompt.
+Oftentimes APIs are defined and documented via [OpenAPI specification](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI spec, which the LLM can then leverage to fulfill the prompt.
 
 In this example the LLM will describe the a Github user, based Github's API and its OpenAPI spec.
 

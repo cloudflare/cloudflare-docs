@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Google Workspace
+updated: 2024-06-04
 weight: 13
 ---
 

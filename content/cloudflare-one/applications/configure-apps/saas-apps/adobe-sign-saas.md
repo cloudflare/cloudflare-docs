@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Adobe Acrobat Sign
+updated: 2024-07-17
 weight: 2
 ---
 

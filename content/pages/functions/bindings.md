@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/reference/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
+A [binding](/workers/runtime-apis/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a Cloudflare Developer Platform resource set up to continue.
 
@@ -19,7 +19,7 @@ Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bi
 
 ## KV namespaces
 
-[Workers KV](/kv/reference/kv-namespaces/) is Cloudflare's key-value storage solution.
+[Workers KV](/kv/concepts/kv-namespaces/) is Cloudflare's key-value storage solution.
 
 To bind your KV namespace to your Pages Function, you can configure a KV namespace binding in [`wrangler.toml`](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
 
@@ -691,7 +691,7 @@ When developing locally, add secrets by creating a `.dev.vars` file in the root 
 
 ```
 ---
-filename:  `.dev.vars`
+filename: .dev.vars
 ---
 SECRET_NAME=<SECRET_VALUE>
 ```

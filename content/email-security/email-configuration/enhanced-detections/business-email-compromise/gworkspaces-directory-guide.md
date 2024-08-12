@@ -6,11 +6,11 @@ weight: 2
 
 # Gmail directory integration
 
-Cloud Email Security can integrate with Google to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
+Email Security can integrate with Google to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
 
-## 1. Create a service account in Google for Cloud Email Security Directory Integration
+## 1. Create a service account in Google for Email Security Directory Integration
 
-You need to authorize Cloud Email Security to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following privileges:
+You need to authorize Email Security to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following privileges:
 
 - View group subscriptions on your domain.
 - View organization units on your domain.
@@ -44,13 +44,13 @@ Start by creating a service account. If you already have one, you can skip this 
 
 6. Review your information and select **Create Role**. 
 
-## 2. Authorize Cloud Email Security for Directory Access with Google
+## 2. Authorize Email Security for Directory Access with Google
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Directories**, and select **Add Directory** to start the authorization process.
 
-    ![Go to Directories in the dashboard of Cloud Email Security, and then select Add Directory to start the authorization process](/images/email-security/bec/gmail/step2-directories.png)
+    ![Go to Directories in the dashboard of Email Security, and then select Add Directory to start the authorization process](/images/email-security/bec/gmail/step2-directories.png)
 
 3. In the Add Directory configuration panel, enter the following details:
     - **Directory Type**: Open the drop-down menu and select **Google**.
@@ -59,7 +59,7 @@ Start by creating a service account. If you already have one, you can skip this 
 
     Select **Authorize** when you are done.
 
-4. The Cloud Email Security dashboard will redirect you to a Google login page. Select or enter the appropriate account to initiate the authentication process.
+4. The Email Security dashboard will redirect you to a Google login page. Select or enter the appropriate account to initiate the authentication process.
 
 5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the checkboxes, and select **Continue** to authorize the change.
 

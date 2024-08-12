@@ -138,6 +138,8 @@ Deprecated APIs:
 
 Enterprise customers can override Cloudflare's default compression behavior using [Compression Rules](/rules/compression-rules/).
 
+---
+
 ## Auto Minify
 **End of life date: August 5th, 2024**
 
@@ -169,8 +171,6 @@ Deprecated API:
  - PATCH /zones/:zone_identifier/settings/mobile_redirect
 
 Replacement: [Single Redirects](/rules/url-forwarding/single-redirects/)
-
----
 
 ## Server-side Excludes
 **End of life date: June 14th, 2024**

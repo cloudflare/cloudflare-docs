@@ -18,7 +18,6 @@ If you're using Cloudflare's Wordpress plugin, our "Optimize Cloudflare for Wor
 | --- | --- |
 | Security level | Medium |
 | Caching level | Standard |
-| Auto Minify (deprecated) | Enable Auto Minify for JS, CSS, and HTML |
 | Browser Cache TTL | 4 hours |
 | Always Online | On |
 | Development Mode | Disabled |

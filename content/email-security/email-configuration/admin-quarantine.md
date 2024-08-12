@@ -6,13 +6,13 @@ weight: 7
 
 # Admin Quarantine
 
-Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}} assigned by Cloud Email Security.
+Admin Quarantine allows you to automatically prevent incoming messages from reaching a recipient's inbox based on the {{<glossary-tooltip term_id="disposition" link="/email-security/reference/dispositions-and-attributes/">}}disposition{{</glossary-tooltip>}} assigned by Email Security.
 
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
 
 ## Quarantine emails by disposition
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -33,7 +33,7 @@ Quarantine by disposition needs to be configured manually per domain.
 
 You can view and potentially release emails that were sent to **Admin Quarantine**: 
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Email** > **Admin Quarantine**.
 
@@ -45,7 +45,7 @@ You can view and potentially release emails that were sent to **Admin Quarantine
 
 From **Admin Quarantine**, you can also release quarantined emails by selecting one or more messages:
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Email** > **Admin Quarantine**.
 
@@ -59,4 +59,4 @@ From **Admin Quarantine**, you can also release quarantined emails by selecting 
 
 6. (Optional) You can also release multiple messages, by selecting the box next to each message you want to release.
 
-{{<Aside type="note">}}After being released from quarantine, Cloud Email Security forwards the original email messages to their destination. These emails will arrive at email inboxes from the original sender, not Cloud Email Security.{{</Aside>}}
+{{<Aside type="note">}}After being released from quarantine, Email Security forwards the original email messages to their destination. These emails will arrive at email inboxes from the original sender, not Email Security.{{</Aside>}}

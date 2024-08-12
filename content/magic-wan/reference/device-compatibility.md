@@ -14,7 +14,7 @@ Appliance                                                                       
 [Aruba EdgeConnect](/magic-wan/configuration/manually/third-party/aruba-edgeconnect/)                   | ✅                            | ✅
 Cisco ASA                                                                                               | Compatibility on roadmap      | Specifications compatible[^1]
 [Cisco IOS XE](/magic-wan/configuration/manually/third-party/cisco-ios-xe/)                             | ✅                            | ✅
-Cisco Meraki                                                                                            | Compatibility on roadmap      | Specifications compatible[^1]
+Cisco Meraki                                                                                            | Compatibility on roadmap      | Compatibility on roadmap
 [Cisco SD-WAN](/magic-wan/configuration/manually/third-party/viptela/)                                  | ✅                            | ✅
 [Fortinet](/magic-wan/configuration/manually/third-party/fortinet/)                                     | Specifications compatible[^1] | ✅
 [Furukawa Electric FITELnet](/magic-wan/configuration/manually/third-party/fitelnet/)                   | —                             | ✅

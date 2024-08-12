@@ -245,6 +245,7 @@ mTLS does not currently work for:
 
 - HTTP/3 traffic
 - Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)
+- Cloudflare R2 public bucket served on a [custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain)
 
 ## Set up alerts for mutual TLS certificates
 

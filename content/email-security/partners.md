@@ -12,7 +12,7 @@ weight: 7
 
 {{</Aside>}}
 
-Cloud Email Security Channel and Alliance partners have the option to set up accounts for themselves and their customers.
+Email Security Channel and Alliance partners have the option to set up accounts for themselves and their customers.
 
 ## Create accounts
 
@@ -24,7 +24,7 @@ Parent accounts are treated as containers with no services provisioned. User acc
 
 {{<Aside type="note">}}This is only required for administrators that manage multiple accounts. For example, Managed Security Service Providers (MSSP) managing multiple customer accounts.{{</Aside>}}
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts** > **Accounts**, select **Create new customer**.
 4. Enter their information, and make sure you select _Parent_ in **Account Type**.
@@ -34,12 +34,12 @@ Your newly created account should show up in the list. If not, refresh the page.
 
 ### Create a child account
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts** > **Accounts**, select the parent account where you want to create a child account.
 4. Select **Create New customer**.
 5. Enter their information, and make sure you select _Advantage_ in **Account Type**.
-6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Loopback Hops** will depend on your email configuration and where Cloud Email Security is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
+6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Loopback Hops** will depend on your email configuration and where Email Security is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
 7. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
 8. Select **Save**.
 
@@ -57,26 +57,26 @@ To create an account at parent level or child level:
 
 ## Escalation contacts
 
-You should add escalation contacts so Cloud Email Security can send notifications regarding detection events and critical service related issues. Cloud Email Security highly recommends that these contacts have both phone and email contacts.
+You should add escalation contacts so Email Security can send notifications regarding detection events and critical service related issues. Email Security highly recommends that these contacts have both phone and email contacts.
 
 Refer to [Escalation contacts](/email-security/account-setup/escalation-contacts/) for more information.
 
 ## Status alerts
 
-Subscribe to incident status alerts [from Cloud Email Security](https://status.area1security.com/).
+Subscribe to incident status alerts [from Email Security](https://status.area1security.com/).
 
 ## Domains setup (inline/API)
 
-Refer to the [setup options](/email-security/deployment/) for Cloud Email Security to learn about the best way of deploying Cloud Email Security in your organization. You can choose between two main setup architectures: 
+Refer to the [setup options](/email-security/deployment/) for Email Security to learn about the best way of deploying Email Security in your organization. You can choose between two main setup architectures: 
 
 - Inline deployment
 - API deployment
 
-With an [inline deployment](/email-security/deployment/inline/), Cloud Email Security evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Cloud Email Security after they have already reached a user’s inbox.
+With an [inline deployment](/email-security/deployment/inline/), Email Security evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Email Security after they have already reached a user’s inbox.
 
 ## Classification actions
 
-Cloud Email Security recommends that you quarantine `MALICIOUS` and `SPAM` {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}}. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Cloud Email Security](/email-security/email-configuration/domains-and-routing/domains/).
+Email Security recommends that you quarantine `MALICIOUS` and `SPAM` {{<glossary-tooltip term_id="disposition">}}dispositions{{</glossary-tooltip>}}. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Email Security](/email-security/email-configuration/domains-and-routing/domains/).
 
 ## Message retraction
 
@@ -88,7 +88,7 @@ To add additional TLS requirements for emails coming from certain domains, you c
 
 ## Reports
 
-You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as {{<glossary-tooltip term_id="SIEM" link="https://horizon.area1security.com/settings/email/routing/webhooks">}}SIEM events{{</glossary-tooltip>}}. For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Cloud Email Security first.
+You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as {{<glossary-tooltip term_id="SIEM" link="https://horizon.area1security.com/settings/email/routing/webhooks">}}SIEM events{{</glossary-tooltip>}}. For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Email Security first.
 
 ## Whitelisting and blocklisting senders
 

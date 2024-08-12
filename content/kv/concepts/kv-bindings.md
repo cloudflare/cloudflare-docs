@@ -12,7 +12,7 @@ Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuratio
 
 ## Reference KV from Workers
 
-A [KV namespace](/kv/reference/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
+A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
 To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 

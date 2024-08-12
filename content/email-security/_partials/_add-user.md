@@ -6,7 +6,7 @@ _build:
 inputParameters: childParentInfo
 ---
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/) $1.
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/) $1.
 2. Go to **Settings** (the gear icon).
 3. Go to **Users and Actions**.
 4. Select **Add User**.

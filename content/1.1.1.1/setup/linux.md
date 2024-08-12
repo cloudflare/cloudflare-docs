@@ -64,7 +64,7 @@ DNS=1.1.1.1
 
 ### KDE Plasma
 
-1. Go to **System Settings** > **Connections**.
+1. Go to **System Settings** > **Wi-Fi & Internet** > **Wi-Fi & Networking**. (or **Connections**, if on Plasma 5)
 2. Select the connection you want to configure - like your current connected network.
 3. On the **IPv4** tab, select the **Method** drop-down menu > _Automatic (Only addresses)_.
 4. Select the text box next to **DNS servers**.

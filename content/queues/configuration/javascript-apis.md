@@ -241,7 +241,7 @@ interface Message<Body = unknown> {
   readonly timestamp: Date;
   readonly body: Body;
   ack(): void;
-  retry(options?: QueueRetryOption): void;
+  retry(options?: QueueRetryOptions): void;
 }
 ```
 

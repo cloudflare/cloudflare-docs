@@ -13,11 +13,7 @@ layout: example
 ---
 
 {{<Aside type="warning" header="Caution when using in production">}}
-
-- This code is provided as a sample, and is not suitable for production without protecting against timing attacks. Refer to the [Workers' `timingSafeEqual` example](/workers/examples/protect-against-timing-attacks/) for more information on how to mitigate timing attacks. Alternatively, consider [signing requests with HMAC](/rules/snippets/examples/signing-requests/).
-
-- The example code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Snippets editor before saving your code.
-
+The example code contains a generic header key and value of `X-Custom-PSK` and `mypresharedkey`. To best protect your resources, change the header key and value in the Snippets editor before saving your code.
 {{</Aside>}}
 
 ```js

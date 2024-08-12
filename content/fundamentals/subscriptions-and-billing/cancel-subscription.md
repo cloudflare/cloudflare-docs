@@ -10,6 +10,10 @@ meta:
 
 Cancellations are not processed until the end of the billing period, so you can continue using the add-on or subscription until the new billing period begins. To avoid unwanted charges, start the cancellation process before the end of your billing period.
 
+If you are making a subscription downgrade including a change from a yearly plan to a monthly plan or a change from a paid plan to a free plan, be aware that downgrades and cancellations do not take immediate effect and that you will continue to be billed and have access to your service for the remainder of your contracted service period. You should not contact Cloudflare to ask for exceptions to this policy or refunds for early downgrades and cancellations.
+
+In addition, you may not always see a cancel button present for each subscription and often it is a switch from a paid plan to a free plan that will act as the cancellation of your paid subscription.
+
 {{<Aside type="note">}}
 
 All billing period dates on invoices and the dashboard are in UTC/GMT timezone, not your local timezone. We recommend any downgrades or changes to subscriptions be made at least 24 hours before stated billing date to avoid any timezone confusion.

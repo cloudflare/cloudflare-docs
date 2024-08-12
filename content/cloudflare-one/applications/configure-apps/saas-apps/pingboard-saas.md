@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Pingboard
+updated: 2024-07-09
 weight: 21
 ---
 

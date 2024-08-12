@@ -312,6 +312,12 @@ You must provide either `--command` or `--file` for this command to run successf
 
 ### `export`
 
+{{<Aside type="warning">}}
+This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
+{{</Aside>}}
+
 Export a D1 database or table's schema and/or content to a `.sql` file.
 
 ```txt
@@ -377,6 +383,12 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 
 ### `backup create`
 
+{{<Aside type="warning">}}
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+{{</Aside>}}
+
 Initiate a D1 backup.
 
 ```txt
@@ -392,6 +404,12 @@ wrangler d1 backup create <DATABASE_NAME>
 
 ### `backup list`
 
+{{<Aside type="warning">}}
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+{{</Aside>}}
+
 List all available backups.
 
 ```txt
@@ -406,6 +424,12 @@ wrangler d1 backup list <DATABASE_NAME>
 {{</definitions>}}
 
 ### `backup restore`
+
+{{<Aside type="warning">}}
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+{{</Aside>}}
 
 Restore a backup into a D1 database.
 
@@ -427,7 +451,7 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 {{<Aside type="warning">}}
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the current beta period. As of now, there is no solution to download existing data of a beta database to your local machine. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups in its beta period.
+This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period.
 {{</Aside>}}
 
 Download existing data to your local machine.
@@ -1024,7 +1048,7 @@ $ npx wrangler kv namespace list | jq "."
 Delete a given namespace.
 
 ```txt
-wrangler kv namespace delete {--bindings=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
 ```
 
 {{<Aside type="warning">}}

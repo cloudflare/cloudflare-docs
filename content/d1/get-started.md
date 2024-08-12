@@ -60,7 +60,7 @@ Run the following `wrangler d1` command and give your database a name. In this t
 
 {{<Aside type="note">}}
 
-The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare` to initialize your new project.
+The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
 
 {{</Aside>}}
 

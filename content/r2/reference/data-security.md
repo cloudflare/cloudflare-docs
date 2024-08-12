@@ -1,6 +1,7 @@
 ---
 title: Data security
 pcx_content_type: concept
+weight: 7
 ---
 
 # Data security

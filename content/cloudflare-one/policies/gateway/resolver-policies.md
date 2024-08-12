@@ -113,7 +113,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ## Value
 
-{{<render file="gateway/_value.md">}}
+{{<render file="gateway/_value.md" withParameters="hostnames;;Host">}}
 
 ## Logical operators
 

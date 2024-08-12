@@ -33,40 +33,6 @@ header: API configuration example
 
 {{</details>}}
 
-## Auto Minify (deprecated) { #auto-minify }
-
-[Auto Minify](/speed/optimization/content/auto-minify/) can remove all unnecessary characters from HTML, JavaScript, and CSS files.
-
-Use this setting to configure which file extensions you want to minify automatically:
-- HTML
-- CSS
-- JS
-
-{{<Aside type="note" header="Note">}}
-Before using this setting, turn off Auto Minify globally for your zone (in **Speed** > **Optimization** > **Content Optimization**) and then turn it on for specific requests and file extensions in a configuration rule.
-{{</Aside>}}
-
-{{<details header="API information">}}
-
-API configuration object name: `"autominify"` (object).
-
-```json
----
-header: API configuration example
----
-"action_parameters": {
-  "autominify": {
-    "html": true,
-    "css": true,
-    "js": false
-  }
-}
-```
-
-{{<render file="_configuration-rule-link-to-examples.md">}}
-
-{{</details>}}
-
 ## Browser Integrity Check
 
 [Browser Integrity Check](/waf/tools/browser-integrity-check/) blocks access to pages based on specific HTTP headers commonly abused by spammers.

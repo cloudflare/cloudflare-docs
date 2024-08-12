@@ -8,7 +8,7 @@ meta:
 
 # Azure integration guide
 
-This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} SSO connection with Cloud Email Security (formerly Area 1).
+This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} SSO connection with Email Security (formerly Area 1).
 
 ## 1. Azure Active Directory configuration
 
@@ -59,7 +59,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 11. Select **Save** and the cross button to exit **SAML Certificates**.
 
-12. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Cloud Email Security dashboard.
+12. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Email Security dashboard.
 
     ![Download the Metadata XML information](/images/email-security/sso/azure/step12-download.png)
 
@@ -71,9 +71,9 @@ Your Azure configuration is now complete. It should look similar to this:
 Now that the application configuration is complete, update **User Assignments** and **Application Properties** as needed to ensure that authorized personnel are able to access the new application from their Apps Catalog. Additionally, you may choose to update the application logo image file or the privacy policy URL.
 {{</Aside>}}
 
-## 2. Configure Cloud Email Security to connect to Azure
+## 2. Configure Email Security to connect to Azure
 
-1. Log in to the [Cloud Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -99,8 +99,8 @@ Now that the application configuration is complete, update **User Assignments** 
 
 ## 3. Test SSO configuration
 
-After completing both the Azure and Cloud Email Security set ups, you can test your SSO access.
-In this example, the logo for Cloud Email Security has been updated.
+After completing both the Azure and Email Security setups, you can test your SSO access.
+In this example, the logo for Email Security has been updated.
 
 {{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
 
@@ -110,18 +110,18 @@ In this example, the logo for Cloud Email Security has been updated.
 
 3. Go to **Settings** > **SSO**.
 
-4. Locate the Cloud Email Security Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Cloud Email Security.
+4. Locate the Email Security Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Email Security.
 
-5. If you configured everything correctly, you should be signed in to the Cloud Email Security Portal and redirected to the dashboard.
+5. If you configured everything correctly, you should be signed in to the Email Security Portal and redirected to the dashboard.
 
 ## Troubleshooting
 
-If you have trouble connecting your Azure account to Cloud Email Security, make sure that:
+If you have trouble connecting your Azure account to Email Security, make sure that:
 
-- The user exists in the Cloud Email Security dashboard.
+- The user exists in the Email Security dashboard.
 - The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
 - **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
-- The SAML SSO Domain is set correctly in the Cloud Email Security dashboard (refer to step 6 in [Configure Cloud Email Security to connect to Azure](#2-configure-cloud-email-security-to-connect-to-azure)).
+- The SAML SSO Domain is set correctly in the Email Security dashboard (refer to step 6 in [Configure Email Security to connect to Azure](#2-configure-email-security-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

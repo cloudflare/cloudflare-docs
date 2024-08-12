@@ -102,7 +102,7 @@ export interface Env {
 }
 
 export default {
-	async queue(batch: MessageBatch, env: Env): Promise<void> {
+	async queue(batch, env): Promise<void> {
 		const batchId = new Date().toISOString().replace(/[:.]/g, '-');
 		const fileName = `upload-logs-${batchId}.json`;
 
@@ -116,7 +116,7 @@ export default {
 			}
 		});
 	}
-};
+} satisfies ExportedHandler<Env>;;
 ```
 
 ## 7. Deploy your Worker

@@ -1170,6 +1170,13 @@
           "pro": 10,
           "biz": 25,
           "ent": 50
+        },
+        "subrequests": {
+          "title": "Number of {{<glossary-tooltip term_id=\"Snippets subrequest\" prepend=\"A subrequest is \">}}subrequests{{</glossary-tooltip>}}",
+          "free": 0,
+          "pro": 2,
+          "biz": 3,
+          "ent": 5
         }
       }
     },
@@ -1966,20 +1973,6 @@
           "title": "Availability",
           "summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
           "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "auto_minify": {
-      "title": "Auto Minify (deprecated)",
-      "link": "/speed/optimization/content/auto-minify/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"

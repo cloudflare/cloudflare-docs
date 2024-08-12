@@ -9,7 +9,7 @@ entries:
 - publish_date: '2024-07-23'
   title: Meta Llama 3.1 now available on Workers AI
   description: |-
-    Workers AI now suppoorts [Meta Llama 3.1](/workers-ai/models/llama-3.1-8b-instruct/).
+    Workers AI now supports [Meta Llama 3.1](/workers-ai/models/llama-3.1-8b-instruct/).
 
 - publish_date: '2024-07-11'
   title: New community-contributed tutorial

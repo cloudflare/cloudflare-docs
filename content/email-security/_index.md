@@ -5,10 +5,10 @@ layout: overview
 weight: 1
 ---
 
-# Cloud Email Security (formerly Area 1) 
+# Email Security (formerly Area 1) 
 
 {{<description>}}
-Stop {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks with Cloud Email Security (formerly Area 1) cloud-native email security service.
+Stop {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} attacks with Email Security (formerly Area 1) cloud-native email security service.
 {{</description>}}
 
 {{<plan id="email.email_security.properties.availability.summary">}}
@@ -26,11 +26,11 @@ Stop {{<glossary-tooltip term_id="phishing">}}phishing{{</glossary-tooltip>}} at
 ## Features
 
 {{<feature header="Deployment" href="/email-security/deployment/" cta="Evaluate deployment options">}}
-Cloud Email Security (formerly Area 1) provides two architectures to protect your organization: inline or API setup. Inline architecture evaluates email messages before they reach a user's inbox. API architecture evaluates emails when they have already reached a user's inbox.
+Email Security (formerly Area 1) provides two architectures to protect your organization: inline or API setup. Inline architecture evaluates email messages before they reach a user's inbox. API architecture evaluates emails when they have already reached a user's inbox.
 {{</feature>}}
 
 {{<feature header="SSO integration" href="/email-security/account-setup/sso/">}}
-In addition to standard logins, Cloud Email Security (formerly Area 1) offers support for {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} based single sign-on (SSO) logins to your dashboard.
+In addition to standard logins, Email Security (formerly Area 1) offers support for {{<glossary-tooltip term_id="SAML">}}SAML{{</glossary-tooltip>}} based single sign-on (SSO) logins to your dashboard.
 {{</feature>}}
 
 {{<feature header="Business email compromise" href="/email-security/email-configuration/enhanced-detections/business-email-compromise/">}}
@@ -46,7 +46,7 @@ Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's glob
 {{</related>}}
 
 {{<related header="Email Routing" href="/email-routing/" product="email-routing">}}
-Email Routing simplifies the way you create and manage custom email addresses. Cloudflare Cloud Email Security (formerly Area 1) helps secure your mail infrastructure from phishing attacks.
+Email Routing simplifies the way you create and manage custom email addresses. Email Security (formerly Area 1) helps secure your mail infrastructure from phishing attacks.
 {{</related>}}
 
 {{<related header="DMARC Management" href="/dmarc-management/" product="dmarc-management">}}
@@ -60,7 +60,7 @@ Stop brand impersonation. Track and manage every source that is sending emails f
 {{<resource-group>}}
  
 {{<resource header="Pricing" href="https://www.cloudflare.com/products/zero-trust/email-security/" icon="price">}}
-Cloudflare Cloud Email Security (formerly Area 1) Email Security is available as a standalone product purchase.
+Email Security (formerly Area 1) is available as a standalone product purchase.
 {{</resource>}}
  
 {{</resource-group>}}

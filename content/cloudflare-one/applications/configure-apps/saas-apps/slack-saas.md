@@ -1,6 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: integration-guide
 title: Slack
+updated: 2024-06-18
 weight: 24
 ---
 

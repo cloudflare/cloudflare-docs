@@ -23,30 +23,21 @@ layout: wide
   </thead>
   <tbody>
     <tr>
-      <td>2024-07-29</td>
-      <td>2024-08-05</td>
+      <td>2024-08-12</td>
+      <td>2024-08-19</td>
       <td>Log</td>
-      <td>100664</td>
-      <td>{{<rule-id>}}03046805349b4af5a438b74f89011f18{{</rule-id>}}</td>
-      <td>Automation Anywhere - SSRF - CVE:CVE-2024-6922</td>
+      <td>100666</td>
+      <td>{{<rule-id>}}7ff77f19b2ec4f1dab9f031ef3f42616{{</rule-id>}}</td>
+      <td>Apache OFBiz - Remote Code Execution - CVE:CVE-2024-32113</td>
       <td>New Detection</td>
     </tr>
     <tr>
-      <td>2024-07-29</td>
-      <td>2024-08-05</td>
+      <td>2024-08-12</td>
+      <td>2024-08-19</td>
       <td>Log</td>
-      <td>100663</td>
-      <td>{{<rule-id>}}3cdb08eb76554208a729e1ae740bce9a{{</rule-id>}}</td>
-      <td>WSO2 - Dangerous File Upload - CVE:CVE-2022-29464</td>
-      <td>New Detection</td>
-    </tr>
-    <tr>
-      <td>2024-07-29</td>
-      <td>2024-08-05</td>
-      <td>Log</td>
-      <td>100662</td>
-      <td>{{<rule-id>}}feebbbae63ee419097548c8f77c07fce{{</rule-id>}}</td>
-      <td>ServiceNow - Input Validation - CVE:CVE-2024-4879, CVE:CVE-2024-5178, CVE:CVE-2024-5217</td>
+      <td>100665</td>
+      <td>{{<rule-id>}}e960ac54d6e841cebcfe89d571eefd6f{{</rule-id>}}</td>
+      <td>Zoho ManageEngine - Remote Code Execution - CVE:CVE-2023-29084</td>
       <td>New Detection</td>
     </tr>
   </tbody>

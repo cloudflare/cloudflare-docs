@@ -534,7 +534,7 @@ The country of the user making the request.
 
 ## Value
 
-{{<render file="gateway/_value.md">}}
+{{<render file="gateway/_value.md" withParameters="hostnames;;Host">}}
 
 ## Logical operators
 

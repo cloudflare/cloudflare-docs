@@ -15,7 +15,7 @@ As shown above, the JWT contains three Base64-URL values separated by dots:
 * [Payload](#payload)
 * [Signature](#signature)
 
-Unless your application is connected to Access through Cloudflare Tunnel, your application must validate the token to ensure the security of your origin. Validation of the header alone is not sufficient — the JWT and signature must be confirmed to avoid identity spoofing.
+Unless your application is connected to Access through Cloudflare Tunnel, your application must [validate the token](/cloudflare-one/identity/authorization-cookie/validating-json/) to ensure the security of your origin. Validation of the header alone is not sufficient — the JWT and signature must be confirmed to avoid identity spoofing.
 
 ## Header
 
@@ -32,6 +32,10 @@ Unless your application is connected to Access through Cloudflare Tunnel, your a
 * `typ` designates the token format.
 
 ## Payload
+
+The payload contains the actual claim and user information to pass to the application. Payload contents vary depending on whether you authenticated to the application with an identity provider or with a [service token](/cloudflare-one/identity/service-tokens/).
+
+### Identity-based authentication
 
 ```json
 {
@@ -50,26 +54,24 @@ Unless your application is connected to Access through Cloudflare Tunnel, your a
 }
 ```
 
-The payload contains the actual claim and user information to pass to the application.
-
 | Field           | Description                               |
 |-----------------|-------------------------------------------|
-| aud             | The audience tag for the application to which the token is issued. |
-| email           | The email address of the authenticated user. |
-| exp             | The expiration timestamp for the token. |
-| iat             | The issuance timestamp for the token. |
-| nbf             | The not-before timestamp for the token, used to checks if the token was received before it should be used.|
-| iss             | The Cloudflare Access domain URL for the application.|
+| aud             | [Application audience (AUD) tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
+| email           | The email address of the authenticated user, verified by the identity provider. |
+| exp             | The expiration timestamp for the token (Unix time). |
+| iat             | The issuance timestamp for the token (Unix time). |
+| nbf             | The not-before timestamp for the token (Unix time), used to check if the token was received before it should be used.|
+| iss             | The Cloudflare Access domain URL for the application. |
 | type            | The type of Access token (`app` for application token or `org` for global session token).|
-| identity_nonce  | A nonce used to get the [user's identity](#user-identity).|
-| sub             | The ID of the user. |
+| identity_nonce  | A cache key used to get the [user's identity](#user-identity).|
+| sub             | The ID of the user. This value is unique to an email address per account. The user would get a different `sub` if they are [removed](/cloudflare-one/identity/users/seat-management/#remove-a-user) and re-added to your Zero Trust organization, or if they log into a different organization. |
 | country         | The country where the user authenticated from. |
 
-### Custom SAML attributes and OIDC claims
+#### Custom SAML attributes and OIDC claims
 
 Access allows you to add custom SAML attributes and OIDC claims to your JWT for enhanced verification, if supported by your identity provider. This is configured when you setup your [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) or [OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) provider.
 
-### User identity
+#### User identity
 
 User identity is useful for checking application permissions. For example, your application can validate that a given user is a member of an Okta or AzureAD group such as `Finance-Team`.
 
@@ -93,7 +95,7 @@ Access will return a JSON structure containing the following data:
 | ip              | The IP address of the user. |
 | auth_status     | The status if authenticating with mTLS. |
 | common_name     | The common name on the mTLS client certificate. |
-| service_token_id | The ID of the service token used for authentication. |
+| service_token_id | The Client ID of the service token used for authentication. |
 | service_token_status | True if authentication was through a service token instead of an IdP. |
 | is_warp         | True if the user enabled WARP. |
 | is_gateway      | True if the user enabled WARP and authenticated to a Zero Trust team. |
@@ -101,6 +103,32 @@ Access will return a JSON structure containing the following data:
 | device_id       | The ID of the device used for authentication. |
 | version         | The version of the `get-identity` object. |
 | device_sessions | A list of all sessions initiated by the user. |
+
+### Service token authentication
+
+```json
+{
+  "type": "app",
+  "aud": [
+    "32eafc7626e974616deaf0dc3ce63d7bcbed58a2731e84d06bc3cdf1b53c4228"
+  ],
+  "exp": 1659474457,
+  "iss": "https://yourteam.cloudflareaccess.com",
+  "common_name": "e367826f93b8d71185e03fe518aff3b4.access",
+  "iat": 1659474397,
+  "sub": "",
+}
+```
+
+| Field           | Description                               |
+|-----------------|-------------------------------------------|
+| type            | The type of Access token (`app` for application token or `org` for global session token).|
+| aud             | The [application audience (AUD) tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) of the Access application. |
+| exp             | The expiration timestamp of the JWT (Unix time). |
+| iss             | The Cloudflare Access domain URL for the application. |
+| common_name     | The Client ID of the service token (`CF-Access-Client-Id`). |
+| iat             | The issuance timestamp of the JWT (Unix time). |
+| sub             | Contains an empty string when authentication was through a service token. |
 
 ## Signature
 

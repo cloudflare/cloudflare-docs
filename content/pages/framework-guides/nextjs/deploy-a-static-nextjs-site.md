@@ -1,15 +1,16 @@
 ---
 pcx_content_type: how-to
-title: Static deployment
+title: Static site
 meta:
-  description: Deploy a static Next.js site with static exports.
+  title: Get started | Static site | Next.js apps
+  description: Deploy a static site built using Next.js to Cloudflare Pages
 ---
 
 # Deploy a static Next.js site
 
 {{<Aside type="note">}}
 
-Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using the [Deploy a Next.js site](/pages/framework-guides/nextjs/deploy-a-nextjs-site/) guide.
+Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using the [Deploy a Next.js site](/pages/framework-guides/nextjs/ssr/get-started/) guide.
 
 {{</Aside>}}
 

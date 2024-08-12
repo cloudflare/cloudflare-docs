@@ -59,7 +59,7 @@ Most developers will not need to use `compatibility_flags`. `compatibility_flags
 
 #### Via Wrangler
 
-Compatability flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
+Compatibility flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-dates/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
 

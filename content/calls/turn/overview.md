@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Overview
-weight: 5
+weight: 1
 ---
 
 # TURN Service
