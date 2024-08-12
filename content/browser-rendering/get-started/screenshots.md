@@ -89,9 +89,7 @@ export default {
 			const page = await browser.newPage();
 			await page.goto(url);
 			img = await page.screenshot();
-			await env.BROWSER_KV_DEMO.put(url, img, {
-				expirationTtl: 60 * 60 * 24,
-			});
+			await env.BROWSER_KV_DEMO.put(url, img, { expirationTtl: 60 * 60 * 24 });
 			await browser.close();
 		}
 
