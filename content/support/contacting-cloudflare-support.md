@@ -62,13 +62,13 @@ For account security, you must verify your identity and account ownership in the
 
 ![](/images/support/Screen_Shot_2022-09-28_at_11.41.37.png)
 
-4\. To authenticate using a single-use token, click **Get a single-use token**. A pop-up window will appear with the token code. The code automatically refreshes every 30 seconds.
+4\. To authenticate using a single-use token, click **Get a single-use token**. A pop-up window will appear with your Unique Customer Id and One Time Passcode. The code automatically refreshes every 30 seconds.
 
 ![](/images/support/Emergency_Phone_Support.png)
 
 5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/setup/account/account-security/2fa/#configure-totp-mobile-application-authentication-for-two-factor-cloudflare-login) on the following screen. After configuration, the token code will appear in your mobile authentication application.
 
-6\. Wait until the Cloudflare Support agent asks for the code before sharing the verification token.
+6\. When calling the emergency phone line, you can authenticate automatically by entering your ID and Code when requested.
 
 ___
 
