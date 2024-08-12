@@ -35,7 +35,7 @@ To create a [SYN flood rule](/ddos-protection/advanced-ddos-systems/overview/adv
 3. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
 4. Add the prefixes you wish to onboard. Advanced DNS Protection will only be applied to the prefixes you onboard. If you already onboarded the desired prefixes when you configured Advanced TCP Protection, you do not need to take any other action.
 
-    {{<Aside type="note">}}
+    {{<Aside type="note" header="Note">}}
 Currently, the list of onboarded prefixes is shared with Advanced TCP Protection. Any onboarded prefixes will be subject to both Advanced TCP Protection and Advanced DNS Protection, assuming that your account team has done the initial configuration of both systems. However, you can leave Advanced TCP Protection in monitoring mode.
     {{</Aside>}}
 

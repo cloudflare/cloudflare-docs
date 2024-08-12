@@ -62,7 +62,7 @@ The default rate sensitivity is _Medium_.
 
 ## Profile sensitivity 
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Note">}}
 
 Profile sensitivity is available for Advanced DNS Protection only.
 

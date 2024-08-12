@@ -8,7 +8,7 @@ meta:
 
 # JSON objects
 
-This page contains examples of the JSON objects used in the API.
+This page contains an example of the TCP protection rule JSON object used in the API.
 
 ## Prefix
 
