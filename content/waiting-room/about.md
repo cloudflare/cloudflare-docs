@@ -26,7 +26,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
 
 Waiting Room is built on [Workers](/workers/) that runs across a global network of Cloudflare data centers.
 
-When a request comes to a host or path covered by a Waiting Room, that request goes to a Waiting Room Worker in closest geographic data center. The Worker then needs to make a decision: whether to send users to the queue or the website.
+When a request comes to a host or path covered by a Waiting Room, that request goes to a Waiting Room Worker in the closest geographic data center. The Worker then needs to make a decision: whether to send users to the queue or the website.
 
 That decision itself depends on two factors: [admin-defined thresholds](/waiting-room/reference/configuration-settings/) and the Waiting Room state.
 
@@ -37,7 +37,7 @@ For admin-defined thresholds, the two measures that matter are `total active use
 
 A sharp spike in either of these values might result in queuing. Another configuration that affects how we calculate `the total active users` is `session duration`. A user is considered active for `session duration` minutes since the request is made to any page covered by a waiting room.
 
-The other factor is the Waiting Room state, which is maintained at the local data center level but then also changes continuously based on the traffic around the world. Each data center works with its own Waiting Room state. This state is a a snapshot of the traffic pattern for the website around the world available at that point in time. The advantage of using this approach - making decisions at the Worker level - is that we can make decisions without any significant latency added to the request. Queueing starts when the slots run out within the Worker. The lack of additional latency added enables the customers to turn on the waiting room all the time without worrying about extra latency to their users.
+The other factor is the Waiting Room state, which is maintained at the local data center level but then also changes continuously based on the traffic around the world. Each data center works with its own Waiting Room state. This state is a snapshot of the traffic pattern for the website around the world available at that point in time. The advantage of using this approach - making decisions at the Worker level - is that we can make decisions without any significant latency added to the request. Queueing starts when the slots run out within the Worker. The lack of additional latency added enables the customers to turn on the waiting room all the time without worrying about extra latency to their users.
 
 The Waiting Room state is updated with global information every few seconds. We have a pipeline set up in Cloudflare [Durable Objects](/durable-objects/) that ensures changes in traffic get propagated around the world. This architecture ensures that we do not introduce additional latency, as well as that we are making decisions with as near-time accuracy as possible.
 
