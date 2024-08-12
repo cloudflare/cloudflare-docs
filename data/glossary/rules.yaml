@@ -14,3 +14,7 @@ entries:
 - term: URL rewrite
   general_definition: |-
     an operation performed by a server that converts a source URL into a target URL.
+
+- term: Snippets subrequest
+  general_definition: |-
+    any request that a Snippet makes to either Internet resources using the Fetch API or requests to other Cloudflare services.
