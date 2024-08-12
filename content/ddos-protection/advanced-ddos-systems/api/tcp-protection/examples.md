@@ -6,7 +6,7 @@ weight: 2
 
 # Common API calls
 
-The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/#endpoints).
+The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/tcp-protection/#endpoints).
 
 ## Get Advanced TCP Protection status
 
@@ -289,7 +289,7 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/) for more information on the fields in the JSON body.
 
 ## Create a SYN flood filter
 
@@ -326,7 +326,7 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/) for more information on the fields in the JSON body.
 
 ## Create an out-of-state TCP filter
 
@@ -363,5 +363,5 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/) for more information on the fields in the JSON body.
 

@@ -10,9 +10,9 @@ meta:
 
 # Configuring Advanced DNS Protection via API
 
-Use the [Cloudflare API](https://developers.cloudflare.com/api/) to configure Advanced DNS Protection via API.
+Use the [Cloudflare API](/api/) to configure Advanced DNS Protection via API.
 
-For examples of API calls, refer to [Common API calls](/ddos-protection/dns-protection/api/examples/).
+For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/dns-protection/examples/).
 
 ## Endpoints
 

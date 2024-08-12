@@ -14,7 +14,7 @@ You can configure Advanced TCP Protection using the Advanced TCP Protection API.
 
 The Advanced TCP Protection API only supports [API token authentication](/fundamentals/api/get-started/create-token/).
 
-For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/examples/).
+For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/tcp-protection/examples/).
 
 ## Endpoints
 

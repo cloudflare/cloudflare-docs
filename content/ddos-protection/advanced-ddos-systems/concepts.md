@@ -45,7 +45,7 @@ Each Advanced TCP Protection system component has its own filters. You can confi
 
 When there is a match, a filter will alter the execution mode for all configured rules in a given system component (SYN flood protection or out-of-state TCP protection), including disabled rules.
 
-For instructions on creating filters in the Cloudflare dashboard, refer to [Create a filter](/ddos-protection/advanced-ddos-systems/how-to/create-filter/). For API examples, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/examples/).
+For instructions on creating filters in the Cloudflare dashboard, refer to [Create a filter](/ddos-protection/advanced-ddos-systems/how-to/create-filter/). For API examples, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/tcp-protection/examples/).
 
 ### Example use case
 
