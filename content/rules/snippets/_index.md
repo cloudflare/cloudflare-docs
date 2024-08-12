@@ -8,9 +8,9 @@ meta:
 
 {{<heading-pill style="alpha">}} Cloudflare Snippets {{</heading-pill>}}
 
-Cloudflare Snippets (alpha) provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement {{<glossary-tooltip term_id="JSON web token (JWT)" prepend="JSON web token (JWT) is ">}}JWT{{</glossary-tooltip>}} validation, perform complex {{<glossary-tooltip term_id="redirect">}}redirects{{</glossary-tooltip>}}, and much more.
+Cloudflare Snippets (alpha) provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement {{<glossary-tooltip term_id="JSON web token (JWT)" prepend="JSON web token (JWT) is ">}}JWT{{</glossary-tooltip>}} validation, perform complex {{<glossary-tooltip term_id="redirect">}}redirects,{{</glossary-tooltip>}} and much more.
 
-For code samples addressing common use cases, please refer to the [Examples](examples/) section.
+For code samples addressing common use cases, please refer to the [Examples](/rules/snippets/examples/) section.
 
 ## Snippets elements
 
