@@ -81,7 +81,8 @@ Uploaded DLP datasets are read-only. To update a dataset, you must upload a new 
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select the dataset you want to update.
-3. Select **Upload new file** and choose your updated dataset.
-4. Select **Save**.
+3. Select **Upload dataset** and choose your updated dataset. Select **Next**.
+4. If your select dataset is an Exact Data Match dataset, review and choose the new columns. Select **Next**.
+5. Select **Save dataset**.
 
 Your new dataset will replace the original dataset.
