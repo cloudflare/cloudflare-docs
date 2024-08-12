@@ -26,7 +26,13 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 ### Prepare a dataset
 
-To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Each line must be at least six characters long. Entries do not require trailing or final commas. Title cells may result in false positives and should not be included. 
+{{<Aside type="warning" header="Title cells">}}
+
+Column title cells may result in false positives in Custom Wordlist datasets and should be removed. DLP will detect and use title cells as column names for Exact Data Match datasets.
+
+{{</Aside>}}
+
+To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Each line must be at least six characters long. Entries do not require trailing or final commas.
 
 For compatibility, save your file in either `.csv` or `.txt` format with LF (`\n`) newline characters. DLP does not support CRLF (`\r\n`) newline characters.
 
@@ -38,7 +44,8 @@ For information on dataset limits, refer to [Account limits](/cloudflare-one/acc
 2. Select **Create new dataset**.
 3. Upload your dataset.
 4. Choose whether your dataset will be an **Exact Data Match dataset** (hashed) or a **Custom Wordlist dataset** (cleartext).
-5. Select **Save**.
+5. If you uploaded an EDM dataset, review and choose the detected columns you want to include.
+6. Select **Save**.
 
 To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
