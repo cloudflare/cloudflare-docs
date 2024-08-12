@@ -32,6 +32,4 @@ You can also specify a desired certificate authority by adding a value to the `c
 
 ## Aspects to consider
 
-* If you select a preferred certificate authority, you cannot change your certificate authority without first disabling Total TLS.
-
 * {{<render file="_total-tls-character-limitation.md">}}
