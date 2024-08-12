@@ -6,7 +6,7 @@ weight: 3
 
 # Common API calls
 
-The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/dns-protection/api/#endpoints).
+The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/dns-protection/#endpoints).
 
 ## Get all DNS protection rules
 
@@ -80,7 +80,7 @@ header: Example response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/dns-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/dns-protection/json-objects/) for more information on the fields in the JSON body.
 
 ### Update DNS protection rule
 
@@ -122,4 +122,4 @@ header: Example response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/dns-protection/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/dns-protection/json-objects/) for more information on the fields in the JSON body.

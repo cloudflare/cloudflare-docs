@@ -246,7 +246,7 @@ header: Response
 }
 ```
 
-Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/json-objects/) for more information on the fields in the JSON body.
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/tcp-protection/json-objects/) for more information on the fields in the JSON body.
 
 ## Create an out-of-state TCP rule
 
