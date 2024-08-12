@@ -26,7 +26,7 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 ### Prepare a dataset
 
-{{<Aside type="warning" header="Title cells">}}
+{{<Aside type="warning" header="Column title cell limitation">}}
 
 Column title cells may result in false positives in Custom Wordlist datasets and should be removed. DLP will detect and use title cells as column names for Exact Data Match datasets.
 
@@ -40,14 +40,34 @@ For information on dataset limits, refer to [Account limits](/cloudflare-one/acc
 
 ### Upload a new dataset
 
+{{<details header="Upload an Exact Data Match dataset" open="true">}}
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
 2. Select **Create new dataset**.
-3. Upload your dataset.
-4. Choose whether your dataset will be an **Exact Data Match dataset** (hashed) or a **Custom Wordlist dataset** (cleartext).
-5. If you uploaded an EDM dataset, review and choose the detected columns you want to include.
+3. Choose **Exact Data Match**.
+4. Upload your dataset file. Select **Next**.
+5. Review and choose the detected columns you want to include. Select **Next**.
+6. Name your dataset. Optionally, add a description. Select **Next**.
+7. Review the details for your uploaded dataset. Select **Save dataset**.
+
+DLP will save your encrypted dataset.
+
+{{</details>}}
+
+{{<details header="Upload a Custom Wordlist dataset" open="true">}}
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP datasets**.
+2. Select **Create new dataset**.
+3. Choose **Custom Wordlist**.
+4. Name your dataset. Optionally, add a description.
+5. In **Upload file**, choose your dataset file.
 6. Select **Save**.
 
-To use this dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+DLP will save your dataset in cleartext.
+
+{{</details>}}
+
+To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing datasets
 
