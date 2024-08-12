@@ -1170,6 +1170,13 @@
           "pro": 10,
           "biz": 25,
           "ent": 50
+        },
+        "subrequests": {
+          "title": "Number of {{<glossary-tooltip term_id=\"Snippets subrequest\" prepend=\"A subrequest is \">}}subrequests{{</glossary-tooltip>}}",
+          "free": 0,
+          "pro": 2,
+          "biz": 3,
+          "ent": 5
         }
       }
     },
