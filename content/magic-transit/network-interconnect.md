@@ -27,7 +27,7 @@ For the time being, Express CNI does not support BGP. If your use case calls for
 With Classic CNI you need to [set up an onboarding process](/network-interconnect/classic-cni/) with Cloudflare. There is no self-serving option through the dashboard.
 
 With Classic CNI, you can create:
-- **GRE tunnels over CNI**: For ingress and egress traffic. You will need to set your MSS clamp size to 1,476 bytes to accommodate overhead from additional headers. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
+- **GRE tunnels over CNI**: For ingress and egress traffic. To accommodate overhead from additional headers, you will need to set the MTU size of your GRE tunnel interface to 1,476 bytes and your MSS clamp to be 1,436 bytes. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
 - **CNI connections without GRE tunnels**: For ingress traffic from Cloudflare to customer device. There is no need to set {{<glossary-tooltip term_id="maximum segment size (MSS)">}}MSS clamping{{</glossary-tooltip>}}, as this supports IP packets with 1,500 bytes.
 
 For more information about Network Interconnect, refer to the [Cloudflare Network Interconnect documentation](/network-interconnect/).
