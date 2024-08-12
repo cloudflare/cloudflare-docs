@@ -1707,7 +1707,7 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 ## `secret`
 
-Manage the secret variables for a Worker. 
+Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
@@ -2188,6 +2188,27 @@ wrangler queues create <name> [OPTIONS]
   - The name of the queue to create.
 - `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - How long a published message should be delayed for, in seconds. Must be a positive integer.
+- `--message-retention-period-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long to retain a message, in seconds. Must be between 60 and 1209600.
+
+{{</definitions>}}
+
+### `update`
+
+Update an existing queue.
+
+```txt
+wrangler queeus update <name> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `name` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the queue to update.
+- `--delivery-delay-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long a published message should be delayed for, in seconds. Must be a positive integer.
+- `--message-retention-period-secs` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - How long to retain a message, in seconds. Must be between 60 and 1209600.
 
 {{</definitions>}}
 
