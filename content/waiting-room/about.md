@@ -1,5 +1,5 @@
 ---
-title: How it works
+title: About
 pcx_content_type: concept
 weight: 1
 ---
