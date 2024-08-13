@@ -1,7 +1,0 @@
-name: Data Loss Prevention
-
-product:
-  title: Data Loss Prevention
-  group: Cloudflare One
-  url: /cloudflare-one/policies/data-loss-prevention/
-  grid_placeholder: true

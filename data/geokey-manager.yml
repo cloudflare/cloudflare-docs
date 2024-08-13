@@ -1,7 +1,0 @@
-name: Geo Key Manager
-
-product:
-  title: Geo Key Manager
-  group: Application security
-  url: /ssl/edge-certificates/geokey-manager/
-  grid_placeholder: true

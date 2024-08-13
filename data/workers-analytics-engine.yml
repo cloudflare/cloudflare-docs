@@ -1,8 +1,0 @@
-name: Workers Analytics Engine
-
-product:
-  title: Workers Analytics Engine
-  url: /analytics/analytics-engine/
-  group: Developer platform
-  additional_groups: [Analytics]
-  grid_placeholder: true

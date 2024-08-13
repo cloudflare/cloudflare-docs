@@ -1,3 +1,0 @@
-{{- $style := .Get "style" -}}
-<!-- Acceptable values are alpha / beta / deprecated / early-access / legacy -->
-<span class="DocsMarkdown--pill DocsMarkdown--pill-{{$style}} inline-pill">{{(replace $style "-" " ") | title}}</span>
