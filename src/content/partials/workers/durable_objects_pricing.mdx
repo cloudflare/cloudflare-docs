@@ -7,10 +7,10 @@ import { Markdown } from "~/components"
 
 [Durable Objects](/durable-objects/) are only available on the [Workers Paid plan](/workers/platform/pricing/#workers).
 
-|                      | Paid plan                                                                                                                               |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Requests             | 1 million, + $0.15/million<br/> Includes HTTP requests, RPC sessions<sup>1</sup>, WebSocket messages<sup>2</sup>, and alarm invocations |
-| Duration<sup>3</sup> | 400,000 GB-s, + {props.one}2.50/million GB-s<sup>4,5</sup>                                                                                       |
+|          | Paid plan                                         |
+| -------- | ------------------------------------------------- |
+| Requests               | 1 million, + $0.15/million<br/> Includes HTTP requests, RPC sessions<sup>1</sup>, WebSocket messages<sup>2</sup>, and alarm invocations                      |
+| Duration<sup>3</sup>                    | 400,000 GB-s, + $12.50/million GB-s<sup>4,5</sup> |
 
 <sup>1</sup> Each [RPC session](/workers/runtime-apis/rpc/lifecycle/) is billed as one request to your Durable Object. Every [RPC method call](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#call-rpc-methods) on a [Durable Objects stub](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#get-a-durable-object-stub) is its own RPC session and therefore a single billed request.
 
