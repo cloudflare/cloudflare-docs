@@ -63,16 +63,6 @@ header: Example response
       "parameters": {
         "host": "examplebucketwithimages.s3.north-eu.amazonaws.com"
       }
-    },
-    {
-      "id": "<RULE_2_ID>",
-      "provider": "cloudflare_r2",
-      "expression": "http.request.uri.path wildcard \"/videos/*\"",
-      "description": "Connect to R2 bucket containing videos",
-      "enabled": true,
-      "parameters": {
-        "host": "mybucketcustomdomain.example.com"
-      }
     }
   ],
   "success": true,
@@ -104,7 +94,7 @@ curl --request PUT \
 
 The required body parameters for each rule are: `expression`, `provider`, and `parameters.host`.
 
-The `provider` value must be one of the following: `aws_s3`, `azure_storage`, `gcp_storage`, and `cloudflare_r2`.
+The `provider` value must be one of the following: `aws_s3`, `azure_storage` and `gcp_storage`.
 
 {{<Aside type="warning" header="Warning">}}
 To create a new rule and keep all existing rules, you must include them all in your request body. Omitting an existing rule in the request body will delete the corresponding Cloud Connector rule.
