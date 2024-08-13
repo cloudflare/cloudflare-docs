@@ -1,7 +1,7 @@
 ---
 title: Compression Rules
 pcx_content_type: concept
-weight: 8
+weight: 9
 ---
 
 # Compression Rules

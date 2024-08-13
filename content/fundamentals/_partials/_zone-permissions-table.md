@@ -22,6 +22,8 @@ inputParameters: editWord
 | Cache Purge                      | Grants access to [purge cache](/cache/how-to/purge-cache/).                                                                                |
 | Cache Rules Read                 | Grants read access to [Cache Rules](/cache/how-to/cache-rules/).                                                                           |
 | Cache Rules $1                 | Grants write access to [Cache Rules](/cache/how-to/cache-rules/).                                                                          |
+| Cloud Connector Read             | Grants read access to [Cloud Connector rules](/rules/cloud-connector/).                                                                  |
+| Cloud Connector $1               | Grants write access to [Cloud Connector rules](/rules/cloud-connector/).                                                                 |
 | Config Rules Read                | Grants read access to [Configuration Rules](/rules/configuration-rules/).                                                                  |
 | Config Rules $1                | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
 | Custom Errors Read          | Grants read access to [Custom Errors Phase](/rules/custom-error-responses/create-api/).                                                               |

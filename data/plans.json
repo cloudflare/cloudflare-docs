@@ -1039,6 +1039,27 @@
         }
       }
     },
+    "cloud_connector": {
+      "title": "Cloud Connector (beta)",
+      "link": "/rules/cloud-connector/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "num_rules": {
+          "title": "Number of rules",
+          "free": 5,
+          "pro": 25,
+          "biz": 50,
+          "ent": 125
+        }
+      }
+    },
     "config_rules": {
       "title": "Configuration Rules",
       "link": "/rules/configuration-rules/",
