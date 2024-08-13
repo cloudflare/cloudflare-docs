@@ -43,7 +43,7 @@ export async function getWranglerChangelog(): Promise<
 
 	const json = await response.json();
 
-	const releases = z
+	let releases = z
 		.object({
 			published_at: z.coerce.date(),
 			name: z.string(),
@@ -51,6 +51,8 @@ export async function getWranglerChangelog(): Promise<
 		})
 		.array()
 		.parse(json);
+
+	releases = releases.filter(x => x.name.startsWith("wrangler@"))
 
 	return {
 		// @ts-expect-error id is a union of on-disk YAML files but we're adding this one dynamically
