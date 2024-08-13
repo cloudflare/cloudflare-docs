@@ -3,8 +3,6 @@
 
 ---
 
-import { Markdown } from "~/components"
-
 The Durable Objects [Transactional Storage API](/durable-objects/api/transactional-storage-api) is only accessible from within Durable Objects.
 
 Durable Objects do not have to use the Transactional Storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
@@ -12,8 +10,8 @@ Durable Objects do not have to use the Transactional Storage API, but if your co
 |                                  | Paid plan                  |
 | -------------------------------- | -------------------------- |
 | Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
-| Write request units<sup>3</sup>  | 1 million, + {props.one}.00/million |
-| Delete requests<sup>4</sup>      | 1 million, + {props.one}.00/million |
+| Write request units<sup>3</sup>  | 1 million, + $1.00/million |
+| Delete requests<sup>4</sup>      | 1 million, + $1.00/million |
 | Stored data<sup>5</sup>          | 1 GB, + $0.20/ GB-month    |
 
 <sup>1</sup> A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.

@@ -70,16 +70,12 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 The [Transactional Storage API](/durable-objects/api/transactional-storage-api/) is only accessible from within Durable Objects. Durable Objects do not have to use the Transactional Storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
-{{<table-wrap>}}
-
 |                                  | Paid plan                  |
 | -------------------------------- | -------------------------- |
 | Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
 | Write request units<sup>1</sup>  | 1 million, + $1.00/million |
 | Delete requests<sup>3</sup>      | 1 million, + $1.00/million |
 | Stored data<sup>4</sup>          | 1 GB, + $0.20/ GB-month    |
-
-{{</table-wrap>}}
 
 1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units. For example, a 9 KB write will consume three write request units.
 2.  List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for one read request unit.
