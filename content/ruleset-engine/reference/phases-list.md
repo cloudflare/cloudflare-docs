@@ -49,7 +49,7 @@ The phases execute in the order they appear in the table.
 | `http_request_redirect` | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/create-api/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_request_late_transform` | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/create-api/) |
-| _N/A_ (internal phase) | [Cloud Connector rules](/rules/cloud-connector/) |
+| `http_request_cloud_connector` | [Cloud Connector](/rules/cloud-connector/) |
 
 {{</table-wrap>}}
 
