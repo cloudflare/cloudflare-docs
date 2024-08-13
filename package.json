@@ -8,7 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "format": "prettier \"**/*.{js,jsx,ts,tsx,mjs,astro,css,json,yaml,yml}\" --write ."
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.2",

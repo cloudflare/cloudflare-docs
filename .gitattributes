@@ -1,8 +1,11 @@
+*.astro text eol=lf
 *.go text eol=lf
 *.html text eol=lf
+*.ini text eol=lf
 *.js text eol=lf
 *.json text eol=lf
 *.md text eol=lf
+*.mjs text eol=lf
 *.toml text eol=lf
 *.ts text eol=lf
 *.txt text eol=lf
@@ -11,3 +14,4 @@
 *.yaml text eol=lf
 *.yml text eol=lf
 .gitattributes text eol=lf
+.editorconfig text eol=lf

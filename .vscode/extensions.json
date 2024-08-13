@@ -5,6 +5,7 @@
         "astro-build.astro-vscode",
         "unifiedjs.vscode-mdx",
         "bradlc.vscode-tailwindcss",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode"
     ]
 }
