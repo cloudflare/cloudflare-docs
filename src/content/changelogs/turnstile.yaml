@@ -5,6 +5,11 @@ productLink: "/turnstile/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+- publish_date: '2024-08-12'
+  description: |-
+    - Added [`[flexible]`](/turnstile/get-started/client-side-rendering/#widget-size) width widget size.
+    - Added new dimensions for Turnstile's compact size.
+    - Added a Feedback Report toggle on the widget's configuration.
 - publish_date: '2024-04-10'
   description: |-
     - Added [`[refresh-timeout]`](/turnstile/get-started/client-side-rendering/#refresh-a-timed-out-widget) and document new automatic interactive timeout-refresh.
