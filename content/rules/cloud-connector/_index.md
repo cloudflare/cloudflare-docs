@@ -30,6 +30,6 @@ Cloud Connector will perform the following configurations automatically, dependi
 
 ## Availability
 
-Cloud Connector is being rolled out gradually throughout 2024 to all customers. Once you have access, the Cloudflare dashboard will show a new Cloud Connector tab under Rules at the zone level. The maximum number of rules depends on your Cloudflare plan:
+Cloud Connector is being rolled out gradually throughout 2024 to all customers. Once you have access, the Cloudflare dashboard will show a new **Cloud Connector** tab under **Rules** at the zone level. The maximum number of rules depends on your Cloudflare plan:
 
 {{<feature-table id="rules.cloud_connector">}}
