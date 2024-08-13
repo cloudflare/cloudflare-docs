@@ -1,0 +1,44 @@
+---
+type: overview
+pcx_content_type: reference
+title: JavaScript detections
+weight: 0
+
+---
+
+import { Render } from "~/components"
+
+<Render file="javascript-detections-definition" params={{ one: " " }} />
+
+## Enable JavaScript detections
+
+For Free customers (Bot Fight Mode), JavaScript detections are automatically enabled and cannot be disabled.
+
+For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional.
+
+<Render file="javascript-detections-enable" />
+
+For more details on how to set up bot protection, see [Get started](/bots/get-started/).
+
+## Enforcing execution of JavaScript detections
+
+<Render file="javascript-detections-implementation" />
+
+## Limitations
+
+### If you enabled Bot Management before June 2020
+
+Customers who enabled Enterprise Bot Management before June 2020 do not have JavaScript detections enabled by default (unless specifically requested). These customers can still enable the feature in the Cloudflare dashboard.
+
+### If you have a Content Security Policy (CSP)
+
+<Render file="javascript-detections-csp" />
+
+:::caution[Warning]
+
+JavaScript detections are not supported with `nonce` set via `<meta>` tags. 
+:::
+
+### If you have ETags
+
+Enabling JavaScript Detections (JSD) will strip [ETags](/cache/reference/etag-headers/) from HTML responses where JSD is injected.

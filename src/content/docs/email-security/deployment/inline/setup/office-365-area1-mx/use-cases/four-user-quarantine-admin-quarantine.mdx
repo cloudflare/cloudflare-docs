@@ -1,0 +1,73 @@
+---
+title: 4 - User managed quarantine and administrative quarantine
+pcx_content_type: integration-guide
+updated: 2023-01-12
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: User managed quarantine and administrative quarantine - Office 365
+
+---
+
+import { Render } from "~/components"
+
+In this tutorial, you will learn to deliver `SPAM` and `SPOOF` messages to the user managed quarantine, and `MALICIOUS` messages to the administrative quarantine (this requires an administrator to release the emails).
+
+## Configure domains
+
+<Render file="deployment/o365-use-case-configure-domain" params={{ one: "Do not check any dispositions." }} />
+
+## Create quarantine policies
+
+<Render file="deployment/o365-use-case-2-4-create-quarantine-policy" />
+
+## Configure quarantine notifications
+
+<Render file="deployment/o365-use-case-configure-quarantine-notifications" />
+
+## Configure anti-spam policies
+
+To configure anti-spam policies:
+
+1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
+
+2. Go to **Email & collaboration** > **Policies & rules**.
+
+3. Select **Threat policies**.
+
+4. Under **Policies**, select **Anti-spam**.
+
+5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
+
+6. In the **Actions** section, scroll down and select **Edit actions**.
+
+    <div class="large-img">
+
+   ![Go to Actions and find Edit actions](~/assets/email-security/static/flexible-partial-images/o365-area1-mx/step6-edit-actions.png)
+
+    </div>
+
+7. Set the following conditions and actions (you might need to scroll up or down to find them):
+
+   * **Spam**: *Quarantine message*.
+     * **Select quarantine policy**: *UserNotifyUserRelease*.
+   * **High confidence spam**: *Quarantine message*.
+     * **Select quarantine policy**: *UserNotifyAdminRelease*.
+   * **Phishing**: *Quarantine message*.
+     * **Select quarantine policy**: *UserNotifyAdminRelease*.
+   * **High confidence phishing**: *Quarantine message*.
+     * **Select quarantine policy**: *UserNotifyAdminRelease*.
+   * **Retain spam in quarantine for this many days**: Default is 15 days. Email Security recommends 15-30 days.
+
+    <div class="large-img">
+
+   ![Select the spam actions in the above step](~/assets/email-security/static/flexible-partial-images/o365-area1-mx/step7-quarantine-message-case4.png)
+
+    </div>
+
+8. Select **Save**.
+
+## Create transport rules
+
+<Render file="deployment/o365-use-case-transport-rules" params={{ one: "`Email Security User Quarantine Message`", two: "`UCE`, `SPOOF`", three: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_", four: "step4-rules-case4.png", five: "`Email Security User Quarantine Message Admin Release`", six: "`MALICIOUS`", seven: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_", eight: "step10-admin-release-case4.png" }} />

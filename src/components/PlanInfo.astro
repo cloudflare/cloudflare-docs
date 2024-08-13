@@ -1,0 +1,19 @@
+---
+import { z } from "astro:content";
+import { indexPlans } from "~/util/plans";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		id: z.string(),
+	})
+	.strict();
+
+const { id } = props.parse(Astro.props);
+
+const info = await indexPlans(id);
+---
+
+<Fragment set:html={marked.parse(info)} />

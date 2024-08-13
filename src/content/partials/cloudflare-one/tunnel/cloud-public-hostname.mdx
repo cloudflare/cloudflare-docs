@@ -1,0 +1,13 @@
+---
+{}
+
+---
+
+[Public hostname routes](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) allow anyone on the Internet to connect to HTTP resources hosted on your virtual private cloud (VPC). To add a public hostname route for your Cloudflare Tunnel:
+
+1. In the **Public Hostname** tab, enter a hostname for the application (for example, `hellocloudflare.<your-domain>.com`).
+2. Under **Service**, enter `http://localhost:80`.
+3. Select **Save hostname**.
+4. To test, open a browser and go to `http://hellocloudflare.<your-domain>.com`. You should see the **Hello Cloudflare!** test page.
+
+You can optionally [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to control who can access the service.

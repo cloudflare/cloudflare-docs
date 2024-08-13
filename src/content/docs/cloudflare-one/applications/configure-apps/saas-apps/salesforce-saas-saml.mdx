@@ -1,0 +1,79 @@
+---
+pcx_content_type: integration-guide
+title: Salesforce (SAML)
+updated: 2024-07-29
+sidebar:
+  order: 22
+
+---
+
+import { Details, Render } from "~/components"
+
+This guide covers how to configure [Salesforce](https://help.salesforce.com/s/articleView?id=sf.sso_saml.htm\&type=5) as a SAML application in Cloudflare Zero Trust.
+
+## Prerequisites
+
+* An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+* Admin access to a Salesforce account
+
+## 1. Add a SaaS application to Cloudflare Zero Trust
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+2. Select **SaaS**.
+3. For **Application**, select *Salesforce*.
+4. For the authentication protocol, select **SAML**.
+5. Select **Add application**.
+6. Fill in the following fields:
+   * **Entity ID**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before summer 2019 or does not have a My Domain subdomain.
+   * **Assertion Consumer Service URL**: `https://<your-domain>.my.salesforce.com` or `https://<your-domain>.my.salesforce.com?so=<your-salesforce-org-id>`, if your account was created before summer 2019 or does not have a My Domain subdomain.
+   * **Name ID format**: *Email*
+
+:::note
+
+
+If you are unsure of which URL to use in the **Entity ID** and **Assertion Consumer Service URL** fields, you can check your Salesforce account's metadata. In Salesforce, go to the **Single Sign-On Settings** page and select **Download Metadata**. In this file, you will find the correct URLs to use.
+
+
+:::
+
+7. Copy the **SSO endpoint**, **Public key**, and **Access Entity ID or Issuer**.
+8. Select **Save configuration**.
+9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+10. Select **Done**.
+
+## 2. Create a certificate file
+
+1. Paste the **Public key** in a text editor.
+2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+3. Set the file extension as `.crt` and save.
+
+## 3. Add a SAML SSO provider to Salesforce
+
+1. In Salesforce, go to **Setup**.
+2. In the **Quick Find** box, enter `single sign-on` and select **Single Sign-On Settings**.
+3. In **SAML Single Sign-On Settings**, select **New**.
+4. Fill in the following fields:
+   * **Name:** Name of the SSO provider (for example, `Cloudflare Access`). Users will select this name when signing in to Salesforce.
+   * **API name:** (this will pre-populate)
+   * **Issuer:** Paste the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   * **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
+   * **Entity ID**: `https://<your-domain>.my.salesforce.com`
+   * **SAML Identity type:** If the user's Salesforce username is their email address, select *Assertion contains the User's Salesforce username*. Otherwise, select *Assertion contains the Federation ID from the User object* and make sure the user's Federation ID matches their email address. 
+   <Details header="Configure Federation IDs">
+   1. In the **Quick Find** box, enter `users` and select **Users**.
+   2. Select the user.
+   3. Verify that the user's **Federation ID** matches the email address used to authenticate to Cloudflare Access. 
+   </Details>
+   * **Identity Provider Login URL**: SSO endpoint provided in Cloudflare Zero Trust for this application.
+5. Select **Save**.
+
+## 4. Enable Single Sign-On in Salesforce
+
+1. Configure Single Sign-On settings:
+   1. In the **Quick Find** box, enter `single sign-on` and select **Single Sign-On Settings**.
+   2. (Optional) To require users to login with Cloudflare Access, turn on **Disable login with Salesforce credentials**.
+   3. Turn on **SAML Enabled**.
+   4. Turn on **Make federation ID case-insensitive**.
+2. <Render file="access/saas-apps/salesforce-sso" />
+
+To test, open an incognito browser window and go to your Salesforce domain (`https://<your-domain>.my.salesforce.com`).

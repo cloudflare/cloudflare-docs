@@ -1,0 +1,25 @@
+name: Spectrum
+
+product:
+  title: Spectrum
+  url: /spectrum/
+  group: Application performance
+  additional_groups: [Application security]
+
+meta:
+  title: Cloudflare Spectrum docs
+  description: DDoS protection for everything.
+  author: '@cloudflare'
+
+resources:
+  community: https://community.cloudflare.com/c/website-application-performance/spectrum/48
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/spectrum
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: spectrum

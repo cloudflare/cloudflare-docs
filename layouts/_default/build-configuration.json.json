@@ -1,2 +1,0 @@
-{{- $file := $.Site.GetPage "pages/_partials/_build-configuration.md" -}}
-{{- $file.Params.build_configs | jsonify -}}

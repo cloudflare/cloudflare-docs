@@ -1,0 +1,32 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import { marked } from "marked";
+import { CardGrid, LinkTitleCard, Description } from "~/components";
+
+const frontmatter = {
+	title: "Learning paths",
+	description:
+		"Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.",
+	template: "splash",
+};
+
+const learningPaths = await getCollection("learning-paths");
+---
+
+<StarlightPage frontmatter={frontmatter}>
+	<Description>
+		{frontmatter.description}
+	</Description>
+	<CardGrid>
+		{
+			learningPaths.map((lp) => (
+				<LinkTitleCard
+					title={lp.data.title}
+					href={lp.data.path}
+					set:html={marked.parse(lp.data.description)}
+				/>
+			))
+		}
+	</CardGrid>
+</StarlightPage>

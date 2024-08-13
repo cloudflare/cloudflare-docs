@@ -1,0 +1,31 @@
+name: Pages
+
+product:
+  title: Pages
+  url: /pages/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Pages docs
+  description: Documentation for Cloudflare Pages, the best way to deploy your
+    static and JAMstack sites
+  author: '@cloudflare'
+
+resources:
+  community: https://community.cloudflare.com/c/developers/cloudflare-pages/69
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/pages
+  learning_center: https://www.cloudflare.com/learning/performance/what-is-jamstack/
+  discord: https://discord.com/channels/595317990191398933/789155108529111069
+
+externals:
+  - title: Pages home
+    url: https://pages.cloudflare.com
+  - title: Announcement blog post
+    url: https://blog.cloudflare.com/cloudflare-pages
+  - title: First look at Cloudflare Pages (video)
+    url: https://www.youtube.com/watch?v=IeHC4NwkEfc
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: pages

@@ -1,0 +1,29 @@
+---
+title: Badges
+---
+
+Badges are a built-in component provided by [Starlight](https://starlight.astro.build/guides/components/#bades).
+
+## Component
+
+```mdx live
+import { Badge } from '~/components';
+
+<Badge text="New" variant="tip" size="small" />
+<Badge text="Deprecated" variant="caution" size="medium" />
+<Badge text="Starlight" variant="note" size="large" />
+<Badge text="Custom" variant="success" style={{ fontStyle: 'italic' }} />
+```
+
+## Sidebar
+
+Badges can be added to the sidebar via page frontmatter.
+
+```mdx
+---
+title: Hello World
+sidebar:
+  badge:
+    variant: tip
+    text: New
+---

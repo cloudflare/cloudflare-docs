@@ -1,0 +1,68 @@
+---
+import { getCollection, z } from "astro:content";
+import { getGlossaryEntry } from "~/util/glossary";
+import "tippy.js/dist/tippy.css";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	term: z.string(),
+	prepend: z.string().optional(),
+	link: z.string().optional(),
+});
+
+const { term, prepend, link } = props.parse(Astro.props);
+
+const tooltip = await getGlossaryEntry(term);
+
+const definition = prepend
+	? prepend.concat(tooltip.general_definition)
+	: tooltip.general_definition;
+---
+
+<span
+	id={tooltip.term}
+	data-tooltip
+	data-content={marked.parse(definition)}
+	class="border-b-2 border-dashed border-orange-400"
+	>{
+		link ? (
+			<a href={link}>
+				<slot />
+			</a>
+		) : (
+			<slot />
+		)
+	}</span
+><script>
+	import tippy from "tippy.js";
+
+	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
+
+	for (const tooltip of tooltips) {
+		tippy(`#${CSS.escape(tooltip.id)}`, {
+			content: tooltip.dataset.content,
+			allowHTML: true,
+			interactive: true,
+		});
+	}
+</script><style is:inline>
+	.tippy-box {
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-white);
+	}
+
+	.tippy-box[data-placement^="top"] > .tippy-arrow::before {
+		border-top-color: var(--sl-color-bg);
+	}
+	.tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+		border-bottom-color: var(--sl-color-bg);
+	}
+	.tippy-box[data-placement^="left"] > .tippy-arrow::before {
+		border-left-color: var(--sl-color-bg);
+	}
+	.tippy-box[data-placement^="right"] > .tippy-arrow::before {
+		border-right-color: var(--sl-color-bg);
+	}
+</style>

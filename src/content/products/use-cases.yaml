@@ -1,0 +1,20 @@
+name: Use cases
+
+product:
+  title: Use cases
+  url: /use-cases/
+  show: false
+
+meta:
+  title: Cloudflare use cases
+  description: Discover what's possible with Cloudflare.
+  author: '@cloudflare'
+
+externals:
+  - title: Cloudflare home
+    url: https://www.cloudflare.com/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: use-cases

@@ -1,0 +1,29 @@
+---
+title: Enable DNSSEC
+pcx_content_type: overview
+sidebar:
+  order: 3
+
+---
+
+import { Render } from "~/components"
+
+<Render file="dnssec-definition" product="dns" />
+
+When you enable DNSSEC, Cloudflare signs your zone, publishes your public signing keys, and generates your **DS** record.
+
+## Step 1 - Activate DNSSEC in Cloudflare
+
+<Render file="dnssec-cloudflare-steps" product="dns" />
+
+## Step 2 — Add DS record to your registrar
+
+<Render file="dnssec-registrar-steps" product="dns" />
+
+:::note[Note:]
+
+
+Cloudflare automatically adds **DS** records for domains using Cloudflare Registrar or those using `.ch` and `.cz` top-level domains.
+
+
+:::

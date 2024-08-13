@@ -1,0 +1,10 @@
+---
+inputParameters: type
+
+---
+
+import { Markdown } from "~/components"
+
+A placeholder can be defined with `:placeholder_name`. A colon (`:`) followed by a letter indicates the start of a placeholder and the placeholder name that follows must be composed of alphanumeric characters and underscores (`:[A-Za-z]\w*`). Every named placeholder can only be referenced once. Placeholders match all characters apart from the delimiter, which when part of the host, is a period (`.`) or a forward-slash (`/`) and may only be a forward-slash (`/`) when part of the path.
+
+Similarly, the matched value can be used in the {props.one} values with `:placeholder_name`.

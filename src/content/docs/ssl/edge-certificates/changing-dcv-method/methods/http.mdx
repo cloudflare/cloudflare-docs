@@ -1,0 +1,68 @@
+---
+title: HTTP
+pcx_content_type: how-to
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: HTTP method — Domain Control Validation — SSL/TLS
+
+---
+
+import { Details, Render } from "~/components"
+
+When you choose HTTP DCV, Cloudflare automatically adds a verification HTTP token to your domain.
+
+Only use this method if your domain can tolerate a few minutes of downtime.
+
+:::note
+
+
+If you encounter issues with HTTP DCV, refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+
+:::
+
+## Limitations
+
+HTTP DCV is only available for [proxied domains](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+HTTP DCV validation also does not work for wildcard certificates.
+
+If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
+
+Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+## Setup
+
+### Specify DCV method
+
+<Render file="http-cname-validation-process" />
+
+In either case, you would need to set a `"validation_method":"http"` parameter.
+
+### Review other Cloudflare settings
+
+To make sure your domain does not accidentally block HTTP DCV, review your Cloudflare settings for [common setup issues](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+### Complete DCV
+
+Your HTTP token will be available for the Certificate Authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#add-dns-records).
+
+This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) for your hostname within Cloudflare.
+
+This process may involve a few minutes of downtime.
+
+
+<Details header="What happens after you create your records">
+
+<Render file="cname-cert-verification" />
+
+
+</Details>
+
+<Render file="acm-validate-cert" />
+
+## Renewal
+
+<Render file="dcv-certificate-renewal" />

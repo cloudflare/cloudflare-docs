@@ -1,0 +1,30 @@
+---
+import { getEntry } from "astro:content";
+
+const entry = await getEntry("pages-framework-presets", "index");
+const presets = entry.data.build_configs;
+const entries = Object.entries(presets);
+---
+
+<table>
+	<thead>
+		<th>Framework/tool</th>
+		<th>Build command</th>
+		<th>Build directory</th>
+	</thead>
+	<tbody>
+		{
+			entries.map(([_, value]) => (
+				<tr>
+					<td>{value.display_name}</td>
+					<td>
+						<code>{value.build_command}</code>
+					</td>
+					<td>
+						<code>{value.build_output_directory}</code>
+					</td>
+				</tr>
+			))
+		}
+	</tbody>
+</table>
