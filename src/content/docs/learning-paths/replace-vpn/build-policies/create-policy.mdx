@@ -20,7 +20,7 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 
 ## Example DNS policy
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value                  |
 | ---------------- | -------- | ---------------------- |
@@ -36,7 +36,7 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
@@ -83,7 +83,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 ## Example network policy
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value              |
 | ---------------- | -------- | ------------------ |
@@ -99,7 +99,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
@@ -144,7 +144,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 We recommend adding a catch-all policy to the bottom of your network policy list. An effective Zero Trust model should prioritize default-deny actions to avoid any overly permissive policy building. For example,
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value                        | Logic |
 | ---------------- | -------- | ---------------------------- | ----- |
@@ -157,7 +157,7 @@ We recommend adding a catch-all policy to the bottom of your network policy list
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \

@@ -24,13 +24,13 @@ For example, for a zone `domain.test`, the ZCNS can be `ns1.domain.test` and `ns
 
 To create zone custom nameservers:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.
 3. On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the ZCNS names (for example, `ns1`, `ns2`, `ns3`).
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Use the [Edit zone endpoint](/api/operations/zones-0-patch) and specify the custom nameservers in the payload:
 
@@ -59,13 +59,13 @@ If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-
 
 To remove zone custom nameservers (and their associated, read-only DNS records):
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **DNS** > **Records**.
 3. On **Custom nameservers**, select **Remove custom nameservers**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Use the [Edit zone endpoint](/api/operations/zones-0-patch) and include an empty array in the payload:
 

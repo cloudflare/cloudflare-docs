@@ -16,7 +16,7 @@ You can configure an Amazon S3 or Google Cloud Platform bucket to use as a targe
 
 Learn how to set up a bucket for use with full packet captures.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -28,7 +28,7 @@ Learn how to set up a bucket for use with full packet captures.
 
 The **Prove ownership** step of the **Bucket configuration** displays.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Before you can begin using a bucket, you must first enable destinations.
 
@@ -42,7 +42,7 @@ Next, validate the bucket and confirm ownership.
 
 After the initial bucket set up, you need to confirm you own the bucket via an ownership challenge. After you validate your bucket, you can begin using it to collect full packet captures.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. From the **Prove ownership** step of the **Bucket configuration**, locate the **Ownership token** field.
 2. In the **Ownership token** field, enter the ownership token for your service provider.
@@ -50,7 +50,7 @@ After the initial bucket set up, you need to confirm you own the bucket via an o
 
 The **Buckets** tab displays a list of the buckets associated with your account. Refer to the **Status** column to see the status of your bucket configuration.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` field is in the form `s3://<bucket-name>/<directory>?region=<bucket-region>`, and for Google Cloud Storage the form is `gs://<bucket-name>/<directory>`.
 
@@ -125,7 +125,7 @@ The bucket status displays one of the following options:
 
 View a list of all buckets configured on your account.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -134,7 +134,7 @@ View a list of all buckets configured on your account.
 
 The list of buckets associated with your account displays.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 ```bash title="Bucket list request example"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership \

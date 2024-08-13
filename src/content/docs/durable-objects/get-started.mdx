@@ -55,7 +55,7 @@ If you do not use JavaScript or TypeScript, you will need a [shim](https://devel
 
 Your `MyDurableObject` class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export class MyDurableObject {
@@ -63,7 +63,7 @@ export class MyDurableObject {
 }
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export class MyDurableObject {
@@ -77,7 +77,7 @@ Workers communicate with a Durable Object via the fetch API. Like a Worker, a Du
 
 Your file should now look like:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export class MyDurableObject {
@@ -89,7 +89,7 @@ export class MyDurableObject {
 }
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export class MyDurableObject {
@@ -125,7 +125,7 @@ This is achieved by configuring a binding in the calling Worker for each Durable
 
 To communicate with a Durable Object, the fetch handler should look like the following:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -141,7 +141,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {

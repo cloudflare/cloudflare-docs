@@ -13,7 +13,7 @@ You need to create a site and set up all the settings associated with it before 
 
 To add a site:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
@@ -25,7 +25,7 @@ To add a site:
 8. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 9. Select **Next** to proceed to creating your WAN and LAN networks.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" product="magic-wan" />
 
@@ -72,7 +72,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 ### 2. Create a WAN
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
 2. In **Interface name**, enter a descriptive name for your WAN.
@@ -89,7 +89,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 7. Select **Save** when you are finished.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" product="magic-wan" />
 
@@ -118,7 +118,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 ### 3. Create a LAN
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. In **LAN configuration**, select **Create**.
 
@@ -145,7 +145,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 9. Select **Save and exit** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" product="magic-wan" />
 

@@ -68,21 +68,21 @@ A Pulumi program is code written in a [supported programming language](https://g
 
 To create a program, select your language of choice and run the `pulumi` command:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
 $ pulumi new javascript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```sh
 $ pulumi new typescript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```sh
 $ pulumi new python --name addsite-cloudflare --yes
@@ -184,21 +184,21 @@ You will now add the Pulumi Cloudflare package and a Cloudflare Zone resource to
 
 ### a. Install dependencies
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
 $ npm install @pulumi/cloudflare
 added 1 package ...
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```sh
 $ npm install @pulumi/cloudflare
 added 1 package ...
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```sh
 $ echo "pulumi_cloudflare>=5.35,<6.0.0" >> requirements.txt
@@ -259,7 +259,7 @@ There are no dependencies to download for YAML. Skip ahead.
 
 Replace the contents of your entrypoint file with the following:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 "use strict";
@@ -282,7 +282,7 @@ const zone = new cloudflare.Zone("my-zone", {
 exports.zoneId = zone.id;
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -304,7 +304,7 @@ const zone = new cloudflare.Zone("my-zone", {
 export const zoneId = zone.id;
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 import pulumi
@@ -478,21 +478,21 @@ This process makes Cloudflare your authoritative DNS provider, allowing your DNS
 
 Towards the end of your entrypoint file, below the `zoneId` variable, add the following:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 exports.nameservers = zone.nameServers;
 exports.status = zone.status;
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```typescript
 export const nameservers = zone.nameServers;
 export const status = zone.status;
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 pulumi.export('nameservers', zone.name_servers)
@@ -585,7 +585,7 @@ You will now add a DNS record to your domain.
 Below is the final version of how your Pulumi program entrypoint file should look.
 Replace the contents of your entrypoint file with the following:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 "use strict";
@@ -618,7 +618,7 @@ const record = new cloudflare.Record("my-record", {
 });
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```typescript
 import * as pulumi from "@pulumi/pulumi";
@@ -655,7 +655,7 @@ const record = new cloudflare.Record("my-record", {
 });
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 import pulumi
