@@ -1,7 +1,7 @@
 ---
 title: Cloud Connector
 pcx_content_type: concept
-weight: 10
+weight: 8
 ---
 
 {{<heading-pill style="beta">}}Cloud Connector{{</heading-pill>}}
