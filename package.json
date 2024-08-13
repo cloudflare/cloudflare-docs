@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "postinstall": "patch-package",
-    "format": "prettier \"**/*.{js,jsx,ts,tsx,mjs,astro,css,json,yaml,yml}\" --write ."
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,mjs,astro,css,json,yaml,yml}\""
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.2",
