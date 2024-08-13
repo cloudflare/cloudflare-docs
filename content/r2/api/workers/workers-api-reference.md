@@ -86,7 +86,7 @@ export default {
 
 - {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}>{{</type>}}
 
-  - Returns an {{<code>}}R2Objects{{</code>}} containing a list of {{<code>}}R2Object{{</code>}} contained within the bucket. By default, returns the first 1000 entries.
+  - Returns an {{<code>}}R2Objects{{</code>}} containing a list of {{<code>}}R2Object{{</code>}} contained within the bucket. Returns up to 1000 entries, but may return less in order to minimize memory pressure within the Worker. To explicitly set the number of objects to list, provide an [R2ListOptions](/r2/api/workers/workers-api-reference/#r2listoptions) object with the `limit` property set. 
 
 - {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}){{</code>}} : {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}
 
