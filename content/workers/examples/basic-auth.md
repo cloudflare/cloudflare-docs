@@ -16,11 +16,6 @@ layout: example
 updated: 2024-01-11
 ---
 
-{{<Aside type="note">}}
-
-This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
-{{</Aside>}}
-
 {{<Aside type="warning" header="Caution when using in production">}}
 
 This code is provided as a sample, and is not suitable for production use. Basic Authentication sends credentials unencrypted, and must be used with an HTTPS connection to be considered secure. For a production-ready authentication system, consider using [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/).
@@ -41,10 +36,6 @@ playground: true
  *
  */
 
-import { Buffer } from "node:buffer";
-
-const encoder = new TextEncoder();
-
 /**
  * Protect against timing attacks by safely comparing values using `timingSafeEqual`.
  * Refer to https://developers.cloudflare.com/workers/runtime-apis/web-crypto/#timingsafeequal for more details
@@ -53,6 +44,8 @@ const encoder = new TextEncoder();
  * @returns {boolean}
  */
 function timingSafeEqual(a, b) {
+  const encoder = new TextEncoder();
+
   const aBytes = encoder.encode(a);
   const bBytes = encoder.encode(b);
 
@@ -113,13 +106,8 @@ export default {
           });
         }
 
-        const credentials = Buffer.from(encoded, "base64").toString();
-
-        // The username & password are split by the first colon.
-        //=> example: "username:password"
-        const index = credentials.indexOf(":");
-        const user = credentials.substring(0, index);
-        const pass = credentials.substring(index + 1);
+        const plainAuth = atob(encoded);
+        const [user, pass] = plainAuth.split(":");
 
         if (
           !timingSafeEqual(BASIC_USER, user) ||
@@ -159,15 +147,13 @@ export default {
  *
  */
 
-import { Buffer } from "node:buffer";
-
-const encoder = new TextEncoder();
-
 /**
  * Protect against timing attacks by safely comparing values using `timingSafeEqual`.
  * Refer to https://developers.cloudflare.com/workers/runtime-apis/web-crypto/#timingsafeequal for more details
  */
 function timingSafeEqual(a: string, b: string) {
+  const encoder = new TextEncoder();
+
   const aBytes = encoder.encode(a);
   const bBytes = encoder.encode(b);
 
@@ -225,13 +211,8 @@ export default {
           });
         }
 
-        const credentials = Buffer.from(encoded, "base64").toString();
-
-        // The username and password are split by the first colon.
-        //=> example: "username:password"
-        const index = credentials.indexOf(":");
-        const user = credentials.substring(0, index);
-        const pass = credentials.substring(index + 1);
+        const plainAuth = atob(encoded);
+        const [user, pass] = plainAuth.split(":");
 
         if (
           !timingSafeEqual(BASIC_USER, user) ||
