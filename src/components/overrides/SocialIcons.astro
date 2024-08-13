@@ -1,0 +1,23 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+
+const links = Object.entries({
+	"Product directory": "/products/",
+	"Learning paths": "/learning-paths/",
+	Status: "https://www.cloudflarestatus.com/",
+	Support: "/support/contacting-cloudflare-support/",
+	"Log in": "https://dash.cloudflare.com",
+});
+---
+
+<div class="items-center hidden lg:flex mx-auto">
+	{
+		links.map(([text, href]) => (
+			<a href={href} class="px-4 no-underline text-black dark:text-white">
+				<span>{text}</span>
+			</a>
+		))
+	}
+</div>
+<Default {...Astro.props}><slot /></Default>

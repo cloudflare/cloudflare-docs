@@ -1,0 +1,22 @@
+---
+import { PackageManagers } from "~/components";
+
+interface Props {
+	title: string;
+	repo: string;
+	description: string;
+}
+
+const { title, repo, description } = Astro.props;
+const link = `https://github.com/${repo}`;
+---
+
+<h5>
+	<a href={link}>{title}</a>
+</h5>
+<p>{description}</p>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-app"
+	args=`--template ${repo}`
+/>
