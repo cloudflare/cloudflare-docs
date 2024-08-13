@@ -1,0 +1,12 @@
+---
+{}
+
+---
+
+import { Render } from "~/components"
+
+<Render file="nameserver-preamble" product="dns" /> <br/>
+
+Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar. Make sure DNSSEC **is disabled** at this point.
+
+<Render file="minimize-downtime-tip" product="dns" />
