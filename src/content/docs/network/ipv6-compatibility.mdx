@@ -33,7 +33,7 @@ If your origin web server only understands IPv4 formatted IP addresses, non-Ente
 
 Alternatively, customers with an Enterprise account can disable Cloudflare's IPv6 compatibility.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To disable **IPv6 Compatibility** in the dashboard:
 
@@ -41,7 +41,7 @@ To disable **IPv6 Compatibility** in the dashboard:
 2. Go to **Network**.
 3. For **IPv6 Compatibility**, switch the toggle to **Off**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 

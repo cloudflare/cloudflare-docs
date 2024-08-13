@@ -39,7 +39,7 @@ Each custom certificate you upload must:
 
 ## Upload a custom certificate
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To upload a custom SSL certificate in the dashboard:
 
@@ -76,7 +76,7 @@ To upload a custom SSL certificate in the dashboard:
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 The following call will upload a certificate for use with `app.example.com`. Cloudflare will automatically bundle the certificate with a certificate chain optimized for maximum compatibility with browsers.
 
@@ -166,7 +166,7 @@ If you are on an Enterprise plan and want to update a custom (modern) certificat
 
 Replacing a custom certificate following these steps does not lead to any downtime. No connections will be terminated and new connections will use the new certificate. The old certificate will only actually be deleted when the new certificate is uploaded and active.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To update a certificate in the dashboard:
 
@@ -177,7 +177,7 @@ To update a certificate in the dashboard:
 5. Select the wrench icon and select **Replace SSL certificate and key**.
 6. Follow the same steps as [upload a new certificate](#upload-a-custom-certificate).
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To update a certificate using the API, send a [`PATCH`](/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
 

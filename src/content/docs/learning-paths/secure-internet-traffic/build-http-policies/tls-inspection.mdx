@@ -64,14 +64,14 @@ You can build pass-through rules to accommodate any type of device or user group
 
 For example, if users are issued a corporate-managed iPhone with limited permissions, set an additional Do Not Inspect policy for all traffic matching the device posture value. That could include the OS type, OS version, or a list of serial numbers (updated via the API with hooks from your MDM tool) for those iPhones:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Selector              | Operator | Value                                   | Logic | Action         |
 | --------------------- | -------- | --------------------------------------- | ----- | -------------- |
 | Passed Device Posture | in       | *iOS 17 or higher (OS version)*         | And   | Do Not Inspect |
 | Passed Device Posture | in       | *iPhone Serial Numbers (Serial number)* |       |                |
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 1. Create a list of device serial numbers that you do not want to inspect.
 
@@ -131,13 +131,13 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 
 If you filter your network-connected devices with Magic WAN tunnels, the WARP Connector, or other devices that do not have the Cloudflare certificate installed, you will need to accommodate by creating pass-through policies. For these devices, you should explicitly exempt TLS inspection for the source network IP range from which that traffic will be originating. For example:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Selector           | Operator | Value            | Action         |
 | ------------------ | -------- | ---------------- | -------------- |
 | Source Internal IP | in       | `203.0.113.0/24` | Do Not Inspect |
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \

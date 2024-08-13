@@ -24,11 +24,11 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 ## Create a pool
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 <Render file="pool-create" />
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="pool-create-api" />
 
@@ -38,7 +38,7 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 ## Edit a pool
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To edit a pool in the dashboard:
 
@@ -48,7 +48,7 @@ To edit a pool in the dashboard:
 4. Update settings as needed.
 5. Click **Save**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 When you edit a pool with the API, your request type depends on how much you want to edit.
 
@@ -69,7 +69,7 @@ If you get an error when trying to delete a pool, consider the hostnames listed 
 If the pool is referenced by geo steering, the configuration is **not** automatically removed when you change to a different **Traffic Steering** method. To make sure you remove it, select **Geo Steering**, remove the pool, and then apply and save any other necessary changes. 
 :::
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To delete a pool in the dashboard:
 
@@ -77,7 +77,7 @@ To delete a pool in the dashboard:
 2. Click **Manage Pools**.
 3. On a specific pool, click **Delete**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To delete a pool using the API, send a [DELETE](/api/operations/account-load-balancer-pools-delete-pool) request.
 

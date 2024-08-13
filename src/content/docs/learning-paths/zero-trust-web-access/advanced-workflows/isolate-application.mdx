@@ -52,7 +52,7 @@ with HTTP policies applied"]
 
 **Policy 1: Allow employees who pass device posture checks**
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Action | Rule type | Selector                                                                                                | Value                      |
 | ------ | --------- | ------------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -65,7 +65,7 @@ with HTTP policies applied"]
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_uuid}/policies \
@@ -100,7 +100,7 @@ To create a list of serial numbers, refer to [Create Zero Trust list](/api/opera
 
 **Policy 2: Allow and isolate contractors**
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Action | Rule type | Selector         | Value                           |
 | ------ | --------- | ---------------- | ------------------------------- |
@@ -112,7 +112,7 @@ To create a list of serial numbers, refer to [Create Zero Trust list](/api/opera
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_uuid}/policies \
@@ -149,7 +149,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app
 
 Prevents users on unmanaged devices from downloading any files from your private application.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Selector                     | Operator | Value                      | Logic | Action  |
 | ---------------------------- | -------- | -------------------------- | ----- | ------- |
@@ -162,7 +162,7 @@ Prevents users on unmanaged devices from downloading any files from your private
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
@@ -238,7 +238,7 @@ Block users on unmanaged devices from downloading files that contain credit card
 
 * **Policy 2: Block credit card numbers**
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 | Selector                                                                   | Operator | Value                      | Logic | Action |
 | -------------------------------------------------------------------------- | -------- | -------------------------- | ----- | ------ |
@@ -248,7 +248,7 @@ Block users on unmanaged devices from downloading files that contain credit card
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \

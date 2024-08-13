@@ -7,7 +7,7 @@ import { TabItem, Tabs } from "~/components"
 
 Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To confirm pool health using the dashboard:
 
@@ -17,7 +17,7 @@ To confirm pool health using the dashboard:
 
 For more information on pool and endpoint health statuses, refer to [How a pool becomes unhealthy](/load-balancing/understand-basics/health-details/#how-a-pool-becomes-unhealthy).
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To fetch the latest health status of all pools, use the [List Pools](/api/operations/account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins (endpoints).
 

@@ -41,7 +41,7 @@ This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to 
 The first implementation of a rate limiter is below:
 
 <Tabs>
-<TabItem label="js">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { DurableObject } from "cloudflare:workers";
@@ -116,7 +116,7 @@ export class RateLimiter extends DurableObject {
 ```
 
 </TabItem>
-<TabItem label="ts">
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -202,7 +202,7 @@ export class RateLimiter extends DurableObject {
 While the token bucket algorithm is popular for implementing rate limiting and uses Durable Object features, there is a simpler approach:
 
 <Tabs>
-<TabItem label="js">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 // Durable Object
@@ -229,7 +229,7 @@ export class RateLimiter extends DurableObject {
 ```
 
 </TabItem>
-<TabItem label="ts">
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts title="index.ts"
 // Durable Object

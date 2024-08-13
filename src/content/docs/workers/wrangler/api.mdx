@@ -83,7 +83,7 @@ To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
 #### Single Worker example
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 const { unstable_dev } = require("wrangler");
@@ -109,7 +109,7 @@ describe("Worker", () => {
 });
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { unstable_dev } from "wrangler";
@@ -144,7 +144,7 @@ You can test Workers that call other Workers. In the below example, we refer to 
 
 If you shut down the child Worker prematurely, the parent Worker will not know the child Worker exists and your tests will fail.
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { unstable_dev } from "wrangler";
@@ -183,7 +183,7 @@ describe("multi-worker testing", () => {
 });
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { unstable_dev } from "wrangler";

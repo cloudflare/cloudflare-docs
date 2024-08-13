@@ -21,11 +21,11 @@ description: Deliver an HTML page from an HTML string directly inside the Worker
 
 import { Render, TabItem, Tabs } from "~/components"
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="return-html-example-js" />
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {
@@ -45,7 +45,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, Headers
@@ -61,7 +61,7 @@ def on_fetch(request):
     return Response.new(html, headers=headers)
 ```
 
-</TabItem> <TabItem label="rs">
+</TabItem> <TabItem label="Rust" icon="seti:rust">
 
 ```rs
 use worker::*;

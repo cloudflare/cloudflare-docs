@@ -39,14 +39,14 @@ Before you set up Secondary DNS override, make sure that you have:
 
 ## Set up Secondary DNS override
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Settings**.
 3. Enable **Secondary DNS override**.
 4. On **DNS** > **Records**, for specific `A`, `AAAA`, or `CNAME` records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) their **Proxy status** to **Proxied**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 1. To enable Secondary DNS override on a zone, use the following PATCH request:
 
