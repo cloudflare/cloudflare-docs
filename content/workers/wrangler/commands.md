@@ -1526,7 +1526,7 @@ wrangler r2 bucket notification create <NAME> --queue <QUEUE_NAME> [OPTIONS]
 Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
-wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME> [OPTIONS]
+wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME>
 ```
 
 {{<definitions>}}
