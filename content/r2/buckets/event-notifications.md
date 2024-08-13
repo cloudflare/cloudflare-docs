@@ -7,7 +7,6 @@ pcx_content_type: how-to
 
 Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers.
 
-
 {{<Aside type="note" header="Open Beta">}}
 
 The event notifications feature is currently in open beta. To report bugs or request features, go to the #r2-storage channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
@@ -19,6 +18,7 @@ The event notifications feature is currently in open beta. To report bugs or req
 ### Prerequisites
 
 Before getting started, you will need:
+
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
 - An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
 - A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/configuration/pull-consumers/) enabled on your Queue.
@@ -33,6 +33,19 @@ To enable event notifications, add an event notification rule to your bucket by 
 
 ```sh
 $ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
+```
+
+To add filtering based on `prefix` or `suffix` use the `--prefix` or `--suffix` flag, respectively.
+
+```sh
+# Filter using prefix
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --prefix "<PREFIX_VALUE>"
+
+# Filter using suffix
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --suffix "<SUFFIX_VALUE>"
+
+# Filter using prefix and suffix. Both the conditions will be used for filtering
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --prefix "<PREFIX_VALUE>" --suffix "<SUFFIX_VALUE>"
 ```
 
 For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
@@ -244,6 +257,7 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 ## Limitations
 
 During the beta, event notifications has the following limitations:
+
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 400 messages per second. If your workload produces more than 400 notifications per second, messages may be dropped.
 - For a given bucket, only one event notification rule can be created per queue.
 - Each bucket can have up to 5 event notification rules.
