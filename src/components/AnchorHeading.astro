@@ -1,5 +1,6 @@
 ---
 import { z } from "astro:content";
+import { marked } from "marked";
 import { slug } from "github-slugger";
 
 type Props = z.infer<typeof props>;
@@ -15,7 +16,7 @@ const Heading = `h${depth}`;
 ---
 
 <div tabindex="-1" class=`heading-wrapper level-h${depth}`>
-	<Heading id={slug(title)}>{title}</Heading>
+	<Heading id={slug(title)} set:html={marked.parseInline(title)} />
 	<a class="anchor-link" href={`#${slug(title)}`}>
 		<span aria-hidden class="anchor-icon">
 			<svg width="16" height="16" viewBox="0 0 24 24">

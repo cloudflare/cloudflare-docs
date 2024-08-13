@@ -21,40 +21,43 @@ if (experimental) {
 	flags.map(
 		async (entry) => {
 			const { Content } = await entry.render();
-			<>	
-				<AnchorHeading title={entry.data.name} depth={3} />
-				<table>
-					{entry.data.enable_date && (
-						<tr>
-							<td>
-								<strong>Default as of</strong>
-							</td>
-							<td>{entry.data.enable_date}</td>
-						</tr>
-					)}
-					{entry.data.enable_flag && (
-						<tr>
-							<td>
-								<strong>Flag to enable</strong>
-							</td>
-							<td>
-								<code>{entry.data.enable_flag}</code>
-							</td>
-						</tr>
-					)}
-					{entry.data.disable_flag && (
-						<tr>
-							<td>
-								<strong>Flag to disable</strong>
-							</td>
-							<td>
-								<code>{entry.data.disable_flag}</code>
-							</td>
-						</tr>
-					)}
-				</table>
-				<Content />
-			</>
+
+			return (
+				<>	
+					<AnchorHeading title={entry.data.name} depth={3} />
+					<table>
+						{entry.data.enable_date && (
+							<tr>
+								<td>
+									<strong>Default as of</strong>
+								</td>
+								<td>{entry.data.enable_date}</td>
+							</tr>
+						)}
+						{entry.data.enable_flag && (
+							<tr>
+								<td>
+									<strong>Flag to enable</strong>
+								</td>
+								<td>
+									<code>{entry.data.enable_flag}</code>
+								</td>
+							</tr>
+						)}
+						{entry.data.disable_flag && (
+							<tr>
+								<td>
+									<strong>Flag to disable</strong>
+								</td>
+								<td>
+									<code>{entry.data.disable_flag}</code>
+								</td>
+							</tr>
+						)}
+					</table>
+					<Content />
+				</>
+			)
 		},
 	)
 }
