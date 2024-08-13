@@ -50,7 +50,9 @@ $ npx wrangler queues create <my-queue-name>
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`.
 
-Queue names must be 1 to 63 characters long. All characters must be lowercase. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number. 
+* Queue names must be 1 to 63 characters long.
+* All characters must be lowercase.
+* Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number. 
 
 You cannot change your queue name after you have set it. After you create your queue, you will set up your producer Worker to access it.
 
