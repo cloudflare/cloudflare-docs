@@ -1,0 +1,37 @@
+---
+title: SIEM integration
+pcx_content_type: integration-guide
+updated: 2022-07-14
+sidebar:
+  order: 3
+head: []
+description: SIEM integrations allow you to view message-level information
+  outside of the dashboard and create your own custom reports.
+
+---
+
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
+
+:::caution[Area 1 has been renamed]
+
+
+<Render file="rename-area1-to-ces" />
+
+
+:::
+
+With a bit of configuration, you can also bring Email Security (formerly Area 1) data into your <GlossaryTooltip term="SIEM">Security Information and Event Management (SIEM)</GlossaryTooltip> tools to view message-level information outside of the dashboard and create your own custom reports.
+
+## Connect a SIEM tool
+
+The following steps are required to connect your SIEM tool.
+
+### 1. Set up your SIEM tool
+
+For help setting up the proper configuration in your SIEM tool, refer to the following guides:
+
+<DirectoryListing />
+
+### 2. Create a webhook
+
+Refer to [Alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/) to learn how to create a webhook and send data into your SIEM tool.

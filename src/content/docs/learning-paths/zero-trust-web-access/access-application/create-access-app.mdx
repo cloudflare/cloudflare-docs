@@ -1,0 +1,26 @@
+---
+title: Create an Access application
+pcx_content_type: overview
+sidebar:
+  order: 1
+
+---
+
+import { Render } from "~/components"
+
+<Render file="access/self-hosted-intro" product="cloudflare-one" />
+Each application can have multiple policies with different constraints depending on what user group is accessing the application. For example, you can create one policy that requires corporate users to present specific device posture checks or mutual TLS authentication events, and a second policy for contractors which does not require these attributes.
+
+## Add your application to Access
+
+<Render file="access/self-hosted-app" product="cloudflare-one" />
+
+## Add an Access policy
+
+<Render file="access/self-hosted-policy" product="cloudflare-one" />
+
+## (Optional) Configure advanced settings
+
+<Render file="access/self-hosted-settings" product="cloudflare-one" />
+
+When users go to the application, they will be prompted to login with your identity provider.

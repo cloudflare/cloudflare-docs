@@ -1,0 +1,51 @@
+---
+title: Available parameters
+pcx_content_type: reference
+sidebar:
+  order: 2
+
+---
+
+import { GlossaryTooltip } from "~/components"
+
+You can pull information for a message in [search detections](/email-security/reporting/search/) using the following parameters:
+
+* From (`envelope_from`)
+* From Name
+* To (any) (`envelope_to`)
+* To Name (any)
+* Cc (any)
+* ReplyTo
+* Subject (any)
+* Sent DateTime (formatted as `YYYY-MM-DDTHH:MM:SS`)
+* Received DateTime (formatted as `YYYY-MM-DDTHH:MM:SS`)
+* final\_disposition
+* alert\_id
+* sha256 (attachments)
+* ssdeep (attachments)
+* name (attachments)
+* md5 (attachments)
+* Message-ID
+* smtp\_helo\_server\_ip
+* smtp\_previous\_hop\_ip
+* x\_originating\_ip
+* Reason(s) for Detection
+
+## Search terms
+
+In addition to the message parameters above, you can use these additional detection search strings:
+
+* phish\_submission
+* phish\_submission\_response
+* user\_submission
+* team\_submission
+* auto-retraction
+* browser\_isolation\_rewrite
+
+For <GlossaryTooltip term="disposition">disposition</GlossaryTooltip>-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Email Security dashboard.
+
+## Data retention
+
+For Email Security Horizon Enterprise customers, detections search would index for a period of 12 months and rotate over to a rolling 12-month period.
+
+For Email Security Horizon Advantage customers, detections search would index for three months and rotate over to a rolling 3-month period.

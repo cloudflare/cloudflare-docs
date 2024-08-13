@@ -1,0 +1,29 @@
+---
+pcx_content_type: how-to
+title: macOS
+sidebar:
+  order: 9
+head:
+  - tag: title
+    content: Set up 1.1.1.1 on macOS
+slug: 1.1.1.1/setup/macos
+
+---
+
+import { Render } from "~/components"
+
+Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
+
+1. Go to **System Settings**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Settings`.
+2. Go to **Network**.
+3. Select a network service.
+4. Select **Details**.
+5. Go to **DNS**.
+6. Under **DNS Servers**, select **Add**.
+7. <Render file="all-ipv4" />
+8. <Render file="all-ipv6" />
+9. Select **OK**.
+
+<Render file="captive-portals" />
+
+<Render file="encrypted" />

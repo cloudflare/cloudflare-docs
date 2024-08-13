@@ -1,0 +1,56 @@
+---
+pcx_content_type: how-to
+title: Edit and delete waiting rooms
+sidebar:
+  order: 5
+
+---
+
+You can manage your waiting rooms using the [Waiting Room dashboard](/waiting-room/how-to/waiting-room-dashboard/) or the [API](/waiting-room/reference/waiting-room-api/).
+
+:::note
+For details about updating an active waiting room, refer to [Best practices](/waiting-room/reference/best-practices/).
+:::
+
+## Use the dashboard
+
+### Edit a waiting room
+
+1. In your application, go to **Traffic** > **Waiting Room**.
+2. On a record, select **Edit**.
+3. Select **Settings**.
+4. Edit the settings. For a description of settings, refer to [Configuration settings](/waiting-room/reference/configuration-settings/).
+5. Select **Next**. If you have access to [customized templates](/waiting-room/how-to/customize-waiting-room/), you could also adjust the template.
+6. Once you get to **Review**, select **Save**.
+
+### Delete a waiting room
+
+1. In your application, go to **Traffic** > **Waiting Room**.
+2. On a record, select **Delete**.
+3. Select **Delete** again.
+
+## Use the API
+
+### Edit a waiting room
+
+[Replace](https://api.cloudflare.com#waiting-room-update-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
+
+```bash
+PUT zones/{zone_identifier}/waiting_rooms/{identifier}
+```
+
+[Update](https://api.cloudflare.com#waiting-room-patch-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
+
+```bash
+PATCH zones/{zone_identifier}/waiting_rooms/{identifier}
+```
+
+You only need to include the parameters that you want to update in the `data` field of the PATCH request.
+
+### Delete a waiting room
+
+Delete a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com#waiting-room-delete-waiting-room) to the Cloudflare API base URL.
+
+```bash
+DELETE zones/{zone_identifier}/waiting_rooms/{identifier}
+```

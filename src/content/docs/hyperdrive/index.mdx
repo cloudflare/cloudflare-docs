@@ -1,0 +1,99 @@
+---
+title: Overview
+order: 0
+type: overview
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Hyperdrive
+
+---
+
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+
+<Description>
+
+
+Turn your existing regional database into a globally distributed database.
+
+
+</Description>
+
+<Plan type="workers-paid" />
+
+Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users' location. Hyperdrive supports any Postgres database, including those hosted on AWS, Google Cloud and Neon, as well as Postgres-compatible databases like CockroachDB and Timescale, with MySQL coming soon.
+
+Use your existing Postgres drivers and object-relational mapping (ORM) libraries of your choice without any changes. Hyperdrive gives you a connection string that looks just like any other. You do not need to write new code or replace your favorite tools: Hyperdrive works with the ones you already use.
+
+***
+
+## Features
+
+<Feature header="Connect your database" href="/hyperdrive/get-started/" cta="Connect Hyperdrive to your database">
+
+Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) that queries it.
+
+
+</Feature>
+
+<Feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">
+
+Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
+
+
+</Feature>
+
+<Feature header="Query Caching" href="/hyperdrive/configuration/query-caching/" cta="Learn about Query Caching">
+
+Use Hyperdrive to cache the most popular queries executed against your database.
+
+
+</Feature>
+
+***
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+
+</RelatedProduct>
+
+<RelatedProduct header="Pages" href="/pages/" product="pages">
+
+Deploy dynamic front-end applications in record time.
+
+
+</RelatedProduct>
+
+***
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Pricing" href="/hyperdrive/platform/pricing/" icon="seti:shell">
+Learn about Hyperdrive's pricing.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/hyperdrive/platform/limits/" icon="document">
+Learn about Hyperdrive limits.
+</LinkTitleCard>
+
+<LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="document">
+Learn more about the storage and database options you can build on with Workers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
+Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
+Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.
+</LinkTitleCard>
+
+</CardGrid>

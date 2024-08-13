@@ -1,0 +1,123 @@
+---
+title: Recommended HTTP policies
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+
+---
+
+import { Details, Render } from "~/components"
+
+We recommend you add the following HTTP policies to build an Internet and SaaS app security strategy for your organization.
+
+
+<Details header="All-HTTP-Application-InspectBypass">
+
+Bypass HTTP inspection for applications that use embedded certificates. This will help avoid any certificate pinning errors that may arise from an initial rollout.
+
+<Render file="gateway/policies/do-not-inspect-applications" product="cloudflare-one" />
+
+
+</Details>
+
+
+<Details header="Android-HTTP-Application-InspectionBypass">
+
+Bypass HTTPS inspection for Android applications (such as Google Drive) that use certificate pinning, which is incompatible with Gateway inspection.
+
+| Selector                     | Operator | Value                             | Logic | Action         |
+| ---------------------------- | -------- | --------------------------------- | ----- | -------------- |
+| Application                  | in       | *Google Drive*                    | And   | Do Not Inspect |
+| Passed Device Posture Checks | in       | *OS Version Android (OS version)* |       |                |
+
+
+</Details>
+
+
+<Details header="All-HTTP-Domain-Inspection-Bypass">
+
+Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection.
+
+| Selector | Operator | Value                    | Logic | Action         |
+| -------- | -------- | ------------------------ | ----- | -------------- |
+| Domain   | in list  | *DomainInspectionBypass* | Or    | Do Not Inspect |
+| Domain   | in list  | *Known Domains*          |       |                |
+
+
+</Details>
+
+
+<Details header="All-HTTP-SecurityRisks-Blocklist">
+
+<Render file="zero-trust/blocklist-security-categories" />
+
+| Selector       | Operator | Value                | Action |
+| -------------- | -------- | -------------------- | ------ |
+| Security Risks | in       | *All security risks* | Block  |
+
+
+</Details>
+
+
+<Details header="All-HTTP-ContentCategories-Blocklist">
+
+<Render file="zero-trust/blocklist-content-categories" params={{ one: "HTTP", two: "Questionable Content, Security Risks, Miscellaneous, Adult Themes, Gambling" }} />
+
+
+</Details>
+
+
+<Details header="All-HTTP-DomainHost-Blocklist">
+
+<Render file="zero-trust/blocklist-domain-host" params={{ one: "HTTP" }} />
+
+
+</Details>
+
+
+<Details header="All-HTTP-Application-Blocklist">
+
+<Render file="zero-trust/blocklist-application" />
+
+
+</Details>
+
+
+<Details header="PrivilegedUsers-HTTP-Any-Isolate">
+
+Isolate traffic for privileged users who regularly access critical systems or execute actions such as threat analysis and malware testing.
+
+Security teams often need to perform threat analysis or malware testing that could trigger malware detection. Likewise, privileged users could be the target of attackers trying to gain access to critical systems.
+
+| Selector         | Operator | Value              | Action  |
+| ---------------- | -------- | ------------------ | ------- |
+| User Group Names | in       | *Privileged Users* | Isolate |
+
+
+</Details>
+
+
+<Details header="Quarantined-Users-HTTP-Restricted-Access">
+
+<Render file="zero-trust/blocklist-restricted-users" />
+
+| Selector         | Operator    | Value                           | Logic | Action |
+| ---------------- | ----------- | ------------------------------- | ----- | ------ |
+| Destination IP   | not in list | *Quarantined-Users-IPAllowlist* | And   | Block  |
+| User Group Names | in          | *Quarantined Users*             |       |        |
+
+
+</Details>
+
+
+<Details header="All-HTTP-Domain-Isolate">
+
+Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection. Ideally, your incident response teams can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
+
+| Selector           | Operator | Value                              | Logic | Action  |
+| ------------------ | -------- | ---------------------------------- | ----- | ------- |
+| Content Categories | in       | *New Domain*, *Newly Seen Domains* | Or    | Isolate |
+| Domain             | in list  | *Domain Isolation*                 |       |         |
+
+
+</Details>

@@ -1,0 +1,83 @@
+---
+title: Render
+---
+
+import { Steps } from "~/components"
+
+The `Render` component allows us to include a "partial", a reusable Markdown snippet, onto a page.
+
+It also accepts parameters that can be used as variables within the partial, so that even content
+which needs slight differences between usages can be turned into a partial.
+
+## Component
+
+```mdx live
+import { Render } from "~/components"
+
+<Render file="hello" params={{
+    name: "world",
+    link: "/style-guide/components/render/"
+}} />
+{/*
+Hello, {props.name}!
+
+Hello `{props.name}`
+
+Hello <code>{props.name}</code>
+
+[link]({props.link})
+
+<a href={props.link}>link</a>
+*/}
+```
+
+### Inputs
+
+**file** `string`: This should be the name of the partial, without the containing directory or file extension.
+                   For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
+
+**product** `string` (optional): By default, it will look for partials in the same product folder as the current page.
+                        You can use this to specify a different product.
+
+**params** `object` (optional): If you wish to substitute values inside your partial, you can use pass params which can be
+                                referenced in your partial. Refer to [params](#params).
+
+## Partials
+
+Partials only have one optional frontmatter property, which is `params`. This takes an array of strings,
+which should be the expected parameters. When this is defined, but those parameters are not passed, an error
+will be thrown.
+
+```mdx title="/src/content/partials/style-guide/hello.mdx"
+---
+params:
+    - name
+---
+
+Hello, {props.name}!
+```
+
+### Params
+
+In the above example, you will notice there is:
+
+<Steps>
+1. A `params` input on the `Render` component
+2. A `params` property in the frontmatter.
+3. A reference to `props.name`.
+</Steps>
+
+#### Input
+
+When using the `params` input on the `Render` component, you can write a [JavaScript object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects)
+which is later available inside the partial.
+
+#### Frontmatter
+
+The `params` frontmatter property on a partial expects an array of strings, containing the "expected parameters". This is so that if
+your partial requires parameters to be passed, and none are passed, we can warn the user.
+
+#### Props
+
+The way that you can access these parameters is with the `props` object, surrounded in curly braces `{}`.
+This is a [JavaScript expression within MDX](https://mdxjs.com/docs/using-mdx/#props).

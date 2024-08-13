@@ -1,0 +1,106 @@
+---
+title: Office 365 Graph API setup
+pcx_content_type: integration-guide
+updated: 2023-07-31
+sidebar:
+  order: 4
+description: Learn how to scan and protect Office 365 emails with Email Security (formerly Area 1) via a Microsoft Graph API setup.
+---
+
+import { Render } from "~/components"
+
+:::caution[Area 1 has been renamed]
+
+<Render file="rename-area1-to-ces" />
+
+:::
+
+For customers using Microsoft Office 365, setting up Email Security via Microsoft Graph API is quick and easy. The following email flow shows how this works:
+
+![Email flow when setting up Email Security with the Microsoft Graph API](~/assets/images/email-security/deployment/api-setup/ms-graph/ms-graph.png)
+
+<Render file="deployment/o365-gcc" />
+
+## User roles
+
+Email Security uses two roles for retraction and directory integration purposes:
+
+* **Privileged authentication administrator**: Users with this role can view the current authentication method information and set or reset non-password credentials for all users, including global administrators. Privileged authentication administrators can force users to re-register against existing non-password credentials (like MFA or FIDO) and revoke the `remember MFA on the device` message prompting for MFA on the next login of all users.
+* **Privileged role administrator**: Users with this role can manage role assignments in Azure Active Directory, as well as within Privileged Identity Management. In addition, this role allows management of all aspects of Privileged Identity Management.
+
+Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Email Security dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the [table below](#azure-applications).
+
+The Enterprise Applications that Email Security registers are not tied to any administrator account. Inside of the Azure Active Directory admin center you can review the permissions granted to each application in the Enterprise Application section. Refer to [Application management documentation](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/) for more information.
+
+## Set up Microsoft Graph API
+
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+
+2. Go to **Settings** (the gear icon).
+
+3. In **Email Configuration** > **Domains & Routing** > **Domains**, select **New Domain**.
+
+4. In **Domain**, enter the domain you want to onboard.
+
+5. In **Authorize Mail Access**, select **Authorize Access**.
+
+    <div class="medium-img">
+
+   ![Select Authorize access to give the correct permissions to Email Security](~/assets/images/email-security/deployment/api-setup/ms-graph/step5.png)
+
+    </div>
+
+6. In the new tab that opens, choose an Office 365 account you want to authorize, or enter your credentials.
+
+7. Read the permissions, and select **Accept** to continue. You will be directed back to the Email Security dashboard.
+
+8. In **Directory Scanning**, select **Authorize Access**.
+
+9. In the new tab that opens, choose an Office 365 account you want to authorize, or enter your credentials.
+
+10. Read the permissions, and select **Accept** to continue. You will be directed back to the Email Security dashboard.
+
+11. In **Protection Scope**, choose if Email Security should scan only the inbox or all folders. Scanning all folders is useful for situations where the email is automatically routed to other folders that users still have access to:
+    1. **Protect Inbox only**: Email Security will only scan the user's inbox.
+    2. **Protect all folders**: Email Security will scan all non-hidden email folders.
+
+12. Now that both types of authorizations have been complete, select **Publish Domain**.
+
+Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Email Security.
+
+![Now that both authorizations are complete, select Publish domain](~/assets/images/email-security/deployment/api-setup/ms-graph/domain-sync-state.png)
+
+## Azure applications
+
+### Directory Integration
+
+The following table shows API permissions required for Directory Integration as it appears in Azure Enterprise applications.
+
+<table-wrap style="font-size:90%">
+
+| API Name               | Claim value            | Permission                    | Type        | Granted through | Granted by       |
+| ---------------------- | ---------------------- | ----------------------------- | ----------- | --------------- | ---------------- |
+| Microsoft <br /> Graph | `User.Read`            | Sign in and read user profile | Delegated   | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `Group.Read.All`       | Read all groups               | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `Directory.Read.All`   | Read directory data           | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `User.Read.All`        | Read all users' full profiles | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `GroupMember.Read.All` | Read all group memberships    | Application | Admin consent   | An administrator |
+
+</table-wrap>
+
+### Retraction
+
+The following table shows retractions as they appear in Azure Enterprise applications.
+
+<table-wrap style="font-size:90%">
+
+| API Name               | Claim value             | Permission                           | Type        | Granted through | Granted by       |
+| ---------------------- | ----------------------- | ------------------------------------ | ----------- | --------------- | ---------------- |
+| Microsoft <br /> Graph | `Mail.ReadWrite`        | Read and write mail in all mailboxes | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `Group.Read.All`        | Read all groups                      | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `User.Read.All`         | Read all users' full profiles        | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `Domain.Read.All`       | Read domains                         | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `GroupMember.Read.All`  | Read all group memberships           | Application | Admin consent   | An administrator |
+| Microsoft <br /> Graph | `Organization.Read.All` | Read organization information        | Application | Admin consent   | An administrator |
+
+</table-wrap>

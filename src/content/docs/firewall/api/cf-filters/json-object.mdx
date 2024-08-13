@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+title: JSON object
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Filter JSON object
+
+---
+
+## Filter object structure and properties
+
+A JSON response for the [Filters API](/api/operations/filters-list-filters) has this structure:
+
+```json
+{
+  "id": "6f58318e7fa2477a23112e8118c66f61",
+  "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\"",
+  "paused": true,
+  "description": "WordPress login paths",
+  "ref": ""
+}
+```
+
+The following table summarizes the object properties:
+
