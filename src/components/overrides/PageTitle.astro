@@ -1,6 +1,7 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/PageTitle.astro";
+import { marked } from "marked";
 
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
@@ -97,7 +98,7 @@ for (let i = 0; i < segments.length; i++) {
   )
 }
 
-{summary && <Description>{summary}</Description>}
+{summary && <Description set:html={marked.parse(summary)} />}
 
 <style>
   :root {
