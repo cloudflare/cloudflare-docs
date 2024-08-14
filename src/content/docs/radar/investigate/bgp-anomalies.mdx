@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 
@@ -182,7 +182,7 @@ We will start with setting up a Cloudflare Worker app.
 
 First, create a new Workers app in a local directory:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "hijack-alerts" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'hijack-alerts'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Demo application", two: "Scheduled Worker (Cron Trigger)", three: "JavaScript" }} />
 

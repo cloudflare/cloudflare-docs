@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 ## Build and deploy your first Worker
 
@@ -30,7 +30,7 @@ You must have a Cloudflare account to create a Worker. To get started with Cloud
 
 To create your Worker project, run:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "first-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'first-worker'} />
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and lead you through setup.
 
