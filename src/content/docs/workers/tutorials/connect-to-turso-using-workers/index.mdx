@@ -10,7 +10,7 @@ languages:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
@@ -100,7 +100,7 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "worker-turso-ts" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'worker-turso-ts'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 
@@ -330,7 +330,7 @@ If you see an error instead of a list of users, double check that:
 * You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
 * You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
 
-Both of these need to be present and match the variable names in your Worker's code. 
+Both of these need to be present and match the variable names in your Worker's code.
 :::
 
 Test the `/add-users` route and pass it an email address to insert: [http://127.0.0.1:8787/add-user?email=test@test.com](http://127.0.0.1:8787/add-user?email=test@test.com.)

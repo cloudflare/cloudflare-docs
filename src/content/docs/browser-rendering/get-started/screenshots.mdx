@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, PackageManagers } from "~/components"
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -18,7 +18,7 @@ By following this guide, you will create a Worker that uses the Browser Renderin
 
 Create a new Worker project named `browser-worker` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "browser-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'browser-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript / Typescript" }} />
 

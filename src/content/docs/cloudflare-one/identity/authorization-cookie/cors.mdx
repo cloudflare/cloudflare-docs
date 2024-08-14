@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)) is a mechanism that uses HTTP headers to grant a web application running on one origin permission to reach selected resources in a different origin. The web application executes a cross-origin HTTP request when it requests a resource that has a different origin from its own, including domain, protocol, or port.
 
@@ -148,7 +148,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 
 Open a terminal and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "authentication-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'authentication-worker'} />
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through setup.
 
@@ -243,5 +243,5 @@ In general, we recommend the following steps when troubleshooting CORS issues:
 
 :::caution[CORS is failing on the same domain]
 
-CORS checks do not occur on the same domain. If this error occurs, it is likely the request is being sent without the `CF-Authorization` cookie. 
+CORS checks do not occur on the same domain. If this error occurs, it is likely the request is being sent without the `CF-Authorization` cookie.
 :::

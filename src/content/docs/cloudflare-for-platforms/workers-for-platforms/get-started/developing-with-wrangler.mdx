@@ -6,18 +6,18 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 To test your [Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker), [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) before deploying to production, you can use [Wrangler](/workers/wrangler) for development and testing.
 
 :::undefined
 
-Support for Workers for Platforms with `wrangler dev` in local mode is experimental and may change in the future. Use the prerelease branch: `wrangler@dispatch-namespaces-dev` to try Workers for Platforms locally. 
+Support for Workers for Platforms with `wrangler dev` in local mode is experimental and may change in the future. Use the prerelease branch: `wrangler@dispatch-namespaces-dev` to try Workers for Platforms locally.
 :::
 
 ## 1. Create a user worker
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "customer-worker-1" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'customer-worker-1'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
@@ -49,7 +49,7 @@ dispatch_namespace = "my-namespace"
 
 ## 2. Create a dispatch worker
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "dispatch-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'dispatch-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
@@ -93,7 +93,7 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 
 ## 3. Create an Outbound Worker
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "outbound-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'outbound-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

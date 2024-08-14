@@ -14,7 +14,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
@@ -357,7 +357,7 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 
 Create a Worker to serve the image you uploaded to Images by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "thumbnail-image" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'thumbnail-image'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
