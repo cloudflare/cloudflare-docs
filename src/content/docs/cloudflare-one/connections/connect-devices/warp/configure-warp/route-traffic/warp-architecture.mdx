@@ -63,7 +63,7 @@ WARP then configures the operating system to send all DNS requests to these IP a
 
 :::note
 
-Browsers with DoH configured will bypass the local DNS proxy. You may need to disable DoH settings in the browser. 
+Browsers with DoH configured will bypass the local DNS proxy. You may need to disable DoH settings in the browser.
 :::
 
 Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
@@ -80,7 +80,7 @@ R -- No --> G[Cloudflare Gateway]
 
 You can verify that the operating system is using WARP's local DNS proxy:
 
-<Tabs> <TabItem label="macos">
+<Tabs> <TabItem label="macOS">
 
 On macOS, open a terminal window and run `scutil --dns`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
@@ -104,7 +104,7 @@ resolver #2
   reach    : 0x00030002 (Reachable,Local Address,Directly Reachable Address)
 ```
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 On Windows, open a PowerShell window and run `ipconfig`. The DNS servers should be set to WARP's local DNS proxy IPs.
 
@@ -132,7 +132,7 @@ Unknown adapter CloudflareWARP:
 
 </TabItem>
 
-<TabItem label="linux">
+<TabItem label="Linux">
 
 On Linux, check the `/etc/resolv.conf` file. The DNS servers should be set to WARP's local DNS proxy IPs.
 
@@ -171,7 +171,7 @@ Virtual interfaces allow the operating system to logically subdivide a physical 
 
 To view a list of all network interfaces on the operating system:
 
-<Tabs> <TabItem label="macos">
+<Tabs> <TabItem label="macOS">
 
 On macOS, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
 
@@ -185,7 +185,7 @@ utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
 	nd6 options=201<PERFORMNUD,DAD>
 ```
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
 
@@ -213,7 +213,7 @@ Unknown adapter CloudflareWARP:
 
 </TabItem>
 
-<TabItem label="linux">
+<TabItem label="Linux">
 
 On Linux, run `ifconfig` or `ip addr`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
 
@@ -240,7 +240,7 @@ WARP edits the system routing table to control what IP traffic goes to Gateway. 
 
 You can verify that the routing table matches your Split Tunnel rules:
 
-<Tabs> <TabItem label="macos">
+<Tabs> <TabItem label="macOS">
 
 To view the entire routing table on macOS, run `netstat -r`.
 
@@ -270,7 +270,7 @@ destination: 169.254.0.0
        0         0         0         0         0         0      1500   -210842
 ```
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 To view the entire routing table on Windows, run `netstat -r`.
 
@@ -296,7 +296,7 @@ Wi-Fi
 
 </TabItem>
 
-<TabItem label="linux">
+<TabItem label="Linux">
 
 To view the entire routing table on Linux, run `ip -6 route show table all` or `ip -4 route show table all`.
 
