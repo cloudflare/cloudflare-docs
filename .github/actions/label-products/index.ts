@@ -6,14 +6,12 @@ import * as core from '@actions/core';
 
 function getTopLevelFolder(path: string): string {
   const parts = path.split('/');
-  console.log(`Top level is ${parts[2]}`)
   return parts[2];
 }
 
 
 function getSubFolder(path: string): string {
   const parts = path.split('/');
-  console.log(`Subfolder level is ${parts[3]}`)
   return parts[3];
 }
 
@@ -49,6 +47,8 @@ async function run(): Promise<void> {
 
     // Get the changed sub-folders within the top-level /content folder
     const changedFolders = getChangedSubFolders(files);
+
+    console.log(files)
 
     // ...
 
