@@ -48,8 +48,6 @@ async function run(): Promise<void> {
     // Get the changed sub-folders within the top-level /content folder
     const changedFolders = getChangedSubFolders(files);
 
-    console.log(files)
-
     // ...
 
     // Label the PR based on the changed sub-folders
