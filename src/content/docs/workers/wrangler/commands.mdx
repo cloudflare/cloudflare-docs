@@ -201,7 +201,7 @@ Interact with Cloudflare's D1 service.
 
 :::note
 
-Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose). 
+Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 :::
 
 ### `create`
@@ -317,7 +317,7 @@ You must provide either `--command` or `--file` for this command to run successf
 
 This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version. 
+Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
 :::
 
 Export a D1 database or table's schema and/or content to a `.sql` file.
@@ -389,7 +389,7 @@ wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
 
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period. 
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
 :::
 
 Initiate a D1 backup.
@@ -411,7 +411,7 @@ wrangler d1 backup create <DATABASE_NAME>
 
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period. 
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
 :::
 
 List all available backups.
@@ -433,7 +433,7 @@ wrangler d1 backup list <DATABASE_NAME>
 
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period. 
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
 :::
 
 Restore a backup into a D1 database.
@@ -457,7 +457,7 @@ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
 
-This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period. 
+This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period.
 :::
 
 Download existing data to your local machine.
@@ -680,7 +680,7 @@ wrangler hyperdrive get <ID>
 
 :::note
 
-Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose). 
+Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 :::
 
 Interact with a [Vectorize](/vectorize/) vector database.
@@ -829,7 +829,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   * Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
 * `--assets` string optional experimental
   * Root folder of static assets to be served.
-  * :::caution
+    :::caution
     This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
     :::
 * `--site` string optional
@@ -910,7 +910,7 @@ None of the options for this command are required. Also, many can be set in your
   * Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
 * `--assets` string optional experimental
   * Root folder of static assets to be served.
-  * :::caution
+    :::caution
     This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
     :::
 * `--site` string optional
@@ -995,12 +995,12 @@ Manage Workers KV namespaces.
 
 :::note
 
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/). 
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
 
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page. 
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
 ### `create`
@@ -1080,7 +1080,7 @@ wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>}
 
 :::caution
 
-This command requires `--binding` or `--namespace-id`. 
+This command requires `--binding` or `--namespace-id`.
 :::
 
 
@@ -1122,12 +1122,12 @@ Manage key-value pairs within a Workers KV namespace.
 
 :::note
 
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/). 
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
 
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page. 
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
 ### `put`
@@ -1141,7 +1141,7 @@ wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespa
 :::caution
 
 This command requires a `VALUE` or `--path`.<br/>
-This command requires a `--binding` or `--namespace-id` flag. 
+This command requires a `--binding` or `--namespace-id` flag.
 :::
 
 
@@ -1211,7 +1211,7 @@ wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTION
 
 :::caution
 
-This command requires `--binding` or `--namespace-id`. 
+This command requires `--binding` or `--namespace-id`.
 :::
 
 
@@ -1258,7 +1258,7 @@ wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [O
 
 :::caution
 
-Exactly one of `--binding` or `--namespace-id` is required. 
+Exactly one of `--binding` or `--namespace-id` is required.
 :::
 
 
@@ -1299,7 +1299,7 @@ wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>}
 
 :::caution
 
-Exactly one of `--binding` or `--namespace-id` is required. 
+Exactly one of `--binding` or `--namespace-id` is required.
 :::
 
 
@@ -1334,12 +1334,12 @@ Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 :::note
 
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/). 
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
 
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page. 
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
 :::
 
 ### `put`
@@ -1352,7 +1352,7 @@ wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_I
 
 :::caution
 
-This command requires `--binding` or `--namespace-id`. 
+This command requires `--binding` or `--namespace-id`.
 :::
 
 
@@ -1419,7 +1419,7 @@ Refer to the full schema for key-value entries uploaded via the bulk API:
 
 :::note
 
-If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`. 
+If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`.
 :::
 
 The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
@@ -1439,7 +1439,7 @@ wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPAC
 
 :::caution
 
-This command requires `--binding` or `--namespace-id`. 
+This command requires `--binding` or `--namespace-id`.
 :::
 
 
@@ -1484,7 +1484,7 @@ Interact with buckets in an R2 store.
 
 :::note
 
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/). 
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
 :::
 
 ### `create`
@@ -1533,7 +1533,7 @@ wrangler r2 bucket list
 
 :::note
 
-Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79). 
+Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
 :::
 
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
@@ -1592,7 +1592,7 @@ wrangler r2 bucket notification get <NAME>
 
 :::note
 
-Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76). 
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
 :::
 
 Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
@@ -1671,7 +1671,7 @@ Interact with R2 objects.
 
 :::note
 
-The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/). 
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
 :::
 
 ### `get`
@@ -1932,7 +1932,7 @@ If your Worker has a high volume of traffic, the tail might enter sampling mode.
 
 :::note
 
-It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after adding an option to filter tail messages. 
+It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after adding an option to filter tail messages.
 :::
 
 If sampling persists after using options to filter messages, consider using [instant logs](https://developers.cloudflare.com/logs/instant-logs/).
@@ -2078,7 +2078,7 @@ wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
 
 :::note
 
-Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits. 
+Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
 :::
 
 After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
@@ -2215,7 +2215,7 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
 :::note
 
-Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose). 
+Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 :::
 
 Manage your Workers [Queues](/queues/) configurations.
@@ -2331,7 +2331,7 @@ wrangler login [OPTIONS]
 
 :::note
 
-`wrangler login` uses all the available scopes by default if no flags are provided. 
+`wrangler login` uses all the available scopes by default if no flags are provided.
 :::
 
 If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
@@ -2619,7 +2619,7 @@ wrangler deployments list [OPTIONS]
 
 The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0. 
+The minimum required wrangler version to use these commands is 3.40.0.
 :::
 
 ### `list --experimental-versions`
@@ -2674,7 +2674,7 @@ There are limitations on which versions you can rollback to. Refer to [Rollbacks
 
 :::caution
 
-A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment. 
+A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
 :::
 
 ### `rollback`
@@ -2766,7 +2766,7 @@ wrangler dispatch-namespace get <NAME>
 
 :::note
 
-You must delete all user Workers in the dispatch namespace before it can be deleted. 
+You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
 
