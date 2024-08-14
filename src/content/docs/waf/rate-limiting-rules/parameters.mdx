@@ -49,8 +49,8 @@ Use one or more of the following characteristics:
 | **Country** | `ip.geoip.country` |
 | **JA3 Fingerprint** | `cf.bot_management.ja3_hash` |
 | **JA4** | `cf.bot_management.ja4` |
-| **JSON string value of** (enter key) | `lookup_json_string(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_string()` function reference](/ruleset-engine/rules-language/functions/#function-lookup_json_string) |
-| **JSON integer value of** (enter key) | `lookup_json_integer(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_integer()` function reference](/ruleset-engine/rules-language/functions/#function-lookup_json_integer) |
+| **JSON string value of** (enter key) | `lookup_json_string(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_string()` function reference](/ruleset-engine/rules-language/functions/#lookup_json_string) |
+| **JSON integer value of** (enter key) | `lookup_json_integer(http.request.body.raw, "<key>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [`lookup_json_integer()` function reference](/ruleset-engine/rules-language/functions/#lookup_json_integer) |
 | **Form input value of** (enter field name) | `http.request.body.form["<input_field_name>"]` | [Missing field versus empty value](#missing-field-versus-empty-value) |
 | **JWT claim of** (enter token configuration ID, claim name) | `lookup_json_string(http.request.jwt.claims["<token_configuration_id>"][0], "<claim_name>")` | [Missing field versus empty value](#missing-field-versus-empty-value) and [JWT Validation reference](/api-shield/security/jwt-validation/transform-rules/) |
 | **Body** | `http.request.body.raw` |
@@ -75,7 +75,7 @@ Only available in the Cloudflare dashboard when you enable **Use custom counting
 
 Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **If incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
 
-The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
+The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/). When there are response fields in the counting expression, the counting will happen after the response is sent.
 
 In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
@@ -229,4 +229,4 @@ If you use **Cookie value of** as a rate limiting rule characteristic, follow th
 
 * If the rule expression [includes IP lists](/waf/tools/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/http-request-response/) and [IP lists](/waf/tools/lists/custom-lists/#ip-lists). If you use IP lists, you must enable the **Also apply rate limiting to cached assets** parameter.

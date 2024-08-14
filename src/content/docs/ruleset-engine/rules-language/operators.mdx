@@ -44,8 +44,8 @@ Comparison operators entered using English notation (such as `eq`, `lt`, and `gt
 
 The Cloudflare dashboard shows the following functions as operators:
 
-* *starts with* (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#function-starts_with) function): Returns `true` when a string starts with a given substring, and `false` otherwise.
-* *ends with* (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#function-ends_with) function): Returns `true` when a string ends with a given substring, and `false` otherwise.
+* *starts with* (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) function): Returns `true` when a string starts with a given substring, and `false` otherwise.
+* *ends with* (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#ends_with) function): Returns `true` when a string ends with a given substring, and `false` otherwise.
 
 However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
 
@@ -59,7 +59,7 @@ http.request.uri.path ends_with ".html"
 
 ### Comparing string values
 
-String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
+String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
