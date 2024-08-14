@@ -21,7 +21,7 @@ jobs:
           key: static
       - run: npx astro build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          NODE_OPTIONS: --max-old-space-size=12288
       - run: npx wrangler pages deploy --project-name cloudflare-docs dist
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
