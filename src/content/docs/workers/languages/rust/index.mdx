@@ -56,10 +56,10 @@ After you have created your first Worker, run the [`wrangler dev`](/workers/wran
 $ npx wrangler dev
 ```
 
-If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account. :::note
+If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
 
-
-If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information. 
+:::note
+If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/#login) documentation for more information.
 :::
 
 Go to [http://localhost:8787](http://localhost:8787) to review your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
@@ -83,7 +83,7 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 There is some counterintuitive behavior going on here:
 
 1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers.
-2. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/languages/rust/#async-wasm-bindgen-futures)). 
+2. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/languages/rust/#async-wasm-bindgen-futures)).
    :::
 
 ### Related runtime APIs
