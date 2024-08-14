@@ -6,9 +6,9 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
 - publish_date: '2024-08-14'
-  title: GCP on-amps
+  title: GCP on-ramps
   description: |-
-    Magic Cloud Networking now supports Google Cloud Platform.
+    Magic Cloud Networking supports Google Cloud Platform.
 - publish_date: '2024-07-01'
   title: Closed beta launch
   description: |-
