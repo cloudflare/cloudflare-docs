@@ -232,6 +232,10 @@ export default {
 			// Test query
 			const results = await sql`SELECT * FROM pg_tables`
 
+			// Clean up the client, ensuring we don't kill the worker before that is
+			// completed.
+			ctx.waitUntil(sql.end());
+
 			// Return result rows as JSON
 			return Response.json(results);
 		} catch (e) {
