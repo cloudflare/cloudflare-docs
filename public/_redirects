@@ -3,7 +3,7 @@
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboarding-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
-/sitemap.xml /sitemap-0.xml
+/sitemap.xml /sitemap-index.xml
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301

@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { h } from 'hastscript';
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
+import sitemap from '@astrojs/sitemap';
 
 async function autogenSections() {
 	const sections = (
@@ -136,5 +137,13 @@ export default defineConfig({
 		}),
 		liveCode({ layout: "~/components/live-code/Layout.astro" }),
 		icon(),
+    sitemap({
+      serialize(item) {
+        item.changefreq = 'daily';
+        item.lastmod = new Date();
+        item.priority = 0.9;
+        return item;
+      },
+    }),
 	],
 });
