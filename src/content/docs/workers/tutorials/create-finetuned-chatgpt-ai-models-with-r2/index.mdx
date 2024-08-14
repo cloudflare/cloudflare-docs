@@ -18,7 +18,7 @@ sidebar:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
 
@@ -46,7 +46,7 @@ Before you start, make sure you have:
 
 First, use the `c3` CLI to create a new Cloudflare Workers project.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "finetune-chatgpt-model" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'finetune-chatgpt-model'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 

@@ -19,7 +19,7 @@ sidebar:
 
 
 
-import { Details, Render } from "~/components"
+import { Details, Render, PackageManagers } from "~/components"
 
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
@@ -35,7 +35,7 @@ C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup a
 
 Open a terminal window and run C3 to create your Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "rag-ai-tutorial" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'rag-ai-tutorial'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

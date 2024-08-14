@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
@@ -39,7 +39,7 @@ Create a new Worker to read and write to your KV namespace.
 
 Create a new project named `kv-tutorial` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "kv-tutorial" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'kv-tutorial'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 
@@ -75,7 +75,7 @@ You can create a KV namespace via Wrangler or the dashboard.
 
 :::note
 
-KV operations are scoped to your account. 
+KV operations are scoped to your account.
 :::
 
 To create a KV namespace via Wrangler:
@@ -132,7 +132,7 @@ Refer to [Environment](/kv/reference/environments/) for more information.
 
 :::note
 
-KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/). 
+KV namespaces prior to version 7 cannot be edited via the Cloudflare dashboard. To edit KV namespaces, use the [KV API](/kv/api/).
 :::
 
 ## 3. Interact with your KV namespace with Wrangler
@@ -187,7 +187,7 @@ $ npx wrangler kv key get --namespace-id=<YOUR_ID> "<KEY>"
 
 :::caution
 
-Exactly one of `--binding` or `--namespace-id` is required. 
+Exactly one of `--binding` or `--namespace-id` is required.
 :::
 
 Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to write a file of multiple key-value pairs to a given KV namespace.

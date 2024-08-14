@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 <Render file="vectorize-beta" />
 
@@ -40,7 +40,7 @@ You will create a new project that will contain a Worker, which will act as the 
 
 Create a new project named `vectorize-tutorial` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "vectorize-tutorial" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'vectorize-tutorial'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 

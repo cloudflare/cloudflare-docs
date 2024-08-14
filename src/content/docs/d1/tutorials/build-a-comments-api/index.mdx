@@ -16,7 +16,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 
@@ -24,7 +24,7 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3-and-wrangler/#c3), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "d1-example" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'d1-example'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

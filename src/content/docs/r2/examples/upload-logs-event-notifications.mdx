@@ -14,7 +14,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 This example provides a step-by-step guide on using [event notifications](/r2/buckets/event-notifications/) to capture and store R2 upload logs in a separate bucket.
 
@@ -64,7 +64,7 @@ Before you enable event notifications for `example-upload-bucket`, you need to c
 
 Create a new Worker with C3 (`create-cloudflare` CLI). [C3](/pages/get-started/c3/) is a command-line tool designed to help you set up and deploy new applications, including Workers, to Cloudflare.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "consumer-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'consumer-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 

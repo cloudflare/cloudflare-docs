@@ -15,7 +15,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will learn how to deploy a Worker that makes calls to OpenAI through AI Gateway. AI Gateway helps you better observe and control your AI applications with more analytics, caching, rate limiting, and logging.
 
@@ -37,7 +37,7 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 Create a Worker project in the command line:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "openai-aig" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'openai-aig'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

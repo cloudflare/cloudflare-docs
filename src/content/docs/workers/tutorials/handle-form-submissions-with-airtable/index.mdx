@@ -13,7 +13,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will use [Cloudflare Workers](/workers/) and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
@@ -27,7 +27,7 @@ For this tutorial, you will be building a Workers function that handles input fr
 
 :::note[Build a form]
 
-If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](/pages/tutorials/forms) tutorial. 
+If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](/pages/tutorials/forms) tutorial.
 :::
 
 Review a simplified example of the form used in this tuttorial. Note that the `action` parameter of the `<form>` tag should point to the deployed Workers application that you will build in this tutorial.
@@ -85,7 +85,7 @@ To handle the form submission, create and deploy a Worker that parses the incomi
 
 Create a new `airtable-form-handler` Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "airtable-form-handler" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'airtable-form-handler'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

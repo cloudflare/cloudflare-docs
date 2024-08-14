@@ -13,7 +13,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/kv/api/).
 
@@ -32,7 +32,7 @@ If you would like to see the finished code for this project, find the [project o
 
 First, use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI tool to create a new Cloudflare Workers project named `todos`. In this tutorial, you will use the default `Hello World` template to create a Workers project.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "todos" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'todos'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
