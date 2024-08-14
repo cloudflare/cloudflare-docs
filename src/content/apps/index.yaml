@@ -291,7 +291,7 @@ entries:
   tags: [Nuxt]
   products: [Pages, R2, Workers AI]
   languages: [TypeScript]
-  cloudflare: true
+  cloudflare: false
   updated: 2024-08-12
 - link: https://github.com/atinux/atidone
   name: Atidone
@@ -299,13 +299,13 @@ entries:
   tags: [Nuxt]
   products: [Pages, D1]
   languages: [TypeScript]
-  cloudflare: true
+  cloudflare: false
   updated: 2024-08-12
 - link: https://github.com/atinux/atinotes
   name: Atinotes
-  description: Store Markdown notes in Cloudflare KV with this full-stack application made with Nuxt & deployed on Cloudflare pages.
+  description: Store Markdown notes in Cloudflare KV with this full-stack application made with Nuxt & deployed on Cloudflare Pages.
   tags: [Nuxt]
   products: [Pages, KV]
   languages: [TypeScript]
-  cloudflare: true
+  cloudflare: false
   updated: 2024-08-12
