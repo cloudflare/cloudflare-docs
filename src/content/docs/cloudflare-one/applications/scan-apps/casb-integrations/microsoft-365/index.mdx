@@ -2,12 +2,14 @@
 pcx_content_type: reference
 title: Microsoft 365
 rss: file
-
 ---
 
-import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "Microsoft 365 (M365)", two: "Microsoft 365 account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "Microsoft 365 (M365)", two: "Microsoft 365 account" }}
+/>
 
 This integration covers the following Microsoft 365 products:
 
@@ -21,42 +23,47 @@ This integration covers the following Microsoft 365 products:
 
 For the Microsoft 365 integration to function, Cloudflare CASB requires the following delegated Microsoft Graph API permissions:
 
-* `Application.Read.All`
-* `Calendars.Read`
-* `Domain.Read.All`
-* `Group.Read.All`
-* `InformationProtectionPolicy.Read.All`
-* `MailboxSettings.Read`
-* `offline_access`
-* `RoleManagement.Read.All`
-* `User.Read.All`
-* `UserAuthenticationMethod.Read.All`
-* `Files.Read.All`
-* `AuditLog.Read.All`
+- `Application.Read.All`
+- `Calendars.Read`
+- `Domain.Read.All`
+- `Group.Read.All`
+- `InformationProtectionPolicy.Read.All`
+- `MailboxSettings.Read`
+- `offline_access`
+- `RoleManagement.Read.All`
+- `User.Read.All`
+- `UserAuthenticationMethod.Read.All`
+- `Files.Read.All`
+- `AuditLog.Read.All`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Microsoft 365", two: "microsoft-365" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+/>
 
 ### User account settings
 
 Keep user accounts safe by ensuring the following settings are maintained. Review password configurations and password strengths to ensure alignment to your organization's security policies and best practices.
 
-| Finding                                      | Severity |
-| -------------------------------------------- | -------- |
-| FIDO2 authentication method unattested       | Low      |
-| Provisioning error for on-prem user          | Low      |
-| Password expiration disabled for user        | Low      |
-| Password not changed in last 90 days         | Low      |
-| Strong password disabled for user            | Low      |
-| Cloud sync disabled for on-prem user         | Low      |
-| Weak Windows Hello for Business key strength | Low      |
-| On-prem user not synced in 7 days.           | Low      |
-| User is not a legal adult                    | Low      |
-| User configured proxy addresses              | Low      |
-| User account disabled                        | Low      |
+| Finding type                                            | FindingTypeID                          | Severity |
+| ------------------------------------------------------- | -------------------------------------- | -------- |
+| Microsoft: FIDO2 authentication method unattested       | `5a9fd288-c04f-4f7a-8976-bfd5464c6cf1` | Low      |
+| Microsoft: Provisioning error for on-prem user          | `3123d99e-a83c-4d9d-9a10-80da5af6dee5` | Low      |
+| Microsoft: Password expiration disabled for user        | `ce8cc363-7cbb-445e-8385-79ae7348e430` | Low      |
+| Microsoft: Password not changed for 90+ days            | `93be1fd1-b6c6-4b98-a04c-121d5ea66745` | Low      |
+| Microsoft: Strong password disabled for user            | `aecfdcb2-ec1f-4571-be3c-4ae46c93125e` | Low      |
+| Microsoft: Cloud sync disabled for on-prem user         | `8370628b-73f1-41a5-bbff-4d5adee7bf33` | Low      |
+| Microsoft: Weak Windows Hello for Business key strength | `6fae390f-07a3-4577-9821-034a7b29e18e` | Low      |
+| Microsoft: On-prem user not synced in 7+ days           | `1eefc5a1-e665-431a-b939-cfbb76a309f5` | Low      |
+| Microsoft: User is not a legal adult                    | `329030a3-db43-4959-9d92-2616a42f1731` | Low      |
+| Microsoft: User configured proxy addresses              | `61406f68-feea-43c5-bda8-b7c4ef9b83cf` | Low      |
+| Microsoft: User account disabled                        | `0a8bd094-9138-4e7f-8ce8-bebdf5c27c4e` | Low      |
+| Microsoft: Reusable temporary access pass               | `98571e6b-c323-48bc-8c60-f0425c7f9342` | Low      |
+| Microsoft: Long-lived temporary access pass             | `45cdbd9c-1594-488b-973e-7c62c6e7234e` | Low      |
 
 ### File sharing
 
@@ -64,17 +71,17 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 
 <Render file="casb/shared-links" />
 
-| Finding                                             | Severity |
-| --------------------------------------------------- | -------- |
-| Microsoft File Publicly Accessible Read and Write   | Critical |
-| Microsoft Folder Publicly Accessible Read and Write | Critical |
-| Microsoft File Publicly Accessible Read Only        | High     |
-| Microsoft Folder Publicly Accessible Read Only      | High     |
-| Microsoft File Shared Company Wide Read and Write   | Medium   |
-| Microsoft File Shared Company Wide Read Only        | Medium   |
-| Microsoft Folder Shared Company Wide Read and Write | Medium   |
-| Microsoft Folder Shared Company Wide Read Only      | Medium   |
-| Calendar shared externally                          | Low      |
+| Finding type                                           | FindingTypeID                          | Severity |
+| ------------------------------------------------------ | -------------------------------------- | -------- |
+| Microsoft: File publicly accessible with edit access   | `85241e6b-205f-4de6-a1d1-325656130995` | Critical |
+| Microsoft: Folder publicly accessible with edit access | `c9662c5c-c3d6-453b-9367-281e024f7e7a` | Critical |
+| Microsoft: File publicly accessible with view access   | `a2b40dc9-b96a-4ace-b8f8-739c2be37dbd` | High     |
+| Microsoft: Folder publicly accessible with view access | `7c673785-8b70-41bc-b7d4-d0f346487ff6` | High     |
+| Microsoft: File shared company-wide with edit access   | `a81a79c8-a0bf-4c60-aa46-7547b4d34266` | Medium   |
+| Microsoft: File shared company-wide with view access   | `364c9c0e-684b-4a83-bf28-fdbb1430bb59` | Medium   |
+| Microsoft: Folder shared company-wide with edit access | `80f73d47-7dcf-4997-8ed3-6564c8388bd1` | Medium   |
+| Microsoft: Folder shared company-wide with view access | `f3fc8ae6-815e-4d5f-a57e-b00d5413f98c` | Medium   |
+| Microsoft: Calendar shared externally                  | `7d2d9b00-3871-4abf-9e65-f29cf00c428b` | Low      |
 
 ### Data Loss Prevention (optional)
 
@@ -86,44 +93,42 @@ Get alerted when files in your Microsoft 365 account have their permissions chan
 
 Identify and get alerted about the third-party apps that have access to at least one service in your Microsoft 365 domain. Additionally, receive information about which services are being accessed and by whom to get full visibility into <GlossaryTooltip term="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">shadow IT</GlossaryTooltip>.
 
-| Finding                        | Severity |
-| ------------------------------ | -------- |
-| App Not Certified By Microsoft | Low      |
-| App Not Attested By Published  | Low      |
-| App Disabled By Microsoft      | Low      |
+| Finding type                              | FindingTypeID                          | Severity |
+| ----------------------------------------- | -------------------------------------- | -------- |
+| Microsoft: App not certified by Microsoft | `3f049bb1-3709-4d8f-8591-59dd034cf396` | Low      |
+| Microsoft: App not attested by publisher  | `d7390d6b-f466-4293-8528-6218e29b1179` | Low      |
+| Microsoft: App disabled by Microsoft      | `b5156b76-caaa-4ca8-bdb7-ea282da62356` | Low      |
 
 ### Email administrator settings
 
 Discover suspicious or insecure email configurations in your Microsoft domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
 
-| Finding                                            | Severity |
-| -------------------------------------------------- | -------- |
-| Microsoft Domain SPF Record Allows Any IP Address  | High     |
-| Microsoft Domain SPF Record Not Present            | Medium   |
-| Microsoft Domain DMARC Record Not Present          | Medium   |
-| Microsoft Domain DMARC Not Enforced                | Medium   |
-| Microsoft Domain DMARC Not Enforced for Subdomains | Medium   |
-| Microsoft Domain DMARC Only Partially Enforced     | Medium   |
-| Microsoft Domain Not Verified                      | Medium   |
-| App Certification Expires in 90 Days or Sooner     | Low      |
+| Finding type                                        | FindingTypeID                          | Severity |
+| --------------------------------------------------- | -------------------------------------- | -------- |
+| Microsoft: Domain SPF record allows any IP address  | `27893e48-663e-43f9-83d4-c158c50259d0` | High     |
+| Microsoft: Domain SPF record not present            | `009093d9-43df-45a2-bdc6-2f35fc3a0c71` | Medium   |
+| Microsoft: Domain DMARC record not present          | `bb3d3760-2c4e-4161-9164-cff92e809f9c` | Medium   |
+| Microsoft: Domain DMARC not enforced                | `a020d87d-332b-49d1-acc3-16c19d72fba4` | Medium   |
+| Microsoft: Domain DMARC not enforced for subdomains | `1837a549-4d4e-4101-917c-e9a4036e0c08` | Medium   |
+| Microsoft: Domain DMARC only partially enforced     | `943414ed-7c79-4d17-a253-8d73f34dcc1d` | Medium   |
+| Microsoft: Domain not verified                      | `dd1e9aba-57ee-4cf1-a895-dd2f1fc166a7` | Medium   |
+| Microsoft: App certification expires within 90 Days | `d5ede282-0339-4983-88f3-849ac59ba840` | Low      |
 
 ### Email forwarding
 
 Get alerted when users set their email to be forwarded externally. This can either be a sign of unauthorized activity, or an employee unknowingly sending potentially sensitive information to a personal email.
 
-| Finding                                               | Severity |
-| ----------------------------------------------------- | -------- |
-| Active Message Rule Forwards Externally As Attachment | Low      |
-| Active Message Rule Forwards Externally               | Low      |
-| Active Message Rule Redirects Externally              | Low      |
+| Finding type                                                     | FindingTypeID                          | Severity |
+| ---------------------------------------------------------------- | -------------------------------------- | -------- |
+| Microsoft: Active message rule forwards externally as attachment | `9efca21a-aba2-452f-bb17-e66d34b58765` | Low      |
+| Microsoft: Active message rule forwards externally               | `42fa3fe6-da72-4bf0-9bc9-5faa4a118ec4` | Low      |
+| Microsoft: Active message rule redirects externally              | `b75ba81e-c98d-4b78-b5a1-47a2f54499e8` | Low      |
 
 ## Microsoft Information Protection (MIP) sensitivity labels
 
 :::note
 
-
 Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
-
 
 :::
 
