@@ -127,6 +127,8 @@ async function run(): Promise<void> {
       previewBaseURL = urlMatches[3];
     }
 
+    core.debug(previewBaseURL)
+
     const changedFiles = files
       .filter(
         (file) =>
@@ -145,12 +147,17 @@ async function run(): Promise<void> {
             .replace(/^src\/content\/docs/, "")
             .replace(/index\.md$/, "")
             .replace(/\.mdx$/, "/");
-          if (path.includes(" ") || path.startsWith("/support/")) {
+          if (path.includes(" ")) {
             return UnicodeSanitize(path);
           } else {
             return DISABLE_PATH_TO_LOWER ? path : path.toLowerCase();
           }
         };
+
+        core.debug(file.file.filename)
+        core.debug(filePathToUriPath(
+          file.file.filename
+        ))
 
         const originalLink = `https://developers.cloudflare.com${filePathToUriPath(
           file.file.filename
