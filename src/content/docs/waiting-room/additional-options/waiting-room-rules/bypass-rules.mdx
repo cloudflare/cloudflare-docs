@@ -12,11 +12,11 @@ A Waiting Room Bypass Rule is a type of Waiting Room Rule built on Cloudflare’
 
 To indicate where you want your bypass rules to apply, write [custom logic](/ruleset-engine/rules-language/) using the [fields](/ruleset-engine/rules-language/fields/) available via the Cloudflare Ruleset Engine from the following fields categories:
 
-* [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields)
-* [Dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) except `cf.threat_score` and fields starting with `cf.bot_management`
-* [URI and argument value fields](/ruleset-engine/rules-language/fields/#uri-argument-and-value-fields)
-* [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields)
-* [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)
+* [Standard fields](/ruleset-engine/rules-language/fields/standard-fields)
+* [Dynamic fields](/ruleset-engine/rules-language/fields/dynamic-fields) except `cf.threat_score` and fields starting with `cf.bot_management`
+* [URI and argument value fields](/ruleset-engine/rules-language/fields/uri/)
+* [HTTP request header fields](/ruleset-engine/rules-language/fields/http-request-header/)
+* [HTTP request body fields](/ruleset-engine/rules-language/fields/http-request-body/)
 
 Please be advised that the waiting room will not apply to all the traffic that matches the expressions written for bypass rules and will not be counted as active users. No Waiting Room features, including but not limited to, Event pre-queueing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
 
