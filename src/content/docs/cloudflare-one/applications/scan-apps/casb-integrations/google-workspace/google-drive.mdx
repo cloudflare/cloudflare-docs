@@ -4,12 +4,14 @@ title: Google Drive
 rss: file
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "Google Drive", two: "Google Workspace account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "Google Drive", two: "Google Workspace account" }}
+/>
 
 ## Integration prerequisites
 
@@ -17,32 +19,38 @@ import { Render } from "~/components"
 
 ## Integration permissions
 
-<Render file="casb/integration-perms" params={{ one: "Google Workspace", two: "google-workspace" }} />
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Google Drive", two: "google-workspace/google-drive" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "Google Drive", two: "google-workspace/google-drive" }}
+/>
 
 ### File sharing
 
-| Finding                                    | Severity | Description                                                                                               |
-| ------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------------- |
-| File Publicly Accessible Read and Write    | Critical | A Google Drive file is publicly accessible on the Internet that anyone can read or write.                 |
-| File Publicly Accessible Read Only         | High     | A Google Drive file is publicly accessible on the Internet that anyone can read.                          |
-| File Shared Outside Company Read and Write | High     | A Google Drive file is shared with another organization or outside party with read and write permissions. |
-| File Shared Outside Company Read Only      | Medium   | A Google Drive file is shared with another organization or outside party with read permissions.           |
-| File Shared Company Wide Read and Write    | Medium   | A Google Drive file is shared with the entire company with read and write permissions.                    |
-| File Shared Company Wide Read Only         | Medium   | A Google Drive file is shared with the entire company with read permissions.                              |
+| Finding type                                                   | FindingTypeID                          | Severity | Description                                                                                               |
+| -------------------------------------------------------------- | -------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| Google Workspace: File publicly accessible with edit access    | `29b01269-025f-4249-b5c1-0b9ec39823e0` | Critical | A Google Drive file is publicly accessible on the Internet that anyone can read or write.                 |
+| Google Workspace: File publicly accessible with view access    | `d5132bc7-4c41-4824-b879-3918bf7f6ee7` | High     | A Google Drive file is publicly accessible on the Internet that anyone can read.                          |
+| Google Workspace: File shared outside company with edit access | `71ec135e-3d4c-4d35-a2b7-4fd1e5b65b99` | High     | A Google Drive file is shared with another organization or outside party with read and write permissions. |
+| Google Workspace: File shared outside company with view access | `d4b231ad-9a8c-40d3-8654-5bd5bb86bf1a` | Medium   | A Google Drive file is shared with another organization or outside party with read permissions.           |
+| Google Workspace: File shared company-wide with edit access    | `0ed79f27-32fd-415a-a919-ea4af3bd25fd` | Medium   | A Google Drive file is shared with the entire company with read and write permissions.                    |
+| Google Workspace: File shared company-wide with view access    | `a34753f3-aec7-4134-a30b-2ebb1d7e47de` | Medium   | A Google Drive file is shared with the entire company with read permissions.                              |
 
 ### Data Loss Prevention (optional)
 
 <Render file="casb/data-loss-prevention" />
 
-| Finding                                                           | Severity | Description                                                                                           |
-| ----------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| File Publicly Accessible Read and Write with DLP Profile match    | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read or write.            |
-| File Publicly Accessible Read Only with DLP Profile match         | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read.                     |
-| File Shared Outside Company Read and Write with DLP Profile match | Critical | A Google Drive file contains sensitive data that user(s) outside your organization can read or write. |
-| File Shared Outside Company Read Only with DLP Profile match      | Critical | A Google Drive file contains sensitive data that user(s) outside your organization can read.          |
-| File Shared Company-Wide Read and Write with DLP Profile match    | High     | A Google Drive file contains sensitive data that all users at your organization can read or write.    |
-| File Shared Company-Wide Read Only with DLP Profile match         | High     | A Google Drive file contains sensitive data that all users at your organization can read.             |
+| Finding type                                                                          | FindingTypeID                          | Severity | Description                                                                                     |
+| ------------------------------------------------------------------------------------- | -------------------------------------- | -------- | ----------------------------------------------------------------------------------------------- |
+| Google Workspace: File publicly accessible with edit access with DLP Profile match    | `868a21e9-62b2-4e4a-8150-92cf9eb0c2e3` | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read or write.      |
+| Google Workspace: File publicly accessible with view access with DLP Profile match    | `bfe54b22-5ee5-4ccc-b62b-ea822b34c164` | High     | A Google Drive file contains sensitive data that anyone on the Internet can read.               |
+| Google Workspace: File shared outside company with edit access with DLP Profile match | `124cfac5-12c6-4b55-8691-9c11776b365a` | High     | A Google Drive file contains sensitive data that anyone the file is shared to can read.         |
+| Google Workspace: File shared company-wide with edit access with DLP Profile match    | `5b2ad0d2-f35f-47a3-96cb-6e8fbb1fcb36` | Medium   | A Google Drive file contains sensitive data that anyone in your organization can read or write. |
+| Google Workspace: File shared company-wide with view access with DLP Profile match    | `b9fa5fef-c1d0-44da-8364-2c0887be0820` | Medium   | A Google Drive file contains sensitive data that anyone in your organization can read.          |
+| Google Workspace: File shared outside company with view access with DLP Profile match | `aebdda6d-ab48-4408-9941-881683972d83` | Medium   | A Google Drive file contains sensitive data that anyone the file is shared to can read.         |
