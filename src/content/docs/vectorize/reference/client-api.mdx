@@ -95,7 +95,8 @@ Enable metadata filtering on the specified property. Limited to 10 properties.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize create-metadata-index <name>
+$ wrangler vectorize create-metadata-index <index-name> --property-name='some-prop' --type='string'
+
 
 ```
 
@@ -108,7 +109,7 @@ Allow Vectorize to delete the specified metadata index.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize delete-metadata-index <name>
+$ wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop' --type='string'
 
 ```
 
@@ -121,7 +122,7 @@ List metadata properties on which metadata filtering is enabled.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize list-metadata-index <name>
+$ wrangler vectorize list-metadata-index <index-name> --property-name='some-prop' --type='string'
 
 ```
 

@@ -4,7 +4,7 @@ title: Limits
 weight: 2
 ---
 
-{{<Aside type="note" heading="Vectorize public beta limits">}}
+{{<Aside type="note" header="Vectorize public beta limits">}}
 
 Many of these limits will increase during Vectorize's [public beta](/workers/platform/betas/). Refer to the [changelog](/vectorize/platform/changelog/) or join the [`#vectorize-beta`](https://discord.cloudflare.com/) channel in the Cloudflare Developer Discord to keep up to date with changes.
 
@@ -29,3 +29,21 @@ The following limits apply to accounts, indexes and vectors (as specified):
 | Maximum vectors upload size       | 100  MB                                     |
 
 <sup>beta</sup> This limit is beta only and is expected to increase over time.
+
+
+# v1 (deprecated) limits
+
+The following limits apply to accounts, indexes and vectors (as specified):
+
+| Feature                               | Current Limit                                                    |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| Indexes per account                   | 100 indexes                                      |
+| Maximum dimensions per vector         | 1536 dimensions                                  |
+| Maximum vector ID length              | 64 bytes                                                         |
+| Metadata per vector                   | 10KiB                                            |
+| Maximum returned results (`topK`)     | 20                                               |
+| Maximum upsert batch size (per batch) | 1000  (Workers) / 5000 (HTTP API) |
+| Maximum index name length             | 63 bytes                                                         |
+| Maximum vectors per index             | 200,000                                          |
+| Maximum namespaces per index          | 1000 namespaces                                  |
+| Maximum namespace name length         | 63 bytes                                                         |
