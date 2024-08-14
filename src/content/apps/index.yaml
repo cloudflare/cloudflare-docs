@@ -285,3 +285,27 @@ entries:
   author: gift
   cloudflare: true
   updated: 2024-03-18
+- link: https://github.com/atinux/atidraw
+  name: Atidraw
+  description: A web application made with Nuxt that lets you to create, enhance, and share your drawings with the world. Harnessing the power of Cloudflare R2 and Cloudflare AI to store and enhance your drawings.
+  tags: [Nuxt]
+  products: [Pages, R2, Workers AI]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
+- link: https://github.com/atinux/atidone
+  name: Atidone
+  description: A full-stack application made with Nuxt, Cloudflare D1 and Authentication to store your todos on the web.
+  tags: [Nuxt]
+  products: [Pages, D1]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
+- link: https://github.com/atinux/atinotes
+  name: Atinotes
+  description: Store Markdown notes in Cloudflare KV with this full-stack application made with Nuxt & deployed on Cloudflare Pages.
+  tags: [Nuxt]
+  products: [Pages, KV]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
