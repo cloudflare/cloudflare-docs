@@ -4,19 +4,16 @@ inputParameters: directoryName
 ---
 
 import { Markdown, TabItem, Tabs } from "~/components"
+import { Code } from "@astrojs/starlight/components"
 
 <Tabs> <TabItem label="npm">
 
-```sh
-$ npm create cloudflare@latest {props.one}
-```
+<Code code={`$ npm create cloudflare@latest ${props.one}`} lang="sh" />
 
 </TabItem>
 
 <TabItem label="yarn">
 
-```sh
-$ yarn create cloudflare@latest {props.one}
-```
+<Code code={`$ yarn create cloudflare@latest ${props.one}`} lang="sh" />
 
 </TabItem> </Tabs>
