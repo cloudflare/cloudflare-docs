@@ -34,8 +34,23 @@
     <a
         role="button"
         id="ot-sdk-btn"
-        class="ot-sdk-show-settings !text-accent-600 !border-accent-600 hover:!bg-gray-800"
+        class="ot-sdk-show-settings"
         >Cookie Settings</a
     >
     <!-- OneTrust Cookies Settings button end -->
 </span>
+
+<style>
+    #ot-sdk-btn.ot-sdk-show-settings {
+        border: none !important;
+        color: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        padding: inherit !important;
+        font-family: var(--sl-font-family) !important;
+    }
+
+    #ot-sdk-btn.ot-sdk-show-settings:hover {
+        background-color: inherit !important;
+    }
+</style>
