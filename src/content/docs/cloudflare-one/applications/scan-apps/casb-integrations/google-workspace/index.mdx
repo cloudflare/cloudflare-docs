@@ -20,7 +20,7 @@ This integration covers the following Google Workspace products:
 
 ## Integration prerequisites
 
-<Render file="casb/google-prereqs" />
+<Render file="casb/google/google-prereqs" />
 
 ## Integration permissions
 
@@ -45,77 +45,34 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ### User account settings
 
-| Finding type                                                         | FindingTypeID                          | Severity | Description                                                                           |
-| -------------------------------------------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
-| Google Workspace: Admin user with two-factor authentication disabled | `5f7c1f62-0ac6-4422-b3d3-d0566dd4e3f2` | Critical | An administrator in Google Workspace does not have two-factor authentication enabled. |
-| Google Workspace: User with two-factor authentication disabled       | `739e1965-2ab4-4946-8a56-73fd75154efa` | High     | A user in Google Workspace does not have two-factor authentication enabled.           |
-| Google Workspace: User without recovery email                        | `2e2383bb-51e8-47fc-8ba7-2dd255c2545f` | Low      | A user in Google Workspace does not have a recovery email set.                        |
-| Google Workspace: User without recovery phone number                 | `ec326c68-f331-4597-9ec4-43dc197c86f4` | Low      | A user in Google Workspace does not have a recovery phone number set.                 |
+<Render file="casb/google/user-account-settings" />
 
 ### Inactive or suspended users
 
-| Finding type                           | FindingTypeID                          | Severity | Description                                                                 |
-| -------------------------------------- | -------------------------------------- | -------- | --------------------------------------------------------------------------- |
-| Google Workspace: Inactive admin user  | `391ee66d-10e0-4b26-91b3-741a2a4c39d0` | Medium   | An administrator account in Google Workspace has not logged in for 30 days. |
-| Google Workspace: Suspended admin user | `31e02a11-aa3b-4278-97d3-9c0f7e8fd2c7` | Medium   | An administrator account in Google Workspace is suspended.                  |
-| Google Workspace: Inactive user        | `7c098546-2e67-4f01-9fb7-bd48412bd178` | Low      | A user account in Google Workspace has not logged in for 30 days.           |
-| Google Workspace: Suspended user       | `84f514e3-f12d-49e5-bdfe-9073e336d89e` | Low      | A user account in Google Workspace is suspended.                            |
+<Render file="casb/google/inactive-suspended-users" />
 
 ### File sharing
 
-| Finding type                                                   | FindingTypeID                          | Severity | Description                                                                                               |
-| -------------------------------------------------------------- | -------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
-| Google Workspace: File publicly accessible with edit access    | `29b01269-025f-4249-b5c1-0b9ec39823e0` | Critical | A Google Drive file is publicly accessible on the Internet that anyone can read or write.                 |
-| Google Workspace: File publicly accessible with view access    | `d5132bc7-4c41-4824-b879-3918bf7f6ee7` | High     | A Google Drive file is publicly accessible on the Internet that anyone can read.                          |
-| Google Workspace: File shared outside company with edit access | `71ec135e-3d4c-4d35-a2b7-4fd1e5b65b99` | High     | A Google Drive file is shared with another organization or outside party with read and write permissions. |
-| Google Workspace: File shared outside company with view access | `d4b231ad-9a8c-40d3-8654-5bd5bb86bf1a` | Medium   | A Google Drive file is shared with another organization or outside party with read permissions.           |
-| Google Workspace: File shared company-wide with edit access    | `0ed79f27-32fd-415a-a919-ea4af3bd25fd` | Medium   | A Google Drive file is shared with the entire company with read and write permissions.                    |
-| Google Workspace: File shared company-wide with view access    | `a34753f3-aec7-4134-a30b-2ebb1d7e47de` | Medium   | A Google Drive file is shared with the entire company with read permissions.                              |
+<Render file="casb/google/file-sharing" />
 
 ### Calendar sharing
 
-| Finding type                                      | FindingTypeID                          | Severity | Description                                                                           |
-| ------------------------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
-| Google Workspace: Calendar is publicly accessible | `ec68bf68-b0c0-47b3-ad48-fcb3d7eaf8b6` | Medium   | A user's Google Calendar is publicly accessible on the Internet that anyone can read. |
+<Render file="casb/google/calendar-sharing" />
 
 ### Data Loss Prevention (optional)
 
 <Render file="casb/data-loss-prevention" />
 
-| Finding type                                                                          | FindingTypeID                          | Severity | Description                                                                                     |
-| ------------------------------------------------------------------------------------- | -------------------------------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| Google Workspace: File publicly accessible with edit access with DLP Profile match    | `868a21e9-62b2-4e4a-8150-92cf9eb0c2e3` | Critical | A Google Drive file contains sensitive data that anyone on the Internet can read or write.      |
-| Google Workspace: File publicly accessible with view access with DLP Profile match    | `bfe54b22-5ee5-4ccc-b62b-ea822b34c164` | High     | A Google Drive file contains sensitive data that anyone on the Internet can read.               |
-| Google Workspace: File shared outside company with edit access with DLP Profile match | `124cfac5-12c6-4b55-8691-9c11776b365a` | High     | A Google Drive file contains sensitive data that anyone the file is shared to can read.         |
-| Google Workspace: File shared company-wide with edit access with DLP Profile match    | `5b2ad0d2-f35f-47a3-96cb-6e8fbb1fcb36` | Medium   | A Google Drive file contains sensitive data that anyone in your organization can read or write. |
-| Google Workspace: File shared company-wide with view access with DLP Profile match    | `b9fa5fef-c1d0-44da-8364-2c0887be0820` | Medium   | A Google Drive file contains sensitive data that anyone in your organization can read.          |
-| Google Workspace: File shared outside company with view access with DLP Profile match | `aebdda6d-ab48-4408-9941-881683972d83` | Medium   | A Google Drive file contains sensitive data that anyone the file is shared to can read.         |
+<Render file="casb/google/google-dlp" />
 
 ### Third-party apps
 
-| Finding type                                                          | FindingTypeID                          | Severity | Description                                                                          |
-| --------------------------------------------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------ |
-| Google Workspace: Installed 3rd-party app with Drive access           | `191f0751-7087-4588-9e99-93c5dd834b5b` | High     | A third-party application has been granted permissions to a user's Google Drive.     |
-| Google Workspace: Installed 3rd-party app with Gmail access           | `431aecad-20e5-4a20-80ba-4b66eaaa1be4` | High     | A third-party application has been granted permissions to a user's Gmail.            |
-| Google Workspace: Installed 3rd-party app with Google Docs access     | `fe41d53b-3bc3-45ef-95d2-75ba159ce60d` | Medium   | A third-party application has been granted permissions to a user's Google Documents. |
-| Google Workspace: Installed 3rd-party app with Google Calendar access | `80102f46-43d4-437e-b694-e8ee2c077ade` | Medium   | A third-party application has been granted permissions to a user's Google Calendar.  |
-| Google Workspace: Installed 3rd-party app with Google Slides access   | `d88e106c-1f2e-4b63-acae-5cee19ded9ec` | Medium   | A third-party application has been granted permissions to a user's Google Slides.    |
-| Google Workspace: Installed 3rd-party app with Google Sheets access   | `ece9a2fd-4248-4f11-bc45-8b4189eedb54` | Medium   | A third-party application has been granted permissions to a user's Google Sheets.    |
-| Google Workspace: Installed 3rd-party app with Google Sign In access  | `26b938ea-8d24-4ea5-8e81-2eae26830061` | Low      | A user has used their Google Workspace account to sign up for a third party service. |
+<Render file="casb/google/third-party-apps" />
 
 ### Gmail administrator settings
 
-| Finding type                                               | FindingTypeID                          | Severity | Description                                                                                                                  |
-| ---------------------------------------------------------- | -------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Google Workspace: Domain SPF record allows any IP address  | `f28dcc8d-1f0c-4b5a-b254-4169095c16e5` | High     | A Google Workspace Domain SPF record allows any email to be sent from any IP address on your behalf.                         |
-| Google Workspace: Domain SPF record not present            | `2e13e5dd-88ed-4d65-8d0a-d3fdff9ee7bb` | Medium   | An SPF record does not exist for a Google Workspace Domain.                                                                  |
-| Google Workspace: Domain DMARC record not present          | `ec39eabf-3536-4005-940b-22d815c628ec` | Medium   | A DMARC record does not exist for a Google Workspace Domain.                                                                 |
-| Google Workspace: Domain DMARC not enforced                | `8971666d-c049-436d-b4d1-6816a70650ef` | Medium   | A DMARC record for a Google Workspace Domain is not enforced.                                                                |
-| Google Workspace: Domain DMARC not enforced for subdomains | `fe485f42-b158-4187-85fe-79acdd92055b` | Medium   | A DMARC record for a Google Workspace Subdomain is not configured to quarantine or reject messages that fail authentication. |
-| Google Workspace: Domain DMARC only partially enforced     | `b682c603-9bc6-485e-be8c-a6e58a989407` | Medium   | A DMARC record for a Google Workspace Domain is not configured to quarantine or reject messages that fail authentication.    |
+<Render file="casb/google/gmail-admin-settings" />
 
 ### Email forwarding
 
-| Finding type                                  | FindingTypeID                          | Severity | Description                                                                                                                      |
-| --------------------------------------------- | -------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Google Workspace: User delegates email access | `66897c22-29a5-4f55-b39a-1bfcdd3c12c5` | High     | A user has delegated access to their inbox to another party. Delegates can read, send, and delete messages on the user's behalf. |
+<Render file="casb/google/email-forwarding" />
