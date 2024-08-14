@@ -1,5 +1,0 @@
-{{- $label := replace (.Get "label") "/" "-"}}
-{{- $default := .Get "default" -}}
-{{- $noCode := .Get "no-code" -}}
-
-<div class="tab {{ if eq $default "true" }}tab-default{{ end }} {{ if eq $noCode "true" }}noCodeTab{{ end }}" id="tab-{{ (lower $label) }}-UNIQUE_ID">{{ $.Inner | $.Page.RenderString }}</div>

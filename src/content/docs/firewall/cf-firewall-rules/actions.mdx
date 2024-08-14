@@ -1,0 +1,319 @@
+---
+title: Actions
+pcx_content_type: reference
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Firewall rules actions
+
+---
+
+
+
+import { Render } from "~/components"
+
+The action of a firewall rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
+
+<Render file="deprecation-notice" />
+
+## Supported actions
+
+The table below lists the actions available in firewall rules. These actions are listed in order of precedence. If the same request matches two different rules which have the same priority, precedence determines the action to take.
+
+For example, the *Allow* action takes precedence over the *Block* action. In a case where a request matches a rule with the *Allow* action and another with the *Block* action, precedence resolves the tie, and Cloudflare allows the request.
+
+There are two exceptions to this behavior: the *Log* and *Bypass* actions. Unlike other actions, *Log* and *Bypass* do not terminate further evaluation within firewall rules. This means that if a request matches two different rules and one of those rules specifies the *Log* or *Bypass* action, the second action will be triggered instead, even though *Log*/*Bypass* has precedence.
+
+:::note
+
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions/).
+
+:::
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Description</th>
+      <th>Order of precedence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Log</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">log</code>
+      </td>
+      <td>
+        <ul>
+          <li>Records matching requests in the Cloudflare Logs.</li>
+          <li>Only available for Enterprise plans.</li>
+          <li>
+            Recommended for validating rules before committing to a more severe
+            action.
+          </li>
+        </ul>
+      </td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Bypass</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">bypass</code>
+      </td>
+      <td>
+        <ul>
+          <li>
+            Allows user to dynamically disable Cloudflare security features for
+            a request.
+          </li>
+          <li>Available to all plans.</li>
+          <li>
+            <p>
+              Matching requests exempt from evaluation by a user-defined list
+              containing one or more of the following Cloudflare security
+              features:
+            </p>
+            <ul>
+              <li>
+                <a href="/waf/tools/user-agent-blocking/">
+                  User Agent Blocking
+                </a>
+              </li>
+              <li>
+                <a href="/waf/tools/browser-integrity-check/">
+                  Browser Integrity Check
+                </a>
+              </li>
+              <li>
+                <a href="/waf/tools/scrape-shield/hotlink-protection/">
+                  Hotlink Protection
+                </a>
+              </li>
+              <li>
+                <a href="/waf/tools/security-level/">
+                  Security Level (IP Reputation)
+                </a>
+              </li>
+              <li>
+                <a href="/waf/reference/legacy/old-rate-limiting/">
+                  Rate Limiting
+                </a>{" "}
+                (previous version, deprecated)
+              </li>
+              <li>
+                <a href="/waf/tools/zone-lockdown/">Zone Lockdown</a>
+              </li>
+              <li>
+                <a href="/waf/reference/legacy/old-waf-managed-rules/">
+                  WAF managed rules
+                </a>{" "}
+                (previous version, deprecated)
+              </li>
+            </ul>
+            <p>
+              <strong>Notes:</strong>
+            </p>
+            <ul>
+              <li>
+                Currently, you cannot bypass Bot Fight Mode. For more
+                information on this product, refer to{" "}
+                <a href="/bots/">Cloudflare bot solutions</a>.
+              </li>
+              <li>
+                You cannot bypass the new{" "}
+                <a href="/waf/managed-rules/">WAF managed rules</a> using this
+                action, only the previous version of WAF managed rules. To skip
+                one or more managed rules in the new WAF for specific requests,{" "}
+                <a href="/waf/managed-rules/waf-exceptions/">
+                  create an exception
+                </a>
+                .
+              </li>
+            </ul>
+            <p></p>
+          </li>
+          <li>
+            Requests which match the <em>Bypass</em> action are still subject to
+            evaluation (and thus a challenge or block) within Firewall Rules,
+            based on the order of execution.
+          </li>
+        </ul>
+      </td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Allow</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">allow</code>
+      </td>
+      <td>
+        <ul>
+          <li>
+            Matching requests are exempt from <em>Bypass</em>, <em>Block</em>,
+            and challenge actions triggered by other firewall rules.
+          </li>
+          <li>
+            The scope of the <em>Allow</em> action is limited to firewall rules;
+            matching requests are <strong>not</strong> exempt from action by
+            other Cloudflare security products such as Bot Fight Mode, IP Access
+            Rules, and WAF Managed Rules.
+          </li>
+          <li>
+            Matched requests will be mitigated if they are part of a DDoS
+            attack.
+          </li>
+        </ul>
+      </td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Interactive Challenge</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">challenge</code>
+      </td>
+      <td>
+        <ul>
+          <li>
+            This option is not recommended. Instead, choose{" "}
+            <strong>Managed Challenge (Recommended)</strong>, which issues
+            interactive challenges to visitors only when necessary.
+          </li>
+          <li>
+            The client that made the request must pass an interactive challenge.
+          </li>
+          <li>
+            If successful, Cloudflare accepts the matched request; otherwise, it
+            is blocked.
+          </li>
+          <li>
+            For additional information, refer to{" "}
+            <a href="#notes-about-challenge-actions">
+              Notes about challenge actions
+            </a>
+            .
+          </li>
+        </ul>
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>
+          Managed Challenge
+          <br />
+          (Recommended)
+        </strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">managed_challenge</code>
+      </td>
+      <td>
+        <ul>
+          <li>
+            Helps reduce the lifetimes of human time spent solving interactive
+            challenges across the Internet.
+          </li>
+          <li>
+            Depending on the characteristics of a request, Cloudflare will
+            dynamically choose the appropriate type of challenge from the
+            following actions based on specific criteria:
+            <ul>
+              <li>
+                Show a non-interactive challenge page (similar to the current JS
+                Challenge).
+              </li>
+              <li>
+                Show an interactive challenge (such as requiring the visitor to
+                click a button or to perform a task).
+              </li>
+            </ul>
+          </li>
+          <li>
+            For additional information, refer to{" "}
+            <a href="#notes-about-challenge-actions">
+              Notes about challenge actions
+            </a>
+            .
+          </li>
+        </ul>
+      </td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>JS Challenge</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">js_challenge</code>
+      </td>
+      <td>
+        <ul>
+          <li>
+            Useful for ensuring that bots and spam cannot access the requested
+            resource; browsers, however, are free to satisfy the challenge
+            automatically.
+          </li>
+          <li>
+            The client that made the request must pass a Cloudflare JavaScript
+            Challenge before proceeding.
+          </li>
+          <li>
+            If successful, Cloudflare accepts the matched request; otherwise, it
+            is blocked.
+          </li>
+          <li>
+            For additional information, refer to{" "}
+            <a href="#notes-about-challenge-actions">
+              Notes about challenge actions
+            </a>
+            .
+          </li>
+        </ul>
+      </td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Block</strong>
+        <br />
+        <br />
+        API value:
+        <br />
+        <code class="InlineCode">block</code>
+      </td>
+      <td>Matching requests are denied access to the site.</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+
+## Notes about challenge actions
+
+When you configure a firewall rule with one of the challenge actions — *Managed Challenge*, *JS Challenge*, or *Interactive Challenge* — and a request matches the rule, one of two things can happen:
+
+* The request is blocked if the visitor fails the challenge
+* The request is allowed if the visitor passes the challenge
+
+In this last case, no further firewall rules will be processed. This means that the action of any later rules with a challenge or *Block* action also matching the request will not be applied, and the request will be allowed.

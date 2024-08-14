@@ -1,0 +1,18 @@
+---
+import { z } from "astro:content";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	header: z.string(),
+	open: z.boolean().optional(),
+});
+
+const { header, open } = props.parse(Astro.props);
+---
+
+<details open={open}>
+    <summary set:html={marked.parse(header)} />
+    <slot />
+</details>

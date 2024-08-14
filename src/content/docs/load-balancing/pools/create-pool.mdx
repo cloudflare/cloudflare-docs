@@ -1,0 +1,94 @@
+---
+title: Manage pools
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Manage pools
+description: Learn how to set up and maintain pools.
+
+---
+
+import { AvailableNotifications, GlossaryDefinition, Render, TabItem, Tabs } from "~/components"
+
+<GlossaryDefinition term="pool" />
+
+For more background information on pools, refer to [Pools](/load-balancing/pools/).
+
+:::caution
+ <Render file="endpoints-introduction-callout" /> 
+:::
+
+***
+
+## Create a pool
+
+<Tabs> <TabItem label="Dashboard">
+
+<Render file="pool-create" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="pool-create-api" />
+
+</TabItem> </Tabs>
+
+***
+
+## Edit a pool
+
+<Tabs> <TabItem label="Dashboard">
+
+To edit a pool in the dashboard:
+
+1. Go to **Traffic** > **Load Balancing**.
+2. Click **Manage Pools**.
+3. On a specific pool, click **Edit**.
+4. Update settings as needed.
+5. Click **Save**.
+
+</TabItem> <TabItem label="API">
+
+When you edit a pool with the API, your request type depends on how much you want to edit.
+
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/operations/account-load-balancer-pools-patch-pool) request. For broader changes, use a [PUT](/api/operations/account-load-balancer-pools-update-pool) request.
+
+</TabItem> </Tabs>
+
+***
+
+## Delete a pool
+
+You cannot delete pools that are in use by load balancers. This includes [geo steering regions](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/#region-steering) pools as well as [fallback pools](/load-balancing/understand-basics/health-details/#fallback-pools).
+
+If you get an error when trying to delete a pool, consider the hostnames listed in the error and [edit the respective load balancers](/load-balancing/load-balancers/create-load-balancer/), making sure to remove all references to the pool.
+
+:::note
+
+If the pool is referenced by geo steering, the configuration is **not** automatically removed when you change to a different **Traffic Steering** method. To make sure you remove it, select **Geo Steering**, remove the pool, and then apply and save any other necessary changes. 
+:::
+
+<Tabs> <TabItem label="Dashboard">
+
+To delete a pool in the dashboard:
+
+1. Go to **Traffic** > **Load Balancing**.
+2. Click **Manage Pools**.
+3. On a specific pool, click **Delete**.
+
+</TabItem> <TabItem label="API">
+
+To delete a pool using the API, send a [DELETE](/api/operations/account-load-balancer-pools-delete-pool) request.
+
+</TabItem> </Tabs>
+
+***
+
+## Set up alerts
+
+You can configure alerts to receive notifications for changes in the status of your pools.
+
+<AvailableNotifications product="Load Balancing" />
+
+<Render file="get-started" product="notifications" />

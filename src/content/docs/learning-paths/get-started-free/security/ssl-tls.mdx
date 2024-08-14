@@ -1,0 +1,49 @@
+---
+title: SSL/TLS settings
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+
+---
+
+import { Render } from "~/components"
+
+Once you make sure that your Cloudflare SSL/TLS [is working correctly](/learning-paths/get-started-free/onboarding/check-ssl/), you will likely want to customize your SSL/TLS setup.
+
+***
+
+## Encryption mode
+
+<Render file="encryption-mode-definition" product="ssl" /> <br/>
+
+### Basic setup
+
+The simplest way to choose your encryption mode is to enable the **SSL/TLS Recommender**, which scans your domain and recommends the appropriate setting.
+
+<Render file="ssl-recommender-prereqs" product="ssl" />
+
+Then, you can enable SSL/TLS recommendations in the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+2. Go to **SSL/TLS**.
+3. For **SSL/TLS Recommender**, switch the toggle to **On**.
+
+<Render file="ssl-recommender-post-setup" product="ssl" />
+
+### Secure setup
+
+If possible, Cloudflare recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
+
+These modes usually require additional setup and can be more technically challenging.
+
+***
+
+## Enforce HTTPS connections
+
+<Render file="enforce-https-recommendation" product="ssl" />
+
+***
+
+## Evaluate additional features
+
+<Render file="get-started-additional-features" product="ssl" />

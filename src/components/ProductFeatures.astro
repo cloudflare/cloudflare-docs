@@ -1,0 +1,97 @@
+---
+import { z } from "astro:content";
+import { getEntry } from "astro:content";
+import { getProperty } from "dot-prop";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		id: z.string(),
+		additional_descriptions: z.boolean().optional(),
+	})
+	.strict();
+
+const { id, additional_descriptions } = props.parse(Astro.props);
+
+const { data } = await getEntry("plans", "index");
+
+const plan = getProperty(data, id);
+
+if (!plan) throw new Error(`Failed to index plans using ${id}`);
+
+const entries = Object.entries(plan);
+---
+
+{
+	entries.map(([key, value]) => {
+		if (key === "title" || key === "link") return;
+
+		return (
+			<div>
+				<h3>{value.title}</h3>
+				{value.link && (
+					<p>
+						<strong>Link: </strong>
+						<a href={value.link}>{value.title}</a>
+					</p>
+				)}
+				{Object.entries(value.properties).map(([key, value]) => (
+					<p>
+						<strong
+							set:html={marked.parseInline(
+								value.title === "Availability"
+									? "Feature availability"
+									: value.title,
+							)}
+						/>
+						{value.title !== "Availability" && value.summary && (
+							<p>{value.summary}</p>
+						)}
+						<ul>
+							<li>
+								<strong>Free: </strong>
+								<Fragment
+									set:html={marked.parseInline(value.free.toString())}
+								/>
+							</li>
+							{additional_descriptions && (
+								<li><strong>Lite: </strong>
+								{value.lite ? (<Fragment
+									set:html={marked.parseInline(value.lite.toString())}
+								/>): (<Fragment
+									set:html={marked.parseInline(value.free.toString())}
+								/>)}
+								
+								</li>
+							)}
+							<li>
+								<strong>Pro: </strong>
+								<Fragment set:html={marked.parseInline(value.pro.toString())} />
+							</li>
+							{additional_descriptions && (
+								<li><strong>Pro Plus: </strong>
+								{value.pro_plus ? (<Fragment
+									set:html={marked.parseInline(value.pro_plus.toString())}
+								/>): (<Fragment
+									set:html={marked.parseInline(value.pro.toString())}
+								/>)}
+								
+								</li>
+							)}
+							<li>
+								<strong>Business: </strong>
+								<Fragment set:html={marked.parseInline(value.biz.toString())} />
+							</li>
+							<li>
+								<strong>Enterprise: </strong>
+								<Fragment set:html={marked.parseInline(value.ent.toString())} />
+							</li>
+						</ul>
+					</p>
+				))}
+			</div>
+		);
+	})
+}

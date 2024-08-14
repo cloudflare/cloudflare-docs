@@ -1,0 +1,33 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/PageSidebar.astro";
+import { slug } from "github-slugger"
+if (Astro.props.slug === "workers-ai/models") {
+    const headings = [
+        "Automatic Speech Recognition",
+        "Image Classification",
+        "Image-to-Text",
+        "Object Detection",
+        "Summarization",
+        "Text Classification",
+        "Text Embeddings",
+        "Text Generation",
+        "Text-to-Image",
+        "Translation"
+    ];
+
+    for (const heading of headings) {
+        Astro.props.toc?.items.push({
+            text: heading,
+            slug: slug(heading),
+            depth: 2,
+            children: []
+        })
+    }
+}
+
+---
+
+<Default {...Astro.props}>
+    <slot />
+</Default>

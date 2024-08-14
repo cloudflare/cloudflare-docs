@@ -1,8 +1,0 @@
-name: Network Analytics
-
-product:
-  title: Network Analytics
-  group: Network security
-  additional_groups: [Analytics]
-  url: /analytics/network-analytics/
-  grid_placeholder: true

@@ -1,0 +1,64 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Head.astro";
+
+import "littlefoot/dist/littlefoot.css";
+
+import { getEntry } from "astro:content";
+import { getPageDescription } from "~/util/description";
+
+const currentSection = Astro.url.pathname.split("/")[1];
+
+if (currentSection) {
+  const product = await getEntry("products", currentSection)
+
+  if (product) {
+    if (product.data.meta.title) {
+      const title = `${Astro.props.entry.data.title} | ${product.data.meta.title}`;
+      Astro.props.entry.data.head.push({
+        tag: "title",
+        attrs: {},
+        content: title
+      });
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: { property: "og:title", content: title },
+      });
+    }
+  }
+}
+
+Astro.props.entry.data.description ??= await getPageDescription(Astro.props.entry);
+
+if (Astro.props.entry.data.pcx_content_type === "changelog") {
+    const href = new URL(Astro.site);
+    href.pathname = Astro.props.entry.slug.concat("/index.xml");
+
+  Astro.props.entry.data.head.push({
+    tag: "link",
+    attrs: {
+      rel: "alternate",
+      type: "application/rss+xml",
+      href: href,
+    },
+    content: "",
+  });
+}
+---
+
+<script>
+  import littlefoot from "littlefoot";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    littlefoot();
+    document
+      .querySelectorAll("span.littlefoot")
+      .forEach((x) => x.classList.add("not-content"));
+  });
+</script>
+<script>
+  import mermaid from "mermaid";
+
+  mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+</script>
+<Default {...Astro.props}><slot /></Default>

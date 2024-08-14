@@ -1,0 +1,47 @@
+---
+pcx_content_type: how-to
+title: Configure tunnel endpoints
+sidebar:
+  order: 1
+head: []
+description: Cloudflare recommends two tunnels for each ISP and network location
+  router combination, one per Cloudflare endpoint. Learn how to configure IPsec
+  or GRE tunnels.
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+<Render file="tunnel-endpoints/tunnel-endpoints" params={{ one: "169.254.240.0/20" }} />
+
+## Ways to onboard traffic to Cloudflare
+
+### GRE and IPsec tunnels
+
+<Render file="tunnel-endpoints/gre-ipsec" params={{ one: "Magic Transit", two: "/magic-transit/reference/tunnels/", three: "/magic-transit/reference/tunnels/#supported-configuration-parameters" }} />
+
+#### Anti-replay protection
+
+<Render file="tunnel-endpoints/anti-replay" params={{ one: "Magic Transit", two: "/magic-transit/reference/anti-replay-protection/" }} />
+
+### Network Interconnect (CNI)
+
+<Render file="tunnel-endpoints/cni" params={{ one: "Magic Transit", two: "Network Interconnect and Magic Transit", three: "/magic-transit/network-interconnect/" }} />
+
+## Add tunnels
+
+<Render file="tunnel-endpoints/add-tunnels" params={{ one: "Magic Transit", two: "Magic Transit > Configuration", three: "/magic-transit/how-to/tunnel-health-checks/", four: "/magic-transit/reference/tunnel-health-checks/", five: "/magic-transit/reference/anti-replay-protection/", six: "unidirectional", seven: "/magic-transit/how-to/check-tunnel-health-dashboard/" }} />
+
+## Bidirectional vs unidirectional health checks
+
+<Render file="tunnel-endpoints/bi-uni-health-checks" params={{ one: "/magic-transit/reference/tunnel-health-checks/" }} />
+
+<Render file="tunnel-endpoints/mt-egress" />
+
+### Legacy health checks system
+
+<Render file="legacy-hc-system" />
+
+## Next steps
+
+Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-transit/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare.

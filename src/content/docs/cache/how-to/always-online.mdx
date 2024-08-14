@@ -1,0 +1,48 @@
+---
+title: Always Online
+pcx_content_type: concept
+
+---
+
+import { FeatureTable } from "~/components"
+
+Cloudflare’s Always Online feature is now integrated with the [Internet Archive](https://archive.org/) so that visitors can access a portion of your website even when your origin server is unreachable and a Cloudflare-cached version is unavailable. When your origin is unreachable, Always Online checks Cloudflare’s cache for a stale or expired version of your website. If a version does not exist, Cloudflare goes to the Internet Archive to fetch and serve static portions of your website.
+
+When you enable Always Online with Internet Archive integration, Cloudflare shares your hostname and popular URL paths with the archive so that the Internet Archive’s crawler stores the pages you want archived. When submitting targets to the crawler, Cloudflare identifies the most popular URLs found among GET requests that returned a 200 HTTP status code in the previous five hours.
+
+Note that Cloudflare does not save a copy of every page of your website, and it cannot serve dynamic content while your origin is offline. If the requested page is not in the Internet Archive's Wayback Machine, the visitor sees the actual error page caused by the offline origin web server.
+
+When the Internet Archive integration is enabled, Cloudflare tells the Internet Archive what pages to crawl and how often. The pages to crawl, as previously mentioned, are the most popular URLs that were successfully visited in the last five hours. The crawling intervals, to ensure stability of service, are limited by Cloudflare. Limits vary according to your Cloudflare plan.
+
+## Availability
+
+<FeatureTable id="cache.always_online" />
+
+## Visitor Experience
+
+When Always Online with Internet Archive integration is enabled, visitors see a banner at the top of the webpage explaining they are visiting an archived version of the website. Visitors can select the Refresh button to check whether the origin has recovered and fresh content is available.
+
+When a visitor requests content for an offline website, Cloudflare returns an HTTP response status code in the range [520–527](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-520-web-server-returns-an-unknown-error), depending on the issue. These status codes indicate that the origin is unreachable.
+
+When the Internet Archive integration is enabled, Cloudflare checks the archive and serves the most recently archived version of the page.
+
+Visitors who interact with dynamic parts of a website, such as a shopping cart or comment box, will see an error page caused by the offline origin web server.
+
+## Enable Always Online
+
+Here is how to enable Always Online in the dashboard:
+
+1. Log in to your Cloudflare account.
+2. Choose the domain that will use Always Online with Internet Archive integration.
+3. Select **Caching** > **Configuration**.
+4. Under **Always Online**, set the toggle to **On**.
+
+:::note[Note]
+
+
+When turning on Always Online, you are also enabling the Internet Archive integration.
+
+
+:::
+
+Refer to [Always Online](/cache/troubleshooting/always-online/) for best practices, limitations, and FAQs.

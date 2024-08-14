@@ -1,0 +1,10 @@
+---
+{}
+
+---
+
+Use this selector to match against only the hostname specified. For example, you can match `test.example.com` but not `example.com` or `www.test.example.com`.
+
+| UI name | API example                      | Evaluation phase      |
+| ------- | -------------------------------- | --------------------- |
+| Host    | `dns.fqdn == "test.example.com"` | Before DNS resolution |

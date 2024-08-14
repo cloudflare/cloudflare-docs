@@ -1,7 +1,0 @@
-name: Cache Reserve
-
-product:
-  title: Cache Reserve
-  group: Application performance
-  url: /cache/advanced-configuration/cache-reserve/
-  grid_placeholder: true
