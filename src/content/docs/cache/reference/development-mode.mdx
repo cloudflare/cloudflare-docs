@@ -1,21 +1,40 @@
----
-title: Development Mode
-pcx_content_type: how-to
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffeechat | Make New Connections & Expand Your Network </title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Coffeechat Logo">
+            <span class="logo-text">Coffeechat</span>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="mailto:ramid@appcoffeechat.com">Contact Us</a>
+        </nav>
+    </header>
 
----
+    <main>
+        <section class="intro">
+            <h1>Premier Platform for Networking with Professionals in the Industry</h1>
+            <p>Make Genuine Relationships with a Coffeechat</p>
+        </section>
 
-Development Mode temporarily suspends Cloudflare's edge caching and [Polish](/images/polish/) features for three hours unless disabled beforehand. Development Mode allows customers to immediately observe changes to their cacheable content like images, CSS, or JavaScript.
+        <section class="waitlist">
+            <div id="getWaitlistContainer" data-waitlist_id="19314" data-widget_type="WIDGET_1"></div>
+        </section>
+    </main>
 
-:::note
+    <footer>
+        <p>&copy; 2024 Coffeechat. All rights reserved.</p>
+    </footer>
 
-To bypass cache for longer than three hours, use bypass cache in [Cache Rules](/cache/how-to/cache-rules/settings/#bypass-cache). 
-:::
-
-## Enable Development Mode
-
-Development Mode temporarily bypasses Cloudflare’s cache and does not purge cached files. To purge your Cloudflare cache, refer to [purge cache](/cache/how-to/purge-cache/).
-
-1. Log in to your Cloudflare account.
-2. Select your domain.
-3. Select **Caching**.
-4. Toggle **Development Mode** to **On**.
+    <script src="https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.js"></script>
+</body>
+</html>
