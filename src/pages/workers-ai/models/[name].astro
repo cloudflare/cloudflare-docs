@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
+import { InlineBadge } from "~/components";
 import Schemas from "~/components/models/Schemas.astro";
 import Playground from "~/components/models/Playground.astro";
 import TextGenerationResponses from "~/components/models/responses/TextGenerationResponses.astro";
@@ -50,6 +51,40 @@ const showPlayground = data.model.task.name === "Text Generation";
 const hasLora = Boolean(
 	data.model.properties.find((x) => x.property_id === "lora"),
 );
+
+const badges = data.model.properties.flatMap(({ property_id, value }) => {
+	if (property_id === "beta" && value === "true") {
+		return {
+			preset: "beta",
+		};
+	}
+
+	if (property_id === "lora" && value === "true") {
+		return {
+			variant: "tip",
+			text: "LoRA",
+		};
+	}
+
+	if (property_id === "function_calling" && value === "true") {
+		return {
+			variant: "note",
+			text: "Function calling",
+		};
+	}
+
+	if (property_id === "planned_deprecation_date") {
+		const timestamp = Math.floor(new Date(value).getTime() / 1000);
+
+		if (Date.now() > timestamp) {
+			return { variant: "danger", text: "Deprecated" };
+		}
+
+		return { variant: "danger", text: "Planned deprecation" };
+	}
+
+	return [];
+});
 
 let CodeExamples;
 let Responses;
@@ -116,6 +151,7 @@ if (data.model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
 ---
 
 <StarlightPage frontmatter={{ title: name, description }}>
+	{badges.map((badge) => <InlineBadge {...badge} /> )}
 	<p>
 		<strong>Model ID: </strong>
 		<code>{data.model.name}</code>
