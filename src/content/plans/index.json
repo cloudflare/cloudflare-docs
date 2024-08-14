@@ -1193,7 +1193,7 @@
           "ent": 50
         },
         "subrequests": {
-          "title": "Number of {{<glossary-tooltip term_id=\"Snippets subrequest\" prepend=\"A subrequest is \">}}subrequests{{</glossary-tooltip>}}",
+          "title": "Number of [[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]",
           "free": 0,
           "pro": 2,
           "biz": 3,

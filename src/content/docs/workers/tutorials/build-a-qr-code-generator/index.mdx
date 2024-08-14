@@ -11,7 +11,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will build and publish a Worker application that generates QR codes.
 
@@ -23,7 +23,7 @@ If you would like to review the code for this tutorial, the final version of the
 
 First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new Cloudflare Workers project. To do this, open a terminal window and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "qr-code-generator" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'qr-code-generator'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

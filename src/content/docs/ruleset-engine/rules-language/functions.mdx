@@ -338,7 +338,7 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 
 `uuidv4(Bytes)` `String`
 
-Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#field-cf-random_seed) field.
+Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#cf-random_seed) field.
 
 For example, `uuidv4(cf.random_seed)` will return a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`.
 

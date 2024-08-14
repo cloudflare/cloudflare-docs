@@ -42,14 +42,14 @@ If you have an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-ce
 
 To manage the TLS version applied to your whole zone when proxied through Cloudflare:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select your website.
 3. Go to **SSL/TLS** > **Edge Certificates**.
 4. For **Minimum TLS Version**, select an option.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) endpoint with `min_tls_version` as the setting name in the URI path, and specify your preferred minimum version in the `value` parameter.
 

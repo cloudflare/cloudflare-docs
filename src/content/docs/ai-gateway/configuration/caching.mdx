@@ -15,15 +15,13 @@ Enable and customize your gateway cache to serve requests directly from Cloudfla
 :::note
 
 
-Caching currently only works for identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
+Currently caching is supported only for text and image responses, and it applies only to identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
 We plan on adding semantic search for caching in the future to improve cache hit rates.
-
-
 :::
 
 ## Default configuration
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To set the default caching configuration in the dashboard:
 
@@ -33,7 +31,7 @@ To set the default caching configuration in the dashboard:
 4. Enable **Cache Responses**.
 5. Change the default caching to whatever value you prefer.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To set the default caching configuration using the API:
 

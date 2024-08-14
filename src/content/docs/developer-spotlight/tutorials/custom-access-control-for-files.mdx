@@ -20,7 +20,7 @@ spotlight:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 
 
@@ -36,7 +36,7 @@ The following sections will guide you through the process of creating a Worker u
 
 To get started developing your Worker you will use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare). To do this, open a terminal window and run the following command:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "custom-access-control" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'custom-access-control'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 

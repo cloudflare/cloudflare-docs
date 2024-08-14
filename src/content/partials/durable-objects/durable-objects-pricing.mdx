@@ -14,7 +14,7 @@ Durable Objects are only available on the [Workers Paid plan](/workers/platform/
 |                      | Paid plan                                         |
 | -------------------- | ------------------------------------------------- |
 | Requests<sup>1</sup> | 1 million, + $0.15/million                        |
-| Duration<sup>2</sup> | 400,000 GB-s, + {props.one}2.50/million GB-s<sup>3,4</sup> |
+| Duration<sup>2</sup> | 400,000 GB-s, + $12.50/million GB-s<sup>3,4</sup> |
 
 
 
@@ -34,57 +34,53 @@ These examples exclude the costs for the Workers calling the Durable Objects.
 
 If a single Durable Object was called by a Worker 1.5 million times, and was active for 1,000,000 seconds in the month, the estimated cost in a month would be:
 
-Total = \~$0.08 USD + Minimum {props.five}/mo usage = {props.five}.08
+Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
-* (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
-* 1,000,000 seconds \* 128 MB / 1 GB = 128,000 GB-s
-* (128,000 GB-s - included 400,000 GB-s) x {props.one}2.50 / 1,000,000 = $0.00
+- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
+- 1,000,000 seconds \* 128 MB / 1 GB = 128,000 GB-s
+- (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
 If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately one message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
 
-Total = \~{props.six}4.65 USD + {props.two}02.36 USD + Minimum {props.five}/mo usage = {props.two}72.01
+Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
-* 100 requests to establish the WebSockets.
-* 100 messages per minute \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
-* (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = {props.six}4.65
-* 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days / 2 = 129,600,000 seconds
-* 129,600,000 seconds \* 128 MB / 1 GB = 16,588,800 GB-s
-* (16,588,800 GB-s - included 400,000 GB-s) x {props.one}2.50 / 1,000,000 = {props.two}02.36
+- 100 requests to establish the WebSockets.
+- 100 messages per minute \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
+- (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = $64.65
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days / 2 = 129,600,000 seconds
+- 129,600,000 seconds \* 128 MB / 1 GB = 16,588,800 GB-s
+- (16,588,800 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $202.36
 
 #### Example 3
 
 If 100 Durable Objects each had a single WebSocket connection established to each of them, which sent one message a second for a month, and the messages overlapped so that the Objects were actually active for the entire month, the estimated cost in a month would be:
 
-Total = \~{props.three}8.73 USD + {props.four}09.72 USD + Minimum {props.five}/mo usage = {props.four}53.45
+Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
-* 100 requests to establish the WebSockets.
-* 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
-* (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = {props.three}8.73
-* 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
-* 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
-* (33,177,600 GB-s - included 400,000 GB-s) x {props.one}2.50 / 1,000,000 = {props.four}09.72
+- 100 requests to establish the WebSockets.
+- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
+- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
+- 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
+- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
 ## Transactional Storage API
 
 The [Transactional Storage API](/durable-objects/api/transactional-storage-api/) is only accessible from within Durable Objects. Durable Objects do not have to use the Transactional Storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
-
-
 |                                  | Paid plan                  |
 | -------------------------------- | -------------------------- |
 | Read request units<sup>1,2</sup> | 1 million, + $0.20/million |
-| Write request units<sup>1</sup>  | 1 million, + {props.one}.00/million |
-| Delete requests<sup>3</sup>      | 1 million, + {props.one}.00/million |
+| Write request units<sup>1</sup>  | 1 million, + $1.00/million |
+| Delete requests<sup>3</sup>      | 1 million, + $1.00/million |
 | Stored data<sup>4</sup>          | 1 GB, + $0.20/ GB-month    |
 
-
-
-1. A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units. For example, a 9 KB write will consume three write request units.
-2. List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for one read request unit.
-3. Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
-4. Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
-5. Each alarm write is billed as a single write request unit.
+1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units. For example, a 9 KB write will consume three write request units.
+2.  List operations are billed by read request units, based on the amount of data examined. For example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for one read request unit.
+3.  Delete requests are unmetered. For example, deleting a 100 KB value will be charged one delete request.
+4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
+5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the Durable Objects in-memory cache or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/transactional-storage-api/) are billed the same as if they were a normal, individual request for each key.

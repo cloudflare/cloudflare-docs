@@ -27,7 +27,7 @@ By default a Worker will emit execution logs containing details about the Reques
 
 In addition, you can add custom logs throughout your code. Any `console.log` statements within your Worker will be visible in the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail). The following example demonstrates a custom `console.log` within a Worker request handler.
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 export default {
@@ -44,7 +44,7 @@ export default {
 }
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener("fetch", (event) => {

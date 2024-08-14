@@ -22,7 +22,7 @@ For more details on what 0-RTT is, how it works, and potential limitations, refe
 
 By default, 0-RTT Connection Resumption is not enabled on your Cloudflare application.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To enable 0-RTT Connection Resumption in the dashboard:
 
@@ -30,7 +30,7 @@ To enable 0-RTT Connection Resumption in the dashboard:
 2. Navigate to **Speed > Optimization**.
 3. Navigate to the **Protocol Optimization** tab and under **0-RTT Connection Resumption**, switch the toggle to **On**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `0rtt` as the setting name in the URI path, and the `value` parameter set to `"on"` or `"off"`.
 

@@ -16,7 +16,7 @@ languages:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -38,7 +38,7 @@ You can learn more about Timescale by reading their [documentation](https://docs
 
 Run the following command to create a Worker project from the command line:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "timescale-api" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'timescale-api'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 
@@ -54,7 +54,7 @@ $ cd timescale-api
 
 :::note
 
-If you have not signed up for Timescale, go to the [signup page](https://timescale.com/signup) where you can start a free 30 day trial with no credit card. 
+If you have not signed up for Timescale, go to the [signup page](https://timescale.com/signup) where you can start a free 30 day trial with no credit card.
 :::
 
 If you are creating a new service, go to the [Timescale Console](https://console.cloud.timescale.com/) and follow these steps:
@@ -78,7 +78,7 @@ If you are using a service you created previously, you can retrieve your service
 
 If you do not have your password stored, you will need to select **Forgot your password?** and set a new **SCRAM** password. Save this password, as Timescale will only display it once.
 
-You should ensure that you do not break any existing clients if when you reset the password. 
+You should ensure that you do not break any existing clients if when you reset the password.
 :::
 
 Insert your password into the **Service URL** as follows (leaving the portion after the @ untouched):

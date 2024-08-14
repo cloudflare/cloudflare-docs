@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 Hyperdrive accelerates access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
 
@@ -59,7 +59,7 @@ Refer to [How Workers works](/workers/reference/how-workers-works/) to learn abo
 
 Create a new project named `hyperdrive-tutorial` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "hyperdrive-tutorial" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'hyperdrive-tutorial'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
 

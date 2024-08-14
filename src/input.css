@@ -5,7 +5,7 @@ select {
 	border-width: 2px;
 }
 
-input:read-only {
+input[readonly] {
 	background-color: var(--sl-color-backdrop-overlay);
 	cursor: not-allowed;
 }

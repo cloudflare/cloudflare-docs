@@ -14,11 +14,11 @@ import { Render, TabItem, Tabs } from "~/components"
 
 <Render file="account-preamble" />
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 <Render file="create-account-dash" />
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="create-account-api" />
 
@@ -28,14 +28,14 @@ import { Render, TabItem, Tabs } from "~/components"
 
 When you create an account with the Tenant API, your Cloudflare user owns that account from creation, ongoing management, and finally deletion.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To view any accounts owned by your tenant using the dashboard:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Tenants** > **Managed Accounts**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To fetch any accounts owned by your tenant using the API, send a [`GET`](/api/operations/accounts-list-accounts) request to the `/accounts` endpoint.
 

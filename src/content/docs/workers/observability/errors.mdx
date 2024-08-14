@@ -210,7 +210,7 @@ A Worker can make HTTP requests to any HTTP service on the public Internet. You 
 
 When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 export default {
@@ -229,7 +229,7 @@ export default {
 }
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener("fetch", (event) => {
@@ -258,7 +258,7 @@ function postLog(data) {
 
 By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 export default {
@@ -270,7 +270,7 @@ export default {
 }
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener("fetch", (event) => {

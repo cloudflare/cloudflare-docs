@@ -3,6 +3,7 @@ import { z } from "astro:content";
 import { Card } from "~/components";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
+import { GlossaryTooltip } from "~/components";
 
 type Props = z.infer<typeof props>;
 
@@ -31,16 +32,35 @@ const properties = plan.properties;
 		</tr>
 	</thead>
 	<tbody>
-		{
-			Object.entries(properties).map(([k, v]) => {
-				const markdown = (content) => {
-					if (typeof content !== "string") return content;
+    {Object.entries(properties).map(([k, v]) => {
+      const renderTitle = (title) => {
+        const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 
-					return marked.parse(content);
-				};
+        if (title.includes(placeholder)) {
+          const [beforePlaceholder, afterPlaceholder] = title.split(placeholder);
+
+          return (
+            <>
+              {beforePlaceholder}
+              <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">
+                subrequests
+              </GlossaryTooltip>
+              {afterPlaceholder}
+            </>
+          );
+        }
+
+        return title;
+      };
+	  
+	  const markdown = (content) => {
+        if (typeof content !== "string") return content;
+        return marked.parse(content);
+      };
+	  
 				return (
 					<tr>
-						<td set:html={markdown(v.title)} />
+						<td>{renderTitle(v.title)}</td>
 						<td set:html={markdown(v.free)} />
 						<td set:html={markdown(v.pro)} />
 						<td set:html={markdown(v.biz)} />

@@ -18,14 +18,14 @@ To enable advanced nameservers on an existing zone:
 
 1. Opt for advanced nameservers on your zone:
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Records**.
 3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
 4. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Use the [Update DNS Settings](/api/operations/dns-settings-for-a-zone-update-dns-settings) endpoint to send a PATCH request like the following:
 

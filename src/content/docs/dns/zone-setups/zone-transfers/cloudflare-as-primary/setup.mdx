@@ -44,11 +44,11 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 <Render file="tsig-definition" />
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 <Render file="tsig-create-dash" />
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="tsig-create-api" />
 
@@ -61,7 +61,7 @@ You only need to create a peer DNS server if you want:
 * Your secondary nameservers to receive **NOTIFYs**  for changes to your Cloudflare DNS records.
 * A **TSIG** to sign zone transfer requests and **NOTIFYs**.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To create a peer using the dashboard:
 
@@ -76,7 +76,7 @@ To create a peer using the dashboard:
    * **Link an existing TSIG**: If desired, link the TSIG you [previously created](#step-1---create-tsig-optional).
 6. Select **Create**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To create a peer DNS server using the API, send a [POST](/api/operations/secondary-dns-\(-peer\)-create-peer) request.
 
@@ -86,7 +86,7 @@ To create a peer DNS server using the API, send a [POST](/api/operations/seconda
 
 If you previously [created a peer DNS server](#step-2---create-peer-dns-server-optional), you should link it to your primary zone.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To create a secondary zone using the dashboard:
 
@@ -97,7 +97,7 @@ To create a secondary zone using the dashboard:
 5. Select a peer.
 6. Select **Save**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To link a primary zone to a peer using the API, send a [POST](/api/operations/secondary-dns-\(-primary-zone\)-create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
 
@@ -121,14 +121,14 @@ Using the information from your secondary DNS provider, [create `NS` records](/d
 
 By default, Cloudflare ignores `NS` records that are added to the zone apex. To modify this behaviour, enable [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns):
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
 3. Go to **DNS** > **Settings**.
 4. Enable **Multi-provider DNS**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 ```bash
 curl --request PATCH \
@@ -147,14 +147,14 @@ curl --request PATCH \
 
 When you enable outgoing zone transfers, this will send a DNS NOTIFY message to your secondary DNS provider.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
 3. Go to **DNS** > **Settings**.
 4. For **Outgoing Zone Transfers**, switch the toggle to **On**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To enable outgoing zone transfers using the API, send a [POST](/api/operations/secondary-dns-\(-primary-zone\)-enable-outgoing-zone-transfers) request.
 

@@ -24,7 +24,7 @@ For Cloudflare to start prefetching URLs, you will need to [enable the feature](
 
 ### Enable Prefetch URLs
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To enable **Prefetch URLs** in the dashboard:
 
@@ -32,7 +32,7 @@ To enable **Prefetch URLs** in the dashboard:
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. For **Prefetch URLs**, switch the toggle to **On**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `prefetch_preload` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
 

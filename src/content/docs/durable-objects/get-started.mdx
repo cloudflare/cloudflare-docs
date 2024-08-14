@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, PackageManagers } from "~/components"
 
 This guide will instruct you through:
 
@@ -30,7 +30,7 @@ You will access your Durable Object from a [Worker](/workers/). Your Worker appl
 
 To create a Worker project, run:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "durable-object-starter" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'durable-object-starter'} />
 
 Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
@@ -50,12 +50,12 @@ Before you create and access a Durable Object, its behavior must be defined by a
 
 :::note
 
-If you do not use JavaScript or TypeScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class. 
+If you do not use JavaScript or TypeScript, you will need a [shim](https://developer.mozilla.org/en-US/docs/Glossary/Shim) to translate your class definition to a JavaScript class.
 :::
 
 Your `MyDurableObject` class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export class MyDurableObject {
@@ -63,7 +63,7 @@ export class MyDurableObject {
 }
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export class MyDurableObject {
@@ -77,7 +77,7 @@ Workers communicate with a Durable Object via the fetch API. Like a Worker, a Du
 
 Your file should now look like:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export class MyDurableObject {
@@ -89,7 +89,7 @@ export class MyDurableObject {
 }
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export class MyDurableObject {
@@ -120,12 +120,12 @@ The `fetch()` handler allows you to instantiate and communicate to a Durable Obj
 :::note
 
 Durable Objects do not receive requests directly from the Internet. Durable Objects receive requests from Workers or other Durable Objects.
-This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances. 
+This is achieved by configuring a binding in the calling Worker for each Durable Object class that you would like it to be able to talk to. These bindings must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
 :::
 
 To communicate with a Durable Object, the fetch handler should look like the following:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -141,7 +141,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {

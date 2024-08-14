@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>configs</key>
+  <array>
+    <dict>
+      <key>organization</key>
+      <string>mycompany</string>
+      <key>display_name</key>
+      <string>Production environment</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>mycompany</string>
+      <key>override_api_endpoint</key>
+      <string>203.0.113.0</string>
+      <key>override_doh_endpoint</key>
+      <string>203.0.113.0</string>
+      <key>override_warp_endpoint</key>
+      <string>203.0.113.0:2408</string>
+      <key>display_name</key>
+      <string>Cloudflare China network</string>
+    </dict>
+    <dict>
+      <key>organization</key>
+      <string>test-org</string>
+      <key>display_name</key>
+      <string>Test environment</string>
+    </dict>
+  </array>
+</dict>
+</plist>

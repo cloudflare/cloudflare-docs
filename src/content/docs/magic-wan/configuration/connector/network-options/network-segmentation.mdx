@@ -36,7 +36,7 @@ The following guide assumes you have already created a site and configured your 
 
 ## Create a policy
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 Follow the steps below to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
@@ -54,7 +54,7 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 12. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
 13. Select **Create policy**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" />
 
@@ -150,7 +150,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 ## Edit a policy
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
@@ -160,7 +160,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 6. Select the policy you need to edit > **Edit**.
 7. Make your changes, and select **Update policy**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" />
 
@@ -210,7 +210,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
 
 ## Delete a policy
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Sites**.
@@ -221,7 +221,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
 7. Select **Delete**.
 8. Select **I understand that deleting a policy is permanent** in the dialog box > **Delete**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 <Render file="connector/account-id-api-key" />
 

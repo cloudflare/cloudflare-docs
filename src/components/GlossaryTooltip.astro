@@ -45,24 +45,15 @@ const definition = prepend
 			content: tooltip.dataset.content,
 			allowHTML: true,
 			interactive: true,
+			placement: "auto",
+			arrow: false
 		});
 	}
-</script><style is:inline>
+</script><style is:global>
 	.tippy-box {
-		background-color: var(--sl-color-bg);
+		background-color: var(--sl-color-bg-nav);
+		border-color: var(--sl-color-text);
+		border: 0.1em solid;
 		color: var(--sl-color-white);
-	}
-
-	.tippy-box[data-placement^="top"] > .tippy-arrow::before {
-		border-top-color: var(--sl-color-bg);
-	}
-	.tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
-		border-bottom-color: var(--sl-color-bg);
-	}
-	.tippy-box[data-placement^="left"] > .tippy-arrow::before {
-		border-left-color: var(--sl-color-bg);
-	}
-	.tippy-box[data-placement^="right"] > .tippy-arrow::before {
-		border-right-color: var(--sl-color-bg);
 	}
 </style>

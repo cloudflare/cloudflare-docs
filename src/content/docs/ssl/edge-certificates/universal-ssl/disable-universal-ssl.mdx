@@ -33,7 +33,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 Before you disable Universal SSL/TLS, make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To disable Universal SSL in the dashboard:
 
@@ -44,7 +44,7 @@ To disable Universal SSL in the dashboard:
 5. Read the warnings in the **Acknowledgement**.
 6. Select **I Understand** and select **Confirm**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To disable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operations/universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": false` parameter.
 
@@ -56,7 +56,7 @@ Even with Universal SSL disabled, some features such as [AMP Real URL](/speed/op
 
 ## Re-enable Universal SSL
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To re-enable Universal SSL in the dashboard:
 
@@ -65,7 +65,7 @@ To re-enable Universal SSL in the dashboard:
 3. Go to **SSL/TLS** > **Edge Certificates**.
 4. For **Disable Universal SSL**, select **Enable Universal SSL**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To re-enable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/operations/universal-ssl-settings-for-a-zone-edit-universal-ssl-settings) request and include the `"enabled": true` parameter.
 

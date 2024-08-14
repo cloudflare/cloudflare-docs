@@ -30,7 +30,7 @@ HTTP/2 is enabled by default for all plans (though it does require an [SSL certi
 
 Domains on Free plans cannot disable Cloudflare's HTTP/2 setting.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To disable **HTTP/2** in the dashboard:
 
@@ -40,7 +40,7 @@ To disable **HTTP/2** in the dashboard:
 4. Go to **Protocol Optimization**.
 5. For **HTTP/2**, switch the toggle to **Off**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To disable **HTTP/2** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `http2` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 

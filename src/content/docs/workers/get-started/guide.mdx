@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render, PackageManagers } from "~/components"
 
 Set up and deploy your first Worker with Wrangler, the Cloudflare Developer Platform CLI.
 
@@ -25,7 +25,7 @@ This guide will instruct you through setting up and deploying your first Worker.
 
 Open a terminal window and run C3 to create your Worker project:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "my-first-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'my-first-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

@@ -13,7 +13,7 @@ tags:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 In this tutorial, you will build a project that leverages [OpenAI's function calling](https://platform.openai.com/docs/guides/function-calling) feature, available in OpenAI's latest Chat Completions API models.
 
@@ -35,7 +35,7 @@ The function calling feature allows the AI model to intelligently decide when to
 
 Create a Worker project in the command line:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "openai-function-calling-workers" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'openai-function-calling-workers'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

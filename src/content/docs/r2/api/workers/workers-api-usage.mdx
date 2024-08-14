@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 ## 1. Create a new application with C3
 
@@ -17,7 +17,7 @@ C3 (`create-cloudflare-cli`) is a command-line tool designed to help you set up 
 
 To get started, open a terminal window and run:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "r2-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'r2-worker'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 
@@ -213,7 +213,7 @@ You can verify your authorization logic is working through the following command
 
 :::caution
 
-When uploading files to R2 via `curl`, ensure you use **[`--data-binary`](https://everything.curl.dev/http/post/binary)** instead of `--data` or `-d`. Files will otherwise be truncated. 
+When uploading files to R2 via `curl`, ensure you use **[`--data-binary`](https://everything.curl.dev/http/post/binary)** instead of `--data` or `-d`. Files will otherwise be truncated.
 :::
 
 ```sh

@@ -25,11 +25,11 @@ import { Render, TabItem, Tabs } from "~/components"
 
 ## Redirect all requests to one URL
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="redirect-example-js" />
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {
@@ -41,7 +41,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response
@@ -52,7 +52,7 @@ def on_fetch(request):
     return Response.redirect(destinationURL, statusCode)
 ```
 
-</TabItem> <TabItem label="rs">
+</TabItem> <TabItem label="Rust" icon="seti:rust">
 
 ```rs
 use worker::*;
@@ -70,7 +70,7 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 
 ## Redirect requests from one domain to another
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -89,7 +89,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {
@@ -108,7 +108,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-</TabItem> <TabItem label="py">
+</TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, URL
@@ -125,7 +125,7 @@ async def on_fetch(request):
     return Response.redirect(destinationURL, statusCode)
 ```
 
-</TabItem> <TabItem label="rs">
+</TabItem> <TabItem label="Rust" icon="seti:rust">
 
 ```rs
 use worker::*;

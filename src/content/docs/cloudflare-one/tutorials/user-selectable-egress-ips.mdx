@@ -40,7 +40,7 @@ Make sure you have:
 
 First, create [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to your dedicated egress IPs.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. In **Network locations**, go to **Virtual networks** and select **Manage**.
@@ -51,7 +51,7 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
 
@@ -78,7 +78,7 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 After creating your virtual networks, route your private network CIDRs over each virtual network. This ensures that users can reach all services on your network regardless of which egress IP they use.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Go to **Networks** > **Tunnels**.
 2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
@@ -93,7 +93,7 @@ After creating your virtual networks, route your private network CIDRs over each
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 1. Assign your first virtual network to your private network route. For example, assign `vnet-AMER` to your tunnel that routes `10.0.0.0/8`:
 
@@ -144,7 +144,7 @@ Each tunnel connected to your private network should have each of your virtual n
 
 Next, assign your dedicated egress IPs to each virtual network using Gateway egress policies.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
 
@@ -166,7 +166,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 </TabItem>
 
-<TabItem label="api">
+<TabItem label="API">
 
 1. Add a Gateway egress policy that matches the corresponding virtual network. For example:
 

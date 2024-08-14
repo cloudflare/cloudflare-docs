@@ -17,7 +17,7 @@ sidebar:
 
 
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 
@@ -31,7 +31,7 @@ Using Durable Objects to persist browser sessions improves performance by elimin
 
 Create a new Worker project named `browser-worker` by running:
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "browser-worker" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'browser-worker'} />
 
 ## 2. Enable Durable Objects in the dashboard
 

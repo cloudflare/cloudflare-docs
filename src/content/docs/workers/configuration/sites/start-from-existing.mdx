@@ -57,7 +57,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 4. Replace the contents of `src/index.ts` with the following code snippet:
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
@@ -89,7 +89,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";

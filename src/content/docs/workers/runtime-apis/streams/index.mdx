@@ -33,7 +33,7 @@ By default, Cloudflare Workers is capable of streaming responses using the [Stre
 The worker can create a `Response` object using a `ReadableStream` as the body. Any data provided through the
 `ReadableStream` will be streamed to the client as it becomes available.
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 export default {
@@ -47,7 +47,7 @@ export default {
 }
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener('fetch', event => {
@@ -67,7 +67,7 @@ async function fetchAndStream(request) {
 
 A [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method can be used to modify the response body as it is being streamed:
 
-<Tabs> <TabItem label="js/esm">
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
 ```js
 export default {
@@ -90,7 +90,7 @@ export default {
 }
 ```
 
-</TabItem> <TabItem label="js/sw">
+</TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
 ```js
 addEventListener('fetch', event => {

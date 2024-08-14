@@ -5,6 +5,10 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2024-08-13"
+    title: Hyperdrive audit logs now available in the Cloudflare Dashboard
+    description: |-
+      Actions that affect Hyperdrive configs in an account will now appear in the audit logs for that account.
   - publish_date: "2024-05-24"
     title: Increased configuration limits
     description: |-

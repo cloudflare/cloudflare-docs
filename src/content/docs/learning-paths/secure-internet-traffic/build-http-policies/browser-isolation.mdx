@@ -24,7 +24,7 @@ As you have begun deploying Cloudflare Zero Trust, you may have started to visua
 
 You can control potential risk and shape user behavior without applying heavy-handed block policies by applying policies to isolate user traffic to applications that match your defined categories. You can then set additional parameters in the policy, such as the ability to restrict copy/paste and upload/download. Users can still access information in the tools -- if not use the tools to a lesser extent -- while you minimize the risk of data loss.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**.
 
@@ -45,7 +45,7 @@ You can control potential risk and shape user behavior without applying heavy-ha
 
 6. Select **Create policy**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
@@ -94,7 +94,7 @@ You can accomplish this by creating the following policies:
 
 In this context, if some traffic is unknown to your organization, Cloudflare will isolate it by default. Cloudflare will also prevent any malicious code from being executed client side, with additional controls available.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 * Allow known applications and websites:
 
@@ -114,7 +114,7 @@ In this context, if some traffic is unknown to your organization, Cloudflare wil
   | -------- | ------------- | ----- | ------- |
   | Host     | matches regex | `.*`  | Isolate |
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 ```bash title="Allow known applications and websites"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \

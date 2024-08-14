@@ -26,7 +26,7 @@ TLS 1.3 requires a two-step activation: in the Cloudflare dashboard and in the b
 
 ### Enable TLS 1.3 in Cloudflare settings
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 To enable TLS 1.3 in the dashboard:
 
@@ -34,7 +34,7 @@ To enable TLS 1.3 in the dashboard:
 2. Go to **SSL/TLS** > **Edge Certificates**.
 3. For **TLS 1.3**, switch the toggle to **On**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 To adjust your TLS 1.3 settings with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `tls_1_3` as the setting name in the URI path, and set the `value` parameter to your desired setting (`"on"` or `"off"`).
 

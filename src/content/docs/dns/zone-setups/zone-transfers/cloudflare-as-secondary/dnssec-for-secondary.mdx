@@ -31,7 +31,7 @@ If you use Cloudflare secondary nameservers as the only nameservers authoritativ
 
 In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
 
@@ -41,7 +41,7 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 4. <Render file="dnssec-registrar-steps" />
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set a `status` of `active` for your zone.
 
@@ -91,13 +91,13 @@ Pre-signed DNSSEC does not support [Secondary DNS Overrides](/dns/zone-setups/zo
 
 :::
 
-<Tabs> <TabItem label="dashboard">
+<Tabs> <TabItem label="Dashboard">
 
 a. Select your zone and go to **DNS** > **Settings**.
 
 b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 
-</TabItem> <TabItem label="api">
+</TabItem> <TabItem label="API">
 
 Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) and set the `dnssec_presigned` value to `true`.
 

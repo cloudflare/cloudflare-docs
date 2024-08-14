@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, PackageManagers } from "~/components"
 
 ## Prerequisites:
 
@@ -80,7 +80,7 @@ $ cd ..
 
 Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
 
-<Render file="c3-run-command-with-directory" product="workers" params={{ one: "my-dispatcher" }} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={'my-dispatcher'} />
 
 <Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
 

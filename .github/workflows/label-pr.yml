@@ -4,7 +4,7 @@ name: Label PRs
 # **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
 # **Who does it impact**: PCX team
 
-on: [pull_request_target]
+on: [pull_request]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

@@ -121,7 +121,7 @@ Save this file, and you are ready to write your first test.
 
 If you created a basic Worker via the guide listed above, you should have the following fetch handler in the `src` folder:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -131,7 +131,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {
@@ -145,7 +145,7 @@ export default {
 
 This Worker receives a request, and returns a response of `"Hello World!"`. In order to test this, create a `test` folder with the following test file:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
@@ -166,7 +166,7 @@ describe("Hello World worker", () => {
 });
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
@@ -195,7 +195,7 @@ describe("Hello World worker", () => {
 
 Add functionality to handle a `404` path on the Worker. This functionality will return the text `Not found` as well as the status code `404`.
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -211,7 +211,7 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export default {
@@ -231,7 +231,7 @@ export default {
 
 To test this, add the following to your test file:
 
-<Tabs> <TabItem label="js">
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 it("responds with not found and proper status for /404", async () => {
@@ -246,7 +246,7 @@ it("responds with not found and proper status for /404", async () => {
 });
 ```
 
-</TabItem> <TabItem label="ts">
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 it("responds with not found and proper status for /404", async () => {
