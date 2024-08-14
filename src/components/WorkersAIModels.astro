@@ -51,6 +51,8 @@ const entries = Object.entries(grouped).reverse();
 									if (Date.now() > timestamp) {
 										return { variant: "danger", text: "Deprecated" }
 									}
+
+									return { variant: "danger", text: "Planned deprecation" };
 								}
 
 								return [];
