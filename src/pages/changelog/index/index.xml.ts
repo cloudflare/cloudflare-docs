@@ -29,7 +29,7 @@ export const GET: APIRoute = async (context) => {
             if (entry.link) {
                 link = entry.link
             } else {
-                const anchor = slug(entry.title ?? entry.date);
+                const anchor = slug(entry.title ?? entry.publish_date);
                 link = product.data.link.concat(`#${anchor}`);
             }
 
@@ -58,6 +58,7 @@ export const GET: APIRoute = async (context) => {
         title: `Cloudflare product changelog`,
         description: `Updates to various Cloudflare products.`,
         site: "https://developers.cloudflare.com/changelog/",
+        trailingSlash: false,
         items: entries.map((entry) => {
             return {
                 title: `${entry.product} - ${entry.title ?? entry.date}`,
