@@ -34,9 +34,12 @@ const INITIAL_VISIBLE_ROWS = 20;
 		}
 	</tbody>
 </table>
-<LinkButton id="glossary-button" href="" class="justify-center">
-	View more terms
-</LinkButton>
+
+{ terms.length > INITIAL_VISIBLE_ROWS && 
+	<LinkButton id="glossary-button" href="" class="justify-center">
+		View more terms
+	</LinkButton>
+}
 
 <script>
 	// function filterRows(search: string) {
