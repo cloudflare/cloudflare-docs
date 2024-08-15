@@ -1,0 +1,117 @@
+---
+title: Overview
+order: 0
+type: overview
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare Durable Objects
+
+---
+
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+
+<Description>
+
+
+Create collaborative applications, real-time chat, multiplayer games and more without needing to coordinate state or manage infrastructure.
+
+
+</Description>
+
+<Plan type="paid" />
+
+Durable Objects provide a powerful API for coordinating multiple clients or users, each with private, transactional and strongly consistent storage attached.
+
+Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own.
+
+***
+
+## Features
+
+<Feature header="In-memory state" href="/durable-objects/reference/in-memory-state/">
+
+Learn how Durable Objects coordinate connections among multiple clients or events.
+
+
+</Feature>
+
+<Feature header="Transactional Storage API" href="/durable-objects/api/transactional-storage-api/">
+
+Learn how Durable Objects provide strongly consistent, serializable key-value storage.
+
+
+</Feature>
+
+<Feature header="WebSocket Hibernation" href="/durable-objects/reference/websockets/#websocket-hibernation">
+
+Learn how WebSocket Hibernation allows you to manage the connections of multiple clients at scale.
+
+
+</Feature>
+
+<Feature header="Durable Objects Alarms" href="/durable-objects/api/alarms/">
+
+Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
+
+
+</Feature>
+
+***
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
+
+
+</RelatedProduct>
+
+<RelatedProduct header="D1" href="/d1/" product="d1">
+
+D1 is Cloudflare’s SQL-based native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+
+
+</RelatedProduct>
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+
+Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+
+</RelatedProduct>
+
+***
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="pen">
+Browse what other developers are building with Durable Objects.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/durable-objects/platform/limits/" icon="document">
+Learn about Durable Objects limits.
+</LinkTitleCard>
+
+<LinkTitleCard title="Pricing" href="/durable-objects/platform/pricing/" icon="pen">
+Learn about Durable Objects pricing.
+</LinkTitleCard>
+
+<LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="document">
+Learn more about storage and database options you can build with Workers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
+Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
+Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.
+</LinkTitleCard>
+
+</CardGrid>

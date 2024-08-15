@@ -1,0 +1,27 @@
+name: D1
+
+product:
+  title: D1
+  url: /d1/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare D1 docs
+  description: Documentation for Cloudflare D1, a SQL database.
+  author: '@cloudflare'
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
+  discord: https://discord.com/invite/cloudflaredev
+
+externals:
+  - title: Workers home
+    url: https://workers.cloudflare.com
+  - title: Discord
+    url: https://discord.cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: d1

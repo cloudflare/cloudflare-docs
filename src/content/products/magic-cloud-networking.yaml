@@ -1,0 +1,21 @@
+name: Magic Cloud Networking
+
+product:
+  title: Magic Cloud Networking
+  url: /magic-cloud-networking/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare Magic Cloud Networking docs
+  description: Documentation for Cloudflare Magic Cloud Networking, a way to automate resource discovery, and reduce management burden when connecting to your public cloud.
+  author: '@cloudflare'
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: magic-cloud-networking

@@ -1,0 +1,73 @@
+---
+import { z } from "astro:content";
+import { Card } from "~/components";
+import { indexPlans } from "~/util/plans";
+import { marked } from "marked";
+import { GlossaryTooltip } from "~/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		id: z.string(),
+	})
+	.strict();
+
+const { id } = props.parse(Astro.props);
+
+const plan = await indexPlans(id);
+
+// @ts-ignore types not implemented for plans JSON
+const properties = plan.properties;
+---
+
+<table>
+	<thead>
+		<tr>
+			<td></td>
+			<td>Free</td>
+			<td>Pro</td>
+			<td>Business</td>
+			<td>Enterprise</td>
+		</tr>
+	</thead>
+	<tbody>
+    {Object.entries(properties).map(([k, v]) => {
+      const renderTitle = (title) => {
+        const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
+
+        if (title.includes(placeholder)) {
+          const [beforePlaceholder, afterPlaceholder] = title.split(placeholder);
+
+          return (
+            <>
+              {beforePlaceholder}
+              <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">
+                subrequests
+              </GlossaryTooltip>
+              {afterPlaceholder}
+            </>
+          );
+        }
+
+        return title;
+      };
+
+	  const markdown = (content) => {
+        if (typeof content !== "string") return content;
+        return marked.parse(content);
+      };
+
+				return (
+					<tr>
+						<td>{renderTitle(v.title)}</td>
+						<td set:html={markdown(v.free)} />
+						<td set:html={markdown(v.pro)} />
+						<td set:html={markdown(v.biz)} />
+						<td set:html={markdown(v.ent)} />
+					</tr>
+				);
+			})
+		}
+	</tbody>
+</table>

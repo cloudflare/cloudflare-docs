@@ -1,0 +1,23 @@
+---
+title: API
+pcx_content_type: navigation
+sidebar:
+  order: 6
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+:::caution[Area 1 has been renamed]
+
+
+<Render file="rename-area1-to-ces" />
+
+
+:::
+
+Email Security offers Application Programming Interfaces (APIs) to expose our <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> campaign rulesets. These APIs both aid research and provide a set of indicators to block using network security edge devices.
+
+All API requests are initiated using normal HTTP requests (`GET`/`POST`/`DELETE`) and responses are returned in JSON. Authentication to the APIs uses HTTP Basic Authentication over HTTPS.
+
+For more details, refer to our [API documentation (PDF)](/email-security/static/api_documentation_1.38.1.pdf).

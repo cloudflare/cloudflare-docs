@@ -1,0 +1,74 @@
+---
+import { getCollection, getEntry, z } from "astro:content";
+import { formatDistance } from "date-fns";
+
+const currentSection = Astro.params.slug?.split("/")[0];
+const currentProduct = await getEntry("products", currentSection!);
+
+if (!currentProduct) {
+	throw new Error(
+		`[ListTutorials] Unable to find product YAML for ${currentSection}.`,
+	);
+}
+
+const productTitle = currentProduct.data.product.title;
+
+const tutorials = await getCollection("docs", (entry) => {
+	return (
+		// pcx_content_type: tutorial
+		entry.data.pcx_content_type === "tutorial" &&
+		// /src/content/r2/**/*.mdx
+		(entry.slug.startsWith(`${currentSection}/`) ||
+		// products: [R2]
+		entry.data.products?.some(
+			(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
+		))
+	);
+});
+
+const videos = await getEntry("videos", "index");
+const filteredVideos = videos.data.entries.filter((x) =>
+	x.products.some(
+		(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
+	),
+);
+
+if (filteredVideos) {
+	filteredVideos.forEach((x) => tutorials.push({ data: x }));
+}
+
+tutorials.sort((a, b) => b.data.updated - a.data.updated);
+
+const timeAgo = (date: Date) => {
+	if (!date) return undefined;
+	return formatDistance(date, new Date(), { addSuffix: true });
+};
+---
+
+<table>
+	<thead>
+		<tr>
+			<td>Name</td>
+			<td>Last Updated</td>
+			<td>Type</td>
+			<td>Difficulty</td>
+		</tr>
+	</thead>
+	<tbody>
+		{
+			tutorials.map((tutorial) => {
+				const href = tutorial.slug ? `/${tutorial.slug}` : tutorial.data.link;
+				return (
+					<tr>
+						<td>
+							<a href={href}>{tutorial.data.title}</a>
+						</td>
+						<td>{timeAgo(tutorial.data.updated)}</td>
+						<td>{tutorial.data.content_type}</td>
+						<td>{tutorial.data.difficulty}</td>
+					</tr>
+				);
+			})
+		}
+	</tbody>
+</table>

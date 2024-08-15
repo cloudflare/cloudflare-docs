@@ -1,0 +1,44 @@
+---
+import { getEntry, z } from "astro:content";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	file: z.string(),
+	product: z.string().optional(),
+	params: z.record(z.string(), z.any()).optional(),
+});
+
+let { file, product, params } = props.parse(Astro.props);
+
+if (!product) {
+	product = Astro.params.slug?.split("/")[0];
+}
+
+if (!product) {
+	throw new Error(
+		`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
+	);
+}
+
+const partial = await getEntry("partials", `${product}/${file}`);
+
+if (!partial) {
+	throw new Error(
+		`[Render] Couldn't find partial: ${file}. Included on ${Astro.params.slug}`,
+	);
+}
+
+if (partial.data.params) {
+	const expected = partial.data.params;
+	if (!params)
+		throw new Error(
+			`${file} included on ${Astro.params.slug} expected parameters: ${expected}, got none`,
+		);
+}
+
+const { Content } = await partial.render();
+---
+
+<Content {...params} />

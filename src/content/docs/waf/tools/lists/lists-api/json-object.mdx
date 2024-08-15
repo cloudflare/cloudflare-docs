@@ -1,0 +1,108 @@
+---
+title: JSON object
+pcx_content_type: reference
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: List JSON object
+description: Reference information on the JSON object used in Lists API calls.
+
+---
+
+## List object structure and properties
+
+A JSON response for the [Lists API](/api/operations/lists-get-lists) has this structure:
+
+```json
+{
+  "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
+  "name": "my_list_name",
+  "description": "List description.",
+  "kind": "(ip|hostname|asn|redirect)",
+  "num_items": 10,
+  "num_referencing_filters": 2,
+  "created_on": "2021-01-01T08:00:00Z",
+  "modified_on": "2021-01-10T14:00:00Z"
+}
+```
+
+This table summarizes the object properties:
+
+
+
+## List item object structure and properties
+
+Each list type (IP address, hostname, ASN, redirects) can only contain items of the same type.
+
+### IP address
+
+A fully populated JSON object for an IP address list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "ip": "10.0.0.1/32",
+  "comment": "CF DNS server",
+  "created_on": "2021-10-01T05:20:00.12345Z",
+  "modified_on": "2021-10-01T05:20:00.12345Z"
+}
+```
+
+### Hostname
+
+A fully populated JSON object for a hostname list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "hostname": {
+    "url_hostname": "*.example.com"
+  },
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
+}
+```
+
+### ASN
+
+A fully populated JSON object for an ASN list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "asn": 13335,
+  "comment": "My provider's ASN",
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
+}
+```
+
+### URL redirect
+
+A fully populated JSON object for a Bulk Redirect List item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "redirect": {
+    "source_url": "https://example.com/blog",
+    "target_url": "https://example.com/blog/latest",
+    "status_code": 301,
+    "include_subdomains": false,
+    "subpath_matching": false,
+    "preserve_query_string": false,
+    "preserve_path_suffix": true
+  },
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
+}
+```
+
+### Properties reference
+
+The JSON object properties for a list item are defined as follows:
+
+
+
+For a detailed specification, refer to the [Lists API](/api/operations/lists-get-lists) documentation.

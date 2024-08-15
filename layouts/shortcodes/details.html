@@ -1,9 +1,0 @@
-{{ $header := default "Header tag required!" (.Get "header") }}
-
-<details class="DocsMarkdown"
-  {{ with .Get "open" }} open{{ end }}>
-    <summary>{{ $header | markdownify }}</summary>
-    <div>
-      {{- .Page.RenderString .Inner -}}
-    </div>
-</details>

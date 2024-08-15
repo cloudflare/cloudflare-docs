@@ -1,0 +1,27 @@
+name: Load Balancing
+
+product:
+  title: Load Balancing
+  url: /load-balancing/
+  group: Application performance
+  preview_tryout: true
+
+meta:
+  title: Cloudflare Load Balancing docs
+  description: Balance traffic loads, manage failovers, monitor server and pool
+    health, and apply geographic control with Cloudflare Load Balancing
+  author: '@cloudflare'
+
+resources:
+  community: https://community.cloudflare.com/tag/loadbalancing
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing
+  learning_center: https://www.cloudflare.com/learning/performance/what-is-load-balancing/
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: load-balancing

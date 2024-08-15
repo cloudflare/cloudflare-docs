@@ -1,0 +1,50 @@
+---
+title: Change your domain version
+pcx_content_type: tutorial
+
+---
+
+import { Render } from "~/components"
+
+[Version Management](/version-management/) is available for Enterprise customers and allows you to safely test, deploy, and roll back changes to your zone configurations.
+
+
+## Enable versioning
+
+
+<Render file="enable-versioning" product="version-management" />
+
+
+## (Optional) Create additional environments
+
+<Render file="enable-default-creation" product="version-management" />
+
+These environments each serve a specific purpose and are accessed differently: <Render file="environment-defaults" product="version-management" />
+
+<Render file="create-environment-situation" product="version-management" /> <br/>
+
+For more details, refer to [Create environment](/version-management/how-to/environments/#create-environment).
+
+
+## Update configurations
+
+<Render file="edit-version" product="version-management" />
+
+## Test version
+
+<Render file="test-version" product="version-management" />
+
+## Promote version
+
+
+Next, [promote](/version-management/how-to/environments/#change-environment-version) your version through your different environments.
+
+<Render file="promote-version" product="version-management" />
+
+After promoting to each environment, test the new version in your new environment.
+
+## Repeat
+
+For new changes to your zone, [create a new version](/version-management/how-to/versions/#create-version) and repeat this process.
+
+

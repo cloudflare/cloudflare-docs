@@ -127,12 +127,13 @@ async function run(): Promise<void> {
       previewBaseURL = urlMatches[3];
     }
 
+    core.debug(previewBaseURL)
+
     const changedFiles = files
       .filter(
         (file) =>
-          file.filename.endsWith(".md") &&
-          !file.filename.includes("_partials") &&
-          file.filename.startsWith("content/")
+          file.filename.endsWith(".mdx") &&
+          file.filename.startsWith("src/content/docs")
       )
       .map((file) => ({
         file,
@@ -143,16 +144,20 @@ async function run(): Promise<void> {
       .map((file) => {
         const filePathToUriPath = (link: string): string => {
           let path = link
-            .replace(/^content/, "")
-            .replace(/_index\.md$/, "")
+            .replace(/^src\/content\/docs/, "")
             .replace(/index\.md$/, "")
-            .replace(/\.md$/, "/");
-          if (path.includes(" ") || path.startsWith("/support/")) {
+            .replace(/\.mdx$/, "/");
+          if (path.includes(" ")) {
             return UnicodeSanitize(path);
           } else {
             return DISABLE_PATH_TO_LOWER ? path : path.toLowerCase();
           }
         };
+
+        core.debug(file.file.filename)
+        core.debug(filePathToUriPath(
+          file.file.filename
+        ))
 
         const originalLink = `https://developers.cloudflare.com${filePathToUriPath(
           file.file.filename

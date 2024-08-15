@@ -1,0 +1,35 @@
+---
+pcx_content_type: how-to
+title: Enable
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Enable Total TLS
+
+---
+
+import { Render, TabItem, Tabs } from "~/components"
+
+To enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) - which issues individual certificates for your proxied hostnames - follow these instructions:
+
+<Tabs> <TabItem label="Dashboard">
+
+To enable Total TLS in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Choose your account and domain.
+3. Go to **SSL/TLS** > **Edge Certificates**.
+4. For **Total TLS**, switch the toggle to **On** and - if desired - choose an issuing **Certificate Authority**.
+
+</TabItem> <TabItem label="API">
+
+To enable Total TLS with the API, send a [`PATCH`](/api/operations/total-tls-enable-or-disable-total-tls) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+
+You can also specify a desired certificate authority by adding a value to the `certificate_authority` parameter.
+
+</TabItem> </Tabs>
+
+## Aspects to consider
+
+* <Render file="total-tls-character-limitation" />

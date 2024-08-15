@@ -1,0 +1,27 @@
+---
+{}
+
+---
+
+import { TabItem, Tabs } from "~/components"
+
+<Tabs> <TabItem label="Dashboard">
+
+To create a peer server using the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Manage Account** > **Configurations**.
+3. Select **DNS Zone Transfers**.
+4. For **Peer DNS servers**, select **Create**.
+5. Enter the following information, paying particular attention to:
+   * **IP**: Specifies where Cloudflare sends transfer requests to.
+   * **Port**: Specifies the IP Port for the transfer IP.
+   * **Enable incremental (IXFR) zone transfers**: Specifies if Cloudflare sends IXFR requests in addition to the default AXFR requests.
+   * **Link an existing TSIG**: If desired, link the TSIG you [previously created](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#1-create-tsig-optional).
+6. Select **Create**.
+
+</TabItem> <TabItem label="API">
+
+To create a peer DNS server using the API, send a [POST request](/api/operations/secondary-dns-\(-peer\)-create-peer).
+
+</TabItem> </Tabs>

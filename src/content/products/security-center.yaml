@@ -1,0 +1,27 @@
+name: Security Center
+
+product:
+  title: Security Center
+  url: /security-center/
+  group: Application security
+  additional_groups: [Analytics]
+
+meta:
+  title: Cloudflare Security Center docs
+  description: Cloudflare Security Center allows you to manage your IT assets in a
+    single dashboard, warning you about possible security risks and
+    vulnerabilities, and providing a one-click solution for Cloudflare
+    configuration issues.
+  author: '@cloudflare'
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/security-center
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: security-center

@@ -1,0 +1,35 @@
+---
+inputParameters: WARPsuccess
+
+---
+
+import { Details, Markdown, Render } from "~/components"
+
+Most admins test by manually downloading the WARP client and enrolling in your organization's Cloudflare Zero Trust instance.
+
+## Install WARP
+
+1. First, uninstall any existing third-party VPN software if possible. Sometimes products placed in a disconnected or disabled state will still interfere with the WARP client.
+2. If you are running third-party firewall or TLS decryption software, verify that it does not inspect or block traffic to these IP addresses:
+   * Client orchestration IPs: <Render file="warp/client-orchestration-ips" product="cloudflare-one" />
+   * Gateway DoH IPs: <Render file="warp/doh-ips" product="cloudflare-one" />
+     For more information, refer to [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+3. Manually install WARP on the device.
+
+
+<Details header="Window, macOS, and Linux">
+
+<Render file="warp/enroll-desktop" product="cloudflare-one" />
+
+
+</Details>
+
+
+<Details header="iOS, Android, and ChromeOS">
+
+<Render file="warp/enroll-ios-android" product="cloudflare-one" />
+
+
+</Details>
+
+The WARP client should show as **Connected**. {props.one}

@@ -1,0 +1,123 @@
+---
+title: Recommended DNS policies
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+
+---
+
+import { Details, Render } from "~/components"
+
+We recommend you add the following DNS policies to build an Internet and SaaS app security strategy for your organization.
+
+
+<Details header="All-DNS-Domain-Allowlist">
+
+Allowlist any known domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
+
+| Selector | Operator | Value           | Logic | Action |
+| -------- | -------- | --------------- | ----- | ------ |
+| Domain   | in list  | *Known Domains* | Or    | Allow  |
+| Host     | in list  | *Known Domains* |       |        |
+
+
+</Details>
+
+
+<Details header="Quarantined-Users-DNS-Restricted-Access">
+
+<Render file="zero-trust/blocklist-restricted-users" />
+
+| Selector         | Operator | Value               | Logic | Action |
+| ---------------- | -------- | ------------------- | ----- | ------ |
+| Domain           | in list  | *Known Domains*     | Or    | Block  |
+| Host             | in list  | *Known Domains*     | And   |        |
+| User Group Names | in       | *Quarantined Users* |       |        |
+
+
+</Details>
+
+
+<Details header="All-DNS-SecurityCategories-Blocklist">
+
+<Render file="zero-trust/blocklist-security-categories" />
+
+<Render file="gateway/policies/block-security-categories" product="cloudflare-one" />
+
+
+</Details>
+
+
+<Details header="All-DNS-ContentCategories-Blocklist">
+
+<Render file="zero-trust/blocklist-content-categories" params={{ one: "DNS", two: "Security Risks" }} />
+
+
+</Details>
+
+
+<Details header="All-DNS-Application-Blocklist">
+
+<Render file="zero-trust/blocklist-application" />
+
+
+</Details>
+
+
+<Details header="All-DNS-GeoCountryIP-Blocklist">
+
+Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's users or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+
+| Selector                        | Operator | Value                                                                                                                                                           | Action |
+| ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Resolved Country IP Geolocation | in       | *Afghanistan*, *Belarus*, *Congo (Kinshasa)*, *Cuba*, *Iran*, *Iraq*, *Korea (North)*, *Myanmar*, *Russian Federation*, *Sudan*, *Syria*, *Ukraine*, *Zimbabwe* | Block  |
+
+
+</Details>
+
+
+<Details header="All-DNS-DomainTopLevel-Blocklist">
+
+Block frequently misused top-level domains (TLDs) to reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations such as [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries) and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+
+| Selector | Operator      | Value                                                                                                    | Action |
+| -------- | ------------- | -------------------------------------------------------------------------------------------------------- | ------ |
+| Domain   | matches regex | `[.](cn\|ru)$ or [.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)$ or [.](zip\|mobi)$` | Block  |
+
+
+</Details>
+
+
+<Details header="All-DNS-DomainPhishing-Blocklist">
+
+Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to known domains.
+
+| Selector | Operator      | Value                                       | Logic | Action |
+| -------- | ------------- | ------------------------------------------- | ----- | ------ |
+| Domain   | not in list   | *Known Domains*                             | And   | Block  |
+| Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
+
+
+</Details>
+
+
+<Details header="All-DNS-ResolvedIP-Blocklist">
+
+Block specific IP addresses that are malicious or pose a threat to your organization.
+
+<Render file="zero-trust/threat-intelligence-automation" />
+
+| Selector    | Operator | Value          | Action |
+| ----------- | -------- | -------------- | ------ |
+| Resolved IP | in list  | *IP Blocklist* | Block  |
+
+
+</Details>
+
+
+<Details header="All-DNS-DomainHost-Blocklist">
+
+<Render file="zero-trust/blocklist-domain-host" params={{ one: "DNS" }} />
+
+
+</Details>

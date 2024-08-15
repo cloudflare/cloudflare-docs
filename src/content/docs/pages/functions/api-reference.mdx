@@ -1,0 +1,101 @@
+---
+pcx_content_type: reference
+title: API reference
+sidebar:
+  order: 3
+head: []
+description: Learn about the APIs used within Pages Functions.
+
+---
+
+The following methods can be used to configure your Pages Function.
+
+## Methods
+
+### `onRequests`
+
+
+
+* <code>onRequest(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all requests no matter the request method.
+* <code>onRequestGet(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `GET` requests.
+* <code>onRequestPost(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `POST` requests.
+* <code>onRequestPatch(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `PATCH` requests.
+* <code>onRequestPut(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `PUT` requests.
+* <code>onRequestDelete(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `DELETE` requests.
+* <code>onRequestHead(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `HEAD` requests.
+* <code>onRequestOptions(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+  * This function will be invoked on all `OPTIONS` requests.
+
+
+
+### `env.ASSETS.fetch()`
+
+The `env.ASSETS.fetch()` function allows you to fetch a static asset from your Pages project.
+
+You can pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object to `env.ASSETS.fetch()` function. The URL must be to the pretty path, not directly to the asset. For example, if you had the path `/users/index.html`, you will request `/users/` instead of `/users/index.html`. This method call will run the header and redirect rules, modifying the response that is returned.
+
+## Types
+
+### `EventContext`
+
+
+The following are the properties on the `context` object which are passed through on the `onRequest` methods:
+
+* `request` [Request](/workers/runtime-apis/request/)
+
+  This is the incoming [Request](/workers/runtime-apis/request/).
+
+* `functionPath` string
+
+  This is the path of the request.
+
+* <code>waitUntil(promisePromise\<any>)</code> void
+
+  Refer to [`waitUntil` documentation](/workers/runtime-apis/context/#waituntil) for more information.
+
+* <code>passThroughOnException()</code> void
+
+  Refer to [`passThroughOnException` documentation](/workers/runtime-apis/context/#passthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/functions/advanced-mode/).
+
+* <code>next(input?Request | string, init?RequestInit)</code> Promise\<Response>
+
+  Passes the request through to the next Function or to the asset server if no other Function is available.
+
+* `env` [EnvWithFetch](#envwithfetch)
+
+* `params` Params\<P>
+
+  Holds the values from [dynamic routing](/pages/functions/routing/#dynamic-routes).
+
+  In the following example, you have a dynamic path that is `/users/[user].js`. When you visit the site on `/users/nevi` the `params` object would look like:
+
+  ```js
+  {
+    user: "nevi"
+  }
+  ```
+
+  This allows you fetch the dynamic value from the path:
+
+  ```js
+  export function onRequest(context) {
+    return new Response(`Hello ${context.params.user}`);
+  }
+  ```
+
+  Which would return `"Hello nevi"`.
+
+* `data` Data
+
+
+
+### `EnvWithFetch`
+
+Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior.

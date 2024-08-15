@@ -1,0 +1,35 @@
+---
+pcx_content_type: how-to
+title: File check
+sidebar:
+  order: 7
+
+---
+
+import { Render } from "~/components"
+
+The File Check device posture attribute checks for the presence of a file on a device. You can create multiple file checks for each operating system you need to run it on, or if you need to check for multiple files.
+
+## Prerequisites
+
+* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "WARP Client Checks", link: "/cloudflare-one/identity/devices/warp-client-checks/" }} />
+
+## Configure a file check
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+
+2. Scroll down to **WARP client checks** and select **Add new**.
+
+3. Select **File Check**.
+
+4. You will be prompted for the following information:
+
+   1. **Name**: Enter a unique name for this device posture check.
+   2. **Operating system**: Select your operating system.
+   3. **File Path**: Enter a file path (for example, `c:\my folder\myfile.exe`).
+   4. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint](/cloudflare-one/identity/devices/warp-client-checks/application-check/#determine-the-signing-thumbprint) of the publishing certificate used to sign the file. Adding this information will enable the check to ensure that the file was signed by the expected software developer.
+   5. **SHA-256 (optional)**: Enter the [SHA-256 value](/cloudflare-one/identity/devices/warp-client-checks/application-check/#determine-the-sha-256-value) of the file. This is used to ensure the integrity of the file on the device.
+
+5. Select **Save**.
+
+Next, go to **Logs** > **Posture** and verify that the file check is returning the expected results.

@@ -1,0 +1,250 @@
+---
+pcx_content_type: how-to
+title: Add captions
+sidebar:
+  order: 5
+
+---
+
+Adding captions and subtitles to your video library.
+
+## Add or modify a caption
+
+There are two ways to add captions to a video: generating via AI or uploading a
+caption file.
+
+To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
+
+The `<LANGUAGE_TAG>` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For convenience, the most common
+language codes are provided [at the bottom of this document](#most-common-language-codes).
+If the language you are adding isn't included in the table, you can find the value
+through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
+value to send, search for the language. Below is an example value from IANA when
+we look for the value to send for a Turkish subtitle:
+
+```bash
+%%
+Type: language
+Subtag: tr
+Description: Turkish
+Added: 2005-10-16
+Suppress-Script: Latn
+%%
+```
+
+The `Subtag` code indicates a value of `tr`. This is the value you should send
+as the `language` at the end of the HTTP request.
+
+A label is generated from the provided language. The label will be visible for
+user selection in the player. For example, if sent `tr`, the label `Türkçe` will
+be created; if sent `de`, the label `Deutsch` will be created.
+
+### Generate a caption
+
+Generated captions use artificial intelligence based speech-to-text technology
+to generate closed captions for your videos.
+
+A video must be uploaded and in a ready state before captions can be generated.
+In the following example URLs, the video’s UID is referenced as \<VIDEO\_UID>.
+To receive webhooks when a video transitions to ready after upload, follow the
+instructions provided [here](/stream/manage-video-library/using-webhooks/).
+
+Only English language caption generation is currently supported.
+
+Videos may include several language captions, but each language must be unique.
+For example, a video may have English, French, and German captions associated
+with it, but it cannot have two English captions. If you have already uploaded
+an English language caption for a video, you must first delete it in order to
+create an English generated caption. Instructions on how to delete a caption can be found below.
+
+The \<LANGUAGE\_TAG> must adhere to the BCP 47 format. The tag for English is `en`.
+You may specify a region in the tag, such as `en-GB`, which will render a label
+that shows `British English` for the caption.
+
+```bash
+curl -X POST \
+-H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>/generate
+```
+
+Example response:
+
+```json
+{
+  "result": {
+    "language": "en",
+    "label": "English (auto-generated)",
+    "generated": true,
+    "status": "inprogress"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+The result will provide a `status` denoting the progress of the caption generation.\
+There are three statuses: inprogress, ready, and error. Note that
+(auto-generated) is applied to the label.
+
+Once the generated caption is ready, it will automatically appear in the video
+player and video manifest.
+
+If the caption enters an error state, you may attempt to re-generate it by
+first deleting it and then using the endpoint listed above.
+Instructions on deletion are provided below.
+
+### Upload a file
+
+Note two changes if you edit a generated caption: the generated field will
+change to `false` and the (auto-generated) portion of the label will be removed.
+
+To create or replace a caption file:
+
+```bash
+curl -X PUT \
+ -H 'Authorization: Bearer <API_TOKEN>' \
+ -F file=@/Users/mickie/Desktop/example_caption.vtt \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
+```
+
+### Example Response to Add or Modify a Caption
+
+```json
+{
+  "result": {
+    "language": "en",
+    "label": "English",
+    "generated": false,
+    "status": "ready"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## List the captions associated with a video
+
+To view captions associated with a video.
+Note this results list will also include generated captions that are `inprogress`
+and `error` status:
+
+```bash
+curl -H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions
+```
+
+### Example response to get the captions associated with a video
+
+```json
+{
+  "result": [
+    {
+      "language": "en",
+      "label": "English (auto-generated)",
+      "generated": true,
+      "status": "inprogress"
+    },
+    {
+      "language": "de",
+      "label": "Deutsch",
+      "generated": false,
+      "status": "ready"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Fetch a caption file
+
+To view the WebVTT caption file, you may make a GET request:
+
+```bash
+curl \
+-H 'Authorization: Bearer <API_TOKEN>' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>/vtt
+```
+
+### Example response to get the caption file for a video
+
+```bash
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:01.560
+This is an example of
+
+2
+00:00:01.560 --> 00:00:03.880
+a WebVTT caption response.
+```
+
+## Delete the captions
+
+To remove a caption associated with your video:
+
+```bash
+curl -X DELETE \
+ -H 'Authorization: Bearer <API_TOKEN>' \
+ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/captions/<LANGUAGE_TAG>
+```
+
+If there is an entry in `errors` response field, the caption has not been
+deleted.
+
+### Example response to delete the caption
+
+```json
+{
+  "result": "",
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Limitations
+
+* A video must be uploaded before a caption can be attached to it. In the following
+  example URLs, the video's ID is referenced as `media_id`.
+* Stream only supports [WebVTT](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+  formatted caption files. If you have a differently formatted caption file,
+  use [a tool to convert your file to WebVTT](https://subtitletools.com/convert-to-vtt-online)
+  prior to uploading it.
+* Videos may include several language captions, but each language must be unique.
+  For example, a video may have English, French, and German captions associated
+  with it, but it cannot have two French captions.
+* Each caption file is limited to 10 MB in size. [Contact support](/support/contacting-cloudflare-support/)
+  if you need to upload a larger file.
+
+## Most common language codes
+
+| Language Code | Language         |
+| ------------- | ---------------- |
+| zh            | Mandarin Chinese |
+| hi            | Hindi            |
+| es            | Spanish          |
+| en            | English          |
+| ar            | Arabic           |
+| pt            | Portuguese       |
+| bn            | Bengali          |
+| ru            | Russian          |
+| ja            | Japanese         |
+| de            | German           |
+| pa            | Panjabi          |
+| jv            | Javanese         |
+| ko            | Korean           |
+| vi            | Vietnamese       |
+| fr            | French           |
+| ur            | Urdu             |
+| it            | Italian          |
+| tr            | Turkish          |
+| fa            | Persian          |
+| pl            | Polish           |
+| uk            | Ukrainian        |
+| my            | Burmese          |
+| th            | Thai             |

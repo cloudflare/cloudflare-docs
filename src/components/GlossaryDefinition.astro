@@ -1,0 +1,24 @@
+---
+import { getGlossaryEntry } from "~/util/glossary";
+import { z } from "astro:content";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		term: z.string(),
+		prepend: z.string().optional(),
+	})
+	.strict();
+
+const { term, prepend } = props.parse(Astro.props);
+
+let { general_definition } = await getGlossaryEntry(term);
+
+if (prepend) {
+	general_definition = prepend.concat(general_definition);
+}
+---
+
+<Fragment set:html={marked.parse(general_definition)} />

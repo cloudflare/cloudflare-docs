@@ -1,0 +1,114 @@
+---
+title: Splunk
+pcx_content_type: integration-guide
+updated: 2023-01-26
+head: []
+description: Splunk Cloud integration guide
+
+---
+
+import { GlossaryTooltip } from "~/components"
+
+When Email Security detects a <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> email, the metadata of the detection can be sent directly to Splunk. This document outlines the steps required to integrate with Splunk Cloud.
+
+![A diagram outlining what happens when Email Security detects a phishing email and sends it to Splunk.](~/assets/images/email-security/siem-integration/splunk/open-splunk.png)
+
+## 1. Configure Splunk HTTP Event Collector
+
+1. [Log in to Splunk](https://login.splunk.com/) with an administrator account.
+
+2. Go to **Settings** > **Data inputs**.
+
+   ![Go to Data inputs to configure your settings.](~/assets/images/email-security/siem-integration/splunk/step2-data-inputs.png)
+
+3. In **Local inputs** > **Type**, select **HTTP Event Collector** to access this configuration and create a new collector.
+
+   ![Select HTTP Event Collectors as the type of your collector.](~/assets/images/email-security/siem-integration/splunk/step3-type.png)
+
+4. Select the **New Token** button to start the configuration.
+
+5. Provide a descriptive name for the Email Security (formerly Area 1) token (for example, `Email Security (formerly Area 1) Email Detections`), and leave the **Enable indexer acknowledgement** unchecked.
+
+   ![Enter a descriptive name for your new token, but leave Enable indexer acknowledgement checkbox unchecked.](~/assets/images/email-security/siem-integration/splunk/step5-token.png)
+
+6. Select **Next** to continue.
+
+7. Configure the Input Settings for the HTTP Event Collector based on your environment.
+
+   ![Configure the Input Settings based on your environment](~/assets/images/email-security/siem-integration/splunk/step7-input-settings.png)
+
+8. You may also select **Create a new index** to create new settings for Email Security events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment.
+
+   ![Optionally, create a new index for Email Security events](~/assets/images/email-security/siem-integration/splunk/step8-new-index.png)
+
+9. For this example, we created a new `area1_index` index, and added it to the configuration.
+
+   ![Example of a new index added to the configuration](~/assets/images/email-security/siem-integration/splunk/step9-new-index.png)
+
+10. Select **Review** > **Submit** to review your settings and create the collector.
+
+11. Take note of the token value in this next screen. This value is required for the Email Security configuration in the next step. You can also retrieve the token from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
+
+    ![Example of a new index added to the configuration](~/assets/images/email-security/siem-integration/splunk/step11-token-value.png)
+
+## 2. Test your HTTP Event Collector
+
+To test your the HTTP Event Collector, you can manually inject an event into Splunk by using the following cURL command:
+
+```bash
+curl https://{host}:8088/services/collector/event \
+--header "Authorization: Splunk <YOUR_TOKEN>" \
+--data '{
+    "sourcetype": "<YOUR_SOURCE_TYPE>",
+    "event": "Hello, World!"
+    }'
+```
+
+### Request formats
+
+When creating requests to Splunk, the URL and port number change according to the type of Splunk setup:
+
+* **Splunk Cloud Platform free trial**: `<protocol>://http-inputs-<host>.splunkcloud.com:8088/<endpoint>`
+* **Splunk Cloud Platform**: `<protocol>://http-inputs-<host>.splunkcloud.com:443/<endpoint>`
+* **Splunk Enterprise**: `<protocol>://<host>:8088/<endpoint>`
+
+Refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) for more information.
+
+If your instance is on-premise, specify the appropriate hostname and ensure that your firewall allows the configured port through to your instance. The connections will be coming from the following egress IP addresses, if you need them for your access control lists (ACLs):
+
+* `52.11.209.211`
+* `52.89.255.11`
+* `52.0.67.109`
+* `54.173.50.115`
+
+:::note
+Ensure that you have a valid SSL certificate configured on your instance. The certificate cannot be expired and cannot be a self-signed certificate.
+:::
+
+If all the requirements are met, you will receive the following response back to the cURL command:
+
+```txt
+{"text":"Success","code":0}
+```
+
+Additionally, you can search your instance of Splunk for the test event with `index` or other search criteria (for example, `index="area1_index"`):
+
+![Example of a new index added to the configuration](~/assets/images/email-security/siem-integration/splunk/search-instance.png)
+
+## 3. Configure Email Security
+
+The next step is to configure Email Security to push the Email Detection Event to the Splunk HTTP Event Collector.
+
+1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
+3. In the Add Webhooks page, enter the following settings:
+   * **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of the previous step.
+   * **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
+   * For the <GlossaryTooltip term="disposition">dispositions</GlossaryTooltip> (`MALICIOUS`, `SUSPICIOUS`, `SPOOF`, `SPAM`, `BULK`) choose which (if any) you want to send to the webhook. Sending `SPAM` and `BULK` dispositions will generate a high number of events.
+4. Select **Publish Webhook**.
+
+Your Splunk integration will now show up in the All Webhooks panel.
+
+![The All Webhooks section will show your Splunk webhook](~/assets/images/email-security/siem-integration/splunk/splunk-webhook-integrations.png)
+
+It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Email Security (formerly Area 1), and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk.

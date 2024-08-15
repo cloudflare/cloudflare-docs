@@ -1,0 +1,27 @@
+name: Automatic Platform Optimization
+
+product:
+  title: Automatic Platform Optimization
+  url: /automatic-platform-optimization/
+  wrap: true
+  group: Application performance
+
+meta:
+  title: Cloudflare Automatic Platform Optimization docs
+  description: With Automatic Platform Optimization, Cloudflare serves your entire
+    site from our edge network, ensuring customers see improved performance when
+    visiting your site.
+  author: '@cloudflare'
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+  - title: 'Blog: Introducing APO'
+    url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
+  - title: 'Blog: APO Post-launch report'
+    url: https://blog.cloudflare.com/apo-post-launch-report/
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: automatic-platform-optimization

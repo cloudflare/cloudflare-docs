@@ -1,0 +1,30 @@
+---
+import { Code, Details } from "~/components";
+import { z } from "astro:content";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		schemas: z.object({
+			input: z.string(),
+			output: z.string(),
+		}),
+	})
+	.strict();
+
+const { schemas } = props.parse(Astro.props);
+---
+
+<h2>API Schema</h2>
+<p>
+	The following schema is based on <a href="https://json-schema.org/"
+		>JSON Schema</a
+	>
+</p>
+<Details header="Input JSON Schema">
+	<Code code={schemas.input} lang="json" />
+</Details>
+<Details header="Output JSON Schema">
+	<Code code={schemas.output} lang="json" />
+</Details>

@@ -1,0 +1,49 @@
+---
+pcx_content_type: overview
+title: Geo Key Manager
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+
+---
+
+import { CardGrid, Description, DirectoryListing, LinkTitleCard, RelatedProduct, Render } from "~/components"
+
+<Description>
+
+Restrict where the private keys used for TLS certificates are stored and managed.
+</Description>
+
+Geo Key Manager allows customers to store and manage the encryption keys for their domains in different geographic locations so they can meet compliance regulations and keep data secure.
+
+## Resources
+
+<DirectoryListing />
+
+## Limitations
+
+Currently, Geo Key Manager is limited to [custom certificates](/ssl/edge-certificates/custom-certificates/) and available only through the Cloudflare API.
+
+***
+
+## Related products
+
+<RelatedProduct header="Data Localization Suite" href="/data-localization/" product="data-localization">
+The Data Localization Suite (DLS) is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
+</RelatedProduct>
+
+<RelatedProduct header="Geo Key Manager (v1)" href="https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/" product="ssl"> <Render file="geokey-manager-v1" />
+</RelatedProduct>
+
+***
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Plans" href="https://www.cloudflare.com/plans/#overview" icon="document">
+Compare available Cloudflare plans
+</LinkTitleCard>
+
+</CardGrid>

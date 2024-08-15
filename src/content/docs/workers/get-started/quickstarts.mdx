@@ -1,0 +1,113 @@
+---
+type: overview
+pcx_content_type: get-started
+title: Quickstarts
+sidebar:
+  order: 3
+head: []
+description: GitHub repositories that are designed to be a starting point for
+  building a new Cloudflare Workers project.
+
+---
+
+
+
+import { LinkButton, WorkerStarter } from "~/components"
+
+Quickstarts are GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project. To start any of the projects below, run:
+
+```sh
+$ npm create cloudflare@latest <NEW_PROJECT_NAME> -- --template <GITHUB_REPO_URL>
+```
+
+
+
+* `new-project-name`
+
+  * A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/wrangler/configuration/).
+
+* `template`
+  * This is the URL of the GitHub repo starter, as below. Refer to the [create-cloudflare documentation](/pages/get-started/c3/) for a full list of possible values.
+
+:::note[Cloudflare templates repository]
+
+
+To access a full list of available Cloudflare templates, refer to the [Cloudflare templates repository](https://github.com/cloudflare/workers-sdk/tree/main/templates).
+
+
+:::
+
+## Example Projects
+
+<WorkerStarter
+    title="Sentry"
+    repo="mhart/cf-sentry"
+    description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool."
+/>
+
+<WorkerStarter
+    title="Image Color"
+    repo="xtuc/img-color-worker"
+    description="Retrieve the dominant color of a PNG or JPEG image."
+/>
+
+<WorkerStarter
+    title="Cloud Storage"
+    repo="conzorkingkong/cloud-storage"
+    description="Serve private Amazon Web Services (AWS) bucket files from a Worker script."
+/>
+
+<WorkerStarter
+    title="BinAST"
+    repo="xtuc/binast-cf-worker-template"
+    description="Serve a JavaScript Binary AST via a Cloudflare Worker."
+/>
+
+<WorkerStarter
+    title="Edge-Side Rendering"
+    repo="frandiox/vitessedge-template"
+    description="Use Vite to render pages on Cloudflare's global network with great DX. Includes i18n, markdown support and more."
+/>
+
+<WorkerStarter
+    title="REST API with Fauna"
+    repo="fauna-labs/fauna-workers"
+    description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
+/>
+
+***
+
+## Frameworks
+
+<WorkerStarter
+    title="Apollo GraphQL Server"
+    repo="cloudflare/workers-graphql-server"
+    description="Lightning-fast, globally distributed Apollo GraphQL server, deployed on the Cloudflare global network using Cloudflare Workers."
+/>
+
+<WorkerStarter
+    title="GraphQL Yoga"
+    repo="the-guild-org/yoga-cloudflare-workers-template"
+    description="The most flexible, fastest, and lightest GraphQL server for all environments, Cloudflare Workers included."
+/>
+
+<WorkerStarter
+    title="Flareact"
+    repo="flareact/flareact"
+    description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs."
+/>
+
+<WorkerStarter
+    title="Sunder"
+    repo="sunderjs/sunder-worker-template"
+    description="Sunder is a minimal and unopinionated framework for Service Workers. This template uses Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass, as well as Workers Sites for static assets."
+/>
+
+
+***
+
+## Built with Workers
+
+Get inspiration from other sites and projects out there that were built with Cloudflare Workers.
+
+<LinkButton variant="primary" href="https://workers.cloudflare.com/built-with">Built with Workers</LinkButton>

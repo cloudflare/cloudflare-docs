@@ -1,0 +1,57 @@
+---
+import { getEntry } from "astro:content";
+import { marked } from "marked";
+import { getWranglerChangelog } from "~/util/changelogs";
+import { slug } from "github-slugger";
+import { AnchorHeading, Details } from "~/components";
+
+const page = await getEntry("docs", Astro.params.slug!);
+
+if (!page) {
+	throw new Error(
+		`[ProductChangelog] Failed to find entry for ${Astro.params.slug}.`,
+	);
+}
+
+if (!page.data.changelog_file_name) {
+	throw new Error(
+		`[ProductChangelog] ${Astro.params.slug} does not have a 'changelog_file_name' frontmatter property.`,
+	);
+}
+
+if (page.data.changelog_file_name.length > 1) {
+	throw new Error(
+		`[ProductChangelog] This component cannot be used on files that have more than 1 entry in their 'changelog_file_name' frontmatter property.`,
+	);
+}
+
+const name = page.data.changelog_file_name[0];
+
+let changelog;
+
+if (name === "wrangler") {
+	changelog = await getWranglerChangelog();
+} else {
+	changelog = await getEntry("changelogs", name);
+}
+
+if (!changelog) {
+	throw new Error(
+		`[ProductChangelog] Failed to find changelog called ${name}.`,
+	);
+}
+
+const entries = changelog.data.entries.sort(
+	(a, b) => new Date(b.publish_date) - new Date(a.publish_date),
+);
+---
+
+{
+	entries.map((entry) => (
+		<>
+      <AnchorHeading depth={2} title={entry.publish_date} />
+			{entry.title && <AnchorHeading depth={3} title={entry.title} />}
+			<Fragment set:html={marked.parse(entry.description)} />
+		</>
+	))
+}

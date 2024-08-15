@@ -1,0 +1,47 @@
+---
+import { z } from "astro:content";
+import { indexPlans } from "~/util/plans";
+
+const mappings = {
+	all: "Available on all plans",
+	paid: "Available on Paid plans",
+	pro: "Pro and above",
+	business: "Business and above",
+	enterprise: "Enterprise-only",
+	"add-on": "Add-on feature",
+	"ent-add-on": "Enterprise-only paid add-on",
+	"workers-all": "Available on Free and Paid plans",
+	"workers-paid": "Available on Workers Paid plan",
+} as const satisfies Record<string, string>;
+
+const keys = Object.keys(mappings);
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		// @ts-ignore this is functional but TS is upset
+		type: z.enum(keys),
+	})
+	.or(
+		z.object({
+			id: z.string(),
+		}),
+	);
+
+// @ts-ignore
+const { id, type } = props.parse(Astro.props);
+
+let availability;
+if (type) {
+	// @ts-ignore
+	availability = mappings[type];
+} else {
+	// @ts-ignore
+	availability = await indexPlans(id);
+}
+---
+
+<div class="font-semibold text-blue-700 dark:text-indigo-300">
+	{availability}
+</div>

@@ -1,0 +1,13 @@
+---
+title: '2023-04-17'
+pcx_content_type: changelog
+sidebar:
+  order: 28018
+
+---
+
+Previously, only a subset of rules were exposed publicly. In rare situations, these rules can cause false positives. When this happens, you can customize their behavior using overrides.
+
+Besides these rules, the DDoS managed rules contain other rules that do not cause issues. Until now, these rules were not shown in the dashboard or referenced in the documentation.
+
+Cloudflare now shows all rules in the dashboard, including these high-confidence rules. This means that packets matching these rules will now have the correct rule identifier. The newly published rules are read-only and you cannot disable them.
