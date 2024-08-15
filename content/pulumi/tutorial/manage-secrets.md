@@ -8,7 +8,7 @@ meta:
 
 # Manage secrets with Pulumi ESC
 
-In this tutorial, you will be given step-by-step instructions on using Pulumi ESC (Environments, Secrets, and Configuration), which is a secure and robust secrets management solution. The tutorial will guide you on retrieving Cloudflare credentials and other secrets for Wrangler commands. Specifically, you will learn how to manage your `CLOUDFLARE_API_TOKEN` for logging in to your Cloudflare account, pass ESC-stored secrets to Workers, and programmatically load your `.dev.vars` file.
+In this tutorial, you will receive step-by-step instructions on using Pulumi ESC (Environments, Secrets, and Configuration), which is a secure and robust secrets management solution. The tutorial will walk you through how to develop with Wrangler while following security best practices. Specifically, you will learn how to manage your `CLOUDFLARE_API_TOKEN` for logging in to your Cloudflare account, pass ESC-stored secrets to Workers, and programmatically load your `.dev.vars` file.
 
 {{<Aside type="note">}}
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
@@ -57,7 +57,7 @@ Now that the Pulumi ESC Environment has been created, it can be consumed in vari
 
 ### a. Add your credentials
 
-Because `wrangler` will run in a non-interactive mode, a Cloudflare API token and account ID are required. Ensure you have:
+By externally and securely storing your `CLOUDFLARE_API_TOKEN`, you can control access and rotate the token value. We'll run `wrangler` in a non-interactive mode, thus, a Cloudflare API token and account ID are required. Ensure you have:
 
 * Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/), and
 * A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
@@ -93,7 +93,7 @@ Getting User settings...
 👋 You are logged in with an API Token.
 ```
 
-The `esc run` command opens the Environment, sets the specified Environment variables into a temporary environment, and then uses those in the context of the `wrangler` command.
+When you use the `esc run` command, it opens the Environment and sets the specified Environment variables into a temporary environment. After that, it uses those variables in the context of the `wrangler` command. This is especially helpful when running `wrangler` commands in a CI/CD environment but wanting to avoid storing credentials directly in your pipeline.
 
 {{</tutorial-step>}}
 {{<tutorial-step title="Add Worker secrets">}}
@@ -111,6 +111,8 @@ $ esc env set ${ESC_ENV} environementVariables.TOP_SECRET "aliens are real" --se
 ```sh
 $ esc run -i ${ESC_ENV} -- sh -c 'echo "$TOP_SECRET" | npx wrangler secret put TOP_SECRET'
 ```
+
+By using an external secrets management solution, commonly used Worker secrets can be stored in a single shared Environment that is accessed by the relevant Workers. You can use shell commands with `esc` to incorporate scripting and integrate them into deployment pipelines or `make` commands. Use `esc [command] --help` for more information about the various commands available in the CLI.
 
 {{</tutorial-step>}}
 {{<tutorial-step title="Load `.dev.vars`">}}
@@ -143,11 +145,13 @@ $ esc env set $E environmentVariables.TOP_SECRET  "the moon is made of cheese" -
 $ esc env open ${E} --format dotenv > .dev.vars
 ```
 
+As `.dev.vars` files may often contain secrets, they should not be committed to source control. Keeping these externally ensures easy loading to a new development environment without any loss.
+
 {{</tutorial-step>}}
 
 {{<tutorial-step title="Next steps">}}
 
-You have defined Pulumi ESC Environments to load secrets for Wrangler commands. [Learn more about Pulumi ESC features and integrations](https://www.pulumi.com/docs/esc/) or follow the [Deploy a Worker with Pulumi](/pulumi/tutorial/hello-world/) tutorial.
+You have configured Pulumi ESC Environments to load secrets for Wrangler commands, enhancing security during development with Wrangler. The externalized secrets are now reusable across Workers. [Learn more about Pulumi ESC features and integrations](https://www.pulumi.com/docs/esc/) or follow the [Deploy a Worker with Pulumi](/pulumi/tutorial/hello-world/) tutorial.
 
 {{</tutorial-step>}}
 {{</tutorial>}}
