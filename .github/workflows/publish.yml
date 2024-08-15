@@ -19,7 +19,6 @@ jobs:
             node_modules/.astro/_astro
             node_modules/.astro/assets
           key: static
-      - run: npx patch-package
       - run: npx astro build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
