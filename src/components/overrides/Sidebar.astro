@@ -161,9 +161,9 @@ const lookupProductTitle = async (product: string) => {
 
 <a
 	href={"/" + currentSection + "/"}
-	class="items-center flex hover:opacity-80 decoration-accent-200"
+	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
 >
-	<AstroIcon name={currentSection} class="text-accent-600 dark:text-accent-200 text-4xl mr-2" />
+	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
 	<h3 class="text-black dark:text-white">
 		{lookupProductTitle(currentSection)}
 	</h3>

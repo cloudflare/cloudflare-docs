@@ -14,13 +14,21 @@ import { Card, LinkCard, Render } from "~/components";
     <div class="tryit-sidebar">
       <Card title="">
         <div class="*:block *:p-2 *:rounded">
-          <label for="section1" id="section1Label">Return HTML</label>
-          <label for="section2" id="section2Label">Return JSON</label>
-          <label for="section3" id="section3Label">Fetch HTML</label>
-          <label for="section4" id="section4Label">Redirect</label>
-          <label for="section5" id="section5Label"
-            >Respond with a new site</label
-          >
+          <label for="section1" id="section1Label">
+            <strong>Return HTML</strong>
+          </label>
+          <label for="section2" id="section2Label">
+            <strong>Return JSON</strong>
+          </label>
+          <label for="section3" id="section3Label">
+            <strong>Fetch HTML</strong>
+          </label>
+          <label for="section4" id="section4Label">
+            <strong>Redirect</strong>
+          </label>
+          <label for="section5" id="section5Label">
+            <strong>Respond with another site</strong>
+          </label>
         </div>
       </Card>
     </div>
@@ -52,13 +60,15 @@ import { Card, LinkCard, Render } from "~/components";
   }
 
   :root {
-    --active-background: rgb(46 105 255 / 0.8);
+    --active-background: rgb(46 105 255);
     --hover-background: rgb(46 105 255 / 0.5);
+    --active-text-color: white;
   }
 
   :root[data-theme="dark"] {
-    --active-background: rgb(246 130 31 / 0.8);
+    --active-background: rgb(246 130 31);
     --hover-background: rgb(246 130 31 / 0.5);
+    --active-text-color: black;
   }
 
   #section1:checked ~ .tryit-code #section1Content,
@@ -74,7 +84,8 @@ import { Card, LinkCard, Render } from "~/components";
   #section3:checked ~ .tryit-sidebar #section3Label,
   #section4:checked ~ .tryit-sidebar #section4Label,
   #section5:checked ~ .tryit-sidebar #section5Label {
-    background-color: var(--active-background)
+    background-color: var(--active-background);
+    color: var(--active-text-color)
   }
 
   .tryit-sidebar label:hover {

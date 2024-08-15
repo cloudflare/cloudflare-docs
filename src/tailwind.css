@@ -3,15 +3,24 @@
 @tailwind utilities;
 
 @layer base {
+    
     :root {
-        --tw-accent-200: rgb(15, 0, 107);
-        --tw-accent-600: rgb(46, 105, 255);
-        --tw-accent-900: rgb(62, 116, 255);
+        --blue-accent-200: rgb(15, 0, 107);
+        --blue-accent-600: rgb(46, 105, 255);
+        --blue-accent-900: rgb(62, 116, 255);
+
+        --orange-accent-200: rgb(246, 130, 31);
+        --orange-accent-600: rgb(255, 102, 51);
+        --orange-accent-900: rgb(0, 0, 0);
+
+        --tw-accent-200: var(--blue-accent-200);
+        --tw-accent-600: var(--blue-accent-600);
+        --tw-accent-900: var(--blue-accent-900);
     }
     
     :root[data-theme="dark"] {
-        --tw-accent-200: rgb(246, 130, 31);
-        --tw-accent-600: rgb(255, 102, 51);
-        --tw-accent-900: rgb(0, 0, 0);
+        --tw-accent-200: var(--orange-accent-200);
+        --tw-accent-600: var(--orange-accent-600);
+        --tw-accent-900: var(--orange-accent-900);
     }
 }
