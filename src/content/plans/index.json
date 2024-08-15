@@ -719,7 +719,7 @@
           "ent": "Yes"
         },
         "character_limit": {
-          "title": "Name character limit<br/>(everything before the colon)",
+          "title": "Name character limit\n\n(everything before the colon)",
           "free": "N/A",
           "lite": 32,
           "pro": 32,
@@ -727,7 +727,7 @@
           "ent": 32
         },
         "numeric_limit": {
-          "title": "Value character limit<br/>(everything after the colon)",
+          "title": "Value character limit\n\n(everything after the colon)",
           "free": "N/A",
           "lite": 100,
           "pro": 100,
@@ -1326,7 +1326,7 @@
           "ent_plus": "Yes"
         },
         "b_unmetered_protection": {
-          "title": "Standard, unmetered DDoS<br/>protection (layers 3-7)",
+          "title": "Standard, unmetered DDoS\nprotection (layers 3-7)",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1343,7 +1343,7 @@
           "ent_plus": "Yes"
         },
         "network_ddos": {
-          "title": "Network-layer (L3/4)<br />DDoS attack protection",
+          "title": "Network-layer (L3/4)\nDDoS attack protection",
           "link": "/ddos-protection/managed-rulesets/network/",
           "free": "Yes",
           "pro": "Yes",
@@ -1360,7 +1360,7 @@
           "ent_plus": "Expression fields & multi-rule support"
         },
         "p_proactive_false_positive_detection": {
-          "title": "Proactive false positive<br />detection for new rules",
+          "title": "Proactive false positive\ndetection for new rules",
           "link": "/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules",
           "free": "No",
           "pro": "No",
@@ -1378,7 +1378,7 @@
           "ent_plus": "All adaptive rules"
         },
         "r_adaptive_protection_details": {
-          "title": "Traffic profiling signals for<br/>adaptive DDoS protection",
+          "title": "Traffic profiling signals for\nadaptive DDoS protection",
           "free": "Error rates only",
           "pro": "Error rates only",
           "biz": "Error rates & historical trends",
@@ -1699,7 +1699,7 @@
           "ent_plus": "Yes"
         },
         "f_new_script_new_domain_alerts": {
-          "title": "New Resources Alerts<br/> and New Domain Alerts",
+          "title": "New Resources Alerts\n\nand New Domain Alerts",
           "summary": "Business and above",
           "free": "No",
           "pro": "No",
@@ -1708,7 +1708,7 @@
           "ent_plus": "Yes"
         },
         "h_malicious_scripts": {
-          "title": "Malicious script detection<br/> and alerting",
+          "title": "Malicious script detection\n and alerting",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -1717,7 +1717,7 @@
           "ent_plus": "Yes"
         },
         "j_code_change_detection": {
-          "title": "Code change detection<br /> and alerting",
+          "title": "Code change detection\n and alerting",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -1726,7 +1726,7 @@
           "ent_plus": "Yes"
         },
         "k_malicious_connections": {
-          "title": "Malicious connection detection<br/> and alerting",
+          "title": "Malicious connection detection\n and alerting",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -1735,7 +1735,7 @@
           "ent_plus": "Yes"
         },
         "l_cookie_advanced_fields": {
-          "title": "Cookie monitor<br/> advanced fields",
+          "title": "Cookie monitor\n advanced fields",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
@@ -1744,7 +1744,7 @@
           "ent_plus": "Yes"
         },
         "m_policies": {
-          "title": "Number of policies<br/>(positive blocking)",
+          "title": "Number of policies\n(positive blocking)",
           "summary": "Enterprise with add-on",
           "free": 0,
           "pro": 0,
@@ -2252,8 +2252,8 @@
           "free": 0,
           "pro": 0,
           "pro_plus": 1,
-          "biz": "1 (Modern)<br/>1 (Legacy)",
-          "ent": "1 (Modern) (can purchase more)<br/>1 (Legacy) (can purchase more)"
+          "biz": "1 (Modern)\n1 (Legacy)",
+          "ent": "1 (Modern) (can purchase more)\n1 (Legacy) (can purchase more)"
         }
       }
     },
@@ -2564,7 +2564,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes<br/>(open beta)"
+          "ent": "Yes\n(open beta)"
         }
       }
     },
@@ -2701,7 +2701,7 @@
           "free": "N/A",
           "pro": "N/A",
           "biz": "1x",
-          "ent": "10x (Standard)<br/>25x (Premium)"
+          "ent": "10x (Standard)\n25x (Premium)"
         }
       }
     }
@@ -2811,7 +2811,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": "1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)"
+          "ent": "1 (default)\n\n<em>With add-on</em>\nCustom (can purchase more)"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2827,7 +2827,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options"
+          "ent": "First In First Out (FIFO) (default)\n\n<em>With add-on</em>\nAll options"
         },
         "configure_multiple_hostnames_paths": {
           "title": "Configure multiple hostnames and paths",
@@ -2900,10 +2900,10 @@
         "availability": {
           "title": "Availability",
           "summary": "Paid add-on",
-          "free": "Yes<br/>(Usage-based billing)",
-          "pro": "Yes<br/>(Usage-based billing)",
-          "biz": "Yes<br/>(Usage-based billing)",
-          "ent": "Yes<br/>(Usage-based billing)"
+          "free": "Yes\n\n(Usage-based billing)",
+          "pro": "Yes\n\n(Usage-based billing)",
+          "biz": "Yes\n\n(Usage-based billing)",
+          "ent": "Yes\n\n(Usage-based billing)"
         },
         "b_total_gateways": {
           "title": "Total gateways",
@@ -2917,10 +2917,10 @@
           "free": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
           "pro": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
           "biz": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
-          "ent": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/),<br/> [Universal Gateway](/web3/ipfs-gateway/concepts/universal-gateway/)"
+          "ent": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/),\n [Universal Gateway](/web3/ipfs-gateway/concepts/universal-gateway/)"
         },
         "d_included_bandwidth": {
-          "title": "Included bandwidth<br/> (without additional cost)",
+          "title": "Included bandwidth\n (without additional cost)",
           "free": "50 GB data transfer",
           "pro": "50 GB data transfer",
           "biz": "50 GB data transfer",
@@ -2944,10 +2944,10 @@
         "availability": {
           "title": "Availability",
           "summary": "Paid add-on",
-          "free": "Yes<br/>(Usage-based billing)",
-          "pro": "Yes<br/>(Usage-based billing)",
-          "biz": "Yes<br/>(Usage-based billing)",
-          "ent": "Yes<br/>(Usage-based billing)"
+          "free": "Yes\n\n(Usage-based billing)",
+          "pro": "Yes\n\n(Usage-based billing)",
+          "biz": "Yes\n\n(Usage-based billing)",
+          "ent": "Yes\n\n(Usage-based billing)"
         },
         "b_total_gateways": {
           "title": "Total gateways",
@@ -2957,7 +2957,7 @@
           "ent": "Unlimited"
         },
         "c_included_bandwidth": {
-          "title": "Included bandwidth<br/> (without additional cost)",
+          "title": "Included bandwidth\n\n (without additional cost)",
           "free": "500,000 HTTP requests",
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",

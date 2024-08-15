@@ -52,12 +52,12 @@ const properties = plan.properties;
 
         return title;
       };
-	  
+
 	  const markdown = (content) => {
         if (typeof content !== "string") return content;
         return marked.parse(content);
       };
-	  
+
 				return (
 					<tr>
 						<td>{renderTitle(v.title)}</td>
