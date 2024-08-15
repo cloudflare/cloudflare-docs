@@ -1,0 +1,18 @@
+diff --git a/node_modules/@astrojs/starlight/utils/navigation.ts b/node_modules/@astrojs/starlight/utils/navigation.ts
+index 43369be..58c4d91 100644
+--- a/node_modules/@astrojs/starlight/utils/navigation.ts
++++ b/node_modules/@astrojs/starlight/utils/navigation.ts
+@@ -336,8 +336,12 @@ function sidebarFromDir(
+ /** Get the sidebar for the current page. */
+ export function getSidebar(pathname: string, locale: string | undefined): SidebarEntry[] {
+ 	const routes = getLocaleRoutes(locale);
++	const currentSection = pathname.split("/")[1];
+ 	if (config.sidebar) {
+-		return config.sidebar.map((group) => configItemToEntry(group, pathname, locale, routes));
++		return config.sidebar.flatMap((group) => {
++			if (group.label !== currentSection) return [];
++			return configItemToEntry(group, pathname, locale, routes);
++	}	);
+ 	} else {
+ 		const tree = treeify(routes, locale || '');
+ 		return sidebarFromDir(tree, pathname, locale, false);

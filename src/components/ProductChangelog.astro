@@ -3,6 +3,7 @@ import { getEntry } from "astro:content";
 import { marked } from "marked";
 import { getWranglerChangelog } from "~/util/changelogs";
 import { slug } from "github-slugger";
+import { AnchorHeading, Details } from "~/components";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -48,8 +49,8 @@ const entries = changelog.data.entries.sort(
 {
 	entries.map((entry) => (
 		<>
-			<h2 id={slug(entry.publish_date)}>{entry.publish_date}</h2>
-			{entry.title && <h3>{entry.title}</h3>}
+      <AnchorHeading depth={2} title={entry.publish_date} />
+			{entry.title && <AnchorHeading depth={3} title={entry.title} />}
 			<Fragment set:html={marked.parse(entry.description)} />
 		</>
 	))

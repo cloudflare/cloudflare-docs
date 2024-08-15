@@ -8,7 +8,7 @@ const versions = await getCollection("pages-build-environment");
 
 <Tabs>
 	{
-		versions.map((version) => (
+		versions.reverse().map((version) => (
 			<TabItem label={version.id}>
 				<table>
 					<tbody>
