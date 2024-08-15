@@ -129,7 +129,6 @@ async function handleLink(link: Link): Promise<Link> {
 			label: link.label.concat(" ↗"),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api") && {
-				variant: "caution",
 				text: "API",
 			},
 		};
@@ -172,9 +171,9 @@ const lookupProductTitle = async (slug: string) => {
 
 <a
 	href={"/" + currentSection + "/"}
-	class="items-center flex hover:opacity-80 decoration-accent-200"
+	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
 >
-	<AstroIcon name={currentSection} class="text-accent-200 text-4xl mr-2" />
+	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
 	<span class="text-black dark:text-white">
 		<strong>
 			{lookupProductTitle(slug)}
@@ -182,3 +181,23 @@ const lookupProductTitle = async (slug: string) => {
 	</span>
 </a>
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
+
+<style is:global>
+:root {
+	a[aria-current="page"] {
+		background-color: var(--sidebar-blue-accent-600) !important;
+		border: 1px solid !important;
+		border-color: var(--blue-accent-900) !important;
+		color: var(--sidebar-blue-text) !important;
+	}
+}
+
+:root[data-theme="dark"] {
+	a[aria-current="page"] {
+		background-color: var(--sidebar-orange-accent-600) !important;
+		border: 1px solid !important;
+		border-color: var(--orange-accent-200) !important;
+		color: var(--sl-color-white) !important;
+	}
+}
+</style>
