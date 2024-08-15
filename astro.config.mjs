@@ -139,9 +139,7 @@ export default defineConfig({
 		icon(),
     sitemap({
       serialize(item) {
-        item.changefreq = 'daily';
         item.lastmod = new Date();
-        item.priority = 0.9;
         return item;
       },
     }),
