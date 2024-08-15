@@ -8,7 +8,7 @@ meta:
 
 # Manage secrets with Pulumi ESC
 
-In this tutorial, you will be guided through step-by-step instructions on using Pulumi ESC (Environments, Secrets, and Configuration), a robust and secure secrets management solution, to retrieve Cloudflare credentials and other secrets for any Wrangler command. You'll become familiar with the secrets management lifecycle. In particular, you will manage your `CLOUDFLARE_API_TOKEN` to log in to your Cloudflare account, programmatically load your `.dev.vars` file, and pass ESC-stored secrets to Workers.
+In this tutorial, you will be given step-by-step instructions on using Pulumi ESC (Environments, Secrets, and Configuration), which is a secure and robust secrets management solution. The tutorial will guide you on retrieving Cloudflare credentials and other secrets for Wrangler commands. Specifically, you will learn how to manage your `CLOUDFLARE_API_TOKEN` for logging in to your Cloudflare account, pass ESC-stored secrets to Workers, and programmatically load your `.dev.vars` file.
 
 {{<Aside type="note">}}
 You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
@@ -19,15 +19,15 @@ You will provision resources that qualify under free tier offerings for both Pul
 
 Ensure you have:
 
-* A Cloudflare account. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-* A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
+* A Cloudflare account. [Sign up for a Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+* A Pulumi Cloud account. [Sign up for a Pulumi Cloud](https://app.pulumi.com/signup).
 * The [Pulumi ESC CLI](https://www.pulumi.com/docs/install/esc/) installed.
-* A Wrangler project. Follow the [Create a new Worker project step](https://developers.cloudflare.com/workers/get-started/guide/#1-create-a-new-worker-project) to create one.
+* A Wrangler project. To create one, follow the [Create a New Worker project step](https://developers.cloudflare.com/workers/get-started/guide/#1-create-a-new-worker-project).
 
 {{</tutorial-prereqs>}}
 {{<tutorial-step title="Set up a new Environment">}}
 
-A [Pulumi ESC Environment](https://www.pulumi.com/docs/esc/environments/) or Environment, for short, is a YAML file containing configurations and secrets for your application and infrastructure. These can be accessed in several ways, including via shell commands. All ESC Environments reside in your Pulumi Cloud account.
+A [Pulumi ESC Environment](https://www.pulumi.com/docs/esc/environments/), or Environment, is a YAML file containing configurations and secrets for your application and infrastructure. These can be accessed in several ways, including shell commands. All ESC Environments reside in your Pulumi Cloud account.
 
 ### a. Log in to Pulumi Cloud
 
@@ -50,9 +50,14 @@ $ esc env init $ESC_ENV
 Environment created.
 ```
 
-### c. Add your Cloudflare credentials
+{{</tutorial-step>}}
+{{<tutorial-step title="Login to Cloudflare">}}
 
-Because we'll run `wrangler` in non-interactive mode, it requires a Cloudflare API token and account ID for authentication. This is particularly useful in CI/CD settings. Ensure you have:
+Now that the Pulumi ESC Environment has been created, it can be consumed in various ways. For instance, to log into your Cloudflare account without needing to predefine credentials in your shell:
+
+### a. Add your credentials
+
+Because `wrangler` will run in a non-interactive mode, a Cloudflare API token and account ID are required. Ensure you have:
 
 * Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/), and
 * A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
@@ -61,58 +66,88 @@ Replace the placeholder `123abc` with your corresponding values:
 
 ```sh
 $ esc env set $ESC_ENV environmentVariables.CLOUDFLARE_ACCOUNT_ID 123abc
-$ esc env set $ESC_ENV environmentVariables.CLOUDFLARE_API_TOKEN  123abc --secret 
+$ esc env set $ESC_ENV environmentVariables.CLOUDFLARE_API_TOKEN  123abc --secret
 ```
 
 {{<Aside type="note">}}
-The API token is declared as a secret. Once the Environment is saved, Pulumi will encrypt its value and replace it with ciphertext.
+The API token is declared as a `secret`. Once the Environment is saved, Pulumi will encrypt its value and replace it with ciphertext.
 {{</Aside>}}
 
-### d. (Optional) Review your Environment
+### a. Log out
+
+Ensure you're not currently logged in to your Cloudflare account.
 
 ```sh
-$ esc env get $ESC_ENV
-
-   Value 
-  
-    {
-      "environmentVariables": {
-        "CLOUDFLARE_ACCOUNT_ID": "789xyz",
-        "CLOUDFLARE_API_TOKEN": "[secret]"
-      }
-    }
-  
-   Definition 
-  
-    values:
-      environmentVariables:
-        CLOUDFLARE_ACCOUNT_ID: 789xyz
-        CLOUDFLARE_API_TOKEN:
-          fn::secret:
-            ciphertext: ZXNjeAAAAAEAAAEAXUm8w8SoPRcM1a/2kTb+UBliFHjadgQoh3FHolhrDZjwrORYVJk=
+$ npx wrangler logout
+Not logged in, exiting...
 ```
 
-{{</tutorial-step>}}
-{{<tutorial-step title="Login to Cloudflare">}}
+### a. Log in
 
-Now that the Pulumi ESC Environment is created, it can be consumed in a variety of ways, such as running other shell commands without having to set the environment variables locally first. The `esc run` command opens the Environment you previously created, sets the specified environment variables into a temporary environment, and then uses those environment variables in the context of the `wrangler` commands.
+Pass ESC-stored Cloudflare credentials to Wrangler.
 
-Log into your Cloudflare account without needing to manage the credentials directly in your shell:
+```sh
+$ esc run ${ESC_ENV} npx wrangler whoami
+...
+Getting User settings...
+👋 You are logged in with an API Token.
+```
 
-{{</tutorial-step>}}
-{{<tutorial-step title="Load `.dev.vars`">}}
-
-<!-- TODO -->
+The `esc run` command opens the Environment, sets the specified Environment variables into a temporary environment, and then uses those in the context of the `wrangler` command.
 
 {{</tutorial-step>}}
 {{<tutorial-step title="Add Worker secrets">}}
 
-<!-- TODO -->
+Pulumi ESC centralizes secrets, and Wrangler can be used to pass them on to Workers and other Cloudflare resources. Let's do this with the `wrangler secret put` command.
+
+#### a. Add a secret
+
+```sh
+$ esc env set ${ESC_ENV} environementVariables.TOP_SECRET "aliens are real" --secret
+```
+
+#### b. Pass the secret to your Worker
+
+```sh
+$ esc run -i ${ESC_ENV} -- sh -c 'echo "$TOP_SECRET" | npx wrangler secret put TOP_SECRET'
+```
 
 {{</tutorial-step>}}
+{{<tutorial-step title="Load `.dev.vars`">}}
+
+In this step, you'll configure an Environment to load your `.dev.vars` file programmatically.
+
+{{<Aside type="info">}}
+The `.dev.vars` file is located in the root of your wrangler project to define secrets used when running `wrangler dev`. [Learn more about Local Development with Secrets](https://developers.cloudflare.com/workers/configuration/secrets/#local-development-with-secrets)
+{{</Aside>}}
+
+With a dedicated ESC Environment to store all the `.dev.vars` secrets, we can use a `dotenv` export flag.
+
+#### a. Create an Environment
+
+```sh
+$ E=my-devvars
+$ esc env init $E
+Environment created.
+```
+
+#### b. Add a secret
+
+```sh
+$ esc env set $E environmentVariables.TOP_SECRET  "the moon is made of cheese" --secret
+```
+
+#### c. Generate the `.dev.vars` file
+
+```sh
+$ esc env open ${E} --format dotenv > .dev.vars
+```
+
+{{</tutorial-step>}}
+
 {{<tutorial-step title="Next steps">}}
 
-You have defined Pulumi ESC Environments to load secrets and configurations for Wrangler commands.  Follow the [Hello World tutorial](/pulumi/tutorial/hello-world/) to deploy a serverless app with Pulumi.
+You have defined Pulumi ESC Environments to load secrets for Wrangler commands. [Learn more about Pulumi ESC features and integrations](https://www.pulumi.com/docs/esc/) or follow the [Deploy a Worker with Pulumi](/pulumi/tutorial/hello-world/) tutorial.
 
 {{</tutorial-step>}}
 {{</tutorial>}}
