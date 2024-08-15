@@ -152,7 +152,18 @@ filtered.entries = filtered.entries.sort(sortGroup);
 
 filtered.entries[0].label = "Overview";
 
-const lookupProductTitle = async (product: string) => {
+const lookupProductTitle = async (slug: string) => {
+	const segments = slug.split("/");
+	const product = segments[0];
+
+	if (product === "learning-paths") {
+		const path = segments[1];
+
+		const { data } = await getEntry("learning-paths", path);
+
+		return `${data.title} (Learning Paths)`;
+	}
+
 	const { data } = await getEntry("products", product);
 
 	return data.product.title;
@@ -164,8 +175,10 @@ const lookupProductTitle = async (product: string) => {
 	class="items-center flex hover:opacity-80 decoration-accent-200"
 >
 	<AstroIcon name={currentSection} class="text-accent-200 text-4xl mr-2" />
-	<h3 class="text-black dark:text-white">
-		{lookupProductTitle(currentSection)}
-	</h3>
+	<span class="text-black dark:text-white">
+		<strong>
+			{lookupProductTitle(slug)}
+		</strong>
+	</span>
 </a>
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
