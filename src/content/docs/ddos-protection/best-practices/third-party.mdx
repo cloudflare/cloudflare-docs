@@ -26,10 +26,15 @@ Note that, if you are using a third-party CDN in front of Cloudflare and Cloudfl
 
 ### Recommended DDoS configuration adjustments
 
-If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named `HTTP requests with unusual HTTP headers or URI path (signature #1)` with rule ID 0b1e17bd25c74e38834f19043486aee1:
+If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the following DDoS rules named:
 
-* Change the rule’s action to *Log* (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
-* Alternatively, change the rule's **Sensitivity Level** to *Essentially Off* to prevent the rule from being triggered.
+* `HTTP requests with unusual HTTP headers or URI path (signature #1)` with rule ID 0b1e17bd25c74e38834f19043486aee1
+* `HTTP requests with unusual HTTP headers or URI path (signature #56)` with the rule ID 466d6c2e8ba74459a2670e91e269dfd6
+* `HTTP requests with unusual HTTP headers or URI path (signature #57)` with the rule ID 12b9aecf1f6245b29d7e842bf35a42a0
+* `HTTP requests with unusual HTTP headers or URI path (signature #1)` with the rule ID 0b1e17bd25c74e38834f19043486aee1
+* `Requests coming from known bad sources` with the rule ID 6e3ccc23900c428e8ec0fb8a3a679c52
+
+You should change the rule’s action to *Log* (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/). Alternatively, change the rule's **Sensitivity Level** to *Essentially Off* to prevent the rule from being triggered.
 
 For more information, refer to [HTTP DDoS Attack Protection managed ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
 
