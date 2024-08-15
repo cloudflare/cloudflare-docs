@@ -13,6 +13,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | Intelligence Endpoint                                                                        | Definition                                                                                                                                                       |
 | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview)                        | Provides an overview of the Autonomous System Number (ASN) and a list of subnets for it.                                                                         |
+| [Custom Indicator Feed Download](/api/operations/custom-indicator-feeds-download-indicator-feed-data) | Provides the ability to download any custom indicator feeds that users create.
 | [Domain Intelligence](/api/operations/domain-intelligence-get-domain-details)                | Provides security details and statistics about a domain.                                                                                                         |
 | [Domain History](/api/operations/domain-history-get-domain-history)                          | Provides historical security threat and content categories that are currently and previously assigned to a domain.                                               |
 | [IP Intelligence](/api/operations/ip-intelligence-get-ip-overview)                           | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address.                                              |
@@ -44,6 +45,54 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335
         "description": "CLOUDFLARENET",
         "country": "US",
         "type": "isp"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+
+
+</Details>
+
+### Custom Indicator Feed Download
+
+<Details header="Download Custom Indicator Feed" open>
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/10d79d097895ae7ed7942a2b3832186c/intel/indicator-feeds/31/download" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
+
+# Example response:
+{
+    "result": [
+        {
+            "type": "bundle",
+            "id": "bundle--f4a735b7-b330-465d-8e6e-87b3c6a01287",
+            "objects": 
+                [
+                    { 
+                        "type": "indicator", 
+                        "spec_version": "2.1", 
+                        "id": "indicator--3d0ad6e0-3d49-4575-a0cb-d0e5c8b81f08", 
+                        "created": "2024-07-18T00:00:00Z", 
+                        "modified": "2024-07-18T00:00:00Z", 
+                        "name": "Malicious domain ahilesopolker.com", 
+                        "description": "This domain is associated with malicious activity.", 
+                        "pattern": "[domain-name:value = 'ahilesopolker.com']", 
+                        "pattern_type": "stix", 
+                        "valid_from": "2024-07-18T00:00:00Z" 
+                    },       
+                    { 
+                        "type": "domain-name", 
+                        "spec_version": "2.1", 
+                        "id": "domain-name--b252f8d7-5b63-4b59-9d58-8f313db76c35", 
+                        "value": "ahilesopolker.com", 
+                        "object_marking_refs": [ "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da" ], 
+                        "created": "2024-07-18T00:00:00Z", 
+                        "modified": "2024-07-18T00:00:00Z" 
+                        }
+],  
     },
     "success": true,
     "errors": [],
