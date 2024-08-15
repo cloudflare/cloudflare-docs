@@ -18,7 +18,7 @@
     "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^5.1.0",
     "algoliasearch": "^4.24.0",
-    "astro": "^4.13.3",
+    "astro": "^4.14.0",
     "astro-breadcrumbs": "^2.3.1",
     "astro-icon": "^1.1.0",
     "astro-live-code": "^0.0.2",
