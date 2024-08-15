@@ -38,6 +38,40 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 :::
 
+## Create a new project using the `nuxthub` CLI
+
+[NuxtHub](https://hub.nuxt.com) is a product for Nuxt users and teams to build, deploy and manage full-stack applications on their Cloudflare account by providing a zero-config experience.
+
+Create a project with:
+
+```sh
+$ npx nuxthub init my-nuxt-app
+```
+
+The project created has [`@nuxthub/core`](https://github.com/nuxt-hub/core) and `wrangler` dependencies installed and configured to provide bindings to [AI](/ai), [D1](/d1), [KV](/kv) and [R2](/r2) in both development and production. It also provides an admin UI to manage your Nuxt projects and bindings.
+
+To deploy your Nuxt application to your Cloudflare account, run the folowing command:
+
+```sh
+$ npx nuxthub deploy
+```
+
+Based on your current branch, it will build and deploy your Nuxt application to production (main) or preview.
+
+:::note[Git integration]
+
+
+The initial deployment created via `nuxthub` is referred to as a [Direct Upload](/pages/get-started/direct-upload/). To set up a deployment via the Pages Git integration, you can use the [NuxtHub Admin](https://admin.hub.nuxt.com).
+
+
+:::
+
+Once deployed, you can develop locally with your production or preview bindings using the [remote storage](https://hub.nuxt.com/docs/getting-started/remote-storage) feature.
+
+```sh
+$ npx nuxt dev --remote
+```
+
 ## Configure and deploy a project without C3
 
 To deploy a Nuxt project without C3, follow the [Nuxt Get Started guide](https://nuxt.com/docs/getting-started/installation). After you have set up your Nuxt project, choose either the [Git integration guide](/pages/get-started/git-integration/) or [Direct Upload guide](/pages/get-started/direct-upload/) to deploy your Nuxt project on Cloudflare Pages.
