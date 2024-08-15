@@ -58,6 +58,7 @@ export const GET: APIRoute = async (context) => {
         title: `Cloudflare product changelog`,
         description: `Updates to various Cloudflare products.`,
         site: "https://developers.cloudflare.com/changelog/",
+        trailingSlash: false,
         items: entries.map((entry) => {
             return {
                 title: `${entry.product} - ${entry.title ?? entry.date}`,
