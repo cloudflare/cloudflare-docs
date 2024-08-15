@@ -2,6 +2,5 @@ https://:project.pages.dev/*
  X-Robots-Tag: noindex
 
 /*
-  Link: <https://cdn.cookielaw.org/scripttemplates/otSDKStub.js>; rel=preload; as=script
-  Link: <https://cdn.cookielaw.org/consent/d3bba612-bde9-4daa-93e3-a78dab7d1a86/OtAutoBlock.js>; rel=preload; as=script
-  Link: <https://8MU1G3QO9P-dsn.algolia.net>; rel=preconnect; crossorigin
+  Link: <https://cdn.cookielaw.org/>; rel=preconnect; crossorigin;
+  Link: <https://8MU1G3QO9P-dsn.algolia.net>; rel=preconnect; crossorigin;
