@@ -120,6 +120,10 @@ export default {
 			// A very simple test query
 			const result = await sql`select * from pg_tables`
 
+      // Clean up the client, ensuring we don't kill the worker before that is
+			// completed.
+			ctx.waitUntil(sql.end());
+
 			// Return result rows as JSON
 			return Response.json({ result: result });
 		} catch (e) {
@@ -163,9 +167,7 @@ export interface Env {
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 
-    // NOTE: if `prepare: false` is passed when connecting, performance will
-    // be slower but still correctly supported.
-    const sql = postgres(env.HYPERDRIVE.connectionString)
+    const client = new Client({ connectionString: c.env.HYPERDRIVE.connectionString });
 
 		try {
 			// Connect to your database
@@ -173,6 +175,10 @@ export default {
 
 			// A very simple test query
 			const result = await client.query({ text: 'SELECT * FROM pg_tables' });
+
+      // Clean up the client, ensuring we don't kill the worker before that is
+			// completed.
+			ctx.waitUntil(client.end());
 
 			// Return result rows as JSON
 			return Response.json({ result: result });
