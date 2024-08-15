@@ -129,7 +129,6 @@ async function handleLink(link: Link): Promise<Link> {
 			label: link.label.concat(" ↗"),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api") && {
-				variant: "caution",
 				text: "API",
 			},
 		};
