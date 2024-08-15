@@ -1,7 +1,17 @@
 ---
 import { Card } from "~/components";
+interface Props {
+	title?: string;
+}
+
+const { title } = Astro.props;
+
+let header = `Example`;
+if (title) {
+	header = title;
+}
 ---
 
-<Card title="Example">
+<Card title={header}>
 	<slot />
 </Card>
