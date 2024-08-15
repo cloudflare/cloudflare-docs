@@ -130,16 +130,8 @@ async function handleLink(link: Link): Promise<Link> {
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api") && {
 				text: "API",
-				class: "sidebar-badge"
 			},
 		};
-	}
-
-	if (link.badge) {
-		link.badge = {
-			...link.badge,
-			class: "sidebar-badge"
-		}
 	}
 
 	return link;
@@ -198,12 +190,6 @@ const lookupProductTitle = async (slug: string) => {
 		border-color: var(--blue-accent-900) !important;
 		color: var(--sidebar-blue-text) !important;
 	}
-
-	.sidebar-badge {
-		--sl-color-bg-badge: var(--sidebar-blue-accent-600);
-		--sl-color-border-badge: var(--blue-accent-900);
-		color: var(--sidebar-blue-text);
-	}
 }
 
 :root[data-theme="dark"] {
@@ -212,12 +198,6 @@ const lookupProductTitle = async (slug: string) => {
 		border: 1px solid !important;
 		border-color: var(--orange-accent-200) !important;
 		color: var(--sl-color-white) !important;
-	}
-
-	.sidebar-badge {
-		--sl-color-bg-badge: var(--sidebar-orange-accent-600);
-		--sl-color-border-badge: var(--orange-accent-200);
-		color: var(--sl-color-white);
 	}
 }
 </style>
