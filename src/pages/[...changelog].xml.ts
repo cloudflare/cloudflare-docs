@@ -92,6 +92,7 @@ export const GET: APIRoute = async (context) => {
         title: `Changelog | ${rssName}`,
         description: `Updates to ${rssName}`,
         site,
+        trailingSlash: false,
         items: entries.map((entry) => {
             return {
                 title: `${entry.product} - ${entry.title ?? entry.date}`,
