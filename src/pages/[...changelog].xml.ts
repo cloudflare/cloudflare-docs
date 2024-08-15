@@ -56,7 +56,7 @@ export const GET: APIRoute = async (context) => {
             if (entry.link) {
                 link = entry.link
             } else {
-                const anchor = slug(entry.title ?? entry.date);
+                const anchor = slug(entry.title ?? entry.publish_date);
                 link = product.data.link.concat(`#${anchor}`);
             }
 
