@@ -36,13 +36,22 @@ If using the [`groq-sdk`](https://www.npmjs.com/package/groq-sdk), set your endp
 ```javascript
 import Groq from 'groq-sdk';
 
+const apiKey = env.GROQ_API_KEY;
+const accountId = '{account_id}';
+const gatewayId = '{gateway_id}';
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/groq`;
+
 const groq = new Groq({
-  apiKey: env.GROQ_API_KEY,
-	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq"
+  apiKey,
+  baseURL,
 });
 
+const messages = [{ role: 'user', content: 'What is Cloudflare?' }];
+const model = 'mixtral-8x7b-32768';
+
 const chatCompletion = await groq.chat.completions.create({
-	messages: [{ role: 'user', content: 'What is Cloudflare?' }],
-	model: 'mixtral-8x7b-32768',
+  messages,
+  model,
 });
+
 ```

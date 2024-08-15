@@ -31,16 +31,34 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-a
 Perplexity doesn't have their own SDK, but they have compatibility with the OpenAI SDK. You can use the OpenAI SDK to make a Perplexity call through AI Gateway as follows:
 
 ```javascript
-import OpenAI from "openai";
+import OpenAI from 'openai';
 
-const perplexity = new OpenAI({
-  apiKey: env.PERPLEXITY_API_KEY,
-  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/perplexity-ai"
+const apiKey = 'my api key'; // defaults to process.env["OPENAI_API_KEY"]
+const accountId = '{account_id}';
+const gatewayId = '{gateway_id}';
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
+
+const openai = new OpenAI({
+  apiKey,
+  baseURL
 });
 
-const chatCompletion = await perplexity.chat.completions.create({
-  model: "mistral-7b-instruct",
-  messages: [{role: "user", content: "What is Cloudflare?"}],
-  max_tokens: 20,
-});
+try {
+  const model = "gpt-3.5-turbo-0613";
+  const messages = [{ role: "user", content: "What is a neuron?" }];
+  const maxTokens = 100;
+
+  const chatCompletion = await openai.chat.completions.create({
+    model,
+    messages,
+    max_tokens: maxTokens,
+  });
+
+  const response = chatCompletion.choices[0].message;
+
+  return new Response(JSON.stringify(response));
+} catch (e) {
+  return new Response(e);
+}
+
 ```

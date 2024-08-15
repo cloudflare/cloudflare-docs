@@ -45,15 +45,18 @@ If you are using the `openai-node` library, you can set your endpoint like this:
 ```javascript
 import OpenAI from "openai";
 
-  const resource = 'xxx'; //without the .openai.azure.com
-  const model = 'xxx';
-  const apiVersion = 'xxx';
-  const apiKey = env.AZURE_OPENAI_API_KEY;
+const resource = 'xxx';
+const model = 'xxx';
+const apiVersion = 'xxx';
+const apiKey = env.AZURE_OPENAI_API_KEY;
+const accountId = '{account_id}';
+const gatewayId = '{gateway_id}';
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/azure-openai/${resource}/${model}`;
 
-  const azure_openai = new OpenAI({
-    apiKey,
-    baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/${resource}/${model}`,
-    defaultQuery: { 'api-version': apiVersion },
-    defaultHeaders: { 'api-key': apiKey },
-  });
+const azure_openai = new OpenAI({
+  apiKey,
+  baseURL,
+  defaultQuery: { 'api-version': apiVersion },
+  defaultHeaders: { 'api-key': apiKey },
+});
 ```
