@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components"
+
 This page covers the Vectorize API available within [Cloudflare Workers](/workers/), including usage examples.
 
 ## Operations
@@ -90,7 +92,7 @@ Retrieves the configuration of a given index directly, including its configured 
 
 Enable metadata filtering on the specified property. Limited to 10 properties.
 
-{{<render file="_vectorize-wrangler-version.md">}}
+<Render file="vectorize-wrangler-version" />
 
 Run the following `wrangler vectorize` command:
 
@@ -104,12 +106,12 @@ $ wrangler vectorize create-metadata-index <index-name> --property-name='some-pr
 
 Allow Vectorize to delete the specified metadata index.
 
-{{<render file="_vectorize-wrangler-version.md">}}
+<Render file="vectorize-wrangler-version" />
 
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop' --type='string'
+$ wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop'
 
 ```
 
@@ -117,12 +119,12 @@ $ wrangler vectorize delete-metadata-index <index-name> --property-name='some-pr
 
 List metadata properties on which metadata filtering is enabled.
 
-{{<render file="_vectorize-wrangler-version.md">}}
+<Render file="vectorize-wrangler-version" />
 
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize list-metadata-index <index-name> --property-name='some-prop' --type='string'
+$ wrangler vectorize list-metadata-index <index-name>
 
 ```
 
@@ -130,7 +132,7 @@ $ wrangler vectorize list-metadata-index <index-name> --property-name='some-prop
 
 Get additional details about the index.
 
-{{<render file="_vectorize-wrangler-version.md">}}
+<Render file="vectorize-wrangler-version" />
 
 Run the following `wrangler vectorize` command:
 

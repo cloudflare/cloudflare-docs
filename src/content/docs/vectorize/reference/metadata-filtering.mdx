@@ -8,12 +8,12 @@ sidebar:
 
 # Metadata Filtering
 
-{{<Aside type="note" header="Enable metadata filtering">}}
+:::note[Enable metadata filtering]
 
 Vectorize v2 requires to define metadata properties that will support filtering. Please refer to [Vectorize API](/vectorize/reference/client-api/#create-metadata-index) for details.
 [Namespaces](/vectorize/best-practices/insert-vectors/#namespaces) support metadata filtering by default.
 
-{{</Aside>}}
+:::
 
 In addition to providing an input vector to your query, you can also filter by [vector metadata](/vectorize/best-practices/insert-vectors/#metadata) associated with every vector. Query results only include vectors that match `filter` criteria, meaning that  `filter` is applied first, and `topK` results are taken from the filtered set. 
 
@@ -69,11 +69,11 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 
 ### Add metadata
 
-{{<Aside type="note" header="Using Vectorize v1?">}}
+:::note[Using Vectorize v1?]
 
 Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
 
-{{</Aside>}}
+:::
 
 With the following index definition:
 

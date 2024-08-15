@@ -6,13 +6,17 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-08-14"
-    title: Vectorive v2 in public beta
+    title: Vectorize v2 in public beta
     description: |-
       Vectorize v2 major changes:
       - Updated maximum vectors per index to 5 millions
       - Metadata filtering requires to define metadata properties that will support filtering
       - Improved query latency
       - Increased maximum topK results to 100
+  - publish_date: "2024-08-14"
+    title: Vectorize v1 is deprecated
+    description: |-
+      Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes. There is no ability to migrate existing indexes from v1 to v2. Workers v1 bindings, Cloudflare v1 API will continue to function.
   - publish_date: "2024-01-17"
     title: HTTP API query vectors request and response format change
     description: |-
