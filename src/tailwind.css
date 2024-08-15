@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-Add additional Tailwind styles to this file, for example with @layer:
-https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer
-*/
+@layer base {
+    :root {
+        --tw-accent-200: rgb(15, 0, 107);
+        --tw-accent-600: rgb(46, 105, 255);
+        --tw-accent-900: rgb(62, 116, 255);
+    }
+    
+    :root[data-theme="dark"] {
+        --tw-accent-200: rgb(246, 130, 31);
+        --tw-accent-600: rgb(255, 102, 51);
+        --tw-accent-900: rgb(0, 0, 0);
+    }
+}
