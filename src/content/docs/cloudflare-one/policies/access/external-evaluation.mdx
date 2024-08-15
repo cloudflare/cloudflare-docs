@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Example } from "~/components"
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
 
@@ -81,7 +81,7 @@ You can set up External Evaluation rules using any API service, but to get start
 
 
 * Sample code is available in our [GitHub repository](https://github.com/cloudflare/workers-access-external-auth-example).
-* To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`. 
+* To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
   :::
 
 2. Deploy the Worker to Cloudflare's global network.
@@ -113,9 +113,16 @@ Other key formats (such as DSA) are not supported at this time.
 3. In the **Policies** tab, edit an existing policy or select **Add a policy**.
 
 4. Add the following rule to your policy:
-   | Rule Type | Selector            | Evaluate URL                                      | Keys URL                                               |
-   | --------- | ------------------- | ------------------------------------------------- | ------------------------------------------------------ |
-   | Include   | External Evaluation | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/` | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/` |
+
+    <Example title="External evaluation rule">
+    **Rule Type**: *Include*
+
+    **Selector**: *External Evaluation*
+
+    **Evaluate URL**: `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/`
+
+    **Keys URL**: `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/`
+    </Example>
 
 When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic. To test your policies against an email, go to the **Policies** tab and select **Test your policies**.
 
