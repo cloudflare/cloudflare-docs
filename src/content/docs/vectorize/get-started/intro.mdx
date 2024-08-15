@@ -20,7 +20,13 @@ This guide will instruct you through:
 
 ## Prerequisites
 
-To continue:
+:::note[Workers Paid plan required]
+
+Vectorize is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
+
+:::
+
+To continue, you will need:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
@@ -68,6 +74,12 @@ To create your first Vectorize index, change into the directory you just created
 ```sh
 $ cd vectorize-tutorial
 ```
+
+:::note[Using Vectorize v1?]
+
+Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
+
+:::
 
 To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
