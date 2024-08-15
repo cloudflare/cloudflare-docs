@@ -88,15 +88,21 @@ Service Auth rules enforce authentication flows that do not require an identity 
 
 ## Rule types
 
-Rules work like logical operators. They help you define which categories of users your policy will affect.
+Rules work like logical operators. They help you define which categories of users your policy will affect. All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
 
-| Include                                                                                                                                              | Exclude                                                                                                                                  | Require                                                                                                                 |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+### Include
 
-All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
+The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria.
 
-### Requiring multiple conditions
+### Exclude
+
+The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application.
+
+### Require
+
+The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access.
+
+#### Requiring multiple conditions
 
 When setting up a Require rule for an Access policy, keep in mind that any values you add to the rule will be concatenated by an AND operator. For example, let's say you want to grant access to an application to both the full-time employees and the contractors, and only the ones based in specific countries — say Portugal and the United States. If you set up a rule with the following configuration:
 

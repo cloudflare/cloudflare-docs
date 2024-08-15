@@ -114,15 +114,9 @@ Other key formats (such as DSA) are not supported at this time.
 
 4. Add the following rule to your policy:
 
-    <Example title="External evaluation rule">
-    **Rule Type**: *Include*
-
-    **Selector**: *External Evaluation*
-
-    **Evaluate URL**: `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/`
-
-    **Keys URL**: `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/`
-    </Example>
+| Rule Type | Selector            | Evaluate URL                                      | Keys URL                                               |
+| --------- | ------------------- | ------------------------------------------------- | ------------------------------------------------------ |
+| Include   | External Evaluation | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/` | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/` |
 
 When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic. To test your policies against an email, go to the **Policies** tab and select **Test your policies**.
 
