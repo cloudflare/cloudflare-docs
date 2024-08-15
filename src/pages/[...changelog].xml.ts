@@ -56,7 +56,7 @@ export const GET: APIRoute = async (context) => {
             if (entry.link) {
                 link = entry.link
             } else {
-                const anchor = slug(entry.title ?? entry.date);
+                const anchor = slug(entry.title ?? entry.publish_date);
                 link = product.data.link.concat(`#${anchor}`);
             }
 
@@ -92,6 +92,7 @@ export const GET: APIRoute = async (context) => {
         title: `Changelog | ${rssName}`,
         description: `Updates to ${rssName}`,
         site,
+        trailingSlash: false,
         items: entries.map((entry) => {
             return {
                 title: `${entry.product} - ${entry.title ?? entry.date}`,
