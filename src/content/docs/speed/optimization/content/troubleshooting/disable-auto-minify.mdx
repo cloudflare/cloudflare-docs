@@ -3,9 +3,20 @@ pcx_content_type: troubleshooting
 title: Disable Auto Minify
 ---
 
-If your site is still using deprecated features for [Auto Minify](/fundamentals/api/reference/deprecations/#auto-minify), disable Auto Minify via the Cloudflare API.
+If your site is still using deprecated features for [Auto Minify](/fundamentals/api/reference/deprecations/#auto-minify), disable Auto Minify via the Cloudflare dashboard or API.
 
-## Before you begin
+## Dashboard
+
+To disable Auto Minify via the Cloudflare dashboard:
+
+1. Log into the [Cloudflare Dashboard](https://dash.cloudflare.com).
+2. Go to **Speed** > **Optimization**.
+3. Go to **Content Optimization**.
+4. For **Auto Minify**, deselect all options.
+
+## API
+
+### Before you begin
 
 You will need:
 
@@ -13,7 +24,7 @@ You will need:
   - `Zone - Zone Settings - Edit`
   - `Zone - Zone Settings - Read`
 
-## (Optional) Check zone status
+### (Optional) Check zone status
 
 To check your zone's Auto Minify status, send a `GET` request to the `/zones/<ZONE_ID>/settings/minify` endpoint.
 
@@ -39,7 +50,7 @@ You will get the following response. If any of the values in the highlighted lin
 }
 ```
 
-## Disable with the API
+### Disable with the API
 
 To disable Auto Minify for your zone, send a `PATCH` request to the `/zones/<ZONE_ID>/settings/minify` endpoint.
 
