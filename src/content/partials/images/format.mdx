@@ -1,0 +1,22 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
+
+- `scale down`\
+  Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept. Example:
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    fit=scale-down
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {fit: "scale-down"}}
+  ```
+  </TabItem>
+</Tabs>
