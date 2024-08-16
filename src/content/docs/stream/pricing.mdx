@@ -1,0 +1,79 @@
+---
+pcx_content_type: reference
+title: Pricing
+sidebar:
+  order: 30
+---
+
+Cloudflare Stream lets you broadcast, store, and deliver video using a simple, unified API and simple pricing. Stream bills on two dimensions only:
+
+- Minutes of video stored
+- Minutes of video delivered
+
+On-demand and live video are billed the same way.
+
+Ingress (sending your content to us) and encoding are always free. Bandwidth is already included in "video delivered" with no additional egress (traffic/bandwidth) fees.
+
+## Minutes of Video Stored
+
+Storage is a prepaid pricing dimension, purchased in increments of $5 per 1,000 minutes stored, regardless of file size. You can check how much storage you have and how much you have used on the [Stream](https://dash.cloudflare.com/?to=/:account/stream) page in Dash.
+
+Storage is consumed by:
+
+- Original videos uploaded to your account
+- Recordings of live broadcasts
+- The reserved maxDurationSeconds for Direct Creator and TUS uploads which have not been completed. Once these uploads are complete or the upload link expires, this reservation is released.
+
+Storage is not consumed by:
+
+- Videos in an unplayable or errored state
+- Expired Direct Creator upload links
+- Deleted videos
+- When a video is enabled for MP4 Downloads, the downloadable file does not consume additional storage
+
+Storage consumption is rounded up to the second of video duration. File size does not matter.
+
+**If you run out of storage** you will not be able to upload new videos or start new live streams until you purchase more storage or delete videos.
+
+## Minutes of Video Delivered
+
+Delivery is a post-paid, usage-based pricing dimension, billed at $1 per 1,000 minutes delivered. You can check how much delivery you have used on the [Billable Usage](https://dash.cloudflare.com/?to=/:account/billing/billable-usage) page in Dash or the [Stream Analytics](https://dash.cloudflare.com/?to=/:account/stream/analytics) page under Stream. Delivery is counted for the following uses:
+
+- Playback via HLS or DASH
+- MP4 Downloads
+- Simulcasting via SRT or RTMP live outputs
+
+Delivery is counted by HTTP requests for video segments or parts of the MP4. Therefore:
+
+- Client-side preloading and buffering is counted as billable delivery.
+- Content played from client-side/browser cache is not billable, like a short looping video. Some mobile app player libraries do not cache HLS segments by default.
+- MP4 Downloads are billed by percentage of the file delivered.
+
+HLS and DASH playback is rounded to the segment length. For uploaded content, HLS and DASH segments are 4 seconds. Live broadcast segments are determined by the keyframe interval (or GOP size).
+
+## Example Scenarios
+
+**Two people each watch thirty minutes of a broadcast. How much would it cost?**
+
+This will result in 60 minutes of Minutes Delivered usage (or $0.06). Stream bills on minutes of video delivered, not per viewer.
+
+**I have a really large file, does that cost more?**
+
+The cost to store a video is based only on its duration, not its file size. If the file is within the [30GB max file size limitation](/stream/reference/faq/#is-there-a-limit-to-the-amount-of-videos-i-can-upload), it will be accepted — be sure to use an upload method like Fetch from URL or TUS that handles large files well.
+
+**If I make a Direct Creator Upload link with a maximum duration (`maxDurationSeconds`) of 600 seconds which expires in 1 hour, how is storage consumed?**
+
+- 10 minutes will be subtracted from your available storage immediately.
+- If the link goes unused, in 1 hour, those 10 minutes will be released.
+- If the creator link is used to upload a 5 minute video, when the video is uploaded and processed, the 10 minute reservation will be released and the 5 minute true duration of the file will be counted.
+- If the creator link is used to upload a 5 minute video but it fails to encode, the video will be marked as errored, the reserved storage will be released, and no storage use will be counted.
+
+**I am broadcasting live, but no one is watching. How much does that cost?**
+
+A live broadcast with no viewers will cost $0 for minutes delivered. The recording of the broadcast will count toward minutes of video stored. If someone watches the recording, that will be counted as minutes of video delivered.
+
+If the recording is deleted, the storage use will be released.
+
+**I want to store and deliver millions of minutes a month. Do you have volume pricing?**
+
+Yes, please reach out to our [Sales Team](https://www.cloudflare.com/plans/enterprise/contact/).
