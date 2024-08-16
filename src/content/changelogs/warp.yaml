@@ -8,7 +8,7 @@ entries:
 - publish_date: '2024-08-15'
   title: WARP client for Linux (version 2024.6.497.0)
   description: |-
-    A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/).
+    A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release includes some exciting new features. It also includes additional fixes and minor improvements.
 
     New features:
       - The WARP client now supports operation on Ubuntu 24.04.
