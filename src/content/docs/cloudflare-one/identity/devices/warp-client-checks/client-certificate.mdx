@@ -21,7 +21,7 @@ The Client Certificate device posture attribute checks if the device has a valid
 | -------- | ------------ | -------------------------------- |
 | Windows  | ✅            | 2024.6.415.0                     |
 | macOS    | ✅            | 2024.6.416.0                     |
-| Linux    | Coming soon  |                                  |
+| Linux    | ✅            | 2024.6.497.0                     |
 | iOS      | ❌            |                                  |
 | Android  | ❌            |                                  |
 | ChromeOS | ❌            |                                  |
@@ -55,11 +55,17 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
    1. **Name**: Enter a unique name for this device posture check.
    2. **Operating system**: Select your operating system.
    3. **OS locations**: Specify the location(s) where the client certificate is installed.
-      | System  | Certificate stores    |
-      | ------- | -------------------- |
-      | Windows | - Local machine trust store <br/> - User trust store|
-      | macOS   | - System keychain      |
-      | Linux   | - NSSDB (`/etc/pki/nssdb`) <br/> - To search a custom location, enter the absolute file path(s) to the certificate and private key (for example `/usr/local/mycompany/certs/client.pem` and `/usr/local/mycompany/certs/client_key.pem`). The certificate and private key must be in `PEM` format. They can either be in two different files or the same file. |
+      <Details header="Windows">
+        - Local machine trust store
+        - User trust store
+        </Details>
+      <Details header="macOS">
+        - System keychain
+        </Details>
+      <Details header="Linux">
+        - NSSDB (`/etc/pki/nssdb`)
+        - To search a custom location, enter the absolute file path(s) to the certificate and private key (for example `/usr/local/mycompany/certs/client.pem` and `/usr/local/mycompany/certs/client_key.pem`). The certificate and private key must be in `PEM` format. They can either be in two different files or the same file.
+        </Details>
    4. **Certificate ID**: Enter the UUID of the root CA.
    5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
@@ -69,9 +75,9 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
 
 Next, go to **Logs** > **Posture** and verify that the client certificate check is returning the expected results.
 
-## How WARP checks for a client certificate
+## Troubleshooting
 
-Learn how the WARP client determines if a client certificate is installed and trusted on the device.
+You can use the following commands to check if a client certificate is properly installed and trusted on the device.
 
 <Tabs>
 
