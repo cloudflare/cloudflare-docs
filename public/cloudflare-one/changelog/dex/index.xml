@@ -1,0 +1,24 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Digital Experience Monitoring · Digital Experience Monitoring</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/dex/</link>
+    <description>Updates to Digital Experience Monitoring</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/cloudflare-one/changelog/dex/index.xml" rel="self" />
+    <lastBuildDate>Mon, 20 May 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Last seen ISP</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/dex/#last-seen-isp</link>
+    <description>Admins can view the last ISP seen for a device by going to &lt;strong&gt;My Team&lt;/strong&gt; &gt; &lt;strong&gt;Devices&lt;/strong&gt;. Requires setting up a &lt;a href=https://developers.cloudflare.com/cloudflare-one/insights/dex/tests/traceroute/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;traceroute test&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Mon, 20 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DEX alerts</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/dex/#dex-alerts</link>
+    <description>&lt;p&gt;Admins can now set &lt;a href=https://developers.cloudflare.com/cloudflare-one/insights/dex/notifications/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;DEX alerts&lt;/span&gt;&lt;/a&gt; using &lt;a href=https://developers.cloudflare.com/notifications/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Cloudflare Notifications&lt;/span&gt;&lt;/a&gt;. Three new DEX alert types:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Device connectivity anomaly&lt;/li&gt;
+&lt;li&gt;Test latency&lt;/li&gt;
+&lt;li&gt;Test low availability&lt;/li&gt;
+&lt;/ul&gt;</description>
+    <pubDate>Mon, 13 May 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

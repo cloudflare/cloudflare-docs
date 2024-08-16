@@ -1,0 +1,34 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Page Shield</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/</link>
+    <description>Updates to Page Shield</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/page-shield/changelog/index.xml" rel="self" />
+    <lastBuildDate>Tue, 18 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Cookie Monitor now available</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/#cookie-monitor-now-available</link>
+    <description>Page Shield now captures HTTP cookies set and used by your web application. The &lt;a href=https://developers.cloudflare.com/page-shield/detection/monitor-connections-scripts/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;list of detected cookies&lt;/span&gt;&lt;/a&gt; in available in the Cloudflare dashboard or via API.</description>
+    <pubDate>Tue, 18 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Added filter operators for scripts and connections</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/#added-filter-operators-for-scripts-and-connections</link>
+    <description>You can now filter scripts and connections in the Cloudflare dashboard using the &lt;code&gt;does not contain&lt;/code&gt; operator. Pages associated with scripts and connections can be filtered by &lt;code&gt;includes&lt;/code&gt;, &lt;code&gt;starts with&lt;/code&gt;, and &lt;code&gt;ends with&lt;/code&gt;.</description>
+    <pubDate>Fri, 14 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Suggestions for the default directive</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/#suggestions-for-the-default-directive</link>
+    <description>When creating a policy in the dashboard, default directive aggregates suggestions of monitored scripts and connections data, enabling defining default directive easier.</description>
+    <pubDate>Fri, 26 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Individual threat intelligence categories</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/#individual-threat-intelligence-categories</link>
+    <description>Instead of aggregating categories of URL and domain data from threat intelligence, they are now listed per type.</description>
+    <pubDate>Thu, 04 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Increase allowed length per policy</title>
+    <link>https://developers.cloudflare.com/page-shield/changelog/#increase-allowed-length-per-policy</link>
+    <description>Now each policy supports up to 6,000 characters.</description>
+    <pubDate>Thu, 21 Mar 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Fortinet · Cloudflare Magic WAN docs</title>
+  <meta name="title" content="Fortinet · Cloudflare Magic WAN docs" />
+  <meta name="image" content="https://developers.cloudflare.com/zt-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Fortinet · Cloudflare Magic WAN docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Fortinet · Cloudflare Magic WAN docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta property="og:title" content="Fortinet · Cloudflare Magic WAN docs" />
+  <meta property="og:description" content="This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/magic-wan/configuration/manually/third-party/fortinet/" />
+
+  <meta name="twitter:title" content="Fortinet · Cloudflare Magic WAN docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta name="twitter:description" content="This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="magic-wan"><meta name="algolia_product_filter" content="Magic WAN"><meta name="algolia_page_title" content="Fortinet">
+  <meta name="pcx_word_count" content="1900"><meta name="pcx_last_modified" content="64"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="integration-guide" />
+  <meta name="algolia_content_type" content="Integration Guide"><meta name="pcx_content_group" content="Cloudflare One" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/magic-wan/configuration/manually/third-party/fortinet/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"magic-wan"}</script>
+  <meta name="docsearch:product" content="magic-wan" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - ffc4cedde16fccdc545aab88844dbc2c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - ffc4cedde16fccdc545aab88844dbc2c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/magic-wan/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Magic WAN logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M43.5 22.5H31.567l11.003-4.575-1.148-2.775-11.047 4.56 8.453-8.46-2.123-2.123-8.415 8.423 4.575-10.988-2.775-1.155-4.59 11.04V4.5h-3v11.895L18 5.393 15.225 6.54l4.56 11.047-8.49-8.452-2.123 2.115 8.415 8.422L6.6 15.105l-1.155 2.767L16.5 22.5h-12v3h11.933L5.43 30l1.147 2.775 11.048-4.56-8.453 8.452 2.123 2.123 8.415-8.415-4.575 10.987 2.775 1.155L22.5 31.5v11.932h3V31.5L30 42.502l2.775-1.14-4.522-11.025 8.452 8.453 2.123-2.123-8.416-8.415L41.4 32.828l1.155-2.776L31.5 25.5h12v-3Zm-12 0v3l-1.14 2.76-2.107 2.107-2.753 1.088h-3l-2.753-1.14-2.107-2.108-1.14-2.76V22.5l1.14-2.76 2.107-2.107L22.5 16.5h3l2.753 1.14 2.107 2.107L31.5 22.5Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Magic WAN</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - e25dbc4caf8ca5f4ce1c44dcdb86cd8f" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - e25dbc4caf8ca5f4ce1c44dcdb86cd8f">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/magic-wan/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Magic WAN logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M43.5 22.5H31.567l11.003-4.575-1.148-2.775-11.047 4.56 8.453-8.46-2.123-2.123-8.415 8.423 4.575-10.988-2.775-1.155-4.59 11.04V4.5h-3v11.895L18 5.393 15.225 6.54l4.56 11.047-8.49-8.452-2.123 2.115 8.415 8.422L6.6 15.105l-1.155 2.767L16.5 22.5h-12v3h11.933L5.43 30l1.147 2.775 11.048-4.56-8.453 8.452 2.123 2.123 8.415-8.415-4.575 10.987 2.775 1.155L22.5 31.5v11.932h3V31.5L30 42.502l2.775-1.14-4.522-11.025 8.452 8.453 2.123-2.123-8.416-8.415L41.4 32.828l1.155-2.776L31.5 25.5h12v-3Zm-12 0v3l-1.14 2.76-2.107 2.107-2.753 1.088h-3l-2.753-1.14-2.107-2.108-1.14-2.76V22.5l1.14-2.76 2.107-2.107L22.5 16.5h3l2.753 1.14 2.107 2.107L31.5 22.5Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Magic WAN</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Magic WAN menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/magic-wan/" tabindex="-1">Magic WAN home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://blog.cloudflare.com/magic-wan-firewall/" tabindex="-1">Blog: Magic WAN &amp; Magic Firewall</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/magic-wan/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/prerequisites/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Prerequisites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/on-ramps/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">On-ramps</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Manual configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manual configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: How to</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How to</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/configure-tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure tunnel endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/configure-static-routes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure static routes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/tunnel-health-checks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Update tunnel health checks frequency</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/how-to/traceroute/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Run traceroute</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Third-party integration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Third-party integration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/alibaba-cloud/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alibaba Cloud VPN Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/aws/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Amazon AWS Transit Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/aruba-edgeconnect/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Aruba EdgeConnect Enterprise</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/cisco-ios-xe/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cisco IOS XE</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/viptela/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cisco SD-WAN</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/fortinet/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fortinet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/fitelnet/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Furukawa Electric FITELnet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/google/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Google Cloud VPN</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/azure/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Microsoft Azure</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/palo-alto/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Palo Alto Networks NGFW</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/pfsense/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">pfSense</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/sonicwall/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SonicWall</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/sophos-firewall/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sophos Firewall</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/strongswan/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">strongSwan</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/manually/third-party/vyos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">VyOS</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configure with Connector</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure with Connector</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configure hardware Connector</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-hardware-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure hardware Connector</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">SFP&#43; port information</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/configure-virtual-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure virtual Connector</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Network options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Application-aware policies</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Application-aware policies</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="4" style="--depth:4"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/breakout-traffic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Breakout traffic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/application-based-policies/prioritized-traffic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Prioritized traffic</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: DHCP options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="4" style="--depth:4"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP relay</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP server</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DHCP static address reservation</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/nat-subnet/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable NAT for a subnet</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/network-segmentation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network segmentation</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/network-options/routed-subnets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Routed subnets</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Maintenance</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Maintenance</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/deactivate-connector/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deactivate Magic WAN Connector</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/heartbeat/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Heartbeat</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/maintenance/interrupt-service-window/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Interrupt window</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/device-metrics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Device metrics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/connector/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/magic-cloud-networking/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure cloud on-ramps</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Common settings</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Common settings</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Check tunnel health in the dashboard</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure Magic Tunnel health alerts</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/configuration/common-settings/enable-magic-roles/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Magic user roles</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/security/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security filters</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Zero Trust integration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zero Trust integration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/cloudflare-gateway/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Gateway</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/cloudflare-tunnel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Tunnel</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/zero-trust/warp/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WARP</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/network-interconnect/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network Interconnect (CNI)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Analytics</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/site-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Site Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/network-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/traceroutes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traceroutes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/packet-captures/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Packet captures</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/query-bandwidth/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Querying Magic WAN tunnel bandwidth analytics with GraphQL</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/analytics/query-tunnel-health/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Querying Magic WAN tunnel health check results with GraphQL</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/anti-replay-protection/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Anti-replay protection</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/bandwidth-measurement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bandwidth measurement</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/device-compatibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Device compatibility</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">GRE and IPsec tunnels</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/magic-tunnels/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Tunnels background information</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/traffic-steering/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traffic steering</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/reference/tunnel-health-checks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tunnel health checks</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Legal</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-wan/legal/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Legal</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-wan/glossary/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-wan/configuration/manually/third-party/fortinet.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Magic WAN</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/" itemprop="item" class="DocsMarkdown--link" aria-label="Configuration" title="Configuration">
+            <span class="DocsMarkdown--link-content" >...</span></a><meta itemprop="name" content="Configuration" /><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/" itemprop="item" class="DocsMarkdown--link" aria-label="Manual configuration" title="Manual configuration">
+            <span class="DocsMarkdown--link-content" >...</span></a><meta itemprop="name" content="Manual configuration" /><meta itemprop="position" content="4" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/third-party/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Third-party integration</span></a><meta itemprop="position" content="5" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-wan/configuration/manually/third-party/fortinet/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Fortinet</span></a><meta itemprop="position" content="6" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="fortinet">Fortinet</h1><p>This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.</p>
+<p>The FortiGate configuration settings presented here support <a href=/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bidirectional health checks</span></a> as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.</p>
+<h2 id="testing-environment">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#testing-environment">&#8203;​</a>
+    </span>
+    <span>Testing Environment</span>
+  </h2><p>The FortiGate configuration was tested on two different FortiGate firewalls:</p>
+<ul>
+<li>FortiGate Virtual Appliance version 7.0.8, running on VMware ESXi 6.5</li>
+<li>FortiGate FG80F, version 7.0.12</li>
+</ul>
+<h2 id="magic-wan-configuration">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magic-wan-configuration">&#8203;​</a>
+    </span>
+    <span>Magic WAN configuration</span>
+  </h2><p>The first step to setting up Magic WAN is to add Magic WAN IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.</p>
+<p>Before proceeding, ensure that you have the Anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.</p>
+<h3 id="magic-ipsec-tunnels">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magic-ipsec-tunnels">&#8203;​</a>
+    </span>
+    <span>Magic IPsec Tunnels</span>
+  </h3><p>Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router — one to each of the two Anycast IP addresses.</p>
+<ol>
+<li>
+<p>Go to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account.</p>
+</li>
+<li>
+<p>Go to <strong>Magic WAN</strong> &gt; <strong>Configuration</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Tunnels</strong> tab, select <strong>Create</strong>.</p>
+</li>
+<li>
+<p>For the first IPsec tunnel, ensure the following settings are defined (refer to <a href=/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Add tunnels</span></a> to learn about settings not mentioned here):</p>
+<ul>
+<li><strong>Customer Endpoint</strong>: Enter your external/egress interface of the firewall.</li>
+<li><strong>Cloudflare Endpoint</strong>: Enter the first of your two Anycast IPs.</li>
+<li><strong>Health check rate</strong>: <em>Low</em>.</li>
+<li><strong>Health check type</strong>: <em>Reply</em>.</li>
+<li><strong>Health check target</strong>: <em>Custom</em>.</li>
+<li><strong>Target address</strong>: The target address for the first tunnel is always <code>172.64.240.253</code>.</li>
+<li><strong>Pre-shared key</strong>: Enter your own key or allow Cloudflare to define the key. Refer to <a href=/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Add IPsec tunnel</span></a> for more information.</li>
+</ul>
+<p><figure class="image-caption">
+    <img alt="The first IPsec tunnel should have the values mentioned above." src="/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-01_hud86d7837b57dd1678252fd650ca7b521_139682_1554x1140_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1140" width="1554"
+    style="aspect-ratio:1.3631666666666666;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+</li>
+<li>
+<p>For the second tunnel, make the same changes as you did for the first tunnel (including creating a pre-shared key), and ensure the following additional settings are defined:</p>
+<ul>
+<li><strong>Cloudflare Endpoint</strong>: Enter the second of your two Anycast IPs.</li>
+<li><strong>Health check target</strong>: <em>Custom</em>.</li>
+<li><strong>Target address</strong>: <code>172.64.240.254</code>.</li>
+</ul>
+<p><figure class="image-caption">
+    <img alt="The second IPsec tunnel should have all the values mentioned for the first tunnel, as well as the ones mentioned in the step above." src="/images/magic-wan/third-party/fortinet/edit-ipsec-tunnel-02_hufaf9abc57a0b6c7f9a5be2402e924dda_138522_1552x1130_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1130" width="1552"
+    style="aspect-ratio:1.3734601769911505;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+</li>
+</ol>
+<h3 id="magic-static-routes">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magic-static-routes">&#8203;​</a>
+    </span>
+    <span>Magic static routes</span>
+  </h3><p>Add two Magic static routes to define the IP address space that exists behind the Magic IPsec tunnels — one to each of the two Magic IPsec tunnels defined in the previous section.</p>
+<p>By default, the Magic static routes are defined with the priority set to <code>100</code>. Cloudflare leverages <a href=/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Equal Cost Multipath Routing (ECMP)</span></a> and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to <code>100</code>, and set the value for the second tunnel to <code>150</code> (higher value is a lower priority).</p>
+<ol>
+<li>
+<p>Go to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account.</p>
+</li>
+<li>
+<p>Go to <strong>Magic WAN</strong> &gt; <strong>Configuration</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Static Routes</strong> tab, select <strong>Create</strong>.</p>
+</li>
+<li>
+<p>For the first route, ensure the following settings are defined (refer to <a href=/magic-wan/configuration/manually/how-to/configure-static-routes/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Configure static routes</span></a> to learn about settings not mentioned here):</p>
+<ul>
+<li><strong>Prefix</strong>: Specify the <a href="https://datatracker.ietf.org/doc/html/rfc1918" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">RFC1918</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.</li>
+<li><strong>Tunnel/Next hop</strong>: Select your first tunnel (Tunnel 01 of 02).</li>
+<li><strong>Priority</strong>: Leave the default value (<code>100</code>).</li>
+<li><strong>Weight</strong>: Leave empty.</li>
+<li><strong>Region code</strong>: Leave this set to <code>All Regions</code>.</li>
+</ul>
+<p><figure class="image-caption">
+    <img alt="The first static route should have the values mentioned above." src="/images/magic-wan/third-party/fortinet/edit-static-route-01_hu86efbd2822974051aaf21c2b9c477b15_69976_1487x683_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="683" width="1487"
+    style="aspect-ratio:2.177174231332357;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+</li>
+<li>
+<p>For the second route, ensure the following settings are defined:</p>
+<ul>
+<li><strong>Prefix</strong>: Specify the <a href="https://datatracker.ietf.org/doc/html/rfc1918" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">RFC1918</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> subnet that exists behind the second Magic IPsec tunnel defined in the previous section.</li>
+<li><strong>Tunnel/Next hop</strong>: Select your second tunnel (Tunnel 02 of 02).</li>
+<li><strong>Priority</strong>:  Leave the default value (<code>100</code>).</li>
+<li><strong>Weight</strong>: Leave empty.</li>
+<li><strong>Region code</strong>: Leave this set to <code>All Regions</code>.</li>
+</ul>
+<p><figure class="image-caption">
+    <img alt="The second static route should have the values mentioned above." src="/images/magic-wan/third-party/fortinet/edit-static-route-02_hu3873f2249358f805bc6997126901628c_70018_1488x664_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="664" width="1488"
+    style="aspect-ratio:2.2409789156626507;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+</li>
+</ol>
+<h2 id="fortinet-fortigate-configuration">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#fortinet-fortigate-configuration">&#8203;​</a>
+    </span>
+    <span>Fortinet FortiGate configuration</span>
+  </h2><h3 id="enable-asymmetric-routing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#enable-asymmetric-routing">&#8203;​</a>
+    </span>
+    <span>Enable asymmetric routing</span>
+  </h3><p>To ensure health checks work as expected, enable asymmetric routing for ICMP. This option is required. Otherwise, the tunnel health checks which are critical for proper Magic WAN functionality will not work as designed.</p>
+<p>Note that enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to <a href="https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">How FortiGate behaves when asymmetric routing is enabled</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="config&#43;system&#43;settings%0A&#43;&#43;&#43;&#43;set&#43;asymroute-icmp&#43;enable%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="disable-anti-replay-protection">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#disable-anti-replay-protection">&#8203;​</a>
+    </span>
+    <span>Disable anti-replay protection</span>
+  </h3><p>For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet&rsquo;s documentation on <a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">anti-replay support per policy</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to learn more.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="config&#43;system&#43;global%0A&#43;&#43;&#43;&#43;set&#43;anti-replay&#43;disable%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="ipsec-tunnels">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ipsec-tunnels">&#8203;​</a>
+    </span>
+    <span>IPsec tunnels</span>
+  </h3><p>Magic IPsec tunnels leverage a route-based site-to-site VPN model. This model relies on the use of virtual tunnel interfaces and routing to define the traffic that flows across the IPsec tunnels.</p>
+<p>Configure two IPsec tunnels using the <code>phase1-interface</code> and <code>phase2-interface</code> objects.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the <code>localid</code> attribute/value pair in the <code>phase1-interface</code> configuration. To find this value, go to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> &gt; <strong>Magic WAN</strong> &gt; <strong>Manage Magic WAN configuration</strong> &gt; <strong>Tunnels</strong>. Then, find your IPsec tunnel and expand it to reveal all the information associated to it.</p>
+</aside>
+
+<p>The following examples assume <code>wan1</code> is the external/egress interface of the FortiGate firewall.</p>
+<h4 id="add-phase-1-interfaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#add-phase-1-interfaces">&#8203;​</a>
+    </span>
+    <span>Add Phase 1 interfaces</span>
+  </h4><p><code>MWAN_IPsec_Tun1</code> corresponds to Tunnel 01 of 02 added earlier in the Cloudflare section of the configuration. <code>MWAN_IPsec_Tun2</code> corresponds to Tunnel 02 of 02 added earlier in the Cloudflare section of the configuration.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;config&#43;vpn&#43;ipsec&#43;phase1-interface%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22wan1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;ike-version&#43;2%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keylife&#43;28800%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;peertype&#43;any%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;net-device&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;proposal&#43;aes256gcm-prfsha512&#43;aes256gcm-prfsha384&#43;aes256gcm-prfsha256%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;localid&#43;%22f1473dXXXXXXX72e33.49561179.ipsec.cloudflare.com%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dhgrp&#43;14%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;nattraversal&#43;disable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;remote-gw&#43;162.159.67.210%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;add-gw-route&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;psksecret&#43;%3CYOUR_PRE-SHARED_KEY%3E%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22wan1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;ike-version&#43;2%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keylife&#43;28800%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;peertype&#43;any%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;net-device&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;proposal&#43;aes256gcm-prfsha512&#43;aes256gcm-prfsha384&#43;aes256gcm-prfsha256%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;localid&#43;%22de91565XXXXXXXfbbd6632.49561179.ipsec.cloudflare.com%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dhgrp&#43;14%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;nattraversal&#43;disable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;remote-gw&#43;172.XX.XX.210%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;add-gw-route&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;psksecret&#43;ENC&#43;%3CYOUR_PRE-SHARED_KEY%3E%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h4 id="add-phase-2-interfaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#add-phase-2-interfaces">&#8203;​</a>
+    </span>
+    <span>Add Phase 2 interfaces</span>
+  </h4><p>Add two <code>phase2-interfaces</code> — one for each of the two <code>phase1-interfaces</code> as follows:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;config&#43;vpn&#43;ipsec&#43;phase2-interface%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;phase1name&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;proposal&#43;aes256gcm&#43;aes128gcm%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dhgrp&#43;14%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;replay&#43;disable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keylifeseconds&#43;3600%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;auto-negotiate&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keepalive&#43;enable%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;phase1name&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;proposal&#43;aes256gcm&#43;aes128gcm%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dhgrp&#43;14%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;replay&#43;disable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keylifeseconds&#43;3600%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;auto-negotiate&#43;enable%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;keepalive&#43;enable%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="network-interfaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#network-interfaces">&#8203;​</a>
+    </span>
+    <span>Network interfaces</span>
+  </h3><h4 id="virtual-tunnel-interfaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#virtual-tunnel-interfaces">&#8203;​</a>
+    </span>
+    <span>Virtual tunnel interfaces</span>
+  </h4><p>Configure the virtual tunnel interfaces that were automatically added when specifying the <code>set net-device enable</code> within the <code>phase1-interface</code> settings.</p>
+<p>These are the only settings that should need to be added to the virtual tunnel interfaces:</p>
+<ul>
+<li><code>ip</code>: The local IP address (specify with a <code>/32</code> netmask — <code>255.255.255.255</code>).</li>
+<li><code>remote-ip</code>: The value associated with the interface address specified earlier in the Magic IPsec tunnels section (specify with a <code>/31</code> netmask — <code>255.255.255.254</code>).</li>
+<li><code>alias</code>: This value is optional.</li>
+</ul>
+<p>The following examples assume <code>wan1</code> is the external/egress interface of the FortiGate firewall.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;config&#43;system&#43;interface%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;vdom&#43;%22root%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;ip&#43;10.252.2.91&#43;255.255.255.255%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;allowaccess&#43;ping%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;type&#43;tunnel%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;remote-ip&#43;10.252.2.90&#43;255.255.255.254%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;alias&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;snmp-index&#43;17%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22wan1%22%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;vdom&#43;%22root%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;ip&#43;10.252.2.93&#43;255.255.255.255%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;allowaccess&#43;ping%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;type&#43;tunnel%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;remote-ip&#43;10.252.2.92&#43;255.255.255.254%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;alias&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;snmp-index&#43;18%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22wan1%22%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="validate-communication-across-virtual-tunnel-interfaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#validate-communication-across-virtual-tunnel-interfaces">&#8203;​</a>
+    </span>
+    <span>Validate communication across virtual tunnel interfaces</span>
+  </h3><p>Once the virtual tunnel interfaces have been configured, you should be able to ping the IP address associated with the <code>remote-ip</code> attribute.</p>
+<p>Below you have examples of a successful result from pinging across both of the virtual tunnel interfaces configured in the previous section:</p>
+<h4 id="mwan_ipsec_tun1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mwan_ipsec_tun1">&#8203;​</a>
+    </span>
+    <span>MWAN_IPsec_Tun1</span>
+  </h4><div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;execute&#43;ping&#43;10.252.2.90%0APING&#43;10.252.2.90&#43;%2810.252.2.90%29%3A&#43;56&#43;data&#43;bytes%0A64&#43;bytes&#43;from&#43;10.252.2.90%3A&#43;icmp_seq%3D0&#43;ttl%3D64&#43;time%3D5.8&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.90%3A&#43;icmp_seq%3D1&#43;ttl%3D64&#43;time%3D5.8&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.90%3A&#43;icmp_seq%3D2&#43;ttl%3D64&#43;time%3D5.8&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.90%3A&#43;icmp_seq%3D3&#43;ttl%3D64&#43;time%3D5.8&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.90%3A&#43;icmp_seq%3D4&#43;ttl%3D64&#43;time%3D5.7&#43;ms%0A%0A---&#43;10.252.2.90&#43;ping&#43;statistics&#43;---%0A5&#43;packets&#43;transmitted%2C&#43;5&#43;packets&#43;received%2C&#43;0%25&#43;packet&#43;loss%0Around-trip&#43;min%2Favg%2Fmax&#43;%3D&#43;5.7%2F5.7%2F5.8&#43;ms"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h4 id="mwan_ipsec_tun2">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mwan_ipsec_tun2">&#8203;​</a>
+    </span>
+    <span>MWAN_IPsec_Tun2</span>
+  </h4><div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;execute&#43;ping&#43;10.252.2.92%0APING&#43;10.252.2.92&#43;%2810.252.2.92%29%3A&#43;56&#43;data&#43;bytes%0A64&#43;bytes&#43;from&#43;10.252.2.92%3A&#43;icmp_seq%3D0&#43;ttl%3D64&#43;time%3D6.1&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.92%3A&#43;icmp_seq%3D1&#43;ttl%3D64&#43;time%3D6.1&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.92%3A&#43;icmp_seq%3D2&#43;ttl%3D64&#43;time%3D6.1&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.92%3A&#43;icmp_seq%3D3&#43;ttl%3D64&#43;time%3D6.1&#43;ms%0A64&#43;bytes&#43;from&#43;10.252.2.92%3A&#43;icmp_seq%3D4&#43;ttl%3D64&#43;time%3D6.0&#43;ms%0A%0A---&#43;10.252.2.92&#43;ping&#43;statistics&#43;---%0A5&#43;packets&#43;transmitted%2C&#43;5&#43;packets&#43;received%2C&#43;0%25&#43;packet&#43;loss%0Around-trip&#43;min%2Favg%2Fmax&#43;%3D&#43;6.0%2F6.0%2F6.1&#43;ms"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="zone-objects-optional">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#zone-objects-optional">&#8203;​</a>
+    </span>
+    <span>Zone objects (optional)</span>
+  </h3><p>This sample configuration assumes there are three zones configured on the FortiGate firewall. These zone objects are used in the policies referenced later in this document:</p>
+<ul>
+<li><code>Trust_Zone</code>: Contains the LAN interface(s).</li>
+<li><code>Untrust_Zone</code>: Contains the WAN interface.</li>
+<li><code>Cloudflare_Zone</code>: Contains both IPsec Tunnel interfaces.</li>
+</ul>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;config&#43;system&#43;zone%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_Zone%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;intrazone&#43;allow%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22MWAN_IPsec_Tun1%22&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Trust_Zone%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;intrazone&#43;allow%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22internal%22%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Untrust_Zone%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;intrazone&#43;allow%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;interface&#43;%22wan1%22%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="create-address-objects">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#create-address-objects">&#8203;​</a>
+    </span>
+    <span>Create Address Objects</span>
+  </h3><p>Create Address Objects to represent the <a href="https://www.cloudflare.com/ips" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare IPv4 address space</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> as well as objects for the bidirectional health check Anycast IPs:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="config&#43;firewall&#43;address%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_01%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;173.245.48.0&#43;255.255.240.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_02%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;103.21.244.0&#43;255.255.252.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_03%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;103.22.200.0&#43;255.255.252.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_04%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;103.31.4.0&#43;255.255.252.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_05%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;141.101.64.0&#43;255.255.192.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_06%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;108.162.192.0&#43;255.255.192.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_07%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;190.93.240.0&#43;255.255.240.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_08%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;188.114.96.0&#43;255.255.240.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_09%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;197.234.240.0&#43;255.255.252.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_10%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;198.41.128.0&#43;255.255.128.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_11%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;162.158.0.0&#43;255.254.0.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_12%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;104.16.0.0&#43;255.248.0.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_13%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;104.24.0.0&#43;255.252.0.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_14%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;172.64.0.0&#43;255.248.0.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_15%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;131.0.72.0&#43;255.255.252.0%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Bidirect_HC_Endpoint_01%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;comment&#43;%22Bidirectional&#43;health&#43;check&#43;endpoint&#43;address%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;172.64.240.253&#43;255.255.255.255%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;%22Bidirect_HC_Endpoint_02%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;comment&#43;%22Bidirectional&#43;health&#43;check&#43;endpoint&#43;address%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;subnet&#43;172.64.240.254&#43;255.255.255.255%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="configure-address-group-object">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#configure-address-group-object">&#8203;​</a>
+    </span>
+    <span>Configure Address Group Object</span>
+  </h3><p>Create an Address Object that contains all of the Cloudflare IPv4 subnets as specified in the previous section.  You can copy/paste the CLI commands below into an SSH terminal and the objects will get created automatically:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="config&#43;firewall&#43;addrgrp%0A&#43;&#43;&#43;&#43;edit&#43;%22Cloudflare_IPv4_Nets%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;member&#43;%22Cloudflare_IPv4_01%22&#43;%22Cloudflare_IPv4_02%22&#43;%22Cloudflare_IPv4_03%22&#43;%22Cloudflare_IPv4_04%22&#43;%22Cloudflare_IPv4_05%22&#43;%22Cloudflare_IPv4_06%22&#43;%22Cloudflare_IPv4_07%22&#43;%22Cloudflare_IPv4_08%22&#43;%22Cloudflare_IPv4_09%22&#43;%22Cloudflare_IPv4_10%22&#43;%22Cloudflare_IPv4_11%22&#43;%22Cloudflare_IPv4_12%22&#43;%22Cloudflare_IPv4_13%22&#43;%22Cloudflare_IPv4_14%22&#43;%22Cloudflare_IPv4_15%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;color&#43;9%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="add-security-policy">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#add-security-policy">&#8203;​</a>
+    </span>
+    <span>Add security policy</span>
+  </h3><p>Add a firewall rule to permit the ICMP traffic associated with the reply style bidirectional health checks.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>This example assumes this rule is the second rule in the firewall policy (<code>edit 2</code>). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.</p>
+</aside>
+
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%28policy%29&#43;%23&#43;show%0Aconfig&#43;firewall&#43;policy%0A&#43;&#43;&#43;&#43;edit&#43;2%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;name&#43;%22CF_Magic_Health_Checks%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;uuid&#43;80eb76ce-3033-51ee-c5e5-d5a670dff3b3%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;srcintf&#43;%22Cloudflare_Zone%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;action&#43;accept%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;srcaddr&#43;%22Cloudflare_IPv4_Nets%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dstaddr&#43;%22Bidirect_HC_Endpoint_01%22&#43;%22Bidirect_HC_Endpoint_02%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;schedule&#43;%22always%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;service&#43;%22ALL_ICMP%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;logtraffic&#43;all%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="policy-based-routing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#policy-based-routing">&#8203;​</a>
+    </span>
+    <span>Policy-based routing</span>
+  </h3><p>Policy-based routing rules are required to ensure the traffic associated with the bidirectional health checks received over a Magic IPsec tunnel is sent back across the same Magic IPsec tunnel.</p>
+<p>Add two policy-based routing rules, one for each of the two Magic IPsec tunnels.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>This example assumes the rules below are the first and second rules respectively (<code>edit 1</code> and <code>edit 2</code>). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.</p>
+</aside>
+
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;config&#43;router&#43;policy%0A&#43;&#43;&#43;&#43;edit&#43;1%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;input-device&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;srcaddr&#43;%22all%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dstaddr&#43;%22all%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;gateway&#43;10.252.2.90%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;output-device&#43;%22MWAN_IPsec_Tun1%22%0A&#43;&#43;&#43;&#43;next%0A&#43;&#43;&#43;&#43;edit&#43;2%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;input-device&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;srcaddr&#43;%22all%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;dstaddr&#43;%22all%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;gateway&#43;10.252.2.92%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;set&#43;output-device&#43;%22MWAN_IPsec_Tun2%22%0A&#43;&#43;&#43;&#43;next%0Aend"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="monitor-cloudflare-magic-ipsec-tunnel-health-checks">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#monitor-cloudflare-magic-ipsec-tunnel-health-checks">&#8203;​</a>
+    </span>
+    <span>Monitor Cloudflare Magic IPsec tunnel health checks</span>
+  </h2>
+
+
+
+
+
+<p>The Cloudflare dashboard monitors the health of all <span tabindex="0" class='glossary-tooltip' data-title='Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations. Anycast typically routes incoming traffic to the nearest data center with the capacity to process the request efficiently.' data-toggle='tooltip' data-placement='top' aria-label='Anycast'>Anycast</span> tunnels on your account that route traffic from Cloudflare to your origin network.</p>
+<p>The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land. If the tunnels are healthy on your side, you will see the majority of servers reporting an <strong>up</strong> status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogeneous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.</p>
+<p>Not all data centers will be relevant to you at all times. You can refer to the <strong>Average ingress traffic (last hour)</strong> column to understand if a given data center is receiving traffic for your network, and if its health status is relevant to you.</p>
+<p>To check for Anycast tunnel health:</p>
+<ol>
+<li>Go to the <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account.</li>
+<li>Go to <strong>Magic WAN</strong> &gt; <strong>Tunnel health</strong>.</li>
+<li>In <strong>Cloudflare colos</strong>, you can choose one or more Cloudflare data centers to filter out the traffic that shows up in your Anycast tunnels. For example, if you chose the Lisbon data center, your Anycast tunnels would only show connections to that data center.</li>
+<li>Below, you have a list of all your Anycast tunnels, as well as their current health status. Find the tunnel you wish to inspect and select the arrow (<strong>&gt;</strong>) before it to open its details.</li>
+<li>The details pane shows the connection status between different Cloudflare servers and your tunnel. Select <strong>Traceroute for details</strong> in one of the Cloudflare servers shown to check for issues between Cloudflare and your origin network.</li>
+</ol>
+
+<h2 id="troubleshooting">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#troubleshooting">&#8203;​</a>
+    </span>
+    <span>Troubleshooting</span>
+  </h2><h3 id="packet-capture">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#packet-capture">&#8203;​</a>
+    </span>
+    <span>Packet Capture</span>
+  </h3><p>Packet captures allow you to determine whether or not the policy-based routing rules are working as expected.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Due to the nature of the reply-style tunnel health checks, you will see ICMP Reply packets in both the ingress and egress direction. This is expected behavior.</p>
+</aside>
+
+<p>The expected behavior should look like the examples below — traffic ingressing Tunnel 01 of 02 should egress the same tunnel.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;diagnose&#43;sniffer&#43;packet&#43;any&#43;%27host&#43;172.64.240.253%27&#43;4%0Ainterfaces%3D%5Bany%5D%0Afilters%3D%5Bhost&#43;172.64.240.253%5D%0A0.601569&#43;MWAN_IPsec_Tun1&#43;in&#43;172.64.240.253&#43;-%3E&#43;162.158.176.118%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.601585&#43;MWAN_IPsec_Tun1&#43;out&#43;172.64.240.253&#43;-%3E&#43;162.158.176.118%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.611164&#43;MWAN_IPsec_Tun1&#43;in&#43;172.64.240.253&#43;-%3E&#43;172.71.87.94%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.611178&#43;MWAN_IPsec_Tun1&#43;out&#43;172.64.240.253&#43;-%3E&#43;172.71.87.94%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.617562&#43;MWAN_IPsec_Tun1&#43;in&#43;172.64.240.253&#43;-%3E&#43;172.71.129.214%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.617574&#43;MWAN_IPsec_Tun1&#43;out&#43;172.64.240.253&#43;-%3E&#43;172.71.129.214%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.622042&#43;MWAN_IPsec_Tun1&#43;in&#43;172.64.240.253&#43;-%3E&#43;172.69.61.43%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.622056&#43;MWAN_IPsec_Tun1&#43;out&#43;172.64.240.253&#43;-%3E&#43;172.69.61.43%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.624092&#43;MWAN_IPsec_Tun1&#43;in&#43;172.64.240.253&#43;-%3E&#43;172.68.9.214%3A&#43;icmp%3A&#43;echo&#43;reply"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Conversely, traffic ingressing Tunnel 02 of 02 should egress the same tunnel:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;diagnose&#43;sniffer&#43;packet&#43;any&#43;%27host&#43;172.64.240.254%27&#43;4%0Ainterfaces%3D%5Bany%5D%0Afilters%3D%5Bhost&#43;172.64.240.254%5D%0A0.912041&#43;MWAN_IPsec_Tun2&#43;in&#43;172.64.240.254&#43;-%3E&#43;172.70.177.56%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.912057&#43;MWAN_IPsec_Tun2&#43;out&#43;172.64.240.254&#43;-%3E&#43;172.70.177.56%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.913579&#43;MWAN_IPsec_Tun2&#43;in&#43;172.64.240.254&#43;-%3E&#43;172.70.221.154%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.913592&#43;MWAN_IPsec_Tun2&#43;out&#43;172.64.240.254&#43;-%3E&#43;172.70.221.154%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.914247&#43;MWAN_IPsec_Tun2&#43;in&#43;172.64.240.254&#43;-%3E&#43;162.158.1.85%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.914260&#43;MWAN_IPsec_Tun2&#43;out&#43;172.64.240.254&#43;-%3E&#43;162.158.1.85%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.918533&#43;MWAN_IPsec_Tun2&#43;in&#43;172.64.240.254&#43;-%3E&#43;172.71.125.75%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.918550&#43;MWAN_IPsec_Tun2&#43;out&#43;172.64.240.254&#43;-%3E&#43;172.71.125.75%3A&#43;icmp%3A&#43;echo&#43;reply%0A0.924465&#43;MWAN_IPsec_Tun2&#43;in&#43;172.64.240.254&#43;-%3E&#43;172.69.21.134%3A&#43;icmp%3A&#43;echo&#43;reply"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="flow-debugging">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#flow-debugging">&#8203;​</a>
+    </span>
+    <span>Flow Debugging</span>
+  </h3><p>Flow debugging can be helpful when it comes to determining whether or not traffic is ingressing/egressing the firewall via the expected path. It takes steps much further than the sniffer packet captures in the previous section, but it creates a tremendous amount of logging and should only be enabled when absolutely necessary.</p>
+<p>Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application&rsquo;s requirements.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;diagnose&#43;debug&#43;disable%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;flow&#43;filter&#43;clear%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;reset%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;flow&#43;filter&#43;addr&#43;172.64.240.253%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;show&#43;flow&#43;show&#43;function-name&#43;enable%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;config-error-log&#43;timestamps&#43;enable%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;flow&#43;trace&#43;start&#43;999%0Afortigate&#43;%23&#43;diagnose&#43;debug&#43;enable%0A%0A%0Afortigate&#43;%23&#43;2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Dprint_pkt_detail&#43;line%3D5844&#43;msg%3D%22vd-root%3A0&#43;received&#43;a&#43;packet%28proto%3D1%2C&#43;172.64.240.253%3A56968-%3E172.70.121.28%3A0%29&#43;tun_id%3D162.159.67.210&#43;from&#43;MWAN_IPsec_Tun1.&#43;type%3D0%2C&#43;code%3D0%2C&#43;id%3D56968%2C&#43;seq%3D0.%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Drpdb_srv_match_input&#43;line%3D1036&#43;msg%3D%22Match&#43;policy&#43;routing&#43;id%3D1%3A&#43;to&#43;10.252.2.90&#43;via&#43;ifindex-34%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Dvf_ip_route_input_common&#43;line%3D2605&#43;msg%3D%22find&#43;a&#43;route%3A&#43;flag%3D00000000&#43;gw-162.159.67.210&#43;via&#43;MWAN_IPsec_Tun1%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Dipsecdev_hard_start_xmit&#43;line%3D669&#43;msg%3D%22enter&#43;IPSec&#43;interface&#43;MWAN_IPsec_Tun1%2C&#43;tun_id%3D0.0.0.0%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3D_do_ipsecdev_hard_start_xmit&#43;line%3D229&#43;msg%3D%22output&#43;to&#43;IPSec&#43;tunnel&#43;MWAN_IPsec_Tun1%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Desp_output4&#43;line%3D844&#43;msg%3D%22IPsec&#43;encrypt%2Fauth%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2871&#43;func%3Dipsec_output_finish&#43;line%3D544&#43;msg%3D%22send&#43;to&#43;172.71.91.34&#43;via&#43;intf-wan1%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Dprint_pkt_detail&#43;line%3D5844&#43;msg%3D%22vd-root%3A0&#43;received&#43;a&#43;packet%28proto%3D1%2C&#43;172.64.240.253%3A18685-%3E162.158.209.64%3A0%29&#43;tun_id%3D162.159.67.210&#43;from&#43;MWAN_IPsec_Tun1.&#43;type%3D0%2C&#43;code%3D0%2C&#43;id%3D18685%2C&#43;seq%3D0.%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Drpdb_srv_match_input&#43;line%3D1036&#43;msg%3D%22Match&#43;policy&#43;routing&#43;id%3D1%3A&#43;to&#43;10.252.2.90&#43;via&#43;ifindex-34%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Dvf_ip_route_input_common&#43;line%3D2605&#43;msg%3D%22find&#43;a&#43;route%3A&#43;flag%3D00000000&#43;gw-162.159.67.210&#43;via&#43;MWAN_IPsec_Tun1%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Dipsecdev_hard_start_xmit&#43;line%3D669&#43;msg%3D%22enter&#43;IPSec&#43;interface&#43;MWAN_IPsec_Tun1%2C&#43;tun_id%3D0.0.0.0%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3D_do_ipsecdev_hard_start_xmit&#43;line%3D229&#43;msg%3D%22output&#43;to&#43;IPSec&#43;tunnel&#43;MWAN_IPsec_Tun1%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Desp_output4&#43;line%3D844&#43;msg%3D%22IPsec&#43;encrypt%2Fauth%22%0A2023-08-01&#43;09%3A27%3A26&#43;id%3D20085&#43;trace_id%3D2872&#43;func%3Dipsec_output_finish&#43;line%3D544&#43;msg%3D%22send&#43;to&#43;172.71.91.34&#43;via&#43;intf-wan1%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="disable-flow-debugging">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#disable-flow-debugging">&#8203;​</a>
+    </span>
+    <span>Disable Flow Debugging</span>
+  </h3><p>The typical use of <kbd>CTRL</kbd> <kbd>C</kbd> will not stop Flow Debugging.</p>
+<p>You can disable Flow Debugging simply by typing the following at any point while the debug logs are scrolling by:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="fortigate&#43;%23&#43;diagnose&#43;debug&#43;disable"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/magic-wan" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-wan/configuration/manually/third-party/fortinet.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-05-10T16:02:36&#43;01:00
+  title=2024-05-10
+>May 10, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available itemscope itemtype="https://schema.org/FAQPage">
+  <head>
+
+  <meta charset="utf-8">
+  <title>FAQ · Cloudflare bot solutions docs</title>
+  <meta name="title" content="FAQ · Cloudflare bot solutions docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="FAQ · Cloudflare bot solutions docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="FAQ · Cloudflare bot solutions docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="FAQ · Cloudflare bot solutions docs" />
+  <meta property="og:description" content="Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/bots/troubleshooting/" />
+
+  <meta name="twitter:title" content="FAQ · Cloudflare bot solutions docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="bots"><meta name="algolia_product_filter" content="Bots"><meta name="algolia_page_title" content="FAQ">
+  <meta name="pcx_word_count" content="1700"><meta name="pcx_last_modified" content="8"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="faq" />
+  <meta name="algolia_content_type" content="Faq"><meta name="pcx_content_group" content="Application security" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/bots/troubleshooting/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"bots"}</script>
+  <meta name="docsearch:product" content="bots" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - c2d5cd4abdd818f6accc8c45fe4f4ceb" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - c2d5cd4abdd818f6accc8c45fe4f4ceb">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/bots/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Bots logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M40.488 15.863H25.5v-4.335a3 3 0 1 0-3 0v4.335H7.512l-1.5 1.5v23.081l1.5 1.5h32.976l1.5-1.5v-23.08l-1.5-1.5Zm-1.5 23.081H9.012v-20.08h29.976v20.08Z"/><path d="M17.008 28.544a2.493 2.493 0 0 0 2.49-2.497 2.493 2.493 0 0 0-2.49-2.495 2.493 2.493 0 0 0-2.491 2.495 2.493 2.493 0 0 0 2.49 2.497ZM30.992 28.544a2.493 2.493 0 0 0 2.49-2.497 2.493 2.493 0 0 0-2.49-2.495 2.493 2.493 0 0 0-2.49 2.495 2.493 2.493 0 0 0 2.49 2.497ZM28.742 31.749h-9.484v3h9.484v-3Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:4">Bots</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - cd84f4285148ddb6c4aebcfcdccf5ace" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - cd84f4285148ddb6c4aebcfcdccf5ace">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/bots/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Bots logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M40.488 15.863H25.5v-4.335a3 3 0 1 0-3 0v4.335H7.512l-1.5 1.5v23.081l1.5 1.5h32.976l1.5-1.5v-23.08l-1.5-1.5Zm-1.5 23.081H9.012v-20.08h29.976v20.08Z"/><path d="M17.008 28.544a2.493 2.493 0 0 0 2.49-2.497 2.493 2.493 0 0 0-2.49-2.495 2.493 2.493 0 0 0-2.491 2.495 2.493 2.493 0 0 0 2.49 2.497ZM30.992 28.544a2.493 2.493 0 0 0 2.49-2.497 2.493 2.493 0 0 0-2.49-2.495 2.493 2.493 0 0 0-2.49 2.495 2.493 2.493 0 0 0 2.49 2.497ZM28.742 31.749h-9.484v3h9.484v-3Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:4">Bots</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Bots menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/products/bot-management" tabindex="-1">Bot Management home</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/bots/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/bots/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/get-started/free/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Free</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/get-started/pro/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pro</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/get-started/biz-and-ent/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Business</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/get-started/bm-subscription/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enterprise Bot Management</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Concepts</span>
+    </button><a class="DocsSidebar--nav-link"  href="/bots/concepts/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Concepts</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/bot/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bots</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Bot scores</span>
+    </button><a class="DocsSidebar--nav-link"  href="/bots/concepts/bot-score/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot scores</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/bot-score/delay-action/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delay action</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/challenge-solve-rate/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Challenge Solve Rate (CSR)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/cloudflare-bot-tags/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot Tags</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/feedback-loop/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot Feedback Loop</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/detection-ids/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Detection IDs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/ja3-ja4-fingerprint/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">JA3/JA4 Fingerprint</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/sequence-rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sequence rules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/concepts/signals-intelligence/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Signals Intelligence</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/plans/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Plans</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Bot Analytics</span>
+    </button><a class="DocsSidebar--nav-link"  href="/bots/bot-analytics/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot Analytics</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/bot-analytics/biz-and-ent/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Business</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/bot-analytics/bm-subscription/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enterprise Bot Management</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/bots/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/bot-management-skips/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot Management skips</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/bot-management-variables/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bot Management variables</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/javascript-detections/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">JavaScript detections</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/machine-learning-models/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Machine Learning models</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/static-resources/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Static resource protection</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/wordpress-loopback-issue/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Super Bot Fight Mode for WordPress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/verified-bot-categories/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Verified Bot Categories</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/reference/verified-bots-policy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Verified Bots Policy</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/bots/troubleshooting/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FAQ</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/bots/glossary/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/bots/troubleshooting.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/bots/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Bots</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/bots/troubleshooting/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >FAQ</span></a><meta itemprop="position" content="3" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="frequently-asked-questions">Frequently Asked Questions</h1><h2 id="bots">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#bots">&#8203;​</a>
+    </span>
+    <span>Bots</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="how-does-cloudflare-detect-bots" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-does-cloudflare-detect-bots"
+    >&#8203;​</a
+    >
+</span>
+<span>How does Cloudflare detect bots?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to <a href=/bots/plans class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Plans</span></a>.
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="how-do-i-know-whats-included-in-my-plan" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-do-i-know-whats-included-in-my-plan"
+    >&#8203;​</a
+    >
+</span>
+<span>How do I know what&rsquo;s included in my plan?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">To know what&rsquo;s included in your plan, refer to our <a href=/bots/plans class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Plans</span></a>.
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="how-do-i-set-up-my-bot-product" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-do-i-set-up-my-bot-product"
+    >&#8203;​</a
+    >
+</span>
+<span>How do I set up my bot product?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">To learn how to set up your bot product, refer to <a href=/bots/get-started class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Get started</span></a>.
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="yandex-bot-unexpectedly-blocked-by-the-waf-managed-rule-with-id-...f6cbb163" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#yandex-bot-unexpectedly-blocked-by-the-waf-managed-rule-with-id-...f6cbb163"
+    >&#8203;​</a
+    >
+</span>
+<span>Yandex bot unexpectedly blocked by the WAF managed rule with ID <code>...f6cbb163</code></span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by a Cloudflare WAF managed rule, as the IP list of Yandex bots has not yet synced with Yandex&rsquo;s most recent changes.</p>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Create an <a href=/waf/managed-rules/waf-exceptions/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">exception</span></a> to temporarily skip the managed rule with ID <code class="ruleID"> <span class="ruleID" title="Click to copy the full ID" onclick="navigator.clipboard.writeText(&#34;2854e3f18ad946049e6d90ccf6cbb163&#34;)">&hellip;f6cbb163 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="width: 16px;height: 18px;" class="icon-copy"><path d="M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z"></path><path d="M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z"></path></svg></span></code> when a request is coming from the <strong>Yandex IP</strong> and the user-agent contains <strong>Yandex.</strong></li>
+<li>Create a <a href=/waf/custom-rules/skip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF custom rule with the <em>Skip</em> action</span></a> to temporarily bypass WAF Managed Rules when a request is coming from the <strong>Yandex IP</strong> and the user-agent contains <strong>Yandex.</strong></li>
+</ul>
+<p>If you are using the legacy WAF managed rules (<a href=/waf/reference/migration-guides/waf-managed-rules-migration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">now deprecated</span></a>), disable the WAF managed rule with ID <code>100203</code> temporarily.</p>
+<p><strong>Solution:</strong></p>
+<p>Once the new Yandex IP is propagated to our system, the requests will not be blocked anymore and you can remove any workaround you configured. This can take up to 48 hours. If you see any Yandex bots still being blocked after 48 hours with no change to the bot, contact <a href=/support/contacting-cloudflare-support/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Support</span></a>.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="how-does-machine-learning-work" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-does-machine-learning-work"
+    >&#8203;​</a
+    >
+</span>
+<span>How does machine learning work?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.</p>
+<p>In Bot Management and Super Bot Fight Mode, the X variables are request features, while the Y variable represents the probability of solving a challenge based on X values.</p>
+<p>Cloudflare uses data from millions of requests and re-train the system on a periodic basis. You can learn about this data from your own request logs such as Cloudflare Logpull and Logpush as well as the Firewall API.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="why-am-i-seeing-a-managed-challenge-action-for-waf-rules" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-am-i-seeing-a-managed-challenge-action-for-waf-rules"
+    >&#8203;​</a
+    >
+</span>
+<span>Why am I seeing a Managed Challenge action for WAF rules?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an <strong>Action Taken</strong> of <strong>Managed Challenge</strong>.</p>
+<p>You may also see Managed Challenge due to a triggered <a href=/waf/reference/cloudflare-challenges/#managed-challenge-recommended class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF custom rule</span></a>.</p>
+<p>This does not mean that your traffic was blocked. It is the challenge sent to your user to determine whether they are likely human or likely bot.</p>
+<p>To understand if the result of the challenge was a success or a failure, you can verify using <a href=/logs/about/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Logpush</span></a>.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="what-is-the-difference-between-the-threat-score-and-bot-management-score" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-is-the-difference-between-the-threat-score-and-bot-management-score"
+    >&#8203;​</a
+    >
+</span>
+<span>What is the difference between the threat score and bot management score?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>The difference is significant:</p>
+<ul>
+<li>Threat score (<em>cf.threat_score</em>) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).</li>
+<li>Bot management score (<em>cf.bot_management.score)</em> is what Cloudflare uses in Bot Management to measure if the request is from a human or a script. The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.</li>
+</ul>
+<p>These fields are available via <a href=/waf/custom-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF custom rules</span></a> and other products based on the Ruleset Engine.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="what-is-cf.bot_management.verified_bot" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-is-cf.bot_management.verified_bot"
+    >&#8203;​</a
+    >
+</span>
+<span>What is cf.bot_management.verified_bot?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>A request&rsquo;s <em>cf.bot_management.verified_bot</em> value is a boolean indicating whether such request comes from a Cloudflare allowed bot.</p>
+<p>Cloudflare has built an allowlist of good, automated bots, e.g. Google Search Engine, Pingdom, and more.</p>
+<p>This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.</p>
+<p>To allow traffic from good bots, use the <a href=/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Verified Bot</span></a> field in your WAF custom rule.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="why-might-the-ja3hash-be-empty-in-http-logs" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-might-the-ja3hash-be-empty-in-http-logs"
+    >&#8203;​</a
+    >
+</span>
+<span>Why might the ja3hash be empty in HTTP logs?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:</p>
+<ul>
+<li>
+<p>Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone).</p>
+</li>
+<li>
+<p>Worker sending requests within the same zone or to a zone that is not proxied (or a 3rd party).</p>
+</li>
+</ul>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="i-run-a-good-bot-and-want-for-it-to-be-added-to-the-allowlist-cf.bot_management.verified_bot.-what-should-i-do" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#i-run-a-good-bot-and-want-for-it-to-be-added-to-the-allowlist-cf.bot_management.verified_bot.-what-should-i-do"
+    >&#8203;​</a
+    >
+</span>
+<span>I run a good bot and want for it to be added to the allowlist (cf.bot_management.verified_bot). What should I do?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Cloudflare maintains a sample list of verified bots in <a href="https://radar.cloudflare.com/verified-bots" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Radar</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our <a href=/bots/reference/verified-bots-policy/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">verified bot public policy</span></a>.  If your bot meets this criteria, submit this <a href="https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">online application</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="what-information-do-i-need-to-troubleshoot-my-bot-issues" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-information-do-i-need-to-troubleshoot-my-bot-issues"
+    >&#8203;​</a
+    >
+</span>
+<span>What information do I need to troubleshoot my bot issues?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).</p>
+<p>Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.</p>
+<p>Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.</p>
+</aside>
+<ul>
+<li>RayIDs</li>
+<li>IP addresses</li>
+<li>WAF custom rule IDs, rule expression, Challenge solve rates</li>
+<li>Common user-agents among false positives</li>
+<li>Common ASNs among false positives</li>
+<li>Screenshots of strange activity from the WAF, such as a huge spike in challenged traffic on the graph</li>
+<li>Problematic URIs or paths</li>
+<li>Rough description of how your domain is configured.
+<ul>
+<li>Is one zone Cloudflare for SaaS while the others are not?</li>
+<li>Is most API traffic sent to a particular URI?</li>
+<li>How much mobile traffic do you expect?</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="what-should-i-do-if-i-am-getting-false-positives-caused-by-bot-fight-mode-bfm-or-super-bot-fight-mode-sbfm" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-should-i-do-if-i-am-getting-false-positives-caused-by-bot-fight-mode-bfm-or-super-bot-fight-mode-sbfm"
+    >&#8203;​</a
+    >
+</span>
+<span>What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><aside class="DocsMarkdown--aside" role="note" data-type="warning">
+    <div class="DocsMarkdown--aside-header">Important considerations you need to be aware of before turning on BFM or SBFM</div><ul>
+<li>
+<p>BFM and SBFM are high security features intended to quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen.</p>
+</li>
+<li>
+<p>BFM has limited control. You cannot bypass or skip BFM using the <em>Skip</em> action in WAF custom rules or using Page Rules. BFM will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at <a href=/bots/plans/bm-subscription/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Bot Management for Enterprise</span></a>, which gives you the ability to precisely customize your security threshold and create exception rules as needed.</p>
+</li>
+<li>
+<p>SBFM can be bypassed with IP Access <em>Allow</em> action rules. You can use the <em>Skip</em> action in <a href=/waf/custom-rules/skip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF custom rules</span></a> to specify where Super Bot Fight Mode should not run.</p>
+</li>
+</ul>
+</aside>
+<p><strong>How to disable BFM/SBFM feature?</strong></p>
+<p>If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under <strong>Security</strong> &gt; <strong>Bots</strong>.</p>
+<ul>
+<li>For <strong>Free</strong> plans, toggle the <strong>Bot Fight Mode</strong> option to <strong>Off</strong></li>
+<li>For <strong>Pro</strong> plans, click the <strong>Configure Super Bot Fight Mode</strong> link and set each of <strong>Definitely automated</strong> and <strong>Verified bots</strong> features to <strong>Allow</strong>, and toggle the <strong>Static resource protection</strong> and <strong>JavaScript Detections</strong> options to <strong>Off</strong></li>
+<li>For <strong>Business</strong> and <strong>Enterprise</strong> (with no Bot Management add-on) plans, click the <strong>Configure Super Bot Fight Mode</strong> link and set each of <strong>Definitely automated</strong>, <strong>Likely automated</strong> and <strong>Verified bots</strong> features to <strong>Allow</strong>, and toggle the <strong>Static resource protection</strong> and <strong>JavaScript Detections</strong> options to <strong>Off</strong></li>
+</ul>
+<p>In parts of your site where you want bot traffic, you can use the <a href=/waf/custom-rules/skip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><em>Skip</em> action</span></a> in <a href=/waf/custom-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF custom rules</span></a> to specify where Super Bot Fight Mode should not run.</p>
+<p>You can use the <a href=/ruleset-engine/rules-language/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Rules language</span></a> and its <a href=/ruleset-engine/rules-language/operators/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">operators</span></a> and <a href=/ruleset-engine/rules-language/fields/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">fields</span></a> in custom rules to configure a scoped rule for approved automated traffic in Super Bot Fight Mode.</p>
+<p>You cannot bypass or skip Bot Fight Mode using the <em>Skip</em> action in WAF custom rules or using Page Rules. <em>Skip</em>, <em>Bypass</em>, and <em>Allow</em> actions apply to rules or rulesets running on the <a href=/ruleset-engine/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Ruleset Engine</span></a>. While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using <a href=/bots/get-started/pro/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Super Bot Fight Mode</span></a>.</p>
+<p>Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h2 id="super-bot-fight-mode-feature-sbfm-is-still-blocking-requests-even-though-the-feature-is-turned-off-why" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#super-bot-fight-mode-feature-sbfm-is-still-blocking-requests-even-though-the-feature-is-turned-off-why"
+    >&#8203;​</a
+    >
+</span>
+<span>Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?</span>
+  </h2>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:</p>
+<ol>
+<li>List the existing Rulesets at the zone level</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Frulesets%22&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="2">
+<li>
+<p>From the output in step 1, find the ruleset ID that is associated with the zone&rsquo;s SBFM configuration. You should be able to see <code>&quot;kind&quot;: &quot;zone&quot;</code> and <code>&quot;phase&quot;: &quot;http_request_sbfm&quot;</code> for that ruleset.</p>
+</li>
+<li>
+<p>Use the ruleset ID you found to delete the SBFM ruleset.</p>
+</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;--request&#43;DELETE&#43;%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Frulesets%2F%7Bruleset_id%7D%22&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Note that you need to replace <code>&lt;API_KEY&gt;</code> with your own <a href=/fundamentals/api/get-started/keys/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">API key</span></a>.</p>
+
+    </div>
+</div>
+</div>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/:zone/security/bots" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/security/6" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/bots/what-is-a-bot/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/bots/troubleshooting.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-05T09:32:14&#43;01:00
+  title=2024-07-05
+>July 5, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Query JSON · Cloudflare D1 docs</title>
+  <meta name="title" content="Query JSON · Cloudflare D1 docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Query JSON · Cloudflare D1 docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Query JSON · Cloudflare D1 docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Query JSON · Cloudflare D1 docs" />
+  <meta property="og:description" content="D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/d1/build-with-d1/query-json/" />
+
+  <meta name="twitter:title" content="Query JSON · Cloudflare D1 docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="d1"><meta name="algolia_product_filter" content="D1"><meta name="algolia_page_title" content="Query JSON">
+  <meta name="pcx_word_count" content="1500"><meta name="pcx_last_modified" content="23"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="concept" />
+  <meta name="algolia_content_type" content="Concept"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/d1/build-with-d1/query-json/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"d1"}</script>
+  <meta name="docsearch:product" content="d1" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - bc65e4c2cacadc888e5cbcdfdfd1f444" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - bc65e4c2cacadc888e5cbcdfdfd1f444">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/d1/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare D1 logo"><svg width="65" height="64" viewBox="0 0 65 64" xmlns="http://www.w3.org/2000/svg"><path d="m23.6 22.2 3.03 1.75v3.5l-3.03 1.75-3.03-1.75v-3.5zm-3.54 26.8 3.54-3.54 3.54 3.54-3.54 3.54zm3.54-14.7c0.593 0 1.17 0.176 1.67 0.506 0.493 0.33 0.878 0.798 1.1 1.35 0.227 0.548 0.286 1.15 0.171 1.73-0.116 0.582-0.401 1.12-0.821 1.54-0.42 0.42-0.954 0.705-1.54 0.821-0.582 0.116-1.19 0.0563-1.73-0.171-0.548-0.227-1.02-0.612-1.35-1.1-0.33-0.493-0.506-1.07-0.506-1.67 0-0.796 0.316-1.56 0.879-2.12 0.563-0.563 1.33-0.879 2.12-0.879zm-13.3-23.1 6.42-4.89 1.21-0.37h29l1.19 0.39 6.61 4.89 0.82 1.61v38l-0.55 1.38-4.83 5.11-1.46 0.63h-31.7l-1.37-0.54-5.48-5.11-0.64-1.47v-38zm3.21 25.4 4.47 4.94h0.0561v4h-1.83l-2.7-3v7.39l4.26 4h30l3.7-3.91v-7.72l-3.67 3.24h-18.6v-4h17.2l5.19-4.61v-7.44l-3.67 3.25h-18.7v-4h17.2l5.19-4.6v-6.92l-3.67 3.26h-31.6l-2.74-2.8v6.12l4.47 4.94h0.0561v4h-1.83l-2.7-3zm32.7-26.7h-27.6l-4.07 3.11 3.4 3.48h28.4l4-3.56z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">D1</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 5b46ddca2cd8a8c5b8e4f14ccfefdc4c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 5b46ddca2cd8a8c5b8e4f14ccfefdc4c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/d1/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare D1 logo"><svg width="65" height="64" viewBox="0 0 65 64" xmlns="http://www.w3.org/2000/svg"><path d="m23.6 22.2 3.03 1.75v3.5l-3.03 1.75-3.03-1.75v-3.5zm-3.54 26.8 3.54-3.54 3.54 3.54-3.54 3.54zm3.54-14.7c0.593 0 1.17 0.176 1.67 0.506 0.493 0.33 0.878 0.798 1.1 1.35 0.227 0.548 0.286 1.15 0.171 1.73-0.116 0.582-0.401 1.12-0.821 1.54-0.42 0.42-0.954 0.705-1.54 0.821-0.582 0.116-1.19 0.0563-1.73-0.171-0.548-0.227-1.02-0.612-1.35-1.1-0.33-0.493-0.506-1.07-0.506-1.67 0-0.796 0.316-1.56 0.879-2.12 0.563-0.563 1.33-0.879 2.12-0.879zm-13.3-23.1 6.42-4.89 1.21-0.37h29l1.19 0.39 6.61 4.89 0.82 1.61v38l-0.55 1.38-4.83 5.11-1.46 0.63h-31.7l-1.37-0.54-5.48-5.11-0.64-1.47v-38zm3.21 25.4 4.47 4.94h0.0561v4h-1.83l-2.7-3v7.39l4.26 4h30l3.7-3.91v-7.72l-3.67 3.24h-18.6v-4h17.2l5.19-4.61v-7.44l-3.67 3.25h-18.7v-4h17.2l5.19-4.6v-6.92l-3.67 3.26h-31.6l-2.74-2.8v6.12l4.47 4.94h0.0561v4h-1.83l-2.7-3zm32.7-26.7h-27.6l-4.07 3.11 3.4 3.48h28.4l4-3.56z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">D1</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>D1 menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/d1/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Build with D1</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Build with D1</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/import-export-data/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Import and export data</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/d1-client-api/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/use-indexes/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use indexes</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/remote-development/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Remote development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/foreign-keys/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Define foreign keys</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/d1/build-with-d1/query-json/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query JSON</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/build-with-d1/local-development/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Local development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/bindings/#d1-databases"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use D1 from Pages</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/configuration/data-location/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data location</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/configuration/environments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Environments</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/configuration/smart-placement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Smart Placement</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Observability</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/observability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Observability</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/observability/debug-d1/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Debug D1</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/observability/metrics-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics and analytics</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-remix/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Remix</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-hono/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Hono</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/d1-and-sveltekit/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from SvelteKit</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/examples/query-d1-from-python-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Query D1 from Python Workers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/alpha-migration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Alpha database migration guide</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/platform/changelog/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/d1/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/migrations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrations</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/time-travel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Time Travel and backups</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/community-projects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Community projects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/generated-columns/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Generated columns</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/database-commands/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Database commands</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/commands/#d1"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler commands</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/data-security/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data security</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/d1/reference/backups/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Backups (Legacy)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/cloudflare-d1-create-database"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">D1 REST API</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/d1/build-with-d1/query-json.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >D1</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/build-with-d1/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Build with D1</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/d1/build-with-d1/query-json/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Query JSON</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="query-json">Query JSON</h1><p>D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:</p>
+<ul>
+<li><a href=#extract-values class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Query paths</span></a> within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.</li>
+<li>Insert and/or replace values within an object or array.</li>
+<li><a href=#expand-arrays-for-in-queries class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Expand the contents of a JSON object</span></a> or array into multiple rows - for example, for use as part of a <code>WHERE ... IN</code> predicate.</li>
+<li>Create <a href=/d1/reference/generated-columns/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">generated columns</span></a> that are automatically populated with values from JSON objects you insert.</li>
+</ul>
+<p>One of the biggest benefits to parsing JSON within D1 directly is that it can directly reduce the number of round-trips (queries) to your database. It reduces the cases where you have to read a JSON object into your application (1), parse it, and then write it back (2).</p>
+<p>This allows you to more precisely query over data and reduce the result set your application needs to additionally parse and filter on.</p>
+<h2 id="types">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#types">&#8203;​</a>
+    </span>
+    <span>Types</span>
+  </h2><p>JSON data is stored as a <code>TEXT</code> column in D1. JSON types follow the same <a href=/d1/build-with-d1/d1-client-api/#type-conversion class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">type conversion rules</span></a> as D1 in general, including:</p>
+<ul>
+<li>A JSON null is treated as a D1 <code>NULL</code>.</li>
+<li>A JSON number is treated as an <code>INTEGER</code> or <code>REAL</code>.</li>
+<li>Booleans are treated as <code>INTEGER</code> values: <code>true</code> as <code>1</code> and <code>false</code> as <code>0</code>.</li>
+<li>Object and array values as <code>TEXT</code>.</li>
+</ul>
+<h2 id="supported-functions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#supported-functions">&#8203;​</a>
+    </span>
+    <span>Supported functions</span>
+  </h2><p>The following table outlines the JSON functions built into D1 and example usage.</p>
+<ul>
+<li>The <code>json</code> argument placeholder can be a JSON object, array, string, number or a null value.</li>
+<li>The <code>value</code> argument accepts string literals (only) and treats input as a string, even if it is well-formed JSON. The exception to this rule is when nesting <code>json_*</code> functions: the outer (wrapping) function will interpret the inner (wrapped) functions return value as JSON.</li>
+<li>The <code>path</code> argument accepts path-style traversal syntax - for example, <code>$</code> to refer to the top-level object/array, <code>$.key1.key2</code> to refer to a nested object, and <code>$.key[2]</code> to index into an array.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>json(json)</code></td>
+<td>Validates the provided string is JSON and returns a minified version of that JSON object.</td>
+<td><code>json('{&quot;hello&quot;:[&quot;world&quot; ,&quot;there&quot;] }')</code> returns <code>{&quot;hello&quot;:[&quot;world&quot;,&quot;there&quot;]}</code></td>
+</tr>
+<tr>
+<td><code>json_array(value1, value2, value3, ...)</code></td>
+<td>Return a JSON array from the values.</td>
+<td><code>json_array(1, 2, 3)</code> returns <code>[1, 2, 3]</code></td>
+</tr>
+<tr>
+<td><code>json_array_length(json)</code> - <code>json_array_length(json, path)</code></td>
+<td>Return the length of the JSON array</td>
+<td><code>json_array_length('{&quot;data&quot;:[&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]}', '$.data')</code> returns <code>3</code></td>
+</tr>
+<tr>
+<td><code>json_extract(json, path)</code></td>
+<td>Extract the value(s) at the given path using <code>$.path.to.value</code> syntax.</td>
+<td><code>json_extract('{&quot;temp&quot;:&quot;78.3&quot;, &quot;sunset&quot;:&quot;20:44&quot;}', '$.temp')</code> returns <code>&quot;78.3&quot;</code></td>
+</tr>
+<tr>
+<td><code>json -&gt; path</code></td>
+<td>Extract the value(s) at the given path using path syntax and return it as JSON.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json -&gt;&gt; path</code></td>
+<td>Extract the value(s) at the given path using path syntax and return it as a SQL type.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_insert(json, path, value)</code></td>
+<td>Insert a value at the given path. Does not overwrite an existing value.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_object(label1, value1, ...)</code></td>
+<td>Accepts pairs of (keys, values) and returns a JSON object.</td>
+<td><code>json_object('temp', 45, 'wind_speed_mph', 13)</code> returns <code>{&quot;temp&quot;:45,&quot;wind_speed_mph&quot;:13}</code></td>
+</tr>
+<tr>
+<td><code>json_patch(target, patch)</code></td>
+<td>Uses a JSON <a href="https://tools.ietf.org/html/rfc7396" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">MergePatch</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> approach to merge the provided patch into the target JSON object.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_remove(json, path, ...)</code></td>
+<td>Remove the key and value at the specified path.</td>
+<td><code>json_remove('[60,70,80,90]', '$[0]')</code> returns <code>70,80,90]</code></td>
+</tr>
+<tr>
+<td><code>json_replace(json, path, value)</code></td>
+<td>Insert a value at the given path. Overwrites an existing value, but does not create a new key if it doesn&rsquo;t exist.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_set(json, path, value)</code></td>
+<td>Insert a value at the given path. Overwrites an existing value.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_type(json)</code> - <code>json_type(json, path)</code></td>
+<td>Return the type of the provided value or value at the specified path. Returns one of <code>null</code>, <code>true</code>, <code>false</code>, <code>integer</code>, <code>real</code>, <code>text</code>, <code>array</code>, or <code>object</code>.</td>
+<td><code>json_type('{&quot;temperatures&quot;:[73.6, 77.8, 80.2]}', '$.temperatures')</code> returns <code>array</code></td>
+</tr>
+<tr>
+<td><code>json_valid(json)</code></td>
+<td>Returns 0 (false) for invalid JSON, and 1 (true) for valid JSON.</td>
+<td><code>json_valid(</code>{invalid:json})<code>returns</code>0`</td>
+</tr>
+<tr>
+<td><code>json_quote(value)</code></td>
+<td>Converts the provided SQL value into its JSON representation.</td>
+<td><code>json_quote('[1, 2, 3]')</code> returns <code>[1,2,3]</code></td>
+</tr>
+<tr>
+<td><code>json_group_array(value)</code></td>
+<td>Returns the provided value(s) as a JSON array.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_each(value)</code> - <code>json_each(value, path)</code></td>
+<td>Returns each element within the object as an individual row. It will only traverse the top-level object.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>json_tree(value)</code> - <code>json_tree(value, path)</code></td>
+<td>Returns each element within the object as an individual row. It traverses the full object.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The SQLite <a href="https://www.sqlite.org/json1.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">JSON extension</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, on which D1 builds on, has additional usage examples.</p>
+<h2 id="error-handling">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#error-handling">&#8203;​</a>
+    </span>
+    <span>Error Handling</span>
+  </h2><p>JSON functions will return a <code>malformed JSON</code> error when operating over data that isn&rsquo;t JSON and/or is not valid JSON. D1 considers valid JSON to be <a href="https://www.rfc-editor.org/rfc/rfc7159.txt" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">RFC 7159</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> conformant.</p>
+<p>In the following example, calling <code>json_extract</code> over a string (not valid JSON) will cause the query to return a <code>malformed JSON</code> error:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="SELECT&#43;json_extract%28%27not&#43;valid&#43;JSON%3A&#43;just&#43;a&#43;string%27%2C&#43;%27%24%27%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This will return an error:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="ERROR&#43;9015%3A&#43;SQL&#43;engine&#43;error%3A&#43;query&#43;error%3A&#43;Error&#43;code&#43;1%3A&#43;SQL&#43;error&#43;or&#43;missing&#43;database&#43;%28malformed%0A&#43;&#43;JSON%29%60"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="generated-columns">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#generated-columns">&#8203;​</a>
+    </span>
+    <span>Generated columns</span>
+  </h2><p>D1&rsquo;s support for <a href=/d1/reference/generated-columns/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">generated columns</span></a> allows you to create dynamic columns that are generated based on the values of other columns, including extracted or calculated values of JSON data.</p>
+<p>These columns can be queried like any other column, and can have <a href=/d1/build-with-d1/use-indexes/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">indexes</span></a> defined on them. If you have JSON data that you frequently query and filter over, creating a generated column and an index can dramatically improve query performance.</p>
+<p>For example, to define a column based on a value within a larger JSON object, use the <code>AS</code> keyword combined with a <a href=#supported-functions class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">JSON function</span></a> to generate a typed column:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="CREATE&#43;TABLE&#43;some_table&#43;%28%0A&#43;&#43;&#43;&#43;--&#43;other&#43;columns&#43;omitted%0A&#43;&#43;&#43;&#43;raw_data&#43;TEXT&#43;--&#43;JSON%3A&#43;%7B%22measurement%22%3A%7B%22aqi%22%3A%5B21%2C42%2C58%5D%2C%22wind_mph%22%3A%2213%22%2C%22location%22%3A%22US-NY%22%7D%7D%0A&#43;&#43;&#43;&#43;location&#43;AS&#43;%28json_extract%28raw_data%2C&#43;%27%24.measurement.location%27%29%29&#43;STORED%0A%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Refer to <a href=/d1/reference/generated-columns/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Generated columns</span></a> to learn more about how to generate columns.</p>
+<h2 id="example-usage">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#example-usage">&#8203;​</a>
+    </span>
+    <span>Example usage</span>
+  </h2><h3 id="extract-values">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#extract-values">&#8203;​</a>
+    </span>
+    <span>Extract values</span>
+  </h3><p>There are three ways to extract a value from a JSON object in D1:</p>
+<ul>
+<li>The <code>json_extract()</code> function - for example, <code>json_extract(text_column_containing_json, '$.path.to.value)</code>.</li>
+<li>The <code>-&gt;</code> operator, which returns a JSON representation of the value.</li>
+<li>The <code>-&gt;&gt;</code> operator, which returns an SQL representation of the value.</li>
+</ul>
+<p>The <code>-&gt;</code> and <code>-&gt;&gt;</code> operators functions both operate similarly to the same operators in PostgreSQL and MySQL/MariaDB.</p>
+<p>Given the following JSON object in a column named <code>sensor_reading</code>, you can extract values from it directly.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;&#43;&#43;%22measurement%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22temp_f%22%3A&#43;%2277.4%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22aqi%22%3A&#43;%5B21%2C&#43;42%2C&#43;58%5D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22o3%22%3A&#43;%5B18%2C&#43;500%5D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22wind_mph%22%3A&#43;%2213%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22location%22%3A&#43;%22US-NY%22%0A&#43;&#43;&#43;&#43;%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="--&#43;Extract&#43;the&#43;temperature&#43;value%0Ajson_extract%28sensor_reading%2C&#43;%27%24.measurement.temp_f%27%29--&#43;returns&#43;%2277.4%22&#43;as&#43;TEXT"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="--&#43;Extract&#43;the&#43;maximum&#43;PM2.5&#43;air&#43;quality&#43;reading%0Asensor_reading&#43;-%3E&#43;%27%24.measurement.aqi%5B3%5D%27&#43;--&#43;returns&#43;58&#43;as&#43;a&#43;JSON&#43;number"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="--&#43;Extract&#43;the&#43;o3&#43;%28ozone%29&#43;array&#43;in&#43;full%0Asensor_reading&#43;-%5C-%3E&#43;%27%24.measurement.o3%27&#43;--&#43;returns&#43;%27%5B18%2C&#43;500%5D%27&#43;as&#43;TEXT"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="get-the-length-of-an-array">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#get-the-length-of-an-array">&#8203;​</a>
+    </span>
+    <span>Get the length of an array</span>
+  </h3><p>You can get the length of a JSON array in two ways:</p>
+<ol>
+<li>By calling <code>json_array_length(value)</code> directly</li>
+<li>By calling <code>json_array_length(value, path)</code> to specify the path to an array within an object or outer array.</li>
+</ol>
+<p>For example, given the following JSON object stored in a column called <code>login_history</code>, you could get a count of the last logins directly:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;&#43;&#43;%22user_id%22%3A&#43;%22abc12345%22%2C%0A&#43;&#43;&#43;&#43;%22previous_logins%22%3A&#43;%5B%222023-03-31T21%3A07%3A14-05%3A00%22%2C&#43;%222023-03-28T08%3A21%3A02-05%3A00%22%2C&#43;%222023-03-28T05%3A52%3A11-05%3A00%22%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="json_array_length%28login_history%2C&#43;%27%24.previous_logins%27%29&#43;--%3E&#43;returns&#43;3&#43;as&#43;an&#43;INTEGER"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You can also use <code>json_array_length</code> as a predicate in a more complex query - for example, <code>WHERE json_array_length(some_column, '$.path.to.value') &gt;= 5</code>.</p>
+<h3 id="insert-a-value-into-an-existing-object">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#insert-a-value-into-an-existing-object">&#8203;​</a>
+    </span>
+    <span>Insert a value into an existing object</span>
+  </h3><p>You can insert a value into an existing JSON object or array using <code>json_insert()</code>. For example, if you have a <code>TEXT</code> column called <code>login_history</code> in a <code>users</code> table containing the following object:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%22history%22%3A&#43;%5B%222023-05-13T15%3A13%3A02%2B00%3A00%22%2C&#43;%222023-05-14T07%3A11%3A22%2B00%3A00%22%2C&#43;%222023-05-15T15%3A03%3A51%2B00%3A00%22%5D%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>To add a new timestamp to the <code>history</code> array within our <code>login_history</code> column, write a query resembling the following:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="UPDATE&#43;users%0ASET&#43;login_history&#43;%3D&#43;json_insert%28login_history%2C&#43;%27%24.history%5B%23%5D%27%2C&#43;%272023-05-15T20%3A33%3A06%2B00%3A00%27%29%0AWHERE&#43;user_id&#43;%3D&#43;%27aba0e360-1e04-41b3-91a0-1f2263e1e0fb%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Provide three arguments to <code>json_insert</code>:</p>
+<ol>
+<li>The name of our column containing the JSON you want to modify.</li>
+<li>The path to the key within the object to modify.</li>
+<li>The JSON value to insert. Using <code>[#]</code> tells <code>json_insert</code> to append to the end of your array.</li>
+</ol>
+<p>To replace an existing value, use <code>json_replace()</code>, which will overwrite an existing key-value pair if one already exists. To set a value regardless of whether it already exists, use <code>json_set()</code>.</p>
+<h3 id="expand-arrays-for-in-queries">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#expand-arrays-for-in-queries">&#8203;​</a>
+    </span>
+    <span>Expand arrays for IN queries</span>
+  </h3><p>Use <code>json_each</code> to expand an array into multiple rows. This can be useful when composing a <code>WHERE column IN (?)</code> query over several values. For example, if you wanted to update a list of users by their integer <code>id</code>, use <code>json_each</code> to return a table with each value as a column called <code>value</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="UPDATE&#43;users&#43;%0ASET&#43;last_audited&#43;%3D&#43;%272023-05-16T11%3A24%3A08%2B00%3A00%27%0AWHERE&#43;id&#43;IN&#43;%28SELECT&#43;value&#43;FROM&#43;json_each%28%27%5B183183%2C&#43;13913%2C&#43;94944%5D%27%29%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This would extract only the <code>value</code> column from the table returned by <code>json_each</code>, with each row representing the user IDs you passed in as an array.</p>
+<p><code>json_each</code> effectively returns a table with multiple columns, with the most relevant being:</p>
+<ul>
+<li><code>key</code> - the key (or index).</li>
+<li><code>value</code> - the literal value of each element parsed by <code>json_each</code>.</li>
+<li><code>type</code> - the type of the value: one of <code>null</code>, <code>true</code>, <code>false</code>, <code>integer</code>, <code>real</code>, <code>text</code>, <code>array</code>, or <code>object</code>.</li>
+<li><code>fullkey</code> - the full path to the element: e.g. <code>$[1]</code> for the second element in an array, or <code>$.path.to.key</code> for a nested object.</li>
+<li><code>path</code> - the top-level path - <code>$</code> as the path for an element with a <code>fullkey</code> of <code>$[0]</code>.</li>
+</ul>
+<p>In this example, <code>SELECT * FROM json_each('[183183, 13913, 94944]')</code> would return a table resembling the below:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sql" data-code="key%7Cvalue%7Ctype%7Cid%7Cfullkey%7Cpath%0A0%7C183183%7Cinteger%7C1%7C%24%5B0%5D%7C%24%0A1%7C13913%7Cinteger%7C2%7C%24%5B1%5D%7C%24%0A2%7C94944%7Cinteger%7C3%7C%24%5B2%5D%7C%24"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You can use <code>json_each</code> with D1&rsquo;s <a href=/d1/build-with-d1/d1-client-api/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">client API</span></a> in a Worker by creating a statement and using <code>JSON.stringify</code> to pass an array as a <a href=/d1/build-with-d1/d1-client-api/#parameter-binding class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bound parameter</span></a>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="const&#43;stmt&#43;%3D&#43;context.env.DB%0A&#43;&#43;&#43;&#43;.prepare%28%22UPDATE&#43;users&#43;SET&#43;last_audited&#43;%3D&#43;%3F&#43;WHERE&#43;id&#43;IN&#43;%28SELECT&#43;value&#43;FROM&#43;json_each%28%3F1%29%29%22%29%0Aconst&#43;resp&#43;%3D&#43;await&#43;stmt.bind%28%0A&#43;&#43;&#43;&#43;%222023-05-16T11%3A24%3A08%2B00%3A00%22%2C%0A&#43;&#43;&#43;&#43;JSON.stringify%28%5B183183%2C&#43;13913%2C&#43;94944%5D%29%0A&#43;&#43;&#43;&#43;%29.run%28%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This would only update rows in your <code>users</code> table where the <code>id</code> matches one of the three provided.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/workers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/d1/build-with-d1/query-json.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-20T15:09:27&#43;01:00
+  title=2024-06-20
+>June 20, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

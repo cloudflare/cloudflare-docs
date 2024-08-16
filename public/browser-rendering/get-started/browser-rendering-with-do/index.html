@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs</title>
+  <meta name="title" content="Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="By following this guide, you will create a Worker that uses the Browser Rendering API along with Durable Objects to take screenshots from web pages …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs" />
+  <meta property="og:description" content="By following this guide, you will create a Worker that uses the Browser Rendering API along with Durable Objects to take screenshots from web pages …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/browser-rendering/get-started/browser-rendering-with-do/" />
+
+  <meta name="twitter:title" content="Deploy a Browser Rendering Worker with Durable Objects · Browser Rendering docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="By following this guide, you will create a Worker that uses the Browser Rendering API along with Durable Objects to take screenshots from web pages …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="browser-rendering"><meta name="algolia_product_filter" content="Browser Rendering"><meta name="algolia_page_title" content="Deploy a Browser Rendering Worker with Durable Objects">
+  <meta name="pcx_word_count" content="600"><meta name="pcx_last_modified" content="16"><meta name="pcx_last_reviewed" content="289" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/browser-rendering/get-started/browser-rendering-with-do/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"browser-rendering"}</script>
+  <meta name="docsearch:product" content="browser-rendering" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 1c4b8c45d44edcafca85fbc68cc2fdde" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 1c4b8c45d44edcafca85fbc68cc2fdde">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/browser-rendering/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Browser Rendering logo"><svg width="64" height="65" viewBox="0 0 64 65" xmlns="http://www.w3.org/2000/svg"><path d="m23.3 18.2c0 1.16-0.94 2.1-2.1 2.1s-2.1-0.94-2.1-2.1 0.94-2.1 2.1-2.1 2.1 0.94 2.1 2.1zm-6.7 0c0 1.16-0.94 2.1-2.1 2.1s-2.1-0.94-2.1-2.1 0.94-2.1 2.1-2.1 2.1 0.94 2.1 2.1zm13.3-0.61c-0.261-0.863-1.06-1.49-2.01-1.49-1.16 0-2.1 0.94-2.1 2.1s0.94 2.1 2.1 2.1c0.948 0 1.75-0.628 2.01-1.49zm28.1-1.6v-3.29l-2-2h-1.39v5.29zm0 9.67v-4.99h-3.39v4.99zm0 9.67v-4.99h-3.39v4.99zm0 9.67v-4.99h-3.39v4.99zm-3.39 9.6h1.39l2-2v-2.93h-3.39zm-17.9-4h4.29v4h-4.29zm8.96 0h4.29v4h-4.29zm-8.96-29h4.29v4h-4.29zm8.96 0h4.29v4h-4.29zm4.29-6.9h-4.29v-4h4.29zm-8.96 0h-4.29v-4h4.29zm-8.96-4h-24l-2 2v39.9l2 2h24v-4h-22v-25h22v-4h-22v-6.9h22z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:17">Browser Rendering</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 5845bcaccdc4a2d846dcbef48df1ccfe" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 5845bcaccdc4a2d846dcbef48df1ccfe">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/browser-rendering/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Browser Rendering logo"><svg width="64" height="65" viewBox="0 0 64 65" xmlns="http://www.w3.org/2000/svg"><path d="m23.3 18.2c0 1.16-0.94 2.1-2.1 2.1s-2.1-0.94-2.1-2.1 0.94-2.1 2.1-2.1 2.1 0.94 2.1 2.1zm-6.7 0c0 1.16-0.94 2.1-2.1 2.1s-2.1-0.94-2.1-2.1 0.94-2.1 2.1-2.1 2.1 0.94 2.1 2.1zm13.3-0.61c-0.261-0.863-1.06-1.49-2.01-1.49-1.16 0-2.1 0.94-2.1 2.1s0.94 2.1 2.1 2.1c0.948 0 1.75-0.628 2.01-1.49zm28.1-1.6v-3.29l-2-2h-1.39v5.29zm0 9.67v-4.99h-3.39v4.99zm0 9.67v-4.99h-3.39v4.99zm0 9.67v-4.99h-3.39v4.99zm-3.39 9.6h1.39l2-2v-2.93h-3.39zm-17.9-4h4.29v4h-4.29zm8.96 0h4.29v4h-4.29zm-8.96-29h4.29v4h-4.29zm8.96 0h4.29v4h-4.29zm4.29-6.9h-4.29v-4h4.29zm-8.96 0h-4.29v-4h4.29zm-8.96-4h-24l-2 2v39.9l2 2h24v-4h-22v-25h22v-4h-22v-6.9h22z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:17">Browser Rendering</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Browser Rendering menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/browser-rendering/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/browser-rendering/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering/get-started/screenshots/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a Browser Rendering Worker</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/browser-rendering/get-started/browser-rendering-with-do/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a Browser Rendering Worker with Durable Objects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering/get-started/reuse-sessions/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reuse sessions</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/browser-rendering/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering/platform/puppeteer/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Puppeteer</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering/platform/wrangler/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/browser-rendering/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/browser-rendering/get-started/browser-rendering-with-DO.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/browser-rendering/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Browser Rendering</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/browser-rendering/get-started/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Get started</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/browser-rendering/get-started/browser-rendering-with-do/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Deploy a Browser Rendering Worker with Durable Objects</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="deploy-a-browser-rendering-worker-with-durable-objects">Deploy a Browser Rendering Worker with Durable Objects</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2023-09-28T00:00:00&#43;00:00
+  title=2023-09-28
+>September 28, 2023</time></span>
+</div>
+<p>By following this guide, you will create a Worker that uses the Browser Rendering API along with <a href=/durable-objects/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Durable Objects</span></a> to take screenshots from web pages and store them in <a href=/r2/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">R2</span></a>.</p>
+<p>Using Durable Objects to persist browser sessions improves performance by eliminating the time that it takes to spin up a new browser session. Since Durable Objects re-uses sessions, it reduces the number of concurrent sessions needed.</p>
+<ol>
+<li>Sign up for a <a href="https://dash.cloudflare.com/sign-up/workers-and-pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare account</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://docs.npmjs.com/getting-started" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://nodejs.org/en/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Node.js</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ol>
+<details class="DocsMarkdown"
+  >
+    <summary>Node.js version manager</summary>
+    <div>Use a Node version manager like <a href="https://volta.sh/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Volta</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> or <a href="https://github.com/nvm-sh/nvm" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">nvm</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to avoid permission issues and change Node.js versions. <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a>, discussed later in this guide, requires a Node version of <code>16.17.0</code> or later.</div>
+</details>
+
+<h2 id="1-create-a-worker-project">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-create-a-worker-project">&#8203;​</a>
+    </span>
+    <span>1. Create a Worker project</span>
+  </h2><p><a href=/workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Workers</span></a> provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. Your Worker application is a container to interact with a headless browser to do actions, such as taking screenshots.</p>
+<p>Create a new Worker project named <code>browser-worker</code> by running:</p>
+<div class="tabs-wrapper" tab-wrapper-id="f4b605078357fbd1">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="f4b605078357fbd1">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-npm" data-id="f4b605078357fbd1">
+npm
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-yarn" data-id="f4b605078357fbd1">
+yarn
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab tab-default " id="tab-npm-f4b605078357fbd1"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;create&#43;cloudflare%40latest"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-yarn-f4b605078357fbd1"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;yarn&#43;create&#43;cloudflare%40latest"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<h2 id="2-enable-durable-objects-in-the-dashboard">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-enable-durable-objects-in-the-dashboard">&#8203;​</a>
+    </span>
+    <span>2. Enable Durable Objects in the dashboard</span>
+  </h2><p>To enable Durable Objects, you will need to purchase the Workers Paid plan:</p>
+<ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and select your account.</li>
+<li>Go to <strong>Workers &amp; Pages</strong> &gt; <strong>Plans</strong>.</li>
+<li>Select <strong>Purchase Workers Paid</strong> and complete the payment process to enable Durable Objects.</li>
+</ol>
+<h2 id="3-install-puppeteer">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-install-puppeteer">&#8203;​</a>
+    </span>
+    <span>3. Install Puppeteer</span>
+  </h2><p>In your <code>browser-worker</code> directory, install Cloudflare’s <a href=/browser-rendering/platform/puppeteer/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">fork of Puppeteer</span></a>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;install&#43;%40cloudflare%2Fpuppeteer&#43;--save-dev"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="4-create-a-r2-bucket">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-create-a-r2-bucket">&#8203;​</a>
+    </span>
+    <span>4. Create a R2 bucket</span>
+  </h2><p>Create two R2 buckets, one for production, and one for development.</p>
+<p>Note that bucket names must be lowercase and can only contain dashes.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;wrangler&#43;r2&#43;bucket&#43;create&#43;screenshots%0A%24&#43;wrangler&#43;r2&#43;bucket&#43;create&#43;screenshots-test"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>To check that your buckets were created, run:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;wrangler&#43;r2&#43;bucket&#43;list"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>After running the <code>list</code> command, you will see all bucket names, including the ones you have just created.</p>
+<h2 id="5-configure-wranglertoml">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-configure-wranglertoml">&#8203;​</a>
+    </span>
+    <span>5. Configure <code>wrangler.toml</code></span>
+  </h2><p>Configure your <code>browser-worker</code> project&rsquo;s <a href=/workers/wrangler/configuration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>wrangler.toml</code></span></a> file by adding a browser <a href=/workers/runtime-apis/bindings/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">binding</span></a> and a <a href=/workers/configuration/compatibility-dates/#nodejs-compatibility-flag class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Node.js compatibility flag</span></a>. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.</p>
+<p>Update your <code>wrangler.toml</code> configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="name&#43;%3D&#43;%22rendering-api-demo%22%0Amain&#43;%3D&#43;%22src%2Findex.js%22%0Acompatibility_date&#43;%3D&#43;%222023-09-04%22%0Acompatibility_flags&#43;%3D&#43;%5B&#43;%22nodejs_compat%22%5D%0Aaccount_id&#43;%3D&#43;%3CACCOUNT_ID%3E%0A%0A%0A%23&#43;Browser&#43;Rendering&#43;API&#43;binding%0Abrowser&#43;%3D&#43;%7B&#43;binding&#43;%3D&#43;%22MYBROWSER%22&#43;%7D%0A%0A%23&#43;Bind&#43;an&#43;R2&#43;Bucket%0A%5B%5Br2_buckets%5D%5D%0Abinding&#43;%3D&#43;%22BUCKET%22%0Abucket_name&#43;%3D&#43;%22screenshots%22%0Apreview_bucket_name&#43;%3D&#43;%22screenshots-test%22%0A%0A%23&#43;Binding&#43;to&#43;a&#43;Durable&#43;Object%0A%5B%5Bdurable_objects.bindings%5D%5D%0Aname&#43;%3D&#43;%22BROWSER%22%0Aclass_name&#43;%3D&#43;%22Browser%22%0A%0A%5B%5Bmigrations%5D%5D%0Atag&#43;%3D&#43;%22v1%22&#43;%23&#43;Should&#43;be&#43;unique&#43;for&#43;each&#43;entry%0Anew_classes&#43;%3D&#43;%5B%22Browser%22%5D&#43;%23&#43;Array&#43;of&#43;new&#43;classes"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="6-code">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#6-code">&#8203;​</a>
+    </span>
+    <span>6. Code</span>
+  </h2><p>The code below uses Durable Object to instantiate a browser using Puppeteer. It then opens a series of web pages with different resolutions, takes a screenshot of each, and uploads it to R2.</p>
+<p>The Durable Object keeps a browser session open for 60 seconds after last use. If a browser session is open, any requests will re-use the existing session rather than creating a new one. Update your Worker code by copy and pasting the following:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;index.js%0A---%0Aimport&#43;puppeteer&#43;from&#43;%27%40cloudflare%2Fpuppeteer%27%3B%0A%0Aexport&#43;default&#43;%7B%0A%09async&#43;fetch%28request%2C&#43;env%29&#43;%7B%0A%0A%09%09let&#43;id&#43;%3D&#43;env.BROWSER.idFromName%28%22browser%22%29%3B%0A%09%09let&#43;obj&#43;%3D&#43;env.BROWSER.get%28id%29%3B%0A%0A%09%09%2F%2F&#43;Send&#43;a&#43;request&#43;to&#43;the&#43;Durable&#43;Object%2C&#43;then&#43;await&#43;its&#43;response.%0A%09%09let&#43;resp&#43;%3D&#43;await&#43;obj.fetch%28request.url%29%3B%0A%0A%09%09return&#43;resp%3B%0A%09%7D%0A%7D%3B%0A%0Aconst&#43;KEEP_BROWSER_ALIVE_IN_SECONDS&#43;%3D&#43;60%3B%0A%0Aexport&#43;class&#43;Browser&#43;%7B%0A%09constructor%28state%2C&#43;env%29&#43;%7B%0A%09%09this.state&#43;%3D&#43;state%3B%0A%09%09this.env&#43;%3D&#43;env%3B%0A%09%09this.keptAliveInSeconds&#43;%3D&#43;0%3B%0A%09%09this.storage&#43;%3D&#43;this.state.storage%3B%0A%09%7D%0A%0A%09async&#43;fetch%28request%29&#43;%7B%0A%09%09%2F%2F&#43;screen&#43;resolutions&#43;to&#43;test&#43;out%0A%09%09const&#43;width&#43;%3D&#43;%5B1920%2C&#43;1366%2C&#43;1536%2C&#43;360%2C&#43;414%5D%0A%09%09const&#43;height&#43;%3D&#43;%5B1080%2C&#43;768%2C&#43;864%2C&#43;640%2C&#43;896%5D%0A%0A%09%09%2F%2F&#43;use&#43;the&#43;current&#43;date&#43;and&#43;time&#43;to&#43;create&#43;a&#43;folder&#43;structure&#43;for&#43;R2%0A%09%09const&#43;nowDate&#43;%3D&#43;new&#43;Date%28%29%0A%09%09var&#43;coeff&#43;%3D&#43;1000&#43;%2A&#43;60&#43;%2A&#43;5%0A%09%09var&#43;roundedDate&#43;%3D&#43;%28new&#43;Date%28Math.round%28nowDate.getTime%28%29&#43;%2F&#43;coeff%29&#43;%2A&#43;coeff%29%29.toString%28%29%3B%0A%09%09var&#43;folder&#43;%3D&#43;roundedDate.split%28%22&#43;GMT%22%29%5B0%5D%0A%0A%09%09%2F%2Fif&#43;there%27s&#43;a&#43;browser&#43;session&#43;open%2C&#43;re-use&#43;it%0A%09%09if&#43;%28%21this.browser&#43;%7C%7C&#43;%21this.browser.isConnected%28%29%29&#43;%7B%0A%09%09%09console.log%28%60Browser&#43;DO%3A&#43;Starting&#43;new&#43;instance%60%29%3B%0A%09%09%09try&#43;%7B%0A%09%09%09&#43;&#43;this.browser&#43;%3D&#43;await&#43;puppeteer.launch%28this.env.MYBROWSER%29%3B%0A%09%09%09%7D&#43;catch&#43;%28e%29&#43;%7B%0A%09%09%09&#43;&#43;console.log%28%60Browser&#43;DO%3A&#43;Could&#43;not&#43;start&#43;browser&#43;instance.&#43;Error%3A&#43;%24%7Be%7D%60%29%3B%0A%09%09%09%7D%0A%09%09&#43;&#43;%7D%0A%0A%09%09%2F%2F&#43;Reset&#43;keptAlive&#43;after&#43;each&#43;call&#43;to&#43;the&#43;DO%0A%09%09this.keptAliveInSeconds&#43;%3D&#43;0%3B%0A%0A%09%09const&#43;page&#43;%3D&#43;await&#43;this.browser.newPage%28%29%3B%0A%0A%09%09%2F%2F&#43;take&#43;screenshots&#43;of&#43;each&#43;screen&#43;size%0A%09%09for&#43;%28let&#43;i&#43;%3D&#43;0%3B&#43;i&#43;%3C&#43;width.length%3B&#43;i%2B%2B%29&#43;%7B%0A%09%09%09await&#43;page.setViewport%28%7B&#43;width%3A&#43;width%5Bi%5D%2C&#43;height%3A&#43;height%5Bi%5D&#43;%7D%29%3B%0A%09%09%09await&#43;page.goto%28%22https%3A%2F%2Fworkers.cloudflare.com%2F%22%29%3B%0A%09%09%09const&#43;fileName&#43;%3D&#43;%22screenshot_%22&#43;%2B&#43;width%5Bi%5D&#43;%2B&#43;%22x%22&#43;%2B&#43;height%5Bi%5D%0A%09%09%09const&#43;sc&#43;%3D&#43;await&#43;page.screenshot%28%7B&#43;path%3A&#43;fileName&#43;%2B&#43;%22.jpg%22&#43;%7D%29%3B%0A%0A%09%09%09await&#43;this.env.BUCKET.put%28folder&#43;%2B&#43;%22%2F%22%2B&#43;fileName&#43;%2B&#43;%22.jpg%22%2C&#43;sc%29%3B%0A%09%09%7D%0A%0A%09%09%2F%2F&#43;Close&#43;tab&#43;when&#43;there&#43;is&#43;no&#43;more&#43;work&#43;to&#43;be&#43;done&#43;on&#43;the&#43;page%0A%09%09await&#43;page.close%28%29%3B%0A%0A%09%09%2F%2F&#43;Reset&#43;keptAlive&#43;after&#43;performing&#43;tasks&#43;to&#43;the&#43;DO.%0A%09%09this.keptAliveInSeconds&#43;%3D&#43;0%3B%0A%0A%09%09%2F%2F&#43;set&#43;the&#43;first&#43;alarm&#43;to&#43;keep&#43;DO&#43;alive%0A%09%09let&#43;currentAlarm&#43;%3D&#43;await&#43;this.storage.getAlarm%28%29%3B%0A%09%09if&#43;%28currentAlarm&#43;%3D%3D&#43;null%29&#43;%7B%0A%09%09%09console.log%28%60Browser&#43;DO%3A&#43;setting&#43;alarm%60%29%3B%0A%09%09%09const&#43;TEN_SECONDS&#43;%3D&#43;10&#43;%2A&#43;1000%3B%0A%09%09%09await&#43;this.storage.setAlarm%28Date.now%28%29&#43;%2B&#43;TEN_SECONDS%29%3B%0A%09%09%7D%0A%0A%09%09return&#43;new&#43;Response%28%22success%22%29%3B%0A%09%7D%0A%0A%09async&#43;alarm%28%29&#43;%7B%0A%09%09this.keptAliveInSeconds&#43;%2B%3D&#43;10%3B%0A%0A%09%09%2F%2F&#43;Extend&#43;browser&#43;DO&#43;life%0A%09%09if&#43;%28this.keptAliveInSeconds&#43;%3C&#43;KEEP_BROWSER_ALIVE_IN_SECONDS%29&#43;%7B%0A%09%09&#43;&#43;console.log%28%60Browser&#43;DO%3A&#43;has&#43;been&#43;kept&#43;alive&#43;for&#43;%24%7Bthis.keptAliveInSeconds%7D&#43;seconds.&#43;Extending&#43;lifespan.%60%29%3B%0A%09%09&#43;&#43;await&#43;this.storage.setAlarm%28Date.now%28%29&#43;%2B&#43;10&#43;%2A&#43;1000%29%3B%0A%09%09&#43;&#43;%2F%2F&#43;You&#43;could&#43;ensure&#43;the&#43;ws&#43;connection&#43;is&#43;kept&#43;alive&#43;by&#43;requesting&#43;something%0A%09%09&#43;&#43;%2F%2F&#43;or&#43;just&#43;let&#43;it&#43;close&#43;automatically&#43;when&#43;there&#43;&#43;is&#43;no&#43;work&#43;to&#43;be&#43;done%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;for&#43;example%2C&#43;%60await&#43;this.browser.version%28%29%60%0A%09%09%7D&#43;else&#43;%7B%0A%09%09%09console.log%28%60Browser&#43;DO%3A&#43;exceeded&#43;life&#43;of&#43;%24%7BKEEP_BROWSER_ALIVE_IN_SECONDS%7Ds.%60%29%3B%0A%09%09%09if&#43;%28this.browser%29&#43;%7B%0A%09%09%09%09console.log%28%60Closing&#43;browser.%60%29%3B%0A%09%09%09%09await&#43;this.browser.close%28%29%3B%0A%09%09%09%7D%0A%09%09%7D%0A%09&#43;&#43;%7D%0A%0A&#43;&#43;%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="7-test">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#7-test">&#8203;​</a>
+    </span>
+    <span>7. Test</span>
+  </h2><p>Run <a href=/workers/wrangler/commands/#dev class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>npx wrangler dev --remote</code></span></a> to test your Worker remotely before deploying to Cloudflare&rsquo;s global network. Local mode support does not exist for Browser Rendering so <code>--remote</code> is required.</p>
+<h2 id="8-deploy">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#8-deploy">&#8203;​</a>
+    </span>
+    <span>8. Deploy</span>
+  </h2><p>Run <a href=/workers/wrangler/commands/#deploy class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>npx wrangler deploy</code></span></a> to deploy your Worker to the Cloudflare global network.</p>
+<h2 id="related-resources">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-resources">&#8203;​</a>
+    </span>
+    <span>Related resources</span>
+  </h2><ul>
+<li>Other <a href="https://github.com/cloudflare/puppeteer/tree/main/examples" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Puppeteer examples</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li>
+<li>Get started with <a href=/durable-objects/get-started/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Durable Objects</span></a></li>
+<li><a href=/r2/api/workers/workers-api-usage/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Using R2 from Workers</span></a></li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/tag/browser-rendering" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/browser-rendering/get-started/browser-rendering-with-DO.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-27T10:22:54-05:00
+  title=2024-06-27
+>June 27, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

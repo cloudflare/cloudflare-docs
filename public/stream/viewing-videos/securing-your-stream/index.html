@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Secure your Stream · Cloudflare Stream docs</title>
+  <meta name="title" content="Secure your Stream · Cloudflare Stream docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Secure your Stream · Cloudflare Stream docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Secure your Stream · Cloudflare Stream docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="By default, videos on  Stream can be viewed by anyone with just a video id. If you want to make your video private by default and only give access to …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Secure your Stream · Cloudflare Stream docs" />
+  <meta property="og:description" content="By default, videos on  Stream can be viewed by anyone with just a video id. If you want to make your video private by default and only give access to …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/" />
+
+  <meta name="twitter:title" content="Secure your Stream · Cloudflare Stream docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="By default, videos on  Stream can be viewed by anyone with just a video id. If you want to make your video private by default and only give access to …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="stream"><meta name="algolia_product_filter" content="Stream"><meta name="algolia_page_title" content="Secure your Stream">
+  <meta name="pcx_word_count" content="1400"><meta name="pcx_last_modified" content="5"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="how-to" />
+  <meta name="algolia_content_type" content="How To"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"stream"}</script>
+  <meta name="docsearch:product" content="stream" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 4f5ac18aeb2ded8546fdbcc4ccf4dc8c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 4f5ac18aeb2ded8546fdbcc4ccf4dc8c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/stream/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Stream logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44.903 22.632a8.798 8.798 0 0 0-6-2.04 14.475 14.475 0 0 0-27.75-3.443A10.222 10.222 0 0 0 3.9 19.542a10.95 10.95 0 0 0-3.9 8.25 10.68 10.68 0 0 0 10.635 10.687h28.41a9 9 0 0 0 5.858-15.847Zm-5.858 12.847H10.642A7.68 7.68 0 0 1 3 27.814a7.935 7.935 0 0 1 2.827-6 7.163 7.163 0 0 1 4.673-1.687c.478 0 .955.043 1.425.127l1.305.233.383-1.268A11.467 11.467 0 0 1 36 22.264l.075 1.74 1.695-.27a6.181 6.181 0 0 1 5.182 1.215A6.076 6.076 0 0 1 45 29.524a6 6 0 0 1-5.955 5.955Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m19.29 18.668 2.264-1.29L32.87 24.08l.002 2.58-11.314 6.73-2.267-1.29V18.668Zm3 2.632v8.162l6.876-4.09L22.29 21.3Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:6">Stream</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fc5dcfcd4be15fc82b4aa6d8de48cc4c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fc5dcfcd4be15fc82b4aa6d8de48cc4c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/stream/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Stream logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44.903 22.632a8.798 8.798 0 0 0-6-2.04 14.475 14.475 0 0 0-27.75-3.443A10.222 10.222 0 0 0 3.9 19.542a10.95 10.95 0 0 0-3.9 8.25 10.68 10.68 0 0 0 10.635 10.687h28.41a9 9 0 0 0 5.858-15.847Zm-5.858 12.847H10.642A7.68 7.68 0 0 1 3 27.814a7.935 7.935 0 0 1 2.827-6 7.163 7.163 0 0 1 4.673-1.687c.478 0 .955.043 1.425.127l1.305.233.383-1.268A11.467 11.467 0 0 1 36 22.264l.075 1.74 1.695-.27a6.181 6.181 0 0 1 5.182 1.215A6.076 6.076 0 0 1 45 29.524a6 6 0 0 1-5.955 5.955Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="m19.29 18.668 2.264-1.29L32.87 24.08l.002 2.58-11.314 6.73-2.267-1.29V18.668Zm3 2.632v8.162l6.876-4.09L22.29 21.3Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:6">Stream</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Stream menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/stream/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Upload videos</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/uploading-videos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upload videos</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/uploading-videos/upload-via-link/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upload via link</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/uploading-videos/upload-video-file/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upload a video file</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/uploading-videos/direct-creator-uploads/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Direct creator uploads</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Stream live video</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/stream-live/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Stream live video</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/start-stream-live/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Start a live stream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/custom-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add custom ingest domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/watch-live-stream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Watch a live stream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/download-stream-live-videos/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Download live stream videos</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/replay-recordings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Record and replay live streams</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/simulcasting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Simulcast (restream) videos</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/webhooks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Receive Live Webhooks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/stream-live-inputs-list-live-inputs"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Stream Live API docs</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/stream-live/live-instant-clipping/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Live instant clipping</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Play video</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Play video</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Use your own player</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-own-player/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use your own player</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-own-player/web/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Web</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-own-player/ios/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">iOS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-own-player/android/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Android</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Use the Stream Player</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-the-stream-player/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use the Stream Player</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/using-the-stream-player/using-the-player-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Stream Player API</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/stream/viewing-videos/securing-your-stream/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secure your Stream</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/displaying-thumbnails/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Display thumbnails</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/viewing-videos/download-videos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Download videos</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Edit videos</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Edit videos</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/adding-additional-audio-tracks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add additional audio tracks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/adding-captions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add captions</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/applying-watermarks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Apply watermarks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/player-enhancements/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add player enhancements</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/edit-videos/video-clipping/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Clip videos</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Manage videos</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/manage-video-library/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage videos</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/manage-video-library/using-webhooks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use webhooks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/manage-video-library/creator-id/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage creators</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/manage-video-library/searching/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Search for videos</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Analytics</span>
+    </button><a class="DocsSidebar--nav-link"  href="/stream/getting-analytics/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/getting-analytics/fetching-bulk-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">GraphQL Analytics API</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/getting-analytics/live-viewer-count/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get live viewer counts</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/webrtc-beta/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WebRTC (beta)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/stream-videos-list-videos"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Stream API Reference</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/stream/faq/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FAQ</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/stream/viewing-videos/securing-your-stream.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/stream/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Stream</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/stream/viewing-videos/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Play video</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/stream/viewing-videos/securing-your-stream/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Secure your Stream</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="secure-your-stream">Secure your Stream</h1><h2 id="signed-urls--tokens">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#signed-urls--tokens">&#8203;​</a>
+    </span>
+    <span>Signed URLs / Tokens</span>
+  </h2><p>By default, videos on  Stream can be viewed by anyone with just a video id. If you want to make your video private by default and only give access to certain users, you can use the signed URL feature. When you mark a video to require signed URL, it can no longer be accessed publicly with only the video id. Instead, the user will need a signed url token to watch or download the video.</p>
+<p>Here are some common use cases for using signed URLs:</p>
+<ul>
+<li>Restricting access so only logged in members can watch a particular video</li>
+<li>Let users watch your video for a limited time period (ie. 24 hours)</li>
+<li>Restricting access based on geolocation</li>
+</ul>
+<h3 id="making-a-video-require-signed-urls">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#making-a-video-require-signed-urls">&#8203;​</a>
+    </span>
+    <span>Making a video require signed URLs</span>
+  </h3><p>Since video ids are effectively public within signed URLs, you will need to turn on <code>requireSignedURLs</code> on for your videos. This option will prevent any public links, such as <code>watch.cloudflarestream.com/{video_uid}</code>, from working.</p>
+<p>Restricting viewing can be done by updating the video&rsquo;s metadata.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2F%7Bvideo_uid%7D%22&#43;%5C%0A--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22%0A--data&#43;%22%7B%5C%22uid%5C%22%3A&#43;%5C%22%3CVIDEO_UID%3E%5C%22%2C&#43;%5C%22requireSignedURLs%5C%22%3A&#43;true&#43;%7D%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Response:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="---%0Ahighlight%3A&#43;%5B5%5D%0A---%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22uid%22%3A&#43;%22%3CVIDEO_UID%3E%22%2C%0A&#43;&#43;&#43;&#43;...%0A&#43;&#43;&#43;&#43;%22requireSignedURLs%22%3A&#43;true%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="two-ways-to-generate-signed-tokens">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#two-ways-to-generate-signed-tokens">&#8203;​</a>
+    </span>
+    <span>Two Ways to Generate Signed Tokens</span>
+  </h2><p>You can program your app to generate token in two ways:</p>
+<ul>
+<li>
+<p><strong>Using the /token endpoint to generate signed tokens:</strong> The simplest way to create a signed url token is by calling the /token endpoint. This is recommended for testing purposes or if you are generating less than 10,000 tokens per day.</p>
+</li>
+<li>
+<p><strong>Using an open-source library:</strong> If you have tens of thousands of daily users and need to generate a high-volume of tokens without calling the /token endpoint <em>each time</em>, you can create tokens yourself. This way, you do not need to call a Stream endpoint each time you need to generate a token.</p>
+</li>
+</ul>
+<h2 id="option-1-using-the-token-endpoint">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#option-1-using-the-token-endpoint">&#8203;​</a>
+    </span>
+    <span>Option 1: Using the /token endpoint</span>
+  </h2><p>You can call the <code>/token</code> endpoint for any video that is marked private to get a signed URL token which expires in one hour:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;--request&#43;POST&#43;%5C%0Ahttps%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2F%7Bvideo_uid%7D%2Ftoken&#43;%5C%0A--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You will see a response similar to this if the request succeeds:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22token%22%3A&#43;%22eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>To render the video, insert the <code>token</code> value in place of the <code>video id</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="html" data-code="%3Ciframe&#43;src%3D%22https%3A%2F%2Fcustomer-%3CCODE%3E.cloudflarestream.com%2FeyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ%2Fiframe%22&#43;style%3D%22border%3A&#43;none%3B%22&#43;height%3D%22720%22&#43;width%3D%221280%22&#43;allow%3D%22accelerometer%3B&#43;gyroscope%3B&#43;autoplay%3B&#43;encrypted-media%3B&#43;picture-in-picture%3B%22&#43;allowfullscreen%3D%22true%22%3E%3C%2Fiframe%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you are using your own player, replace the video id in the manifest URL with the <code>token</code> value:</p>
+<p><code>https://customer-&lt;CODE&gt;.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/manifest/video.m3u8</code></p>
+<h3 id="customizing-default-restrictions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#customizing-default-restrictions">&#8203;​</a>
+    </span>
+    <span>Customizing default restrictions</span>
+  </h3><p>If you call the <code>/token</code> endpoint without any body, it will return a token that expires in one hour. Let&rsquo;s say you want to let a user watch a particular video for the next 12 hours. Here&rsquo;s how you&rsquo;d do it with a Cloudflare Worker:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="javascript" data-code="addEventListener%28%27fetch%27%2C&#43;event&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;event.respondWith%28handleRequest%28event%29%29%0A%7D%29%0A%0Aasync&#43;function&#43;handleRequest%28request%29&#43;%7B%0A%0A&#43;&#43;&#43;&#43;var&#43;signed_url_restrictions&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2Flimit&#43;viewing&#43;for&#43;the&#43;next&#43;12&#43;hours%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;exp%3A&#43;Math.floor%28Date.now%28%29&#43;%2F&#43;1000%29&#43;%2B&#43;%2812%2A60%2A60%29%0A&#43;&#43;&#43;&#43;%7D%3B%0A%0A&#43;&#43;&#43;&#43;const&#43;init&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;method%3A&#43;%27POST%27%2C%0A&#43;&#43;&#43;&#43;headers%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22Authorization%22%3A&#43;%22Bearer&#43;%3CAPI_TOKEN%3E%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22content-type%22%3A&#43;%22application%2Fjson%3Bcharset%3DUTF-8%22%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;body%3A&#43;JSON.stringify%28signed_url_restrictions%29%0A&#43;&#43;%7D%0A&#43;&#43;const&#43;signedurl_service_response&#43;%3D&#43;await&#43;fetch%28%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2F%7Bvideo_uid%7D%2Ftoken%22%2C&#43;init%29%0A&#43;&#43;return&#43;new&#43;Response%28JSON.stringify%28await&#43;signedurl_service_response.json%28%29%29%2C&#43;%7Bstatus%3A&#43;200%7D%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The returned token will expire after 12 hours.</p>
+<p>Let&rsquo;s take this a step further and add 2 additional restrictions:</p>
+<ul>
+<li>Allow the signed URL token to be used for MP4 downloads (assuming the video has downloads enabled)</li>
+<li>Block users from US and Mexico from viewing or downloading the video</li>
+</ul>
+<p>To achieve this, we can specify additional restrictions in the <code>signed_url_restrictions</code> object in our sample code:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="javascript" data-code="addEventListener%28%27fetch%27%2C&#43;event&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;event.respondWith%28handleRequest%28event%29%29%0A%7D%29%0A%0Aasync&#43;function&#43;handleRequest%28request%29&#43;%7B%0A%0A&#43;&#43;&#43;&#43;var&#43;signed_url_restrictions&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2Flimit&#43;viewing&#43;for&#43;the&#43;next&#43;2&#43;hours%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;exp%3A&#43;Math.floor%28Date.now%28%29&#43;%2F&#43;1000%29&#43;%2B&#43;%2812%2A60%2A60%29%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;downloadable%3A&#43;true%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;accessRules%3A%5B%7B%22type%22%3A%22ip.geoip.country%22%2C%22country%22%3A%5B%22US%22%2C%22MX%22%5D%2C%22action%22%3A%22block%22%7D%5D%0A&#43;&#43;&#43;&#43;%7D%3B%0A%0A&#43;&#43;&#43;&#43;const&#43;init&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;method%3A&#43;%27POST%27%2C%0A&#43;&#43;&#43;&#43;headers%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22Authorization%22%3A&#43;%22Bearer&#43;%3CAPI_TOKEN%3E%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22content-type%22%3A&#43;%22application%2Fjson%3Bcharset%3DUTF-8%22%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;body%3A&#43;JSON.stringify%28signed_url_restrictions%29%0A&#43;&#43;%7D%0A&#43;&#43;const&#43;signedurl_service_response&#43;%3D&#43;await&#43;fetch%28%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2F%7Bvideo_uid%7D%2Ftoken%22%2C&#43;init%29%0A&#43;&#43;return&#43;new&#43;Response%28JSON.stringify%28await&#43;signedurl_service_response.json%28%29%29%2C&#43;%7Bstatus%3A&#43;200%7D%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="option-2-generating-signed-tokens-without-calling-the-token-endpoint">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#option-2-generating-signed-tokens-without-calling-the-token-endpoint">&#8203;​</a>
+    </span>
+    <span>Option 2: Generating signed tokens without calling the <code>/token</code> endpoint</span>
+  </h2><p>If you are generating a high-volume of tokens, it is best to generate new tokens without needing to call the Stream API each time.</p>
+<h3 id="step-1-call-the-streamkey-endpoint-once-to-obtain-a-key">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-1-call-the-streamkey-endpoint-once-to-obtain-a-key">&#8203;​</a>
+    </span>
+    <span>Step 1: Call the <code>/stream/key</code> endpoint <em>once</em> to obtain a key</span>
+  </h3><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;--request&#43;POST&#43;%5C%0A%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2Fkeys%22&#43;%5C%0A--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The response will return <code>pem</code> and <code>jwk</code> values.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;%228f926b2b01f383510025a78a4dcbf6a%22%2C%0A&#43;&#43;&#43;&#43;%22pem%22%3A&#43;%22LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBemtHbXhCekFGMnBIMURiWmgyVGoyS3ZudlBVTkZmUWtNeXNCbzJlZzVqemRKTmRhCmtwMEphUHhoNkZxOTYveTBVd0lBNjdYeFdHb3kxcW1CRGhpdTVqekdtYW13NVgrYkR3TEdTVldGMEx3QnloMDYKN01Rb0xySHA3MDEycXBVNCtLODUyT1hMRVVlWVBrOHYzRlpTQ2VnMVdLRW5URC9oSmhVUTFsTmNKTWN3MXZUbQpHa2o0empBUTRBSFAvdHFERHFaZ3lMc1Vma2NsRDY3SVRkZktVZGtFU3lvVDVTcnFibHNFelBYcm9qaFlLWGk3CjFjak1yVDlFS0JCenhZSVEyOVRaZitnZU5ya0t4a2xMZTJzTUFML0VWZkFjdGkrc2ZqMkkyeEZKZmQ4aklmL2UKdHBCSVJZVDEza2FLdHUyYmk0R2IrV1BLK0toQjdTNnFGODlmTHdJREFRQUJBb0lCQUYzeXFuNytwNEtpM3ZmcgpTZmN4ZmRVV0xGYTEraEZyWk1mSHlaWEFJSnB1MDc0eHQ2ZzdqbXM3Tm0rTFVhSDV0N3R0bUxURTZacy91RXR0CjV3SmdQTjVUaFpTOXBmMUxPL3BBNWNmR2hFN1pMQ2wvV2ZVNXZpSFMyVDh1dGlRcUYwcXpLZkxCYk5kQW1MaWQKQWl4blJ6UUxDSzJIcmlvOW1KVHJtSUUvZENPdG80RUhYdHpZWjByOVordHRxMkZrd3pzZUdaK0tvd09JaWtvTgp2NWFOMVpmRGhEVG0wdG1Vd0tLbjBWcmZqalhRdFdjbFYxTWdRejhwM2xScWhISmJSK29PL1NMSXZqUE16dGxOCm5GV1ZEdTRmRHZsSjMyazJzSllNL2tRVUltT3V5alY3RTBBcm5vR2lBREdGZXFxK1UwajluNUFpNTJ6aTBmNloKdFdvwdju39xOFJWQkwxL2tvWFVmYk00S04ydVFadUdjaUdGNjlCRDJ1S3o1eGdvTwowVTBZNmlFNG9Cek5GUW5hWS9kayt5U1dsQWp2MkgraFBrTGpvZlRGSGlNTmUycUVNaUFaeTZ5cmRkSDY4VjdIClRNRllUQlZQaHIxT0dxZlRmc00vRktmZVhWY1FvMTI1RjBJQm5iWjNSYzRua1pNS0hzczUyWE1DZ1lFQTFQRVkKbGIybDU4blVianRZOFl6Uk1vQVo5aHJXMlhwM3JaZjE0Q0VUQ1dsVXFZdCtRN0NyN3dMQUVjbjdrbFk1RGF3QgpuTXJsZXl3S0crTUEvU0hlN3dQQkpNeDlVUGV4Q3YyRW8xT1loMTk3SGQzSk9zUythWWljemJsYmJqU0RqWXVjCkdSNzIrb1FlMzJjTXhjczJNRlBWcHVibjhjalBQbnZKd0k5aUpGVUNnWUVBMjM3UmNKSEdCTjVFM2FXLzd3ekcKbVBuUm1JSUczeW9UU0U3OFBtbHo2bXE5eTVvcSs5aFpaNE1Fdy9RbWFPMDF5U0xRdEY4QmY2TFN2RFh4QWtkdwpWMm5ra0svWWNhWDd3RHo0eWxwS0cxWTg3TzIwWWtkUXlxdjMybG1lN1JuVDhwcVBDQTRUWDloOWFVaXh6THNoCkplcGkvZFhRWFBWeFoxYXV4YldGL3VzQ2dZRUFxWnhVVWNsYVlYS2dzeUN3YXM0WVAxcEwwM3h6VDR5OTBOYXUKY05USFhnSzQvY2J2VHFsbGVaNCtNSzBxcGRmcDM5cjIrZFdlemVvNUx4YzBUV3Z5TDMxVkZhT1AyYk5CSUpqbwpVbE9ldFkwMitvWVM1NjJZWVdVQVNOandXNnFXY21NV2RlZjFIM3VuUDVqTVVxdlhRTTAxNjVnV2ZiN09YRjJyClNLYXNySFVDZ1lCYmRvL1orN1M3dEZSaDZlamJib2h3WGNDRVd4eXhXT2ZMcHdXNXdXT3dlWWZwWTh4cm5pNzQKdGRObHRoRXM4SHhTaTJudEh3TklLSEVlYmJ4eUh1UG5pQjhaWHBwNEJRNTYxczhjR1Z1ZSszbmVFUzBOTDcxZApQL1ZxUWpySFJrd3V5ckRFV2VCeEhUL0FvVEtEeSt3OTQ2SFM5V1dPTGJvbXQrd3g0NytNdWc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo%3D%22%2C%0A&#43;&#43;&#43;&#43;%22jwk%22%3A&#43;%22eyJ1c2UiOiJzaWciLCJrdHkiOiJSU0EiLCJraWQiOiI4ZjkyNmIyYjAxZjM4MzUxNzAwMjVhNzhhNGRjYmY2YSIsImFsZyI6IlJTMjU2IiwibiI6InprR214QnpBRjJwSDFEYlpoMlRqMkt2bnZQVU5GZlFrTXlzQm8yZWc1anpkSk5kYWtwMEphUHhoNkZxOTZfeTBVd0lBNjdYeFdHb3kxcW1CRGhpdTVqekdtYW13NVgtYkR3TEdTVldGMEx3QnloMDY3TVFvTHJIcDcwMTJxcFU0LUs4NTJPWExFVWVZUGs4djNGWlNDZWcxV0tFblREX2hKaFVRMWxOY0pNY3cxdlRtR2tqNHpqQVE0QUhQX3RxRERxWmd5THNVZmtjbEQ2N0lUZGZLVWRrRVN5b1Q1U3JxYmxzRXpQWHJvamhZS1hpNzFjak1yVDlFS0JCenhZSVEyOVRaZi1nZU5ya0t4a2xMZTJzTUFMX0VWZkFjdGktc2ZqMkkyeEZKZmQ4aklmX2V0cEJJUllUMTNrYUt0dTJiaTRHYi1XUEstS2hCN1M2cUY4OWZMdyIsImUiOiJBUUFCIiwiZCI6IlhmS3FmdjZuZ3FMZTktdEo5ekY5MVJZc1ZyWDZFV3RreDhmSmxjQWdtbTdUdmpHM3FEdU9henMyYjR0Um9mbTN1MjJZdE1UcG16LTRTMjNuQW1BODNsT0ZsTDJsX1VzNy1rRGx4OGFFVHRrc0tYOVo5VG0tSWRMWlB5NjJKQ29YU3JNcDhzRnMxMENZdUowQ0xHZEhOQXNJcllldUtqMllsT3VZZ1Q5MEk2MmpnUWRlM05oblN2MW42MjJyWVdURE94NFpuNHFqQTRpS1NnMl9sbzNWbDhPRU5PYlMyWlRBb3FmUld0LU9OZEMxWnlWWFV5QkRQeW5lVkdxRWNsdEg2Zzc5SXNpLU04ek8yVTJjVlpVTzdoOE8tVW5mYVRhd2xnei1SQlFpWTY3S05Yc1RRQ3VlZ2FJQU1ZVjZxcjVUU1Ai2odx5iT0xSX3BtMWFpdktyUSIsInAiOiI5X1o5ZUpGTWI5X3E4UlZCTDFfa29YVWZiTTRLTjJ1UVp1R2NpR0Y2OUJEMnVLejV4Z29PMFUwWTZpRTRvQnpORlFuYVlfZGsteVNXbEFqdjJILWhQa0xqb2ZURkhpTU5lMnFFTWlBWnk2eXJkZEg2OFY3SFRNRllUQlZQaHIxT0dxZlRmc01fRktmZVhWY1FvMTI1RjBJQm5iWjNSYzRua1pNS0hzczUyWE0iLCJxIjoiMVBFWWxiMmw1OG5VYmp0WThZelJNb0FaOWhyVzJYcDNyWmYxNENFVENXbFVxWXQtUTdDcjd3TEFFY243a2xZNURhd0JuTXJsZXl3S0ctTUFfU0hlN3dQQkpNeDlVUGV4Q3YyRW8xT1loMTk3SGQzSk9zUy1hWWljemJsYmJqU0RqWXVjR1I3Mi1vUWUzMmNNeGNzMk1GUFZwdWJuOGNqUFBudkp3STlpSkZVIiwiZHAiOiIyMzdSY0pIR0JONUUzYVdfN3d6R21QblJtSUlHM3lvVFNFNzhQbWx6Nm1xOXk1b3EtOWhaWjRNRXdfUW1hTzAxeVNMUXRGOEJmNkxTdkRYeEFrZHdWMm5ra0tfWWNhWDd3RHo0eWxwS0cxWTg3TzIwWWtkUXlxdjMybG1lN1JuVDhwcVBDQTRUWDloOWFVaXh6THNoSmVwaV9kWFFYUFZ4WjFhdXhiV0ZfdXMiLCJkcSI6InFaeFVVY2xhWVhLZ3N5Q3dhczRZUDFwTDAzeHpUNHk5ME5hdWNOVEhYZ0s0X2NidlRxbGxlWjQtTUswcXBkZnAzOXIyLWRXZXplbzVMeGMwVFd2eUwzMVZGYU9QMmJOQklKam9VbE9ldFkwMi1vWVM1NjJZWVdVQVNOandXNnFXY21NV2RlZjFIM3VuUDVqTVVxdlhRTTAxNjVnV2ZiN09YRjJyU0thc3JIVSIsInFpIjoiVzNhUDJmdTB1N1JVWWVubzIyNkljRjNBaEZzY3NWam55NmNGdWNGanNIbUg2V1BNYTU0dS1MWFRaYllSTFBCOFVvdHA3UjhEU0NoeEhtMjhjaDdqNTRnZkdWNmFlQVVPZXRiUEhCbGJudnQ1M2hFdERTLTlYVF8xYWtJNngwWk1Mc3F3eEZuZ2NSMF93S0V5Zzh2c1BlT2gwdlZsamkyNkpyZnNNZU9fakxvIn0%3D%22%2C%0A&#43;&#43;&#43;&#43;%22created%22%3A&#43;%222021-06-15T21%3A06%3A54.763937286Z%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Save these values as they won&rsquo;t be shown again. You will use these values later to generate the tokens. The pem and jwk fields are base64-encoded, you must decode them before using them (an example of this is shown in step 2).</p>
+<h3 id="step-2-generate-tokens-using-the-key">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-2-generate-tokens-using-the-key">&#8203;​</a>
+    </span>
+    <span>Step 2: Generate tokens using the key</span>
+  </h3><p>Once you generate the key in step 1, you can use the <code>pem</code> or <code>jwk</code> values to generate self-signing URLs on your own. Using this method, you do not need to call the Stream API each time you are creating a new token.</p>
+<p>Here&rsquo;s an example Cloudflare Worker script which generates tokens that expire in 60 minutes and only work for users accessing the video from UK. In lines 2 and 3, you will configure the <code>id</code> and <code>jwk</code> values from step 1:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="javascript" data-code="%2F%2F&#43;Global&#43;variables%0Aconst&#43;jwkKey&#43;%3D&#43;%27%7BPRIVATE-KEY-IN-JWK-FORMAT%7D%27%0Aconst&#43;keyID&#43;%3D&#43;%27%3CKEY_ID%3E%27%0Aconst&#43;videoUID&#43;%3D&#43;%27%3CVIDEO_UID%3E%27%0A%2F%2F&#43;expiresTimeInS&#43;is&#43;the&#43;expired&#43;time&#43;in&#43;second&#43;of&#43;the&#43;video%0Aconst&#43;expiresTimeInS&#43;%3D&#43;3600%0A%0A%2F%2F&#43;Main&#43;function%0Aasync&#43;function&#43;streamSignedUrl&#43;%28%29&#43;%7B%0A&#43;&#43;const&#43;encoder&#43;%3D&#43;new&#43;TextEncoder%28%29%0A&#43;&#43;const&#43;expiresIn&#43;%3D&#43;Math.floor%28Date.now%28%29&#43;%2F&#43;1000%29&#43;%2B&#43;expiresTimeInS%0A&#43;&#43;const&#43;headers&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;%22alg%22%3A&#43;%22RS256%22%2C%0A&#43;&#43;&#43;&#43;%22kid%22%3A&#43;keyID%0A&#43;&#43;%7D%0A&#43;&#43;const&#43;data&#43;%3D&#43;%7B%0A&#43;&#43;&#43;&#43;%22sub%22%3A&#43;videoUID%2C%0A&#43;&#43;&#43;&#43;%22kid%22%3A&#43;keyID%2C%0A&#43;&#43;&#43;&#43;%22exp%22%3A&#43;expiresIn%2C%0A&#43;&#43;&#43;&#43;%22accessRules%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22ip.geoip.country%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22action%22%3A&#43;%22allow%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22country%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22GB%22%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22any%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%22action%22%3A&#43;%22block%22%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;%7D%0A%0A&#43;&#43;const&#43;token&#43;%3D&#43;%60%24%7BobjectToBase64url%28headers%29%7D.%24%7BobjectToBase64url%28data%29%7D%60%0A%0A&#43;&#43;const&#43;jwk&#43;%3D&#43;JSON.parse%28atob%28jwkKey%29%29%0A%0A&#43;&#43;const&#43;key&#43;%3D&#43;await&#43;crypto.subtle.importKey%28%0A&#43;&#43;&#43;&#43;%22jwk%22%2C&#43;jwk%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;name%3A&#43;%27RSASSA-PKCS1-v1_5%27%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;hash%3A&#43;%27SHA-256%27%2C%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;false%2C&#43;%5B&#43;%22sign%22&#43;%5D%0A&#43;&#43;%29%0A%0A&#43;&#43;const&#43;signature&#43;%3D&#43;await&#43;crypto.subtle.sign%28%0A&#43;&#43;&#43;&#43;%7B&#43;name%3A&#43;%27RSASSA-PKCS1-v1_5%27&#43;%7D%2C&#43;key%2C%0A&#43;&#43;&#43;&#43;encoder.encode%28token%29%0A&#43;&#43;%29%0A%0A&#43;&#43;const&#43;signedToken&#43;%3D&#43;%60%24%7Btoken%7D.%24%7BarrayBufferToBase64Url%28signature%29%7D%60%0A%0A&#43;&#43;return&#43;signedToken%0A%7D%0A%0A%2F%2F&#43;Utilities&#43;functions%0Afunction&#43;arrayBufferToBase64Url%28buffer%29&#43;%7B%0A&#43;&#43;return&#43;btoa%28String.fromCharCode%28...new&#43;Uint8Array%28buffer%29%29%29%0A&#43;&#43;&#43;&#43;.replace%28%2F%3D%2Fg%2C&#43;%27%27%29%0A&#43;&#43;&#43;&#43;.replace%28%2F%5C%2B%2Fg%2C&#43;%27-%27%29%0A&#43;&#43;&#43;&#43;.replace%28%2F%5C%2F%2Fg%2C&#43;%27_%27%29%0A%7D%0A%0Afunction&#43;objectToBase64url%28payload%29&#43;%7B%0A&#43;&#43;return&#43;arrayBufferToBase64Url%28%0A&#43;&#43;&#43;&#43;new&#43;TextEncoder%28%29.encode%28JSON.stringify%28payload%29%29%2C%0A&#43;&#43;%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="step-3-rendering-the-video">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#step-3-rendering-the-video">&#8203;​</a>
+    </span>
+    <span>Step 3: Rendering the video</span>
+  </h3><p>If you are using the Stream Player, insert the token returned by the Worker in Step 2 in place of the video id:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="html" data-code="%3Ciframe&#43;src%3D%22https%3A%2F%2Fcustomer-%3CCODE%3E.cloudflarestream.com%2FeyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ%2Fiframe%22&#43;style%3D%22border%3A&#43;none%3B%22&#43;height%3D%22720%22&#43;width%3D%221280%22&#43;allow%3D%22accelerometer%3B&#43;gyroscope%3B&#43;autoplay%3B&#43;encrypted-media%3B&#43;picture-in-picture%3B%22&#43;allowfullscreen%3D%22true%22%3E%3C%2Fiframe%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you are using your own player, replace the video id in the manifest url with the <code>token</code> value:</p>
+<p><code>https://customer-&lt;CODE&gt;.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/manifest/video.m3u8</code></p>
+<h3 id="revoking-keys">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#revoking-keys">&#8203;​</a>
+    </span>
+    <span>Revoking keys</span>
+  </h3><p>You can create up to 1,000 keys and rotate them at your convenience.
+Once revoked all tokens created with that key will be invalidated.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;--request&#43;DELETE&#43;%5C%0A%22https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2Fkeys%2F%7Bkey_id%7D%22&#43;%5C%0A--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22%0A%0A%23&#43;Response%3A%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%22Revoked%22%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="supported-restrictions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#supported-restrictions">&#8203;​</a>
+    </span>
+    <span>Supported Restrictions</span>
+  </h2><div class="DocsMarkdown--table-wrap"><div class="DocsMarkdown--table-wrap-inner">
+    <table>
+<thead>
+<tr>
+<th>Property Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exp</td>
+<td>Expiration. A unix epoch timestamp after which the token will stop working. Cannot be greater than 24 hours in the future from when the token is signed</td>
+</tr>
+<tr>
+<td>nbf</td>
+<td><em>Not Before</em> value. A unix epoch timestamp before which the token will not work</td>
+</tr>
+<tr>
+<td>downloadable</td>
+<td>if true, the token can be used to download the mp4 (assuming the video has downloads enabled)</td>
+</tr>
+<tr>
+<td>accessRules</td>
+<td>An array that specifies one or more ip and geo restrictions. accessRules are evaluated first-to-last. If a Rule matches, the associated action is applied and no further rules are evaluated. A token may have at most 5 members in the accessRules array.</td>
+</tr>
+</tbody>
+</table>
+
+  </div>
+</div>
+<h3 id="accessrules-schema">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#accessrules-schema">&#8203;​</a>
+    </span>
+    <span>accessRules Schema</span>
+  </h3><p>Each accessRule must include 2 required properties:</p>
+<ul>
+<li><code>type</code>: supported values are <code>any</code>, <code>ip.src</code> and <code>ip.geoip.country</code></li>
+<li><code>action</code>: support values are <code>allow</code> and <code>block</code></li>
+</ul>
+<p>Depending on the rule type, accessRules support 2 additional properties:</p>
+<ul>
+<li><code>country</code>: an array of 2-letter country codes in <a href="https://www.iso.org/obp/ui/#search" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">ISO 3166-1 Alpha 2</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> format.</li>
+<li><code>ip</code>: an array of ip ranges. It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address. CIDRs should be preferred over specific IP addresses. Some devices, such as mobile, may change their IP over the course of a view. Video Access Control are evaluated continuously while a video is being viewed. As a result, overly strict IP rules may disrupt playback.</li>
+</ul>
+<p><em><strong>Example 1: Block views from a specific country</strong></em></p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="...%0A%22accessRules%22%3A&#43;%5B%0A%09%7B%0A%09%09%22type%22%3A&#43;%22ip.geoip.country%22%2C%0A%09%09%22action%22%3A&#43;%22block%22%2C%0A%09%09%22country%22%3A&#43;%5B%22US%22%2C&#43;%22DE%22%2C&#43;%22MX%22%5D%2C%0A%09%7D%2C%0A%5D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The first rule matches on country, US, DE, and MX here. When that rule matches, the block action will have the token considered invalid. If the first rule doesn&rsquo;t match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.</p>
+<p><em><strong>Example 2: Allow only views from specific country or IPs</strong></em></p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="...%0A%22accessRules%22%3A&#43;%5B%0A%09%7B%0A%09%09%22type%22%3A&#43;%22ip.geoip.country%22%2C%0A%09%09%22country%22%3A&#43;%5B%22US%22%2C&#43;%22MX%22%5D%2C%0A%09%09%22action%22%3A&#43;%22allow%22%2C%0A%09%7D%2C%0A%09%7B%0A%09%09%22type%22%3A&#43;%22ip.src%22%2C%0A%09%09%22ip%22%3A&#43;%5B%2293.184.216.0%2F24%22%2C&#43;%222400%3Acb00%3A%3A%2F32%22%5D%2C%0A%09%09%22action%22%3A&#43;%22allow%22%2C%0A%09%7D%2C%0A%09%7B%0A%09%09%22type%22%3A&#43;%22any%22%2C%0A%09%09%22action%22%3A&#43;%22block%22%2C%0A%09%7D%2C%0A%5D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The first rule matches on country, US and MX here. When that rule matches, the allow action will have the token considered valid. If it doesn&rsquo;t match we continue evaluating rules</p>
+<p>The second rule is an IP rule matching on CIDRs, 93.184.216.0/24 and 2400:cb00::/32. When that rule matches, the allow action will consider the rule valid.</p>
+<p>If the first two rules don&rsquo;t match, the final rule of any will match all remaining requests and block those views.</p>
+<h2 id="security-considerations">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#security-considerations">&#8203;​</a>
+    </span>
+    <span>Security considerations</span>
+  </h2><h3 id="hotlinking-protection">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#hotlinking-protection">&#8203;​</a>
+    </span>
+    <span>Hotlinking Protection</span>
+  </h3><p>By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.</p>
+<p>In the dashboard, you will see a text box by each video labeled <code>Enter allowed origin domains separated by commas</code>. If you click on it, you can list the domains that the Stream embed code should be able to be used on.</p>
+<ul>
+<li><code>*.badtortilla.com</code> covers a.badtortilla.com, a.b.badtortilla.com and does not cover badtortilla.com</li>
+<li><code>example.com</code> does not cover <a href="https://www.example.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">www.example.com</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> or any subdomain of example.com</li>
+<li><code>localhost</code> requires a port if it is not being served over HTTP on port 80 or over HTTPS on port 443</li>
+<li>There&rsquo;s no path support - <code>example.com</code> covers example.com/*</li>
+</ul>
+<p>You can also control embed limitation programmatically using the Stream API. <code>uid</code> in the example below refers to the video id.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fstream%2F%7Bvideo_uid%7D&#43;%5C%0A--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22&#43;%5C%0A--data&#43;%22%7B%5C%22uid%5C%22%3A&#43;%5C%22%3CVIDEO_UID%3E%5C%22%2C&#43;%5C%22allowedOrigins%5C%22%3A&#43;%5B%5C%22example.com%5C%22%5D%7D%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="signed-urls">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#signed-urls">&#8203;​</a>
+    </span>
+    <span>Signed URLs</span>
+  </h3><p>Combining signed URLs with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/stream" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/stream/52" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/video/what-is-streaming/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/stream/viewing-videos/securing-your-stream.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-08T14:46:23&#43;01:00
+  title=2024-07-08
+>July 8, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Changelog · Cloudflare R2 docs</title>
+  <meta name="title" content="Changelog · Cloudflare R2 docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Changelog · Cloudflare R2 docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Changelog · Cloudflare R2 docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Changelog · Cloudflare R2 docs" />
+  <meta property="og:description" content="Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/r2/reference/changelog/" />
+
+  <meta name="twitter:title" content="Changelog · Cloudflare R2 docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="r2"><meta name="algolia_product_filter" content="R2"><meta name="algolia_page_title" content="Changelog">
+  <meta name="pcx_word_count" content="2400"><meta name="pcx_last_modified" content="295"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="changelog" />
+  <meta name="algolia_content_type" content="Changelog"><meta name="pcx_content_group" content="Developer platform" />
+  
+
+  
+    <link rel="alternate" type="application/rss+xml" href="https://developers.cloudflare.com/r2/reference/changelog/index.xml" title="Changelog - R2 - RSS Feed" />
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/r2/reference/changelog/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"r2"}</script>
+  <meta name="docsearch:product" content="r2" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 6cf8bdcd4e55eca48cc8bf1dc4afc42d" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 6cf8bdcd4e55eca48cc8bf1dc4afc42d">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/r2/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare R2 logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill-rule="evenodd" d="M30.289 6.423c-2.43-.813-5.958-1.362-9.977-1.362-4.018 0-7.545.549-9.976 1.362-1.228.41-2.033.842-2.48 1.195-.094.074-.16.134-.204.18.052.171.196.395.562.67.524.394 1.372.783 2.563 1.119 2.368.666 5.731 1.023 9.536 1.023 3.804 0 7.167-.357 9.535-1.023 1.191-.336 2.04-.725 2.563-1.119.366-.275.51-.499.562-.67a2.211 2.211 0 0 0-.204-.18c-.447-.353-1.252-.784-2.48-1.195Zm-20.24 5.624c-.885-.25-1.71-.552-2.424-.922v4.393c0 .196.097.514.625.941.535.433 1.391.869 2.576 1.252 2.36.764 5.71 1.222 9.486 1.222 3.778 0 7.128-.458 9.487-1.222 1.185-.383 2.041-.82 2.576-1.252.528-.427.625-.745.625-.94v-4.394c-.715.37-1.539.673-2.424.922-2.7.76-6.336 1.124-10.264 1.124-3.927 0-7.564-.364-10.263-1.124Zm25.576 3.471V7.622c0-2.829-6.856-5.122-15.313-5.122C11.857 2.5 5 4.793 5 7.622v24.756c0 2.829 6.856 5.122 15.313 5.122 8.456 0 15.312-2.293 15.312-5.122v-16.86ZM33 19.134c-.7.393-1.505.726-2.375 1.008-2.708.877-6.358 1.352-10.313 1.352-3.954 0-7.604-.475-10.312-1.352-.87-.282-1.676-.615-2.375-1.008v4.28c0 .196.097.514.625.942.535.432 1.391.868 2.576 1.252 2.36.763 5.71 1.221 9.486 1.221 3.778 0 7.128-.458 9.487-1.221 1.185-.384 2.041-.82 2.576-1.252.528-.428.625-.746.625-.941v-4.28Zm-23 8.904c-.87-.281-1.676-.615-2.375-1.007v5.143c.044.048.116.117.231.208.447.353 1.252.785 2.48 1.195 2.43.813 5.958 1.362 9.976 1.362 4.019 0 7.546-.549 9.977-1.362 1.228-.41 2.033-.842 2.48-1.195a2.03 2.03 0 0 0 .231-.208v-5.143c-.7.392-1.505.726-2.375 1.007-2.708.877-6.358 1.352-10.313 1.352-3.954 0-7.604-.475-10.312-1.352Zm23.06 4.06-.01.016a.059.059 0 0 1 .01-.016Zm-25.495 0 .01.016a.06.06 0 0 1-.01-.016Zm3.997-15.726c.725 0 1.313-.573 1.313-1.28 0-.708-.588-1.281-1.313-1.281-.724 0-1.312.573-1.312 1.28 0 .708.588 1.281 1.313 1.281Zm1.313 6.83c0 .706-.588 1.28-1.313 1.28-.724 0-1.312-.574-1.312-1.28 0-.708.588-1.281 1.313-1.281.724 0 1.312.573 1.312 1.28Zm-1.313 9.176c.725 0 1.313-.573 1.313-1.28 0-.708-.588-1.28-1.313-1.28-.724 0-1.312.572-1.312 1.28 0 .707.588 1.28 1.313 1.28Z" clip-rule="evenodd"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">R2</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 1de88db5dc2cacc8c4fbfa4fdce4546c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 1de88db5dc2cacc8c4fbfa4fdce4546c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/r2/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare R2 logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill-rule="evenodd" d="M30.289 6.423c-2.43-.813-5.958-1.362-9.977-1.362-4.018 0-7.545.549-9.976 1.362-1.228.41-2.033.842-2.48 1.195-.094.074-.16.134-.204.18.052.171.196.395.562.67.524.394 1.372.783 2.563 1.119 2.368.666 5.731 1.023 9.536 1.023 3.804 0 7.167-.357 9.535-1.023 1.191-.336 2.04-.725 2.563-1.119.366-.275.51-.499.562-.67a2.211 2.211 0 0 0-.204-.18c-.447-.353-1.252-.784-2.48-1.195Zm-20.24 5.624c-.885-.25-1.71-.552-2.424-.922v4.393c0 .196.097.514.625.941.535.433 1.391.869 2.576 1.252 2.36.764 5.71 1.222 9.486 1.222 3.778 0 7.128-.458 9.487-1.222 1.185-.383 2.041-.82 2.576-1.252.528-.427.625-.745.625-.94v-4.394c-.715.37-1.539.673-2.424.922-2.7.76-6.336 1.124-10.264 1.124-3.927 0-7.564-.364-10.263-1.124Zm25.576 3.471V7.622c0-2.829-6.856-5.122-15.313-5.122C11.857 2.5 5 4.793 5 7.622v24.756c0 2.829 6.856 5.122 15.313 5.122 8.456 0 15.312-2.293 15.312-5.122v-16.86ZM33 19.134c-.7.393-1.505.726-2.375 1.008-2.708.877-6.358 1.352-10.313 1.352-3.954 0-7.604-.475-10.312-1.352-.87-.282-1.676-.615-2.375-1.008v4.28c0 .196.097.514.625.942.535.432 1.391.868 2.576 1.252 2.36.763 5.71 1.221 9.486 1.221 3.778 0 7.128-.458 9.487-1.221 1.185-.384 2.041-.82 2.576-1.252.528-.428.625-.746.625-.941v-4.28Zm-23 8.904c-.87-.281-1.676-.615-2.375-1.007v5.143c.044.048.116.117.231.208.447.353 1.252.785 2.48 1.195 2.43.813 5.958 1.362 9.976 1.362 4.019 0 7.546-.549 9.977-1.362 1.228-.41 2.033-.842 2.48-1.195a2.03 2.03 0 0 0 .231-.208v-5.143c-.7.392-1.505.726-2.375 1.007-2.708.877-6.358 1.352-10.313 1.352-3.954 0-7.604-.475-10.312-1.352Zm23.06 4.06-.01.016a.059.059 0 0 1 .01-.016Zm-25.495 0 .01.016a.06.06 0 0 1-.01-.016Zm3.997-15.726c.725 0 1.313-.573 1.313-1.28 0-.708-.588-1.281-1.313-1.281-.724 0-1.312.573-1.312 1.28 0 .708.588 1.281 1.313 1.281Zm1.313 6.83c0 .706-.588 1.28-1.313 1.28-.724 0-1.312-.574-1.312-1.28 0-.708.588-1.281 1.313-1.281.724 0 1.312.573 1.312 1.28Zm-1.313 9.176c.725 0 1.313-.573 1.313-1.28 0-.708-.588-1.28-1.313-1.28-.724 0-1.312.572-1.312 1.28 0 .707.588 1.28 1.313 1.28Z" clip-rule="evenodd"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:2">R2</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>R2 menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/r2/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Data Migration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/data-migration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data Migration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/data-migration/super-slurper/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Super Slurper</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/data-migration/sippy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sippy (beta)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Buckets</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/buckets/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Buckets</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/create-buckets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Create new buckets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/public-buckets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Public buckets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/cors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure CORS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/event-notifications/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Event notifications</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/object-lifecycles/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Object lifecycles</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/storage-classes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Storage classes</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Objects</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/objects/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Objects</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/objects/multipart-objects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Multipart upload</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/objects/upload-objects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Upload objects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/objects/download-objects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Download objects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/objects/delete-objects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delete objects</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: API</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/api/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: S3</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/api/s3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">S3</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/s3/api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">S3 API compatibility</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/s3/tokens/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Authentication</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/s3/extensions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Extensions</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/s3/presigned-urls/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Presigned URLs</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Workers API</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/api/workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers API</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/workers/workers-api-usage/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use R2 from Workers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/workers/workers-multipart-usage/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use the R2 multipart API from Workers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/api/workers/workers-api-reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers API reference</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/storage/egress-free-storage-multi-cloud/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Multi-cloud setup</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: AWS</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AWS</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-cli/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws CLI</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-go/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-go</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-js/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-js</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-js-v3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-js-v3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-net/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-net</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-php/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-php</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws-sdk-ruby/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws-sdk-ruby</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/aws4fetch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">aws4fetch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/boto3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">boto3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/aws/custom-header/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure custom headers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/demo-worker/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Expose an R2 bucket to the Internet via a Worker</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/upload-logs-event-notifications/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Log and store upload events in R2 with event notifications</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/mastodon/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Mastodon</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/postman/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Postman</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/cloudflare-access/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Protect an R2 Bucket with Cloudflare Access</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/rclone/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">rclone</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/terraform/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Terraform</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/terraform-aws/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Terraform (AWS)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/examples/cache-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use the Cache API</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/r2/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/audit-logs/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Audit Logs</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/r2/reference/changelog/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/consistency/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Consistency model</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/data-location/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data location</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/data-security/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Data security</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/durability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Durability</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/limits/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/metrics-analytics/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics and analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/reference/unicode-interoperability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Unicode interoperability</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/pricing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/r2/reference/changelog.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--tools-icon-item">
+    <div class="Tooltip---root">
+      <div class="DocsToolbar--tools-icon-item-content">
+        <a class="Link Link-without-underline" href="/r2/reference/changelog/index.xml" target="_blank">
+          <svg viewBox="0 0 485 560" fill="currentColor" role="img" aria-labelledby="title-1234" xmlns="http://www.w3.org/2000/svg">
+            <title id="title-1234">RSS icon</title>
+            <path
+              d="M0 64C0 46.3 14.3 32 32 32c229.8 0 416 186.2 416 416c0 17.7-14.3 32-32 32s-32-14.3-32-32C384 253.6 226.4 96 32 96C14.3 96 0 81.7 0 64zM128 416c0 35.3-28.7 64-64 64s-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64zM32 160c159.1 0 288 128.9 288 288c0 17.7-14.3 32-32 32s-32-14.3-32-32c0-123.7-100.3-224-224-224c-17.7 0-32-14.3-32-32s14.3-32 32-32z">
+            </path>
+          </svg>
+        </a>
+      </div>
+
+      <span class="Tooltip" role="tooltip" position="bottom-end">
+        View RSS feed
+      </span>
+    </div>
+  </div>
+
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/r2/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >R2</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/r2/reference/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Reference</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/r2/reference/changelog/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Changelog</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="changelog">Changelog</h1><!-- Actual content lives in /data/changelogs/r2.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file -->
+<h2 id="2024-06-07">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-07">&#8203;​</a>
+    </span>
+    <span>2024-06-07</span>
+  </h2>
+<ul>
+<li>Fixed an issue that prevented Sippy from copying over objects from S3 buckets with SSE set up.</li>
+</ul>
+<h2 id="2024-06-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-06-06">&#8203;​</a>
+    </span>
+    <span>2024-06-06</span>
+  </h2>
+<ul>
+<li>R2 will now ignore the <code>x-purpose</code> request parameter.</li>
+</ul>
+<h2 id="2024-02-20">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-02-20">&#8203;​</a>
+    </span>
+    <span>2024-02-20</span>
+  </h2>
+<ul>
+<li>When an <code>OPTIONS</code> request against the public entrypoint does not include an <code>origin</code> header, an <code>HTTP 400</code> instead of an <code>HTTP 401</code> is returned.</li>
+</ul>
+<h2 id="2024-02-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-02-06">&#8203;​</a>
+    </span>
+    <span>2024-02-06</span>
+  </h2>
+<ul>
+<li>The response shape of <code>GET /buckets/:bucket/sippy</code> has changed.</li>
+<li>The <code>/buckets/:bucket/sippy/validate</code> endpoint is exposed over APIGW to validate Sippy&rsquo;s configuration.</li>
+<li>The shape of the configuration object when modifying Sippy&rsquo;s configuration has changed.</li>
+</ul>
+<h2 id="2024-01-30">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-01-30">&#8203;​</a>
+    </span>
+    <span>2024-01-30</span>
+  </h2>
+<ul>
+<li>Fixed a bug where the API would accept empty strings in the <code>AllowedHeaders</code> property of <code>PutBucketCors</code> actions.</li>
+</ul>
+<h2 id="2024-01-26">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-01-26">&#8203;​</a>
+    </span>
+    <span>2024-01-26</span>
+  </h2>
+<ul>
+<li>Parts are now automatically sorted in ascending order regardless of input during <code>CompleteMultipartUpload</code>.</li>
+</ul>
+<h2 id="2024-01-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2024-01-11">&#8203;​</a>
+    </span>
+    <span>2024-01-11</span>
+  </h2>
+<ul>
+<li>Sippy is available for Google Cloud Storage (GCS) beta.</li>
+</ul>
+<h2 id="2023-12-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-12-11">&#8203;​</a>
+    </span>
+    <span>2023-12-11</span>
+  </h2>
+<ul>
+<li>The <code>x-id</code> query param for <code>S3 ListBuckets</code> action is now ignored.</li>
+<li>The <code>x-id</code> query param is now ignored for all S3 actions.</li>
+</ul>
+<h2 id="2023-10-23">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-10-23">&#8203;​</a>
+    </span>
+    <span>2023-10-23</span>
+  </h2>
+<ul>
+<li><code>PutBucketCors</code> now only accepts valid origins.</li>
+</ul>
+<h2 id="2023-09-01">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-09-01">&#8203;​</a>
+    </span>
+    <span>2023-09-01</span>
+  </h2>
+<ul>
+<li>Fixed an issue with <code>ListBuckets</code> where the <code>name_contains</code> parameter would also search over the jurisdiction name.</li>
+</ul>
+<h2 id="2023-08-23">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-08-23">&#8203;​</a>
+    </span>
+    <span>2023-08-23</span>
+  </h2>
+<ul>
+<li>Config Audit Logs GA.</li>
+</ul>
+<h2 id="2023-08-11">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-08-11">&#8203;​</a>
+    </span>
+    <span>2023-08-11</span>
+  </h2>
+<ul>
+<li>Users can now complete conditional multipart publish operations. When a condition failure occurs when publishing an upload, the upload is no longer available and is treated as aborted.</li>
+</ul>
+<h2 id="2023-07-05">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-07-05">&#8203;​</a>
+    </span>
+    <span>2023-07-05</span>
+  </h2>
+<ul>
+<li>Improved performance for ranged reads on very large files. Previously ranged reads near the end of very large files would be noticeably slower than
+ranged reads on smaller files. Performance should now be consistently good independent of filesize.</li>
+</ul>
+<h2 id="2023-06-21">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-06-21">&#8203;​</a>
+    </span>
+    <span>2023-06-21</span>
+  </h2>
+<ul>
+<li><a href=/r2/objects/multipart-objects/#etags class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Multipart ETags</span></a> are now MD5
+hashes.</li>
+</ul>
+<h2 id="2023-06-16">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-06-16">&#8203;​</a>
+    </span>
+    <span>2023-06-16</span>
+  </h2>
+<ul>
+<li>Fixed a bug where calling <a href="/api/operations/r2-get-bucket" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">GetBucket</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a> on a non-existent bucket would return a 500 instead of a 404.</li>
+<li>Improved S3 compatibility for ListObjectsV1, now nextmarker is only set when truncated is true.</li>
+<li>The R2 worker bindings now support parsing conditional headers with multiple etags. These etags can now be strong, weak or a wildcard. Previously the bindings only accepted headers containing a single strong etag.</li>
+<li>S3 putObject now supports sha256 and sha1 checksums. These were already supported by the R2 worker bindings.</li>
+<li>CopyObject in the S3 compatible api now supports Cloudflare specific headers which allow the copy operation to be conditional on the state of the destination object.</li>
+</ul>
+<h2 id="2023-04-01">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-04-01">&#8203;​</a>
+    </span>
+    <span>2023-04-01</span>
+  </h2>
+<ul>
+<li><a href="/api/operations/r2-get-bucket" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">GetBucket</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a> is now available for use through the Cloudflare API.</li>
+<li><a href=https://developers.cloudflare.com/r2/reference/data-location/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Location hints</span></a> can now be set when creating a bucket, both through the S3 API, and the dashboard.</li>
+</ul>
+<h2 id="2023-03-16">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-03-16">&#8203;​</a>
+    </span>
+    <span>2023-03-16</span>
+  </h2>
+<ul>
+<li>The ListParts API has been implemented and is available for use.</li>
+<li>HTTP2 is now enabled by default for new custom domains linked to R2 buckets.</li>
+<li>Object Lifecycles are now available for use.</li>
+<li>Bug fix: Requests to public buckets will now return the <code>Content-Encoding</code> header for gzip files when <code>Accept-Encoding: gzip</code> is used.</li>
+</ul>
+<h2 id="2023-01-27">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2023-01-27">&#8203;​</a>
+    </span>
+    <span>2023-01-27</span>
+  </h2>
+<ul>
+<li>R2 authentication tokens created via the R2 token page are now scoped
+to a single account by default.</li>
+</ul>
+<h2 id="2022-12-07">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-12-07">&#8203;​</a>
+    </span>
+    <span>2022-12-07</span>
+  </h2>
+<ul>
+<li>Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.</li>
+<li>Passing a range header to the <code>get</code> operation in the R2 bindings API should now work as expected.</li>
+</ul>
+<h2 id="2022-11-30">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-11-30">&#8203;​</a>
+    </span>
+    <span>2022-11-30</span>
+  </h2>
+<ul>
+<li>Requests with the header <code>x-amz-acl: public-read</code> are no longer rejected.</li>
+<li>Fixed issues with wildcard CORS rules and presigned URLs.</li>
+<li>Fixed an issue where <code>ListObjects</code> would time out during delimited listing of unicode-normalized keys.</li>
+<li>S3 API&rsquo;s <code>PutBucketCors</code> now rejects requests with unknown keys in the XML body.</li>
+<li>Signing additional headers no longer breaks CORS preflight requests for presigned URLs.</li>
+</ul>
+<h2 id="2022-11-21">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-11-21">&#8203;​</a>
+    </span>
+    <span>2022-11-21</span>
+  </h2>
+<ul>
+<li>Fixed a bug in <code>ListObjects</code> where <code>startAfter</code> would skip over objects with keys that have numbers right after the <code>startAfter</code> prefix.</li>
+<li>Add worker bindings for multipart uploads.</li>
+</ul>
+<h2 id="2022-11-17">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-11-17">&#8203;​</a>
+    </span>
+    <span>2022-11-17</span>
+  </h2>
+<ul>
+<li>Unconditionally return HTTP 206 on ranged requests to match behavior of other S3 compatible implementations.</li>
+<li>Fixed a CORS bug where <code>AllowedHeaders</code> in the CORS config were being treated case-sensitively.</li>
+</ul>
+<h2 id="2022-11-08">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-11-08">&#8203;​</a>
+    </span>
+    <span>2022-11-08</span>
+  </h2>
+<ul>
+<li>Copying multipart objects via <code>CopyObject</code> is re-enabled.</li>
+<li><code>UploadPartCopy</code> is re-enabled.</li>
+</ul>
+<h2 id="2022-10-28">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-10-28">&#8203;​</a>
+    </span>
+    <span>2022-10-28</span>
+  </h2>
+<ul>
+<li>Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.</li>
+<li>Fixed a performance issue where concurrent multipart part uploads would get rejected.</li>
+</ul>
+<h2 id="2022-10-26">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-10-26">&#8203;​</a>
+    </span>
+    <span>2022-10-26</span>
+  </h2>
+<ul>
+<li>Fixed ranged reads for multipart objects with part sizes unaligned
+to 64KiB.</li>
+</ul>
+<h2 id="2022-10-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-10-19">&#8203;​</a>
+    </span>
+    <span>2022-10-19</span>
+  </h2>
+<ul>
+<li><code>HeadBucket</code> now sets <code>x-amz-bucket-region</code> to <code>auto</code> in the response.</li>
+</ul>
+<h2 id="2022-10-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-10-06">&#8203;​</a>
+    </span>
+    <span>2022-10-06</span>
+  </h2>
+<ul>
+<li>Temporarily disabled <code>UploadPartCopy</code> while we investigate an issue.</li>
+</ul>
+<h2 id="2022-09-29">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-09-29">&#8203;​</a>
+    </span>
+    <span>2022-09-29</span>
+  </h2>
+<ul>
+<li>Fixed a CORS issue where <code>Access-Control-Allow-Headers</code> was not being
+set for preflight requests.</li>
+</ul>
+<h2 id="2022-09-28">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-09-28">&#8203;​</a>
+    </span>
+    <span>2022-09-28</span>
+  </h2>
+<ul>
+<li>Fixed a bug where CORS configuration was not being applied to S3 endpoint.</li>
+<li>No-longer render the <code>Access-Control-Expose-Headers</code> response header if <code>ExposeHeader</code> is not defined.</li>
+<li>Public buckets will no-longer return the <code>Content-Range</code> response header unless the response is partial.</li>
+<li>Fixed CORS rendering for the S3 <code>HeadObject</code> operation.</li>
+<li>Fixed a bug where no matching CORS configuration could result in a <code>403</code> response.</li>
+<li>Temporarily disable copying objects that were created with multipart uploads.</li>
+<li>Fixed a bug in the Workers bindings where an internal error was being returned for malformed ranged <code>.get</code> requests.</li>
+</ul>
+<h2 id="2022-09-27">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-09-27">&#8203;​</a>
+    </span>
+    <span>2022-09-27</span>
+  </h2>
+<ul>
+<li>CORS preflight responses and adding CORS headers for other responses is now implemented for S3 and public buckets. Currently, the only way to configure CORS is via the S3 API.</li>
+<li>Fixup for bindings list truncation to work more correctly when listing keys with custom metadata that have <code>&quot;</code> or when some keys/values contain certain multi-byte UTF-8 values.</li>
+<li>The S3 <code>GetObject</code> operation now only returns <code>Content-Range</code> in response to a ranged request.</li>
+</ul>
+<h2 id="2022-09-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-09-19">&#8203;​</a>
+    </span>
+    <span>2022-09-19</span>
+  </h2>
+<ul>
+<li>The R2 <code>put()</code> binding options can now be given an <code>onlyIf</code> field, similar to <code>get()</code>, that performs a conditional upload.</li>
+<li>The R2 <code>delete()</code> binding now supports deleting multiple keys at once.</li>
+<li>The R2 <code>put()</code> binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.</li>
+<li>User-specified object checksums will now be available in the R2 <code>get()</code> and <code>head()</code> bindings response. MD5 is included by default for non-multipart uploaded objects.</li>
+</ul>
+<h2 id="2022-09-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-09-06">&#8203;​</a>
+    </span>
+    <span>2022-09-06</span>
+  </h2>
+<ul>
+<li>The S3 <code>CopyObject</code> operation now includes <code>x-amz-version-id</code> and <code>x-amz-copy-source-version-id</code> in the response headers for consistency with other methods.</li>
+<li>The <code>ETag</code> for multipart files uploaded until shortly after Open Beta uploaded now include the number of parts as a suffix.</li>
+</ul>
+<h2 id="2022-08-17">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-08-17">&#8203;​</a>
+    </span>
+    <span>2022-08-17</span>
+  </h2>
+<ul>
+<li>The S3 <code>DeleteObjects</code> operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 <code>DeleteObject</code> operation was not affected by this.</li>
+<li>Fixed presigned URL support for the S3 <code>ListBuckets</code> and <code>ListObjects</code> operations.</li>
+</ul>
+<h2 id="2022-08-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-08-06">&#8203;​</a>
+    </span>
+    <span>2022-08-06</span>
+  </h2>
+<ul>
+<li>Uploads will automatically infer the <code>Content-Type</code> based on file body
+if one is not explicitly set in the <code>PutObject</code> request. This functionality will
+come to multipart operations in the future.</li>
+</ul>
+<h2 id="2022-07-30">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-30">&#8203;​</a>
+    </span>
+    <span>2022-07-30</span>
+  </h2>
+<ul>
+<li>Fixed S3 conditionals to work properly when provided the <code>LastModified</code> date of the last upload, bindings fixes will come in the next release.</li>
+<li><code>If-Match</code> / <code>If-None-Match</code> headers now support arrays of ETags, Weak ETags and wildcard (<code>*</code>) as per the HTTP standard and undocumented AWS S3 behavior.</li>
+</ul>
+<h2 id="2022-07-21">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-21">&#8203;​</a>
+    </span>
+    <span>2022-07-21</span>
+  </h2>
+<ul>
+<li>Added dummy implementation of the following operation that mimics
+the response that a basic AWS S3 bucket will return when first created: <code>GetBucketAcl</code>.</li>
+</ul>
+<h2 id="2022-07-20">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-20">&#8203;​</a>
+    </span>
+    <span>2022-07-20</span>
+  </h2>
+<ul>
+<li>
+<p>Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:</p>
+<ul>
+<li><code>GetBucketVersioning</code></li>
+<li><code>GetBucketLifecycleConfiguration</code></li>
+<li><code>GetBucketReplication</code></li>
+<li><code>GetBucketTagging</code></li>
+<li><code>GetObjectLockConfiguration</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2022-07-19">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-19">&#8203;​</a>
+    </span>
+    <span>2022-07-19</span>
+  </h2>
+<ul>
+<li>Fixed an S3 compatibility issue for error responses with MinIO .NET SDK and any other tooling that expects no <code>xmlns</code> namespace attribute on the top-level <code>Error</code> tag.</li>
+<li>List continuation tokens prior to 2022-07-01 are no longer accepted and must be obtained again through a new <code>list</code> operation.</li>
+<li>The <code>list()</code> binding will now correctly return a smaller limit if too much data would otherwise be returned (previously would return an <code>Internal Error</code>).</li>
+</ul>
+<h2 id="2022-07-14">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-14">&#8203;​</a>
+    </span>
+    <span>2022-07-14</span>
+  </h2>
+<ul>
+<li>Improvements to 500s: we now convert errors, so things that were previously concurrency problems for some operations should now be <code>TooMuchConcurrency</code> instead of <code>InternalError</code>. We&rsquo;ve also reduced the rate of 500s through internal improvements.</li>
+<li><code>ListMultipartUpload</code> correctly encodes the returned <code>Key</code> if the <code>encoding-type</code> is specified.</li>
+</ul>
+<h2 id="2022-07-13">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-13">&#8203;​</a>
+    </span>
+    <span>2022-07-13</span>
+  </h2>
+<ul>
+<li>S3 XML documents sent to R2 that have an XML declaration are not rejected with <code>400 Bad Request</code> / <code>MalformedXML</code>.</li>
+<li>Minor S3 XML compatibility fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.</li>
+<li>Beta <code>ListMultipartUploads</code> support.</li>
+</ul>
+<h2 id="2022-07-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-06">&#8203;​</a>
+    </span>
+    <span>2022-07-06</span>
+  </h2>
+<ul>
+<li>Support the <code>r2_list_honor_include</code> compat flag coming up in an upcoming runtime release (default behavior as of 2022-07-14 compat date). Without that compat flag/date, list will continue to function implicitly as <code>include: ['httpMetadata', 'customMetadata']</code> regardless of what you specify.</li>
+<li><code>cf-create-bucket-if-missing</code> can be set on a <code>PutObject</code>/<code>CreateMultipartUpload</code> request to implicitly create the bucket if it does not exist.</li>
+<li>Fix S3 compatibility with MinIO client spec non-compliant XML for publishing multipart uploads. Any leading and trailing quotes in <code>CompleteMultipartUpload</code> are now optional and ignored as it seems to be the actual non-standard behavior AWS implements.</li>
+</ul>
+<h2 id="2022-07-01">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-07-01">&#8203;​</a>
+    </span>
+    <span>2022-07-01</span>
+  </h2>
+<ul>
+<li>Unsupported search parameters to <code>ListObjects</code>/<code>ListObjectsV2</code> are
+now rejected with <code>501 Not Implemented</code>.</li>
+<li>Fixes for Listing:
+<ul>
+<li>Fix listing behavior when the number of files within a folder exceeds the limit (you&rsquo;d end
+up seeing a CommonPrefix for that large folder N times where N = number of children
+within the CommonPrefix / limit).</li>
+<li>Fix corner case where listing could cause
+objects with sharing the base name of a &quot;folder&quot; to be skipped.</li>
+<li>Fix listing over some files that shared a certain common prefix.</li>
+</ul>
+</li>
+<li><code>DeleteObjects</code> can now handle 1000 objects at a time.</li>
+<li>S3 <code>CreateBucket</code> request can specify <code>x-amz-bucket-object-lock-enabled</code> with a value of <code>false</code> and not have the requested rejected with a <code>NotImplemented</code>
+error. A value of <code>true</code> will continue to be rejected as R2 does not yet support
+object locks.</li>
+</ul>
+<h2 id="2022-06-17">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-06-17">&#8203;​</a>
+    </span>
+    <span>2022-06-17</span>
+  </h2>
+<ul>
+<li>Fixed a regression for some clients when using an empty delimiter.</li>
+<li>Added support for S3 pre-signed URLs.</li>
+</ul>
+<h2 id="2022-06-16">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-06-16">&#8203;​</a>
+    </span>
+    <span>2022-06-16</span>
+  </h2>
+<ul>
+<li>Fixed a regression in the S3 API <code>UploadPart</code> operation where <code>TooMuchConcurrency</code>
+&amp; <code>NoSuchUpload</code> errors were being returned as <code>NoSuchBucket</code>.</li>
+</ul>
+<h2 id="2022-06-13">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-06-13">&#8203;​</a>
+    </span>
+    <span>2022-06-13</span>
+  </h2>
+<ul>
+<li>Fixed a bug with the S3 API <code>ListObjectsV2</code> operation not returning empty folder/s as common prefixes when using delimiters.</li>
+<li>The S3 API <code>ListObjectsV2</code> <code>KeyCount</code> parameter now correctly returns the sum of keys and common prefixes rather than just the keys.</li>
+<li>Invalid cursors for list operations no longer fail with an <code>InternalError</code> and now return the appropriate error message.</li>
+</ul>
+<h2 id="2022-06-10">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-06-10">&#8203;​</a>
+    </span>
+    <span>2022-06-10</span>
+  </h2>
+<ul>
+<li>The <code>ContinuationToken</code> field is now correctly returned in the response if provided in a S3 API <code>ListObjectsV2</code> request.</li>
+<li>Fixed a bug where the S3 API <code>AbortMultipartUpload</code> operation threw an error when called multiple times.</li>
+</ul>
+<h2 id="2022-05-27">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-27">&#8203;​</a>
+    </span>
+    <span>2022-05-27</span>
+  </h2>
+<ul>
+<li>Fixed a bug where the S3 API&rsquo;s <code>PutObject</code> or the <code>.put()</code> binding could fail but still show the bucket upload as successful.</li>
+<li>If <a href="https://datatracker.ietf.org/doc/html/rfc7232" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">conditional headers</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> are provided to S3 API <code>UploadObject</code> or <code>CreateMultipartUpload</code> operations, and the object exists, a <code>412 Precondition Failed</code> status code will be returned if these checks are not met.</li>
+</ul>
+<h2 id="2022-05-20">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-20">&#8203;​</a>
+    </span>
+    <span>2022-05-20</span>
+  </h2>
+<ul>
+<li>Fixed a bug when <code>Accept-Encoding</code> was being used in <code>SignedHeaders</code>
+when sending requests to the S3 API would result in a <code>SignatureDoesNotMatch</code>
+response.</li>
+</ul>
+<h2 id="2022-05-17">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-17">&#8203;​</a>
+    </span>
+    <span>2022-05-17</span>
+  </h2>
+<ul>
+<li>Fixed a bug where requests to the S3 API were not handling non-encoded parameters used for the authorization signature.</li>
+<li>Fixed a bug where requests to the S3 API where number-like keys were being parsed as numbers instead of strings.</li>
+</ul>
+<h2 id="2022-05-16">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-16">&#8203;​</a>
+    </span>
+    <span>2022-05-16</span>
+  </h2>
+<ul>
+<li>Add support for S3 <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">virtual-hosted style paths</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, such as <code>&lt;BUCKET&gt;.&lt;ACCOUNT_ID&gt;.r2.cloudflarestorage.com</code> instead of path-based routing (<code>&lt;ACCOUNT_ID&gt;.r2.cloudflarestorage.com/&lt;BUCKET&gt;</code>).</li>
+<li>Implemented <code>GetBucketLocation</code> for compatibility with external tools, this will always return a <code>LocationConstraint</code> of <code>auto</code>.</li>
+</ul>
+<h2 id="2022-05-06">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-06">&#8203;​</a>
+    </span>
+    <span>2022-05-06</span>
+  </h2>
+<ul>
+<li>S3 API <code>GetObject</code> ranges are now inclusive (<code>bytes=0-0</code> will correctly return the first byte).</li>
+<li>S3 API <code>GetObject</code> partial reads return the proper <code>206 Partial Content</code> response code.</li>
+<li>Copying from a non-existent key (or from a non-existent bucket) to another bucket now returns the proper <code>NoSuchKey</code> / <code>NoSuchBucket</code> response.</li>
+<li>The S3 API now returns the proper <code>Content-Type: application/xml</code> response header on relevant endpoints.</li>
+<li>Multipart uploads now have a <code>-N</code> suffix on the etag representing the number of parts the file was published with.</li>
+<li><code>UploadPart</code> and <code>UploadPartCopy</code> now return proper error messages, such as <code>TooMuchConcurrency</code> or <code>NoSuchUpload</code>, instead of &lsquo;internal error&rsquo;.</li>
+<li><code>UploadPart</code> can now be sent a 0-length part.</li>
+</ul>
+<h2 id="2022-05-05">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-05">&#8203;​</a>
+    </span>
+    <span>2022-05-05</span>
+  </h2>
+<ul>
+<li>When using the S3 API, an empty string and <code>us-east-1</code> will now alias to the <code>auto</code> region for compatibility with external tools.</li>
+<li><code>GetBucketEncryption</code>, <code>PutBucketEncryption</code> and <code>DeleteBucketEncrypotion</code> are now supported (the only supported value currently is <code>AES256</code>).</li>
+<li>Unsupported operations are explicitly rejected as unimplemented rather than implicitly converting them into <code>ListObjectsV2</code>/<code>PutBucket</code>/<code>DeleteBucket</code> respectively.</li>
+<li>S3 API <code>CompleteMultipartUploads</code> requests are now properly escaped.</li>
+</ul>
+<h2 id="2022-05-03">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-05-03">&#8203;​</a>
+    </span>
+    <span>2022-05-03</span>
+  </h2>
+<ul>
+<li>Pagination cursors are no longer returned when the keys in a bucket is the same as the <code>MaxKeys</code> argument.</li>
+<li>The S3 API <code>ListBuckets</code> operation now accepts <code>cf-max-keys</code>, <code>cf-start-after</code> and <code>cf-continuation-token</code> headers behave the same as the respective URL parameters.</li>
+<li>The S3 API <code>ListBuckets</code> and <code>ListObjects</code> endpoints now allow <code>per_page</code> to be 0.</li>
+<li>The S3 API <code>CopyObject</code> source parameter now requires a leading slash.</li>
+<li>The S3 API <code>CopyObject</code> operation now returns a <code>NoSuchBucket</code> error when copying to a non-existent bucket instead of an internal error.</li>
+<li>Enforce the requirement for <code>auto</code> in SigV4 signing and the <code>CreateBucket</code> <code>LocationConstraint</code> parameter.</li>
+<li>The S3 API <code>CreateBucket</code> operation now returns the proper <code>location</code> response header.</li>
+</ul>
+<h2 id="2022-04-14">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-04-14">&#8203;​</a>
+    </span>
+    <span>2022-04-14</span>
+  </h2>
+<ul>
+<li>The S3 API now supports unchunked signed payloads.</li>
+<li>Fixed <code>.put()</code> for the Workers R2 bindings.</li>
+<li>Fixed a regression where key names were not properly decoded when using the S3 API.</li>
+<li>Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.</li>
+<li>The S3 API <code>DeleteObjects</code> operation no longer returns an error even though an object has been deleted in some cases.</li>
+<li>Fixed a bug where <code>startAfter</code> and <code>continuationToken</code> were not working in list operations.</li>
+<li>The S3 API <code>ListObjects</code> operation now correctly renders <code>Prefix</code>, <code>Delimiter</code>, <code>StartAfter</code> and <code>MaxKeys</code> in the response.</li>
+<li>The S3 API <code>ListObjectsV2</code> now correctly honors the <code>encoding-type</code> parameter.</li>
+<li>The S3 API <code>PutObject</code> operation now works with <code>POST</code> requests for <code>s3cmd</code> compatibility.</li>
+</ul>
+<h2 id="2022-04-04">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2022-04-04">&#8203;​</a>
+    </span>
+    <span>2022-04-04</span>
+  </h2>
+<ul>
+<li>The S3 API <code>DeleteObjects</code> request now properly returns a <code>MalformedXML</code>
+error instead of <code>InternalError</code> when provided with more than 128 keys.</li>
+</ul>
+
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/r2" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/workers/40" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/cloud/what-is-object-storage/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/r2/reference/changelog.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths</title>
+  <meta name="title" content="Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare’s global network." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths" />
+  <meta property="og:description" content="Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare’s global network." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/learning-paths/workers/concepts/workers-concepts/" />
+
+  <meta name="twitter:title" content="Cloudflare Workers · Build applications with Cloudflare Workers · Learning paths" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare’s global network." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="learning-paths"><meta name="algolia_product_filter" content="Learning Paths"><meta name="algolia_page_title" content="Cloudflare Workers">
+  <meta name="pcx_word_count" content="700"><meta name="pcx_last_modified" content="40"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="learning-unit" />
+  <meta name="algolia_content_type" content="Learning Unit"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/learning-paths/workers/concepts/workers-concepts/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"learning-paths"}</script>
+  <meta name="docsearch:product" content="learning-paths" /><link rel="stylesheet preconnect" href="/learning-paths.css" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body>
+  <div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fb1cdec5d8ac8cc52f4aef4d8b4c64cd" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fb1cdec5d8ac8cc52f4aef4d8b4c64cd">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/learning-paths/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Learning Paths logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none"><path d="M1.00002 9.49999L0.500023 9.99999V12.75L1.00002 13.25H3.75002L4.25002 12.75V9.99999L3.75002 9.49999H1.00002ZM3.25002 12.25H1.50002V10.5H3.25002V12.25Z" fill="black"/><path d="M6.92799 0.498184L4.67763 2.74855L6.92799 4.99892L9.17836 2.74855L6.92799 0.498184Z" fill="black"/><path d="M2.76002 8.05749H11.095V9.19749H12.0775V7.07249H7.42752V5.47249H6.42752V7.07249H1.77502V9.19749H2.76002V8.05749Z" fill="black"/><path d="M11.5 9.49999C11.1045 9.49999 10.7178 9.61729 10.3889 9.83705C10.06 10.0568 9.80364 10.3692 9.65226 10.7346C9.50089 11.1001 9.46128 11.5022 9.53845 11.8902C9.61562 12.2781 9.8061 12.6345 10.0858 12.9142C10.3655 13.1939 10.7219 13.3844 11.1098 13.4616C11.4978 13.5387 11.8999 13.4991 12.2654 13.3477C12.6308 13.1964 12.9432 12.94 13.163 12.6111C13.3827 12.2822 13.5 11.8956 13.5 11.5C13.5 10.9696 13.2893 10.4608 12.9142 10.0858C12.5392 9.7107 12.0305 9.49999 11.5 9.49999ZM11.5 12.5C11.3022 12.5 11.1089 12.4413 10.9445 12.3315C10.78 12.2216 10.6518 12.0654 10.5761 11.8827C10.5005 11.6999 10.4807 11.4989 10.5192 11.3049C10.5578 11.1109 10.6531 10.9327 10.7929 10.7929C10.9328 10.653 11.111 10.5578 11.3049 10.5192C11.4989 10.4806 11.7 10.5004 11.8827 10.5761C12.0654 10.6518 12.2216 10.78 12.3315 10.9444C12.4414 11.1089 12.5 11.3022 12.5 11.5C12.5 11.7652 12.3947 12.0196 12.2071 12.2071C12.0196 12.3946 11.7652 12.5 11.5 12.5Z" fill="black"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:14">Learning Paths</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 4ca248cf54e8cd65cafdd4fdb8ccbec1" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 4ca248cf54e8cd65cafdd4fdb8ccbec1">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/learning-paths/workers/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Build applications with Cloudflare Workers (Learning Path) Learning Path logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none"><path d="M1.00002 9.49999L0.500023 9.99999V12.75L1.00002 13.25H3.75002L4.25002 12.75V9.99999L3.75002 9.49999H1.00002ZM3.25002 12.25H1.50002V10.5H3.25002V12.25Z" fill="black"/><path d="M6.92799 0.498184L4.67763 2.74855L6.92799 4.99892L9.17836 2.74855L6.92799 0.498184Z" fill="black"/><path d="M2.76002 8.05749H11.095V9.19749H12.0775V7.07249H7.42752V5.47249H6.42752V7.07249H1.77502V9.19749H2.76002V8.05749Z" fill="black"/><path d="M11.5 9.49999C11.1045 9.49999 10.7178 9.61729 10.3889 9.83705C10.06 10.0568 9.80364 10.3692 9.65226 10.7346C9.50089 11.1001 9.46128 11.5022 9.53845 11.8902C9.61562 12.2781 9.8061 12.6345 10.0858 12.9142C10.3655 13.1939 10.7219 13.3844 11.1098 13.4616C11.4978 13.5387 11.8999 13.4991 12.2654 13.3477C12.6308 13.1964 12.9432 12.94 13.163 12.6111C13.3827 12.2822 13.5 11.8956 13.5 11.5C13.5 10.9696 13.2893 10.4608 12.9142 10.0858C12.5392 9.7107 12.0305 9.49999 11.5 9.49999ZM11.5 12.5C11.3022 12.5 11.1089 12.4413 10.9445 12.3315C10.78 12.2216 10.6518 12.0654 10.5761 11.8827C10.5005 11.6999 10.4807 11.4989 10.5192 11.3049C10.5578 11.1109 10.6531 10.9327 10.7929 10.7929C10.9328 10.653 11.111 10.5578 11.3049 10.5192C11.4989 10.4806 11.7 10.5004 11.8827 10.5761C12.0654 10.6518 12.2216 10.78 12.3315 10.9444C12.4414 11.1089 12.5 11.3022 12.5 11.5C12.5 11.7652 12.3947 12.0196 12.2071 12.2071C12.0196 12.3946 11.7652 12.5 11.5 12.5Z" fill="black"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:58">Build applications with Cloudflare Workers (Learning Path)</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Build applications with Cloudflare Workers (Learning Path) Learning Path menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="/learning-paths/" tabindex="-1">All learning paths</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav"><li class="moduleCounter">Module 1</li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Concepts</span>
+    </button><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/concepts/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Concepts</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/concepts/cloudflare-intro/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Introduction to Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/concepts/serverless-computing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless computing</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/learning-paths/workers/concepts/workers-concepts/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Workers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="moduleCounter">Module 2</li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Deploy your first Worker</span>
+    </button><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy your first Worker</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/get-started/c3-and-wrangler/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">C3 &amp; Wrangler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/get-started/first-worker/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">First Worker</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/get-started/first-application/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">First application</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="moduleCounter">Module 3</li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Learn about Cloudflare&#39;s Developer Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/devplat/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Learn about Cloudflare&#39;s Developer Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/learning-paths/workers/devplat/intro-to-devplat/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Developer Platform</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/learning-paths/workers/concepts/workers-concepts.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody">
+      <div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+
+
+      <div id="docs-content" data-reach-skip-nav-content></div>
+
+      <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/learning-paths/" class="DocsMarkdown--link" itemprop="item">
+            <span itemprop="name" class="DocsMarkdown--link-content">Learning Paths</span></a>
+          <meta itemprop="position" content="1" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/learning-paths/workers/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Build applications with Cloudflare Workers</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/learning-paths/workers/concepts/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Concepts</span></a><meta itemprop="position" content="4" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/learning-paths/workers/concepts/workers-concepts/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Cloudflare Workers</span></a><meta itemprop="position" content="5" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+        
+        <article class="DocsMarkdown">
+          <h1 id="cloudflare-workers">Cloudflare Workers</h1>
+          <p class="timeEstimate"><span class="DocsMarkdown--link-external-icon timeIcon" aria-hidden="true">
+<svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49">
+  <path
+    d="M24 5.04a19.5 19.5 0 1 0 0 39 19.5 19.5 0 0 0 0-39Zm0 36a16.5 16.5 0 1 1 0-33 16.5 16.5 0 0 1 0 33Z"
+  />
+  <path d="M25.5 11.715h-3V25.62l8.1 8.422 2.16-2.077-7.26-7.552V11.715Z" />
+</svg>
+</span>&nbsp;&nbsp;4&nbsp;min read</p><p>Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare&rsquo;s global network.</p>
+<p>Cloudflare Workers significantly differs from other serverless computing providers in its execution model and architecture.</p>
+<h2 id="what-you-can-do-with-workers">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#what-you-can-do-with-workers">&#8203;​</a>
+    </span>
+    <span>What you can do with Workers</span>
+  </h2><p>A single Worker project can have logic as complex or as simple as the developer desires. A project of smaller scale might look like a Worker that <a href=/workers/examples/return-html/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">returns a small HTML page</span></a> on a single route. A more complex Worker project would span multiple domains, multiple routes for each domain, and different logic for each route. The developer decides the architectural complexity of their Worker project.</p>
+<p>Your application can be made up of multiple Workers that work together and deliver a single experience to end users. Workers can also integrate with other Cloudflare Developer Platform functionality such as storage, media and AI. You will learn more about this in the <a href=/learning-paths/workers/devplat/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Developer Platform module</span></a>.</p>
+<h2 id="runtime">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#runtime">&#8203;​</a>
+    </span>
+    <span>Runtime</span>
+  </h2><p>The <a href="https://blog.cloudflare.com/workerd-open-source-workers-runtime" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Workers runtime</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> is designed to be JavaScript-standards compliant and web-interoperable. The Workers runtime uses the V8 engine — the same engine used by Chromium and Node.js, and has an open-source version, <a href="https://github.com/cloudflare/workerd" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>workerd</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h2 id="execution">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#execution">&#8203;​</a>
+    </span>
+    <span>Execution</span>
+  </h2><p>The Cloudflare Workers runtime runs in every data center of <a href="https://www.cloudflare.com/network/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare&rsquo;s global network of over 300 cities</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. Every Worker run within its own isolate. Isolate architecture is what makes Workers efficient.</p>
+<h3 id="isolates">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#isolates">&#8203;​</a>
+    </span>
+    <span>Isolates</span>
+  </h3><p>Workers uses <a href=/workers/reference/how-workers-works/#isolates class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">isolates</span></a>: lightweight contexts that provide your code with variables it can access and a safe environment to be executed within. You could even consider an isolate a sandbox for your function to run in.</p>
+<p>A single instance of the runtime can run hundreds or thousands of isolates, seamlessly switching between them. Each isolate&rsquo;s memory is completely isolated, so each piece of code is protected from other untrusted or user-written code on the runtime. Isolates are also designed to start very quickly. Instead of creating a virtual machine for each function, an isolate is created within an existing environment. This model eliminates the cold starts of the virtual machine model.</p>
+<p>Unlike other serverless providers which use <a href="https://www.cloudflare.com/learning/serverless/serverless-vs-containers/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">containerized processes</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> each running an instance of a language runtime, Workers pays the overhead of a JavaScript runtime once on the start of a container. Workers processes are able to run essentially limitless scripts with almost no individual overhead. Any given isolate can start around a hundred times faster than a Node process on a container or virtual machine. Notably, on startup isolates consume an order of magnitude less memory.</p>
+
+<figure>
+  <div class="ArchitectureDiagram">
+    <div class="ArchitectureDiagram--diagram">
+      <div class="ArchitectureDiagram--content">
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+      </div>
+      <div class="ArchitectureDiagram--caption">Traditional architecture</div>
+    </div>
+    <div class="ArchitectureDiagram--diagram">
+      <div class="ArchitectureDiagram--content">
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--user-code"></div>
+          
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+        
+        <div class="ArchitectureDiagram--process-overhead">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--process-overhead-background"></div>
+        </div>
+      </div>
+      <div class="ArchitectureDiagram--caption">Workers V8 isolates</div>
+    </div>
+    <div class="ArchitectureDiagram--key">
+      <div class="ArchitectureDiagram--key-content">
+        <div class="ArchitectureDiagram--key-user-code">
+          <div class="ArchitectureDiagram--user-code"></div>
+          <div class="ArchitectureDiagram--key-label">User code</div>
+        </div>
+        <div class="ArchitectureDiagram--key-process-overhead">
+          <div class="ArchitectureDiagram--process-overhead">
+            <div class="ArchitectureDiagram--process-overhead-background"></div>
+          </div>
+          <div class="ArchitectureDiagram--key-label">Process overhead</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</figure>
+<h2 id="compute-per-request">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#compute-per-request">&#8203;​</a>
+    </span>
+    <span>Compute per request</span>
+  </h2><p>Most Workers are a variation on the default Workers flow:</p>
+<div class="tabs-wrapper" tab-wrapper-id="998d8dd8a21be850">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="998d8dd8a21be850">
+<li class="tab-label-wrapper">
+<a class="tab-label" href="#" data-link="tab-js" data-id="998d8dd8a21be850">
+<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+    xmlns="http://www.w3.org/2000/svg">
+<path
+  d="M32 32v448h448V32zm240 348c0 43.61-25.76 64.87-63.05 64.87-33.68 0-53.23-17.44-63.15-38.49l34.28-20.75c6.61 11.73 11.63 21.65 26.06 21.65 12 0 21.86-5.41 21.86-26.46V240h44zm99.35 63.87c-39.09 0-64.35-17.64-76.68-42L329 382c9 14.74 20.75 24.56 41.5 24.56 17.44 0 27.57-7.72 27.57-19.75 0-14.43-10.43-19.54-29.68-28l-10.52-4.52c-30.38-12.92-50.52-29.16-50.52-63.45 0-31.57 24.05-54.63 61.64-54.63 26.77 0 46 8.32 59.85 32.68L396 290c-7.22-12.93-15-18-27.06-18-12.33 0-20.15 7.82-20.15 18 0 12.63 7.82 17.74 25.86 25.56l10.52 4.51c35.79 15.34 55.94 31 55.94 66.16.01 37.9-29.76 57.64-69.76 57.64z"
+  role="graphics-symbol">
+</path>
+</svg>
+JavaScript
+</a>
+</li>
+<li class="tab-label-wrapper">
+<a class="tab-label" href="#" data-link="tab-ts" data-id="998d8dd8a21be850">
+  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"
+      role="graphics-symbol">
+    </path>
+  </svg>
+  TypeScript
+</a>
+</li>
+</ul>
+</nav>
+<div class="tab tab-default " id="tab-js-998d8dd8a21be850"><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="export&#43;default&#43;%7B%0A%09async&#43;fetch%28request%2C&#43;env%2C&#43;ctx%29&#43;%7B%0A%09%09return&#43;new&#43;Response%28%27Hello&#43;World%21%27%29%3B%0A%09%7D%2C%0A%7D%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-ts-998d8dd8a21be850"><div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="export&#43;default&#43;%7B%0A%09async&#43;fetch%28request%2C&#43;env%2C&#43;ctx%29%3A&#43;Promise%3CResponse%3E&#43;%7B%0A%09%09return&#43;new&#43;Response%28%27Hello&#43;World%21%27%29%3B%0A%09%7D%2C%0A%7D&#43;satisfies&#43;ExportedHandler%3CEnv%3E%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+</div>
+<p>For Workers written in <a href=/workers/reference/migrate-to-module-workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">ES modules syntax</span></a>, when a request to your <code>*.workers.dev</code> subdomain or to your Cloudflare-managed domain is received by any of Cloudflare&rsquo;s data centers, the request invokes the <a href=/workers/runtime-apis/handlers/fetch/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>fetch()</code> handler</span></a> defined in your Worker code with the given request. You can respond to the request by returning a <a href=/workers/runtime-apis/response/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>Response</code></span></a> object.</p>
+
+<h2 id="summary">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#summary">&#8203;​</a>
+    </span>
+    <span>Summary</span>
+  </h2><p>By reading this page, you have learned:</p>
+<ul>
+<li>The basics of how Worker projects are organized.</li>
+<li>The fundamentals of how Workers execute on the Cloudflare network.</li>
+<li>How the request to response flow executes.</li>
+</ul>
+<p>In the next module, you build and deploy your first Worker to the Cloudflare global network.</p>
+<h2 id="related-resources">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-resources">&#8203;​</a>
+    </span>
+    <span>Related resources</span>
+  </h2><ul>
+<li><a href="https://blog.cloudflare.com/cloud-computing-without-containers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloud computing without containers</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> - A blog post detailing the containers versus isolates difference in the context of Cloudflare.</li>
+<li><a href=/workers/reference/how-workers-works/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">How Workers works</span></a> - Learn the difference between the Workers runtime versus traditional browsers and Node.js.</li>
+<li><a href=/workers/reference/how-the-cache-works/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">How the cache works</span></a> - Learn how Workers interacts with the Cloudflare cache.</li>
+</ul>
+<h2 id="feedback">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#feedback">&#8203;​</a>
+    </span>
+    <span>Feedback</span>
+  </h2><p>To improve this learning path or report any missing or incorrect information, <a href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">file an issue on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h2 id="community">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#community">&#8203;​</a>
+    </span>
+    <span>Community</span>
+  </h2><p>Connect with the <a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Developer Platform community on Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to ask questions, share what you are building, and discuss the platform with other developers.</p>
+<br/>
+          <br/>
+          <br/><div class="progressIndicator">
+    <p class="DocsMarkdown--button-group" style="align-items: center;">
+    <span class="DocsMarkdown--button-group-content"><a href="/learning-paths/workers/concepts/serverless-computing/" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Previous</span>
+    </a><a href="/learning-paths/workers/get-started/" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Next module</span>
+    </a>
+    <br/></span>
+    </p>
+    </div></article>
+      </div>
+    </main>
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/learning-paths/workers/concepts/workers-concepts.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-03T09:48:45&#43;01:00
+  title=2024-06-03
+>June 3, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

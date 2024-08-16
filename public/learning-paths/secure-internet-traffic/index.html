@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en" theme="light" is-site-page is-docs-page>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Secure your Internet traffic and SaaS apps · Cloudflare Docs</title>
+  <meta name="title" content="Secure your Internet traffic and SaaS apps · Cloudflare Docs" />
+  <meta name="image" content="https://developers.cloudflare.com/zt-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Secure your Internet traffic and SaaS apps · Cloudflare Docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Secure your Internet traffic and SaaS apps · Cloudflare Docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Provide your users and networks with a secure, performant, and flexible path to the Internet." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta property="og:title" content="Secure your Internet traffic and SaaS apps · Cloudflare Docs" />
+  <meta property="og:description" content="Provide your users and networks with a secure, performant, and flexible path to the Internet." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/learning-paths/secure-internet-traffic/" />
+
+  <meta name="twitter:title" content="Secure your Internet traffic and SaaS apps · Cloudflare Docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta name="twitter:description" content="Provide your users and networks with a secure, performant, and flexible path to the Internet." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="learning-paths"><meta name="algolia_product_filter" content="Home page"><meta name="algolia_page_title" content="Secure your Internet traffic and SaaS apps">
+  <meta name="pcx_word_count" content="700"><meta name="pcx_last_modified" content="93"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="learning-path" />
+  <meta name="algolia_content_type" content="Learning Path"><meta name="pcx_content_group" content="Cloudflare One" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/learning-paths/secure-internet-traffic/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2"}</script>
+  <meta name="docsearch:product" content="" /><link rel="stylesheet preconnect" href="/learning-paths.css" /><link rel="stylesheet preconnect" href="/codeBlock.css" />
+
+  <link rel="stylesheet preconnect" href="/home.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/home.js" defer></script></head>
+
+<body>
+  <div class="DocsPage">
+    <div class="SiteHeader">
+      <div class="SiteHeader--container">
+        <div class="SiteHeader--logo-section">
+          <a aria-current="page" class="SiteHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+            <div class="DocsNavLogoLockup">
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - d4dca8f65df8f8cd4e5ccc2abc44b1ce" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - d4dca8f65df8f8cd4e5ccc2abc44b1ce">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span></div>
+          </a>
+        </div>
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div><div class="SiteHeader--nav">
+          <a class="SiteHeader--nav-link" href="/products/"><span>Product directory</span></a>
+          <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
+          <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
+          <a class="SiteHeader--nav-link"
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
+          <a class="SiteHeader--nav-link"
+          href="https://dash.cloudflare.com"><span>Log in</span></a>
+        </div>
+        <div class="SiteHeader--theme-toggle"><button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+            <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+              <path
+                d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+              </path>
+            </svg>
+          </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+      </div>
+    </div>
+
+    
+    <div class="SiteHeader---shadow"></div>
+    <div class="SiteHeader---shadow-cover"></div>
+    
+
+    <main class="DocsBody">
+      
+          <div id="docs-content" data-reach-skip-nav-content></div>
+          <div class="DocsContent" page-type="developers-site">
+            <article class="DocsMarkdown">
+<p class="viewOtherPaths"><a href="/learning-paths/"><strong>&lt;</strong>  View other learning paths</a></p>
+
+<div class="header">
+<h1>Secure your Internet traffic and SaaS apps</h1>
+<p><em>Learning path</em></p>
+<p>Provide your users and networks with a secure, performant, and flexible path to the Internet.</p>
+<p></p>
+<p class="DocsMarkdown--button-group">
+  <span class="DocsMarkdown--button-group-content">
+    <a href="/learning-paths/secure-internet-traffic/concepts/" class="getStartedButton learningNavigation Button Button-is-docs-primary">
+      <span class="getStarted DocsMarkdown--link-content">Start path</span>
+    </a>
+</span>
+</p>
+</div>
+
+
+
+<div class="background">
+  <p class="estimate"><strong>Modules</strong>: <span>11</span>&emsp;&emsp;&emsp;<strong>Reading time</strong>: <span>85 min</span></p><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="concepts"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#concepts"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Concepts</span>
+    </h2>
+    </div><p>Learn the core concepts of using Cloudflare Zero Trust functionality to provide granular security policy for devices and networks accessing the Internet.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/concepts/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 1 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/concepts/security-concepts/">What security features does Cloudflare provide?</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="get-started-with-zero-trust"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#get-started-with-zero-trust"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Get started with Zero Trust</span>
+    </h2>
+    </div><p>Start securing your users and networks with Cloudflare Zero Trust.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/initial-setup/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 4 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/initial-setup/prerequisites/">Prerequisites</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/initial-setup/create-cloudflare-account/">Create a Cloudflare account</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/initial-setup/create-zero-trust-org/">Create a Zero Trust organization</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/initial-setup/configure-idp/">Configure an identity provider</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="configure-the-device-agent"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#configure-the-device-agent"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Configure the device agent</span>
+    </h2>
+    </div><p>The following steps are identical to <a href=/learning-paths/secure-internet-traffic/configure-device-agent/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Configure the device agent</span></a> in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to <a href=/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Determine when to use PAC files</span></a>.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/configure-device-agent/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 6 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/device-enrollment-permissions/">Define device enrollment permissions</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/device-profiles/">Customize device profiles</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/enable-proxy/">Proxy traffic through Gateway</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/split-tunnel-settings/">Define Split Tunnel settings</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/private-dns/">Resolve private DNS</a>
+              <p class="readingTime">4&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/">Determine when to use PAC files</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="connect-user-devices"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#connect-user-devices"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Connect user devices</span>
+    </h2>
+    </div><p>After setting up your Cloudflare account and Zero Trust organization, you can begin connecting user devices to Cloudflare.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/connect-devices/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 3 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/connect-devices/install-agent/">Download and install WARP</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/connect-devices/mdm/">MDM deployment</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/connect-devices/validate-traffic-in-gateway/">Verify device connectivity</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="connect-networks-to-cloudflare"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#connect-networks-to-cloudflare"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Connect networks to Cloudflare</span>
+    </h2>
+    </div><p>After connecting your devices to Cloudflare, you can route their traffic through your DNS, network, and HTTP policies. However, not every device can run a Zero Trust client. This module offers detail on connecting your networks to the Cloudflare …</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/connect-networks/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 1 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/">Choose an on-ramp</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="understand-and-streamline-policy-creation"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#understand-and-streamline-policy-creation"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Understand and streamline policy creation</span>
+    </h2>
+    </div><p>Before you begin building security policies, there are a few key details about Gateway to review.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/understand-policies/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 3 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/">Order of enforcement</a>
+              <p class="readingTime">5&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/understand-policies/create-list/">Create a list of IPs or domains</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/understand-policies/indicator-feeds/">Use indicator feeds to improve security policies</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="build-dns-security-policies"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#build-dns-security-policies"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Build DNS security policies</span>
+    </h2>
+    </div><p>DNS security is an important, wide-reaching, and early action in the lifecycle of a request. Cloudflare operates one of the world’s largest and fastest public DNS resolvers. Your users’ public DNS requests will be resolved by that same resolution …</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/build-dns-policies/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 5 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/build-dns-policies/create-policy/">Create your first DNS policy</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-dns-policies/create-list/">Create an allowlist or blocklist</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-dns-policies/recommended-dns-policies/">Recommended DNS policies</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-dns-policies/onboard-dns/">Onboard DNS for a network</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-dns-policies/test-policy/">Test a policy</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="build-network-security-policies"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#build-network-security-policies"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Build network security policies</span>
+    </h2>
+    </div><p>After creating policies for security based on DNS resolution, we can layer in additional security controls with the Gateway network firewall, which operates at Layer 4 of the OSI model. The Gateway network firewall allows you to build specific …</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/build-network-policies/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 1 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/build-network-policies/recommended-network-policies/">Recommended network policies</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="build-http-security-policies"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#build-http-security-policies"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Build HTTP security policies</span>
+    </h2>
+    </div><p>After securing your organization’s DNS queries and network level traffic, you can begin implementing advanced security controls for web traffic by inspecting HTTPS and taking actions based on the full URL or the body of HTTP requests.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/build-http-policies/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 5 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/build-http-policies/tls-inspection/">Use TLS inspection</a>
+              <p class="readingTime">5&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-http-policies/create-policy/">Create your first HTTP policy</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-http-policies/data-loss-prevention/">Build Data Loss Prevention (DLP) policies</a>
+              <p class="readingTime">6&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-http-policies/browser-isolation/">Configure Browser Isolation</a>
+              <p class="readingTime">4&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-http-policies/recommended-http-policies/">Recommended HTTP policies</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="control-traffic-egress-with-source-ip-anchoring-and-allowlisting"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#control-traffic-egress-with-source-ip-anchoring-and-allowlisting"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Control traffic egress with source IP anchoring and allowlisting</span>
+    </h2>
+    </div><p>Now that you have created firewall policies to secure your organization, you can begin creating egress policies to control what IP address your users egress to the Internet with.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/build-egress-policies/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 3 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/build-egress-policies/source-ip-anchoring/">Source IP anchoring</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-egress-policies/deploy-egress-ips/">Egress IP best practices</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/build-egress-policies/egress-policies/">Use egress policies to deliver consistent egress IPs</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div><div class="learningPathModule">
+    <div class="moduleHeader">
+    <h2 id="secure-saas-applications"><span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#secure-saas-applications"
+          >&#8203;​</a
+        >
+      </span>
+      <span><span class="lpstepCounter"></span>Secure SaaS applications</span>
+    </h2>
+    </div><p>Now that you have deployed dedicated egress IPs and created egress policies to anchor your source IPs, you can integrate Cloudflare with your SSO provider and secure your SaaS applications.</p><p class="DocsMarkdown--button-group">
+      <span class="DocsMarkdown--button-group-content">
+        <a href="/learning-paths/secure-internet-traffic/secure-saas-applications/" class="learningNavigation Button Button-is-docs-secondary">
+          <span class="DocsMarkdown--link-content">Start module</span>
+        </a>
+    </span>
+  </p>
+  
+    <details class="pathDetails" open>
+      <summary>Contains 4 units</summary>
+      <div>
+          <ul><li><a href="/learning-paths/secure-internet-traffic/secure-saas-applications/saas-security-overview/">SaaS security overview</a>
+              <p class="readingTime">1&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/">Single sign-on front door controls</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/secure-saas-applications/layer-security/">Layer security methods</a>
+              <p class="readingTime">2&nbsp;min</p>
+            </li><li><a href="/learning-paths/secure-internet-traffic/secure-saas-applications/configure-casb/">Scan SaaS applications with Cloudflare CASB</a>
+              <p class="readingTime">3&nbsp;min</p>
+            </li></ul>
+      </div>
+      </details>
+      </div></div>
+  
+</article>
+          </div>
+          
+    </main><div class="SiteFooter">
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Stay in touch</p>
+    </div>
+
+    <ul>
+      <li><a href="https://github.com/cloudflare">GitHub</a></li>
+      <li><a href="https://discord.cloudflare.com">Discord</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Resources</p>
+    </div>
+    <ul>
+      <li><a href="/api/">API</a></li>
+      <li><a href="/fundamentals/">New to Cloudflare?</a></li>
+      <li><a href="/products/">Products</a></li>
+      <li><a href="/sponsorships/">Sponsorships</a></li>
+      <li><a href="https://github.com/cloudflare">Open Source</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Support</p>
+    </div>
+    <ul>
+      <li><a href="https://support.cloudflare.com/">Help Center</a></li>
+      <li><a href="https://www.cloudflarestatus.com/">System Status</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/compliance-resources/">Compliance</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/gdpr/">GDPR</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>What we do</p>
+    </div>
+    <ul>
+      <li><a href="https://www.cloudflare.com/people/">Our Team</a></li>
+      <li><a href="https://www.cloudflare.com/careers/">Careers</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Tools</p>
+    </div>
+    <ul>
+      <li><a href="https://radar.cloudflare.com">Cloudflare Radar</a></li>
+      <li><a href="https://speed.cloudflare.com/">Speed Test</a></li>
+      <li><a href="https://isbgpsafeyet.com/">Is BGP Safe Yet?</a></li>
+      <li><a href="https://rpki.cloudflare.com/">RPKI Toolkit</a></li>
+      <li><a href="https://ct.cloudflare.com/">Certificate Transparency</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="legalInformation">
+  <ul>
+    <li>© 2024 Cloudflare, Inc.</li>
+    <li><a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a></li>
+    <li><a href="https://www.cloudflare.com/website-terms/">Terms of Use</a></li>
+    <li><a href="https://www.cloudflare.com/disclosure/">Report Security Issues</a></li>
+    <li><a href="https://www.cloudflare.com/trademark/">Trademark</a></li>
+    <li>
+      
+        <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+      
+    </li>
+  </ul>
+</div>
+</div>
+</body>
+
+</html>

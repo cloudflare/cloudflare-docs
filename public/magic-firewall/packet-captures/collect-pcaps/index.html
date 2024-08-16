@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Collect PCAPs · Cloudflare Magic Firewall docs</title>
+  <meta name="title" content="Collect PCAPs · Cloudflare Magic Firewall docs" />
+  <meta name="image" content="https://developers.cloudflare.com/zt-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Collect PCAPs · Cloudflare Magic Firewall docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Collect PCAPs · Cloudflare Magic Firewall docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta property="og:title" content="Collect PCAPs · Cloudflare Magic Firewall docs" />
+  <meta property="og:description" content="After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/magic-firewall/packet-captures/collect-pcaps/" />
+
+  <meta name="twitter:title" content="Collect PCAPs · Cloudflare Magic Firewall docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/zt-preview.png" />
+  <meta name="twitter:description" content="After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="magic-firewall"><meta name="algolia_product_filter" content="Magic Firewall"><meta name="algolia_page_title" content="Collect PCAPs">
+  <meta name="pcx_word_count" content="1000"><meta name="pcx_last_modified" content="8"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="how-to" />
+  <meta name="algolia_content_type" content="How To"><meta name="pcx_content_group" content="Cloudflare One" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/magic-firewall/packet-captures/collect-pcaps/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"magic-firewall"}</script>
+  <meta name="docsearch:product" content="magic-firewall" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - dcabde1fcdd55eccc4484bfa84f6c8c2" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - dcabde1fcdd55eccc4484bfa84f6c8c2">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/magic-firewall/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Magic Firewall logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m13.591 3.476 1.417.767-.394.691-1.375-.84.038 1.607h-.797l.038-1.607-1.374.84-.394-.691 1.416-.767-1.416-.767.394-.692 1.374.84-.038-1.607h.797l-.037 1.607 1.374-.84.393.691-.108.06-1.308.708z"/><path fill-rule="evenodd" d="m2 2.5-.5.5v10.5l.5.5h12l.5-.5V10l-.5-.5h-2.25v-3l-.5-.5H8.5V3L8 2.5H2zm6.5 8h5V13h-5v-2.5zm-1 0V13h-5v-2.5h5zm-1.75-1V7h5v2.5h-5zm-1 0V7H2.5v2.5h2.25zM7.5 6h-5V3.5h5V6z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:14">Magic Firewall</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 5c8bfa54d2448d6c1cc4eba8dcdcffec" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 5c8bfa54d2448d6c1cc4eba8dcdcffec">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/magic-firewall/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Magic Firewall logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m13.591 3.476 1.417.767-.394.691-1.375-.84.038 1.607h-.797l.038-1.607-1.374.84-.394-.691 1.416-.767-1.416-.767.394-.692 1.374.84-.038-1.607h.797l-.037 1.607 1.374-.84.393.691-.108.06-1.308.708z"/><path fill-rule="evenodd" d="m2 2.5-.5.5v10.5l.5.5h12l.5-.5V10l-.5-.5h-2.25v-3l-.5-.5H8.5V3L8 2.5H2zm6.5 8h5V13h-5v-2.5zm-1 0V13h-5v-2.5h5zm-1.75-1V7h5v2.5h-5zm-1 0V7H2.5v2.5h2.25zM7.5 6h-5V3.5h5V6z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:14">Magic Firewall</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Magic Firewall menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/magic-transit/" tabindex="-1">Magic Transit home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://blog.cloudflare.com/introducing-magic-firewall/" tabindex="-1">Blog: Magic WAN &amp; Magic Firewall</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/magic-firewall/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/plans/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Plans</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: About</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/ids/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">IDS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/list-types/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">List types</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/protocol-validation-rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Protocol validation rules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/ruleset-logic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Ruleset logic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/about/traffic-types/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traffic types</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: How to</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How to</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/add-rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add rules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/form-expressions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Form expressions</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/use-rules-list/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use IP lists</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/enable-ids/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable IDS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/enable-magic-roles/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Magic user roles</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/enable-managed-rulesets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Managed Rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/filter-views/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Filter different views</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/how-to/use-logpush-with-ids/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use Logpush with IDS</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Packet captures</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/packet-captures/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Packet captures</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/packet-captures/pcaps-bucket-setup/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">PCAPs bucket setup</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/magic-firewall/packet-captures/collect-pcaps/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Collect PCAPs</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Best practices</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/best-practices/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Best practices</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/best-practices/minimal-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Minimal ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/best-practices/extended-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Extended ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/best-practices/magic-transit-egress/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Transit egress</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Tutorials</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/magic-firewall/tutorials/graphql-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">GraphQL Analytics</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/magic-firewall/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/fields/#magic-firewall-fields"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Firewall fields</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/functions/#magic-firewall-functions"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Firewall functions</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-firewall/packet-captures/collect-pcaps.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-firewall/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Magic Firewall</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-firewall/packet-captures/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Packet captures</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/magic-firewall/packet-captures/collect-pcaps/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Collect PCAPs</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="collect-packet-captures-pcaps">Collect packet captures (PCAPs)</h1><p>After a <span tabindex="0" class='glossary-tooltip' data-title='A data packet is a unit of data consisting of user and control information. Information in a network is broken down into packets, that might follow different paths to their final destination.' data-toggle='tooltip' data-placement='top' aria-label='packet'>packet</span> capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a <code>full</code> type packet capture, you must first follow instructions for <a href=/magic-firewall/packet-captures/pcaps-bucket-setup/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">configuring a bucket</span></a>.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Packet captures are available for Advanced Magic Firewall users. For access, contact your account team.</p>
+</aside>
+
+<h2 id="send-a-packet-capture-request">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#send-a-packet-capture-request">&#8203;​</a>
+    </span>
+    <span>Send a packet capture request</span>
+  </h2><p>Currently, when a packet capture is requested, packets flowing at Cloudflare&rsquo;s global network through the Magic Transit system are captured. The default API field for this is <code>&quot;system&quot;: &quot;magic-transit&quot;</code>, both for the request and response.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Note</div><p>For help determining which data center to select for a packet capture, visit <a href="https://cloudflare.com/cdn-cgi/trace" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">https://cloudflare.com/cdn-cgi/trace</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and refer to the <code>colo</code> field. Note some data centers can be regional such as <code>ORD</code> while other names may be more specific like <code>ord02</code>. Either of these names can be used for this same field.</p>
+</aside>
+
+<h3 id="packet-capture-limits">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#packet-capture-limits">&#8203;​</a>
+    </span>
+    <span>Packet capture limits</span>
+  </h3><p><strong>Sample and full</strong></p>
+<ul>
+<li><code>time_limit</code>: The minimum value is <code>1</code> seconds and maximum value is <code>300</code> seconds.</li>
+<li><code>packet_limit</code>: The minimum value is <code>1</code> packet and maximum value is <code>10000</code> packets.</li>
+</ul>
+<p><strong>Full</strong></p>
+<ul>
+<li><code>byte_limit</code>: The minimum value is <code>1</code> byte and maximum value is <code>1000000000</code> bytes.</li>
+</ul>
+<div class="tabs-wrapper" tab-wrapper-id="38755c999b7443fd">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="38755c999b7443fd">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="38755c999b7443fd">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="38755c999b7443fd">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-38755c999b7443fd"><ol>
+<li>Log in to your <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and select you account.</li>
+<li>Select <strong>Magic Transit</strong> or <strong>Magic WAN</strong>.</li>
+<li>In <strong>Captures</strong>, select <strong>Start a capture</strong>.</li>
+<li>Select the <strong>Captures</strong> tab &gt; <strong>Start a capture</strong>.</li>
+<li>Choose the type of capture you want to perform, and select <strong>Next</strong>.</li>
+<li>Fill out the required fields to begin the capture and then select <strong>Start</strong>.</li>
+</ol>
+<p>The main <strong>Packet captures</strong> page displays a list of captures.</p></div>
+<div class="tab  noCodeTab" id="tab-api-38755c999b7443fd"><p>The PCAPs API needs both <code>system</code> and <code>type</code> to be specified to start a capture. A PCAP&rsquo;s <code>system</code> is the product or logical subsystem where packets are captured, and a PCAP&rsquo;s <code>type</code> is how the captured packets are built into a PCAP file.</p>
+<p>Currently, you can only send one collect request per minute for sample PCAPs, and you can only have one running or pending full PCAP at a time.</p>
+<details class="DocsMarkdown"
+  >
+    <summary>Full PCAP</summary>
+    <div><p>For full PCAP requests, refer to the required parameters listed at <a href="/api/operations/magic-pcap-collection-create-pcap-request" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Create full PCAP requests</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a>. Note that full packet captures require two more parameters than sample packets.</p>
+<p>The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and sample packet requests contain an optional <code>filter_v1</code> parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.</p>
+<p>Leave <code>filter_v1</code> empty to collect all packets without any filtering.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="---%0Aheader%3A&#43;Full&#43;PCAP&#43;example&#43;request%0A---%0Acurl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fpcaps&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;%5C%0A--data&#43;%27%7B%0A&#43;&#43;%22filter_v1%22%3A&#43;%7B%7D%2C%0A&#43;&#43;%22time_limit%22%3A&#43;300%2C%0A&#43;&#43;%22packet_limit%22%3A&#43;10000%2C%0A&#43;&#43;%22byte_limit%22%3A&#43;100000000%2C%0A&#43;&#43;%22type%22%3A&#43;%22full%22%2C%0A&#43;&#43;%22colo%22%3A&#43;%22ORD%22%2C%0A&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%2C%0A&#43;&#43;%22destination_conf%22%3A&#43;%22%24%7BBUCKET%7D%22%0A%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>While the collection is in progress, the response returns the <code>status</code> field as <code>pending</code>. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to <code>success</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="---%0Aheader%3A&#43;Full&#43;PCAP&#43;example&#43;response%0A---%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;%227d7c88382f0b4d5daa9587aa45a1a877%22%2C%0A&#43;&#43;&#43;&#43;%22submitted%22%3A&#43;%222022-06-02T18%3A38%3A22.269047Z%22%2C%0A&#43;&#43;&#43;&#43;%22filter_v1%22%3A&#43;%7B%7D%2C%0A&#43;&#43;&#43;&#43;%22time_limit%22%3A&#43;300%2C%0A&#43;&#43;&#43;&#43;%22status%22%3A&#43;%22pending%22%2C%0A&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22full%22%2C%0A&#43;&#43;&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%2C%0A&#43;&#43;&#43;&#43;%22packet_limit%22%3A&#43;10000%2C%0A&#43;&#43;&#43;&#43;%22byte_limit%22%3A&#43;100000000%2C%0A&#43;&#43;&#43;&#43;%22colo%22%3A&#43;%22ORD%22%2C%0A&#43;&#43;&#43;&#43;%22destination_conf%22%3A&#43;%22gs%3A%2F%2Ftest-magic-pcaps%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+</details>
+<details class="DocsMarkdown"
+  >
+    <summary>Sample PCAP</summary>
+    <div><p>To create a sample PCAP request, send a JSON body with the required parameter listed at <a href="/api/operations/magic-pcap-collection-create-pcap-request" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Create sample PCAP request</span><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></a>.</p>
+<p>Leave <code>filter_v1</code> to collect all packets without any filtering.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="---%0Aheader%3A&#43;Sample&#43;PCAP&#43;example&#43;request%0A---%0Acurl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fpcaps&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22&#43;%5C%0A--header&#43;%22Content-Type%3A&#43;application%2Fjson%22&#43;%5C%0A--data&#43;%27%7B%0A&#43;&#43;%22filter_v1%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22source_address%22%3A&#43;%221.2.3.4%22%2C%0A&#43;&#43;&#43;&#43;%22source_port%22%3A&#43;123%2C%0A&#43;&#43;&#43;&#43;%22destination_address%22%3A&#43;%225.6.7.8%22%2C%0A&#43;&#43;&#43;&#43;%22destination_port%22%3A&#43;80%2C%0A&#43;&#43;&#43;&#43;%22protocol%22%3A&#43;6%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22time_limit%22%3A&#43;300%2C%0A&#43;&#43;%22packet_limit%22%3A&#43;10000%2C%0A&#43;&#43;%22type%22%3A&#43;%22simple%22%2C%0A&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%0A%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The response is a JSON body that contains the details of the job running to build the packet capture. The response contains a unique identifier for the packet capture request along with the details sent in the request.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="---%0Aheader%3A&#43;Sample&#43;PCAP&#43;example&#43;response%0A---%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;%226d1f0aac13cd40e3900d29f5dd0e8a2b%22%2C%0A&#43;&#43;&#43;&#43;%22submitted%22%3A&#43;%222021-12-20T17%3A29%3A20.641845Z%22%2C%0A&#43;&#43;&#43;&#43;%22filter_v1%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22source_address%22%3A&#43;%221.2.3.4%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22source_port%22%3A&#43;123%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22destination_address%22%3A&#43;%225.6.7.8%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22destination_port%22%3A&#43;80%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22protocol%22%3A&#43;6%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%22time_limit%22%3A&#43;60%2C%0A&#43;&#43;&#43;&#43;%22status%22%3A&#43;%22pending%22%2C%0A&#43;&#43;&#43;&#43;%22packets_remaining%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22simple%22%2C%0A&#43;&#43;&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+</details>
+</div>
+
+</div>
+<h2 id="check-packet-capture-status">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#check-packet-capture-status">&#8203;​</a>
+    </span>
+    <span>Check packet capture status</span>
+  </h2><div class="tabs-wrapper" tab-wrapper-id="b4e9c080db513461">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="b4e9c080db513461">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="b4e9c080db513461">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="b4e9c080db513461">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-b4e9c080db513461"><ol>
+<li>Log in to your <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and select you account.</li>
+<li>Select <strong>Magic Transit</strong> or <strong>Magic WAN</strong>.</li>
+<li>In <strong>Packet captures</strong>, select <strong>Start a capture</strong>.</li>
+<li>Select the <strong>Captures</strong> tab.</li>
+</ol>
+</div>
+<div class="tab  noCodeTab" id="tab-api-b4e9c080db513461"><p>To check the status of a running job, send a request to the endpoint and specify the PCAP identifier. The PCAP identifier is received in the response of a collect request as shown in the previous step.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fpcaps%2F%7Bpcap_id%7D&#43;%5C%0A--header&#43;%27X-Auth-Email%3A&#43;%3CEMAIL%3E%27&#43;%5C%0A--header&#43;%27X-Auth-Key%3A&#43;%3CAPI_KEY%3E%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The response will be similar to the one received when requesting a PCAP collection.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="---%0Aheader%3A&#43;Sample&#43;PCAP&#43;example&#43;result%0A---%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;%226d1f0aac13cd40e3900d29f5dd0e8a2b%22%2C%0A&#43;&#43;&#43;&#43;%22submitted%22%3A&#43;%222021-12-20T17%3A29%3A20.641845Z%22%2C%0A&#43;&#43;&#43;&#43;%22filter_v1%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22source_address%22%3A&#43;%221.2.3.4%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22source_port%22%3A&#43;123%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22destination_address%22%3A&#43;%225.6.7.8%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22destination_port%22%3A&#43;80%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22protocol%22%3A&#43;6%0A&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%22time_limit%22%3A&#43;120%2C%0A&#43;&#43;&#43;&#43;%22status%22%3A&#43;%22success%22%2C%0A&#43;&#43;&#43;&#43;%22packets_remaining%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22simple%22%2C%0A&#43;&#43;&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<p>The capture status displays one of the following options:</p>
+<ul>
+<li><strong>Complete:</strong> The capture request is done and ready for download.</li>
+<li><strong>In progress:</strong> The capture request was captured but still processing.</li>
+<li><strong>Failure:</strong> The capture failed. If this occurs, verify your ownership information.</li>
+</ul>
+<h2 id="download-packet-captures">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#download-packet-captures">&#8203;​</a>
+    </span>
+    <span>Download packet captures</span>
+  </h2><p>After your request finishes processing, you can download your packet captures.</p>
+<div class="tabs-wrapper" tab-wrapper-id="5358af3ffb4f85dd">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="5358af3ffb4f85dd">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="5358af3ffb4f85dd">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="5358af3ffb4f85dd">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-5358af3ffb4f85dd"><ol>
+<li>Log in to your <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and select you account.</li>
+<li>Select <strong>Magic Transit</strong> or <strong>Magic WAN</strong>.</li>
+<li>In <strong>Packet captures</strong>, select <strong>Start a capture</strong>.</li>
+<li>Select the <strong>Captures</strong> tab.</li>
+<li>Locate your packet capture you want to download, and select <strong>Download</strong>.</li>
+</ol>
+<p>Packet captures are available to download when the <strong>Status</strong> displays <strong>Success</strong>.</p></div>
+<div class="tab  noCodeTab" id="tab-api-5358af3ffb4f85dd"><p>For more information on how to process multiple saved capture files into a single output file, refer to <a href="https://www.wireshark.org/docs/man-pages/mergecap.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Wireshark&rsquo;s mergecap documentation</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p><strong>Full PCAPs</strong></p>
+<p>To obtain full PCAPs, download the files from the bucket specified in <code>destination_conf</code> after the PCAP&rsquo;s status is <code>success</code>. You may find multiple files named <code>pcap_&lt;pcap_id&gt;.pcap</code> per capture as captures can occur across multiple machines.</p>
+<p><strong>Sample PCAPs</strong></p>
+<p>Once the sample PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fpcaps%2F%7Bpcap_id%7D%2Fdownload&#43;%5C%0A--header&#43;%27X-Auth-Email%3A&#43;%3CEMAIL%3E%27&#43;%5C%0A--header&#43;%27X-Auth-Key%3A&#43;%3CAPI_KEY%3E%27&#43;%5C%0A--output&#43;download.pcap"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<h2 id="list-packet-captures">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#list-packet-captures">&#8203;​</a>
+    </span>
+    <span>List packet captures</span>
+  </h2><div class="tabs-wrapper" tab-wrapper-id="09a4627cf9514711">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="09a4627cf9514711">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="09a4627cf9514711">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="09a4627cf9514711">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-09a4627cf9514711"><ol>
+<li>Log in to your <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, and select you account.</li>
+<li>Select <strong>Magic Transit</strong> or <strong>Magic WAN</strong>.</li>
+<li>In <strong>Packet captures</strong>, select <strong>Start a capture</strong>.</li>
+<li>Select the <strong>Captures</strong> tab.</li>
+</ol>
+<p>The list of packet captures associated with your account displays.</p></div>
+<div class="tab  noCodeTab" id="tab-api-09a4627cf9514711"><p>To view a list of sent requests, use the following command:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="---%0Aheader%3A&#43;List&#43;request&#43;example%0A---%0Acurl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Faccounts%2F%7Baccount_id%7D%2Fpcaps&#43;%5C%0A--header&#43;%22X-Auth-Email%3A&#43;%3CEMAIL%3E%22&#43;%5C%0A--header&#43;%22X-Auth-Key%3A&#43;%3CAPI_KEY%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="json" data-code="---%0Aheader%3A&#43;List&#43;response&#43;example%0A---%0A%7B%0A&#43;&#43;%22result%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22id%22%3A&#43;%2243adab5adeca4dab9c51f4b7f70f2ec3%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22submitted%22%3A&#43;%222021-12-15T03%3A04%3A09.277394Z%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22filter_v1%22%3A&#43;%7B%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22time_limit%22%3A&#43;120%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22status%22%3A&#43;%22success%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22packets_remaining%22%3A&#43;0%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22type%22%3A&#43;%22simple%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22system%22%3A&#43;%22magic-transit%22%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%5D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/magic-firewall/packet-captures/collect-pcaps.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-05T09:32:14&#43;01:00
+  title=2024-07-05
+>July 5, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

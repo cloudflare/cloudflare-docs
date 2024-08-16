@@ -1,0 +1,529 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Stream</title>
+    <link>https://developers.cloudflare.com/stream/changelog/</link>
+    <description>Updates to Stream</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/stream/changelog/index.xml" rel="self" />
+    <lastBuildDate>Thu, 20 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Generated Captions to Open beta</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#generated-captions-to-open-beta</link>
+    <description>Stream has introduced automatically generated captions to open beta for all subscribers at no additional cost. While in beta, only English is supported and videos must be less than 2 hours. For more information, refer to the &lt;a href=&#34;https://blog.cloudflare.com/stream-automatic-captions-with-ai&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;product announcement and deep dive&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; or refer to the &lt;a href=https://developers.cloudflare.com/stream/edit-videos/adding-captions/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;captions documentation&lt;/span&gt;&lt;/a&gt; to get started.</description>
+    <pubDate>Thu, 20 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Updated response codes on requests for errored videos</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#updated-response-codes-on-requests-for-errored-videos</link>
+    <description>Stream will now return HTTP error status 424 (failed dependency) when requesting segments, manifests, thumbnails, downloads, or subtitles for videos that are in an errored state. Previously, Stream would return one of several 5xx codes for requests like this.</description>
+    <pubDate>Tue, 11 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Live Instant Clipping for live broadcasts and recordings</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#live-instant-clipping-for-live-broadcasts-and-recordings</link>
+    <description>Clipping is now available in open beta for live broadcasts and recordings. For more information, refer to &lt;a href=https://developers.cloudflare.com/stream/stream-live/live-instant-clipping/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Live instant clipping&lt;/span&gt;&lt;/a&gt; documentation.</description>
+    <pubDate>Thu, 11 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Tonemapping improvements for HDR content</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#tonemapping-improvements-for-hdr-content</link>
+    <description>In certain cases, videos uploaded with an HDR colorspace (such as footage from certain mobile devices) appeared washed out or desaturated when played back. This issue is resolved for new uploads.</description>
+    <pubDate>Fri, 16 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>HLS improvements for on-demand TS output</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#hls-improvements-for-on-demand-ts-output</link>
+    <description>HLS output from Cloudflare Stream on-demand videos that use Transport Stream file format now includes a 10 second offset to timestamps. This will have no impact on most customers. A small percentage of customers will see improved playback stability. Caption files were also adjusted accordingly.</description>
+    <pubDate>Tue, 07 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>SRT Audio Improvements</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#srt-audio-improvements</link>
+    <description>In some cases, playback via SRT protocol was missing an audio track regardless of existence of audio in the broadcast. This issue is now resolved.</description>
+    <pubDate>Tue, 10 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>LL-HLS Beta</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#ll-hls-beta</link>
+    <description>&lt;p&gt;Low-Latency HTTP Live Streaming (LL-HLS) is now in open beta. Enable LL-HLS on your &lt;a href=https://developers.cloudflare.com/stream/stream-live/start-stream-live/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;live input&lt;/span&gt;&lt;/a&gt; for automatic low-latency playback using the Stream built-in player where supported.&lt;/p&gt;
+&lt;p&gt;For more information, refer to &lt;a href=https://developers.cloudflare.com/stream/stream-live/start-stream-live/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;live input&lt;/span&gt;&lt;/a&gt; and &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;custom player&lt;/span&gt;&lt;/a&gt; docs.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 25 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Scheduled Deletion</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#scheduled-deletion</link>
+    <description>&lt;p&gt;Stream now supports adding a scheduled deletion date to new and existing videos. Live inputs support deletion policies for automatic recording deletion.&lt;/p&gt;
+&lt;p&gt;For more, refer to the &lt;a href=https://developers.cloudflare.com/stream/uploading-videos/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;video on demand&lt;/span&gt;&lt;/a&gt; or &lt;a href=https://developers.cloudflare.com/stream/stream-live/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;live input&lt;/span&gt;&lt;/a&gt; docs.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 08 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Multiple audio tracks now generally available</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#multiple-audio-tracks-now-generally-available</link>
+    <description>&lt;p&gt;Stream supports adding multiple audio tracks to an existing video.&lt;/p&gt;
+&lt;p&gt;For more, refer to the &lt;a href=https://developers.cloudflare.com/stream/edit-videos/adding-additional-audio-tracks/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;documentation&lt;/span&gt;&lt;/a&gt; to get started.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 16 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Player Enhancement Properties</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#player-enhancement-properties</link>
+    <description>&lt;p&gt;Cloudflare Stream now supports player enhancement properties.&lt;/p&gt;
+&lt;p&gt;With player enhancements, you can modify your video player to incorporate elements of your branding, such as your logo, and customize additional options to present to your viewers.&lt;/p&gt;
+&lt;p&gt;For more, refer to the &lt;a href=https://developers.cloudflare.com/stream/edit-videos/player-enhancements/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;documentation&lt;/span&gt;&lt;/a&gt; to get started.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 26 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Limits for downloadable MP4s for live recordings</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#limits-for-downloadable-mp4s-for-live-recordings</link>
+    <description>&lt;p&gt;Previously, generating a download for a live recording exceeding four hours resulted in failure.&lt;/p&gt;
+&lt;p&gt;To fix the issue, now video downloads are only available for live recordings under four hours. Live recordings exceeding four hours can still be played but cannot be downloaded.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 21 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Earlier detection (and rejection) of non-video uploads</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#earlier-detection-and-rejection-of-non-video-uploads</link>
+    <description>&lt;p&gt;Cloudflare Stream now detects non-video content on upload using &lt;a href=https://developers.cloudflare.com/stream/uploading-videos/upload-video-file/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;the POST API&lt;/span&gt;&lt;/a&gt; and returns a 400 Bad Request HTTP error with code &lt;code&gt;10059&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.&lt;/p&gt;
+&lt;p&gt;With this change, Stream responds to the upload request with an error, allowing you to give users immediate feedback if they attempt to upload non-video content.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 04 Jan 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Faster mp4 downloads of live recordings</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#faster-mp4-downloads-of-live-recordings</link>
+    <description>Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to &lt;a href=https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;the docs&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 08 Dec 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Multiple audio tracks (closed beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#multiple-audio-tracks-closed-beta</link>
+    <description>&lt;p&gt;Stream now supports adding multiple audio tracks to an existing video upload. This allows you to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Provide viewers with audio tracks in multiple languages&lt;/li&gt;
+&lt;li&gt;Provide dubbed audio tracks, or audio commentary tracks (ex: Director’s Commentary)&lt;/li&gt;
+&lt;li&gt;Allow your users to customize the customize the audio mix, by providing separate audio tracks for music, speech or other audio tracks.&lt;/li&gt;
+&lt;li&gt;Provide Audio Description tracks to ensure your content is accessible. (&lt;a href=&#34;https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc-only&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;WCAG 2.0 Guideline 1.2 1&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To request an invite to the beta, refer to &lt;a href=&#34;https://community.cloudflare.com/t/new-in-beta-support-for-multiple-audio-tracks/439629&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;this post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 29 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>VP9 support for WebRTC live streams (beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#vp9-support-for-webrtc-live-streams-beta</link>
+    <description>Cloudflare Stream now supports &lt;a href=&#34;https://developers.google.com/media/vp9&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;VP9&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; when streaming using &lt;a href=https://developers.cloudflare.com/stream/webrtc-beta/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;WebRTC (WHIP)&lt;/span&gt;&lt;/a&gt;, currently in beta.</description>
+    <pubDate>Tue, 22 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Reduced time to start WebRTC streaming and playback with Trickle ICE</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#reduced-time-to-start-webrtc-streaming-and-playback-with-trickle-ice</link>
+    <description>&lt;p&gt;Cloudflare Stream’s &lt;a href=&#34;https://datatracker.ietf.org/doc/draft-ietf-wish-whip/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;WHIP&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; and &lt;a href=&#34;https://www.ietf.org/archive/id/draft-murillo-whep-01.html&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;WHEP&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; implementations now support &lt;a href=&#34;https://datatracker.ietf.org/doc/rfc8838/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Trickle ICE&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.&lt;/p&gt;
+&lt;p&gt;For more, refer to &lt;a href=https://developers.cloudflare.com/stream/webrtc-beta/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;the docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 08 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Deprecating the &#39;per-video&#39; Analytics API</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#deprecating-the-per-video-analytics-api</link>
+    <description>&lt;p&gt;The “per-video” analytics API is being deprecated. If you still use this API, you will need to switch to using the &lt;a href=https://developers.cloudflare.com/stream/getting-analytics/fetching-bulk-analytics/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;GraphQL Analytics API&lt;/span&gt;&lt;/a&gt; by February 1, 2023. After this date, the per-video analytics API will be no longer available.&lt;/p&gt;
+&lt;p&gt;The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can &lt;a href=https://developers.cloudflare.com/analytics/graphql-api/features/data-sets/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;use across many Cloudflare products&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For more about this change and how to migrate existing API queries, refer to &lt;a href=&#34;https://community.cloudflare.com/t/migrate-to-the-stream-graphql-analytics-api-by-feb-1st-2023/433252&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;this post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; and the &lt;a href=https://developers.cloudflare.com/stream/getting-analytics/fetching-bulk-analytics/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;GraphQL Analytics API docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 07 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Create an unlimited number of live inputs</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#create-an-unlimited-number-of-live-inputs</link>
+    <description>&lt;p&gt;Cloudflare Stream now has no limit on the number of &lt;a href=&#34;https://developers.cloudflare.com/api/operations/stream-live-inputs-retrieve-a-live-input&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;live inputs&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.&lt;/p&gt;
+&lt;p&gt;For more on creating and managing live inputs, get started with the &lt;a href=https://developers.cloudflare.com/stream/stream-live/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 01 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>More accurate bandwidth estimates for live video playback</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#more-accurate-bandwidth-estimates-for-live-video-playback</link>
+    <description>&lt;p&gt;When playing live video, Cloudflare Stream now provides significantly more accurate estimates of the bandwidth needs of each quality level to client video players. This ensures that live video plays at the highest quality that viewers have adequate bandwidth to play.&lt;/p&gt;
+&lt;p&gt;As live video is streamed to Cloudflare, we transcode it to make it available to viewers at multiple quality levels. During transcoding, we learn about the real bandwidth needs of each segment of video at each quality level, and use this to provide an estimate of the bandwidth requirements of each quality level the in HLS (&lt;code&gt;.m3u8&lt;/code&gt;) and DASH (&lt;code&gt;.mpd&lt;/code&gt;) manifests.&lt;/p&gt;
+&lt;p&gt;If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower, ensuring that the most viewers possible view the highest quality level, since it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher, ensuring that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.&lt;/p&gt;
+&lt;p&gt;This change is particularly helpful if you’re building a platform or application that allows your end users to create their own live streams, where these end users have their own streaming software and hardware that you can’t control. Because this new functionality adapts based on the live video we receive, rather than just the configuration advertised by the broadcaster, even in cases where your end users’ settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements, causing playback quality to decrease unnecessarily. Your end users don’t have to be OBS Studio experts in order to get high quality video playback.&lt;/p&gt;
+&lt;p&gt;No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream. For more, refer to the &lt;a href=https://developers.cloudflare.com/stream/stream-live/#bitrate-estimates-at-each-quality-level-bitrate-ladder class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Thu, 20 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>AV1 Codec support for live streams and recordings (beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#av1-codec-support-for-live-streams-and-recordings-beta</link>
+    <description>&lt;p&gt;Cloudflare Stream now supports playback of live videos and live recordings using the &lt;a href=&#34;https://aomedia.org/av1/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;AV1 codec&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, which uses 46% less bandwidth than H.264.&lt;/p&gt;
+&lt;p&gt;For more, read the &lt;a href=&#34;https://blog.cloudflare.com/av1-cloudflare-stream-beta&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 05 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>WebRTC live streaming and playback (beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#webrtc-live-streaming-and-playback-beta</link>
+    <description>&lt;p&gt;Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.&lt;/p&gt;
+&lt;p&gt;For more, read the &lt;a href=&#34;https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; or the get started with example code in the &lt;a href=https://developers.cloudflare.com/stream/webrtc-beta class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 27 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Manually control when you start and stop simulcasting</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#manually-control-when-you-start-and-stop-simulcasting</link>
+    <description>You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, &lt;a href=https://developers.cloudflare.com/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;read the docs&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 15 Sep 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Unique subdomain for your Stream Account</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#unique-subdomain-for-your-stream-account</link>
+    <description>&lt;p&gt;URLs in the Stream Dashboard and Stream API now use a subdomain specific to your Cloudflare Account: &lt;code&gt;customer-{CODE}.cloudflarestream.com&lt;/code&gt;. This change allows you to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Content Security Policy&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; (CSP) directives specific to your Stream subdomain, to ensure that only videos from your Cloudflare account can be played on your website.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Allowlist only your Stream account subdomain at the network-level to ensure that only videos from a specific Cloudflare account can be accessed on your network.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;No action is required from you, unless you use Content Security Policy (CSP) on your website. For more on CSP, read the &lt;a href=https://developers.cloudflare.com/stream/faq/#i-use-content-security-policy-csp-on-my-website-what-domains-do-i-need-to-add-to-which-directives class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 15 Aug 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Clip videos using the Stream API</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#clip-videos-using-the-stream-api</link>
+    <description>You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to &lt;a href=https://developers.cloudflare.com/stream/edit-videos/video-clipping/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Clip videos&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 02 Aug 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Live inputs</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#live-inputs</link>
+    <description>The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the &lt;a href=&#34;https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Live Inputs API documentation&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 26 Jul 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Picture-in-Picture support</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#picture-in-picture-support</link>
+    <description>The &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Stream Player&lt;/span&gt;&lt;/a&gt; now displays a button to activate Picture-in-Picture mode, if the viewer’s web browser supports the &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/API/Picture-in-Picture_API&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Picture-in-Picture API&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 24 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Creator ID property</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#creator-id-property</link>
+    <description>During or after uploading a video to Stream, you can now specify a value for a new field, &lt;code&gt;creator&lt;/code&gt;. This field can be used to identify the creator of the video content, linking the way you identify your users or creators to videos in your Stream account. For more, read the &lt;a href=&#34;https://blog.cloudflare.com/stream-creator-management/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Fri, 13 May 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Analytics panel in Stream Dashboard</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#analytics-panel-in-stream-dashboard</link>
+    <description>The Stream Dashboard now has an analytics panel that shows the number of minutes of both live and recorded video delivered. This view can be filtered by &lt;strong&gt;Creator ID&lt;/strong&gt;, &lt;strong&gt;Video UID&lt;/strong&gt;, and &lt;strong&gt;Country&lt;/strong&gt;. For more in-depth analytics data, refer to the &lt;a href=https://developers.cloudflare.com/stream/getting-analytics/fetching-bulk-analytics/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;bulk analytics documentation&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 17 Mar 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Custom letterbox color configuration option for Stream Player</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#custom-letterbox-color-configuration-option-for-stream-player</link>
+    <description>The Stream Player can now be configured to use a custom letterbox color, displayed around the video (’letterboxing’ or ‘pillarboxing’) when the video’s aspect ratio does not match the player’s aspect ratio. Refer to the documentation on configuring the Stream Player &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/#basic-options class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Wed, 16 Mar 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Support for SRT live streaming protocol</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#support-for-srt-live-streaming-protocol</link>
+    <description>&lt;p&gt;Cloudflare Stream now supports the SRT live streaming protocol. SRT is a modern, actively maintained streaming video protocol that delivers lower latency, and better resilience against unpredictable network conditions. SRT supports newer video codecs and makes it easier to use accessibility features such as captions and multiple audio tracks.&lt;/p&gt;
+&lt;p&gt;For more, read the &lt;a href=&#34;https://blog.cloudflare.com/stream-now-supports-srt-as-a-drop-in-replacement-for-rtmp/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Thu, 10 Mar 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Faster video quality switching in Stream Player</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#faster-video-quality-switching-in-stream-player</link>
+    <description>When viewers manually change the resolution of video they want to receive in the Stream Player, this change now happens immediately, rather than once the existing resolution playback buffer has finished playing.</description>
+    <pubDate>Thu, 17 Feb 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Volume and playback controls accessible during playback of VAST Ads</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#volume-and-playback-controls-accessible-during-playback-of-vast-ads</link>
+    <description>When viewing ads in the &lt;a href=&#34;https://www.iab.com/guidelines/vast/#:~:text=VAST%20is%20a%20Video%20Ad,of%20the%20digital%20video%20marketplace.&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;VAST format&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; in the Stream Player, viewers can now manually start and stop the video, or control the volume.</description>
+    <pubDate>Wed, 09 Feb 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>DASH and HLS manifest URLs accessible in Stream Dashboard</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#dash-and-hls-manifest-urls-accessible-in-stream-dashboard</link>
+    <description>If you choose to use a third-party player with Cloudflare Stream, you can now easily access HLS and DASH manifest URLs from within the Stream Dashboard. For more about using Stream with third-party players, read the docs &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 25 Jan 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Input health status in the Stream Dashboard</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#input-health-status-in-the-stream-dashboard</link>
+    <description>When a live input is connected, the Stream Dashboard now displays technical details about the connection, which can be used to debug configuration issues.</description>
+    <pubDate>Sat, 22 Jan 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Live viewer count in the Stream Player</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#live-viewer-count-in-the-stream-player</link>
+    <description>The &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Stream Player&lt;/span&gt;&lt;/a&gt; now shows the total number of people currently watching a video live.</description>
+    <pubDate>Thu, 06 Jan 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Webhook notifications for live stream connections events</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#webhook-notifications-for-live-stream-connections-events</link>
+    <description>You can now configure Stream to send webhooks each time a live stream connects and disconnects. For more information, refer to the &lt;a href=https://developers.cloudflare.com/stream/stream-live/webhooks class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Webhooks documentation&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 04 Jan 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>FedRAMP Support</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#fedramp-support</link>
+    <description>The Stream Player can now be served from a &lt;a href=&#34;https://www.cloudflare.com/press-releases/2021/cloudflare-hits-milestone-in-fedramp-approval/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;FedRAMP&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; compliant subdomain.</description>
+    <pubDate>Tue, 07 Dec 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>24/7 Live streaming support</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#247-live-streaming-support</link>
+    <description>You can now use Cloudflare Stream for 24/7 live streaming.</description>
+    <pubDate>Tue, 23 Nov 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Persistent Live Stream IDs</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#persistent-live-stream-ids</link>
+    <description>You can now start and stop live broadcasts without having to provide a new video UID to the Stream Player (or your own player) each time the stream starts and stops. &lt;a href=https://developers.cloudflare.com/stream/stream-live/watch-live-stream/#view-by-live-input-id class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Read the docs&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Wed, 17 Nov 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>MP4 video file downloads for live videos</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#mp4-video-file-downloads-for-live-videos</link>
+    <description>Once a live video has ended and been recorded, you can now give viewers the option to download an MP4 video file of the live recording. For more, read the docs &lt;a href=https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 14 Oct 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Serverless Live Streaming</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#serverless-live-streaming</link>
+    <description>Stream now supports live video content! For more information, read the &lt;a href=&#34;https://blog.cloudflare.com/stream-live/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; and get started by reading the &lt;a href=https://developers.cloudflare.com/stream/stream-live/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 30 Sep 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Thumbnail previews in Stream Player seek bar</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#thumbnail-previews-in-stream-player-seek-bar</link>
+    <description>The Stream Player now displays preview images when viewers hover their mouse over the seek bar, making it easier to skip to a specific part of a video.</description>
+    <pubDate>Mon, 26 Jul 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>MP4 video file downloads (GA)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#mp4-video-file-downloads-ga</link>
+    <description>All Cloudflare Stream customers can now give viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/download-videos/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Mon, 26 Jul 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Stream Connect (open beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#stream-connect-open-beta</link>
+    <description>&lt;p&gt;You can now opt-in to the Stream Connect beta, and use Cloudflare Stream to restream live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.&lt;/p&gt;
+&lt;p&gt;For more, read the &lt;a href=&#34;https://blog.cloudflare.com/restream-with-stream-connect/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; or the &lt;a href=https://developers.cloudflare.com/stream/stream-live/simulcasting/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Sat, 10 Jul 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Simplified signed URL token generation</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#simplified-signed-url-token-generation</link>
+    <description>You can now obtain a signed URL token via a single API request, without needing to generate signed tokens in your own application. &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Read the docs&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Thu, 10 Jun 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Stream Connect (closed beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#stream-connect-closed-beta</link>
+    <description>&lt;p&gt;You can now use Cloudflare Stream to restream or simulcast live video to any platform that accepts RTMPS input, including Facebook, YouTube and Twitch.&lt;/p&gt;
+&lt;p&gt;For more, read the &lt;a href=&#34;https://blog.cloudflare.com/restream-with-stream-connect/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;blog post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; or the &lt;a href=https://developers.cloudflare.com/stream/stream-live/simulcasting/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;docs&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 08 Jun 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>MP4 video file downloads (beta)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#mp4-video-file-downloads-beta</link>
+    <description>You can now give your viewers the option to download videos uploaded to Stream as an MP4 video file. For more, read the docs &lt;a href=https://developers.cloudflare.com/stream/viewing-videos/download-videos/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Mon, 03 May 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Picture quality improvements</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#picture-quality-improvements</link>
+    <description>Cloudflare Stream now encodes videos with fewer artifacts, resulting in improved video quality for your viewers.</description>
+    <pubDate>Mon, 29 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Improved client bandwidth hints for third-party video players</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#improved-client-bandwidth-hints-for-third-party-video-players</link>
+    <description>If you use Cloudflare Stream with a third party player, and send the &lt;code&gt;clientBandwidthHint&lt;/code&gt; parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection.</description>
+    <pubDate>Thu, 25 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Improved client bandwidth hints for third-party video players</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#improved-client-bandwidth-hints-for-third-party-video-players</link>
+    <description>If you use Cloudflare Stream with a third party player, and send the &lt;code&gt;clientBandwidthHint&lt;/code&gt; parameter in requests to fetch video manifests, Cloudflare Stream now selects the ideal resolution to provide to your client player more intelligently. This ensures your viewers receive the ideal resolution for their network connection.</description>
+    <pubDate>Thu, 25 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Less bandwidth, identical video quality</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#less-bandwidth-identical-video-quality</link>
+    <description>Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reduction in quality. This ensures faster playback for your viewers with less buffering, particularly when viewers have slower network connections.</description>
+    <pubDate>Wed, 17 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Stream Player 2.0 (preview)</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#stream-player-20-preview</link>
+    <description>&lt;p&gt;A brand new version of the Stream Player is now available for preview. New features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unified controls across desktop and mobile devices&lt;/li&gt;
+&lt;li&gt;Keyboard shortcuts&lt;/li&gt;
+&lt;li&gt;Intelligent mouse cursor interactions with player controls&lt;/li&gt;
+&lt;li&gt;Phased out support for Internet Explorer 11&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more, refer to &lt;a href=&#34;https://community.cloudflare.com/t/announcing-the-preview-build-for-stream-player-2-0/243095&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;this post&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; on the Cloudflare Community Forum.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 10 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Faster video encoding</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#faster-video-encoding</link>
+    <description>Videos uploaded to Cloudflare Stream are now available to view 5x sooner, reducing the time your users wait between uploading and viewing videos.</description>
+    <pubDate>Thu, 04 Mar 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Removed weekly upload limit, increased max video upload size</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#removed-weekly-upload-limit-increased-max-video-upload-size</link>
+    <description>You can now upload videos up to 30GB in size to Cloudflare Stream and also now upload an unlimited number of videos to Cloudflare Stream each week</description>
+    <pubDate>Sun, 17 Jan 2021 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Tus support for direct creator uploads</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#tus-support-for-direct-creator-uploads</link>
+    <description>&lt;p&gt;You can now use the &lt;a href=https://developers.cloudflare.com/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;tus protocol&lt;/span&gt;&lt;/a&gt; when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.&lt;/p&gt;
+&lt;p&gt;In addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 14 Dec 2020 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Multiple audio track mixdown</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#multiple-audio-track-mixdown</link>
+    <description>Videos with multiple audio tracks (ex: 5.1 surround sound) are now mixed down to stereo when uploaded to Stream. The resulting video, with stereo audio, is now playable in the Stream Player.</description>
+    <pubDate>Wed, 09 Dec 2020 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Storage limit notifications</title>
+    <link>https://developers.cloudflare.com/stream/changelog/#storage-limit-notifications</link>
+    <description>Cloudflare now emails you if your account is using 75% or more of your prepaid video storage, so that you can take action and plan ahead.</description>
+    <pubDate>Wed, 02 Dec 2020 08:00:00 EST</pubDate></item></channel>
+</rss>

@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Log Explorer (beta) · Cloudflare Logs docs</title>
+  <meta name="title" content="Log Explorer (beta) · Cloudflare Logs docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Log Explorer (beta) · Cloudflare Logs docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Log Explorer (beta) · Cloudflare Logs docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Log Explorer (beta) · Cloudflare Logs docs" />
+  <meta property="og:description" content="Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/logs/log-explorer/" />
+
+  <meta name="twitter:title" content="Log Explorer (beta) · Cloudflare Logs docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="logs"><meta name="algolia_product_filter" content="Logs"><meta name="algolia_page_title" content="Log Explorer (beta)">
+  <meta name="pcx_word_count" content="1300"><meta name="pcx_last_modified" content="1"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="concept" />
+  <meta name="algolia_content_type" content="Concept"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/logs/log-explorer/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"logs"}</script>
+  <meta name="docsearch:product" content="logs" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 4c8ea4fc4ccff21d55cedbbd8cd8a64c" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 4c8ea4fc4ccff21d55cedbbd8cd8a64c">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/logs/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Logs logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 22.569h-6.082V18.06l-.435-1.054L23.535 4.97h-.005l-1.06-.44H7.53l-1.5 1.5v36l1.5 1.5h26.888l1.5-1.5v-4.461H42l1.5-1.5v-12l-1.5-1.5Zm-18.03-12.9 6.844 6.89H23.97V9.67Zm8.948 30.861H9.03v-33h11.94v10.53l1.5 1.5h10.448v3.009H14.976l-1.5 1.5v12l1.5 1.5h17.942v2.961Zm7.582-5.961H16.476v-9H40.5v9Z"/><path d="M24.188 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597ZM30.938 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597ZM37.688 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:4">Logs</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - c4df6cd5c88db8cfe24daeb4cf51a4cc" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - c4df6cd5c88db8cfe24daeb4cf51a4cc">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/logs/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Logs logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 22.569h-6.082V18.06l-.435-1.054L23.535 4.97h-.005l-1.06-.44H7.53l-1.5 1.5v36l1.5 1.5h26.888l1.5-1.5v-4.461H42l1.5-1.5v-12l-1.5-1.5Zm-18.03-12.9 6.844 6.89H23.97V9.67Zm8.948 30.861H9.03v-33h11.94v10.53l1.5 1.5h10.448v3.009H14.976l-1.5 1.5v12l1.5 1.5h17.942v2.961Zm7.582-5.961H16.476v-9H40.5v9Z"/><path d="M24.188 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597ZM30.938 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597ZM37.688 27.78h-3.203l-1.702 4.597h3.202l1.703-4.597Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:4">Logs</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Logs menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/logs/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/about/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logpush</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/edge-log-delivery/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Edge Log Delivery</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/permissions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Permissions</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/api-configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API configuration</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Enable destinations</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable destinations</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/r2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Cloudflare R2</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/http/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable HTTP destination</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/aws-s3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Amazon S3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/s3-compatible-endpoints/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable S3-compatible endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/datadog/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Datadog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/elastic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Elastic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/google-cloud-storage/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Google Cloud Storage</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/bigquery/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable BigQuery</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/azure/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Microsoft Azure</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/new-relic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable New Relic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/splunk/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Splunk</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/other-providers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable other providers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/sumo-logic/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Sumo Logic</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/enable-destinations/ibm-qradar/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable IBM QRadar</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/get-started/alerts-and-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logpush alerts and analytics</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Tutorials</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/tutorials/parsing-json-log-data/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Parse Cloudflare Logs JSON data</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Logpush examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/tutorials/examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logpush examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/tutorials/examples/example-logpush-curl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage Logpush with cURL</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/tutorials/examples/example-logpush-python/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Manage Logpush with Python</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-output-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Log Output Options</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/filters/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Filters</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/custom-fields/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom fields</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Log fields</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Log fields</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Zone-scoped datasets</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zone-scoped datasets</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/dns_logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DNS logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/firewall_events/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Firewall events</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/http_requests/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP requests</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/nel_reports/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">NEL reports</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/page_shield_events/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Page Shield events</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/zone/spectrum_events/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Spectrum events</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Account-scoped datasets</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Account-scoped datasets</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/access_requests/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Access requests</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/audit_logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Audit logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/casb_findings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">CASB Findings</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/device_posture_results/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Device posture results</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/dns_firewall_logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">DNS Firewall Logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/gateway_dns/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gateway DNS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/gateway_http/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gateway HTTP</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/gateway_network/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gateway Network</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/magic_ids_detections/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic IDS Detections</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/network_analytics_logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Network Analytics Logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/sinkhole_http_logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sinkhole HTTP Logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/workers_trace_events/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers Trace Events</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/log-fields/account/zero_trust_network_sessions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zero Trust Network Session Logs</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/pathing-status/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pathing status</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/security-fields/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security fields</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/waf-fields/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WAF fields</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/clientrequestsource/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">ClientRequestSource field</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Change notices</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/reference/change-notices/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Change notices</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/change-notices/2023-02-01-security-fields-updates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">2023-02-01 - Updates to security fields</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/reference/glossary/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/instant-logs/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Instant Logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/r2-log-retrieval/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logs Engine</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/logs/log-explorer/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Log Explorer (beta)</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Logpull</span>
+    </button><a class="DocsSidebar--nav-link"  href="/logs/logpull/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Logpull</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/logpull/understanding-the-basics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Understanding the basics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/logpull/enabling-log-retention/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enabling log retention</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/logpull/requesting-logs/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Requesting logs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/logpull/additional-details/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Additional details</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/logs/faq/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FAQ</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/logs/log-explorer.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/logs/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Logs</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/logs/log-explorer/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Log Explorer (beta)</span></a><meta itemprop="position" content="3" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown"><div class="DocsMarkdown-beta">
+    
+    <h1 id="log-explorer">Log Explorer</h1>
+        <div class="DocsMarkdown--pill DocsMarkdown--pill-beta">Beta</div></div>
+
+<p>Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your logs without the need to forward them to third parties. Logs are stored on Cloudflare&rsquo;s global network using the R2 object storage platform and can be queried via the Dashboard or SQL API.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Log Explorer is currently in beta. To request access, complete the <a href="https://cloudflare.com/lp/log-explorer/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">sign-up form</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+</aside>
+
+<h2 id="supported-datasets">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#supported-datasets">&#8203;​</a>
+    </span>
+    <span>Supported datasets</span>
+  </h2><p>The following zone-level datasets are currently available with Log Explorer:</p>
+<ul>
+<li><a href=/logs/reference/log-fields/zone/http_requests/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP requests</span></a> (<code>FROM http_requests</code>)</li>
+<li><a href=/logs/reference/log-fields/zone/firewall_events/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Firewall events</span></a> (<code>FROM firewall_events</code>)</li>
+</ul>
+<h2 id="authentication">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#authentication">&#8203;​</a>
+    </span>
+    <span>Authentication</span>
+  </h2><p>In order to communicate with the API, you will need to configure the appropriate authentication headers.</p>
+<ul>
+<li><code>X-Auth-Email</code> - the Cloudflare account email address associated with the domain</li>
+<li><code>X-Auth-Key</code> - the Cloudflare API key</li>
+</ul>
+<p>Alternatively, API tokens with Account and Zone level Logs Edit permissions can also be used for authentication:</p>
+<ul>
+<li><code>Authorization: Bearer &lt;API_TOKEN&gt;</code></li>
+</ul>
+<h2 id="enable-log-explorer">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#enable-log-explorer">&#8203;​</a>
+    </span>
+    <span>Enable Log Explorer</span>
+  </h2><p>You can use the dashboard or the API to enable the datasets you want to query with Log Explorer.</p>
+<div class="tabs-wrapper" tab-wrapper-id="8af69e287d4a2f6f">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="8af69e287d4a2f6f">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="8af69e287d4a2f6f">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="8af69e287d4a2f6f">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-8af69e287d4a2f6f"><ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account and domain.</li>
+<li>Go to <strong>Analytics &amp; Logs</strong> &gt; <strong>Log Explorer</strong>.</li>
+<li>Select <strong>Enable a dataset</strong> to select the datasets you want to query. You can enable more datasets later.</li>
+</ol>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>It may take a few minutes for the logs to become available for querying.</p>
+</aside></div>
+<div class="tab  noCodeTab" id="tab-api-8af69e287d4a2f6f"><p>Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take up to 30 minutes after a logstream is enabled before you can view the logs.</p>
+<p>The following curl command is an example for enabling <code>http_requests</code>, as well as the expected response when the command succeeds.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Flogs%2Fexplorer%2Fdatasets&#43;%5C%0A&#43;&#43;--header&#43;%27Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%27&#43;%5C%0A&#43;&#43;--header&#43;%27Content-Type%3A&#43;application%2Fjson%27&#43;%5C%0A&#43;&#43;--data&#43;%27%7B%0A&#43;&#43;%22dataset%22%3A&#43;%22http_requests%22%0A%7D%27"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%7B%0A&#43;&#43;%22result%22%3A&#43;%7B%0A&#43;&#43;&#43;&#43;%22id%22%3A&#43;1%2C%0A&#43;&#43;&#43;&#43;%22dataset%22%3A&#43;%22http_requests%22%2C%0A&#43;&#43;&#43;&#43;%22created_at%22%3A&#43;%222023-09-25T22%3A12%3A31Z%22%2C%0A&#43;&#43;&#43;&#43;%22updated_at%22%3A&#43;%222023-09-25T22%3A12%3A31Z%22%0A&#43;&#43;%7D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<h2 id="use-log-explorer">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#use-log-explorer">&#8203;​</a>
+    </span>
+    <span>Use Log Explorer</span>
+  </h2><p>Filtering and viewing your logs is available via the Cloudflare Dashboard or via query API.</p>
+<div class="tabs-wrapper" tab-wrapper-id="1887b7ef4b721974">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="1887b7ef4b721974">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-dashboard" data-id="1887b7ef4b721974">
+Dashboard
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-api" data-id="1887b7ef4b721974">
+API
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  noCodeTab" id="tab-dashboard-1887b7ef4b721974"><ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/login" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account and domain.</li>
+<li>Go to <strong>Analytics &amp; Logs</strong> &gt; <strong>Log Explorer</strong>.</li>
+<li>From the dropdown, select the <strong>Dataset</strong> you want to use.</li>
+<li>Select a <strong>Limit</strong>. That is the maximum number of results to return, for example, 50.</li>
+<li>Select the <strong>Time period</strong> from which you want to query, for example, the previous 12 hours.</li>
+<li>Select <strong>Add filter</strong> to create your query. Select a <strong>Field</strong>, an <strong>Operator</strong>, and a <strong>Value</strong>.</li>
+<li>A query preview is displayed. Select <strong>Use custom SQL</strong>, if you would like to change it.</li>
+<li>Select <strong>Run query</strong> when you are done. The results are displayed below within the <strong>Query results</strong> section.</li>
+</ol>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>You can also access the Log Explorer dashboard directly from the <a href=/waf/analytics/security-analytics/#logs class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Security Analytics dashboard</span></a>. When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.</p>
+</aside></div>
+<div class="tab  noCodeTab" id="tab-api-1887b7ef4b721974"><p>Log Explorer exposes a query endpoint that uses a familiar SQL syntax for querying your logs generated with Cloudflare&rsquo;s network.</p>
+<p>For example, to find an HTTP request with a specific <a href=/fundamentals/reference/cloudflare-ray-id/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Ray ID</span></a>, you can perform the following SQL query.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Flogs%2Fexplorer%2Fquery%2Fsql&#43;%5C%0A&#43;&#43;--header&#43;%22Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%22&#43;%5C%0A&#43;&#43;--url-query&#43;query%3D%22SELECT&#43;clientRequestScheme%2C&#43;clientRequestHost%2C&#43;clientRequestMethod%2C&#43;edgeResponseStatus%2C&#43;clientRequestUserAgent&#43;FROM&#43;http_requests&#43;WHERE&#43;RayID&#43;%3D&#43;%27806c30a3cec56817%27&#43;LIMIT&#43;1%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Which returns the following HTTP request details:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="%7B%0A&#43;&#43;%22result%22%3A&#43;%5B%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%22clientrequestscheme%22%3A&#43;%22https%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22clientrequesthost%22%3A&#43;%22example.com%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22clientrequestmethod%22%3A&#43;%22GET%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22clientrequestuseragent%22%3A&#43;%22curl%2F7.88.1%22%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%22edgeresponsestatus%22%3A&#43;200%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%5D%2C%0A&#43;&#43;%22success%22%3A&#43;true%2C%0A&#43;&#43;%22errors%22%3A&#43;%5B%5D%2C%0A&#43;&#43;%22messages%22%3A&#43;%5B%5D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<h2 id="output-formats">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#output-formats">&#8203;​</a>
+    </span>
+    <span>Output formats</span>
+  </h2><p>Log Explorer output can be presented in different formats, besides JSON: JSON Lines (also known as NDJSON), CSV, and plain text. The plain text uses ASCII tables similar to psql&rsquo;s <code>aligned</code> output mode. Besides the convenience factor of not having to translate the format on the client side, JSON Lines, CSV, and plain text formats have the advantage of being streamed from the API. So for large result sets, you will get a response earlier.</p>
+<p>You can choose the output format with an HTTP <code>Accept</code> header, as shown in the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Output format</th>
+<th>Content type</th>
+<th>Streaming?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td><code>application/json</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>JSON Lines</td>
+<td><code>application/x-ndjson</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><code>text/csv</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Plain text</td>
+<td><code>text/plain</code></td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="optimizing-your-queries">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#optimizing-your-queries">&#8203;​</a>
+    </span>
+    <span>Optimizing your queries</span>
+  </h2><p>All the tables supported by Log Explorer contain a special column called <code>date</code>, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of <code>date</code> must be in the form of <code>YYYY-MM-DD</code>. For example, to query logs that occurred on October 12, 2023, add the following to your <code>WHERE</code> clause: <code>date = '2023-10-12'</code>. The column supports the standard operators of <code>&lt;</code>, <code>&gt;</code>, and <code>=</code>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="bash" data-code="curl&#43;https%3A%2F%2Fapi.cloudflare.com%2Fclient%2Fv4%2Fzones%2F%7Bzone_id%7D%2Flogs%2Fexplorer%2Fquery%2Fsql&#43;%5C%0A&#43;&#43;--header&#43;%27Authorization%3A&#43;Bearer&#43;%3CAPI_TOKEN%3E%27&#43;%5C%0A&#43;&#43;--url-query&#43;query%3D%22SELECT&#43;clientRequestMethod%2C&#43;clientRequestPath%2C&#43;clientRequestProtocol&#43;FROM&#43;http_requests&#43;WHERE&#43;date&#43;%3D&#43;%272023-10-12%27&#43;LIMIT&#43;500%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="sql-queries-supported">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#sql-queries-supported">&#8203;​</a>
+    </span>
+    <span>SQL queries supported</span>
+  </h2><p>These are the SQL query clauses supported by Log Explorer.</p>
+<h3 id="select">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#select">&#8203;​</a>
+    </span>
+    <span>SELECT</span>
+  </h3><p>The <code>SELECT</code> clause specifies the columns that you want to retrieve from the database tables. It can include individual column names, expressions, or even wildcard characters to select all columns.</p>
+<h3 id="from">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#from">&#8203;​</a>
+    </span>
+    <span>FROM</span>
+  </h3><p>The <code>FROM</code> clause specifies the tables from which to retrieve data. It indicates the source of the data for the <code>SELECT</code> statement.</p>
+<h3 id="where">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#where">&#8203;​</a>
+    </span>
+    <span>WHERE</span>
+  </h3><p>The <code>WHERE</code> clause filters the rows returned by a query based on specified conditions. It allows you to specify conditions that must be met for a row to be included in the result set.</p>
+<h3 id="group-by">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#group-by">&#8203;​</a>
+    </span>
+    <span>GROUP BY</span>
+  </h3><p>The <code>GROUP BY</code> clause is used to group rows that have the same values into summary rows.</p>
+<h3 id="having">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#having">&#8203;​</a>
+    </span>
+    <span>HAVING</span>
+  </h3><p>The <code>HAVING</code> clause is similar to the <code>WHERE</code> clause but is used specifically with the <code>GROUP BY</code> clause. It filters groups of rows based on specified conditions after the <code>GROUP BY</code> operation has been performed.</p>
+<h3 id="order-by">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#order-by">&#8203;​</a>
+    </span>
+    <span>ORDER BY</span>
+  </h3><p>The <code>ORDER BY</code> clause is used to sort the result set by one or more columns in ascending or descending order.</p>
+<h3 id="limit">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#limit">&#8203;​</a>
+    </span>
+    <span>LIMIT</span>
+  </h3><p>The <code>LIMIT</code> clause is used to constrain the number of rows returned by a query. It is often used in conjunction with the <code>ORDER BY</code> clause to retrieve the top N rows or to implement pagination.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Log Explorer does not support <code>JOINs</code>, <code>DDL</code>, <code>DML</code>, or <code>EXPLAIN</code> queries.</p>
+</aside>
+
+<h2 id="faqs">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#faqs">&#8203;​</a>
+    </span>
+    <span>FAQs</span>
+  </h2><h3 id="which-fields-or-columns-are-available-for-querying">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#which-fields-or-columns-are-available-for-querying">&#8203;​</a>
+    </span>
+    <span>Which fields (or columns) are available for querying?</span>
+  </h3><p>All fields listed in the datasets <a href=/logs/reference/log-fields/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Log Fields</span></a> are viewable in Log Explorer. For filtering, only fields with simple values, such as those of type <code>bool</code>, <code>int</code>, <code>float</code>, or <code>string</code> are supported. Fields with key-value pairs are currently not supported. For example, you cannot use the fields <code>RequestHeaders</code> and <code>Cookies</code> from the HTTP requests dataset in a filter.</p>
+<h3 id="why-does-my-query-not-complete-or-time-out">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#why-does-my-query-not-complete-or-time-out">&#8203;​</a>
+    </span>
+    <span>Why does my query not complete or time out?</span>
+  </h3><p>Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.</p>
+<p>If your query times out with an HTTP status of 524 (Gateway Timeout), consider using one of the <a href=/logs/log-explorer/#output-formats class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">streaming output formats</span></a>, such as <code>application/x-ndjson</code>.</p>
+<h3 id="my-query-returned-an-error-how-do-i-figure-out-what-went-wrong">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#my-query-returned-an-error-how-do-i-figure-out-what-went-wrong">&#8203;​</a>
+    </span>
+    <span>My query returned an error. How do I figure out what went wrong?</span>
+  </h3><p>We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), make sure you have included a date and a limit, and that the field you are filtering is not a key-value pair. If the query still fails it is likely timing out. Try refining your filters.</p>
+<h3 id="where-is-the-data-stored">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#where-is-the-data-stored">&#8203;​</a>
+    </span>
+    <span>Where is the data stored?</span>
+  </h3><p>The data is stored in Cloudflare R2. Each Log Explorer dataset is stored on a per-customer level, similar to Cloudflare D1, ensuring that your data is kept separate from that of other customers. In the future, this single-tenant storage model will provide you with the flexibility to create your own retention policies and decide in which regions you want to store your data.</p>
+<h3 id="does-log-explorer-support-customer-metadata-boundary">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#does-log-explorer-support-customer-metadata-boundary">&#8203;​</a>
+    </span>
+    <span>Does Log Explorer support Customer Metadata Boundary?</span>
+  </h3><p>Customer metadata boundary is currently not supported for Log Explorer.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/logs/log-explorer.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-12T10:40:12&#43;01:00
+  title=2024-07-12
+>July 12, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

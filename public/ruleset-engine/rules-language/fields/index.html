@@ -1,0 +1,2547 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Fields reference · Cloudflare Ruleset Engine docs</title>
+  <meta name="title" content="Fields reference · Cloudflare Ruleset Engine docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Fields reference · Cloudflare Ruleset Engine docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Fields reference · Cloudflare Ruleset Engine docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="The Cloudflare Rules language supports a range of field types:" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Fields reference · Cloudflare Ruleset Engine docs" />
+  <meta property="og:description" content="The Cloudflare Rules language supports a range of field types:" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/ruleset-engine/rules-language/fields/" />
+
+  <meta name="twitter:title" content="Fields reference · Cloudflare Ruleset Engine docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="The Cloudflare Rules language supports a range of field types:" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="ruleset-engine"><meta name="algolia_product_filter" content="Ruleset Engine"><meta name="algolia_page_title" content="Fields reference">
+  <meta name="pcx_word_count" content="5300"><meta name="pcx_last_modified" content="12"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="reference" />
+  <meta name="algolia_content_type" content="Reference"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/ruleset-engine/rules-language/fields/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"ruleset-engine"}</script>
+  <meta name="docsearch:product" content="ruleset-engine" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 8cd8cf46cac2e4fd1c8de4c5fd54abcb" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 8cd8cf46cac2e4fd1c8de4c5fd54abcb">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/ruleset-engine/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Ruleset Engine logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M29.9 10.1a7.682 7.682 0 0 0-3.61 6.32 7.691 7.691 0 0 0 5.06 7.43l.924 1.32.004 15.1h3.41l.003-15.1.924-1.32a7.758 7.758 0 0 0 3.73-2.9 7.702 7.702 0 0 0-.23-8.98 7.741 7.741 0 0 0-2.05-1.87l-.003 5.99-1.4 1.4h-5.33l-1.4-1.4zm-4.29.176c1.33-1.75 3.18-3.04 5.28-3.69l1.82 1.34.003 6.76h2.52l.004-6.76 1.82-1.34c2.1.646 3.95 1.94 5.28 3.69a10.45 10.45 0 0 1 2.13 6.08c.056 2.2-.58 4.36-1.82 6.18a10.558 10.558 0 0 1-4.16 3.57l-.004 15.6-1.4 1.4h-6.22l-1.4-1.4-.004-15.6a10.534 10.534 0 0 1-4.16-3.57 10.469 10.469 0 0 1-1.82-6.18c.057-2.2.803-4.33 2.13-6.08zm-3.78 18.1H12v-2.81h9.83zm4.21-5.62h-14v-2.81h14zm-1.4-5.62h-12.6v-2.81h12.6zm-18.3-7.73 1.4-1.4h21.1v2.81H9.14v28.1h22.5v2.81H7.74l-1.4-1.4z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:14">Ruleset Engine</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - decf2eccabb18d88d5fc64c544fd4acc" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - decf2eccabb18d88d5fc64c544fd4acc">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/ruleset-engine/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Ruleset Engine logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M29.9 10.1a7.682 7.682 0 0 0-3.61 6.32 7.691 7.691 0 0 0 5.06 7.43l.924 1.32.004 15.1h3.41l.003-15.1.924-1.32a7.758 7.758 0 0 0 3.73-2.9 7.702 7.702 0 0 0-.23-8.98 7.741 7.741 0 0 0-2.05-1.87l-.003 5.99-1.4 1.4h-5.33l-1.4-1.4zm-4.29.176c1.33-1.75 3.18-3.04 5.28-3.69l1.82 1.34.003 6.76h2.52l.004-6.76 1.82-1.34c2.1.646 3.95 1.94 5.28 3.69a10.45 10.45 0 0 1 2.13 6.08c.056 2.2-.58 4.36-1.82 6.18a10.558 10.558 0 0 1-4.16 3.57l-.004 15.6-1.4 1.4h-6.22l-1.4-1.4-.004-15.6a10.534 10.534 0 0 1-4.16-3.57 10.469 10.469 0 0 1-1.82-6.18c.057-2.2.803-4.33 2.13-6.08zm-3.78 18.1H12v-2.81h9.83zm4.21-5.62h-14v-2.81h14zm-1.4-5.62h-12.6v-2.81h12.6zm-18.3-7.73 1.4-1.4h21.1v2.81H9.14v28.1h22.5v2.81H7.74l-1.4-1.4z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:14">Ruleset Engine</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Ruleset Engine menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/ruleset-engine/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: About</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/about/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/about/phases/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Phases</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/about/rulesets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/about/rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rules</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Basic API operations</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/basic-operations/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Basic API operations</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/basic-operations/view-rulesets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">View rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/basic-operations/add-rule-phase-rulesets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add rules to phase entry point rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/basic-operations/deploy-rulesets/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy rulesets</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Work with managed rulesets</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Work with managed rulesets</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/deploy-managed-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a managed ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-managed-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Override a managed ruleset</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Override examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Override examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/deploy-cmr-wordpress-block/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Set WordPress rules to Block</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/deploy-cmr-joomla-only/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable only Joomla rules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/enable-selected-rules/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable only selected rules</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/override-ruleset-tag-rule/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a managed ruleset with ruleset, tag, and rule overrides</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/override-examples/override-ddos-rule-sensitivity/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Adjust the sensitivity of an HTTP DDoS rule to Low</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ddos-protection/managed-rulesets/network/configure-api/#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Adjust an L3/4 DDoS rule</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/managed-rulesets/create-exception/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Create an exception</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Work with custom rulesets</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/custom-rulesets/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Work with custom rulesets</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/custom-rulesets/create-custom-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Create a custom ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/custom-rulesets/add-rules-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add rules to a custom ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/custom-rulesets/deploy-custom-ruleset/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a custom ruleset</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Rules language</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rules language</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Expressions</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/expressions/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Expressions</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/expressions/edit-expressions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Edit in the dashboard</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/operators/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Operators and grouping symbols</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/values/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Values</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/actions/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Actions</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/fields/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fields</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rules-language/functions/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Functions</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Rulesets API</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rulesets API</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/json-object/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">JSON object</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/endpoints/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/view/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">List and view rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/create/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Create ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/update/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Update and deploy rulesets</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/add-rule/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add rule to ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/update-rule/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Update a rule in a ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/delete-rule/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delete a rule in a ruleset</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/rulesets-api/delete/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delete rulesets</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/ruleset-engine/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ruleset-engine/reference/phases-list/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Phases list</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/ruleset-engine/rules-language/fields.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ruleset-engine/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Ruleset Engine</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ruleset-engine/rules-language/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Rules language</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/ruleset-engine/rules-language/fields/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Fields</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="fields-reference">Fields reference</h1><p>The Cloudflare Rules language supports a range of field types:</p>
+<ul>
+<li><a href=#standard-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Standard fields</span></a> represent common, typically static properties of an HTTP request.</li>
+<li><a href=#dynamic-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Dynamic fields</span></a> represent computed or derived values, typically related to Cloudflare threat intelligence about the request.</li>
+<li><a href=#uri-argument-and-value-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">URI argument and value fields</span></a> are extracted from the request.</li>
+<li><a href=#http-request-header-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP request header fields</span></a> represent the names and values associated with HTTP request headers.</li>
+<li><a href=#http-request-body-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP request body fields</span></a> represent the properties of an HTTP request body, including forms, for example.</li>
+<li><a href=#http-response-fields class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP response fields</span></a> represent the names and values of HTTP headers and the status code of the HTTP response.</li>
+</ul>
+<h2 id="standard-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#standard-fields">&#8203;​</a>
+    </span>
+    <span>Standard fields</span>
+  </h2><p>Most standard fields use the same naming conventions as <a href="https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Wireshark display fields</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. However, there are some subtle differences between Cloudflare and Wireshark:</p>
+<ul>
+<li>
+<p>Wireshark supports <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">CIDR (Classless Inter-Domain Routing) notation</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for expressing IP address ranges in equality comparisons (<code>ip.src == 1.2.3.0/24</code>, for example). Cloudflare does not.</p>
+<p>To evaluate a range of addresses using CIDR notation, use the <code>in</code> <a href=/ruleset-engine/rules-language/operators/#comparison-operators class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">comparison operator</span></a> as in this example: <code>ip.src in {1.2.3.0/24 4.5.6.0/24}</code>.</p>
+</li>
+<li>
+<p>In Wireshark, <code>ssl</code> is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language <code>ssl</code> is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.</p>
+</li>
+<li>
+<p>The Cloudflare Rules language does not support the <code>slice</code> operator.</p>
+</li>
+</ul>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Availability notes</div><ul>
+<li>
+<p>Geolocation information is provided and maintained by MaxMind. Access to <code>ip.src.is_in_european_union</code>, <code>ip.src.subdivision_1_iso_code</code>, and <code>ip.src.subdivision_2_iso_code</code> fields requires a Cloudflare Business or Enterprise plan.</p>
+</li>
+<li>
+<p>Access to <code>http.request.cookies</code> field requires a Cloudflare Pro, Business, or Enterprise plan.</p>
+</li>
+</ul>
+</aside>
+
+<p>The Cloudflare Rules language supports these standard fields:</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width:50%">Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr id="field-http-cookie">
+      <td valign="top"><code>http.cookie</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the entire cookie as a string.</p>
+         <p>Example value:
+         <br /><code class="InlineCode">session=8521F670545D7865F79C3D7BEDC29CCE;-background=light</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-host">
+      <td valign="top"><code>http.host</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the hostname used in the full request URI.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">www.example.org</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-referer">
+      <td valign="top"><code>http.referer</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Referer: htt&shy;ps://developer.example.org/en-US/docs/Web/JavaScript</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-full-uri">
+      <td valign="top"><code>http.request.full_uri</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the full URI as received by the web server (does not include <code class="InlineCode">#fragment</code>, which is not sent to web servers).
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">htt­ps://www.example.org/articles/index?section=539061&expand=comments</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-method">
+      <td valign="top"><code>http.request.method</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the HTTP method, returned as a string of uppercase characters.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">GET</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-cookies">
+      <td valign="top"><code>http.request.cookies</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+      <td>
+         <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
+         </p>
+         <p>The cookie values are not pre-processed and retain the original case used in the request.</p>
+         <p><em>Decoding:</em> The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{"app": ["test"]}</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-timestamp-sec">
+      <td valign="top"><code>http.request.timestamp.sec</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+      <td>
+         <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
+         </p>
+         <p>To obtain the timestamp milliseconds, use the <code class="InlineCode">http.request.timestamp.msec</code> field.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">1484063137</code>
+         </p>
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/ruleset-engine/rules-language/functions/#hmac-validation">validation function</a>.
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-timestamp-msec">
+      <td valign="top"><code>http.request.timestamp.msec</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+      <td>
+         <p>Represents the millisecond when Cloudflare received the request, between 0 and 999.
+         </p>
+         <p>To obtain the complete timestamp, use both <code class="InlineCode">http.request.timestamp.sec</code> and <code class="InlineCode">http.request.timestamp.msec</code> fields.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">857</code>
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri">
+      <td valign="top"><code>http.request.uri</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the URI path and query string of the request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">/articles/index?section=539061&expand=comments</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-uri-path">
+      <td valign="top"><code>http.request.uri.path</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the URI path of the request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">/articles/index</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-uri-path-extension">
+      <td valign="top"><code>http.request.uri.path.extension</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>The lowercased file extension in the URI path without the dot (<code>.</code>) character. Corresponds to the string after the last dot in the URI path, without considering the query string.<br/>
+         If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (<code>""</code>). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to represent a hidden file or directory.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table>
+            <tr>
+              <th>URI path</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>/foo</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/.mp3</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/.foo.mp3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.tar.bz2</code></td>
+              <td><code>"bz2"</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.</code></td>
+              <td><code>""</code></td>
+            </tr>
+            <tr>
+              <td><code>/foo.MP3</code></td>
+              <td><code>"mp3"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
+      </td>
+   </tr>
+   <tr id="field-http-request-uri-query">
+      <td valign="top"><code class>http.request.uri.query</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">section=539061&expand=comments</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-user-agent">
+      <td valign="top"><code>http.user_agent</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the HTTP user agent, a request header that contains a characteristic string to allow identification of the client operating system and web browser.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-version">
+      <td valign="top"><code>http.request.version</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
+         </p>
+         <p>Example Values:
+            <ul>
+               <li><code class="InlineCode">HTTP/1.1</code></li>
+               <li><code class="InlineCode">HTTP/3</code></li>
+            </ul>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-x-forwarded-for">
+      <td valign="top"><code>http.x_forwarded_for</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the full <code class="InlineCode">X-Forwarded-For</code> HTTP header.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">203.0.113.195, 70.41.3.18</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src">
+      <td valign="top"><code>ip.src</code><br /><code class="InlineCode InlineCode-is-type">IP address</code></td>
+      <td>
+         <p> Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
+         <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">93.184.216.34</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-lat">
+      <td valign="top"><code>ip.src.lat</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the latitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">37.78044</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-lon">
+      <td valign="top"><code>ip.src.lon</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the longitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">-122.39055</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-city">
+      <td valign="top"><code>ip.src.city</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the city associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">San Francisco</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-postal_code">
+      <td valign="top"><code>ip.src.postal_code</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the postal code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">78701</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-metro_code">
+      <td valign="top"><code>ip.src.metro_code</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the metro code or Designated Market Area (DMA) code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">635</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-region">
+      <td valign="top"><code>ip.src.region</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the region name associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">Texas</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-region_code">
+      <td valign="top"><code>ip.src.region_code</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the region code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">TX</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-timezone-name">
+      <td valign="top"><code>ip.src.timezone.name</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the name of the timezone associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">America/Chicago</code>
+         </p>
+         <p>This field is only available in rewrite expressions of <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-asnum">
+      <td valign="top"><code>ip.src.asnum</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+      <td>
+         <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
+         </p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.asnum</code> field, which is deprecated. The <code>ip.geoip.asnum</code> field is still available for new and existing rules, but you should use the <code>ip.src.asnum</code> field instead.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-continent">
+      <td valign="top"><code>ip.src.continent</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the continent code associated with client IP address:
+          <ul>
+              <li>AF &#8211; Africa</li>
+              <li>AN &#8211; Antarctica</li>
+              <li>AS &#8211; Asia</li>
+              <li>EU &#8211; Europe</li>
+              <li>NA &#8211; North America</li>
+              <li>OC &#8211; Oceania</li>
+              <li>SA &#8211; South America</li>
+              <li>T1 &#8211; Tor network</li>
+          </ul>
+        </p>
+        <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.continent</code> field, which is deprecated. The <code>ip.geoip.continent</code> field is still available for new and existing rules, but you should use the <code>ip.src.continent</code> field instead.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-country">
+      <td valign="top"><code>ip.src.country</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">GB</code>
+         </p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.country</code> field, which is deprecated. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> field instead.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-subdivision-1-iso-code">
+      <td valign="top"><code>ip.src.subdivision_1_iso_code</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
+         <p>Example value:
+         <br />
+         <code class="InlineCode">GB-ENG</code></p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_1_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_1_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_1_iso_code</code> field instead.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-subdivision-2-iso-code">
+      <td valign="top"><code>ip.src.subdivision_2_iso_code</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
+         </p>
+         <p>Example value:
+         <br />
+         <code class="InlineCode">GB-SWK</code>
+         </p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.subdivision_2_iso_code</code> field, which is deprecated. The <code>ip.geoip.subdivision_2_iso_code</code> field is still available for new and existing rules, but you should use the <code>ip.src.subdivision_2_iso_code</code> field instead.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-is-in-european-union">
+      <td valign="top"><code>ip.src.is_in_european_union</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union (EU).</p>
+         <details>
+         <summary>Countries in EU (from geolocation data)</summary>
+         <div>
+          <table class="Small">
+            <tr>
+              <th>Country code</th>
+              <th>Country name</th>
+            </tr>
+            <tr>
+              <td><code>AT</code></td>
+              <td>Austria</td>
+            </tr>
+            <tr>
+              <td><code>AX</code></td>
+              <td>Åland Islands</td>
+            </tr>
+            <tr>
+              <td><code>BE</code></td>
+              <td>Belgium</td>
+            </tr>
+            <tr>
+              <td><code>BG</code></td>
+              <td>Bulgaria</td>
+            </tr>
+            <tr>
+              <td><code>CY</code></td>
+              <td>Cyprus</td>
+            </tr>
+            <tr>
+              <td><code>CZ</code></td>
+              <td>Czechia</td>
+            </tr>
+            <tr>
+              <td><code>DE</code></td>
+              <td>Germany</td>
+            </tr>
+            <tr>
+              <td><code>DK</code></td>
+              <td>Denmark</td>
+            </tr>
+            <tr>
+              <td><code>EE</code></td>
+              <td>Estonia</td>
+            </tr>
+            <tr>
+              <td><code>ES</code></td>
+              <td>Spain</td>
+            </tr>
+            <tr>
+              <td><code>FI</code></td>
+              <td>Finland</td>
+            </tr>
+            <tr>
+              <td><code>FR</code></td>
+              <td>France</td>
+            </tr>
+            <tr>
+              <td><code>GF</code></td>
+              <td>French Guiana</td>
+            </tr>
+            <tr>
+              <td><code>GP</code></td>
+              <td>Guadeloupe</td>
+            </tr>
+            <tr>
+              <td><code>GR</code></td>
+              <td>Greece</td>
+            </tr>
+            <tr>
+              <td><code>HR</code></td>
+              <td>Croatia</td>
+            </tr>
+            <tr>
+              <td><code>HU</code></td>
+              <td>Hungary</td>
+            </tr>
+            <tr>
+              <td><code>IE</code></td>
+              <td>Ireland</td>
+            </tr>
+            <tr>
+              <td><code>IT</code></td>
+              <td>Italy</td>
+            </tr>
+            <tr>
+              <td><code>LT</code></td>
+              <td>Lithuania</td>
+            </tr>
+            <tr>
+              <td><code>LU</code></td>
+              <td>Luxembourg</td>
+            </tr>
+            <tr>
+              <td><code>LV</code></td>
+              <td>Latvia</td>
+            </tr>
+            <tr>
+              <td><code>MF</code></td>
+              <td>Saint Martin</td>
+            </tr>
+            <tr>
+              <td><code>MQ</code></td>
+              <td>Martinique</td>
+            </tr>
+            <tr>
+              <td><code>MT</code></td>
+              <td>Malta</td>
+            </tr>
+            <tr>
+              <td><code>NL</code></td>
+              <td>The Netherlands</td>
+            </tr>
+            <tr>
+              <td><code>PL</code></td>
+              <td>Poland</td>
+            </tr>
+            <tr>
+              <td><code>PT</code></td>
+              <td>Portugal</td>
+            </tr>
+            <tr>
+              <td><code>RE</code></td>
+              <td>Réunion</td>
+            </tr>
+            <tr>
+              <td><code>RO</code></td>
+              <td>Romania</td>
+            </tr>
+            <tr>
+              <td><code>SE</code></td>
+              <td>Sweden</td>
+            </tr>
+            <tr>
+              <td><code>SI</code></td>
+              <td>Slovenia</td>
+            </tr>
+            <tr>
+              <td><code>SK</code></td>
+              <td>Slovakia</td>
+            </tr>
+            <tr>
+              <td><code>YT</code></td>
+              <td>Mayotte</td>
+            </tr>
+          </table>
+          The EU country list was obtained from MaxMind&rsquo;s GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the <a href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">MaxMind website</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.
+         </div>
+         </details>
+         <p><strong>Note:</strong> This field has the same value as the <code>ip.geoip.is_in_european_union</code> field, which is deprecated. The <code>ip.geoip.is_in_european_union</code> field is still available for new and existing rules, but you should use the <code>ip.src.is_in_european_union</code> field instead.</p>
+      </td>
+  </tr>
+  <tr id="field-raw-http-request-full-uri">
+    <td valign="top"><code>raw.http.request.full_uri</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-full-uri"><code>http.request.full_uri</code></a> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+  </td>
+  </tr>
+  <tr id="field-raw-http-request-uri">
+    <td valign="top"><code>raw.http.request.uri</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri"><code>http.request.uri</code></a> non-raw field. Represents the URI path and query string of the request without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-path">
+    <td valign="top"><code>raw.http.request.uri.path</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri-path"><code>http.request.uri.path</code></a> non-raw field. Represents the URI path of the request without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-path-extension">
+      <td valign="top"><code>raw.http.request.uri.path.extension</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Similar to the <a href="#field-http-request-uri-path-extension"><code>http.request.uri.path.extension</code></a> non-raw field. Represents the file extension in the request URI path without any transformation.
+         </p>
+      </td>
+   </tr>
+  <tr id="field-raw-http-request-uri-query">
+    <td valign="top"><code>raw.http.request.uri.query</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri-query"><code>http.request.uri.query</code></a> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
+  <tr id="field-ssl">
+      <td valign="top"><code>ssl</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+         <p>Returns<code class="InlineCode">true</code> when the HTTP connection to the client is encrypted.
+         </p>
+      </td>
+   </tr>
+  </tbody>
+</table>
+<h2 id="dynamic-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#dynamic-fields">&#8203;​</a>
+    </span>
+    <span>Dynamic fields</span>
+  </h2><p>Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Notes</div><ul>
+<li>
+<p>Access to <code>cf.bot_management.*</code> fields requires a Cloudflare Enterprise plan with <a href=/bots/plans/bm-subscription/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Bot Management</span></a> enabled.</p>
+</li>
+<li>
+<p>Access to <code>cf.waf.content_scan.*</code> fields requires a Cloudflare Enterprise plan with <a href=/waf/about/content-scanning/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF content scanning</span></a> enabled.</p>
+</li>
+<li>
+<p>The <code>cf.tls_client_auth.*</code> string fields are only filled in if the request includes a client certificate for <a href=/ssl/client-certificates/enable-mtls/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">mTLS authentication</span></a>.</p>
+</li>
+</ul>
+</aside>
+
+<p>The Cloudflare Rules language supports these dynamic fields:</p>
+<table>
+  <thead>
+   <tr>
+      <th style="width: 51%;">Field Name</th>
+      <th>Description</th>
+   </tr>
+  </thead>
+  <tbody style='vertical-align:top'>
+    <tr id="field-cf-bot_management-verified_bot">
+        <td><p><code>cf.bot_management.verified_bot</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.client.bot</code>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-verified_bot_categories">
+        <td><p><code>cf.verified_bot_category</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+          <p>Provides the type and purpose of a verified bot.</p>
+          <p>For more details, refer to <a href="/bots/reference/verified-bot-categories/">Verified Bot Categories</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-score">
+        <td><p><code>cf.bot_management.score</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+          <p>Represents the likelihood that a request originates from a bot using a score from 1&#8211;99.
+          </p>
+          <p>A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+          </p>
+        </td>
+    </tr>
+     <tr id="field-cf-bot_management-static_resource">
+        <td><p><code>cf.bot_management.static_resource</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+          <p>Indicates whether static resources should be included when you create a rule using <code>cf.bot_management.score</code>.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/static-resources/">Static resource protection</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-ja3_hash">
+        <td><p><code>cf.bot_management.ja3_hash</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-ja4">
+        <td><p><code>cf.bot_management.ja4</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="/bots/concepts/ja3-ja4-fingerprint/">JA3/JA4 Fingerprint</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-bot_management-js_detection-passed">
+        <td><p><code>cf.bot_management.js_detection.passed</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+          <p>Indicates whether the visitor has previous passed a JS Detection.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/javascript-detections/">JavaScript detections</a>.
+          </p>
+        </td>
+    </tr>
+   <tr id="field-cf-bot_management-detection_ids">
+        <td><p><code>cf.bot_management.detection_ids</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;Number&gt;</code></p>
+        </td>
+        <td>
+          <p>List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request). Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule.
+          </p>
+          <p>Example:
+          <br />
+          <code class="InlineCode">any(cf.bot_management.detection_ids[*] eq 33554817)</code>
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-client-bot">
+        <td><code>cf.client.bot</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+        <td>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.bot_management.verified_bot</code>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-edge-server_ip">
+        <td><code>cf.edge.server_ip</code><br /><code class="InlineCode InlineCode-is-type">IP Address</code></td>
+        <td>
+          <p>Represents the global network's IP address to which the HTTP request has resolved to.
+          </p>
+          <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-edge-server_port">
+        <td><code>cf.edge.server_port</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>Represents the port number at which the Cloudflare global network received the request.
+          </p>
+          <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-hostname-metadata">
+        <td><code>cf.hostname.metadata</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+        <td>
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-random_seed">
+        <td><code>cf.random_seed</code><br /><code class="InlineCode InlineCode-is-type">Bytes</code></td>
+        <td>
+          <p>Returns per-request random bytes that you can use in the <a href="/ruleset-engine/rules-language/functions/#function-uuidv4"><code>uuidv4()</code></a> function.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-ray_id">
+      <td><code>cf.ray_id</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>The Ray ID of the current request. A <a href="/fundamentals/reference/cloudflare-ray-id/">Ray ID</a> is an identifier given to every request that goes through Cloudflare.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-threat_score">
+        <td><code>cf.threat_score</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
+          </p>
+          <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-tls_cipher">
+      <td><code>cf.tls_cipher</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>
+          The cipher for the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"AES128-SHA256"</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_revoked">
+      <td><code>cf.tls_client_auth.cert_revoked</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+      <p>
+      Returns <code class="InlineCode">true</code> when a request presents a valid but revoked client certificate.
+      </p>
+      <p>When <code class="InlineCode">true</code>, the <code class="InlineCode">cf.tls_client_auth.cert_verified</code> field is also <code class="InlineCode">true</code>.
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_verified">
+      <td><code>cf.tls_client_auth.cert_verified</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+      <p>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.
+      </p>
+      <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_presented">
+      <td><code>cf.tls_client_auth.cert_presented</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+      <p>
+      Returns <code class="InlineCode">true</code> when a request presents a certificate (valid or not).
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn">
+      <td><code>cf.tls_client_auth.cert_issuer_dn</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn">
+      <td><code>cf.tls_client_auth.cert_subject_dn</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_rfc2253</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_rfc2253">
+      <td><code>cf.tls_client_auth.cert_subject_dn_rfc2253</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in <a href="https://datatracker.ietf.org/doc/html/rfc2253">RFC 2253</a> format.
+      </p>
+      <p>Example:<br/>
+      <code>"CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_issuer_dn_legacy</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_subject_dn_legacy">
+      <td><code>cf.tls_client_auth.cert_subject_dn_legacy</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+      </p>
+      <p>Example:<br/>
+      <code>"/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_serial">
+      <td><code>cf.tls_client_auth.cert_serial</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>Serial number of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"527E0F20A20EA2A4146C78390F34CE7AF0878CA4"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_serial">
+      <td><code>cf.tls_client_auth.cert_issuer_serial</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>Serial number of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"2688201DBA77402EA87118876F2E1B24CF8B0395"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha256">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha256</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The SHA-256 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_fingerprint_sha1">
+      <td><code>cf.tls_client_auth.cert_fingerprint_sha1</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The SHA-1 fingerprint of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"933ad5282c560ae3f482a43ecd73bc9de878a190"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_before">
+      <td><code>cf.tls_client_auth.cert_not_before</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The certificate in the request is not valid before this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2022 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_not_after">
+      <td><code>cf.tls_client_auth.cert_not_after</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The certificate in the request is not valid after this date.
+      </p>
+      <p>Example:<br/>
+      <code>"Mar 21 13:35:00 2023 GMT"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_ski">
+      <td><code>cf.tls_client_auth.cert_ski</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"27846FAE6EAC4A8DAD9101B519CF1EB460242831"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_auth-cert_issuer_ski">
+      <td><code>cf.tls_client_auth.cert_issuer_ski</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+      </p>
+      <p>Example:<br/>
+      <code>"8204924CF49D471E855862706D889F58F6B784D3"</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_extensions_sha1">
+      <td><code>cf.tls_client_extensions_sha1</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+      </p>
+      <p>Example:<br/>
+      <code>"OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_client_hello_length">
+      <td><code>cf.tls_client_hello_length</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+      <td>
+      <p>The length of the client hello message sent in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>. Specifically, the length of the bytestring of the client hello.
+      </p>
+      <p>Example:<br/>
+      <code>508</code>
+      </p>
+      </td>
+    </tr>
+    <tr id="field-cf-tls_client_random">
+      <td><code>cf.tls_client_random</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+      <p>The value of the 32-byte random value provided by the client in a <a href="https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/">TLS handshake</a>, encoded in Base64. Refer to <a href="https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2">RFC 8446</a> for more details.
+      </p>
+      <p>Example:<br/>
+      <code>"YWJjZA=="</code>
+      </p></td>
+    </tr>
+    <tr id="field-cf-tls_version">
+      <td><code>cf.tls_version</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>The TLS version of the connection to Cloudflare.
+        </p>
+        <p>Example:<br/>
+        <code>"TLSv1.2"</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_obj">
+        <td><code>cf.waf.content_scan.has_obj</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+        <td>
+          <p>When true, the request contains at least one <span tabindex="0" class='glossary-tooltip' data-title='A content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: text/html, text/x-shellscript, application/json, text/csv, or text/xml.' data-toggle='tooltip' data-placement='top' aria-label='content object'>content object</span>.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_malicious_obj">
+        <td><code>cf.waf.content_scan.has_malicious_obj</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+        <td>
+          <p>When true, the request contains at least one malicious content object.
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_malicious_obj">
+        <td><code>cf.waf.content_scan.num_malicious_obj</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+        <td>
+          <p>The number of malicious content objects detected in the request (zero or greater).
+          </p>
+          <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-has_failed">
+      <td><code>cf.waf.content_scan.has_failed</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+        <p>When true, the file scanner was unable to scan all the content objects detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-num_obj">
+      <td><code>cf.waf.content_scan.num_obj</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+      <td>
+        <p>The number of content objects detected in the request (zero or greater).
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_sizes">
+      <td><code>cf.waf.content_scan.obj_sizes</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;Integer&gt;</code></td>
+      <td>
+        <p>An array of file sizes in bytes, in the order the content objects were detected in the request.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_types">
+      <td><code>cf.waf.content_scan.obj_types</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>An array of file types in the order the content objects were detected in the request.
+        </p>
+        <p>If Cloudflare cannot determine the file type of a content object, the corresponding value in the <code>obj_types</code>array will be <code>application/octet-stream</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-content_scan-obj_results">
+      <td><code>cf.waf.content_scan.obj_results</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>An array of scan results in the order the content objects were detected in the request.
+        </p>
+        <p>The possible values are: <code>clean</code>, <code>suspicious</code>, <code>infected</code>, and <code>not scanned</code>.
+        </p>
+        <p>For more details, refer to <a href="/waf/about/content-scanning/">Uploaded content scanning</a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-cf-waf-score">
+        <td><code>cf.waf.score</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>A global score from 1 to 99 that combines the score of each WAF attack vector into a single score.<br/>
+      This is the standard <a href="/waf/about/waf-attack-score/">WAF attack score</a> to detect variants of attack patterns.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-sqli">
+        <td><code>cf.waf.score.sqli</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-xss">
+        <td><code>cf.waf.score.xss</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-rce">
+        <td><code>cf.waf.score.rce</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-class">
+        <td><code>cf.waf.score.class</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+        <td>
+          <p>The attack score class of the current request, based on the WAF attack score.<br/>Can have one of the following values: <code>attack</code>, <code>likely_attack</code>, <code>likely_clean</code>, <code>clean</code>.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-worker-upstream_zone">
+      <td><code>cf.worker.upstream_zone</code> <br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>Identifies whether a request comes from a worker or not.</p>
+        <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="corporate-proxy">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#corporate-proxy">&#8203;​</a>
+    </span>
+    <span>Corporate Proxy</span>
+  </h3><p>The Bot Management Corporate Proxy field contains identified cloud-based corporate proxies and secure web gateways that are Enterprise-only, and provide outbound security services to their clients.</p>
+<p>You can access the Corporate Proxy field in <a href=/waf/custom-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">custom rules</span></a>, <a href=/waf/rate-limiting-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">rate limiting rules</span></a>, or <a href=/workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers</span></a> to provide different security rules for traffic from these sources. You can also exempt them from rules using Bot Management scores.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="---%0Aheader%3A&#43;Example&#43;%0A---%0A%0Anot&#43;cf.bot_management.verified_bot&#43;%0Aand&#43;not&#43;cf.bot_management.static_resource&#43;%0Aand&#43;not&#43;&#43;cf.bot_management.corporate_proxy%0Aand&#43;cf.bot_management.score&#43;lt&#43;30"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div>
+<h2 id="magic-firewall-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magic-firewall-fields">&#8203;​</a>
+    </span>
+    <span>Magic Firewall fields</span>
+  </h2><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Some Magic Firewall fields are available only to customers who purchased Magic Firewall&rsquo;s advanced features. Refer to <a href=/magic-firewall/plans/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Firewall plans</span></a> for more information.</p>
+</aside>
+
+<table>
+  <thead>
+   <tr>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
+   </tr>
+  </thead>
+  <tbody style='vertical-align:top'>
+    <tr id="field-cf-colo-name">
+        <td><p><code>cf.colo.name</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The data center that is handling this traffic.  <br />
+        Example value: <code class="InlineCode"> sfo06 </code>
+        </td>
+    </tr>
+    <tr id="field-cf-colo-region">
+        <td><p><code>cf.colo.region</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        Region of the data center that is handling this traffic.<br />
+        Example value: <code class="InlineCode"> WNAM </code>
+        </td>
+    </tr>
+    <tr id="field-icmp">
+        <td><p><code>icmp</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The raw ICMP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr id="field-icmp-type">
+        <td><p><code>icmp.type</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets.<br />
+         Example value:
+         <code class="InlineCode">8</code>
+        </td>
+    </tr>
+    <tr id="field-icmp-code">
+        <td><p><code>icmp.code</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets.<br />
+         Example value:
+         <code class="InlineCode">2</code>
+        </td>
+    </tr>
+    <tr id="field-ip">
+        <td><p><code>ip</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The raw IP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr id="field-ip-dst">
+        <td><p><code>ip.dst</code><br /><code class="InlineCode InlineCode-is-type">IP Address</code></p>
+        </td>
+        <td>
+         The destination address as specified in the IP packet.<br />
+         Example value:
+         <code class="InlineCode">192.0.2.2</code>
+        </td>
+    </tr>
+    <tr id="field-ip-dst-country">
+        <td><p><code>ip.dst.country</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the server IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+        </td>
+    </tr>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+         <p>Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+            Example value:<br />
+            <code>GB</code>
+         </p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For Magic Firewall, the <code>ip.geoip.country</code> field (which is deprecated) will match on either source or destination address. The <code>ip.geoip.country</code> field is still available for new and existing rules, but you should use the <code>ip.src.country</code> and/or <code>ip.dst.country</code> fields instead.</p>
+        </td>
+    </tr>
+    <tr id="field-ip-hdr_len">
+        <td><p><code>ip.hdr_len</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+         The length of the IPv4 header in bytes.<br />
+         Example value:
+         <code class="InlineCode">5</code>
+        </td>
+    </tr>
+    <tr id="field-ip-len">
+        <td><p><code>ip.len</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+         The length of the packet including the header.<br />
+         Example value:
+         <code class="InlineCode">60</code>
+        </td>
+    </tr>
+    <tr id="field-ip-opt-type">
+        <td><p><code>ip.opt.type</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set.<br />
+         Example value:
+         <code class="InlineCode">25</code>
+        </td>
+    </tr>
+    <tr id="field-ip-proto">
+        <td><p><code>ip.proto</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The transport layer for the packet, if it can be determined.<br />
+        Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
+        </td>
+    </tr>
+    <tr id="field-ip-src">
+        <td><p><code>ip.src</code><br /><code class="InlineCode InlineCode-is-type">IP Address</code></p>
+        </td>
+        <td>
+        The source address of the IP Packet.
+        </td>
+    </tr>
+    <tr id="field-ip-src-country">
+        <td><p><code>ip.src.country</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+        </td>
+    </tr>
+    <tr id="field-ip-ttl">
+        <td><p><code>ip.ttl</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        The time-to-live of the IP Packet.<br />
+        Example values: <code class="InlineCode">54</code>
+        </td>
+    </tr>
+    <tr id="field-sip">
+        <td><p><code>sip</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+       Determines if packets are valid L7 protocol <a href="https://datatracker.ietf.org/doc/html/rfc2543">SIP</a>. Requires UDP packets to operate. <br />
+       Use a guard clause as shown below to ensure the packet is UDP (wirefilter):<br />
+       <code class="InlineCode">ip.proto == "udp"</code>
+        </td>
+    </tr>
+    <tr id="field-tcp">
+        <td><p><code>tcp</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The raw TCP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags">
+        <td><p><code>tcp.flags</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        The numeric value of the TCP flags byte.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-ack">
+        <td><p><code>tcp.flags.ack</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP acknowledgment flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-cwr">
+        <td><p><code>tcp.flags.cwr</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP congestion window reduced flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-ecn">
+        <td><p><code>tcp.flags.ecn</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP ECN-Echo flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-fin">
+        <td><p><code>tcp.flags.fin</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP flag indicating this is the last packet from sender.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-push">
+        <td><p><code>tcp.flags.push</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP push flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-reset">
+        <td><p><code>tcp.flags.reset</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP reset flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-syn">
+        <td><p><code>tcp.flags.syn</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP synchronize flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-flags-urg">
+        <td><p><code>tcp.flags.urg</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></p>
+        </td>
+        <td>
+        TCP urgent flag.
+        </td>
+    </tr>
+    <tr id="field-tcp-srcport">
+        <td><p><code>tcp.srcport</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        Source port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr id="field-tcp-dstport">
+        <td><p><code>tcp.dstport</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        Destination port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr id="field-udp">
+        <td><p><code>udp</code><br /><code class="InlineCode InlineCode-is-type">String</code></p>
+        </td>
+        <td>
+        The raw UDP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr id="field-udp-dstport">
+        <td><p><code>udp.dstport</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        Destination port number of the IP packet. Only applies to UDP packets.
+        </td>
+    </tr>
+    <tr id="field-udp-srcport">
+        <td><p><code>udp.srcport</code><br /><code class="InlineCode InlineCode-is-type">Number</code></p>
+        </td>
+        <td>
+        Source port number of the IP packet. Only applies to UDP packets.
+        </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="uri-argument-and-value-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#uri-argument-and-value-fields">&#8203;​</a>
+    </span>
+    <span>URI argument and value fields</span>
+  </h2><p>The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return <a href=/ruleset-engine/rules-language/values/#arrays class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">arrays</span></a> containing the respective values.</p>
+<p>The Cloudflare Rules language supports these URI argument and value fields:</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="field-http-request-uri-args">
+      <td valign="top"><code>http.request.uri.args</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+       <td>
+        <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
+        </p>
+        <p>When an argument repeats, then the array contains multiple items in the order they appear in the request.
+        </p>
+        <p>The values are not pre-processed and retain the original case used in the request.</p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args["search"][*] == "red+apples")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">{"search": ["red+apples"]}</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-names">
+      <td valign="top"><code>http.request.uri.args.names</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
+        </p>
+        <p>When a name repeats, the array contains multiple items in the order that they appear in the request.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.names[*] == "search")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["search"]</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-values">
+      <td valign="top"><code>http.request.uri.args.values</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
+        </p>
+        <p>Duplicated values are listed multiple times.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.values[*] == "red+apples")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["red+apples"]</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args">
+      <td valign="top"><code>raw.http.request.uri.args</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+       <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-names">
+      <td valign="top"><code>raw.http.request.uri.args.names</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-values">
+      <td valign="top"><code>raw.http.request.uri.args.values</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.values</code></a>.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="http-request-header-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#http-request-header-fields">&#8203;​</a>
+    </span>
+    <span>HTTP request header fields</span>
+  </h2><p>The Rules language includes fields that represent properties of HTTP request headers. Many of these return <a href=/ruleset-engine/rules-language/values/#arrays class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">arrays</span></a> containing the respective values.</p>
+<p>The Cloudflare Rules language supports these HTTP header fields:</p>
+<table>
+  <thead>
+   <tr>
+      <th>Field Name</th>
+      <th style="width: 50%;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr id="field-http-request-headers">
+      <td valign="top"><code>http.request.headers</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+      <td>
+         <p>Represents HTTP request headers as a Map (or associative array).</p>
+         <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the request.</p>
+         <p>The request header values are not pre-processed and retain the original case used in the request.</p>
+         <p><em><em>Decoding:</em></em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.headers["content-type"][*] == "application/json")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{"content-type": ["application/json"]}</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-headers-names">
+      <td valign="top"><code>http.request.headers.names</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the names of the headers in the HTTP request.</p>
+         <p>The names are not pre-processed and retain the original case used in the request.</p>
+         <p><strong>Note:</strong> In HTTP/2 the names of HTTP headers are always in lowercase. Recent versions of the <code class="InlineCode">curl</code> tool <a href="https://curl.se/docs/http2.html#curl-tool">enable HTTP/2 by default</a> for HTTPS connections.
+         </p>
+         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.request.headers.values</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.headers.names[*] == "content-type")</code>
+         </p>
+         <p>Example value:
+         <code class="InlineCode">["content-type"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-headers-values">
+      <td valign="top"><code>http.request.headers.values</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the values of the headers in the HTTP request.</p>
+         <p>The values are not pre-processed and retain the original case used in the request.</p>
+         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.request.headers.names</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example 1:
+         <br />
+         <code class="InlineCode">any(http.request.headers.values[*] == "application/json")</code>
+         </p>
+         <p>Example value 1:
+         <br />
+         <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.request.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-headers-truncated">
+      <td valign="top"><code>http.request.headers.truncated</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+         <p>Returns <code class="InlineCode">true</code> when the HTTP request contains too many headers; otherwise, returns <code class="InlineCode">false</code>.
+         </p>
+         <p>When <code class="InlineCode">true,</code> <code class="InlineCode">http.request.headers</code>, <code class="InlineCode">http.request.headers.names</code>, and <code class="InlineCode">http.request.headers.values</code> may not contain all of the headers sent in the HTTP request.
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-accepted_languages">
+      <td valign="top"><code>http.request.accepted_languages</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#array-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
+         <p>Example 1:<br/>
+         Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
+         <code class="InlineCode">http.request.accepted_languages[0] == "fr-CH"</code><br/>
+         <code class="InlineCode">http.request.accepted_languages == ["fr-CH", "en", "fr", "de"]</code>
+         </p>
+         <p>Example 2:<br/>
+         Request without an <code class="InlineCode">Accept-Language</code> HTTP header and a URI of <code class="InlineCode">https://www.example.com/my-path</code>. In this case:<br/>
+         <code class="InlineCode">concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"</code>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+  </tbody>
+</table>
+<h2 id="http-request-body-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#http-request-body-fields">&#8203;​</a>
+    </span>
+    <span>HTTP request body fields</span>
+  </h2><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Access to HTTP request body fields requires a Cloudflare Enterprise plan with a paid add-on, except for the <code>http.request.body.mime</code> field.</p>
+</aside>
+
+<p>The Rules language includes fields that represent properties of an HTTP request body. Many of these return <a href=/ruleset-engine/rules-language/values/#arrays class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">arrays</span></a> containing the respective values.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>All <code>http.request.body.*</code> fields (except <code>http.request.body.size</code>) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the <code>http.request.body.truncated</code> field will be set to <code>true</code>. The <code>http.request.body.size</code> field will contain the full size of the request without any truncation.</p>
+<p>The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.</p>
+</aside>
+
+<p>The Cloudflare Rules language supports these HTTP body fields:</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="field-http-request-body-raw">
+      <td valign="top"><code>http.request.body.raw</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>Represents the unaltered HTTP request body.
+         </p>
+         <p>When the value of <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>, the return value may be truncated.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-truncated">
+      <td valign="top"><code>http.request.body.truncated</code><br /><code class="InlineCode InlineCode-is-type">Boolean</code></td>
+      <td>
+         <p>Indicates whether the HTTP request body is truncated.
+         </p>
+         <p>When true, <code class="InlineCode">http.request.body</code> fields may not contain all of the HTTP request body.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-size">
+      <td valign="top"><code>http.request.body.size</code><br /><code class="InlineCode InlineCode-is-type">Number</code></td>
+      <td>
+         <p>The total size of the HTTP request body (in bytes).
+         </p>
+         <p>Note: This field may have a value larger than the one returned by <code>len(http.request.body.raw)</code>, since the <code>http.request.body.raw</code> field only considers the first 128 KB of the request.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-form">
+      <td valign="top"><code>http.request.body.form</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+      <td>
+         <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
+         </p>
+         <p>The values are not pre-processed and retain the original case used in the request.</p>
+         <p> When a field repeats, then the array contains multiple items in the order they are in the request.
+         </p>
+         <p>The return value may be truncated if <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.body.form["username"][*] == "admin")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{username": ["admin"]}</code>
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-form-names">
+      <td valign="top"><code>http.request.body.form.names</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the names of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
+         </p>
+         <p>The names are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+         </p>
+         <p>Duplicate names are listed multiple times.
+         </p>
+         <p>The return value may be truncated if <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.body.form.names[*] == "username")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">["username"]</code>
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-form-values">
+      <td valign="top"><code>http.request.body.form.values</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the values of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
+         </p>
+         <p>The values are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+         </p>
+         <p>Duplicated values are listed multiple times.
+         </p>
+         <p>The return value may be truncated if  <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.body.form.values[*] == "admin")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">["admin"]</code>
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-mime">
+      <td valign="top"><code>http.request.body.mime</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>The MIME type of the request detected from the request body.
+        </p>
+        <p>Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">image/jpeg</code>
+        </p>
+        <p>This field is available on all Cloudflare plans.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="http-response-fields">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#http-response-fields">&#8203;​</a>
+    </span>
+    <span>HTTP response fields</span>
+  </h2><p>The Rules language includes fields that represent properties of HTTP response returned by the origin or by a Worker script.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>You can only use HTTP response fields in:</p>
+<ul>
+<li><a href=/rules/transform/response-header-modification/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP Response Header Modification Rules</span></a></li>
+<li><a href=/rules/compression-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Compression Rules</span></a></li>
+<li><a href=/rules/custom-error-responses/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom error responses</span></a></li>
+<li><a href=/waf/rate-limiting-rules/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Rate limiting rules</span></a></li>
+<li>Filter expressions of the <a href=/waf/managed-rules/reference/sensitive-data-detection/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Sensitive Data Detection</span></a> ruleset</li>
+</ul>
+<p>Specific fields may have additional limitations.</p>
+</aside>
+
+<p>The Cloudflare Rules language supports these HTTP response fields:</p>
+<table>
+  <thead>
+   <tr>
+      <th>Field Name</th>
+      <th style="width: 50%;">Description</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr id="field-http-response-code">
+      <td valign="top"><code>http.response.code</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+      <td>
+         <p>Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">403</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-headers">
+      <td valign="top"><code>http.response.headers</code><br /><code class="InlineCode InlineCode-is-type">Map&lt;Array&lt;String&gt;&gt;</code></td>
+      <td>
+         <p>Represents HTTP response headers as a Map (or associative array).
+         </p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.</p>
+         <p><em><em>Decoding:</em></em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers["server"][*] == "nginx")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{"server": ["nginx"]}</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-headers-names">
+      <td valign="top"><code>http.response.headers.names</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the original case used in the response.
+         </p>
+         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.response.headers.values</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers.names[*] == "content-type")</code>
+         </p>
+         <p>Example value:
+         <code class="InlineCode">["content-type"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-headers-values">
+      <td valign="top"><code>http.response.headers.values</code><br /><code class="InlineCode InlineCode-is-type">Array&lt;String&gt;</code></td>
+      <td>
+         <p>Represents the values of the headers in the HTTP response.</p>
+         <p>The values are not pre-processed and retain the original case used in the response.</p>
+         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.response.headers.names</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example 1:
+         <br />
+         <code class="InlineCode">any(http.response.headers.values[*] == "application/json")</code>
+         </p>
+         <p>Example value 1:
+         <br />
+         <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used to match responses according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.response.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-http-response-content_type-media_type">
+      <td valign="top"><code>http.response.content_type.media_type</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+         <p>The lowercased content type (including subtype and suffix) without any parameters such as <code>charset</code>, based on the response's <code>Content-Type</code> header.
+         </p>
+         <details>
+         <summary>Example values</summary>
+         <div class="NoPadding">
+          <table class="Small">
+            <tr>
+              <th><code>Content-Type</code> header</th>
+              <th>Field value</th>
+            </tr>
+            <tr>
+              <td><code>text/html</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html+extra; charset=utf-8</code></td>
+              <td><code>"text/html+extra"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/HTML</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+            <tr>
+              <td><code>text/html; charset=utf-8; other=value</code></td>
+              <td><code>"text/html"</code></td>
+            </tr>
+          </table>
+         </div>
+         </details>
+      </td>
+   </tr>
+   <tr id="field-cf-response-1xxx_code">
+      <td valign="top"><code>cf.response.1xxx_code</code><br /><code class="InlineCode InlineCode-is-type">Integer</code></td>
+      <td>
+         <p>Contains the specific code for 1xxx Cloudflare errors. Use this field to differentiate between 1xxx errors associated with the same HTTP status code. The default value is <code>0</code>. For a list of 1xxx errors, refer to <a href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/">Troubleshooting Cloudflare 1XXX errors</a>.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">1020</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-cf-response-error_type">
+      <td valign="top"><code>cf.response.error_type</code><br /><code class="InlineCode InlineCode-is-type">String</code></td>
+      <td>
+        <p>Contains a string with the type of error in the response being returned. The default value is an empty string (<code>""</code>).
+        </p>
+        <p>The available values are the following:</p>
+        <ul>
+          <li><code>managed_challenge</code></li>
+          <li><code>iuam</code></li>
+          <li><code>legacy_challenge</code></li>
+          <li><code>ip_ban</code></li>
+          <li><code>waf</code></li>
+          <li><code>5xx</code></li>
+          <li><code>1xxx</code></li>
+          <li><code>always_online</code></li>
+          <li><code>country_challenge</code></li>
+          <li><code>ratelimit</code></li>
+        </ul>
+        <p>You can use this field to customize the response for a specific type of error (for example, all 1xxx errors or all WAF block actions).</p>
+        <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/response-header-modification/">HTTP response header modifications</a> and <a href="/rules/custom-error-responses/">custom error responses</a>.</p>
+      </td>
+   </tr>
+  </tbody>
+</table>
+<hr>
+<p><em>GeoIP is the registered trademark of MaxMind, Inc.</em></p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/rulesets" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/ruleset-engine/rules-language/fields.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-07-01T10:50:48&#43;01:00
+  title=2024-07-01
+>July 1, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

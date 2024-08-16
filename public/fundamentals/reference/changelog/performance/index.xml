@@ -1,0 +1,136 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Application performance</title>
+    <link>https://developers.cloudflare.com/fundamentals/reference/changelog/performance/index.xml</link>
+    <description>Updates to Application performance</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/fundamentals/reference/changelog/performance/index.xml" rel="self" />
+    <lastBuildDate>Mon, 01 Jul 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Rules - Cloudflare Snippets now available to all paid customers</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#cloudflare-snippets-now-available-to-all-paid-customers</link>
+    <description>Cloudflare Snippets (alpha) are now available to all paid customers.</description>
+    <pubDate>Mon, 01 Jul 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2024-06-11</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2024-06-11</link>
+    <description>Enhanced to include reporting of Server-Timing headers.</description>
+    <pubDate>Tue, 11 Jun 2024 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>Rules - Cloudflare Snippets now available to all Enterprise customers</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#cloudflare-snippets-now-available-to-all-enterprise-customers</link>
+    <description>Cloudflare Snippets (alpha) are now available to all Enterprise customers. Customers in other paid plans will gradually get access throughout 2024.</description>
+    <pubDate>Mon, 03 Jun 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2024-05-22</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2024-05-22</link>
+    <description>Introducing new metric fields, transferSize and decodedBodySize are included.</description>
+    <pubDate>Wed, 22 May 2024 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>Rules - Page Rules migration</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#page-rules-migration</link>
+    <description>The &lt;a href=https://developers.cloudflare.com/rules/reference/page-rules-migration/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Page Rules migration guide&lt;/span&gt;&lt;/a&gt; is now available for users interested in transitioning to modern Rules features instead of Page Rules. Explore the guide for detailed instructions on migrating your configurations.</description>
+    <pubDate>Tue, 14 May 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>Rules - New Configuration Rules setting for Web Analytics (RUM)</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-configuration-rules-setting-for-web-analytics-rum</link>
+    <description>You can now turn off Cloudflare Web Analytics, also known as Real User Monitoring (RUM), for specific requests using a configuration rule.</description>
+    <pubDate>Mon, 13 May 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>Rules - New Configuration Rules setting for Cloudflare Fonts</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-configuration-rules-setting-for-cloudflare-fonts</link>
+    <description>You can now turn on or off Cloudflare Fonts for specific requests using a configuration rule.</description>
+    <pubDate>Mon, 29 Apr 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2024-04-17</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2024-04-17</link>
+    <description>Introducing new metric fields, deliveryType (dt) and navigationType (nt) are included.</description>
+    <pubDate>Wed, 17 Apr 2024 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>Rules - New TLS fields in rule expressions</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#new-tls-fields-in-rule-expressions</link>
+    <description>Customers can now use new fields &lt;code&gt;cf.tls_client_hello_length&lt;/code&gt; (the length of the client hello message sent in a TLS handshake), &lt;code&gt;cf.tls_client_random&lt;/code&gt; (the value of the 32-byte random value provided by the client in a TLS handshake), and &lt;code&gt;cf.tls_client_extensions_sha1&lt;/code&gt; (the SHA-1 fingerprint of TLS client extensions) in various products built on Ruleset Engine.</description>
+    <pubDate>Fri, 22 Mar 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>Rules - Origin Rules now allow port numbers in Host Header Override</title>
+    <link>https://developers.cloudflare.com/rules/changelog/#origin-rules-now-allow-port-numbers-in-host-header-override</link>
+    <description>Customers can now use arbitrary port numbers in Host Header Override in Origin Rules. Previously, only hostname was allowed as a value (for example, &lt;code&gt;example.com&lt;/code&gt;). Now, you can set the value to &lt;code&gt;hostname:port&lt;/code&gt; (for example, &lt;code&gt;example.com:1234&lt;/code&gt;) as well.</description>
+    <pubDate>Wed, 20 Mar 2024 08:00:00 EST</pubDate><product>Rules</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-10-18</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-10-18</link>
+    <description>Manages A/B testing tags.</description>
+    <pubDate>Wed, 18 Oct 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>Waiting Room - Waiting Room coverage for multiple hostnames and paths</title>
+    <link>https://developers.cloudflare.com/waiting-room/changelog/#waiting-room-coverage-for-multiple-hostnames-and-paths</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Advanced Waiting Room customers can now &lt;a href=https://developers.cloudflare.com/waiting-room/how-to/place-waiting-room/#apply-to-multiple-hostnames-and-paths class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;add multiple hostname and path combinations&lt;/span&gt;&lt;/a&gt; to a single waiting room via the UI and API.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 06 Sep 2023 08:00:00 EST</pubDate><product>Waiting Room</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-07-25</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-07-25</link>
+    <description>Fixed ETag format in the response header.</description>
+    <pubDate>Tue, 25 Jul 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-07-13</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-07-13</link>
+    <description>Fixed the issue that was causing an illegal invocation error.</description>
+    <pubDate>Thu, 13 Jul 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-04-19</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-04-19</link>
+    <description>Reports additional LCP diagnostic information using web-vitals library’s attribution build.</description>
+    <pubDate>Wed, 19 Apr 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-04-06</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-04-06</link>
+    <description>Updated webpack configuration to output code in ECMAScript 3 (ES3) format.</description>
+    <pubDate>Thu, 06 Apr 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2023-03-23</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2023-03-23</link>
+    <description>Updated Google’s web-vitals library (version 3.1.1) and removed experimental &lt;code&gt;server-timing&lt;/code&gt; header.</description>
+    <pubDate>Thu, 23 Mar 2023 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2022-10-17</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2022-10-17</link>
+    <description>Updated to report new metrics such as time to first byte (TTFB), interaction to next paint (INP), and first contentful paint (FCP). Additionally, it reports &lt;code&gt;navigator.webdriver&lt;/code&gt;, &lt;code&gt;server-timing&lt;/code&gt; header (experimental), and protocol info (&lt;code&gt;nextHopProtocol&lt;/code&gt;).</description>
+    <pubDate>Mon, 17 Oct 2022 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2021-12-14</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2021-12-14</link>
+    <description>Improved site filtering.</description>
+    <pubDate>Tue, 14 Dec 2021 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2021-11-16</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2021-11-16</link>
+    <description>When using the automatic installation feature of the JavaScript Beacon (available only to customers proxied through Cloudflare - also known as orange-clouded customers),
+&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Subresource Integrity (SRI)&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; is now enabled by default. SRI is a security feature that enables browsers to
+verify that resources they fetch are delivered without unexpected manipulation.</description>
+    <pubDate>Tue, 16 Nov 2021 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2021-09-01</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2021-09-01</link>
+    <description>Improved to report debugging information for Core Web Vitals.</description>
+    <pubDate>Wed, 01 Sep 2021 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2021-05-28</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2021-05-28</link>
+    <description>&lt;code&gt;startsWith&lt;/code&gt; function replaced with &lt;code&gt;indexOf&lt;/code&gt; function, which prevents rendering if multiple beacon scripts are loaded.</description>
+    <pubDate>Fri, 28 May 2021 08:00:00 EST</pubDate><product>beacon.min.js</product></item>
+    <item>
+    <title>beacon.min.js - Application performance - 2021-05-12</title>
+    <link>https://developers.cloudflare.com/analytics/web-analytics/changelog/#2021-05-12</link>
+    <description>Reporting endpoint changed from &lt;code&gt;/cdn-cgi/beacon/performance&lt;/code&gt; to &lt;code&gt;/cdn-cgi/rum&lt;/code&gt; (for Browser Insights only).</description>
+    <pubDate>Wed, 12 May 2021 08:00:00 EST</pubDate><product>beacon.min.js</product></item></channel>
+</rss>

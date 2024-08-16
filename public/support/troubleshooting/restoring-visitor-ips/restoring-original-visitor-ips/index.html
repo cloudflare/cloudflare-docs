@@ -1,0 +1,1470 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Restoring original visitor IPs · Cloudflare Support docs</title>
+  <meta name="title" content="Restoring original visitor IPs · Cloudflare Support docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Restoring original visitor IPs · Cloudflare Support docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Restoring original visitor IPs · Cloudflare Support docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="When your website traffic is routed through the Cloudflare network , we act as a reverse proxy. This allows Cloudflare to speed up page load time by …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Restoring original visitor IPs · Cloudflare Support docs" />
+  <meta property="og:description" content="When your website traffic is routed through the Cloudflare network , we act as a reverse proxy. This allows Cloudflare to speed up page load time by …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/" />
+
+  <meta name="twitter:title" content="Restoring original visitor IPs · Cloudflare Support docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="When your website traffic is routed through the Cloudflare network , we act as a reverse proxy. This allows Cloudflare to speed up page load time by …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="support"><meta name="algolia_product_filter" content="Support"><meta name="algolia_page_title" content="Restoring original visitor IPs">
+  <meta name="pcx_word_count" content="2600"><meta name="pcx_last_modified" content="68"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="troubleshooting" />
+  <meta name="algolia_content_type" content="Troubleshooting"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"support"}</script>
+  <meta name="docsearch:product" content="support" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - fa4cd8b214b8acd8d44fc6ecdcfcce55" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - fa4cd8b214b8acd8d44fc6ecdcfcce55">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/support/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Support logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">  <path fill="#000" fill-rule="evenodd" d="M2 3.309 3.28 2h23.196l1.281 1.309v11.178h2.073l1.005 4.07 3.72-1.092 3.368 5.962-2.85 2.813L38 29.126l-3.368 5.962-3.771-1.106L29.875 38h-6.807l-.973-4.031-3.746 1.1-.954-1.694H3.281L2 32.068V3.309Zm13.92 27.449-.939-1.664 2.862-2.834-2.862-2.827 3.368-5.962 3.765 1.087.96-4.07h2.122v-9.87H4.56v26.14h11.36Zm6.584-20.844H7.252V7.297h15.252v2.617Zm2.594 25.449h2.728l.896-3.671 1.089-.766 3.54 1.04 1.383-2.408-2.638-2.617-.038-1.342 2.657-2.617-1.364-2.415-3.585 1.06-1.044-.857-.896-3.645h-2.728l-.884 3.625-1.056.864-3.567-1.047-1.363 2.415 2.657 2.617v1.342l-2.657 2.617 1.363 2.408 3.567-1.04 1.05.792.89 3.645Zm2.913-9.12c0 .86-.68 1.555-1.52 1.555s-1.521-.696-1.521-1.554c0-.859.68-1.555 1.52-1.555s1.521.696 1.521 1.555Zm2.562 0c0 2.305-1.828 4.173-4.082 4.173-2.255 0-4.082-1.868-4.082-4.172 0-2.304 1.827-4.172 4.082-4.172 2.254 0 4.082 1.868 4.082 4.172Zm-23.32-11.05h10.974v-2.618H7.252v2.618Zm6.698 5.277H7.252v-2.618h6.699v2.618Z" clip-rule="evenodd"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Support</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 8dcf4b8acef46e8dccc5bc24fdc1a4d5" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 8dcf4b8acef46e8dccc5bc24fdc1a4d5">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/support/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Support logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">  <path fill="#000" fill-rule="evenodd" d="M2 3.309 3.28 2h23.196l1.281 1.309v11.178h2.073l1.005 4.07 3.72-1.092 3.368 5.962-2.85 2.813L38 29.126l-3.368 5.962-3.771-1.106L29.875 38h-6.807l-.973-4.031-3.746 1.1-.954-1.694H3.281L2 32.068V3.309Zm13.92 27.449-.939-1.664 2.862-2.834-2.862-2.827 3.368-5.962 3.765 1.087.96-4.07h2.122v-9.87H4.56v26.14h11.36Zm6.584-20.844H7.252V7.297h15.252v2.617Zm2.594 25.449h2.728l.896-3.671 1.089-.766 3.54 1.04 1.383-2.408-2.638-2.617-.038-1.342 2.657-2.617-1.364-2.415-3.585 1.06-1.044-.857-.896-3.645h-2.728l-.884 3.625-1.056.864-3.567-1.047-1.363 2.415 2.657 2.617v1.342l-2.657 2.617 1.363 2.408 3.567-1.04 1.05.792.89 3.645Zm2.913-9.12c0 .86-.68 1.555-1.52 1.555s-1.521-.696-1.521-1.554c0-.859.68-1.555 1.52-1.555s1.521.696 1.521 1.555Zm2.562 0c0 2.305-1.828 4.173-4.082 4.173-2.255 0-4.082-1.868-4.082-4.172 0-2.304 1.827-4.172 4.082-4.172 2.254 0 4.082 1.868 4.082 4.172Zm-23.32-11.05h10.974v-2.618H7.252v2.618Zm6.698 5.277H7.252v-2.618h6.699v2.618Z" clip-rule="evenodd"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:7">Support</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Support menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.cloudflare.com/" tabindex="-1">Cloudflare home</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/support/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/contacting-cloudflare-support/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Contacting Cloudflare Support</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: About Cloudflare</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About Cloudflare</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Support - Enterprise Documentation</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/enterprise-documentation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Support - Enterprise Documentation</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/about-cloudflare/enterprise-documentation/customer-incident-management-policy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Customer Incident Management Policy</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Account Management &amp; Billing</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Account Management &amp; Billing</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Billing Cloudflare Plans</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Billing Cloudflare Plans</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Billing Policy</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Understanding Cloudflare sales tax</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/cannot-locate-dashboard-account/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cannot locate dashboard account</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/account-management-billing/billing-add-on-service/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Understanding Billing for Add-on Services</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: More Dashboard Apps</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">More Dashboard Apps</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Apps</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Apps</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Managing Cloudflare Apps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Removing Cloudflare Apps</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Custom Pages</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-custom-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Custom Pages</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuring Custom Pages (Error and Challenge)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Stream</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-stream/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Stream</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delivering Videos with Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Partners Support</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/partners/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Partners Support</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/partners/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reduce data transfer (egress costs) between Azure and Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Third-Party Software</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Third-Party Software</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Content Management System (CMS)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Content Management System (CMS)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/caching-html-with-drupal/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching HTML with Drupal</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/caching-static-html-with-wordpresswoocommerce/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching Static HTML with WordPressWooCommerce</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/can-i-use-wordpress-caching-plugins-like-super-cache-or-w3-total-cache-w3tc-with-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Can I use WordPress caching plugins like Super Cache or W3 Total Cache (W3TC) with Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/cloudflare-and-joomla-recommended-first-steps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare and Joomla Recommended First Steps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/cloudflare-wordpress-plugin-automatic-cache-management/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare WordPress Plugin Automatic Cache Management</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/how-do-i-enable-http2-server-push-in-wordpress/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How do I enable HTTP2 Server Push in WordPress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Improving web security for content management systems like WordPress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/speed-up-wordpress-and-improve-performance/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Speed Up WordPress and Improve Performance</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/using-cloudflare-and-drupal-five-easy-recommended-steps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using Cloudflare and Drupal Five Easy Recommended Steps</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/what-settings-are-applied-when-i-click-optimize-cloudflare-for-wordpress-in-cloudflares-wordpress-plugin/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">What settings are applied when I click Optimize Cloudflare for WordPress in Cloudflare&#39;s WordPress plugin</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/wordpress-jetpack-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WordPress Jetpack and Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WordPress.com and Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: e-Commerce</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/e-commerce/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">e-Commerce</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/e-commerce/caching-static-html-with-magento-business-and-enterprise-only/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Caching Static HTML with Magento (Business and Enterprise only)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Forum Software</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/forum-software/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Forum Software</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/forum-software/using-cloudflare-with-various-forums-vbulletin-xenforo-mybb/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using Cloudflare with various forums</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Others</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Others</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/configure-cloudflare-and-heroku-over-https/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure Cloudflare and Heroku over HTTPS</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuring an Amazon Web Services static site to use Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enabling Cloudflare SSL on Azure Storage Static Web Hosting Applications</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Cloudflare Errors</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Errors</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 10XXX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 1XXX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting Cloudflare 5XX errors</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/cloudflare-errors/troubleshooting-other-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting other errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: General Troubleshooting</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">General Troubleshooting</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gathering information for troubleshooting sites</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/general-troubleshooting/troubleshooting-crawl-errors/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting crawl errors</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: HTTP Status Codes</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Status Codes</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/1xx-informational/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">1xx Informational</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/2xx-success/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">2xx Success</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/3xx-redirection/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">3xx Redirection</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/4xx-client-error/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">4xx Client Error</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/http-status-codes/http-status-codes/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">HTTP Status Codes</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Restoring Visitor IPs</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/restoring-visitor-ips/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Restoring Visitor IPs</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Restoring original visitor IPs</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Disruptive Maintenance</span>
+    </button><a class="DocsSidebar--nav-link"  href="/support/troubleshooting/disruptive-maintenance/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Disruptive Maintenance</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/support/Troubleshooting/Restoring%20Visitor%20IPs/Restoring%20original%20visitor%20IPs.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="restoring-original-visitor-ips">Restoring original visitor IPs</h1><p>When your <a href="https://support.cloudflare.com/hc/articles/205177068" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">website traffic is routed through the Cloudflare network</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a <a href="https://www.cloudflare.com/ips/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare IP address</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called <a href=/fundamentals/reference/http-request-headers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><em>CF-Connecting-IP</em></span></a>. By following our <a href=#web-server-instructions class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">web server instructions</span></a>, you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your <a href=/rules/transform/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Transform Rules</span></a> and <a href=/rules/transform/managed-transforms/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Managed Transforms</span></a> configuration.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>If <strong>Pseudo IPv4</strong> is set to <code>Overwrite Headers</code> - Cloudflare overwrites the existing <code>Cf-Connecting-IP</code> and <code>X-Forwarded-For</code> headers with a pseudo IPv4 address while preserving the real IPv6 address in <code>CF-Connecting-IPv6</code> header.</p>
+</aside>
+
+<p>The diagram below illustrates the different ways that IP addresses are handled with and without Cloudflare.</p>
+<p><figure class="image-caption">
+    <img alt="The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare." src="/images/support/Restoring_IPs__1__hu20bc9274b51c617bbba4817192318c60_63897_960x720_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="720" width="960"
+    style="aspect-ratio:1.3333472222222222;height: auto;"/>
+    <figcaption></figcaption>
+</figure></p>
+<aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>Cloudflare no longer updates and supports <em>mod_cloudflare</em>, starting
+with versions <strong>Debian 9</strong> and <strong>Ubuntu 18.04 LTS</strong> of the Linux
+operating system. We now recommend
+<a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><em>mod_remoteip</em></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+for customers using Apache web servers. Customers who are interested in
+building the <em>mod_cloudflare</em> package can <a href="https://github.com/cloudflare/mod_cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">download the
+codebase</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> from GitHub.</p>
+</aside>
+
+<hr>
+<h2 id="mod_remoteip">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mod_remoteip">&#8203;​</a>
+    </span>
+    <span>mod_remoteip</span>
+  </h2><p>Cloudflare no longer updates and supports <em>mod_cloudflare.</em> However, if you are using an Apache web server with an operating system such as <strong>Ubuntu Server 18.04</strong> and <strong>Debian 9 Stretch</strong>, you can use <em>mod_remoteip</em> to log your visitor’s original IP address.</p>
+<p><strong>As this module was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.</strong></p>
+<p>To install <em>mod_remoteip</em> on your Apache web server:</p>
+<ol>
+<li>Enable <em>mod_remoteip</em> by issuing the following command:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;a2enmod&#43;remoteip"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="2">
+<li>Update the site configuration to include <em>RemoteIPHeader CF-Connecting-IP</em>, e.g. <code>/etc/apache2/sites-available/000-default.conf</code></li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="ServerAdmin&#43;webmaster%40localhost%0ADocumentRoot&#43;%2Fvar%2Fwww%2Fhtml%0AServerName&#43;remoteip.andy.support%0ARemoteIPHeader&#43;CF-Connecting-IP%0AErrorLog&#43;%24%7BAPACHE_LOG_DIR%7D%2Ferror.log%0ACustomLog&#43;%24%7BAPACHE_LOG_DIR%7D%2Faccess.log&#43;combined"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="3">
+<li>Update combined <em>LogFormat</em> entry in <code>apache.conf</code>, replacing <em>%h</em> with <em>%a in</em> <code>/etc/apache2/apache2.conf.</code> For example, if your current <em>LogFormat</em> appeared as follows</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="LogFormat&#43;%22%25h&#43;%25l&#43;%25u&#43;%25t&#43;%5C%22%25r%5C%22&#43;%25%3Es&#43;%25O&#43;%5C%22%25%7BReferer%7Di%5C%22&#43;%5C%22%25%7BUser-Agent%7Di%5C%22%22&#43;combined"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>you would update <em>LogFormat</em> to the following:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="LogFormat&#43;%22%25a&#43;%25l&#43;%25u&#43;%25t&#43;%5C%22%25r%5C%22&#43;%25%3Es&#43;%25O&#43;%5C%22%25%7BReferer%7Di%5C%22&#43;%5C%22%25%7BUser-Agent%7Di%5C%22%22&#43;combined"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="4">
+<li>Define trusted proxy addresses by creating <code>/etc/apache2/conf-available/remoteip.conf</code> by entering the following code and <a href="https://www.cloudflare.com/ips/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare IPs</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="RemoteIPHeader&#43;CF-Connecting-IP%0ARemoteIPTrustedProxy&#43;192.0.2.1&#43;%28example&#43;IP&#43;address%29%0ARemoteIPTrustedProxy&#43;192.0.2.2&#43;%28example&#43;IP&#43;address%29%0A%28repeat&#43;for&#43;all&#43;Cloudflare&#43;IPs&#43;listed&#43;at&#43;https%3A%2F%2Fwww.cloudflare.com%2Fips%2F%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="5">
+<li>Enable Apache configuration:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;a2enconf&#43;remoteip%0AEnabling&#43;conf&#43;remoteip.%0ATo&#43;activate&#43;the&#43;new&#43;configuration%2C&#43;you&#43;need&#43;to&#43;run%3A%0Aservice&#43;apache2&#43;reload"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="6">
+<li>Test Apache configuration:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;apache2ctl&#43;configtest%0ASyntax&#43;OK"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><ol start="7">
+<li>Restart Apache:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;sudo&#43;systemctl&#43;restart&#43;apache2"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>For more information on <em>mod_remoteip</em>, refer to the <a href="https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Apache
+documentation</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+</aside>
+
+<hr>
+<h2 id="mod_cloudflare">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mod_cloudflare">&#8203;​</a>
+    </span>
+    <span>mod_cloudflare</span>
+  </h2><aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>Cloudflare no longer updates and supports <em>mod_cloudflare</em>, starting
+with versions <strong>Debian 9</strong> and <strong>Ubuntu 18.04 LTS</strong> of the Linux
+operating system. We now recommend
+<a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><em>mod_remoteip</em></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+for customers using Apache web servers. Customers who are interested in
+building the <em>mod_cloudflare</em> package can <a href="https://github.com/cloudflare/mod_cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">download the
+codebase</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> from GitHub.</p>
+</aside>
+
+<h3 id="installing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#installing">&#8203;​</a>
+    </span>
+    <span>Installing</span>
+  </h3><p>There are two methods for installing mod_cloudflare: by downloading the Apache extension from GitHub or by adding code to your origin web server.</p>
+<h4 id="downloading-packets-or-scripts-from-github">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#downloading-packets-or-scripts-from-github">&#8203;​</a>
+    </span>
+    <span>Downloading packets or scripts from GitHub</span>
+  </h4><p>If you are using an Apache web server, you can download mod_cloudflare from <a href="https://github.com/cloudflare/mod_cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h4 id="adding-code-to-your-origin-web-server">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#adding-code-to-your-origin-web-server">&#8203;​</a>
+    </span>
+    <span>Adding code to your origin web server</span>
+  </h4><p>If you can&rsquo;t install mod_cloudflare, or if there is no Cloudflare plugin available for your content management system platform to restore original visitor IP, add this code to your origin web server in or before the <body> tag on any page that needs the original visitor IPs:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="php" data-code="%3C%3Fphp&#43;if&#43;%28isset%28%24_SERVER%5B%27HTTP_CF_CONNECTING_IP%27%5D%29%29&#43;%24_SERVER%5B%27REMOTE_ADDR%27%5D&#43;%3D&#43;%24_SERVER%5B%27HTTP_CF_CONNECTING_IP%27%5D%3B%3F%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This command will only make the IP address available to scripts that need it. It doesn’t store the IP in your actual server logs.</p>
+<h3 id="removing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#removing">&#8203;​</a>
+    </span>
+    <span>Removing</span>
+  </h3><h4 id="apache">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#apache">&#8203;​</a>
+    </span>
+    <span>Apache</span>
+  </h4><p>To remove <em>mod_cloudflare</em>, you should comment out the Apache config line that loads <em>mod_cloudflare</em>.</p>
+<p>This varies based on your Linux distribution, but for most people, if you look <code>in /etc/apache2</code>, you should be able to search to find the line:</p>
+<p><code>LoadModule cloudflare_module</code></p>
+<p>Comment or remove this line, then restart apache, and <em>mod_cloudflare</em> should be gone.</p>
+<p>If you are running Ubuntu or Debian, you should see.</p>
+<p><code>file/etc/apache2/mods-enabled/cloudflare.load</code></p>
+<p>delete this file to remove <em>mod_cloudflare</em>, then restart Apache.</p>
+<h4 id="nginx">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#nginx">&#8203;​</a>
+    </span>
+    <span>Nginx</span>
+  </h4><p><em>mod_cloudflare</em> is not needed for Nginx. Use the <a href="http://nginx.org/en/docs/http/ngx_http_realip_module.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>ngx_http_realip_module</code> NGINX module</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and the configuration parameters described in the <a href=https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/#web-server-instructions class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Web server instructions</span></a> instead.</p>
+<hr>
+<h2 id="web-server-instructions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#web-server-instructions">&#8203;​</a>
+    </span>
+    <span>Web server instructions</span>
+  </h2><p>Refer below for instructions on how to configure your web server to log original visitor IPs based on your web server type:</p>
+<h3 id="apache-24">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#apache-24">&#8203;​</a>
+    </span>
+    <span>Apache 2.4</span>
+  </h3><aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>Cloudflare no longer updates and supports <em>mod_cloudflare</em>, starting
+with versions <strong>Debian 9</strong> and <strong>Ubuntu 18.04 LTS</strong> of the Linux
+operating system. We now recommend
+<a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><em>mod_remoteip</em></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+for customers using Apache web servers. Customers who are interested in
+building the <em>mod_cloudflare</em> package can <a href="https://github.com/cloudflare/mod_cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">download the
+codebase</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> from GitHub.</p>
+</aside>
+
+<ol>
+<li>Make sure the following is installed:
+<ul>
+<li>Red Hat/Fedora<code>sudo yum install httpd-devel libtool git</code></li>
+<li>Debian/Ubuntu<code>sudo apt-get install apache2-dev libtool git</code></li>
+</ul>
+</li>
+<li>Clone the following for the most recent build of <em>mod_cloudflare</em>:
+<ul>
+<li>Red Hat/Fedora/Debian/Ubuntu:<code>git clone https://github.com/cloudflare/mod_cloudflare.git; cd mod_cloudflare</code></li>
+</ul>
+</li>
+<li>Use the Apache extension tool to convert the .c file into a module:
+<ul>
+<li>Red Hat/Fedora/Debian/Ubuntu:<code>apxs -a -i -c mod_cloudflare.c</code></li>
+</ul>
+</li>
+<li>Restart and verify the module is active:
+<ul>
+<li>Red Hat/Fedora<code>service httpd restart; httpd -M|grep cloudflare</code></li>
+<li>Debian/Ubuntu:<code>sudo apachectl restart; apache2ctl -M|grep cloudflare</code></li>
+</ul>
+</li>
+<li>If your web server is behind a load balancer, add the following line to your Apache configuration (httpd.conf usually) and replace 123.123.123.123 with your load balancer&rsquo;s IP address:</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="IfModule&#43;cloudflare_module%0ACloudFlareRemoteIPHeader&#43;X-Forwarded-For%0ACloudFlareRemoteIPTrustedProxy&#43;%5Binsert&#43;your&#43;load&#43;balancer%E2%80%99s&#43;IP&#43;address%5D%0ADenyAllButCloudFlare%0A%2FIfModule"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="nginx-1">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#nginx-1">&#8203;​</a>
+    </span>
+    <span>Nginx</span>
+  </h3><p>Use the <a href="http://nginx.org/en/docs/http/ngx_http_realip_module.html" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>ngx_http_realip_module</code> Nginx module</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and the following configuration parameters:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="set_real_ip_from&#43;192.0.2.1&#43;%28example&#43;IP&#43;address%29%0A%0A%23use&#43;any&#43;of&#43;the&#43;following&#43;two%0A%0Areal_ip_header&#43;CF-Connecting-IP%3B%0A%23real_ip_header&#43;X-Forwarded-For%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>That list of prefixes needs to be updated regularly, and we publish the full list in <a href="https://www.cloudflare.com/ips" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare IP addresses</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>To Include the original visitor IP in your logs, add the variables
+$http_cf_connecting_ip and $http_x_forwarded_for in the
+log_format directive.</p>
+</aside>
+
+<p>Also refer to: <a href="https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare and NGINX</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h3 id="easyapache-and-cpanel">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#easyapache-and-cpanel">&#8203;​</a>
+    </span>
+    <span>EasyApache and cPanel</span>
+  </h3><aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>Cloudflare no longer updates and supports <em>mod_cloudflare</em>, starting
+with versions <strong>Debian 9</strong> and <strong>Ubuntu 18.04 LTS</strong> of the Linux
+operating system. We now recommend
+<a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><em>mod_remoteip</em></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+for customers using Apache web servers. Customers who are interested in
+building the <em>mod_cloudflare</em> package can <a href="https://github.com/cloudflare/mod_cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">download the
+codebase</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> from GitHub.</p>
+</aside>
+
+<ol>
+<li>Run the following script to install mod_cloudflare as part of EasyApache: <code>bash &lt;(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)</code></li>
+<li>Upon installing, you will need to recompile your Apache with the new mod_cloudflare plugin.</li>
+<li>To fix this, open up your Apache configuration. This can typically be found in <code>/etc/apache2/apache2.conf</code>, <code>/etc/httpd/httpd.conf</code>, <code>/usr/local/apache/conf/httpd.conf</code> or another location depending on configuration. If you&rsquo;re unsure, ask your hosting provider.</li>
+<li>At the very end add:<code>CloudflareRemoteIPTrustedProxy {LOOPBACK_ADDRESS}</code> So, if your server is located at 127.0.0.1, it will look like:<code>CloudflareRemoteIPTrustedProxy 127.0.0.1</code></li>
+<li>If you have more than one server to add to the trusted proxy list, you can add them at the end: CloudflareRemoteIPTrustedProxy 127.0.0.1 127.0.0.2</li>
+</ol>
+<h3 id="lighttpd">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#lighttpd">&#8203;​</a>
+    </span>
+    <span>Lighttpd</span>
+  </h3><p>To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.</p>
+<ol>
+<li>Open your <strong>lighttpd.conf</strong> file and add <em>mod_extforward</em> to the <em>server.modules</em> list. It must come <strong>after</strong> <em>mod_accesslog</em> to show the real IP in the access logs</li>
+<li>Add the following code block anywhere in the <strong>lighttpd.conf</strong> file after the server modules list and then restart Lighttpd</li>
+</ol>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="%24HTTP%5B%22remoteip%22%5D&#43;%3D%3D&#43;%22192.2.0.1&#43;%28example&#43;IP&#43;address%29%22%0A%7B%0Aextforward.forwarder&#43;%3D&#43;%28&#43;%22all%22&#43;%3D%3E&#43;%22trust%22&#43;%29%0Aextforward.headers&#43;%3D&#43;%28%22CF-Connecting-IP%22%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>If your origin connects to the Internet with IPv6,
+<strong>$HTTP[&quot;remoteip&quot;]</strong>, which is required for matching the remote IP
+ranges does not work when IPv6 is enabled. Using the above method will
+not work when trying to forward IP ranges. Add the following lines to
+lighttpd.conf as an alternative solution:
+<code>extforward.forwarder = ( &quot;all&quot; =&gt; &quot;trust&quot; ) extforward.headers = (&quot;CF-Connecting-IP&quot;)</code></p>
+</aside>
+
+<h3 id="litespeed-server">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#litespeed-server">&#8203;​</a>
+    </span>
+    <span>LiteSpeed server</span>
+  </h3><ol>
+<li>Go to your LiteSpeed Web Admin Console.</li>
+<li>Enable the option Use Client IP in Header in Configuration.</li>
+<li>Once enabled, your access logs will now show the correct IP addresses, and even PHP&rsquo;s <code>$_SERVER['REMOTE_ADDR']</code> variable will contain the client real IP address, instead of a Cloudflare IP address, which in itself will resolve most problems you could hit when enabling Cloudflare on PHP-enabled web sites (like WordPress or vBulletin installs).</li>
+</ol>
+<h3 id="microsoft-iis">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#microsoft-iis">&#8203;​</a>
+    </span>
+    <span>Microsoft IIS</span>
+  </h3><h4 id="for-iis-7---8">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#for-iis-7---8">&#8203;​</a>
+    </span>
+    <span>For IIS 7 - 8:</span>
+  </h4><p>Follow the directions in the <a href="https://techcommunity.microsoft.com/t5/iis-support-blog/how-to-use-x-forwarded-for-header-to-log-actual-client-ip/ba-p/873115" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Microsoft Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h4 id="for-iis-85---10">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#for-iis-85---10">&#8203;​</a>
+    </span>
+    <span>For IIS 8.5 - 10:</span>
+  </h4><p>From IIS 8.5 onwards, custom logging is a built-in option. Refer to <a href="http://www.iis.net/learn/get-started/whats-new-in-iis-85/enhanced-logging-for-iis85" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">IIS Enhanced Logging</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<ol>
+<li>
+<p>In IIS Manager, double click on <strong>Logging</strong> in the <em>Actions</em> menu of the site you are working on.</p>
+</li>
+<li>
+<p>After this launches, select <strong>W3C</strong> as the format and then click <strong>Select Fields</strong> next to the format drop-down in the <em>Log File</em> sub-section.</p>
+</li>
+<li>
+<p>Click on <strong>Add Field</strong> and add in <em>CF-Connecting-IP</em> header.</p>
+</li>
+<li>
+<p>Click <strong>Ok</strong>. You should see your new entry reflected under <strong>Custom Fields</strong>. Click on <strong>Apply</strong> when you are back in the <em>Logging</em> window.</p>
+</li>
+<li>
+<p>If this is successful, the log file should now have an underscore:You should also see the change in the fields:</p>
+</li>
+<li>
+<p>Restart the site, then W3SVC, then the entire instance if the change doesn’t reflect immediately.When using enhanced logging in IIS 8.5+, it <strong>does not restore</strong> original visitor IP at the application level.</p>
+</li>
+</ol>
+<h3 id="tomcat-7">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#tomcat-7">&#8203;​</a>
+    </span>
+    <span>Tomcat 7</span>
+  </h3><p>To have Tomcat7 automatically restore the original visitor IP to your access logs and application you will need to add <code>%{CF-Connecting-IP}i</code> into your log schema.</p>
+<p>As an example, you could add the below block to your <code>server.xml</code> file.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="xml" data-code="%3CValve&#43;className%3D%22org.apache.catalina.valves.AccessLogValve%22&#43;directory%3D%22logs%22&#43;prefix%3D%22localhost_access_log.%22&#43;suffix%3D%22.txt%22&#43;pattern%3D%22%25%7BCF-Connecting-IP%7Di&#43;-&#43;%25h&#43;%25u&#43;%25t&#43;-&#43;%26quot%3B%25r%26quot%3B&#43;-&#43;%25s&#43;-&#43;%25b&#43;-&#43;%25%7BCF-RAY%7Di%22%2F%3E"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Which would result in your logs looking like this:</p>
+<p><code>Visitor IP - Cloudflare IP - [04/Dec/2014:23:18:15 -0500] - &quot;GET / HTTP/1.1&quot; - 200 - 1895 - 193d704b85200296-SJC</code></p>
+<h3 id="magento">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#magento">&#8203;​</a>
+    </span>
+    <span>Magento</span>
+  </h3><p>Refer to this third-party tutorial on restoring original visitor IP with <a href="https://tall-paul.co.uk/2012/03/02/magento-show-remote-ip-when-using-cloudflare/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Magento and Cloudflare</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>Similarly, Cloudflare did not write this <a href="https://marketplace.magento.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Magento extension</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, but some of our customers have found it helpful.</p>
+<p>As this plugin was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.</p>
+<h3 id="ipb-invision-power-board">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ipb-invision-power-board">&#8203;​</a>
+    </span>
+    <span>IPB (Invision Power Board)</span>
+  </h3><p>To enable correct IP matching when running an Invision Power Board 3 installation through Cloudflare, follow these directions:</p>
+<p>Log into your IPB installation&rsquo;s ACP.</p>
+<ol>
+<li>Click <strong>System</strong>.</li>
+<li>Under Overview, click <strong>Security</strong>.</li>
+<li>Under Security Center, click <strong>Security Settings</strong>.Check that <em>Trust IP addresses provided by proxies?</em> is green.</li>
+</ol>
+<h4 id="ipb4-description-of_trust-ip-addresses-provided-by-proxies_">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ipb4-description-of_trust-ip-addresses-provided-by-proxies_">&#8203;​</a>
+    </span>
+    <span>IPB4 description of <em>Trust IP addresses provided by proxies?</em></span>
+  </h4><p>If your network environment means requests are handled through a proxy (such as in an intranet situation in an office or university, or on a load-balanced server cluster), you may need to enable this setting so that the correct IP address is used. However, when enabled, a malicious user can abuse the system to provide a fake IP address. In most environments, this setting should be left off.</p>
+<h3 id="phpbb">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#phpbb">&#8203;​</a>
+    </span>
+    <span>PHPBB</span>
+  </h3><p>If you are using an Apache server, then we would recommend installing <a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">mod_remoteip</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to restore the visitor IP back to your logs.</p>
+<p>If you do not have access to your server to install a mod, then you may be able to <a href="https://www.phpbb.com/community/viewtopic.php?p=13936406#p13936406" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">modify the core</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<h3 id="mybb-forums">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mybb-forums">&#8203;​</a>
+    </span>
+    <span>MyBB forums</span>
+  </h3><p>More recent versions of MyBB include a Scrutinize User&rsquo;s IP address option.</p>
+<p><code>Admin CP &gt; Configuration &gt; Server and Optimization Options &gt; Scrutinize User's IP address? &gt; Yes</code></p>
+<p>Alternatively, you may install the <a href="https://mods.mybb.com/view/antoligy-mybb-cloudflare-management-plugin" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare management plugin</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> available for MyBB 1.6.</p>
+<h4 id="mybb-160-161-162-or-163">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#mybb-160-161-162-or-163">&#8203;​</a>
+    </span>
+    <span>MyBB 1.6.0, 1.6.1, 1.6.2, or 1.6.3</span>
+  </h4><ol>
+<li>Navigate to <code>./inc/functions.php</code>.</li>
+<li>Go to line 2790.</li>
+<li>Replace:<code>if(isset($_SERVER['REMOTE_ADDR']))</code>With:<code>if(isset($_SERVER['HTTP_CF_CONNECTING_IP']))</code></li>
+<li>Then, replace:<code>$ip = $_SERVER['REMOTE_ADDR'];</code>With:<code>$ip = $_SERVER['HTTP_CF_CONNECTING_IP'];</code></li>
+</ol>
+<h3 id="vanilla-forums">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#vanilla-forums">&#8203;​</a>
+    </span>
+    <span>Vanilla forums</span>
+  </h3><p>A member of the Vanilla team has written a <a href="https://open.vanillaforums.com/addon/cloudflaresupport-plugin" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare plugin for Vanilla</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to restore original visitor IP to the log files for self-hosted sites.</p>
+<p>As this plugin was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.MediaWiki</p>
+<ol>
+<li>Open <code>includes/GlobalFunctions.php</code>. At approximately line 370, change the following:<code>$forward = &quot;\t(proxied via {$_SERVER['REMOTE_ADDR']}{$forward})&quot;;</code>to<code>$forward = &quot;\t(proxied via {$_SERVER['HTTP_CF_CONNECTING_IP']}{$forward})&quot;;</code></li>
+<li>Open <code>includes/ProxyTools.php</code>. At approximately line 79, find:<code>if ( isset( $_SERVER['REMOTE_ADDR'] ) ){</code>and replace with:<code>if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ){</code>The second step only applies to MediaWiki versions 1.18.0 and older. Newer versions of MediaWiki have completely rewritten ProxyTools.php and the following code is no longer present.</li>
+<li>Find at approximately line 80:<code>$ipchain = array( IP::canonicalize($_SERVER['REMOTE_ADDR']) );</code>Save and upload to your origin web server.</li>
+</ol>
+<h4 id="for-versions-around-1271">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#for-versions-around-1271">&#8203;​</a>
+    </span>
+    <span>For versions around 1.27.1:</span>
+  </h4><ol>
+<li>Go to line 1232 in <code>GlobalFunctions.php</code>, change <code>REMOTE_ADDR</code> to <code>HTTP_CF_CONNECTING_IP</code>.</li>
+<li>Next, go to <code>WebRequest.php</code>, in lines 1151 to line 1159, change <code>REMOTE_ADDR</code> to <code>HTTP_CF_CONNECTING_IP</code>.</li>
+</ol>
+<h3 id="xenforo">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#xenforo">&#8203;​</a>
+    </span>
+    <span>XenForo</span>
+  </h3><p>A XenForo user has created a <a href="https://xenforo.com/community/resources/solidmean-cloudflare-detect.1595/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">plugin for Cloudflare</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>As this plugin was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.</p>
+<ol>
+<li>Open <code>library/config.php</code>.</li>
+<li>At the end, add:<code>if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) { $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];}</code></li>
+<li>Upload and overwrite.</li>
+</ol>
+<h3 id="punbb">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#punbb">&#8203;​</a>
+    </span>
+    <span>PunBB</span>
+  </h3><p>An outside party has created a <a href="http://punbb.informer.com/forums/post/147539/#p147539" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">module for Cloudflare and PunBB</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> that will restore original visitor IP.</p>
+<p>As this plugin was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.Cherokee server</p>
+<ol>
+<li>Launch <code>cherokee-admin</code> on your server.</li>
+<li>Navigate to the <strong>Cherokee Administration interface</strong> in your web browser.</li>
+<li>Select the <strong>Virtual Server</strong> for the domain that is being serviced by Cloudflare.</li>
+<li>On the <em>Logging</em> tab for your selected <strong>Virtual Server</strong>, enable Accept Forwarded IPs.</li>
+<li>In the <em>Accept from Hosts</em> box, enter <a href="https://www.cloudflare.com/ips/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare&rsquo;s IP addresses</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ol>
+<h3 id="livezilla">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#livezilla">&#8203;​</a>
+    </span>
+    <span>Livezilla</span>
+  </h3><p>You can fix the IP address by changing the <code>PHP IP Server Param</code> field on the Livezilla server configuration to <code>HTTP_CF_CONNECTING_IP</code>.</p>
+<h3 id="datalife-engine">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#datalife-engine">&#8203;​</a>
+    </span>
+    <span>Datalife Engine</span>
+  </h3><p>To restore visitor IP to DataLife Engine:</p>
+<ol>
+<li>Open:/engine/inc/include/functions.inc.phpFind:<code>$db_ip_split = explode( &quot;.&quot;, $_SERVER['REMOTE_ADDR'] );</code>Change to:<code>$db_ip_split = explode(&quot;.&quot;, $_SERVER['HTTP_CF_CONNECTING_IP'] );</code></li>
+<li>Find:<code>$ip_split = explode( &quot;.&quot;, $_SERVER['REMOTE_ADDR'] );</code>Change to:<code>$ip_split = explode(&quot;.&quot;, $_SERVER['HTTP_CF_CONNECTING_IP'] );</code></li>
+<li>Open:/engine/modules/addcomments.phpFind:<code>$_SERVER['REMOTE_ADDR'],</code>Change to:<code>$_SERVER['HTTP_CF_CONNECTING_IP'],</code></li>
+<li>Find:<code>$db_ip_split = explode( &quot;.&quot;, $_SERVER['REMOTE_ADDR'] );</code>Change to:<code>$db_ip_split = explode( &quot;.&quot;, $_SERVER['HTTP_CF_CONNECTING_IP'] );</code></li>
+</ol>
+<h3 id="typo3">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#typo3">&#8203;​</a>
+    </span>
+    <span>TYPO3</span>
+  </h3><p>An outside developer has created a <a href="https://extensions.typo3.org/extension/cloudflare/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare extension for TYPO3</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> that will restore original visitor IP to your logs. The extension will also give the ability to clear your Cloudflare cache.</p>
+<p>As this plugin was created by an outside party, we can&rsquo;t provide technical support for issues related to the plugin.</p>
+<h3 id="vestacp">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#vestacp">&#8203;​</a>
+    </span>
+    <span>VestaCP</span>
+  </h3><p>If you use the hosting control panel VestaCP, you have both Nginx and Apache running on your server. Requests are proxied through Nginx before going to Apache.</p>
+<p>Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. <a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Mod_remoteip</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for Apache is not needed unless you disable the Nginx server for some requests. Adding <a href="https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">mod_remoteip</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to Apache will not conflict with the Nginx server configuration.</p>
+<h3 id="nodejs">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#nodejs">&#8203;​</a>
+    </span>
+    <span>node.js</span>
+  </h3><p>An outside developer has created a module to restore visitor IP called <a href="https://github.com/keverw/node_CloudFlare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">node_cloudflare.</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></p>
+<h3 id="haproxy">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#haproxy">&#8203;​</a>
+    </span>
+    <span>HAProxy</span>
+  </h3><p>In order to extract the original client IP in the X_FORWARDED_FOR header, you need to use the following configuration in HAProxy:</p>
+<ol>
+<li>Create a text file <code>CF_ips.lst</code> containing all IP ranges from <a href="https://www.cloudflare.com/en-gb/ips/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">https://www.cloudflare.com/en-gb/ips/</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li>
+<li>Ensure to disable <code>option forwardfor</code> in HAProxy</li>
+</ol>
+<p>HAProxy config:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="" data-code="acl&#43;from_cf&#43;src&#43;-f&#43;%2Fpath%2Fto%2FCF_ips.lst%0Aacl&#43;cf_ip_hdr&#43;req.hdr%28CF-Connecting-IP%29&#43;-m&#43;found%0Ahttp-request&#43;set-header&#43;X-Forwarded-For&#43;%25%5Breq.hdr%28CF-Connecting-IP%29%5D&#43;if&#43;from_cf&#43;cf_ip_hdr"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="envoy-gateway">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#envoy-gateway">&#8203;​</a>
+    </span>
+    <span>Envoy Gateway</span>
+  </h3><p>To extract the original client IP for your Envoy Gateway, set a <a href="https://gateway.envoyproxy.io/latest/tasks/traffic/client-traffic-policy/#configure-client-ip-detection" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Client Traffic Policy</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to look for the custom <a href=/fundamentals/reference/http-request-headers/#cf-connecting-ip class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>CF-Connecting-IP</code> header</span></a>.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="txt" data-code="---%0Aheader%3A&#43;Truncated&#43;Client&#43;Traffic&#43;Policy&#43;example%0A---%0AclientIPDetection%3A%0A&#43;&#43;&#43;&#43;customHeader%3A%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;name%3A&#43;CF-Connecting-IP%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;failClosed%3A&#43;true"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>For more details, refer to <a href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/http/original_ip_detection/custom_header/v3/custom_header.proto" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Custom header original IP detection extension</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<hr>
+<h2 id="related-resources">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-resources">&#8203;​</a>
+    </span>
+    <span>Related Resources</span>
+  </h2><ul>
+<li><a href=/fundamentals/reference/http-request-headers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">HTTP request headers</span></a></li>
+<li><a href=/rules/transform/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Transform Rules</span></a></li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/support" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/support/Troubleshooting/Restoring%20Visitor%20IPs/Restoring%20original%20visitor%20IPs.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-05-06T08:28:30-05:00
+  title=2024-05-06
+>May 6, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,1310 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Full-stack deployment · Cloudflare Pages docs</title>
+  <meta name="title" content="Full-stack deployment · Cloudflare Pages docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Full-stack deployment · Cloudflare Pages docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Full-stack deployment · Cloudflare Pages docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Deploy a full-stack Next.js site (recommended)." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Full-stack deployment · Cloudflare Pages docs" />
+  <meta property="og:description" content="Deploy a full-stack Next.js site (recommended)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-nextjs-site/" />
+
+  <meta name="twitter:title" content="Full-stack deployment · Cloudflare Pages docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="Deploy a full-stack Next.js site (recommended)." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="pages"><meta name="algolia_product_filter" content="Pages"><meta name="algolia_page_title" content="Full-stack deployment">
+  <meta name="pcx_word_count" content="2000"><meta name="pcx_last_modified" content="45"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="how-to" />
+  <meta name="algolia_content_type" content="How To"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-nextjs-site/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"pages"}</script>
+  <meta name="docsearch:product" content="pages" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - cbcacdcc5ff4aebf5dc1e648d28d4c48" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - cbcacdcc5ff4aebf5dc1e648d28d4c48">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/pages/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Pages logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m21.375 7.5-1.95 3H9v27h8.7l-.525 3H7.5L6 39V9l1.5-1.5h13.875Zm9.45 0H40.5L42 9v30l-1.5 1.5H26.625l1.95-3H39v-27h-8.7l.525-3Z"/><path d="M21.45 28.5h-8.7l-1.275-2.325 15.6-24 2.7 1.125-3.225 16.2h8.7l1.275 2.325-15.6 24-2.7-1.125 3.225-16.2ZM11.175 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1ZM13.95 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1ZM16.725 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:5">Pages</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 65aedc1c58c4cfcc4fb44edbfad828dc" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 65aedc1c58c4cfcc4fb44edbfad828dc">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/pages/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Pages logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m21.375 7.5-1.95 3H9v27h8.7l-.525 3H7.5L6 39V9l1.5-1.5h13.875Zm9.45 0H40.5L42 9v30l-1.5 1.5H26.625l1.95-3H39v-27h-8.7l.525-3Z"/><path d="M21.45 28.5h-8.7l-1.275-2.325 15.6-24 2.7 1.125-3.225 16.2h8.7l1.275 2.325-15.6 24-2.7-1.125 3.225-16.2ZM11.175 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1ZM13.95 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1ZM16.725 13.725a1.05 1.05 0 1 0 0-2.1 1.05 1.05 0 0 0 0 2.1Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:5">Pages</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Pages menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://pages.cloudflare.com" tabindex="-1">Pages home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://blog.cloudflare.com/cloudflare-pages" tabindex="-1">Announcement blog post</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://www.youtube.com/watch?v=IeHC4NwkEfc" tabindex="-1">First look at Cloudflare Pages (video)</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/pages/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/get-started/c3/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">C3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/get-started/direct-upload/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Direct Upload</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/get-started/git-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Git integration</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Framework guides</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Framework guides</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-analog-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Analog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-angular-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Angular</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-astro-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Astro</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-blazor-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Blazor</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-brunch-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Brunch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-docusaurus-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Docusaurus</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-elderjs-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Elder.js</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-eleventy-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Eleventy</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-emberjs-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Ember</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-gatsby-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gatsby</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-gridsome-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Gridsome</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-hexo-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hexo</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-hono-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hono</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-hugo-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hugo</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-jekyll-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Jekyll</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-an-mkdocs-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">MkDocs</span></a></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Next.js</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/nextjs/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Next.js</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/pages/framework-guides/nextjs/deploy-a-nextjs-site/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Full-stack deployment</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Static deployment</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-nuxt-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Nuxt</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-pelican-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pelican</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-preact-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Preact</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-qwik-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Qwik</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-react-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">React</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-remix-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Remix</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-solid-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Solid</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-sphinx-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sphinx</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-anything/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Static HTML</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-svelte-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Svelte</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-vite3-project/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Vite 3</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-vitepress-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">VitePress</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-vue-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Vue</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/framework-guides/deploy-a-zola-site/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Zola</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Migration guides</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/migrations/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migration guides</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/migrations/migrating-jekyll-from-github-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrating a Jekyll-based site from GitHub Pages</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/migrations/migrating-from-firebase/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrating from Firebase</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/migrations/migrating-from-netlify/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrating from Netlify to Pages</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/migrations/migrating-from-vercel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrating from Vercel to Pages</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/migrations/migrating-from-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Migrating from Workers Sites to Pages</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/branch-build-controls/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Branch deployment controls</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/build-caching/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Build caching</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/build-configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Build configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/build-watch-paths/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Build watch paths</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/custom-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Custom domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/debugging-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Debugging Pages</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/deploy-hooks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy Hooks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/early-hints/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Early Hints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/git-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Git integration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/headers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Headers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/language-support-and-tools/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Language support and tools</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/monorepos/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Monorepos</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/preview-deployments/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Preview deployments</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/redirects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Redirects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">REST API</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/rollbacks/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Rollbacks</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/configuration/serving-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serving Pages</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Functions</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/functions/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Functions</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/get-started/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/routing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Routing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/api-reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API reference</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/functions/examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/examples/ab-testing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">A/B testing with middleware</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/examples/cors-headers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Adding CORS headers</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/middleware/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Middleware</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/wrangler-configuration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/local-development/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Local development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Bindings</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/typescript/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">TypeScript</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/advanced-mode/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Advanced mode</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Pages Plugins</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pages Plugins</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/cloudflare-access/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Access</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/google-chat/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Google Chat</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/graphql/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">GraphQL</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/hcaptcha/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">hCaptcha</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/honeycomb/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Honeycomb</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/sentry/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Sentry</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/static-forms/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Static Forms</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/stytch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Stytch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/turnstile/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Turnstile</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/community-plugins/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Community Plugins</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/plugins/vercel-og/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">vercel/og</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/metrics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/debugging-and-logging/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Debugging and logging</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/module-support/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Module support</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/smart-placement/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Smart Placement (beta)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/functions/source-maps/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Source maps and stack traces</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: How to</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/how-to/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How to</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/custom-branch-aliases/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add a custom domain to a branch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/add-custom-http-headers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Add custom HTTP headers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/deploy-a-wordpress-site/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Deploy a static WordPress site</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/web-analytics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Web Analytics</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/enable-zaraz/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable Zaraz</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/npm-private-registry/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Install private packages</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/preview-with-cloudflare-tunnel/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Preview Local Projects with Cloudflare Tunnel</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/redirect-to-custom-domain/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Redirecting *.pages.dev to a Custom Domain</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/www-redirect/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Redirecting www to domain apex</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/refactor-a-worker-to-pages-functions/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Refactor a Worker to a Pages Function</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/build-commands-branches/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Set build commands per branch</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/use-direct-upload-with-continuous-integration/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use Direct Upload with continuous integration</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/how-to/use-worker-for-ab-testing-in-pages/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use Pages Functions for A/B testing</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/pages/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/platform/changelog/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/pages/platform/known-issues/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Known issues</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/pages/framework-guides/nextjs/deploy-a-nextjs-site.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/pages/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Pages</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/pages/framework-guides/" itemprop="item" class="DocsMarkdown--link" aria-label="Framework guides" title="Framework guides">
+            <span class="DocsMarkdown--link-content" >...</span></a><meta itemprop="name" content="Framework guides" /><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/pages/framework-guides/nextjs/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Next.js</span></a><meta itemprop="position" content="4" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/pages/framework-guides/nextjs/deploy-a-nextjs-site/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Full-stack deployment</span></a><meta itemprop="position" content="5" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="nextjs">Next.js</h1><p><a href="https://nextjs.org" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Next.js</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> is an open-source React framework for creating websites and applications. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.</p>
+<p>This guide will instruct you how to deploy a full-stack Next.js project which uses the <a href="https://nextjs.org/docs/app/api-reference/edge" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edge Runtime</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, via the <a href="https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages/docs" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>next-on-pages</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> adapter.</p>
+<h2 id="create-a-new-project-using-the-create-cloudflare-cli-c3">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#create-a-new-project-using-the-create-cloudflare-cli-c3">&#8203;​</a>
+    </span>
+    <span>Create a new project using the <code>create-cloudflare</code> CLI (C3)</span>
+  </h2><p>The <a href=/pages/get-started/c3/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>create-cloudflare</code> CLI (C3)</span></a> will configure your Next.js site for Cloudflare Pages. Run the following command in your terminal to create a new Next.js site:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;create&#43;cloudflare%40latest&#43;my-next-app&#43;--&#43;--framework%3Dnext"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>C3 will ask you a series of setup questions. C3 will also install necessary dependencies, including the <a href=/workers/wrangler/install-and-update/#check-your-wrangler-version class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a> CLI and the <code>@cloudflare/next-on-pages</code> adapter.</p>
+<p>After creating your project, C3 will generate a new <code>my-next-app</code> directory using the default Next.js template, updated to be fully compatible with Cloudflare Pages.</p>
+<p>When creating your new project, C3 will give you the option of deploying an initial version of your application via <a href=/pages/how-to/use-direct-upload-with-continuous-integration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Direct Upload</span></a>. You can redeploy your application at any time by running following command inside your project directory:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;run&#43;deploy"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Git integration</div><p>The initial deployment created via C3 is referred to as a <a href=/pages/get-started/direct-upload/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Direct Upload</span></a>. To set up a deployment via the Pages Git integration, refer to the <a href=#git-integration class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Git Integration</span></a> section below.</p>
+</aside>
+
+<h2 id="configure-and-deploy-a-project-without-c3">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#configure-and-deploy-a-project-without-c3">&#8203;​</a>
+    </span>
+    <span>Configure and deploy a project without C3</span>
+  </h2><p>If you already have a Next.js project or wish to manually create and deploy one without using C3, Cloudflare recommends that you use <code>@cloudflare/next-on-pages</code> and refer to its <a href="https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">README</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for instructions and additional information to help you develop and deploy your project.</p>
+<h2 id="git-integration">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#git-integration">&#8203;​</a>
+    </span>
+    <span>Git integration</span>
+  </h2><p>In addition to <a href=/pages/get-started/direct-upload/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Direct Upload</span></a> deployments, you can deploy projects via <a href=/pages/configuration/git-integration class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Git integration</span></a>. Git integration allows you to connect a GitHub or GitLab repository to your Pages application and have your Pages application automatically built and deployed after each new commit is pushed to it.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="warning">
+    <div class="DocsMarkdown--aside-header">Git integration</div><p>Currently, you cannot add Git integration to existing Pages applications. If you have already deployed your application, you need to create a new Pages application in order to add Git integration to it.</p>
+</aside>
+<p>Setup requires a basic understanding of <a href="https://git-scm.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Git</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. If you are new to Git, refer to GitHub&rsquo;s <a href="https://guides.github.com/introduction/git-handbook/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">summarized Git handbook</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> on how to set up Git on your local machine.</p>
+
+<h3 id="create-a-new-github-repository">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#create-a-new-github-repository">&#8203;​</a>
+    </span>
+    <span>Create a new GitHub repository</span>
+  </h3>Create a new GitHub repository by visiting <a href="https://repo.new" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">repo.new</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. After creating a new repository, go to your newly created project directory to prepare and push your local application to GitHub by running the following commands in your terminal:
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%23&#43;Skip&#43;the&#43;following&#43;three&#43;commands&#43;if&#43;you&#43;have&#43;built&#43;your&#43;application%0A%23&#43;using&#43;C3&#43;or&#43;already&#43;committed&#43;your&#43;changes%0A%24&#43;git&#43;init%0A%24&#43;git&#43;add&#43;.%0A%24&#43;git&#43;commit&#43;-m&#43;%22Initial&#43;commit%22%0A%0A%24&#43;git&#43;branch&#43;-M&#43;main%0A%24&#43;git&#43;remote&#43;add&#43;origin&#43;https%3A%2F%2Fgithub.com%2F%3Cyour-gh-username%3E%2F%3Crepository-name%3E%0A%24&#43;git&#43;push&#43;-u&#43;origin&#43;main"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="connect-your-application-to-the-github-repository-via-the-cloudflare-dashboard">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#connect-your-application-to-the-github-repository-via-the-cloudflare-dashboard">&#8203;​</a>
+    </span>
+    <span>Connect your application to the GitHub repository via the Cloudflare dashboard</span>
+  </h3><ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and select your account.</li>
+<li>In Account Home, select <strong>Workers &amp; Pages</strong> &gt; <strong>Create application</strong> &gt; <strong>Pages</strong> &gt; <strong>Connect to Git</strong>.</li>
+</ol>
+<p>You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer. However, you will have to manually update this list <a href="https://github.com/settings/installations" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">within your GitHub settings</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> when you want to add more repositories to Cloudflare Pages.</p>
+<ol start="3">
+<li>Select the new GitHub repository that you created and, in the <strong>Set up builds and deployments</strong> section, provide the following information:</li>
+</ol>
+<div class="DocsMarkdown--table-wrap">
+  <div class="DocsMarkdown--table-wrap-inner">
+    <table>
+      <thead>
+        <tr>
+          <th>Configuration option</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Production branch</td>
+          <td><code>main</code></td>
+        </tr>
+        <tr>
+          <td>Build command</td>
+          <td><code>npx @cloudflare/next-on-pages@1</code></td>
+        </tr>
+        <tr>
+          <td>Build directory</td>
+          <td><code>.vercel/output/static</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>Optionally, you can customize the <strong>Project name</strong> field. It defaults to the GitHub repository&rsquo;s name, but it does not need to match. The <strong>Project name</strong> value is assigned as your <code>*.pages.dev</code> subdomain.</p>
+<ol start="4">
+<li>After completing configuration, select <strong>Save and Deploy</strong>.</li>
+</ol>
+<p>You will be able to review your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified. Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.</p>
+<p>Additionally, you will have access to <a href=/pages/configuration/preview-deployments/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">preview deployments</span></a>, which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.</p>
+<h2 id="use-bindings-in-your-nextjs-application">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#use-bindings-in-your-nextjs-application">&#8203;​</a>
+    </span>
+    <span>Use bindings in your Next.js application</span>
+  </h2><p>A <a href=/pages/functions/bindings/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">binding</span></a> allows your application to interact with Cloudflare developer products, such as <a href=/kv/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">KV</span></a>, <a href=/durable-objects/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Durable Objects</span></a>, <a href=/r2/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">R2</span></a>, and <a href=/d1/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">D1</span></a>.</p>
+<p>If you intend to use bindings in your project, you must first set up your bindings for local and remote development.</p>
+
+<h3 id="set-up-bindings-for-local-development">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#set-up-bindings-for-local-development">&#8203;​</a>
+    </span>
+    <span>Set up bindings for local development</span>
+  </h3><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Projects created with C3 have bindings for local development set up by default.</p>
+</aside>
+
+<p>To set up bindings for use in local development, you will use the <code>setupDevPlatform</code> function provided by <a href="https://github.com/cloudflare/next-on-pages/tree/main/internal-packages/next-dev" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>@cloudflare/next-on-pages/next-dev</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>. <code>setupDevPlatform</code> sets up a platform emulation based on your project&rsquo;s <a href=/workers/wrangler/configuration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>wrangler.toml</code></span></a> file that your Next.js application can make use of locally.</p>
+<p>For example, to work with a KV binding locally, open the Next.js configuration file and add:</p>
+<div class="tabs-wrapper" tab-wrapper-id="fef61e51f425b55f">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="fef61e51f425b55f">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-next.config.mjs" data-id="fef61e51f425b55f">
+next.config.mjs
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-next.config.(js|cjs)" data-id="fef61e51f425b55f">
+next.config.(js|cjs)
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab  " id="tab-next.config.mjs-fef61e51f425b55f"><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;next.config.mjs%0Ahighlight%3A&#43;%5B1-7%5D%0A---%0Aimport&#43;%7B&#43;setupDevPlatform&#43;%7D&#43;from&#43;%27%40cloudflare%2Fnext-on-pages%2Fnext-dev%27%0A%0A%2F%2F&#43;note%3A&#43;the&#43;if&#43;statement&#43;is&#43;present&#43;because&#43;you%0A%2F%2F&#43;&#43;&#43;&#43;&#43;&#43;&#43;only&#43;need&#43;to&#43;use&#43;the&#43;function&#43;during&#43;development%0Aif&#43;%28process.env.NODE_ENV&#43;%3D%3D%3D&#43;%27development%27%29&#43;%7B%0A&#43;&#43;await&#43;setupDevPlatform%28%29%0A%7D%0A%0A%2F%2A%2A&#43;%40type&#43;%7Bimport%28%27next%27%29.NextConfig%7D&#43;%2A%2F%0Aconst&#43;nextConfig&#43;%3D&#43;%7B%7D%0A%0Aexport&#43;default&#43;nextConfig"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-next.config.(js|cjs)-fef61e51f425b55f"><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;next.config.js&#43;%2F&#43;next.config.cjs%0Ahighlight%3A&#43;%5B1-6%5D%0A---%0A%2F%2F&#43;note%3A&#43;the&#43;if&#43;statement&#43;is&#43;present&#43;because&#43;you%0A%2F%2F&#43;&#43;&#43;&#43;&#43;&#43;&#43;only&#43;need&#43;to&#43;use&#43;the&#43;function&#43;during&#43;development%0Aif&#43;%28process.env.NODE_ENV&#43;%3D%3D%3D&#43;%22development%22%29&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;setupDevPlatform&#43;%7D&#43;%3D&#43;require%28%22%40cloudflare%2Fnext-on-pages%2Fnext-dev%22%29%0A&#43;&#43;setupDevPlatform%28%29%0A%7D%0A%0A%2F%2A%2A&#43;%40type&#43;%7Bimport%28%27next%27%29.NextConfig%7D&#43;%2A%2F%0Aconst&#43;nextConfig&#43;%3D&#43;%7B%7D%0A%0Amodule.exports&#43;%3D&#43;nextConfig"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<p>Make sure to have a <code>wrangler.toml</code> file at the root of your project with a declaration for a KV binding named <code>MY_KV</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="---%0Afilename%3A&#43;wrangler.toml%0Ahighlight%3A&#43;%5B5-7%5D%0A---%0Aname&#43;%3D&#43;%22my-next-app%22%0A%0Acompatibility_flags&#43;%3D&#43;%5B%22nodejs_compat%22%5D%0A%0A%5B%5Bkv_namespaces%5D%5D%0Abinding&#43;%3D&#43;%22MY_KV%22%0Aid&#43;%3D&#43;%22%3CYOUR_KV_NAMESPACE_ID%3E%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="set-up-bindings-for-a-deployed-application">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#set-up-bindings-for-a-deployed-application">&#8203;​</a>
+    </span>
+    <span>Set up bindings for a deployed application</span>
+  </h3><p>To access bindings in a deployed application, you will need to <a href=/pages/functions/bindings/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">configure</span></a> any necessary bindings and connect them to your project via your project&rsquo;s settings page in the Cloudflare dashboard.</p>
+<h3 id="add-bindings-to-typescript-projects">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#add-bindings-to-typescript-projects">&#8203;​</a>
+    </span>
+    <span>Add bindings to Typescript projects</span>
+  </h3><p>If your project is using TypeScript, you will want to set up proper type support so you can access your bindings in a type-safe and convenient manner.</p>
+<p>To get proper type support, you need to create a new <code>env.d.ts</code> file in your project and extend the <code>CloudflareEnv</code> (used by <code>getRequestContext</code>) interface with your <a href=/pages/functions/bindings/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">bindings</span></a>.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Projects created with C3 have a default <code>env.d.ts</code> file.</p>
+</aside>
+
+<p>The following is an example of how to add a <code>KVNamespace</code> binding:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;env.d.ts%0Ahighlight%3A&#43;%5B7%5D%0A---%0Ainterface&#43;CloudflareEnv&#43;%7B%0A&#43;&#43;%2F%2F&#43;The&#43;KV&#43;Namespace&#43;binding&#43;type&#43;used&#43;here&#43;comes%0A&#43;&#43;%2F%2F&#43;from&#43;%60%40cloudflare%2Fworkers-types%60.&#43;To&#43;use&#43;it&#43;in&#43;such%0A&#43;&#43;%2F%2F&#43;a&#43;way&#43;make&#43;sure&#43;that&#43;you&#43;have&#43;installed&#43;the&#43;package%0A&#43;&#43;%2F%2F&#43;as&#43;a&#43;dev&#43;dependency&#43;and&#43;you&#43;have&#43;added&#43;it&#43;to&#43;your%0A&#43;&#43;%2F%2F%60tsconfig.json%60&#43;file&#43;under&#43;%60compilerOptions.types%60.%0A&#43;&#43;MY_KV%3A&#43;KVNamespace%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="access-bindings-in-the-application">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#access-bindings-in-the-application">&#8203;​</a>
+    </span>
+    <span>Access bindings in the application</span>
+  </h3><p>Local and remote bindings can be accessed using the <a href="https://github.com/cloudflare/next-on-pages/blob/3846730c4a0d12/packages/next-on-pages/README.md#cloudflare-platform-integration" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>getRequestContext</code> function</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> exposed by <code>@cloudflare/next-on-pages</code>. The following code example shows how to access them in a <code>hello</code> API route of an App Router application.</p>
+<div class="tabs-wrapper" tab-wrapper-id="47eaa30e567879bf">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="47eaa30e567879bf">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label" href="#" data-link="tab-js" data-id="47eaa30e567879bf">
+<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+    xmlns="http://www.w3.org/2000/svg">
+<path
+  d="M32 32v448h448V32zm240 348c0 43.61-25.76 64.87-63.05 64.87-33.68 0-53.23-17.44-63.15-38.49l34.28-20.75c6.61 11.73 11.63 21.65 26.06 21.65 12 0 21.86-5.41 21.86-26.46V240h44zm99.35 63.87c-39.09 0-64.35-17.64-76.68-42L329 382c9 14.74 20.75 24.56 41.5 24.56 17.44 0 27.57-7.72 27.57-19.75 0-14.43-10.43-19.54-29.68-28l-10.52-4.52c-30.38-12.92-50.52-29.16-50.52-63.45 0-31.57 24.05-54.63 61.64-54.63 26.77 0 46 8.32 59.85 32.68L396 290c-7.22-12.93-15-18-27.06-18-12.33 0-20.15 7.82-20.15 18 0 12.63 7.82 17.74 25.86 25.56l10.52 4.51c35.79 15.34 55.94 31 55.94 66.16.01 37.9-29.76 57.64-69.76 57.64z"
+  role="graphics-symbol">
+</path>
+</svg>
+JavaScript
+</a>
+
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label" href="#" data-link="tab-ts" data-id="47eaa30e567879bf">
+  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"
+      role="graphics-symbol">
+    </path>
+  </svg>
+  TypeScript
+</a>
+
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab tab-default " id="tab-js-47eaa30e567879bf"><div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;app%2Fapi%2Fhello%2Froute.js%0Ahighlight%3A&#43;%5B1%2C&#43;9%5D%0A---%0Aimport&#43;%7B&#43;getRequestContext&#43;%7D&#43;from&#43;%27%40cloudflare%2Fnext-on-pages%27%0A%0Aexport&#43;const&#43;runtime&#43;%3D&#43;%27edge%27%0A%0A%2F%2F&#43;...%0A%0Aexport&#43;async&#43;function&#43;GET%28request%29&#43;%7B%0A&#43;&#43;%2F%2F&#43;this&#43;is&#43;the&#43;KV&#43;binding&#43;you&#43;defined&#43;in&#43;the&#43;wrangler.toml&#43;file%0A&#43;&#43;const&#43;myKv&#43;%3D&#43;getRequestContext%28%29.env.MY_KV%0A%0A&#43;&#43;%2F%2F&#43;get&#43;a&#43;value&#43;from&#43;the&#43;namespace%0A&#43;&#43;const&#43;kvValue&#43;%3D&#43;await&#43;myKv.get%28%60kvTest%60%29&#43;%7C%7C&#43;false%0A%0A&#43;&#43;return&#43;new&#43;Response%28%60The&#43;value&#43;of&#43;kvTest&#43;in&#43;MY_KV&#43;is%3A&#43;%24%7BkvValue%7D%60%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-ts-47eaa30e567879bf"><div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;app%2Fapi%2Fhello%2Froute.ts%0Ahighlight%3A&#43;%5B2%2C&#43;10%5D%0A---%0Aimport&#43;type&#43;%7B&#43;NextRequest&#43;%7D&#43;from&#43;%27next%2Fserver%27%0Aimport&#43;%7B&#43;getRequestContext&#43;%7D&#43;from&#43;%27%40cloudflare%2Fnext-on-pages%27%0A%0Aexport&#43;const&#43;runtime&#43;%3D&#43;%27edge%27%0A%0A%2F%2F&#43;...%0A%0Aexport&#43;async&#43;function&#43;GET%28request%3A&#43;NextRequest%29&#43;%7B%0A&#43;&#43;%2F%2F&#43;this&#43;is&#43;the&#43;KV&#43;binding&#43;you&#43;defined&#43;in&#43;the&#43;wrangler.toml&#43;file%0A&#43;&#43;const&#43;myKv&#43;%3D&#43;getRequestContext%28%29.env.MY_KV%0A%0A&#43;&#43;%2F%2F&#43;get&#43;a&#43;value&#43;from&#43;the&#43;namespace%0A&#43;&#43;const&#43;kvValue&#43;%3D&#43;await&#43;myKv.get%28%60kvTest%60%29&#43;%7C%7C&#43;false%0A%0A&#43;&#43;return&#43;new&#43;Response%28%60The&#43;value&#43;of&#43;kvTest&#43;in&#43;MY_KV&#43;is%3A&#43;%24%7BkvValue%7D%60%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<h2 id="image-component">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#image-component">&#8203;​</a>
+    </span>
+    <span><code>Image</code> component</span>
+  </h2><p>The Cloudflare network does not provide the same image optimization support as the Vercel network does. Because of this, the Next.js&rsquo; <code>&lt;Image /&gt;</code> component behaves differently from how it would in the Vercel network.</p>
+<ul>
+<li>
+<p>If you build your application as a static site, the <code>&lt;Image /&gt;</code> component will not serve any images.</p>
+</li>
+<li>
+<p>If you build your application using <code>@cloudflare/next-on-pages</code>, the component will work but it will not perform any image optimization (regardless of the <a href="https://react.dev/learn/passing-props-to-a-component" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">props</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> you pass to it).</p>
+</li>
+</ul>
+<p>Both cases can be improved by setting up proper <a href="https://nextjs.org/docs/pages/api-reference/components/image#loader" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">loaders</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for the <code>&lt;Image /&gt;</code> component, which allow you to use any image optimization service you want. To use <a href=/images/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Images</span></a>, refer to <a href=/images/transform-images/transform-via-workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">resize with Cloudflare Workers</span></a>.</p>
+<h2 id="recommended-development-workflow">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#recommended-development-workflow">&#8203;​</a>
+    </span>
+    <span>Recommended development workflow</span>
+  </h2><p>When developing a <code>next-on-pages</code> application, this is the development workflow that Cloudflare recommends:</p>
+<h3 id="develop-using-the-standard-nextjs-dev-server">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#develop-using-the-standard-nextjs-dev-server">&#8203;​</a>
+    </span>
+    <span>Develop using the standard Next.js dev server</span>
+  </h3><p>The <a href="https://nextjs.org/docs/getting-started/installation#run-the-development-server" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">standard development server provided by Next.js</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> is the best available option for a fast and polished development experience. The <code>next-dev</code> submodule (as described in the <a href=#set-up-bindings-for-local-development class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">local bindings</span></a> section) makes it possible to use Next.js&rsquo; standard development server while still having access to your Cloudflare bindings.</p>
+<h3 id="build-and-preview-your-application-locally">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#build-and-preview-your-application-locally">&#8203;​</a>
+    </span>
+    <span>Build and preview your application locally</span>
+  </h3><p>To ensure that your application is being built in a manner that is fully compatible with Cloudflare Pages, before deploying it, or whenever you are comfortable checking the correctness of the application during your development process, you will want to build and preview it locally using Cloudflare&rsquo;s <code>workerd</code> JavaScript runtime.</p>
+<p>If you have created your project with C3, do this by running:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;run&#43;preview"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>If you have created your project without C3, run:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;%40cloudflare%2Fnext-on-pages%401"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>And preview your project by running:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;pages&#43;dev&#43;.vercel%2Foutput%2Fstatic"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>The <a href=/workers/wrangler/commands/#dev-1 class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>wrangler pages dev</code></span></a> command needs to run the application using the <a href=/workers/configuration/compatibility-dates/#nodejs-compatibility-flag class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>nodejs_compat</code></span></a> compatibility flag. The <code>nodejs_compat</code> flag can be specified in either your project&rsquo;s <code>wrangler.toml</code> file or provided to the command as an inline argument: <code>--compatibility-flag=nodejs_compat</code>.</p>
+</aside>
+
+<h3 id="deploy-your-application-and-iterate">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#deploy-your-application-and-iterate">&#8203;​</a>
+    </span>
+    <span>Deploy your application and iterate</span>
+  </h3><p>After you have previewed your application locally, you can deploy it to Cloudflare Pages (both via <a href=/pages/get-started/direct-upload/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Direct Uploads</span></a> or <a href=/pages/configuration/git-integration/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Git integration</span></a>) and iterate over the process to make new changes.</p>
+<h2 id="troubleshooting">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#troubleshooting">&#8203;​</a>
+    </span>
+    <span>Troubleshooting</span>
+  </h2><p>Review common mistakes and issues that you might encounter when developing a Next.js application using <code>next-on-pages</code>.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Tip</div><p>Using the official <a href="https://www.npmjs.com/package/eslint-plugin-next-on-pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">next-on-pages ESLint plugin</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> (especially with the <code>recommended</code> rules)
+helps you avoid issues like the ones presented in this section, giving you helpful and actionable feedback directly in your IDE.</p>
+</aside>
+
+<h3 id="edge-runtime">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#edge-runtime">&#8203;​</a>
+    </span>
+    <span>Edge runtime</span>
+  </h3><p>All server-side routes in your Next.js project must be configured as Edge runtime routes when running on Cloudflare Pages. You must add <code>export const runtime = 'edge'</code> to each individual server-side route.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>If you are using the Pages router, for page routes, you need to use <code>'experimental-edge'</code> instead of <code>'edge'</code>.</p>
+</aside>
+
+<h3 id="app-router">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#app-router">&#8203;​</a>
+    </span>
+    <span>App router</span>
+  </h3><h4 id="not-found">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#not-found">&#8203;​</a>
+    </span>
+    <span>Not found</span>
+  </h4><p>Next.js generates a <code>not-found</code> route for your application under the hood during the build process. In some circumstances, Next.js can detect that the route requires server-side logic (particularly if computation is being performed in the root layout component) and Next.js might create a Node.js serverless function (which, as such, is incompatible with <code>@cloudflare/next-on-pages</code>).</p>
+<p>To prevent this incompatibility, Cloudflare recommends to always provide a custom <code>not-found</code> route which explicitly opts in the edge runtime:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;%28src%2F%29app%2Fnot-found.%28jsx%7Ctsx%29%0A---%0A%0Aexport&#43;const&#43;runtime&#43;%3D&#43;%27edge%27%0A%0Aexport&#43;default&#43;async&#43;function&#43;NotFound%28%29&#43;%7B%0A&#43;&#43;&#43;&#43;%2F%2F&#43;...%0A&#43;&#43;&#43;&#43;return&#43;%28%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;...%0A&#43;&#43;&#43;&#43;%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Projects created with C3 have a default custom <code>not-found</code> page already created for them.</p>
+</aside>
+
+<h4 id="generatestaticparams">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#generatestaticparams">&#8203;​</a>
+    </span>
+    <span><code>generateStaticParams</code></span>
+  </h4><p>When doing static site generation (SSG) in the <a href="https://nextjs.org/docs/getting-started/project-structure" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>/app</code> directory</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and using the <a href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>generateStaticParams</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> function, Next.js by default tries to handle requests for non statically generated routes on-demand via Node.js serverless functions which, as such, are incompatible with <code>@cloudflare/next-on-pages</code>.</p>
+<p>To avoid such problem make sure to have your route opted in the edge runtime as mentioned <a href=#edge-runtime class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">above</span></a> (which however nullifies SSG since currently Next.js does not support SSG with the edge runtime).</p>
+<p>Or alternatively you can opt out of the dynamic routes handling by specifying a <code>false</code> <a href="https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>dynamicParams</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="diff" data-code="---%0Afilename%3A&#43;app%2Fmy-example-page%2F%5Bslug%5D%2Fpage.jsx%0A---%0A%2B&#43;export&#43;const&#43;dynamicParams&#43;%3D&#43;false%0A%0A%2F%2F&#43;..."></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h4 id="top-level-getrequestcontext">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#top-level-getrequestcontext">&#8203;​</a>
+    </span>
+    <span>Top-level <code>getRequestContext</code></span>
+  </h4><p>The <code>getRequestContext</code> function cannot be called at the top level of a route file or in any manner that triggers the function call as part of the file&rsquo;s initialization.</p>
+<p><code>getRequestContext</code> must be called inside the request handling process logic and not in a global/unconditional manner that gets triggered as soon as the file is imported.</p>
+<p>For example, the following is an incorrect usage of <code>getRequestContext</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;app%2Fapi%2Fmyvar%2Froute.js%0Ahighlight%3A&#43;%5B5%5D%0A---%0Aimport&#43;%7B&#43;getRequestContext&#43;%7D&#43;from&#43;%27%40cloudflare%2Fnext-on-pages%27%0A%0Aexport&#43;const&#43;runtime&#43;%3D&#43;%27edge%27%0A%0Aconst&#43;myVariable&#43;%3D&#43;getRequestContext%28%29.env.MY_VARIABLE%0A%0Aexport&#43;async&#43;function&#43;GET%28request%29&#43;%7B%0A&#43;&#43;return&#43;new&#43;Response%28myVariable%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>The above example can be fixed in the following way:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;app%2Fapi%2Fmyvar%2Froute.js%0Ahighlight%3A&#43;%5B6%5D%0A---%0Aimport&#43;%7B&#43;getRequestContext&#43;%7D&#43;from&#43;%27%40cloudflare%2Fnext-on-pages%27%0A%0Aexport&#43;const&#43;runtime&#43;%3D&#43;%27edge%27%0A%0Aexport&#43;async&#43;function&#43;GET%28request%29&#43;%7B%0A&#43;&#43;const&#43;myVariable&#43;%3D&#43;getRequestContext%28%29.env.MY_VARIABLE%0A&#43;&#43;return&#43;new&#43;Response%28myVariable%29%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h3 id="pages-router">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#pages-router">&#8203;​</a>
+    </span>
+    <span>Pages router</span>
+  </h3><h4 id="getstaticpaths">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#getstaticpaths">&#8203;​</a>
+    </span>
+    <span><code>getStaticPaths</code></span>
+  </h4><p>When doing static site generation (SSG) in the <a href="https://nextjs.org/docs/getting-started/project-structure" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>/pages</code> directory</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> and using the <a href="https://nextjs.org/docs/pages/api-reference/functions/get-static-paths" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>getStaticPaths</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> function, Next.js by default tries to handle requests for non statically generated routes on-demand via Node.js serverless functions which, as such, are incompatible with <code>@cloudflare/next-on-pages</code>.</p>
+<p>To avoid such problem make sure to have your route opted in the edge runtime as mentioned <a href=#edge-runtime class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">above</span></a> (which however nullifies SSG since currently Next.js does not support SSG with the edge runtime).</p>
+<p>Or alternatively you can opt out of the dynamic routes handling by specifying a <a href="https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-false" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">false <code>fallback</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="diff" data-code="---%0Afilename%3A&#43;pages%2Fmy-example-page%2F%5Bslug%5D.jsx%0A---%0A%2F%2F&#43;...%0A%0Aexport&#43;async&#43;function&#43;getStaticPaths%28%29&#43;%7B%0A&#43;&#43;&#43;&#43;%2F%2F&#43;...%0A%0A&#43;&#43;&#43;&#43;return&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;paths%2C%0A%2B&#43;&#43;&#43;&#43;&#43;&#43;&#43;fallback%3A&#43;false%2C%0A%09%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="warning"><p>When opting for the latter please keep in mind that the <code>paths</code> array cannot be empty since an empty <code>paths</code> array causes Next.js to ignore the provided <code>fallback</code> value. At build time, make sure that at least one entry is present in the array.</p>
+</aside>
+
+
+
+
+<h2 id="learn-more">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#learn-more">&#8203;​</a>
+    </span>
+    <span>Learn more</span>
+  </h2><p>By completing this guide, you have successfully deployed your Next.js site to Cloudflare Pages. To get started with other frameworks, <a href=/pages/framework-guides/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">refer to the list of Framework guides</span></a>.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/cloudflare-pages/69" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/performance/what-is-jamstack/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/pages/framework-guides/nextjs/deploy-a-nextjs-site.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-05-29T13:25:24&#43;01:00
+  title=2024-05-29
+>May 29, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

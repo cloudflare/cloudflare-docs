@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available itemscope itemtype="https://schema.org/FAQPage">
+  <head>
+
+  <meta charset="utf-8">
+  <title>FAQ · Cloudflare Registrar docs</title>
+  <meta name="title" content="FAQ · Cloudflare Registrar docs" />
+  <meta name="image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="FAQ · Cloudflare Registrar docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="FAQ · Cloudflare Registrar docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the community page to …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+  <meta property="og:title" content="FAQ · Cloudflare Registrar docs" />
+  <meta property="og:description" content="Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the community page to …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/registrar/faq/" />
+
+  <meta name="twitter:title" content="FAQ · Cloudflare Registrar docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+  <meta name="twitter:description" content="Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the community page to …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="registrar"><meta name="algolia_product_filter" content="Registrar"><meta name="algolia_page_title" content="FAQ">
+  <meta name="pcx_word_count" content="2100"><meta name="pcx_last_modified" content="85"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="faq" />
+  <meta name="algolia_content_type" content="Faq"><meta name="pcx_content_group" content="Consumer services" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/registrar/faq/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"registrar"}</script>
+  <meta name="docsearch:product" content="registrar" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - daccf84d4ccc4e1db548f65cb8fcda2e" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - daccf84d4ccc4e1db548f65cb8fcda2e">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/registrar/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Registrar logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z"/><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z" fill="url(#a)"/><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z" fill="url(#b)"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z" fill="url(#c)"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z" fill="url(#d)"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z" fill="url(#e)"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z" fill="url(#f)"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z" fill="url(#g)"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z" fill="url(#h)"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z" fill="url(#i)"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z" fill="url(#j)"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Registrar</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - dab658fdcf8f4bc254cccddc4c48aee1" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - dab658fdcf8f4bc254cccddc4c48aee1">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/registrar/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Registrar logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z"/><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z" fill="url(#a)"/><path d="M24.629 4.509c-.125-.009-.25-.009-.375-.009h-.245a19.5 19.5 0 0 0 0 39h.245a19.5 19.5 0 0 0 .375-38.991Zm14.325 12.496h-3.85a22.867 22.867 0 0 0-2.925-7.338 16.618 16.618 0 0 1 6.773 7.338h.002ZM25.5 7.685c2.788.824 5.277 4.37 6.525 9.32H25.5v-9.32Zm-3 .182v9.138h-6.012c1.168-4.647 3.433-8.054 6.012-9.138Zm-5.897 1.39a22.406 22.406 0 0 0-3.198 7.748h-4.34a16.613 16.613 0 0 1 7.538-7.748ZM8.935 30.71h4.407a22.666 22.666 0 0 0 3.245 8.025 16.605 16.605 0 0 1-7.652-8.025ZM22.5 40.137c-2.641-1.1-4.938-4.621-6.083-9.427H22.5v9.427Zm3 .18V30.71h6.592c-1.218 5.112-3.742 8.77-6.592 9.608Zm6.694-1.994a23.12 23.12 0 0 0 2.972-7.613h3.916a16.603 16.603 0 0 1-6.889 7.615v-.002ZM7.93 27.71a16.568 16.568 0 0 1 .068-7.705h32.025c.628 2.527.651 5.167.068 7.705H7.93Z" fill="url(#b)"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z" fill="url(#c)"/><path d="M18.707 24.497h-.032l-.546-2.343H16.98l-.532 2.358h-.031l-.496-2.358h-1.177l.958 3.682h1.256l.576-2.145h.04l.576 2.145h1.253l.961-3.682H19.19l-.482 2.343Z" fill="url(#d)"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z" fill="url(#e)"/><path d="M24.53 24.497h-.032l-.546-2.343h-1.149l-.532 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.576 2.145h1.254l.96-3.682h-1.176l-.482 2.343Z" fill="url(#f)"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z" fill="url(#g)"/><path d="M30.352 24.497h-.032l-.546-2.343h-1.148l-.533 2.358h-.03l-.497-2.358h-1.177l.959 3.682h1.256l.575-2.145h.04l.577 2.145h1.253l.962-3.682h-1.178l-.481 2.343Z" fill="url(#h)"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z" fill="url(#i)"/><path d="M32.643 24.666a.6.6 0 0 0-.442.181.58.58 0 0 0-.181.435.59.59 0 0 0 .181.442.6.6 0 0 0 .442.182.578.578 0 0 0 .306-.085.663.663 0 0 0 .225-.225.6.6 0 0 0 .04-.552.588.588 0 0 0-.14-.197.6.6 0 0 0-.431-.181Z" fill="url(#j)"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:9">Registrar</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Registrar menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/registrar/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/about/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">About</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/registrar/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/get-started/register-domain/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Register a new domain</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/get-started/transfer-domain-to-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Transfer your domain to Cloudflare</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/get-started/enable-dnssec/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Enable DNSSEC</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Account options</span>
+    </button><a class="DocsSidebar--nav-link"  href="/registrar/account-options/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Account options</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/whois-redaction/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">WHOIS redaction</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/domain-management/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Domain management</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/icloud-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">iCloud Custom Email Domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/domain-contact-updates/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Registrant contact updates</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/renew-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Renew domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/account-options/transfer-out-from-cloudflare/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Transfer domain out from Cloudflare</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Top Level Domains supported</span>
+    </button><a class="DocsSidebar--nav-link"  href="/registrar/top-level-domains/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Top Level Domains supported</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/top-level-domains/uk-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">.UK domains</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/top-level-domains/us-domains/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">.US domains</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/custom-domain-protection/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare Custom Domain Protection</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/registrar/faq/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">FAQ</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/registrar-domains-list-domains"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API reference</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/registrar/troubleshooting/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshoot failed domain transfers</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/registrar/faq.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/registrar/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Registrar</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/registrar/faq/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >FAQ</span></a><meta itemprop="position" content="3" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="faq">FAQ</h1><p>Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the <a href="https://community.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">community page</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to explore more resources.</p>
+<ul>
+<li><a href=#domain-transfers class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Domain transfers</span></a></li>
+<li><a href=#domain-registrations class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Domain registrations</span></a></li>
+<li><a href=#billing class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Billing</span></a></li>
+</ul>
+<h2 id="domain-transfers">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#domain-transfers">&#8203;​</a>
+    </span>
+    <span>Domain transfers</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="why-did-my-transfer-fail" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-did-my-transfer-fail"
+    >&#8203;​</a
+    >
+</span>
+<span>Why did my transfer fail?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Domain transfers sometimes fail. Refer to <a href=/registrar/troubleshooting/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Registrar: troubleshoot stalled domain transfers</span></a> for more information on what might have happened and how to solve the issue.</p>
+<p>If you cannot solve the issue, open a support ticket or contact your account team.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="why-did-my-domains-expiration-date-change-after-transferring-it-to-cloudflare" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-did-my-domains-expiration-date-change-after-transferring-it-to-cloudflare"
+    >&#8203;​</a
+    >
+</span>
+<span>Why did my domain&rsquo;s expiration date change after transferring it to Cloudflare?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>ICANN requires that any transfer also extends the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2021, but it expires on March 10, 2022, your new expiration date will be March 10, 2023.</p>
+<p>Whenever a domain is first registered, the registrant purchases control of that domain for some number of years — up to 10 years. For example, a domain registered on October 8, 2020 will have an expiration date of October 8th in some year between 2021 and 2030, depending on the amount of years originally purchased.</p>
+<p>Transferring a domain adds time to the current expiration date, unless your domain already has <a href=#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">10 years on the term</span></a>.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="what-happens-to-my-nameservers-when-i-transfer-my-domain-to-cloudflare" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-happens-to-my-nameservers-when-i-transfer-my-domain-to-cloudflare"
+    >&#8203;​</a
+    >
+</span>
+<span>What happens to my nameservers when I transfer my domain to Cloudflare?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">Cloudflare Registrar only supports transfers of domains that are active on a Cloudflare <a href=/dns/zone-setups/full-setup/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">full setup</span></a>. Domains on Cloudflare use <a href=/dns/zone-setups/reference/nameserver-assignment/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">nameservers assigned by Cloudflare</span></a> to the associated account and those nameservers must remain in place for the domain to be Active.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="how-can-i-see-the-status-of-my-domain-transfer" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-can-i-see-the-status-of-my-domain-transfer"
+    >&#8203;​</a
+    >
+</span>
+<span>How can I see the status of my domain transfer?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Once you initiate a domain transfer, your previous registrar has five days to release the domain. In most cases, they will send you an email to confirm you want to transfer. If you actively acknowledge that email (through a link or the registrar&rsquo;s dashboard), they can process it immediately.</p>
+<p>To see the progress of your transfer, log in to the Cloudflare dashboard and select your account. Then, select <strong>Domain Registration</strong> &gt; <strong>Transfer Domains</strong> to see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.</p>
+<p>Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under <strong>Overview</strong> of that site.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="why-am-i-not-allowed-to-transfer-my-domain" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-am-i-not-allowed-to-transfer-my-domain"
+    >&#8203;​</a
+    >
+</span>
+<span>Why am I not allowed to transfer my domain?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, Cloudflare will be unable to process your transfer immediately.</p>
+<p>You can leave the domain <strong>In Progress</strong> and Cloudflare will wait until after the 60-day window passes to attempt to process the transfer.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Note</div><p>This information does not apply to <code>.uk</code> domains.</p>
+</aside>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="why-am-i-not-able-to-start-a-transfer" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-am-i-not-able-to-start-a-transfer"
+    >&#8203;​</a
+    >
+</span>
+<span>Why am I not able to start a transfer?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">If you have an <a href=/fundamentals/setup/account/verify-email-address/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">unverified email address</span></a>, you might experience issues when initiating a domain transfer.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="what-happens-if-i-enter-the-wrong-auth-code" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-happens-if-i-enter-the-wrong-auth-code"
+    >&#8203;​</a
+    >
+</span>
+<span>What happens if I enter the wrong auth code?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">If you enter an incorrect auth code (also referred to as authentication code or authorization code), return to the <strong>Domain Registration</strong> page or the <strong>Overview</strong> for your site. You can use the available input field to reenter your authentication code.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare"
+    >&#8203;​</a
+    >
+</span>
+<span>If I registered my domain for 10 years at another registrar, will I gain another year if I transfer it to Cloudflare?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
+    </div>
+</div>
+</div>
+<hr>
+<h2 id="domain-registrations">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#domain-registrations">&#8203;​</a>
+    </span>
+    <span>Domain registrations</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare"
+    >&#8203;​</a
+    >
+</span>
+<span>My domain’s registration was not extended by one year after transferring to Cloudflare</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>When you transfer your domain to Cloudflare, the registry will extend your registration by one year. However, in one specific circumstance your transfer could result in you keeping your original expiration date.</p>
+<p>When a domain expires, the registration enters the auto-renew grace period. During that time, you can renew the domain at your registrar to avoid losing it. If your domain expires at your current registrar, you renew it and then transfer to Cloudflare within 45 days, the registry can restrict the addition of an extra year.</p>
+<p>Say you have <code>example.com</code> registered and it expires on December 10, 2021. You decide to renew it during the auto-renew grace period on December 20, 2021. That renewal extends the registration to December 20, 2022. You then transfer to Cloudflare on December 30, 2021. Since that transfer is within 45 days of the expiration, the registry may not add the year to your registration. When you transfer to Cloudflare or any registrar in this circumstance, your expiration can still remain December 20th, 2022.</p>
+<p>If a year is not added to your registration, you have effectively paid twice for the same added year. Per ICANN rules, you are entitled to request a refund at your previous registrar.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="what-happens-when-a-domain-expires" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-happens-when-a-domain-expires"
+    >&#8203;​</a
+    >
+</span>
+<span>What Happens When a Domain Expires?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>In summary, here is what will happen after a domain expires:</p>
+<ul>
+<li><strong>Day 0</strong>: Expiration Date.</li>
+<li><strong>Day 1 - 30</strong>: Grace Period (domain resolves normally).</li>
+<li><strong>Day 31 - 40</strong>: Suspension Period (domains resolves to suspension page).</li>
+<li><strong>Day 41 - 70</strong>: Redemption Period.</li>
+<li><strong>Day 71 - 75</strong>: Pending Delete Period.</li>
+</ul>
+<p>Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs).</p>
+<p>During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page.</p>
+<p>The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.</p>
+<p>If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of dash will display a message indicating the domain is restorable. You will then will be able to initiate the restore process directly from the dashboard.</p>
+
+    </div>
+</div>
+</div>
+<h2 id="domain-restoration">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#domain-restoration">&#8203;​</a>
+    </span>
+    <span>Domain restoration</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="which-domains-are-eligible-to-be-restored" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#which-domains-are-eligible-to-be-restored"
+    >&#8203;​</a
+    >
+</span>
+<span>Which domains are eligible to be restored?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Domains that are in the Redemption Period and have an EPP status of redemptionPeriod may be restored. For most TLDs this will include domains that are between 40 and 70 days past expiration.</p>
+<p>Currently <code>.uk</code> domains cannot be restored using this process. We are working on an alternative process for <code>.uk</code> domains and will provide additional information at a later date.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="is-there-a-fee-to-restore-a-domain" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#is-there-a-fee-to-restore-a-domain"
+    >&#8203;​</a
+    >
+</span>
+<span>Is there a fee to restore a domain?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Yes, in most cases there is a restore fee.</p>
+<p>The amount varies depending on the TLD. The restore fee is separate from the renewal fee. You will be presented with both the restore and renewal fees before confirming they wish to proceed.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="will-the-domain-be-renewed-after-the-restore-has-completed" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#will-the-domain-be-renewed-after-the-restore-has-completed"
+    >&#8203;​</a
+    >
+</span>
+<span>Will the domain be renewed after the restore has completed?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>Yes. We will attempt to renew the domain after the restore has been completed. While not common, it is possible for the renewal transaction to fail.</p>
+<p>In the event of a failure, we will make several retry attempts. If we are unable to process the renewal after several retries, you will be presented with a message that you should contact support for assistance.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="how-long-does-the-restore-process-take" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-long-does-the-restore-process-take"
+    >&#8203;​</a
+    >
+</span>
+<span>How long does the restore process take?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>The entire process can take a few minutes to complete.</p>
+<p>There are multiple steps to the restore process, and each step must be completed in a specific sequence. These steps are performed automatically by the system. The UI will continue to poll for an updated status and will provide feedback as each step completes.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="what-happens-if-the-domain-renewal-fails" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#what-happens-if-the-domain-renewal-fails"
+    >&#8203;​</a
+    >
+</span>
+<span>What happens if the domain renewal fails?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>The restore and the renewal are two distinct processes that happen sequentially.</p>
+<p>In rare cases the domain may be successfully restored but the renewal fails. We will make several attempts to renew the domain. However, should all the renewals fail the customer may attempt to manually renew the domain or contact support so we may investigate the cause of the failure.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="can-a-restore-be-reversed-or-refunded" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#can-a-restore-be-reversed-or-refunded"
+    >&#8203;​</a
+    >
+</span>
+<span>Can a restore be reversed or refunded?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>No. Once a restore has been completed it can not be reversed. It may be possible to delete the domain again but there are no refunds.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Note</div><p>Domain names should be released after a period of 75 days, although the exact deletion timeline is ultimately determined by the domain&rsquo;s registry. You should monitor the domain status to ascertain when it will become available for registration once again.</p>
+</aside>
+
+    </div>
+</div>
+</div>
+<hr>
+<h2 id="domain-deletions">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#domain-deletions">&#8203;​</a>
+    </span>
+    <span>Domain deletions</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="why-am-i-unable-to-delete-my-registrar-domain" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#why-am-i-unable-to-delete-my-registrar-domain"
+    >&#8203;​</a
+    >
+</span>
+<span>Why am I unable to delete my Registrar domain?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>A domain can only be deleted if all the following conditions are met:</p>
+<ul>
+<li>The user initiating the action is a Super Admin or Read/Write Administrator.</li>
+<li>The domain is not delete locked at the registry with either <code>clientDeleteProhibited</code> or <code>serverDeleteProhibited</code>.</li>
+<li>The domain is not already in <code>pendingDelete</code>, <code>redemptionPeriod</code>, or in <code>pendingTransfer</code>.</li>
+<li>The domain has not been administratively locked by Cloudflare.  This typically occurs for legal reasons such as a UDRP filing or court order, but may also be the result of an abuse or payment investigation.</li>
+<li>The domain is NOT a .UK domain. .UK domains currently cannot be deleted at the registry.</li>
+</ul>
+<p>If any of the above conditions are not met, the domain cannot be deleted.</p>
+
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="who-has-permission-to-delete-a-domain-registration" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#who-has-permission-to-delete-a-domain-registration"
+    >&#8203;​</a
+    >
+</span>
+<span>Who has permission to delete a domain registration?</span>
+  </h3>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">Only Super Admins and Administrators with Read/Write access can initiate the deletion of a domain.  Note that only Super Admins will receive the email with the delete token.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="will-i-receive-a-refund-for-my-deleted-domain-registration" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#will-i-receive-a-refund-for-my-deleted-domain-registration"
+    >&#8203;​</a
+    >
+</span>
+<span>Will I receive a refund for my deleted domain registration?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">No. Refunds will not be issued for costs incurred by a domain registration.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="how-do-i-get-the-domain-deletion-token" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-do-i-get-the-domain-deletion-token"
+    >&#8203;​</a
+    >
+</span>
+<span>How do I get the domain deletion token?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">The delete token is only sent to the Super Admins of the account. If the user requesting the deletion is not a Super Admin they will need to obtain the delete token from one of the Super Admins of the account.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="how-long-is-the-domain-deletion-token-valid-for" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-long-is-the-domain-deletion-token-valid-for"
+    >&#8203;​</a
+    >
+</span>
+<span>How long is the domain deletion token valid for?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">The delete token is valid for 30 minutes. After the 30 minutes the code will expire and the user must restart the process.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="will-the-domain-be-deleted-immediately-from-my-account" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#will-the-domain-be-deleted-immediately-from-my-account"
+    >&#8203;​</a
+    >
+</span>
+<span>Will the domain be deleted immediately from my account?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer"><p>If the domain is within 5 days of the initial registration, the domain will be immediately released by the registry and made available for re-registration. In this scenario the domain will be immediately removed from the registrar section of the account. You may need to refresh the page to force an update of the data.</p>
+<p>If the domain is more than 5 days old, it will enter the redemption period and will remain in account until the redemption period expires and the registry releases the domain.</p>
+
+    </div>
+</div>
+</div>
+<hr>
+<h2 id="billing">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#billing">&#8203;​</a>
+    </span>
+    <span>Billing</span>
+  </h2><div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="how-much-does-cloudflare-registrar-cost" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#how-much-does-cloudflare-registrar-cost"
+    >&#8203;​</a
+    >
+</span>
+<span>How much does Cloudflare Registrar cost?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">Refer to <a href="https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">What is Cloudflare Registrar</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for more information on pricing.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="when-will-i-be-billed" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#when-will-i-be-billed"
+    >&#8203;​</a
+    >
+</span>
+<span>When will I be billed?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Currently, Cloudflare Registrar only uses the primary payment method for any associated transaction. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
+    </div>
+</div>
+</div>
+<div class="faqItem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+<h3 id="is-there-a-fee-to-transfer-a-.uk-domain" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#is-there-a-fee-to-transfer-a-.uk-domain"
+    >&#8203;​</a
+    >
+</span>
+<span>Is there a fee to transfer a .UK domain?</span>
+  </h3>
+
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">No, there is no fee to transfer a <code>.uk</code> domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
+    </div>
+</div>
+</div>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/domains" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/reliability/registrar/53" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/registrar/faq.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-04-19T14:51:26&#43;01:00
+  title=2024-04-19
+>April 19, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

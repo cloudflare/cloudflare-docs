@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs</title>
+  <meta name="title" content="Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs" />
+  <meta name="image" content="https://developers.cloudflare.com/core-services-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="Cloudflare provides a complete suite of services around application performance, security, reliability, development, and zero trust. Cloudflare’s …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta property="og:title" content="Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs" />
+  <meta property="og:description" content="Cloudflare provides a complete suite of services around application performance, security, reliability, development, and zero trust. Cloudflare’s …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/reference-architecture/design-guides/secure-application-delivery/" />
+
+  <meta name="twitter:title" content="Design guide: Securely deliver applications with Cloudflare · Cloudflare Reference Architecture docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/core-services-preview.png" />
+  <meta name="twitter:description" content="Cloudflare provides a complete suite of services around application performance, security, reliability, development, and zero trust. Cloudflare’s …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="reference-architecture"><meta name="algolia_product_filter" content="Reference Architecture"><meta name="algolia_page_title" content="Design guide: Securely deliver applications with Cloudflare">
+  <meta name="pcx_word_count" content="3700"><meta name="pcx_last_modified" content="37"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="design-guide" />
+  <meta name="algolia_content_type" content="Design Guide"><meta name="pcx_content_group" content="Cloudflare essentials" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/reference-architecture/design-guides/secure-application-delivery/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"reference-architecture"}</script>
+  <meta name="docsearch:product" content="reference-architecture" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 1ca868a8fe42cbcf5cdbdf5c444ceddc" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 1ca868a8fe42cbcf5cdbdf5c444ceddc">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/reference-architecture/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Reference Architecture logo"><svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M51.4372 57.0486H40.0506L37.7169 53.0486H49.4372V25.2045L35.4559 25.1468L33.4642 23.1468V9.10795L17.4106 9.10796V37.9861H13.4106V7.10796L15.4106 5.10796H35.4642L36.8842 5.69956L52.8572 21.8043L53.4372 23.2127V55.0486L51.4372 57.0486ZM37.4642 11.9646V21.1551L46.617 21.1928L37.4642 11.9646Z" /><path d="M17.4106 60.5137C20.0882 60.5137 22.2588 58.3431 22.2588 55.6655C22.2588 53.8247 21.2328 52.2235 19.7216 51.4025C19.6201 51.3474 19.5164 51.2958 19.4106 51.2478C18.8009 50.9714 18.1237 50.8174 17.4106 50.8174C16.8249 50.8174 16.2635 50.9212 15.7437 51.1116C15.6694 51.1388 15.596 51.1677 15.5235 51.1984C15.4857 51.2144 15.448 51.2309 15.4106 51.2478C13.7309 52.0095 12.5625 53.7011 12.5625 55.6655C12.5625 58.3431 14.7331 60.5137 17.4106 60.5137Z" /><path d="M27.8201 59.909L33.0331 50.9739L38.2464 59.909H27.8201Z" /><path d="M29.4521 24.7759V33.3807H20.8474V24.7759H29.4521Z" /><path d="M27.1496 41.2822V36.3807H23.1496V41.2822H15.4106V48.0745C16.0492 47.9067 16.7195 47.8174 17.4106 47.8174C18.1018 47.8174 18.7721 47.9067 19.4106 48.0745V45.2822H30.8889V48.462L34.8889 48.462V41.2822H27.1496Z" /></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:22">Reference Architecture</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - f5cbc4de25d464f1fc4cc8ebcd8c8daa" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - f5cbc4de25d464f1fc4cc8ebcd8c8daa">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/reference-architecture/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Reference Architecture logo"><svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M51.4372 57.0486H40.0506L37.7169 53.0486H49.4372V25.2045L35.4559 25.1468L33.4642 23.1468V9.10795L17.4106 9.10796V37.9861H13.4106V7.10796L15.4106 5.10796H35.4642L36.8842 5.69956L52.8572 21.8043L53.4372 23.2127V55.0486L51.4372 57.0486ZM37.4642 11.9646V21.1551L46.617 21.1928L37.4642 11.9646Z" /><path d="M17.4106 60.5137C20.0882 60.5137 22.2588 58.3431 22.2588 55.6655C22.2588 53.8247 21.2328 52.2235 19.7216 51.4025C19.6201 51.3474 19.5164 51.2958 19.4106 51.2478C18.8009 50.9714 18.1237 50.8174 17.4106 50.8174C16.8249 50.8174 16.2635 50.9212 15.7437 51.1116C15.6694 51.1388 15.596 51.1677 15.5235 51.1984C15.4857 51.2144 15.448 51.2309 15.4106 51.2478C13.7309 52.0095 12.5625 53.7011 12.5625 55.6655C12.5625 58.3431 14.7331 60.5137 17.4106 60.5137Z" /><path d="M27.8201 59.909L33.0331 50.9739L38.2464 59.909H27.8201Z" /><path d="M29.4521 24.7759V33.3807H20.8474V24.7759H29.4521Z" /><path d="M27.1496 41.2822V36.3807H23.1496V41.2822H15.4106V48.0745C16.0492 47.9067 16.7195 47.8174 17.4106 47.8174C18.1018 47.8174 18.7721 47.9067 19.4106 48.0745V45.2822H30.8889V48.462L34.8889 48.462V41.2822H27.1496Z" /></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:22">Reference Architecture</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Reference Architecture menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://cloudflare.com" tabindex="-1">Cloudflare homepage</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/reference-architecture/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference Architectures</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference Architectures</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/cloudflare-sase-with-microsoft/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Cloudflare SASE with Microsoft</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/cdn/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Content Delivery Network (CDN)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/load-balancing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Load Balancing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/magic-transit/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Magic Transit</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/multi-vendor/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Multi-Vendor Architecture</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/sase/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secure Access Service Edge (SASE)</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/architectures/security/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference Architecture Diagrams</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference Architecture Diagrams</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Artificial Intelligence (AI)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Artificial Intelligence (AI)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/ai-video-caption/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Automatic captioning for video uploads</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/ai-composable/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Composable AI architecture</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/ai-asset-creation/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Content-based asset creation</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/ai-multivendor-observability-control/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Multi-vendor AI observability and control</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/ai/ai-rag/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Retrieval Augmented Generation (RAG)</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Content Delivery</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/content-delivery/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Content Delivery</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/content-delivery/optimizing-image-delivery-with-cloudflare-image-resizing-and-r2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Optimizing Image Delivery with Cloudflare Image Resizing and R2</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Secure Access Service Edge (SASE)</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/sase/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secure Access Service Edge (SASE)</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Access to private apps without having to deploy client agents</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Security</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/security/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Security</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/security/securing-data-at-rest/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Securing data at rest</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/security/securing-data-in-transit/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Securing data in transit</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/security/securing-data-in-use/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Securing data in use</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Serverless</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/a-b-testing-using-workers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">A/B-testing using Workers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/fullstack-application/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fullstack Applications</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/serverless-etl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless ETL pipelines</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/serverless-global-apis/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless global APIs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/serverless-image-content-management/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless image content management</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Storage</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/storage/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Storage</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/storage/egress-free-storage-multi-cloud/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Egress-free object storage in multi-cloud setups</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Design Guides</span>
+    </button><a class="DocsSidebar--nav-link"  href="/reference-architecture/design-guides/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Design Guides</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/design-guides/zero-trust-for-startups/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Building zero trust architecture into your startup</span></a></li><li class="DocsSidebar--nav-item" is-active><a aria-current="page" class="DocsSidebar--nav-link"  href="/reference-architecture/design-guides/secure-application-delivery/"   is-active>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Secure application delivery</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/reference-architecture/design-guides/secure-application-delivery.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/reference-architecture/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Reference Architecture</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/reference-architecture/design-guides/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Design Guides</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/reference-architecture/design-guides/secure-application-delivery/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Secure application delivery</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="securely-deliver-applications-with-cloudflare">Securely deliver applications with Cloudflare</h1><h2 id="overview-and-the-cloudflare-advantage">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#overview-and-the-cloudflare-advantage">&#8203;​</a>
+    </span>
+    <span>Overview and the Cloudflare advantage</span>
+  </h2><p>Cloudflare provides a complete suite of services around application performance, security, reliability, development, and zero trust. Cloudflare’s global network is approximately 50 ms away from about 95% of the Internet-connected population and consists of services that run on every server in every data center. The global scale of Cloudflare also allows for a robust threat intelligence source which is constantly fed back into Cloudflare security products to enhance the machine learning models and services even further.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides application performance and security services that run on every server in every data center, ensuring the highest level of performance regardless of user location." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-1_hu2a9fe37f3579085c7115d9a44ed04a78_316293_1620x782_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="782" width="1620"
+    style="aspect-ratio:2.071624040920716;height: auto;"/>
+    <figcaption>Figure 1: Cloudflare services run on every server in every data center</figcaption>
+</figure></p>
+<p>Other differentiators include the fact that Cloudflare is not a point product unlike some vendors who only offer API security or zero trust services or specific performance/security services. Customers have started moving away from the point-product approach due to operational and management complexities, inefficiencies related to not being able to leverage cross-product innovation/integrations, and not being able to leverage scale of the network/resources across all services.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare’s global platform integrates zero trust, network and application services through several product suites including Cloudflare One, Cloudflare’s Developer Platform and our compliance and privacy features." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-2_hue94b2ed68b044e3c26040d108151bd2f_315418_1999x991_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="991" width="1999"
+    style="aspect-ratio:2.017164480322906;height: auto;"/>
+    <figcaption>Figure 2: Cloudflare Global Cloud Platform.</figcaption>
+</figure></p>
+<p>Additionally, customers do not want to be locked in to a specific cloud provider, but many performance and security vendors lock customers into their platform by focusing on and optimizing services to their own cloud and making it operationally difficult to adopt a multi-cloud strategy.</p>
+<p>Cloudflare is agnostic to where the workloads run or what cloud provider is being used. Customers get the same consistent unified dashboard and operational simplicity whether workloads run in a specific cloud or on-premise. Unlike many vendors, taking advantage of cross-product innovations and integration does not depend on customers using a specific cloud for workloads.</p>
+<p>This document demonstrates how easy it is to use Cloudflare’s collective services regardless of where workloads run. For the example in this document, an application workload will use Cloudflare DNS, CDN, WAF, and Access while also using Cloudflare Tunnel to connect securely to the Cloudflare network. It’s rare for a vendor to provide this comprehensive level of security capability in an operationally simple and consistent fashion.</p>
+<p>For additional details and reference architectures on specific services, see our <a href=/reference-architecture/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">reference architecture documents</span></a>.</p>
+<h2 id="onboarding-and-protecting-the-application-with-cloudflare">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#onboarding-and-protecting-the-application-with-cloudflare">&#8203;​</a>
+    </span>
+    <span>Onboarding and protecting the application with Cloudflare</span>
+  </h2><p>Cloud-based security and performance providers like Cloudflare work as a reverse proxy. A reverse proxy is a server that sits in front of web servers and forwards client requests to those web servers. Reverse proxies are typically implemented to help increase security, performance, and reliability.</p>
+<p>Normal traffic flow without a reverse proxy would involve a client sending a DNS lookup request, receiving the origin IP address, and communicating directly to the <a href="https://www.cloudflare.com/learning/cdn/glossary/origin-server/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">origin server(s)</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>When a reverse proxy is introduced, the client still sends a DNS lookup request to its resolver, which is the first stop in the DNS lookup. In some cases, the vendor providing the reverse proxy also provides DNS services; this is visualized in Figure 3 below. However, the client now communicates to the reverse proxy and the reverse proxy communicates to the origin server(s). This traffic flow, where all traffic passes through the reverse proxy, allows for additional application security, performance, and reliability services to be implemented easily for applications.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides reverse proxy functionality between clients and origin servers, enabling greater user and application security." src="/images/reference-architecture/multi-vendor-architecture-images/Figure_3_huf98446a4a7dc1a654dfe70edc44c2422_117605_1591x421_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="421" width="1591"
+    style="aspect-ratio:3.779121140142518;height: auto;"/>
+    <figcaption>Figure 3: Same vendor providing DNS and security/performance services via proxy.</figcaption>
+</figure></p>
+<p>In this example, we have a website running on one of the major cloud providers and we want to use Cloudflare DNS, CDN, WAF, and Access. We want to start with these services for demonstration purposes; customers can expand these to include other Cloudflare services as desired. Cloudflare provides the benefit of decoupling all services from the cloud provider and if we want to change cloud providers later or protect other applications running in other clouds, the dashboard and operations all stay consistent.</p>
+<p>Customers can easily and securely connect their web application to the Cloudflare network and leverage application performance and security services. There are several connectivity options that fit different use cases.</p>
+<h3 id="connectivity-options">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#connectivity-options">&#8203;​</a>
+    </span>
+    <span>Connectivity options</span>
+  </h3><h4 id="public-connection-over-the-internet">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#public-connection-over-the-internet">&#8203;​</a>
+    </span>
+    <span>Public connection over the Internet</span>
+  </h4><p>In the most basic scenario, the Cloudflare proxy will route the request traffic over the Internet to the origin. In this setup the client and origin are both endpoints directly connected to the Internet via their respective ISPs. The request is routed over the Internet from the client to Cloudflare proxy (via DNS configuration) before the proxy routes the request over the Internet to the customer&rsquo;s origin.</p>
+<p>The below diagram describes the default connectivity to origins as requests flow through the Cloudflare network. When a request for the origin resolves to an IP hosted by Cloudflare, that request is then handled by the Cloudflare network and forwarded onto the origin server over the public Internet.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides application performance and security services over Internet connectivity." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-4_hu89f70a84a072d234b64a16d98646fa7e_124494_1758x436_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="436" width="1758"
+    style="aspect-ratio:4.032133027522936;height: auto;"/>
+    <figcaption>Figure 4: Connectivity from Cloudflare to origin server(s) via Internet</figcaption>
+</figure></p>
+<p>The origin is connected directly to the Internet and traffic is routed to the origin based on the IP address resolved by Cloudflare DNS. The DNS A record associates the domain name with the IP address of the origin server(s) or typically a load balancer the origin(s) are sitting behind.</p>
+<p>In this model, when Cloudflare DNS receives a query for the A record, a Cloudflare Anycast IP address is returned, so all traffic is routed through Cloudflare. However, unless additional precautions are taken, it’s possible for the origin to be reached directly bypassing Cloudflare if someone knows the IP address of the origin(s).</p>
+<p>Additionally, in this model, the customer has to open firewall rules for the origin(s) or web server(s) so they can be accessible on the respective http/https ports. However, customers can choose to leverage <a href="https://blog.cloudflare.com/cloudflare-aegis/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Aegis</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access.</p>
+<p>In addition to IP blocking at the origin-side firewall, we also strongly recommend additional verification of traffic via either the <a href=/ssl/origin-configuration/ssl-modes/full-strict/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">&ldquo;Full (Strict)&rdquo; SSL setting</span></a> or <a href=/ssl/origin-configuration/authenticated-origin-pull/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">mTLS auth</span></a> to ensure all traffic is sourced from requests passing through the customer configured zones.</p>
+<p>Cloudflare also supports <a href=/byoip/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Bring Your Own IP (BYOIP)</span></a>. When BYOIP is configured, the Cloudflare global network will announce a customer’s own IP prefixes and the prefixes can be used with the respective Cloudflare Layer 7 services. This allows customers to proxy traffic through Cloudflare and still have the customer IP address returned in the DNS resolution. This can be <a href="https://blog.cloudflare.com/bringing-your-own-ips-to-cloudflare-byoip/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">beneficial</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> for cases where the customer IP prefixes are already allow-listed and updating firewall rules is not desirable or present an administrative hurdle.</p>
+<h4 id="private-connection-over-the-internet---tunnel">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#private-connection-over-the-internet---tunnel">&#8203;​</a>
+    </span>
+    <span>Private connection over the Internet - Tunnel</span>
+  </h4><p>The recommended option when connecting origin(s) over the Internet is to have a private tunnel/connection over the Internet for additional security.</p>
+<p>A traditional VPN setup is not optimal due to backhauling traffic to a centralized VPN gateway location which then connects back to the origin; this negatively impacts end-to-end throughput and latency. Cloudflare offers <a href=/cloudflare-one/connections/connect-networks/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Tunnel</span></a> software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages Anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s) and therefore optimize the end-to-end latency and throughput.</p>
+<p>When you run a tunnel, a lightweight daemon in your infrastructure, cloudflared, establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers providing robust resiliency. It is possible to install many cloudflared instances to increase resilience between your origin servers and the Cloudflare network.</p>
+<p>Cloudflared creates an encrypted tunnel between your origin web server(s) and Cloudflare’s nearest data center(s), without the need for opening any public inbound ports. This provides for simplicity and speed of implementation as there are no security changes needed on the firewall. This solution also lowers the risk of firewall misconfigurations which could leave your company vulnerable to attacks.</p>
+<p>The firewall and security posture is hardened by locking down all origin server ports and protocols via your firewall. Once Cloudflare Tunnel is in place and respective security applied, all requests on HTTP/S ports are dropped, including volumetric DDoS attacks. Data breach attempts, such as snooping of data in transit or brute force login attacks, are blocked entirely.</p>
+<p><figure class="image-caption">
+    <img alt="aCloudflare provides application performance and security services securely with Cloudflare Tunnel over the Internet." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-5_huff70d9f738882ff6e93a0b22c1f81610_127546_1754x422_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="422" width="1754"
+    style="aspect-ratio:4.156421800947867;height: auto;"/>
+    <figcaption>Figure 5: Connectivity from Cloudflare to origin server(s) via Cloudflare Tunnel</figcaption>
+</figure></p>
+<p>The above diagram describes the connectivity model through Cloudflare Tunnel. This option provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. Cloudflare Tunnel can connect HTTP web servers, SSH servers, remote desktops, and other protocols safely to Cloudflare.</p>
+<h4 id="direct-connection---cloudflare-network-interconnect-cni">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#direct-connection---cloudflare-network-interconnect-cni">&#8203;​</a>
+    </span>
+    <span>Direct connection - Cloudflare Network Interconnect (CNI)</span>
+  </h4><p>Most vendors also provide an option of directly connecting to their network. Direct connections provide security, reliability, and performance benefits over using the public Internet. These direct connections are done at peering facilities, Internet exchanges (IXs) where Internet service providers (ISPs) and Internet networks can interconnect with each other, or through vendor partners.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides application performance and security services over a direct connection, Cloudflare Network Interconnect." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-6_hufde4a82576563de79ae146e4c4330a42_167767_1999x517_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="517" width="1999"
+    style="aspect-ratio:3.8665570599613153;height: auto;"/>
+    <figcaption>Figure 6: Connectivity from Cloudflare to origin server(s) via Cloudflare Network Interconnect (CNI)</figcaption>
+</figure></p>
+<p>The above diagram describes origin connectivity through <a href="https://blog.cloudflare.com/cloudflare-network-interconnect/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Network Interconnect (CNI)</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> which allows you to connect your network infrastructure directly with Cloudflare and communicate only over those direct links. CNI allows customers to interconnect branch and headquarter locations directly with Cloudflare. Customers can interconnect with Cloudflare in one of three ways: over a private network interconnect (PNI) available at <a href="https://www.peeringdb.com/net/4224" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare peering facilities</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, via an IX at any of the <a href="https://bgp.he.net/AS13335#_ix" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">many global exchanges Cloudflare participates in</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, or through one of Cloudflare’s <a href="https://blog.cloudflare.com/cloudflare-network-interconnect-partner-program" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">interconnection platform partners</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>Cloudflare’s global network allows for ease of connecting to the network regardless of where your infrastructure and employees are.</p>
+<h2 id="routing-to-the-origin">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#routing-to-the-origin">&#8203;​</a>
+    </span>
+    <span>Routing to the origin</span>
+  </h2><p>Regardless of which connectivity model is used, DNS resolution is done first and provides Cloudflare the information of where to route to. Cloudflare can support configurations as an authoritative DNS provider, secondary DNS provider, or non-Cloudflare DNS (CNAME) setups for a zone. For Cloudflare performance and security services to be applied, the traffic must be routed to the Cloudflare network.</p>
+<h3 id="example-securing-your-application-with-cloudflare-tunnel-and-access">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#example-securing-your-application-with-cloudflare-tunnel-and-access">&#8203;​</a>
+    </span>
+    <span>Example: Securing your application with Cloudflare Tunnel and Access</span>
+  </h3><h4 id="securing-connectivity-with-cloudflare-tunnel">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#securing-connectivity-with-cloudflare-tunnel">&#8203;​</a>
+    </span>
+    <span>Securing connectivity with Cloudflare Tunnel</span>
+  </h4><p>Although there are multiple ways to onboard an application to use Cloudflare services, a common approach is to use Cloudflare DNS as the primary authoritative DNS. The additional benefit for customers here is that Cloudflare is consistently ranked the <a href="https://www.dnsperf.com/#!dns-providers" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">fastest available authoritative DNS provider globally</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</p>
+<p>In this example, we’ll connect our origin server to Cloudflare securely with Cloudflare Tunnel. You can configure DNS in the dashboard and enter the site you want to onboard. You’ll receive a pair of Cloudflare nameservers to configure at your domain registrar’s site. Once that’s completed, Cloudflare becomes the primary authoritative DNS provider.</p>
+<p>If Cloudflare is configured for just routing over the Internet, the DNS configuration would look something like below, where the A record points to the IP address of the origin server or respective load balancer. As Cloudflare is acting as a reverse proxy, the status shows as Proxied.&quot; As is, Cloudflare is still acting as a reverse proxy so all the Cloudflare services such as CDN, WAF, and Access can be used.</p>
+<p><figure class="image-caption">
+    <img alt="Typical configuration for directing traffic through Cloudflare network." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-7_huabea147654753651abb124dd89790195_194020_1999x910_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="910" width="1999"
+    style="aspect-ratio:2.1967142857142856;height: auto;"/>
+    <figcaption>Figure 7: DNS configuration for 'cftestsite3.com' - pointing to IP address of origin or load balancer.</figcaption>
+</figure></p>
+<p>We can also use Cloudflare Tunnel over the Internet to provide for more security and to prevent the need for opening any inbound firewall rules to the origin(s). In this way, instead of an A record in the DNS configuration, we will have a CNAME record pointing to the tunnel we deploy. Here we deploy a tunnel from the origin to the Cloudflare network, and the DNS will automatically be configured. A CNAME record that points to the tunnel will be created; this enforces all traffic going to the origin(s) be routed over the Cloudflare Tunnel.</p>
+<p>To create and manage tunnels, you need to install and authenticate cloudflared on your origin server. cloudflared is what connects your server to Cloudflare’s global network.</p>
+<p>There are two options for creating a tunnel - <a href=/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">via the dashboard</span></a> or <a href=/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">via the command line</span></a>. It’s recommended getting started with the dashboard, since it will allow you to manage the tunnel from any machine.</p>
+<p>A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel. You can get a tunnel’s token from the dashboard or via the API as shown below. The command provided in the dashboard will install and configure cloudflared to run as a service using an auth token.</p>
+<p>In the Cloudflare dashboard, navigate to Zero Trust &gt; Access &gt; Tunnels. Select the &ldquo;Create a tunnel&rdquo; button, name the tunnel, and save.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare allows for easily creating and naming a tunnel." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-8_huf29855fa6310bc9902dca395b1540c6c_196521_1999x1062_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1062" width="1999"
+    style="aspect-ratio:1.882306967984934;height: auto;"/>
+    <figcaption>Figure 8: Cloudflare Tunnel Creation.</figcaption>
+</figure></p>
+<p>Next, you’ll be presented with a screen where you select the operating system (OS) of your origin server. You will then be provided a CLI command that you can run on your origin that will automatically download and install the Cloudflare Tunnel software.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare supports tunnel deployment/configuration for all popular operating systems." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-9_hu5e0b4c7c8cd38a7290ef9ffb6df4f6f7_422177_1706x1380_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1380" width="1706"
+    style="aspect-ratio:1.2362391304347826;height: auto;"/>
+    <figcaption>Figure 9: Instructions to install and run a connector.</figcaption>
+</figure></p>
+<p>Below, the CLI command has been run to download and install the Cloudflare Tunnel software.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare supports easy deployment/configuration of Cloudflare Tunnel via CLI." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-10_hu5d2d262366f3837b98b76131e77f7c29_423924_1522x532_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="532" width="1522"
+    style="aspect-ratio:2.860921052631579;height: auto;"/>
+    <figcaption>Figure 10: Downloading and installing Cloudflare Tunnel</figcaption>
+</figure></p>
+<p>The connector will now automatically be displayed as connected.</p>
+<p><figure class="image-caption">
+    <img alt="On successful configuration, Cloudflare displays the Connectors and status of connection to Cloudflare network." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-11_hubbc86f84283c95da34380f614d64dd79_255436_1674x1288_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1288" width="1674"
+    style="aspect-ratio:1.2996972049689441;height: auto;"/>
+    <figcaption>Figure 11: Cloudflare Tunnel Connectors showing in dashboard.</figcaption>
+</figure></p>
+<p>In the dashboard, you can now continue with the next step which is to create the tunnel and map it to a service on the origin as shown below. In this case, all HTTPS traffic will be sent over the tunnel to the origin server.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Tunnel configuration allows for routing traffic to specific services running on the origin." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-12_hu4ef121eaa537df0efc953f110d4fdadf_242695_1999x1336_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1336" width="1999"
+    style="aspect-ratio:1.4962649700598802;height: auto;"/>
+    <figcaption>Figure 12: Cloudflare Tunnel Configuration.</figcaption>
+</figure></p>
+<p>You can now see in the dashboard that the tunnel has been created and is healthy.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides health status of deployed tunnels." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-13_hu9f24ff4e282234d7463ff8e20227fd13_204533_1999x707_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="707" width="1999"
+    style="aspect-ratio:2.8274540311173975;height: auto;"/>
+    <figcaption>Figure 13: Cloudflare Tunnel is created and healthy.</figcaption>
+</figure></p>
+<p>Further, if we look at the DNS configuration, we can see a DNS record was automatically created pointing to the tunnel ID. When you create a tunnel, Cloudflare generates a subdomain of <code>cfargotunnel.com</code> with the UUID of the created tunnel. Unlike publicly routable IP addresses, the subdomain will only proxy traffic for a DNS record in the same Cloudflare account. It’s not possible for another user to create a DNS record in another account or system to proxy traffic over this tunnel.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Tunnel automatically creates a CNAME DNS entry directing traffic to the deployed tunnel" src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-14_hu3ac64fdbcee60dd09be1528dbbcc5c33_327743_1999x1224_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1224" width="1999"
+    style="aspect-ratio:1.6331781045751634;height: auto;"/>
+    <figcaption>Figure 14: Cloudflare DNS CNAME record automatically created</figcaption>
+</figure></p>
+<p>We now have secure application access. Users can only access the application through the tunnel connected to the Cloudflare network. Further, since Tunnel uses outbound connections to Cloudflare and any return traffic from an outbound connection will be allowed, no inbound firewall rule is required creating less overhead and more operational simplicity.</p>
+<p>If you were to deploy the tunnel via CLI, after the tunnel install, you would also need to authenticate <a href=/cloudflare-one/glossary/?term&#61;cloudflared class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">cloudflared</span></a> on the origin server. cloudflared is what connects the server to Cloudflare’s global network. This authentication can be done with the <code>cloudflared tunnel login</code> command as shown below.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides for easily authenticating Cloudflare Tunnel with a Cloudflare account." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-15_hu593cdad79f782c8387d0c3f668e20899_152266_1502x206_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="206" width="1502"
+    style="aspect-ratio:7.291310679611651;height: auto;"/>
+    <figcaption>Figure 15: Authenticating cloudflared on the origin server.</figcaption>
+</figure></p>
+<p>You’ll be asked to select the zone you want to add the tunnel to as shown below.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare can enforce tunnel-only connections to a specific zone." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-16_hud2322960a17241a7ac61e87fe1663eed_78199_1999x595_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="595" width="1999"
+    style="aspect-ratio:3.3596806722689077;height: auto;"/>
+    <figcaption>Figure 16: Adding Cloudflare Tunnel to a selected zone.</figcaption>
+</figure></p>
+<p>Next, you’ll authorize the tunnel for the zone.</p>
+<p><figure class="image-caption">
+    <img alt="Users must authorize the zone a tunnel connects to." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-17_huddb428dc7d0a1f60f4413ec361cd3912_61653_1999x431_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="431" width="1999"
+    style="aspect-ratio:4.638074245939675;height: auto;"/>
+    <figcaption>Figure 17: Authorizing the tunnel for a zone.</figcaption>
+</figure></p>
+<p>Finally, you should receive confirmation that a certificate has been installed allowing your origin to create a tunnel on the respective zone.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides a confirmation on successfully installing a certificate to origin, allowing it to connect via Tunnel to the Cloudflare network." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-18_hu3d7bf527f71eec584aa703d547377fc6_71806_1999x396_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="396" width="1999"
+    style="aspect-ratio:5.048005050505051;height: auto;"/>
+    <figcaption>Figure 18: Confirmation that certificate has been successfully installed.</figcaption>
+</figure></p>
+<h4 id="securing-the-application-with-cloudflare-access">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#securing-the-application-with-cloudflare-access">&#8203;​</a>
+    </span>
+    <span>Securing the application with Cloudflare Access</span>
+  </h4><p>The current setup as described prior in this document is shown below, where the origin server(s) are connected to the Cloudflare network via Tunnel. Now, we can start to consume Cloudflare services.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare behaves as a proxy where traffic is directed and performance and security services applied." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-19_hu444a3269845999c546c17f682d897cb8_93456_1910x328_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="328" width="1910"
+    style="aspect-ratio:5.823201219512195;height: auto;"/>
+    <figcaption>Figure 19: Web app securely connected to Cloudflare network for performance and security services.</figcaption>
+</figure></p>
+<p>Currently the origin is only accessible via Cloudflare Tunnel. Because a public hostname is used, access to the origin is public. The application is secured behind Cloudflare and protected from DDoS and other types of attacks. For additional security, Cloudflare Access can be used to place a layer of authentication and access controls in front of the tunneled application. Access enforces an authentication step before requests to the origin can be served. Many other identity, device and network attributes can be used in the policy, allowing customers to define access beyond just authentication. For example, customers can define the network the request originates from, as well as ensuring the user device is running the latest operating system.</p>
+<p>Below, you can see an application has been created for cftestsite3.com.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Access allows for creating application policies to secure application access." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-20_hu0551e26e43a5170540df9b60d84aac1c_149201_1999x588_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="588" width="1999"
+    style="aspect-ratio:3.399676870748299;height: auto;"/>
+    <figcaption>Figure 20: Cloudflare Access Policy Configuration.</figcaption>
+</figure></p>
+<p>Looking at policy configuration below you can see it requires users to be part of the &ldquo;Secure Employees&rdquo; Access group.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare allows assigning multiple Access groups to an application to enforce a set of predefined policies." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-21_hu21fb83a0465c8c03c3849432a0853902_213259_1999x1171_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1171" width="1999"
+    style="aspect-ratio:1.7070964987190436;height: auto;"/>
+    <figcaption>Figure 21 : Access group assigned to the application.</figcaption>
+</figure></p>
+<p>If we take a deeper look at the &ldquo;Secure Employees&rdquo; Access group, it can be seen below that members are from the company’s Okta identity provider (IdP) group called &ldquo;Employees.&rdquo; Further, the Access group is enforcing multi-factor authentication (MFA).</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Access groups allow for simplicity in defining criteria for certain groups/individuals to access the application." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-22_hu15f64b5ca3ef50f9e2b5362cf0b6fdfc_265838_1999x1381_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1381" width="1999"
+    style="aspect-ratio:1.4475090514120204;height: auto;"/>
+    <figcaption>Figure 22 : Access group configuration with defined group criteria.</figcaption>
+</figure></p>
+<p>Looking at the &ldquo;Image and Video Gallery&rdquo; application, under &ldquo;Authentication,&rdquo; customers can also manually select identity providers users can use to connect to this application.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Access supports all major Identity Providers (IdPs) and users can manually select which IdPs can be used." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-23_huebf54d43e5b51592b7909e863a72805c_177097_1999x1061_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1061" width="1999"
+    style="aspect-ratio:1.884081055607917;height: auto;"/>
+    <figcaption>Figure 23 : Manually selecting identity providers users can use.</figcaption>
+</figure></p>
+<p>We now have secure application access to the origin(s) via Tunnel and also authentication and access policies to the application via Access. When users try to access the site, they are greeted with a Cloudflare Access page asking users to authenticate with the configured IdP; the page can be customized to customer’s liking as shown below.</p>
+<p><figure class="image-caption">
+    <img alt="Using Cloudflare Access configured with a company’s IdP, users are forced to authenticate to access the application." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-24_hu799138448cae228b4e1b20de8bd7c18f_100643_1296x1406_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1406" width="1296"
+    style="aspect-ratio:0.9217709815078237;height: auto;"/>
+    <figcaption>Figure 24 : Sign-in via IdP configured in Access.</figcaption>
+</figure></p>
+<h3 id="using-other-cloudflare-services-cdn-waf-security-analytics-etc">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#using-other-cloudflare-services-cdn-waf-security-analytics-etc">&#8203;​</a>
+    </span>
+    <span>Using other Cloudflare services (CDN, WAF, Security Analytics, etc.)</span>
+  </h3><p>In the current setup, the origin server(s) are securely connected to the Cloudflare network via Cloudflare Tunnel and Cloudflare Access via policies enforcing authentication and other security requirements.</p>
+<p>Since Cloudflare is already set up and acting as a reverse proxy for the site, traffic is being directed through Cloudflare, so all Cloudflare services can easily be leveraged including CDN, Security Analytics, WAF, API Gateway, Bot Management, Page Shield for client-side security, etc.</p>
+<p>When a DNS lookup request is made by a client for the respective website, in this case &ldquo;cftestsite3.com,&rdquo; Cloudflare returns an Anycast IP address, so all traffic is directed to the closest data center where all services will be applied before the request is forwarded over Cloudflare Tunnel to the origin server(s).</p>
+<p>Cloudflare CDN leverages Cloudflare’s global Anycast edge network. In addition to using Anycast for network performance and resiliency, the Cloudflare CDN leverages <a href=/cache/how-to/tiered-cache/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Argo Tiered Cache</span></a> to deliver optimized results while saving costs for customers. Customers can also enable <a href=/argo-smart-routing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Argo Smart Routing</span></a> to find the fastest network path to route requests to the origin server. As shown below, the Cloudflare CDN is now caching content globally and granular CDN policies to affect default behavior can be applied.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides analytics for visibility into caching data and performance." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-25_hu87b99ac4f17da19ee389ed186f9f7639_284552_1999x1422_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1422" width="1999"
+    style="aspect-ratio:1.4057735583684952;height: auto;"/>
+    <figcaption>Figure 25 : Cloudflare Caching Analytics.</figcaption>
+</figure></p>
+<p>There are <a href=/reference-architecture/architectures/cdn/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">different caching topologies and configurations available</span></a>. Below, you can see a Cache Rule has been configured to cache requests to the domain and override the origin TTL.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Cache Rules allow for granular control of caching." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-26_hub9a6a6f1df1d348788e1d883585c7f91_353797_1999x1579_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1579" width="1999"
+    style="aspect-ratio:1.2659974667511082;height: auto;"/>
+    <figcaption>Figure 26 : Cloudflare rule configuration.</figcaption>
+</figure></p>
+<p><a href=/cache/advanced-configuration/cache-reserve/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Cloudflare Cache Reserve</span></a> has also been enabled by clicking the &ldquo;Enable storage sync&rdquo; button under &ldquo;Caching &gt; Cache Reserve&rdquo; in the dashboard. Cache Reserve leverages Cloudflare’s persistent object storage, R2, to eliminate egress costs from other public cloud providers. It improves cache hit ratios by enabling customers to persistently cache data with the push of a single button.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides one-click enablement of Cache Reserve which provides persistent object storage for CDN to cut down on egress fees charged by many cloud providers." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-27_hu3ff014ca3b1a187eaf233160745576e3_313020_1999x1274_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1274" width="1999"
+    style="aspect-ratio:1.5690816326530612;height: auto;"/>
+    <figcaption>Figure 27 : Cloudflare Cache Reserve.</figcaption>
+</figure></p>
+<p>Additionally, as shown below, Cloudflare Security Analytics brings together all of Cloudflare’s detection capabilities and provides a global view and important insights for all traffic going to the respective site. As traffic is being routed through the Cloudflare network, Cloudflare has visibility into threats and insights which are exposed to customers in the dashboard, logs, and reporting.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare Security Analytics brings together all of Cloudflare’s detection capabilities in one place." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-28_hue3410f42083ebfa69c635ac29177a013_550310_1999x1430_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1430" width="1999"
+    style="aspect-ratio:1.397909090909091;height: auto;"/>
+    <figcaption>Figure 28 : Cloudflare Security Analytics.</figcaption>
+</figure></p>
+<p>Cloudflare WAF rules can be applied to enforce policies on traffic inline. Below a firewall policy is in place to log all traffic with a bot score of &lt; 30 and WAF attack score &lt; 50. A bot score of &lt; 30 signifies all traffic that’s classified as either automated or likely automated and a WAF attack score &lt; 50 signifies all traffic that’s classified as either malicious or likely malicious.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare WAF allows for easy configuration of rules with visibility into how often the rule is hit." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-29_huef36387ad165cf4980c7e9d172943f11_238767_1999x947_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="947" width="1999"
+    style="aspect-ratio:2.1108870116156284;height: auto;"/>
+    <figcaption>Figure 29 : Cloudflare WAF.</figcaption>
+</figure></p>
+<p>Cloudflare WAF allows for granular policies that can leverage many different request criteria including header information. Customers can take a <a href=/firewall/cf-firewall-rules/actions/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">variety of actions</span></a> including logging, blocking, and challenge.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare allows for matching on a combination of request attributes and Cloudflare data/fields to determine if specific actions should be taken." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-30_hu372848226becafe91badfbddd609a618_282910_1959x1999_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1999" width="1959"
+    style="aspect-ratio:0.9799949974987494;height: auto;"/>
+    <figcaption>Figure 30 : Cloudflare WAF Rule Configuration.</figcaption>
+</figure></p>
+<p>Customers can use WAF to implement and use custom rules, rate limiting rules, and managed rules. A brief description of each is provided below.</p>
+<ul>
+<li>WAF Custom Rules: provides ability to create custom rules based on different request attributes and header information to block any threat</li>
+<li>WAF Rate Limiting Rules: prevents abuse, DDoS, brute force attempts, and provides for API-centric controls.</li>
+<li>WAF Managed Rules
+<ul>
+<li>Cloudflare Managed Ruleset: provides advanced zero-day vulnerability protection</li>
+<li>Cloudflare OWASP Core Ruleset: block common web application vulnerabilities, some of which are in OWASP top 10</li>
+<li>Cloudflare Leaked Credential Check: checks exposed credential database for popular content management system (CMS) applications</li>
+</ul>
+</li>
+</ul>
+<p>The same methodology applies for all other Cloudflare Application Performance and Security products (API Gateway, Bot Management, etc.): once configured to route traffic through the Cloudflare network, customers can start leveraging the Cloudflare services. Figure 31 displays Cloudflare’s Bot Analytics which categorizes the traffic based on bot score, shows the bot score distribution, and other bot analytics. All of the request data is captured inline and all enforcement based on defined policies is also done inline.</p>
+<p><figure class="image-caption">
+    <img alt="Cloudflare provides analytics and insights into bot traffic including bot score distribution." src="/images/reference-architecture/secure-application-delivery-design-guide/secure-app-dg-fig-31_hu538339e9109443b77fd0b8b4c00dba49_371663_1999x1953_resize_q75_box_3.png" loading="lazy" class="image-figure lightbox"
+    height="1953" width="1999"
+    style="aspect-ratio:1.0235586277521762;height: auto;"/>
+    <figcaption>Figure 31 : Cloudflare Bot Management - Bot Analytics.</figcaption>
+</figure></p>
+<h2 id="summary">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#summary">&#8203;​</a>
+    </span>
+    <span>Summary</span>
+  </h2><p>Cloudflare offers comprehensive application performance and security services. Customers can easily onboard and start using all performance and security services by routing traffic to their origin server(s) through Clooudflare’s network. Additionally, Cloudflare offers multiple connectivity options including Cloudflare Tunnel for securely connecting origin server(s) to Cloudflare’s network.</p>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/reference-architecture/design-guides/secure-application-delivery.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-06T10:09:13-05:00
+  title=2024-06-06
+>June 6, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues</title>
+  <meta name="title" content="Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues" />
+  <meta property="og:description" content="This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/queues/tutorials/web-crawler-with-browser-rendering/" />
+
+  <meta name="twitter:title" content="Cloudflare Queues - Queues &amp; Browser Rendering · Cloudflare Queues" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="queues"><meta name="algolia_product_filter" content="Queues"><meta name="algolia_page_title" content="Cloudflare Queues - Queues &amp; Browser Rendering">
+  <meta name="pcx_word_count" content="1200"><meta name="pcx_last_modified" content="16"><meta name="pcx_last_reviewed" content="362" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/queues/tutorials/web-crawler-with-browser-rendering/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"queues"}</script>
+  <meta name="docsearch:product" content="queues" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 5488ceccb8cba54d44e21fafd6dcdcfc" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 5488ceccb8cba54d44e21fafd6dcdcfc">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/queues/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Queues logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M11.154 19.894 5.33 14.21l-1.612 1.65 2.656 2.594H1.942a1.442 1.442 0 1 0 0 2.884h4.433L3.72 23.927l1.61 1.653 5.823-5.685Zm28.352 0-5.823-5.685-1.612 1.65 2.656 2.594h-4.433a1.442 1.442 0 1 0 0 2.884h4.433l-2.655 2.591 1.611 1.651 5.823-5.685Z"/><rect width="23.07" height="2.884" x="7.911" y="7" rx="1.442"/><rect width="23.07" height="2.884" x="7.911" y="30.07" rx="1.442"/><path d="M13.679 14.21c.796 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.646-1.443 1.442-1.443Zm5.767 0c.797 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.646-1.443 1.442-1.443Zm5.768 0c.796 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.645-1.443 1.442-1.443Z"/></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:6">Queues</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - dc6e8aefc844ccc5d21cfbcbfd54ad84" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - dc6e8aefc844ccc5d21cfbcbfd54ad84">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/queues/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Queues logo"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M11.154 19.894 5.33 14.21l-1.612 1.65 2.656 2.594H1.942a1.442 1.442 0 1 0 0 2.884h4.433L3.72 23.927l1.61 1.653 5.823-5.685Zm28.352 0-5.823-5.685-1.612 1.65 2.656 2.594h-4.433a1.442 1.442 0 1 0 0 2.884h4.433l-2.655 2.591 1.611 1.651 5.823-5.685Z"/><rect width="23.07" height="2.884" x="7.911" y="7" rx="1.442"/><rect width="23.07" height="2.884" x="7.911" y="30.07" rx="1.442"/><path d="M13.679 14.21c.796 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.646-1.443 1.442-1.443Zm5.767 0c.797 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.646-1.443 1.442-1.443Zm5.768 0c.796 0 1.442.645 1.442 1.441v8.651a1.442 1.442 0 1 1-2.884 0v-8.65c0-.797.645-1.443 1.442-1.443Z"/></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:6">Queues</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Queues menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/queues/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/queues/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/configure-queues/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configure Queues</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/batching-retries/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Batching, Retries and Delays</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/dead-letter-queues/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Dead Letter Queues</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/pull-consumers/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pull consumers</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/consumer-concurrency/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Consumer concurrency</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/javascript-apis/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">JavaScript APIs</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/configuration/local-development/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Local Development</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/r2/buckets/event-notifications/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">R2 Event Notifications</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Observability</span>
+    </button><a class="DocsSidebar--nav-link"  href="/queues/observability/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Observability</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/observability/metrics/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Metrics</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/queues/examples/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/reference-architecture/diagrams/serverless/serverless-etl/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Serverless ETL pipelines</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/examples/use-queues-with-durable-objects/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use Queues from Durable Objects</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/examples/publish-to-a-queue-over-http/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Publish to a Queue via HTTP</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/examples/send-errors-to-r2/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use Queues to store data in R2</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/examples/send-messages-from-dash/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Send messages from the dashboard</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/examples/list-messages-from-dash/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">List and acknowledge messages from the dashboard</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><a class="DocsSidebar--nav-link"  href="/queues/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/queues/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/platform/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/platform/changelog/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Reference</span>
+    </button><a class="DocsSidebar--nav-link"  href="/queues/reference/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Reference</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/reference/how-queues-works/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">How Queues Works</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/reference/delivery-guarantees/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Delivery guarantees</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/wrangler/commands/#queues"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Wrangler commands</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/queues/glossary/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Glossary</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/queue-v2-create-queue"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Queues REST API</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/queues/tutorials/web-crawler-with-browser-rendering/index.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/queues/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Queues</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/queues/tutorials/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Tutorials</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/queues/tutorials/web-crawler-with-browser-rendering/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Build a web crawler with Queues and Browser Rendering</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="build-a-web-crawler-with-queues-and-browser-rendering">Build a web crawler with Queues and Browser Rendering</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2023-07-17T00:00:00&#43;00:00
+  title=2023-07-17
+>July 17, 2023</time></span>
+</div>
+<p>This tutorial explains how to build and deploy a web crawler with Queues, Browser Rendering, and Puppeteer.</p>
+<p>Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to Cloudflare.com and take a screenshot of the site, saving results to KV.</p>
+<p>You can use Puppeteer to request all images on a page, save the colors used on a site, and more.</p>
+<h2 id="prerequisites">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#prerequisites">&#8203;​</a>
+    </span>
+    <span>Prerequisites</span>
+  </h2><p>To continue, you will need:</p>
+<ol>
+<li>A recent version of <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Node.js and npm</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> installed.</li>
+<li>A subscription to Workers Paid, required for using Queues.</li>
+<li>Access to the <a href="https://www.cloudflare.com/lp/workers-browser-rendering-api/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Browser Rendering</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> API, currently in open beta.</li>
+</ol>
+<aside class="DocsMarkdown--aside" role="note" data-type="note"><p>Queues today works with local development mode in wrangler. <code>wrangler dev --remote</code> is not supported.</p>
+</aside>
+
+<h2 id="1-build-the-crawler-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-build-the-crawler-worker">&#8203;​</a>
+    </span>
+    <span>1. Build the crawler Worker</span>
+  </h2><p>You will first need to create KV namespaces and queue required for the crawler before creating a new Worker, setting up bindings, and writing the crawler script.</p>
+<h3 id="set-up-kv-namespaces">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#set-up-kv-namespaces">&#8203;​</a>
+    </span>
+    <span>Set up KV namespaces</span>
+  </h3><p>To set up KV namespaces:</p>
+<ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Go to <strong>Workers &amp; Pages</strong> &gt; <strong>KV</strong>.</li>
+<li>Select <strong>Create a namespace</strong>, enter <code>crawler_links</code>, and select <strong>Add</strong>. Repeat to create another KV namespace called <code>crawler_screenshots</code>.</li>
+</ol>
+<p>
+<p class="md__image">
+    <img src="/queues/tutorials/web-crawler-with-browser-rendering/create-kv-namespaces.png" alt="Creating a KV namespace named crawler_links" loading="lazy" class="lightbox"
+     />
+</p></p>
+<h3 id="set-up-a-queue">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#set-up-a-queue">&#8203;​</a>
+    </span>
+    <span>Set up a Queue</span>
+  </h3><p>To set up a Queue:</p>
+<ol>
+<li>Log in to the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Go to <strong>Workers &amp; Pages</strong> &gt; <strong>Queues</strong>.</li>
+<li>Select <strong>Create queue</strong>.</li>
+<li>Enter a queue name and select <strong>Create queue</strong>.</li>
+</ol>
+<p>
+<p class="md__image">
+    <img src="/queues/tutorials/web-crawler-with-browser-rendering/create-queue.png" alt="Creating a queue named queues-web-crawler" loading="lazy" class="lightbox"
+     />
+</p></p>
+<h2 id="2-create-a-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-create-a-worker">&#8203;​</a>
+    </span>
+    <span>2. Create a Worker</span>
+  </h2><p>Create a new Worker with the C3 (<code>create-cloudflare-cli</code>) CLI, a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="---%0Aheader%3A&#43;Create&#43;a&#43;Worker%0A---%0A%24&#43;npm&#43;create&#43;cloudflare%40latest&#43;%23&#43;or&#43;yarn&#43;create&#43;cloudflare"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>C3 will then prompt you for some information on your Worker.</p>
+<ol>
+<li>Provide a name for your Worker. This is also the name of the new directory where the Worker will be created.</li>
+<li>For the question <code>What type of application do you want to create?</code>, select <code>&quot;Hello World&quot; Worker</code>.</li>
+<li>For the question <code>Would you like to use TypeScript? (y/n)</code>, select <code>y</code>.</li>
+<li>For the question <code>Do you want to deploy your application?</code>, select <code>n</code>.</li>
+</ol>
+<p>This will create the crawler Worker.</p>
+<h2 id="3-configure-your-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-configure-your-worker">&#8203;​</a>
+    </span>
+    <span>3. Configure your Worker</span>
+  </h2><p>In the <code>wrangler.toml</code> file, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer. Add the bindings for KV namespaces and queue you created previously, which will allow you to access KV and the queue from the Worker.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="---%0Afilename%3A&#43;wrangler.toml%0Ahighlight%3A&#43;%5B7%2C&#43;9%2C&#43;10%2C&#43;11%2C&#43;12%2C&#43;14%2C&#43;15%2C&#43;16%2C&#43;18%2C&#43;19%2C&#43;20%5D%0A---%0Aname&#43;%3D&#43;%22queues-web-crawler%22%0Amain&#43;%3D&#43;%22src%2Findex.ts%22%0Acompatibility_date&#43;%3D&#43;%222023-06-09%22%0Anode_compat&#43;%3D&#43;true%0A%0Abrowser&#43;%3D&#43;%7B&#43;binding&#43;%3D&#43;%22CRAWLER_BROWSER%22%2C&#43;type&#43;%3D&#43;%22browser%22&#43;%7D%0A%0Akv_namespaces&#43;%3D&#43;%5B%0A&#43;&#43;%7B&#43;binding&#43;%3D&#43;%22CRAWLER_SCREENSHOTS_KV%22%2C&#43;id&#43;%3D&#43;%22%3Ccrawler_screenshots&#43;namespace&#43;ID&#43;here%3E%22&#43;%7D%2C%0A&#43;&#43;%7B&#43;binding&#43;%3D&#43;%22CRAWLER_LINKS_KV%22%2C&#43;id&#43;%3D&#43;%22%3Ccrawler_links&#43;namespace&#43;ID&#43;here%3E%22&#43;%7D%0A%5D%0A%0A%5B%5Bqueues.consumers%5D%5D%0A&#43;&#43;queue&#43;%3D&#43;%22%3Cqueue&#43;name&#43;here%3E%22%0A&#43;&#43;max_batch_timeout&#43;%3D&#43;60%0A%0A%5B%5Bqueues.producers%5D%5D%0A&#43;queue&#43;%3D&#43;%22%3Cqueue&#43;name&#43;here%3E%22%0A&#43;binding&#43;%3D&#43;%22CRAWLER_QUEUE%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>To find the KV namespace IDs in the <a href="https://dash.cloudflare.com/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, select <strong>Workers &amp; Pages</strong> &gt; <strong>KV</strong>. The namespace IDs are shown to the right of each KV namespace.</p>
+<p>
+<p class="md__image">
+    <img src="/queues/tutorials/web-crawler-with-browser-rendering/list-namespace-id.png" alt="List namespace IDs" loading="lazy" class="lightbox"
+     />
+</p></p>
+<p>Add a <code>max_batch_timeout</code> of 60 seconds to the consumer because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.</p>
+<p>Change the <code>usage_model</code> to unbound. This allows your crawler to take advantage of higher CPU time limits.</p>
+<p>Refer to <a href=/workers/platform/limits/#worker-limits class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Worker limits</span></a> to learn more about usage models.</p>
+<h2 id="4-add-bindings-to-environment">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-add-bindings-to-environment">&#8203;​</a>
+    </span>
+    <span>4. Add bindings to environment</span>
+  </h2><p>Add the bindings to the environment interface in <code>src/index.ts</code>, so TypeScript correctly types the bindings. Type the queue as <code>Queue&lt;any&gt;</code>. The following step will show you how to change this type.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aimport&#43;%7B&#43;BrowserWorker&#43;%7D&#43;from&#43;%22%40cloudflare%2Fpuppeteer%22%3B%0A%0Aexport&#43;interface&#43;Env&#43;%7B%0A&#43;&#43;CRAWLER_QUEUE%3A&#43;Queue%3Cany%3E%3B%0A&#43;&#43;CRAWLER_SCREENSHOTS_KV%3A&#43;KVNamespace%3B%0A&#43;&#43;CRAWLER_LINKS_KV%3A&#43;KVNamespace%3B%0A&#43;&#43;CRAWLER_BROWSER%3A&#43;BrowserWorker%3B%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="5-submit-links-to-crawl">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-submit-links-to-crawl">&#8203;​</a>
+    </span>
+    <span>5. Submit links to crawl</span>
+  </h2><p>Add a <code>fetch()</code> handler to the Worker to submit links to crawl.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Atype&#43;Message&#43;%3D&#43;%7B%0A&#43;&#43;url%3A&#43;string%3B%0A%7D%3B%0A%0Aexport&#43;interface&#43;Env&#43;%7B%0A&#43;&#43;CRAWLER_QUEUE%3A&#43;Queue%3CMessage%3E%3B%0A&#43;&#43;%2F%2F&#43;...&#43;etc.%0A%7D%0A%0Aexport&#43;default&#43;%7B%0A&#43;&#43;async&#43;fetch%28req%2C&#43;env%29%3A&#43;Promise%3CResponse%3E&#43;%7B%0A&#43;&#43;&#43;&#43;await&#43;env.CRAWLER_QUEUE.send%28%7B&#43;url%3A&#43;await&#43;req.text%28%29&#43;%7D%29%3B%0A&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28%22Success%21%22%29%3B%0A&#43;&#43;%7D%2C%0A%7D&#43;satisfies&#43;ExportedHandler%3CEnv%3E%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This will accept requests to any subpath and forwards the request&rsquo;s body to be crawled. It expects that the request body only contains a URL. In production, you should check that the request was a <code>POST</code> request and contains a well-formed URL in its body. This has been omitted for simplicity.</p>
+<h2 id="6-crawl-with-puppeteer">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#6-crawl-with-puppeteer">&#8203;​</a>
+    </span>
+    <span>6. Crawl with Puppeteer</span>
+  </h2><p>Add a <code>queue()</code> handler to the Worker to process the links you send.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Aimport&#43;puppeteer&#43;from&#43;%22%40cloudflare%2Fpuppeteer%22%3B%0Aimport&#43;robotsParser&#43;from&#43;%22robots-parser%22%3B%0A%0Aasync&#43;queue%28batch%3A&#43;MessageBatch%3CMessage%3E%2C&#43;env%3A&#43;Env%29%3A&#43;Promise%3Cvoid%3E&#43;%7B%0A&#43;&#43;let&#43;browser%3A&#43;puppeteer.Browser&#43;%7C&#43;null&#43;%3D&#43;null%3B%0A&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;browser&#43;%3D&#43;await&#43;puppeteer.launch%28env.CRAWLER_BROWSER%29%3B%0A&#43;&#43;%7D&#43;catch&#43;%7B%0A&#43;&#43;&#43;&#43;batch.retryAll%28%29%3B%0A%09return%3B%0A&#43;&#43;%7D%0A%0A&#43;&#43;for&#43;%28const&#43;message&#43;of&#43;batch.messages%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;%7B&#43;url&#43;%7D&#43;%3D&#43;message.body%3B%0A%0A&#43;&#43;&#43;&#43;let&#43;isAllowed&#43;%3D&#43;true%3B%0A&#43;&#43;&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;const&#43;robotsTextPath&#43;%3D&#43;new&#43;URL%28url%29.origin&#43;%2B&#43;%22%2Frobots.txt%22%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;const&#43;response&#43;%3D&#43;await&#43;fetch%28robotsTextPath%29%3B%0A%0A&#43;&#43;&#43;&#43;&#43;&#43;const&#43;robots&#43;%3D&#43;robotsParser%28robotsTextPath%2C&#43;await&#43;response.text%28%29%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;isAllowed&#43;%3D&#43;robots.isAllowed%28url%29&#43;%3F%3F&#43;true%3B&#43;%2F%2F&#43;respect&#43;robots.txt%21%0A&#43;&#43;&#43;&#43;%7D&#43;catch&#43;%7B%7D%0A%0A&#43;&#43;&#43;&#43;if&#43;%28%21isAllowed%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;message.ack%28%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;continue%3B%0A&#43;&#43;&#43;&#43;%7D%0A%0A%09%2F%2F&#43;TODO%3A&#43;crawl%21%0A&#43;&#43;&#43;&#43;message.ack%28%29%3B%0A&#43;&#43;%7D%0A%0A&#43;&#43;await&#43;browser.close%28%29%3B%0A%7D%2C"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This is a skeleton for the crawler. It launches the Puppeteer browser and iterates through the Queue&rsquo;s received messages. It fetches the site&rsquo;s <code>robots.txt</code> and uses <code>robots-parser</code> to check that this site allows crawling. If crawling is not allowed, the message is <code>ack</code>&lsquo;ed, removing it from the Queue. If crawling is allowed, you can continue to crawl the site.</p>
+<p>The <code>puppeteer.launch()</code> is wrapped in a <code>try...catch</code> to allow the whole batch to be retried if the browser launch fails. The browser launch may fail due to going over the limit for number of browsers per account.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0A---%0Atype&#43;Result&#43;%3D&#43;%7B%0A&#43;&#43;numCloudflareLinks%3A&#43;number%3B%0A&#43;&#43;screenshot%3A&#43;ArrayBuffer%3B%0A%7D%3B%0A%0Aconst&#43;crawlPage&#43;%3D&#43;async&#43;%28url%3A&#43;string%29%3A&#43;Promise%3CResult%3E&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;page&#43;%3D&#43;await&#43;%28browser&#43;as&#43;puppeteer.Browser%29.newPage%28%29%3B%0A%0A&#43;&#43;await&#43;page.goto%28url%2C&#43;%7B%0A&#43;&#43;&#43;&#43;waitUntil%3A&#43;%22load%22%2C%0A&#43;&#43;%7D%29%3B%0A%0A&#43;&#43;const&#43;numCloudflareLinks&#43;%3D&#43;await&#43;page.%24%24eval%28%22a%22%2C&#43;%28links%29&#43;%3D%3E&#43;%7B%0A%09links&#43;%3D&#43;links.filter%28%28link%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;new&#43;URL%28link.href%29.hostname.includes%28%22cloudflare.com%22%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D&#43;catch&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;return&#43;false%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%7D%29%3B%0A&#43;&#43;&#43;&#43;return&#43;links.length%3B%0A&#43;&#43;%7D%29%3B%0A%0A&#43;&#43;await&#43;page.setViewport%28%7B%0A&#43;&#43;&#43;&#43;width%3A&#43;1920%2C%0A&#43;&#43;&#43;&#43;height%3A&#43;1080%2C%0A&#43;&#43;&#43;&#43;deviceScaleFactor%3A&#43;1%2C%0A&#43;&#43;%7D%29%3B%0A%0A&#43;&#43;return&#43;%7B%0A&#43;&#43;&#43;&#43;numCloudflareLinks%2C%0A&#43;&#43;&#43;&#43;screenshot%3A&#43;%28%28await&#43;page.screenshot%28%7B&#43;fullPage%3A&#43;true&#43;%7D%29%29&#43;as&#43;Buffer%29%0A&#43;&#43;&#43;&#43;&#43;&#43;.buffer%2C%0A&#43;&#43;%7D%3B%0A%7D%3B"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This helper function opens a new page in Puppeteer and navigates to the provided URL. <code>numCloudflareLinks</code> uses Puppeteer&rsquo;s <code>$$eval</code> (equivalent to <code>document.querySelectorAll</code>) to find the number of links to a <code>cloudflare.com</code> page. Checking if the link&rsquo;s <code>href</code> is to a <code>cloudflare.com</code> page is wrapped in a <code>try...catch</code> to handle cases where <code>href</code>s may not be URLs.</p>
+<p>Then, the function sets the browser viewport size and takes a screenshot of the full page. The screenshot is returned as a <code>Buffer</code> so it can be converted to an <code>ArrayBuffer</code> and written to KV.</p>
+<p>To enable recursively crawling links, add a snippet after checking the number of Cloudflare links to send messages recursively from the queue consumer to the queue itself. Recursing too deep, as is possible with crawling, will cause a Durable Object <code>Subrequest depth limit exceeded.</code> error. If one occurs, it is caught, but the links are not retried.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%5D%0A---%0A%2F%2F&#43;const&#43;numCloudflareLinks&#43;%3D&#43;await&#43;page.%24%24eval%28%22a%22%2C&#43;%28links%29&#43;%3D%3E&#43;%7B&#43;...%0A%0Aawait&#43;page.%24%24eval%28%22a%22%2C&#43;async&#43;%28links%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;urls%3A&#43;MessageSendRequest%3CMessage%3E%5B%5D&#43;%3D&#43;links.map%28%28link%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;&#43;&#43;return&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;body%3A&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;url%3A&#43;link.href%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%2C%0A&#43;&#43;&#43;&#43;%7D%3B%0A&#43;&#43;%7D%29%3B%0A&#43;&#43;try&#43;%7B%0A&#43;&#43;&#43;&#43;await&#43;env.CRAWLER_QUEUE.sendBatch%28urls%29%3B%0A&#43;&#43;%7D&#43;catch&#43;%7B%7D&#43;%2F%2F&#43;do&#43;nothing%2C&#43;likely&#43;hit&#43;subrequest&#43;limit%0A%7D%29%3B%0A%0A%2F%2F&#43;await&#43;page.setViewport%28%7B&#43;..."></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then, in the <code>queue</code> handler, call <code>crawlPage</code> on the URL.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%5D%0A---%0A%2F%2F&#43;in&#43;the&#43;%60queue%60&#43;handler%3A%0A%2F%2F&#43;...%0Aif&#43;%28%21isAllowed%29&#43;%7B%0A&#43;&#43;message.ack%28%29%3B%0A&#43;&#43;continue%3B%0A%7D%0A%0Atry&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;numCloudflareLinks%2C&#43;screenshot&#43;%7D&#43;%3D&#43;await&#43;crawlPage%28url%29%3B%0A&#43;&#43;const&#43;timestamp&#43;%3D&#43;new&#43;Date%28%29.getTime%28%29%3B%0A&#43;&#43;const&#43;resultKey&#43;%3D&#43;%60%24%7BencodeURIComponent%28url%29%7D-%24%7Btimestamp%7D%60%3B%0A&#43;&#43;await&#43;env.CRAWLER_LINKS_KV.put%28%0A&#43;&#43;&#43;&#43;resultKey%2C%0A&#43;&#43;&#43;&#43;numCloudflareLinks.toString%28%29%2C%0A&#43;&#43;&#43;&#43;%7B&#43;metadata%3A&#43;%7B&#43;date%3A&#43;timestamp&#43;%7D&#43;%7D%0A&#43;&#43;%29%3B%0A&#43;&#43;await&#43;env.CRAWLER_SCREENSHOTS_KV.put%28resultKey%2C&#43;screenshot%2C&#43;%7B%0A&#43;&#43;&#43;&#43;metadata%3A&#43;%7B&#43;date%3A&#43;timestamp&#43;%7D%2C%0A&#43;&#43;%7D%29%3B%0A&#43;&#43;message.ack%28%29%3B%0A%7D&#43;catch&#43;%7B%0A&#43;&#43;message.retry%28%29%3B%0A%7D%0A%0A%2F%2F&#43;..."></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This snippet saves the results from <code>crawlPage</code> into the appropriate KV namespaces. If an unexpected error occurred, the URL will be retried and resent to the queue again.</p>
+<p>Saving the timestamp of the crawl in KV helps you avoid crawling too frequently.</p>
+<p>Add a snippet before checking <code>robots.txt</code> to check KV for a crawl within the last hour. This lists all KV keys beginning with the same URL (crawls of the same page), and check if any crawls have been done within the last hour. If any crawls have been done within the last hour, the message is <code>ack</code>&lsquo;ed and not retried.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="ts" data-code="---%0Afilename%3A&#43;src%2Findex.ts%0Ahighlight%3A&#43;%5B12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%5D%0A---%0Atype&#43;KeyMetadata&#43;%3D&#43;%7B%0A&#43;&#43;date%3A&#43;number%3B%0A%7D%3B%0A%0A%2F%2F&#43;in&#43;the&#43;%60queue%60&#43;handler%3A%0A%2F%2F&#43;...%0Afor&#43;%28const&#43;message&#43;of&#43;batch.messages%29&#43;%7B%0A&#43;&#43;const&#43;sameUrlCrawls&#43;%3D&#43;await&#43;env.CRAWLER_LINKS_KV.list%28%7B%0A&#43;&#43;&#43;&#43;prefix%3A&#43;%60%24%7BencodeURIComponent%28url%29%7D%60%2C%0A&#43;&#43;%7D%29%3B%0A%0A&#43;&#43;let&#43;shouldSkip&#43;%3D&#43;false%3B%0A&#43;&#43;for&#43;%28const&#43;key&#43;of&#43;sameUrlCrawls.keys%29&#43;%7B%0A&#43;&#43;&#43;&#43;if&#43;%28timestamp&#43;-&#43;%28key.metadata&#43;as&#43;KeyMetadata%29%3F.date&#43;%3C&#43;60&#43;%2A&#43;60&#43;%2A&#43;1000%29&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;%2F%2F&#43;if&#43;crawled&#43;in&#43;last&#43;hour%2C&#43;skip%0A&#43;&#43;&#43;&#43;&#43;&#43;message.ack%28%29%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;shouldSkip&#43;%3D&#43;true%3B%0A&#43;&#43;&#43;&#43;&#43;&#43;break%3B%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%7D%0A&#43;&#43;if&#43;%28shouldSkip%29&#43;%7B%0A&#43;&#43;&#43;&#43;continue%3B%0A&#43;&#43;%7D%0A%0A&#43;&#43;let&#43;isAllowed&#43;%3D&#43;true%3B%0A&#43;&#43;%2F%2F&#43;..."></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="7-deploy-your-worker">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#7-deploy-your-worker">&#8203;​</a>
+    </span>
+    <span>7. Deploy your Worker</span>
+  </h2><p>To deploy your Worker, run the following command:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;deploy"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>You have successfully created a Worker which can submit URLs to a queue for crawling and save results to KV.</p>
+<p>Refer to the <a href="https://github.com/cloudflare/queues-web-crawler" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">GitHub repository for the complete tutorial</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>, including a front end deployed with Pages to submit URLs and view crawler results.</p>
+<h2 id="related-resources">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-resources">&#8203;​</a>
+    </span>
+    <span>Related resources</span>
+  </h2><ul>
+<li><a href=/queues/reference/how-queues-works/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">How Queues works</span></a></li>
+<li><a href=/queues/configuration/batching-retries/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Queues Batching and Retries</span></a></li>
+<li><a href=/browser-rendering/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Browser Rendering</span></a></li>
+<li><a href="https://github.com/puppeteer/puppeteer/tree/main/examples" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Puppeteer Examples</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com/c/developers/workers/40" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/queues/tutorials/web-crawler-with-browser-rendering/index.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-27T10:22:54-05:00
+  title=2024-06-27
+>June 27, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

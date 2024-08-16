@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en" theme="light" is-docs-page js-focus-visible-polyfill-available >
+  <head>
+
+  <meta charset="utf-8">
+  <title>Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs</title>
+  <meta name="title" content="Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs" />
+  <meta name="image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered …" />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta property="og:title" content="Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs" />
+  <meta property="og:description" content="This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered …" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/" />
+
+  <meta name="twitter:title" content="Build a Retrieval Augmented Generation (RAG) AI · Cloudflare Workers AI docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/dev-products-preview.png" />
+  <meta name="twitter:description" content="This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered …" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="pcx_product" content="workers-ai"><meta name="algolia_product_filter" content="Workers AI"><meta name="pcx_tags" content="AI,Hono"><meta name="algolia_page_title" content="Build a Retrieval Augmented Generation (RAG) AI">
+  <meta name="pcx_word_count" content="1600"><meta name="pcx_last_modified" content="16"><meta name="pcx_last_reviewed" content="292" /><meta name="pcx_content_type" content="tutorial" />
+  <meta name="algolia_content_type" content="Tutorial"><meta name="pcx_content_group" content="Developer platform" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2","product":"workers-ai"}</script>
+  <meta name="docsearch:product" content="workers-ai" /><link rel="stylesheet preconnect" href="/style.css" />
+      <link rel="stylesheet preconnect" href="/codeBlock.css" /><link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" as="style">
+    <link rel="preload" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" as="script" />
+    <link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    const themeToggleTooltip = document.querySelector("#ThemeToggle--tooltip");
+    if (!themeToggleTooltip)
+      return;
+    if (isDark) {
+      themeToggleTooltip.textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      themeToggleTooltip.textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/main.js" defer></script></head>
+  <body><div class="DocsPage"><div>
+    <a class="skip-link" href='#main'>Skip to content</a>
+</div><div class="DocsMobileHeader">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 1db4fc5edc8af4dcd5f86c4bcc28cae4" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 1db4fc5edc8af4dcd5f86c4bcc28cae4">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+    </div>
+  </a>
+</div>
+
+<div class="DocsMobileTitleHeader">
+  <a aria-current="page" class="DocsMobileTitleHeader--logo-link Link Link-without-underline" href="/workers-ai/">
+    <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
+      <div class="DocsNavLogoLockup--logo">
+        <span title="Cloudflare Workers AI logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.72 1.5H9.265v3.198l1.455.004V1.5ZM7.36 3.347l1.516 1.517-1.032 1.025-1.513-1.513 1.03-1.029ZM4.485 6.28h3.202l-.005 1.455H4.485V6.28Zm1.848 3.36 1.515-1.516 1.026 1.032-1.512 1.512-1.03-1.029Zm2.932 2.875V9.313l1.455.005v3.197H9.265Zm3.36-1.845-1.517-1.517 1.032-1.026 1.514 1.514-1.03 1.029ZM15.5 7.735h-3.202l.005-1.455H15.5v1.455Zm-1.847-3.359-1.516 1.516-1.025-1.032 1.513-1.513 1.028 1.03ZM2 1.829v.82h-.822v1.315H2v.821h1.314v-.82h.821V2.65h-.821v-.821H2Zm0 12.842v-1.5H.5v-1.314H2v-1.499h1.314v1.499h1.5v1.314h-1.5v1.5H2Z"></path></svg></span>
+      </div>
+
+      <span class="DocsNavLogoLockup--text">
+        <span class="DocsSidebar--docs-title-text-scaler" style="--length:10">Workers AI</span>
+      </span>
+    </div>
+  </a>
+
+  <button class="Button DocsMobileTitleHeader--sidebar-toggle-button">
+    <span class="DocsMobileTitleHeader--sidebar-toggle-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-labelledby="title-1332672649688018"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-1332672649688018">Navigation menu icon</title>
+        <path data-index="1" d="M5, 7h10" transform-origin="10  7"></path>
+        <path data-index="2" d="M5,10h10" transform-origin="10 10"></path>
+        <path data-index="3" d="M5,13h10" transform-origin="10 13"></path>
+      </svg>
+      <span is-visually-hidden="">Open external link</span>
+    </span>
+  </button>
+</div>
+
+<div class="DocsMobileNavBackdrop"></div><div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - a46d888feb5cc2c1c4c4dccda4ef5bdf" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - a46d888feb5cc2c1c4c4dccda4ef5bdf">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="/workers-ai/">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare Workers AI logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10.72 1.5H9.265v3.198l1.455.004V1.5ZM7.36 3.347l1.516 1.517-1.032 1.025-1.513-1.513 1.03-1.029ZM4.485 6.28h3.202l-.005 1.455H4.485V6.28Zm1.848 3.36 1.515-1.516 1.026 1.032-1.512 1.512-1.03-1.029Zm2.932 2.875V9.313l1.455.005v3.197H9.265Zm3.36-1.845-1.517-1.517 1.032-1.026 1.514 1.514-1.03 1.029ZM15.5 7.735h-3.202l.005-1.455H15.5v1.455Zm-1.847-3.359-1.516 1.516-1.025-1.032 1.513-1.513 1.028 1.03ZM2 1.829v.82h-.822v1.315H2v.821h1.314v-.82h.821V2.65h-.821v-.821H2Zm0 12.842v-1.5H.5v-1.314H2v-1.499h1.314v1.499h1.5v1.314h-1.5v1.5H2Z"></path></svg></span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:10">Workers AI</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>Workers AI menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list"><li class="Dropdown--item">
+                <a class="Dropdown--link" href="/use-cases/ai/" tabindex="-1">AI - Use cases</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://workers.cloudflare.com" tabindex="-1">Workers home</a>
+              </li><li class="Dropdown--item">
+                <a class="Dropdown--link" href="https://discord.cloudflare.com" tabindex="-1">Discord</a>
+              </li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
+      <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
+        <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
+
+        <ul class="DocsSidebar--nav">
+          <li class="DocsSidebar--nav-item">
+            <a class="DocsSidebar--nav-link" href="/workers-ai/">
+              <span class="DocsSidebar--nav-link-highlight"></span>
+              <span class="DocsSidebar--nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Get started</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get started</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/workers-wrangler/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">CLI</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/rest-api/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">REST API</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/get-started/dashboard/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Dashboard</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="https://playground.ai.cloudflare.com"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Playground</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Configuration</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Configuration</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/bindings/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Workers Bindings</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/open-ai-compatibility/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">OpenAI compatible API endpoints</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/configuration/hugging-face-chat-ui/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Hugging Face Chat UI</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/models/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Models</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Fine-tunes</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Fine-tunes</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/loras/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Using LoRA adapters</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/fine-tunes/public-loras/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Public LoRA adapters</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Function Calling</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Function Calling</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Embedded</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Embedded</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="2" style="--depth:2"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/get-started/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Get Started</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button" tabindex="-1">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Examples</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Examples</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="3" style="--depth:3"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/fetch/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use fetch() handler</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/openapi/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tools based on OpenAPI Spec</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/examples/kv/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Use KV API</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/api-reference/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">API Reference</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/embedded/troubleshooting/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Troubleshooting</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/function-calling/traditional/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Traditional</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item" is-active-root is-expanded><a class="DocsSidebar--nav-link"  href="/workers-ai/tutorials/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Tutorials</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/demos/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Demo apps</span></a></li><li class="DocsSidebar--nav-item"><button class="Button DocsSidebar--nav-expand-collapse-button">
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: Platform</span>
+    </button><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Platform</span></a><div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;"><div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="1" style="--depth:1"><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/pricing/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Pricing</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/platform/limits/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Limits</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/ai-gateway/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">AI Gateway</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers/platform/storage-options/"   tabindex="-1">
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Choose a data or storage product</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li></ul>
+            </div>
+          </div>
+        </div>
+      </div></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="https://developers.cloudflare.com/reference-architecture/diagrams/ai/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Architectures</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/changelog/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Changelog</span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/api/operations/workers-ai-post-run-model"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">REST API reference</span><span class="apiSidebarIcon"><span class="DocsMarkdown--link-api-icon" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23px" height="12px" viewBox="0 0 23 12" version="1.1">
+    <title>API link label</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <rect id="Rectangle" fill="#e06d10" x="0" y="0" width="23" height="12" rx="2"/>
+            <path d="M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z" id="API" fill="#FFFFFF" fill-rule="nonzero"/>
+        </g>
+    </g>
+</svg>
+  <span is-visually-hidden>Open API docs link</span>
+</span></span></a></li><li class="DocsSidebar--nav-item"><a class="DocsSidebar--nav-link"  href="/workers-ai/privacy/"  >
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">Privacy</span></a></li></ul>
+      </div>
+      <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">
+        <div style="position:relative;display:block;height:100%;cursor:pointer;border-radius:inherit;background-color:rgba(0,0,0,.2)"></div>
+      </div>
+      <div style="position:absolute;width:6px;display:none" class="Scrollbars--track Scrollbars--track-vertical">
+        <div style="position:relative;display:block;width:100%" class="Scrollbars--thumb Scrollbars--thumb-vertical"></div>
+      </div>
+    </div>
+  </div>
+  <div class="DocsSidebar--shadow"></div>
+</div><div class="DocsToolbar">
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div>
+<div class="DocsToolbar--tools"><div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai.md" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <path d="M22.742 47.456L23.757 46.912L52.175 18.573V15.743L42.254 5.823H39.428L11.012 34.16L10.461 35.193L8.03899 47.614L10.399 49.957L22.742 47.456ZM14.27 36.56L40.84 10.06L47.932 17.152L21.358 43.652L12.538 45.439L14.27 36.56Z" fill="currentColor"/>
+      <path d="M56.002 54H7.99799V58H56.002V54Z" fill="currentColor"/>
+      </svg>Edit
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Edit this page
+  </span>
+</div>
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-secondary" href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose" target="_blank">
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+      <path d="M14 2.5H2l-.5.5v11.165l.863.345 2.852-3.01H14l.5-.5V3l-.5-.5Zm-.5 8H4.785L2.5 12.911V3.5h11v7Z"
+        fill="currentColor"></path>
+      <path d="M12.5 5.003h-9v1h9v-1ZM12.5 7.5h-9v1h9v-1Z" fill="currentColor"></path>
+    </svg>Issue
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Report an issue with this page
+  </span>
+  </div>
+
+  <div class="DocsToolbar--tools-spacer"></div>
+  <div class="Tooltip---root">
+  <a class="DocsToolbar--feedback Button Button-is-docs-primary" href="https://dash.cloudflare.com/login" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+      <path d="M36.85 34.76H27.17C21.5587 34.7653 16.1786 36.996 12.2099 40.9629C8.24121 44.9297 6.00794 50.3087 6 55.92L8 57.92H56L58 55.92C57.9921 50.3122 55.7615 44.9362 51.7972 40.9699C47.8328 37.0037 42.4578 34.7706 36.85 34.76ZM10.12 53.92C10.6165 49.7453 12.6256 45.8972 15.7674 43.1037C18.9092 40.3102 22.9659 38.7648 27.17 38.76H36.85C41.0455 38.777 45.09 40.3278 48.2213 43.1202C51.3526 45.9126 53.3546 49.7538 53.85 53.92H10.12Z" fill="currentColor"/>
+      <path d="M32.05 32C34.8189 32 37.5257 31.1789 39.828 29.6406C42.1303 28.1022 43.9247 25.9157 44.9843 23.3576C46.0439 20.7994 46.3212 17.9845 45.781 15.2687C45.2408 12.553 43.9074 10.0584 41.9495 8.10051C39.9916 6.14258 37.497 4.80921 34.7813 4.26901C32.0655 3.72882 29.2506 4.00607 26.6924 5.06569C24.1343 6.12532 21.9478 7.91973 20.4094 10.222C18.8711 12.5243 18.05 15.2311 18.05 18C18.05 21.713 19.525 25.274 22.1505 27.8995C24.776 30.525 28.337 32 32.05 32ZM32.05 8.00001C34.0278 8.00001 35.9612 8.5865 37.6057 9.68531C39.2502 10.7841 40.5319 12.3459 41.2888 14.1732C42.0457 16.0004 42.2437 18.0111 41.8579 19.9509C41.472 21.8907 40.5196 23.6725 39.1211 25.0711C37.7225 26.4696 35.9407 27.422 34.0009 27.8079C32.0611 28.1937 30.0504 27.9957 28.2232 27.2388C26.3959 26.4819 24.8341 25.2002 23.7353 23.5557C22.6365 21.9112 22.05 19.9778 22.05 18C22.05 15.3478 23.1036 12.8043 24.9789 10.9289C26.8543 9.05357 29.3978 8.00001 32.05 8.00001Z"  fill="currentColor"/>
+      </svg>Log&nbsp;in
+  </a>
+  <span class="Tooltip" role="tooltip" position="bottom-end">
+    Log into the Cloudflare dashboard
+  </span>
+  </div>
+  
+
+  <div class="DocsToolbar--tools-spacer"></div>
+
+  <div class="DocsToolbar--theme-toggle">
+    <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+      <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+        xmlns="http://www.w3.org/2000/svg">
+        <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+        <path
+          d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+        </path>
+      </svg>
+    </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+</div>
+</div>
+
+    <main class="DocsBody"><div class="DocsBody--sidebar" with-styled-webkit-scrollbars="">
+  <div class="DocsBody--sidebar-content-scroll-fade"></div>
+  <div class="DocsBody--sidebar-content">
+      <ul class="DocsTableOfContents" hidden>
+        <li><a class="DocsTableOfContents-link" href="#docs-content">↑ Top</a></li>
+      </ul>
+  </div>
+</div>
+<div id="docs-content" data-reach-skip-nav-content></div>
+<ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/products/" class="DocsMarkdown--link" itemprop="item">
+        <span itemprop="name" class="DocsMarkdown--link-content">Products</span></a>
+      <meta itemprop="position" content="1" />
+    </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Workers AI</span></a><meta itemprop="position" content="2" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/tutorials/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Tutorials</span></a><meta itemprop="position" content="3" />
+        </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/" itemprop="item" class="DocsMarkdown--link" >
+            <span class="DocsMarkdown--link-content"  itemprop="name" >Build a Retrieval Augmented Generation (RAG) AI</span></a><meta itemprop="position" content="4" />
+        </li></ol><div class="DocsContent" id="main" page-type="document">
+
+        <article class="DocsMarkdown">
+  <h1 id="build-a-retrieval-augmented-generation-rag-ai">Build a Retrieval Augmented Generation (RAG) AI</h1><div class="tutorialDateInfo">
+  <span><strong>Last reviewed</strong>: <time
+  class="relative"
+  datetime=2023-09-25T00:00:00&#43;00:00
+  title=2023-09-25
+>September 25, 2023</time></span>
+</div>
+<p>This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.</p>
+<p>At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare&rsquo;s AI toolkit. You do not need to have experience working with AI tools to build this application.</p>
+<ol>
+<li>Sign up for a <a href="https://dash.cloudflare.com/sign-up/workers-and-pages" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare account</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://docs.npmjs.com/getting-started" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li>Install <a href="https://nodejs.org/en/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>Node.js</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ol>
+<details class="DocsMarkdown"
+  >
+    <summary>Node.js version manager</summary>
+    <div>Use a Node version manager like <a href="https://volta.sh/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Volta</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> or <a href="https://github.com/nvm-sh/nvm" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">nvm</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to avoid permission issues and change Node.js versions. <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a>, discussed later in this guide, requires a Node version of <code>16.17.0</code> or later.</div>
+</details>
+
+<p>You will also need access to <a href=/vectorize/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Vectorize</span></a>.</p>
+<h2 id="1-create-a-new-worker-project">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#1-create-a-new-worker-project">&#8203;​</a>
+    </span>
+    <span>1. Create a new Worker project</span>
+  </h2><p>C3 (<code>create-cloudflare-cli</code>) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.</p>
+<p>Open a terminal window and run C3 to create your Worker project:</p>
+<div class="tabs-wrapper" tab-wrapper-id="00586b290afa80a8">
+<nav role="navigation" class="tabs">
+<ul class="tab-active" block-id="00586b290afa80a8">
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-npm" data-id="00586b290afa80a8">
+npm
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-yarn" data-id="00586b290afa80a8">
+yarn
+</a>
+
+</li>
+
+<li class="tab-label-wrapper">
+
+<a class="tab-label noCodeLabel" href="#" data-link="tab-pnpm" data-id="00586b290afa80a8">
+pnpm
+</a>
+
+</li>
+
+</ul>
+</nav>
+
+<div class="tab tab-default " id="tab-npm-00586b290afa80a8"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;create&#43;cloudflare%40latest"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-yarn-00586b290afa80a8"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;yarn&#43;create&#43;cloudflare%40latest"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+<div class="tab  " id="tab-pnpm-00586b290afa80a8"><div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;pnpm&#43;create&#43;cloudflare%40latest"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div></div>
+
+</div>
+<p>This will prompt you to install the <a href="https://www.npmjs.com/package/create-cloudflare" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>create-cloudflare</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> package, and lead you through setup.</p>
+<p>For this guide, set up a basic Worker:</p>
+<ol>
+<li>Name your new Worker directory by specifying where you want to create your application.</li>
+<li>Select <code>&quot;Hello World&quot; Worker</code> as the type of application you want to create.</li>
+<li>Answer <code>no</code> to using TypeScript.</li>
+</ol>
+<p>You will be asked if you would like to deploy the project to Cloudflare.</p>
+<ul>
+<li>If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed to the Cloudflare global network.</li>
+<li>If you choose not to deploy, go to the newly created project directory to begin writing code. Deploy your project by following the instructions in <a href=/workers/get-started/guide/#4-deploy-your-project class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">step 4</span></a>.</li>
+</ul>
+<p>In your project directory, C3 has generated the following:</p>
+<ol>
+<li><code>wrangler.toml</code>: Your <a href=/workers/wrangler/configuration/#sample-wranglertoml-configuration class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a> configuration file.</li>
+<li><code>worker.js</code> (in <code>/src</code>): A minimal <code>'Hello World!'</code> Worker written in <a href=/workers/reference/migrate-to-module-workers/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">ES module</span></a> syntax.</li>
+<li><code>package.json</code>: A minimal Node dependencies configuration file.</li>
+<li><code>package-lock.json</code>: Refer to <a href="https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code> documentation on <code>package-lock.json</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+<li><code>node_modules</code>: Refer to <a href="https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content"><code>npm</code> documentation <code>node_modules</code></span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>.</li>
+</ol>
+<h2 id="2-develop-with-wrangler-cli">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#2-develop-with-wrangler-cli">&#8203;​</a>
+    </span>
+    <span>2. Develop with Wrangler CLI</span>
+  </h2><p>The Workers command-line interface, <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a>, allows you to <a href=/workers/wrangler/commands/#init class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">create</span></a>, <a href=/workers/wrangler/commands/#dev class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">test</span></a>, and <a href=/workers/wrangler/commands/#deploy class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">deploy</span></a> your Workers projects. C3 will install Wrangler in projects by default.</p>
+<p>After you have created your first Worker, run the <a href=/workers/wrangler/commands/#dev class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>wrangler dev</code></span></a> command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;dev&#43;--remote"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><aside class="DocsMarkdown--aside" role="note" data-type="note"><p>If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.</p>
+<p>If you have issues with this step or you do not have access to a browser interface, refer to the <a href=/workers/wrangler/commands/#login class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>wrangler login</code></span></a> documentation for more information.</p>
+</aside>
+
+<p>You will now be able to go to <a href="http://localhost:8787" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">http://localhost:8787</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a> to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.</p>
+<h2 id="3-adding-the-ai-binding">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#3-adding-the-ai-binding">&#8203;​</a>
+    </span>
+    <span>3. Adding the AI binding</span>
+  </h2><p>To begin using Cloudflare&rsquo;s AI products, you can add the <code>ai</code> block to <code>wrangler.toml</code>. This will set up a binding to Cloudflare&rsquo;s AI models in your code that you can use to interact with the available AI models on the platform.</p>
+<p>This example features the <a href=/workers-ai/models/llama-3-8b-instruct/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>@cf/meta/llama-3-8b-instruct</code> model</span></a>, which generates text.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="---%0Afilename%3A&#43;wrangler.toml%0A---%0A%0A%5Bai%5D%0Abinding&#43;%3D&#43;%22AI%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Now, find the <code>src/index.js</code> file. Inside the <code>fetch</code> handler, you can query the <code>LLM</code> binding:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;src%2Findex.js%0A---%0Aexport&#43;default&#43;%7B%0A%09async&#43;fetch%28request%2C&#43;env%2C&#43;ctx%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;answer&#43;%3D&#43;await&#43;env.AI.run%28%0A&#43;&#43;&#43;&#43;&#43;&#43;%27%40cf%2Fmeta%2Fllama-3-8b-instruct%27%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;messages%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B&#43;role%3A&#43;%27user%27%2C&#43;content%3A&#43;%60What&#43;is&#43;the&#43;square&#43;root&#43;of&#43;9%3F%60&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;&#43;&#43;%29%0A%0A&#43;&#43;&#43;&#43;return&#43;new&#43;Response%28JSON.stringify%28answer%29%29%0A%09%7D%0A%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>By querying the LLM binding, we can interact directly with the Cloudflare AI large language model directly in our code.</p>
+<p>You can deploy your Worker using <code>wrangler</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;deploy"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Making a request to your Worker will now return a response from the LLM binding.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;curl&#43;https%3A%2F%2Fexample.username.workers.dev%0A%7B%22response%22%3A%22Answer%3A&#43;The&#43;square&#43;root&#43;of&#43;9&#43;is&#43;3.%22%7D"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="4-adding-embeddings-using-cloudflare-d1-and-vectorize">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#4-adding-embeddings-using-cloudflare-d1-and-vectorize">&#8203;​</a>
+    </span>
+    <span>4. Adding embeddings using Cloudflare D1 and Vectorize</span>
+  </h2><p>Embeddings allow you to add additional capabilities to the language models you can use in your Cloudflare AI projects. This is done via <strong>Vectorize</strong>, Cloudflare&rsquo;s vector database.</p>
+<p>To begin using Vectorize, create a new embeddings index using <code>wrangler</code>. This index will store vectors with 768 dimensions, and will use cosine similarity to determine which vectors are most similar to each other:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;vectorize&#43;create&#43;vector-index&#43;--dimensions%3D768&#43;--metric%3Dcosine"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then, add the configuration details for your new Vectorize index to <code>wrangler.toml</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="%23&#43;...&#43;existing&#43;wrangler&#43;configuration%0A%0A%5B%5Bvectorize%5D%5D%0Abinding&#43;%3D&#43;%22VECTOR_INDEX%22%0Aindex_name&#43;%3D&#43;%22vector-index%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>A vector index allows you to store a collection of dimensions, which are floating point numbers used to represent your data. When you want to query the vector database, you can also convert your query into dimensions. <strong>Vectorize</strong> is designed to efficiently determine which stored vectors are most similar to your query.</p>
+<p>To implement the searching feature, you must set up a D1 database from Cloudflare. In D1, you can store your app&rsquo;s data. Then, you change this data into a vector format. When someone searches and it matches the vector, you can show them the matching data.</p>
+<p>Create a new D1 database using <code>wrangler</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;d1&#43;create&#43;database"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then, paste the configuration details output from the previous command into <code>wrangler.toml</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="toml" data-code="%23&#43;...&#43;existing&#43;wrangler&#43;configuration%0A%0A%5B%5Bd1_databases%5D%5D%0Abinding&#43;%3D&#43;%22DB%22&#43;%23&#43;available&#43;in&#43;your&#43;Worker&#43;on&#43;env.DB%0Adatabase_name&#43;%3D&#43;%22database%22%0Adatabase_id&#43;%3D&#43;%22abc-def-geh%22&#43;%23&#43;replace&#43;this&#43;with&#43;a&#43;real&#43;database_id&#43;%28UUID%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>In this application, we&rsquo;ll create a <code>notes</code> table in D1, which will allow us to store notes and later retrieve them in Vectorize. To create this table, run a SQL command using <code>wrangler d1 execute</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;d1&#43;execute&#43;database&#43;--remote&#43;--command&#43;%22CREATE&#43;TABLE&#43;IF&#43;NOT&#43;EXISTS&#43;notes&#43;%28id&#43;INTEGER&#43;PRIMARY&#43;KEY%2C&#43;text&#43;TEXT&#43;NOT&#43;NULL%29%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Now, we can add a new note to our database using <code>wrangler d1 execute</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;d1&#43;execute&#43;database&#43;--remote&#43;--command&#43;%22INSERT&#43;INTO&#43;notes&#43;%28text%29&#43;VALUES&#43;%28%27The&#43;best&#43;pizza&#43;topping&#43;is&#43;pepperoni%27%29%22"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="5-creating-notes-and-adding-them-to-vectorize">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#5-creating-notes-and-adding-them-to-vectorize">&#8203;​</a>
+    </span>
+    <span>5. Creating notes and adding them to Vectorize</span>
+  </h2><p>To expand on your Workers function in order to handle multiple routes, we will add <code>hono</code>, a routing library for Workers. This will allow us to create a new route for adding notes to our database. Install <code>hono</code> using <code>npm</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npm&#43;install&#43;hono"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Then, import <code>hono</code> into your <code>src/index.js</code> file. You should also update the <code>fetch</code> handler to use <code>hono</code>:</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;src%2Findex.js%0A---%0Aimport&#43;%7B&#43;Hono&#43;%7D&#43;from&#43;%22hono%22%0Aconst&#43;app&#43;%3D&#43;new&#43;Hono%28%29%0A%0Aapp.get%28%27%2F%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;answer&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;&#43;&#43;%27%40cf%2Fmeta%2Fllama-3-8b-instruct%27%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;messages%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B&#43;role%3A&#43;%27user%27%2C&#43;content%3A&#43;%60What&#43;is&#43;the&#43;square&#43;root&#43;of&#43;9%3F%60&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%29%0A%0A&#43;&#43;return&#43;c.json%28answer%29%0A%7D%29%0A%0Aexport&#43;default&#43;app"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This will establish a route at the root path <code>/</code> that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database.</p>
+<p>This example features the <a href=/workers-ai/models/bge-base-en-v1.5/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>@cf/baai/bge-base-en-v1.5</code> model</span></a>, which can be used to create an embedding. Embeddings are stored and retrieved from our vector database <a href=/vectorize/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Vectorize</span></a>. The user&rsquo;s query is also turned into an embedding so that it can be used for searching within Vectorize.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;src%2Findex.js%0A---%0Aapp.post%28%27%2Fnotes%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;%7B&#43;text&#43;%7D&#43;%3D&#43;await&#43;c.req.json%28%29%0A&#43;&#43;if&#43;%28%21text%29&#43;%7B%0A%09%09%09return&#43;c.text%28%22Missing&#43;text%22%2C&#43;400%29%3B%0A&#43;&#43;%7D%0A%0A&#43;&#43;const&#43;%7B&#43;results&#43;%7D&#43;%3D&#43;await&#43;c.env.DB.prepare%28%22INSERT&#43;INTO&#43;notes&#43;%28text%29&#43;VALUES&#43;%28%3F%29&#43;RETURNING&#43;%2A%22%29%0A&#43;&#43;&#43;&#43;.bind%28text%29%0A&#43;&#43;&#43;&#43;.run%28%29%0A%0A&#43;&#43;const&#43;record&#43;%3D&#43;results.length&#43;%3F&#43;results%5B0%5D&#43;%3A&#43;null%0A%0A&#43;&#43;if&#43;%28%21record%29&#43;%7B%0A%09%09%09return&#43;c.text%28%22Failed&#43;to&#43;create&#43;note%22%2C&#43;500%29%3B%0A%09%7D%0A%0A&#43;&#43;const&#43;%7B&#43;data&#43;%7D&#43;%3D&#43;await&#43;c.env.AI.run%28%27%40cf%2Fbaai%2Fbge-base-en-v1.5%27%2C&#43;%7B&#43;text%3A&#43;%5Btext%5D&#43;%7D%29%0A&#43;&#43;const&#43;values&#43;%3D&#43;data%5B0%5D%0A%0A&#43;&#43;if&#43;%28%21values%29&#43;%7B%0A%09%09%09return&#43;c.text%28%22Failed&#43;to&#43;generate&#43;vector&#43;embedding%22%2C&#43;500%29%3B%0A%09%7D%0A%0A&#43;&#43;const&#43;%7B&#43;id&#43;%7D&#43;%3D&#43;record%0A&#43;&#43;const&#43;inserted&#43;%3D&#43;await&#43;c.env.VECTOR_INDEX.upsert%28%5B%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;id%3A&#43;id.toString%28%29%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;values%2C%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%5D%29%0A%0A&#43;&#43;return&#43;c.json%28%7B&#43;id%2C&#43;text%2C&#43;inserted&#43;%7D%29%0A%7D%29"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>This function does the following things:</p>
+<ol>
+<li>Parse the JSON body of the request to get the <code>text</code> field.</li>
+<li>Insert a new row into the <code>notes</code> table in D1, and retrieve the <code>id</code> of the new row.</li>
+<li>Convert the <code>text</code> into a vector using the <code>embeddings</code> model of the LLM binding.</li>
+<li>Upsert the <code>id</code> and <code>vectors</code> into the <code>vector-index</code> index in Vectorize.</li>
+<li>Return the <code>id</code> and <code>text</code> of the new note as JSON.</li>
+</ol>
+<p>By doing this, you will create a new vector representation of the note, which can be used to retrieve the note later.</p>
+<h2 id="6-querying-vectorize-to-retrieve-notes">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#6-querying-vectorize-to-retrieve-notes">&#8203;​</a>
+    </span>
+    <span>6. Querying Vectorize to retrieve notes</span>
+  </h2><p>To complete your code, you can update the root path (<code>/</code>) to query Vectorize. You will convert the query into a vector, and then use the <code>vector-index</code> index to find the most similar vectors.</p>
+<p>Since we are using cosine similarity, the vectors with the highest cosine similarity will be the most similar to the query. We can introduce a <code>SIMILIARITY_CUTOFF</code> to only return vectors that are above a certain similarity threshold. In this case, we will use a cutoff of <code>0.75</code>, but you can adjust this value to suit your needs.</p>
+<p>We will also specify the <code>topK</code> parameter as part of the optional parameters to the <code>query</code> function. The <code>topK</code> parameter limits the number of vectors returned by the function. For instance, providing a <code>topK</code> of 1 will only return the <em>most similar</em> vector based on the query. You may customize this for your own needs.</p>
+<p>With the list of similar vectors, you can retrieve the notes that match the record IDs stored alongside those vectors. You can insert the text of those notes as context into the prompt for the LLM binding. We&rsquo;ll update the prompt to include the context, and to ask the LLM to use the context when responding.</p>
+<p>Finally, you can query the LLM binding to get a response.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="js" data-code="---%0Afilename%3A&#43;src%2Findex.js%0A---%0Aimport&#43;%7B&#43;Hono&#43;%7D&#43;from&#43;%27hono%27%0Aconst&#43;app&#43;%3D&#43;new&#43;Hono%28%29%0A%0A%2F%2F&#43;Existing&#43;post&#43;route...%0A%2F%2F&#43;app.post%28%27%2Fnotes%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B&#43;...&#43;%7D%29%0A%0Aapp.get%28%27%2F%27%2C&#43;async&#43;%28c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;const&#43;question&#43;%3D&#43;c.req.query%28%27text%27%29&#43;%7C%7C&#43;%22What&#43;is&#43;the&#43;square&#43;root&#43;of&#43;9%3F%22%0A%0A&#43;&#43;const&#43;embeddings&#43;%3D&#43;await&#43;c.env.AI.run%28%27%40cf%2Fbaai%2Fbge-base-en-v1.5%27%2C&#43;%7B&#43;text%3A&#43;question&#43;%7D%29%0A&#43;&#43;const&#43;vectors&#43;%3D&#43;embeddings.data%5B0%5D%0A%0A&#43;&#43;const&#43;SIMILARITY_CUTOFF&#43;%3D&#43;0.75%0A&#43;&#43;const&#43;vectorQuery&#43;%3D&#43;await&#43;c.env.VECTOR_INDEX.query%28vectors%2C&#43;%7B&#43;topK%3A&#43;1&#43;%7D%29%3B%0A&#43;&#43;const&#43;vecIds&#43;%3D&#43;vectorQuery.matches%0A&#43;&#43;&#43;&#43;.filter%28vec&#43;%3D%3E&#43;vec.score&#43;%3E&#43;SIMILARITY_CUTOFF%29%0A&#43;&#43;&#43;&#43;.map%28vec&#43;%3D%3E&#43;vec.id%29%0A%0A&#43;&#43;let&#43;notes&#43;%3D&#43;%5B%5D%0A&#43;&#43;if&#43;%28vecIds.length%29&#43;%7B%0A&#43;&#43;&#43;&#43;const&#43;query&#43;%3D&#43;%60SELECT&#43;%2A&#43;FROM&#43;notes&#43;WHERE&#43;id&#43;IN&#43;%28%24%7BvecIds.join%28%22%2C&#43;%22%29%7D%29%60%0A&#43;&#43;&#43;&#43;const&#43;%7B&#43;results&#43;%7D&#43;%3D&#43;await&#43;c.env.DB.prepare%28query%29.bind%28%29.all%28%29%0A&#43;&#43;&#43;&#43;if&#43;%28results%29&#43;notes&#43;%3D&#43;results.map%28vec&#43;%3D%3E&#43;vec.text%29%0A&#43;&#43;%7D%0A%0A&#43;&#43;const&#43;contextMessage&#43;%3D&#43;notes.length%0A&#43;&#43;&#43;&#43;%3F&#43;%60Context%3A%5Cn%24%7Bnotes.map%28note&#43;%3D%3E&#43;%60-&#43;%24%7Bnote%7D%60%29.join%28%22%5Cn%22%29%7D%60%0A&#43;&#43;&#43;&#43;%3A&#43;%22%22%0A%0A&#43;&#43;const&#43;systemPrompt&#43;%3D&#43;%60When&#43;answering&#43;the&#43;question&#43;or&#43;responding%2C&#43;use&#43;the&#43;context&#43;provided%2C&#43;if&#43;it&#43;is&#43;provided&#43;and&#43;relevant.%60%0A%0A&#43;&#43;const&#43;%7B&#43;response%3A&#43;answer&#43;%7D&#43;%3D&#43;await&#43;c.env.AI.run%28%0A&#43;&#43;&#43;&#43;%27%40cf%2Fmeta%2Fllama-3-8b-instruct%27%2C%0A&#43;&#43;&#43;&#43;%7B%0A&#43;&#43;&#43;&#43;&#43;&#43;messages%3A&#43;%5B%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;...%28notes.length&#43;%3F&#43;%5B%7B&#43;role%3A&#43;%27system%27%2C&#43;content%3A&#43;contextMessage&#43;%7D%5D&#43;%3A&#43;%5B%5D%29%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B&#43;role%3A&#43;%27system%27%2C&#43;content%3A&#43;systemPrompt&#43;%7D%2C%0A&#43;&#43;&#43;&#43;&#43;&#43;&#43;&#43;%7B&#43;role%3A&#43;%27user%27%2C&#43;content%3A&#43;question&#43;%7D%0A&#43;&#43;&#43;&#43;&#43;&#43;%5D%0A&#43;&#43;&#43;&#43;%7D%0A&#43;&#43;%29%0A%0A&#43;&#43;return&#43;c.text%28answer%29%3B%0A%7D%29%0A%0Aapp.onError%28%28err%2C&#43;c%29&#43;%3D%3E&#43;%7B%0A&#43;&#43;return&#43;c.text%28err%29%0A%7D%29%0A%0Aexport&#43;default&#43;app"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><h2 id="7-deploy-your-project">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#7-deploy-your-project">&#8203;​</a>
+    </span>
+    <span>7. Deploy your project</span>
+  </h2><p>If you did not deploy your Worker during <a href=/workers/get-started/guide/#1-create-a-new-worker-project class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">step 1</span></a>, deploy your Worker via Wrangler, to a <code>*.workers.dev</code> subdomain, or a <a href=/workers/configuration/routing/custom-domains/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom Domain</span></a>, if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.</p>
+<div class="code-container">
+    <unparsed-codeblock data-language="sh" data-code="%24&#43;npx&#43;wrangler&#43;deploy"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
+</div><p>Preview your Worker at <code>&lt;YOUR_WORKER&gt;.&lt;YOUR_SUBDOMAIN&gt;.workers.dev</code>.</p>
+<aside class="DocsMarkdown--aside" role="note" data-type="note">
+    <div class="DocsMarkdown--aside-header">Note</div><p>When pushing to your <code>*.workers.dev</code> subdomain for the first time, you may see <a href=/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable class="DocsMarkdown--link"><span class="DocsMarkdown--link-content"><code>523</code> errors</span></a> while DNS is propagating. These errors should resolve themselves after a minute or so.</p>
+</aside>
+
+<h2 id="related-resources">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-resources">&#8203;​</a>
+    </span>
+    <span>Related resources</span>
+  </h2><p>To do more:</p>
+<ul>
+<li>Explore the reference diagram for a <a href=/reference-architecture/diagrams/ai/ai-rag/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Retrieval Augmented Generation (RAG) Architecture</span></a>.</li>
+<li>Review Cloudflare&rsquo;s <a href=/workers-ai class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">AI documentation</span></a>.</li>
+<li>Review <a href=/workers/tutorials/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Tutorials</span></a> to build projects on Workers.</li>
+<li>Explore <a href=/workers/examples/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Examples</span></a> to experiment with copy and paste Worker code.</li>
+<li>Understand how Workers works in <a href=/workers/reference/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Reference</span></a>.</li>
+<li>Learn about Workers features and functionality in <a href=/workers/platform/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Platform</span></a>.</li>
+<li>Set up <a href=/workers/wrangler/install-and-update/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Wrangler</span></a> to programmatically create, test, and deploy your Worker projects.</li>
+</ul>
+</article>
+      </div>
+    </main>
+
+    <footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div class="DocsFooterResources">      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://dash.cloudflare.com/?to=/:account/ai/workers-ai" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Cloudflare Dashboard</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://discord.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Discord</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://community.cloudflare.com" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Community</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span> 
+      
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="https://www.cloudflare.com/learning/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Learning Center</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper"><a href="/support/contacting-cloudflare-support/" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Support Portal</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a>
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-additional-wrapper">
+        
+          <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+        
+      </span>
+    </div>
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper"><a href="https://github.com/cloudflare/cloudflare-docs/blob/production/content/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai.md" class="DocsMarkdown--link" target="_blank" rel="noopener">
+  <span class="DocsMarkdown--link-content">Edit on GitHub</span><span class="DocsMarkdown--link-external-icon" aria-hidden="true">
+  <svg fill="none" stroke="currentColor" stroke-width="1.5" width="23px" height="12px" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16" role="img" aria-labelledby="title-4744738674102027" xmlns="http://www.w3.org/2000/svg">
+    <title id="title-4744738674102027">External link icon</title>
+    <path d="M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5"></path>
+  </svg>
+  <span is-visually-hidden>Open external link</span>
+</span></a></span><span class="DocsFooter--content-dot-spacer"> &nbsp; · &nbsp; </span>
+
+      <span class="DocsFooter--content-time">
+        Updated <time
+  class="relative"
+  datetime=2024-06-27T10:22:54-05:00
+  title=2024-06-27
+>June 27, 2024</time>
+      </span></div>
+  </div><script type="module" src="/lightbox.js" defer></script><link rel="stylesheet" href="/lightbox.css">
+</footer>
+
+  </div>
+<script defer src="https://unpkg.com/littlefoot@4.0.0-11/dist/littlefoot.js" type="application/javascript" ></script>
+    <script type="application/javascript"> document.addEventListener('DOMContentLoaded', () => littlefoot.default()) </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Magic WAN</title>
+    <link>https://developers.cloudflare.com/magic-wan/changelog/</link>
+    <description>Updates to Magic WAN</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/magic-wan/changelog/index.xml" rel="self" />
+    <lastBuildDate>Sun, 23 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>ICMP support for traffic sourced from private IPs</title>
+    <link>https://developers.cloudflare.com/magic-wan/changelog/#icmp-support-for-traffic-sourced-from-private-ips</link>
+    <description>Magic WAN will now support ICMP traffic sourced from private IPs going to the Internet via Gateway.</description>
+    <pubDate>Sun, 23 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Application based prioritization</title>
+    <link>https://developers.cloudflare.com/magic-wan/changelog/#application-based-prioritization</link>
+    <description>The Magic WAN Connector can now prioritize traffic on a per-application basis.</description>
+    <pubDate>Wed, 05 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>WARP virtual IP addresses</title>
+    <link>https://developers.cloudflare.com/magic-wan/changelog/#warp-virtual-ip-addresses</link>
+    <description>Customers using Gateway to filter traffic to Magic WAN destinations will now see traffic from Cloudflare egressing with WARP virtual IP addresses (CGNAT range), rather than public Cloudflare IP addresses. This simplifies configuration and improves visibility for customers.</description>
+    <pubDate>Fri, 31 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Network segmentation</title>
+    <link>https://developers.cloudflare.com/magic-wan/changelog/#network-segmentation</link>
+    <description>You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features.</description>
+    <pubDate>Tue, 23 Jan 2024 08:00:00 EST</pubDate></item></channel>
+</rss>
