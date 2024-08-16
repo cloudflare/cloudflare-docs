@@ -5,6 +5,14 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-08-15'
+  title: Full HD encoding for Portrait Videos
+  description: |-
+    Stream now supports full HD encoding for portrait/vertical videos. Videos with a height greater than their width will now be constrained and prepared for adaptive bitrate renditions based on their width. No changes are required to benefit from this update. For more information, refer to [the announcement](https://blog.cloudflare.com/introducing-high-definition-portrait-video-support-for-cloudflare-stream).
+- publish_date: '2024-08-09'
+  title: Hide Viewer Count in Live Streams
+  description: |-
+    A new property `hideLiveViewerCount` has been added to Live Inputs to block access to the count of viewers in a live stream and remove it from the player. For more information, refer to [Start a Live Stream](/stream/stream-live/start-stream-live/).
 - publish_date: '2024-07-23'
   title: New Live Webhooks for Error States
   description: |-
