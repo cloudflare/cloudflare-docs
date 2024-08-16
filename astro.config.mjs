@@ -82,14 +82,21 @@ export default defineConfig({
 					tag: "meta",
 					attrs: {
 						name: "image",
-						content: "/cf-twitter-card.png"
+						content: "https://developers.cloudflare.com/cf-twitter-card.png"
 					}
 				},
 				{
 					tag: "meta",
 					attrs: {
 						name: "og:image",
-						content: "/cf-twitter-card.png"
+						content: "https://developers.cloudflare.com/cf-twitter-card.png"
+					}
+				},
+        {
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: "https://developers.cloudflare.com/cf-twitter-card.png"
 					}
 				}
 			],
