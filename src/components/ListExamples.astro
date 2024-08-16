@@ -21,7 +21,7 @@ if (directory) {
 }
 
 const examples = await getCollection("docs", (entry) => {
-	return entry.slug.startsWith(target);
+	return entry.data.pcx_content_type === "example" && entry.slug.startsWith(target);
 });
 
 const filterValues: Record<string, string[]> = {};
