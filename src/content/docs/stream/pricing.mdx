@@ -64,7 +64,7 @@ The cost to store a video is based only on its duration, not its file size. If t
 **If I make a Direct Creator Upload link with a maximum duration (`maxDurationSeconds`) of 600 seconds which expires in 1 hour, how is storage consumed?**
 
 - 10 minutes will be subtracted from your available storage immediately.
-- If the link goes unused, in 1 hour, those 10 minutes will be released.
+- If the link is unused in one hour, those 10 minutes will be released.
 - If the creator link is used to upload a 5 minute video, when the video is uploaded and processed, the 10 minute reservation will be released and the 5 minute true duration of the file will be counted.
 - If the creator link is used to upload a 5 minute video but it fails to encode, the video will be marked as errored, the reserved storage will be released, and no storage use will be counted.
 
