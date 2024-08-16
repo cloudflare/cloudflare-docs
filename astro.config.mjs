@@ -91,6 +91,13 @@ export default defineConfig({
 						name: "og:image",
 						content: "/cf-twitter-card.png"
 					}
+				},
+        {
+					tag: "meta",
+					attrs: {
+						name: "twitter:image",
+						content: "/cf-twitter-card.png"
+					}
 				}
 			],
 			social: {
