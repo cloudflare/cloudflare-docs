@@ -134,7 +134,7 @@ export default defineConfig({
 				starlightDocSearch({
 					appId: "8MU1G3QO9P",
 					apiKey: "4edb0a6cef3338ff4bcfbc6b3d2db56b",
-					indexName: "developers-cloudflare2",
+					indexName: "developers-cloudflare2.bak",
 				}),
 				starlightImageZoom(),
 			],
