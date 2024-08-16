@@ -1471,6 +1471,8 @@
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
 /vectorize/configuration/ /vectorize/best-practices/ 301
+/vectorize/examples/langchain/ https://js.langchain.com/v0.1/docs/integrations/vectorstores/cloudflare_vectorize/ 301
+/vectorize/examples/rag/ /reference-architecture/diagrams/ai/ai-rag/ 301
 
 
 # version management
