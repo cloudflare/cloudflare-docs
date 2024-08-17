@@ -91,6 +91,12 @@ import '@astrojs/starlight/style/markdown.css';
 		opacity: 1;
 	}
 
+	/* Fixes the problem of scrollbar appearing when littlefoot is opened by removing overflow property */
+	.sl-markdown-content :global(table:not(:where(.not-content *))) {
+		display: block;
+		border-spacing: 0;
+	}
+
 	/* Float anchor links to the left of headings on larger screens. */
 	@media (min-width: 95em) {
 		.sl-markdown-content :global(.heading-wrapper) {
