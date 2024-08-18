@@ -1,4 +1,5 @@
 ---
+import { Spa } from "astro-spa";
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Footer.astro";
 import OneTrust from "../OneTrust.astro";
@@ -126,3 +127,5 @@ if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_R
     </>
   )
 }
+
+<Spa />
