@@ -12,12 +12,16 @@ By default, your HTTP request logs are not retained. When using the Logpull API 
 
 There are two endpoints for managing log retention:
 
-- `GET /logs/control/retention/flag` - returns whether retention is on
+- `GET /logs/control/retention/flag` - returns the current status of retention
 - `POST /logs/control/retention/flag` - turns retention on or off
 
 {{<Aside type="note" header="Note">}}
 
-To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share.
+In the linux examples below we use the optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response data.
+
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share. Additional information on making API calls can be found at the link below.
+
+- [Making API Calls](/fundamentals/api/how-to/make-api-calls/)
 
 {{</Aside>}}
 
@@ -25,9 +29,9 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 
 ### Check log retention status:
 
-In the linux examples below we use optional [jq](/logs/tutorials/parsing-json-log-data/) tool to help parse the response.
-
 {{<render file="_check-log-retention.md">}}
+
+If the zone has log retention [enabled](/logs/logpull/enabling-log-retention/#enabled-response) you see the value `true`, whereas a value of `false` is returned when it is [disabled](/logs/logpull/enabling-log-retention/#disabled-response).
 
 ### Turn on log retention:
 
@@ -44,7 +48,7 @@ In the linux examples below we use optional [jq](/logs/tutorials/parsing-json-lo
 
 {{<render file="_disable-log-retention.md">}}
 
-#### Disable Response:
+#### Disabled Response:
 
 ```json
 {
