@@ -1,8 +1,18 @@
 import { getCollection, z } from "astro:content";
 import { type CollectionEntry } from "astro:content";
 
-export async function getChangelogs(filter?: Function) {
-	const changelogs = await getCollection("changelogs", filter);
+export async function getChangelogs(opts?: { filter?: Function, wranglerOnly?: boolean }) {
+	let changelogs;
+
+	if (opts?.wranglerOnly) {
+		changelogs = [await getWranglerChangelog()];
+	} else {
+		changelogs = await getCollection("changelogs", opts?.filter);
+	}
+
+	if (!changelogs) {
+		throw new Error(`[getChangelogs] Unable to find any changelogs with ${JSON.stringify(opts)}`);
+	}
 
 	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];
 	const productAreas = [...new Set(changelogs.flatMap((x) => x.data.productArea))];

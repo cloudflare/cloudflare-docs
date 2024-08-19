@@ -29,12 +29,21 @@ const name = page.data.changelog_product_area_name ?? page.data.changelog_file_n
 let changelogs;
 
 if (page.data.changelog_product_area_name) {
-	({ changelogs } = await getChangelogs((entry) => { return entry.data.productArea === name}));
+	const opts = {
+		filter: (entry) => { return entry.data.productArea === name}
+	};
+	({ changelogs } = await getChangelogs(opts));
 } else {
 	if (name === "wrangler") {
-		changelogs = await getWranglerChangelog();
+		const opts = {
+			wranglerOnly: true
+		};
+		({ changelogs } = await getChangelogs(opts));
 	} else {
-		({ changelogs } = await getChangelogs((entry) => { return entry.id === name}));
+		const opts = {
+			filter: (entry) => { return entry.id === name }
+		};
+		({ changelogs } = await getChangelogs(opts));
 	}
 }
 
@@ -43,8 +52,6 @@ if (!changelogs) {
 		`[ProductChangelog] Failed to find changelog called ${name}.`,
 	);
 }
-
-console.log(changelogs)
 ---
 
 {
