@@ -29,7 +29,7 @@ If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#cus
 
 Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
 
-#### Opt out
+#### Opt out single zone
 
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date (September 16, 2024).
 
@@ -40,6 +40,36 @@ If you want to opt a zone out via the API, you can make this API call on or befo
   --header 'Content-Type: application/json' \
   --data '{"value":"custom"}'
 ```
+
+#### Opt out multiple zones
+
+If you wanted to opt out multiple zones:
+
+1. Create an API token with the following permissions:
+   - `Zone - Zone Settings - Read`
+   - `Zone - Zone Settings - Edit`
+2. Create a list of zone IDs you want to each, each on a separate line (newline separate), stored in a file such as `zones.txt`.
+3. Create a bash script for `opt-out-multiple-zones.sh` and add the following. Add `zones.txt` to the same directory or update the path accordingly.
+
+   ```bash title="opt-out-multiple-zones.sh"
+   for zoneID in $(cat zone.txt); do
+     printf "Opting out ${zoneID}:\n"
+
+     curl --request PATCH \
+   		--url https://api.cloudflare.com/client/v4/zones/$zoneID/settings/ssl_automatic_mode \
+   		--header 'Authorization: Bearer <CF_API_TOKEN>' \
+   		--header 'Content-Type: application/json' \
+   		--data '{"value":"custom"}'
+
+     printf "\n\n"
+   done
+   ```
+
+4. Open your command line and run:
+
+   ```bash
+   bash opt-out-multiple-zones.sh
+   ```
 
 ### Custom SSL/TLS
 
