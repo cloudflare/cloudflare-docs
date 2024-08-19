@@ -23,6 +23,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: TEST - Re-dev docs
+  index: developers-cloudflare2
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: firewall
