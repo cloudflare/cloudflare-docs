@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Setup
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) are an opt-in configuration.
 
@@ -18,7 +17,7 @@ To enable advanced nameservers on an existing zone:
 
 1. Opt for advanced nameservers on your zone:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Records**.
@@ -45,10 +44,10 @@ The response body will contain your assigned namservers in the `nameservers` obj
 </TabItem> </Tabs>
 
 2. Update the authoritative nameservers at your registrar. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
-   * If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
-   * If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
+   - If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
+   - If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
 
 :::caution
 
-Make sure the values for your assigned nameservers are copied exactly. 
+Make sure the values for your assigned nameservers are copied exactly.
 :::

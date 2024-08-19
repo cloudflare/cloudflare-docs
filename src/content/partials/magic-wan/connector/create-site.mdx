@@ -1,9 +1,8 @@
 ---
 inputParameters: wan;;lan;;noConnectorShows
-
 ---
 
-import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 ### 1. Create a site
 
@@ -13,7 +12,7 @@ You need to create a site and set up all the settings associated with it before 
 
 To add a site:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.
@@ -50,19 +49,19 @@ If you created your site successfully, you should receive a message similar to t
 
 ```json
 {
-  "result": {
-    "site": {
-      "id": "<SITE_ID>",
-      "name": "<SITE_NAME>",
-      "description": "<SITE_DESCRIPTION>",
-      "connector_id": null,
-      "secondary_connector_id": null,
-      "ha_mode": false
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"site": {
+			"id": "<SITE_ID>",
+			"name": "<SITE_NAME>",
+			"description": "<SITE_DESCRIPTION>",
+			"connector_id": null,
+			"secondary_connector_id": null,
+			"ha_mode": false
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -72,7 +71,7 @@ Take note of the site `id` parameter, as you will need it to create WANs and LAN
 
 ### 2. Create a WAN
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
 2. In **Interface name**, enter a descriptive name for your WAN.
@@ -118,7 +117,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 ### 3. Create a LAN
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **LAN configuration**, select **Create**.
 
@@ -129,15 +128,17 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
 
 5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:
-   * **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
-   * **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
+
+   - **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+   - **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
 
 6. (Optional) In **Directly attached subnet** > **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
 
 7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
-   * **Prefix**: The CIDR prefix for the subnet behind the L3 router.
-   * **Next hop**:  The address of the L3 router to which the Connector should forward packets for this subnet.
-   * **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**.
+
+   - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
+   - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
+   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**.
 
      Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
 
@@ -180,9 +181,9 @@ After setting up your LANs, you can configure your Connector to enable communica
 
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
 
-* Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
-* Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
-* Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
-* [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
+- Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
+- Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+- Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
 
 Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.

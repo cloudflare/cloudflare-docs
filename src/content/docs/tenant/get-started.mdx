@@ -3,10 +3,9 @@ pcx_content_type: get-started
 title: Get started
 sidebar:
   order: 2
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following steps will get you started on making API calls to provision accounts, users, and services.
 
@@ -28,7 +27,7 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 <Render file="account-preamble" />
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="create-account-dash" />
 
@@ -79,9 +78,7 @@ This means that you will be making API calls to Cloudflare on behalf of your cus
 
 :::note
 
-
 This capability is not enabled by default. If you need this functionality, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
-
 
 :::
 
@@ -99,25 +96,25 @@ curl "https://api.cloudflare.com/client/v4/users" \
 
 ```json title="Response"
 {
-  "result": {
-    "id": "60758bd48392a06215ae817bc35084b6",
-    "email": "<ID@example.com>",
-    "first_name": null,
-    "last_name": null,
-    "username": "17bd2796b374cec14976ac3bced85c05",
-    "telephone": null,
-    "country": null,
-    "created_on": "2019-02-21T23:20:28.645256Z",
-    "modified_on": "2019-02-21T23:20:28.645256Z",
-    "two_factor_authentication": {
-      "enabled": false,
-      "locked": false
-    },
-    "api_key": "xxx"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "60758bd48392a06215ae817bc35084b6",
+		"email": "<ID@example.com>",
+		"first_name": null,
+		"last_name": null,
+		"username": "17bd2796b374cec14976ac3bced85c05",
+		"telephone": null,
+		"country": null,
+		"created_on": "2019-02-21T23:20:28.645256Z",
+		"modified_on": "2019-02-21T23:20:28.645256Z",
+		"two_factor_authentication": {
+			"enabled": false,
+			"locked": false
+		},
+		"api_key": "xxx"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
