@@ -27,17 +27,23 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 ### Prepare a dataset
 
-:::caution[Column title cell limitation]
-
-Column title cells may result in false positives in Custom Wordlist datasets and should be removed. DLP will detect and use title cells as column names for Exact Data Match datasets.
-
-:::
+#### Formatting
 
 To prepare a dataset for DLP, add your desired data to a single-column spreadsheet. Each line must be at least six characters long. Entries do not require trailing or final commas.
 
-For compatibility, save your file in either `.csv` or `.txt` format with LF (`\n`) newline characters. DLP does not support CRLF (`\r\n`) newline characters.
+For compatibility, save your file in either `.csv` or `.txt` format with LF (`\n`) newline characters. DLP does not support CRLF (`\r\n`) newline characters. For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention-dlp).
 
-For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention-dlp).
+#### Column title cells
+
+Column title cells may result in false positives in Custom Wordlist datasets and should be removed.
+
+DLP will detect and use title cells as column names for Exact Data Match datasets. If multiple columns have the same name, DLP will append a number sign (`#`) and number to their names.
+
+:::tip[Update EDM datasets]
+
+To select which Exact Data Match columns to use, you will need to [reupload any EDM datasets](#manage-existing-datasets) added prior to column support.
+
+:::
 
 ### Upload a new dataset
 
@@ -71,12 +77,6 @@ DLP will save your dataset in cleartext.
 To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing datasets
-
-:::tip[Update EDM datasets]
-
-To select which Exact Data Match columns to use, you will need to reupload any EDM datasets added prior to column support.
-
-:::
 
 Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
 
