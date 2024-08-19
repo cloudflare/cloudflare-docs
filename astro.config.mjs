@@ -67,6 +67,9 @@ export default defineConfig({
 			[ rehypeAutolinkHeadings, autolinkConfig ]
 		],
 	},
+	experimental: {
+		contentIntellisense: true
+	},
 	server: {
 		port: 1111,
 	},
