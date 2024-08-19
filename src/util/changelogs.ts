@@ -1,8 +1,8 @@
 import { getCollection, z } from "astro:content";
 import { type CollectionEntry } from "astro:content";
 
-export async function getChangelogs() {
-	const changelogs = await getCollection("changelogs");
+export async function getChangelogs(filter?: Function) {
+	const changelogs = await getCollection("changelogs", filter);
 
 	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];
 	const productAreas = [...new Set(changelogs.flatMap((x) => x.data.productArea))];
@@ -16,6 +16,7 @@ export async function getChangelogs() {
 				description: entry.description,
 				title: entry.title,
 				scheduled: entry.scheduled,
+				productLink: product.data.productLink,
 				productAreaName: product.data.productArea,
 				productAreaLink: product.data.productAreaLink,
 			};

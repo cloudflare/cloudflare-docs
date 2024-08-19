@@ -1,9 +1,8 @@
 ---
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { marked } from "marked";
-import { getWranglerChangelog } from "~/util/changelogs";
-import { slug } from "github-slugger";
-import { AnchorHeading, Details } from "~/components";
+import { getChangelogs, getWranglerChangelog } from "~/util/changelogs";
+import { AnchorHeading } from "~/components";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -13,45 +12,52 @@ if (!page) {
 	);
 }
 
-if (!page.data.changelog_file_name) {
+if (!page.data.changelog_file_name && !page.data.changelog_product_area_name) {
 	throw new Error(
-		`[ProductChangelog] ${Astro.params.slug} does not have a 'changelog_file_name' frontmatter property.`,
+		`[ProductChangelog] ${Astro.params.slug} does not have a 'changelog_file_name' or 'changaelog_product_area_name' frontmatter property.`,
 	);
 }
 
-if (page.data.changelog_file_name.length > 1) {
+if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
 	throw new Error(
 		`[ProductChangelog] This component cannot be used on files that have more than 1 entry in their 'changelog_file_name' frontmatter property.`,
 	);
 }
 
-const name = page.data.changelog_file_name[0];
+const name = page.data.changelog_product_area_name ?? page.data.changelog_file_name[0];
 
-let changelog;
+let changelogs;
 
-if (name === "wrangler") {
-	changelog = await getWranglerChangelog();
+if (page.data.changelog_product_area_name) {
+	({ changelogs } = await getChangelogs((entry) => { return entry.data.productArea === name}));
 } else {
-	changelog = await getEntry("changelogs", name);
+	if (name === "wrangler") {
+		changelogs = await getWranglerChangelog();
+	} else {
+		({ changelogs } = await getChangelogs((entry) => { return entry.id === name}));
+	}
 }
 
-if (!changelog) {
+if (!changelogs) {
 	throw new Error(
 		`[ProductChangelog] Failed to find changelog called ${name}.`,
 	);
 }
 
-const entries = changelog.data.entries.sort(
-	(a, b) => new Date(b.publish_date) - new Date(a.publish_date),
-);
+console.log(changelogs)
 ---
 
 {
-	entries.map((entry) => (
+	changelogs.map(([date, entries]) => (
 		<>
-      <AnchorHeading depth={2} title={entry.publish_date} />
-			{entry.title && <AnchorHeading depth={3} title={entry.title} />}
-			<Fragment set:html={marked.parse(entry.description)} />
+      		<AnchorHeading depth={2} title={date} />
+			{ entries.map((entry) => (
+				<>
+				{ page.data.changelog_product_area_name && <h3 class="!mt-4"><a href={entry.productLink}>{entry.product}</a></h3>}
+				{entry.title && <strong>{entry.title}</strong>}
+				<Fragment set:html={marked.parse(entry.description)} />
+				</>
+			))}
 		</>
 	))
 }
