@@ -1,7 +1,7 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getEntry } from "astro:content";
 import { marked } from "marked";
-import { getChangelogs, getWranglerChangelog } from "~/util/changelogs";
+import { getChangelogs } from "~/util/changelogs";
 import { AnchorHeading } from "~/components";
 
 const page = await getEntry("docs", Astro.params.slug!);
@@ -27,13 +27,12 @@ if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
 const name = page.data.changelog_product_area_name ?? page.data.changelog_file_name[0];
 
 let changelogs;
-let products;
 
 if (page.data.changelog_product_area_name) {
 	const opts = {
 		filter: (entry) => { return entry.data.productArea === name}
 	};
-	({ changelogs, products } = await getChangelogs(opts));
+	({ changelogs } = await getChangelogs(opts));
 } else {
 	if (name === "wrangler") {
 		const opts = {
@@ -56,16 +55,6 @@ if (!changelogs) {
 ---
 
 {
-	products &&
-	<>
-		<label for="products">Product: </label>
-		<select name="products" id="products">
-			<option value="all">Select...</option>
-			{products.map((product) => <option value={product.toLowerCase()}>{product}</option>)}
-		</select>
-	</>
-}
-{
 	changelogs.map(([date, entries]) => (
 		<div data-date={date}>
       		<AnchorHeading depth={2} title={date} />
@@ -79,45 +68,3 @@ if (!changelogs) {
 		</div>
 	))
 }
-
-<script>
-	const productFilter = document.querySelector<HTMLSelectElement>("#products");
-	productFilter?.addEventListener("change", filterEntries);
-
-	function filterEntries() {
-		const dates = document.querySelectorAll<HTMLElement>("[data-date]");
-
-		for (const date of dates) {
-			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
-
-			if (productFilter?.value === "all") {
-				dates.forEach((x) => {
-					x.style.display = "";
-				});
-				entries.forEach((x) => {
-					x.style.display = "";
-				});
-				continue;
-			}
-
-			let entriesHidden = 0;
-
-			for (const entry of entries) {
-				const product = entry.dataset.product;
-
-				if (productFilter?.value === product) {
-					entry.style.display = "";
-					date.style.display = "";
-				} else {
-					entry.style.display = "none";
-					entriesHidden++;
-					
-				}
-			}
-
-			if (entriesHidden >= entries.length) {
-				date.style.display = "none";
-			}
-		}
-	}
-</script>
