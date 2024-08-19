@@ -9,4 +9,4 @@ entries:
 - publish_date: '2024-08-19'
   title: AI bots is now a managed rule
   description: |-
-    Customers can now block [AI bots](/bots/concepts/bot/#ai-bots) using a pre-configured managed rule.
+    [AI bots](/bots/concepts/bot/#ai-bots) protection has been upgraded from a custom rule to a managed rule.
