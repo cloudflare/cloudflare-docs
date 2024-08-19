@@ -7,6 +7,7 @@ authorized_users:
 	- marciocloudflare
   - pedrosousa
 	- ranbel
+	- RebeccaTamachiro
 style_guide:
   enabled: true
   unmanaged_vale: true
