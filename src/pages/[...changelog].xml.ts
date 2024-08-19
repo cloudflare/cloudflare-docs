@@ -4,6 +4,7 @@ import type { APIRoute } from 'astro';
 import { marked, type Token } from 'marked';
 import { getWranglerChangelog } from '~/util/changelogs';
 import { slug } from "github-slugger"
+import { entryToString } from '~/util/container';
 
 export async function getStaticPaths() {
     const changelogs = await getCollection("docs", (entry) => {
@@ -57,7 +58,7 @@ export const GET: APIRoute = async (context) => {
 
                 if (!page) throw new Error(`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`)
 
-                description = page.body;
+                description = await entryToString(page) ?? page.body;
             } else {
                 description = entry.description;
             }
