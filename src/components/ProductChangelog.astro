@@ -27,12 +27,13 @@ if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
 const name = page.data.changelog_product_area_name ?? page.data.changelog_file_name[0];
 
 let changelogs;
+let products;
 
 if (page.data.changelog_product_area_name) {
 	const opts = {
 		filter: (entry) => { return entry.data.productArea === name}
 	};
-	({ changelogs } = await getChangelogs(opts));
+	({ changelogs, products } = await getChangelogs(opts));
 } else {
 	if (name === "wrangler") {
 		const opts = {
@@ -55,16 +56,68 @@ if (!changelogs) {
 ---
 
 {
+	products &&
+	<>
+		<label for="products">Product: </label>
+		<select name="products" id="products">
+			<option value="all">Select...</option>
+			{products.map((product) => <option value={product.toLowerCase()}>{product}</option>)}
+		</select>
+	</>
+}
+{
 	changelogs.map(([date, entries]) => (
-		<>
+		<div data-date={date}>
       		<AnchorHeading depth={2} title={date} />
 			{ entries.map((entry) => (
-				<>
+				<div data-product={entry.product.toLowerCase()}>
 				{ page.data.changelog_product_area_name && <h3 class="!mt-4"><a href={entry.productLink}>{entry.product}</a></h3>}
 				{entry.title && <strong>{entry.title}</strong>}
 				<Fragment set:html={marked.parse(entry.description)} />
-				</>
+				</div>
 			))}
-		</>
+		</div>
 	))
 }
+
+<script>
+	const productFilter = document.querySelector<HTMLSelectElement>("#products");
+	productFilter?.addEventListener("change", filterEntries);
+
+	function filterEntries() {
+		const dates = document.querySelectorAll<HTMLElement>("[data-date]");
+
+		for (const date of dates) {
+			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
+
+			if (productFilter?.value === "all") {
+				dates.forEach((x) => {
+					x.style.display = "";
+				});
+				entries.forEach((x) => {
+					x.style.display = "";
+				});
+				continue;
+			}
+
+			let entriesHidden = 0;
+
+			for (const entry of entries) {
+				const product = entry.dataset.product;
+
+				if (productFilter?.value === product) {
+					entry.style.display = "";
+					date.style.display = "";
+				} else {
+					entry.style.display = "none";
+					entriesHidden++;
+					
+				}
+			}
+
+			if (entriesHidden >= entries.length) {
+				date.style.display = "none";
+			}
+		}
+	}
+</script>
