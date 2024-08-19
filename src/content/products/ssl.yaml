@@ -11,7 +11,7 @@ meta:
   description: Cloudflare wants to encrypt as much web traffic as possible to
     prevent data theft and other tampering. We are the first Internet
     performance and security company to offer free SSL/TLS protection.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -23,6 +23,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: ssl

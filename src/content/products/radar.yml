@@ -9,7 +9,7 @@ product:
 meta:
   title: Cloudflare Radar docs
   description: Investigate Internet usage around the world using Cloudflare's data.
-  author: '@CloudflareRadar'
+  author: "@CloudflareRadar"
 
 resources:
   community: https://community.cloudflare.com/tag/cloudflareradar
@@ -19,6 +19,6 @@ externals:
     url: https://radar.cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: radar

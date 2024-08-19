@@ -9,7 +9,7 @@ product:
 meta:
   title: Cloudflare Support docs
   description: Cloudflare Support focused documentation.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/support
@@ -19,6 +19,6 @@ externals:
     url: https://www.cloudflare.com/
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: support

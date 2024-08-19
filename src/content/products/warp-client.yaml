@@ -10,7 +10,7 @@ meta:
   title: Cloudflare WARP client docs
   description: The Cloudflare WARP client allows individuals or organizations to
     have a faster, more secure and private experience online.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Blog announcement
@@ -19,6 +19,6 @@ externals:
     url: https://1.1.1.1
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: warp-client

@@ -10,13 +10,13 @@ product:
 meta:
   title: Pulumi
   description: Create, deploy, and manage Cloudflare resources in various programming languages.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Pulumi docs
     url: https://www.pulumi.com/docs/
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: pulumi

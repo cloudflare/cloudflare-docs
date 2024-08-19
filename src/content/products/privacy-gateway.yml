@@ -8,9 +8,10 @@ product:
 
 meta:
   title: Cloudflare Privacy Gateway
-  description: A managed gateway service that implements the Oblivious HTTP IETF standard
-   and improves client privacy.
-  author: '@cloudflare'
+  description:
+    A managed gateway service that implements the Oblivious HTTP IETF standard
+    and improves client privacy.
+  author: "@cloudflare"
 
 externals:
   - title: Introductory blog
@@ -19,6 +20,6 @@ externals:
     url: https://www.cloudflare.com/lp/privacy-edge/
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: privacy-gateway

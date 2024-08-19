@@ -4,23 +4,24 @@ product:
   title: Aegis
   url: /aegis/
   group: Network security
-  additional_groups: [Application performance, Application security, Cloudflare essentials]
+  additional_groups:
+    [Application performance, Application security, Cloudflare essentials]
 
 meta:
   title: Cloudflare Aegis docs
   description: Leverage dedicated IPs to improve your origin security and implement Zero Trust.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
-    community: https://community.cloudflare.com/
-    dashboard_link: https://dash.cloudflare.com/
-    discord: https://discord.gg/cloudflaredev
+  community: https://community.cloudflare.com/
+  dashboard_link: https://dash.cloudflare.com/
+  discord: https://discord.gg/cloudflaredev
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: aegis

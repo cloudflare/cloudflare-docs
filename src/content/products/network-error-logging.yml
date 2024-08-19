@@ -13,7 +13,7 @@ meta:
   description: Network Error Logging allows you to take a peek into connectivity
     issues on the Internet to provide answers to when and where incident is
     happening, who is impacted, and how they're impacted.
-  author: '@cloudflare'
+  author: "@cloudflare"
   image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=
 
 externals:
@@ -21,6 +21,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: network-error-logging

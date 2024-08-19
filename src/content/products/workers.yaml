@@ -11,7 +11,7 @@ meta:
   description: Documentation for Cloudflare Workers, a serverless execution
     environment that allows you to create entirely new applications or augment
     existing ones without configuring or maintaining infrastructure.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
@@ -30,6 +30,6 @@ externals:
     url: https://discord.cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: workers

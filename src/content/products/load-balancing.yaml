@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Load Balancing docs
   description: Balance traffic loads, manage failovers, monitor server and pool
     health, and apply geographic control with Cloudflare Load Balancing
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/tag/loadbalancing
@@ -22,6 +22,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: load-balancing

@@ -8,10 +8,11 @@ product:
 
 meta:
   title: Cloudflare Logs docs
-  description: Cloudflare Logs contain detailed information on requests and events
+  description:
+    Cloudflare Logs contain detailed information on requests and events
     processed by our network. Find out about the connecting client, Cloudflare's
     actions, and the response from the origin server
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs
@@ -21,6 +22,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: logs

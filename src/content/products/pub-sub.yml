@@ -10,7 +10,7 @@ product:
 meta:
   title: Cloudflare Pub/Sub
   description: Cloudflare Pub/Sub allows developers to connect any MQTT-capable device – an ecosystem of tens of millions of devices — directly to Cloudflare's edge using the industry-standard MQTT protocol.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   discord: https://discord.com/channels/595317990191398933/967783711955365899
@@ -18,6 +18,6 @@ resources:
 externals:
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: pub-sub

@@ -9,13 +9,13 @@ product:
 meta:
   title: Cloudflare Docs Guide
   description: Learn how to create and then level up your docs site.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: docs-guide
