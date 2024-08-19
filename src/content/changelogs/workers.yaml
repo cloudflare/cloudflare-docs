@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-08-19'
+  description: |-
+    -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
 - publish_date: '2024-07-19'
   description: |-
     -  Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
