@@ -13,7 +13,6 @@ if (currentSection) {
   const product = await getEntry("products", currentSection)
 
   if (product) {
-    console.log(product)
     if (product.data.meta.title) {
       const title = `${Astro.props.entry.data.title} | ${product.data.meta.title}`;
       Astro.props.entry.data.head.push({
