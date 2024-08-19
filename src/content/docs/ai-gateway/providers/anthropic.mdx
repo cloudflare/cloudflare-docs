@@ -28,17 +28,26 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
 
 If you are using the `@anthropic-ai/sdk`, you can set your endpoint like this:
 
-```javascript
+```js title="JavaScript"
 import Anthropic from '@anthropic-ai/sdk';
 
+const apiKey = env.ANTHROPIC_API_KEY;
+const accountId = '{account_id}';
+const gatewayId = '{gateway_id}';
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic`;
+
 const anthropic = new Anthropic({
-  apiKey: env.ANTHROPIC_API_KEY,
-  baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic",
+  apiKey,
+  baseURL,
 });
 
+const model = 'claude-3-opus-20240229';
+const messages = [{ role: "user", content: "What is Cloudflare?" }];
+const maxTokens = 1024;
+
 const message = await anthropic.messages.create({
-  model: 'claude-3-opus-20240229',
-  messages: [{role: "user", content: "What is Cloudflare?"}],
-  max_tokens: 1024
+  model,
+  messages,
+  max_tokens: maxTokens,
 });
 ```

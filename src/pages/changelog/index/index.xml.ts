@@ -6,6 +6,16 @@ import { getWranglerChangelog } from '~/util/changelogs';
 import { slug } from "github-slugger"
 
 export const GET: APIRoute = async (context) => {
+    function walkTokens(token: Token) {
+        if (token.type === 'image' || token.type === 'link') {
+            if (token.href.startsWith("/")) {
+                token.href = context.site + token.href.slice(1);
+            }
+        }
+    }
+
+    marked.use({ walkTokens });
+
     const changelogs = await getCollection("changelogs")
 
     changelogs.push(await getWranglerChangelog());

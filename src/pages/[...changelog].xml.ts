@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from 'astro';
-import { marked } from 'marked';
+import { marked, type Token } from 'marked';
 import { getWranglerChangelog } from '~/util/changelogs';
 import { slug } from "github-slugger"
 
@@ -23,6 +23,16 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async (context) => {
+    function walkTokens(token: Token) {
+        if (token.type === 'image' || token.type === 'link') {
+            if (token.href.startsWith("/")) {
+                token.href = context.site + token.href.slice(1);
+            }
+        }
+    }
+
+    marked.use({ walkTokens });
+
     const entry = context.props.entry;
 
     if (!entry.data.changelog_file_name && !entry.data.changelog_product_area_name) {

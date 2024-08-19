@@ -18,14 +18,13 @@ sidebar:
   order: 6
 description: Redirect requests from one URL to another or from one set of URLs
   to another set.
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 ## Redirect all requests to one URL
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="redirect-example-js" />
 
@@ -33,11 +32,11 @@ import { Render, TabItem, Tabs } from "~/components"
 
 ```ts
 export default {
-  async fetch(request): Promise<Response> {
-    const destinationURL = "https://example.com";
-    const statusCode = 301;
-    return Response.redirect(destinationURL, statusCode);
-  },
+	async fetch(request): Promise<Response> {
+		const destinationURL = "https://example.com";
+		const statusCode = 301;
+		return Response.redirect(destinationURL, statusCode);
+	},
 } satisfies ExportedHandler;
 ```
 
@@ -70,22 +69,22 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 
 ## Redirect requests from one domain to another
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
-  async fetch(request) {
-    const base = "https://example.com";
-    const statusCode = 301;
+	async fetch(request) {
+		const base = "https://example.com";
+		const statusCode = 301;
 
-    const url = new URL(request.url);
-    const { pathname, search } = url;
+		const url = new URL(request.url);
+		const { pathname, search } = url;
 
-    const destinationURL = `${base}${pathname}${search}`;
-    console.log(destinationURL);
+		const destinationURL = `${base}${pathname}${search}`;
+		console.log(destinationURL);
 
-    return Response.redirect(destinationURL, statusCode);
-  },
+		return Response.redirect(destinationURL, statusCode);
+	},
 };
 ```
 
@@ -93,18 +92,18 @@ export default {
 
 ```ts
 export default {
-  async fetch(request): Promise<Response> {
-    const base = "https://example.com";
-    const statusCode = 301;
+	async fetch(request): Promise<Response> {
+		const base = "https://example.com";
+		const statusCode = 301;
 
-    const url = new URL(request.url);
-    const { pathname, search } = url;
+		const url = new URL(request.url);
+		const { pathname, search } = url;
 
-    const destinationURL = `${base}${pathname}${search}`;
-    console.log(destinationURL);
+		const destinationURL = `${base}${pathname}${search}`;
+		console.log(destinationURL);
 
-    return Response.redirect(destinationURL, statusCode);
-  },
+		return Response.redirect(destinationURL, statusCode);
+	},
 } satisfies ExportedHandler;
 ```
 

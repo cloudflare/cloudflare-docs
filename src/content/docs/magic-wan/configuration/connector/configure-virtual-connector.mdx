@@ -42,7 +42,6 @@ The following instructions assume you already have VMware ESXi hypervisor instal
    * A null, or unused, port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of `Null port group`, and a **VLAN ID** of `999`.
 
 :::note[VLAN tagging]
-
 Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
 
 Use VLAN ID `0` when:
@@ -90,7 +89,7 @@ Refer to [VMWare's documentation](https://kb.vmware.com/s/article/1003825) for m
        * **Value**: `<YOUR_LICENCE_KEY>`
 
 :::note
-&#x20;You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.
 :::
 
 12. Select **Save** to finish configuring your Virtual Connector.

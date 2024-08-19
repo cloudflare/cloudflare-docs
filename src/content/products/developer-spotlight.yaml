@@ -8,7 +8,7 @@ product:
 meta:
   title: Cloudflare Developer spotlight
   description: Whether you use Cloudflare in your profession, as a student or as a hobby, let us spotlight your creativity. Write a tutorial for our documentation and earn credits for your Cloudflare account along with having your name credited on your work.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
@@ -27,6 +27,6 @@ externals:
     url: https://discord.cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: developer-spotlight

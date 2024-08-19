@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Flexible - SSL/TLS encryption modes
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Setting your encryption mode to **Flexible** makes your site partially secure. Cloudflare allows HTTPS connections between your visitor and Cloudflare, but all connections between Cloudflare and your origin are made through HTTP. As a result, an SSL certificate is not required on your origin.
 
@@ -32,7 +31,7 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ### Process
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="change-encryption-mode-dash" />
 
@@ -48,4 +47,4 @@ Flexible mode is only supported for HTTPS connections on port 443 (default port)
 
 If your application contains sensitive information (personalized data, user login), use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (Strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes instead.
 
-<Render file="ssl-mode-no-aop" /> <br/>
+<Render file="ssl-mode-no-aop" /> <br />

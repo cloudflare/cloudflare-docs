@@ -337,7 +337,7 @@ If you do not have access to the router, you will need to configure each device 
 
 You can configure all traffic on a device to egress through WARP Connector with its local source IP. All traffic will be filtered by your Gateway network policies.
 
-<Tabs> <TabItem label="linux">
+<Tabs> <TabItem label="Linux">
 
 ```sh
 $ sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
@@ -345,7 +345,7 @@ $ sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
 
 Ensure that the `metric` value is lower than other default gateways. To verify that WARP Connector is now the preferred default gateway, run `ip route get <DESTINATION-IP>`.
 
-</TabItem> <TabItem label="macos">
+</TabItem> <TabItem label="macOS">
 
 ```sh
 $ sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
@@ -353,7 +353,7 @@ $ sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
 
 </TabItem>
 
-<TabItem label="windows">
+<TabItem label="Windows">
 
 ```bash
 route /p add 0.0.0.0 mask 0.0.0.0 <WARP-CONNECTOR-IP> metric 101
@@ -365,13 +365,13 @@ route /p add 0.0.0.0 mask 0.0.0.0 <WARP-CONNECTOR-IP> metric 101
 
 You can configure only certain routes to egress through WARP Connector. For example, you may only want to filter traffic destined to internal applications and devices, but allow public Internet traffic to bypass Cloudflare.
 
-<Tabs> <TabItem label="linux">
+<Tabs> <TabItem label="Linux">
 
 ```sh
 $ sudo ip route add <DESTINATION-IP> via <WARP-CONNECTOR-IP> dev eth0
 ```
 
-</TabItem> <TabItem label="macos">
+</TabItem> <TabItem label="macOS">
 
 ```sh
 $ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
@@ -379,7 +379,7 @@ $ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
 
 </TabItem>
 
-<TabItem label="windows">
+<TabItem label="Windows">
 
 ```bash
 route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>

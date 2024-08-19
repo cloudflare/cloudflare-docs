@@ -3,18 +3,15 @@ title: Collect PCAPs
 pcx_content_type: how-to
 sidebar:
   order: 3
-
 ---
 
-import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components"
+import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 After a <GlossaryTooltip term="data packet">packet</GlossaryTooltip> capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](/magic-firewall/packet-captures/pcaps-bucket-setup/).
 
 :::note
 
-
 Packet captures are available for Advanced Magic Firewall users. For access, contact your account team.
-
 
 :::
 
@@ -24,9 +21,7 @@ Currently, when a packet capture is requested, packets flowing at Cloudflare's g
 
 :::note[Note]
 
-
 For help determining which data center to select for a packet capture, visit [https://cloudflare.com/cdn-cgi/trace](https://cloudflare.com/cdn-cgi/trace) and refer to the `colo` field. Note some data centers can be regional such as `ORD` while other names may be more specific like `ord02`. Either of these names can be used for this same field.
-
 
 :::
 
@@ -34,14 +29,14 @@ For help determining which data center to select for a packet capture, visit [ht
 
 **Sample and full**
 
-* `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
-* `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
+- `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
+- `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
 
 **Full**
 
-* `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
+- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -57,7 +52,6 @@ The main **Packet captures** page displays a list of captures.
 The PCAPs API needs both `system` and `type` to be specified to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
 
 Currently, you can only send one collect request per minute for sample PCAPs, and you can only have one running or pending full PCAP at a time.
-
 
 <Details header="Full PCAP">
 
@@ -88,28 +82,26 @@ While the collection is in progress, the response returns the `status` field as 
 
 ```json title="Full PCAP example response"
 {
-  "result": {
-    "id": "7d7c88382f0b4d5daa9587aa45a1a877",
-    "submitted": "2022-06-02T18:38:22.269047Z",
-    "filter_v1": {},
-    "time_limit": 300,
-    "status": "pending",
-    "type": "full",
-    "system": "magic-transit",
-    "packet_limit": 10000,
-    "byte_limit": 100000000,
-    "colo": "ORD",
-    "destination_conf": "gs://test-magic-pcaps"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "7d7c88382f0b4d5daa9587aa45a1a877",
+		"submitted": "2022-06-02T18:38:22.269047Z",
+		"filter_v1": {},
+		"time_limit": 300,
+		"status": "pending",
+		"type": "full",
+		"system": "magic-transit",
+		"packet_limit": 10000,
+		"byte_limit": 100000000,
+		"colo": "ORD",
+		"destination_conf": "gs://test-magic-pcaps"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-
 </Details>
-
 
 <Details header="Sample PCAP">
 
@@ -141,28 +133,27 @@ The response is a JSON body that contains the details of the job running to buil
 
 ```json title="Sample PCAP example response"
 {
-  "result": {
-    "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
-    "submitted": "2021-12-20T17:29:20.641845Z",
-    "filter_v1": {
-      "source_address": "1.2.3.4",
-      "source_port": 123,
-      "destination_address": "5.6.7.8",
-      "destination_port": 80,
-      "protocol": 6
-    },
-    "time_limit": 60,
-    "status": "pending",
-    "packets_remaining": 0,
-    "type": "simple",
-    "system": "magic-transit"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
+		"submitted": "2021-12-20T17:29:20.641845Z",
+		"filter_v1": {
+			"source_address": "1.2.3.4",
+			"source_port": 123,
+			"destination_address": "5.6.7.8",
+			"destination_port": 80,
+			"protocol": 6
+		},
+		"time_limit": 60,
+		"status": "pending",
+		"packets_remaining": 0,
+		"type": "simple",
+		"system": "magic-transit"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
-
 
 </Details>
 
@@ -170,7 +161,7 @@ The response is a JSON body that contains the details of the job running to buil
 
 ## Check packet capture status
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -191,25 +182,25 @@ The response will be similar to the one received when requesting a PCAP collecti
 
 ```json title="Sample PCAP example result"
 {
-  "result": {
-    "id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
-    "submitted": "2021-12-20T17:29:20.641845Z",
-    "filter_v1": {
-      "source_address": "1.2.3.4",
-      "source_port": 123,
-      "destination_address": "5.6.7.8",
-      "destination_port": 80,
-      "protocol": 6
-    },
-    "time_limit": 120,
-    "status": "success",
-    "packets_remaining": 0,
-    "type": "simple",
-    "system": "magic-transit"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "6d1f0aac13cd40e3900d29f5dd0e8a2b",
+		"submitted": "2021-12-20T17:29:20.641845Z",
+		"filter_v1": {
+			"source_address": "1.2.3.4",
+			"source_port": 123,
+			"destination_address": "5.6.7.8",
+			"destination_port": 80,
+			"protocol": 6
+		},
+		"time_limit": 120,
+		"status": "success",
+		"packets_remaining": 0,
+		"type": "simple",
+		"system": "magic-transit"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -217,15 +208,15 @@ The response will be similar to the one received when requesting a PCAP collecti
 
 The capture status displays one of the following options:
 
-* **Complete:** The capture request is done and ready for download.
-* **In progress:** The capture request was captured but still processing.
-* **Failure:** The capture failed. If this occurs, verify your ownership information.
+- **Complete:** The capture request is done and ready for download.
+- **In progress:** The capture request was captured but still processing.
+- **Failure:** The capture failed. If this occurs, verify your ownership information.
 
 ## Download packet captures
 
 After your request finishes processing, you can download your packet captures.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -258,7 +249,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/
 
 ## List packet captures
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
 2. Select **Magic Transit** or **Magic WAN**.
@@ -281,21 +272,21 @@ The response returns an array that includes up to 50 sent requests, which includ
 
 ```json title="List response example"
 {
-  "result": [
-    {
-      "id": "43adab5adeca4dab9c51f4b7f70f2ec3",
-      "submitted": "2021-12-15T03:04:09.277394Z",
-      "filter_v1": {},
-      "time_limit": 120,
-      "status": "success",
-      "packets_remaining": 0,
-      "type": "simple",
-      "system": "magic-transit"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "43adab5adeca4dab9c51f4b7f70f2ec3",
+			"submitted": "2021-12-15T03:04:09.277394Z",
+			"filter_v1": {},
+			"time_limit": 120,
+			"status": "success",
+			"packets_remaining": 0,
+			"type": "simple",
+			"system": "magic-transit"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

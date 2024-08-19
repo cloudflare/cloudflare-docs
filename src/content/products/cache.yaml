@@ -7,11 +7,12 @@ product:
 
 meta:
   title: Cloudflare Cache (CDN) docs
-  description: Cloudflare makes customer websites faster by storing a copy of the
+  description:
+    Cloudflare makes customer websites faster by storing a copy of the
     website’s content on our servers. Caching static resources at Cloudflare
     reduces your server load and bandwidth, with no extra charges for bandwidth
     spikes
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/tag/caching
@@ -25,6 +26,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: cache
