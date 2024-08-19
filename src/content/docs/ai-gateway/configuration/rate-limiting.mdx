@@ -3,10 +3,9 @@ pcx_content_type: configuration
 title: Rate limiting
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Rate limiting controls the traffic that reaches your application, which prevents expensive bills and suspicious activity.
 
@@ -20,7 +19,7 @@ To illustrate this, let us say you had a limit of ten requests per ten minutes, 
 
 ## Default configuration
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To set the default rate limiting configuration in the dashboard:
 
@@ -36,8 +35,8 @@ To set the default rate limiting configuration using the API:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-* `AI Gateway - Read`
-* `AI Gateway - Edit`
+- `AI Gateway - Read`
+- `AI Gateway - Edit`
 
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to create a new Gateway and include a value for the `rate_limiting_interval`, `rate_limiting_limit`, and `rate_limiting_technique`.

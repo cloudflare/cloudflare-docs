@@ -14,12 +14,11 @@ sidebar:
   order: 1001
 description: Inject [Turnstile](/turnstile/) implicitly into HTML elements using
   the HTMLRewriter runtime API.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -123,7 +122,7 @@ async def on_fetch(request, env):
 
 :::note
 
-This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation. 
+This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 :::
 
 <TabItem label="JavaScript" icon="seti:javascript">
