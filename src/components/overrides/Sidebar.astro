@@ -74,7 +74,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = indexPage.data;
 
-	group.label = frontmatter.sidebar.label ?? frontmatter.title;
+	group.label = frontmatter.sidebar.groupLabel ?? frontmatter.sidebar.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
 	if (frontmatter.hideChildren) {
@@ -102,8 +102,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		(x) => x.type === "link" && x.href === indexLink.href,
 	) as number;
 
+	if (indexPage.data.sidebar.hideIndex) {
+		group.entries.splice(indexIdx, 1)[0];
+		return group;
+	}
+
 	group.entries.unshift(group.entries.splice(indexIdx, 1)[0]);
-	group.entries[0].label = "Overview";
+	group.entries[0].label = indexPage.data.sidebar.label ?? "Overview";
 
 	return group;
 }
