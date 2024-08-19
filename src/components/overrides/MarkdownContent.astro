@@ -1,6 +1,8 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import '@astrojs/starlight/style/markdown.css';
+// @ts-expect-error no types available
+import ImageZoom from "starlight-image-zoom/components/ImageZoom.astro";
 /*
     MIT License
 
@@ -36,6 +38,7 @@ const { tableOfContents } = Astro.props.entry.data;
 		</style>
 }
 
+<ImageZoom />
 <div class="sl-markdown-content">
     <slot />
 </div>
