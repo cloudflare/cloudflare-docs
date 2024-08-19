@@ -1009,6 +1009,8 @@
 /stream/platform/changelog/index.xml /stream/changelog/index.xml 301
 /stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
 /stream/reference/faq/ /stream/faq/ 301
+/stream/platform/ /stream/platform/changelog/ 301
+/stream/reference/ /stream/faq/ 301
 
 # support
 
