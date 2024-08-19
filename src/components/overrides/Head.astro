@@ -1,7 +1,7 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Head.astro";
-
+import { differenceInCalendarDays } from "date-fns";
 import "littlefoot/dist/littlefoot.css";
 
 import { getEntry } from "astro:content";
@@ -25,7 +25,36 @@ if (currentSection) {
         attrs: { property: "og:title", content: title },
       });
     }
+    if (product.data.product.title) {
+      const productName = product.data.product.title;
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "pcx_product",
+          content: productName
+        },
+        content: "",
+      });
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "algolia_product_filter",
+          content: productName
+        },
+        content: "",
+      });
+    }
+    if (product.data.product.group) {
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "pcx_content_group",
+          content: product.data.product.group
+        },
+        content: "",
+      });
   }
+}
 }
 
 Astro.props.entry.data.description ??= await getPageDescription(Astro.props.entry);
@@ -74,6 +103,18 @@ if (Astro.props.entry.data.tags) {
     attrs: {
       name: "pcx_tags",
       content: pageTags.toString()
+    },
+    content: "",
+  });
+}
+
+if (Astro.props.entry.data.updated) {
+  const daysBetween = differenceInCalendarDays(new Date(), Astro.props.entry.data.updated)
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "pcx_last_reviewed",
+      content: daysBetween
     },
     content: "",
   });
