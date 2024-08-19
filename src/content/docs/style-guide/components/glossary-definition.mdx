@@ -1,0 +1,18 @@
+---
+title: Glossary definition
+---
+
+## Component
+
+```mdx live
+import { GlossaryDefinition } from "~/components"
+
+<GlossaryDefinition term="example" prepend="The definition for example is: " />
+```
+
+## Glossary
+
+import { Code } from "~/components"
+import glossary from "~/content/glossary/style-guide.yaml?raw"
+
+<Code title="/src/content/glossary/style-guide.yaml" code={glossary} lang="yaml" />

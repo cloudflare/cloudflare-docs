@@ -1,0 +1,57 @@
+---
+inputParameters: ruleName;;ruleWords;;doFollowing;;img;;ruleName2;;ruleWords2;;doFollowing2;;img2
+
+---
+
+import { Image } from 'astro:assets';
+import { GlossaryTooltip, Markdown } from "~/components"
+
+To create the transport rules that will send emails with certain <GlossaryTooltip term="disposition">dispositions</GlossaryTooltip> to Cloud Email Security:
+
+1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
+
+2. Go to **Mail flow** > **Rules**.
+
+3. Select **Add a Rule** > **Create a new rule**.
+
+4. Set the following rule conditions:
+
+   * **Name**: *{props.one}*.
+   * **Apply this rule if**: *The message headers* > *includes any of these words*.
+     * **Enter text**: `X-Area1Security-Disposition` > **Save**.
+     * **Enter words**: <code>{props.two}</code> > **Add** > **Save**.
+   * **Apply this rule if**: Select **+** to add a second condition.
+   * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+   * **Do the following** - *{props.three}*.
+
+ {/* todo <Image src={`~/assets/email-security/static/flexible-partial-images/o365-area1-mx/${props.four}`} alt="set rule conditions" /> */}
+
+5. Select **Next**.
+
+6. You can use the default values on this screen. Select **Next**.
+
+7. Review your settings and select **Finish** > **Done**.
+
+8. Select the rule {props.one} you have just created, and **Enable**.
+
+9. Select **Add a Rule** > **Create a new rule**.
+
+10. Set the following rule conditions:
+
+    * **Name**: *{props.five}*.
+    * **Apply this rule if**: *The message headers* > *includes any of these words*.
+      * **Enter text**: `X-Area1Security-Disposition` > **Save**.
+      * **Enter words**: *{props.six}* > **Add** > **Save**.
+    * **Apply this rule if**: Select **+** to add a second condition.
+    * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+    * **Do the following**: *{props.seven}*.
+    
+ {/* todo   <Image src={`~/assets/email-security/static/flexible-partial-images/o365-area1-mx/${props.eight}`} alt="set rule conditions" /> */}
+
+11. Select **Next**.
+
+12. You can use the default values on this screen. Select **Next**.
+
+13. Review your settings and select **Finish** > **Done**.
+
+14. Select the rule *{props.five}* you have just created, and select **Enable**.

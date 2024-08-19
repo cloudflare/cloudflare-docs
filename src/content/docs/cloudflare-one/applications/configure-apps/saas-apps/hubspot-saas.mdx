@@ -1,0 +1,59 @@
+---
+pcx_content_type: integration-guide
+title: Hubspot
+updated: 2024-06-18
+sidebar:
+  order: 16
+
+---
+
+This guide covers how to configure [Hubspot](https://knowledge.hubspot.com/account-security/set-up-single-sign-on-sso) as a SAML application in Cloudflare Zero Trust.
+
+## Prerequisites
+
+* An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
+* Admin access to a Hubspot Enterprise plan account
+
+## 1. Configure Hubspot
+
+1. Go to **Settings** > **Account**, then go to **Defaults** > **Security**.
+2. Select *Single Sign-on*.
+3. Copy the values for *Audience URI* and *Sign on URL*.
+
+## 2. Configure Cloudflare Access
+
+1. In Zero Trust, go to **Access** > **Applications** and create a SaaS application.
+
+2. Set the **Application type** to *Hubspot*.
+
+3. Use the following Hubspot field mappings:
+
+   | Hubspot values | Cloudflare values              |
+   | -------------- | ------------------------------ |
+   | Audience URI   | EntityID                       |
+   | Sign On URL    | Assertion Consumer Service URL |
+
+4. Set **NameID** to *Email*.
+
+5. Add any desired [Access policies](/cloudflare-one/policies/access/) to your application.
+
+6. Copy SSO endpoint and Access Entity ID.
+
+## 3. Create the certificate
+
+1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+2. Paste the certificate contents into the Certificate field.
+
+## 4. Finalize Hubspot configuration
+
+1. Use the following field mappings:
+
+   | Cloudflare value | Hubspot value                        |
+   | ---------------- | ------------------------------------ |
+   | SSO endpoint     | Identity Provider Single Sign-on URL |
+   | Entity ID        | Identity Provider Identifier         |
+   | Public key       | Certificate                          |
+
+2. Select **Verify** to validate the integration.
+
+Your configuration is now complete. Hubspot SSO can be switched on for specific users or the entire account.

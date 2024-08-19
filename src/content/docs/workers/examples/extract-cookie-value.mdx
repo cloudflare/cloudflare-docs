@@ -1,0 +1,82 @@
+---
+type: example
+summary: Given the cookie name, get the value of a cookie. You can also use
+  cookies for A/B testing.
+tags:
+  - Headers
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+pcx_content_type: example
+title: Cookie parsing
+sidebar:
+  order: 1001
+description: Given the cookie name, get the value of a cookie. You can also use
+  cookies for A/B testing.
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { parse } from "cookie";
+export default {
+	async fetch(request) {
+		// The name of the cookie
+		const COOKIE_NAME = "__uid";
+		const cookie = parse(request.headers.get("Cookie") || "");
+		if (cookie[COOKIE_NAME] != null) {
+			// Respond with the cookie value
+			return new Response(cookie[COOKIE_NAME]);
+		}
+		return new Response("No cookie with name: " + COOKIE_NAME);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { parse } from "cookie";
+export default {
+	async fetch(request): Promise<Response> {
+		// The name of the cookie
+		const COOKIE_NAME = "__uid";
+		const cookie = parse(request.headers.get("Cookie") || "");
+		if (cookie[COOKIE_NAME] != null) {
+			// Respond with the cookie value
+			return new Response(cookie[COOKIE_NAME]);
+		}
+		return new Response("No cookie with name: " + COOKIE_NAME);
+	},
+} satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from http.cookies import SimpleCookie
+from js import Response
+
+async def on_fetch(request):
+    # Name of the cookie
+    cookie_name = "__uid"
+
+    cookies = SimpleCookie(request.headers["Cookie"] or "")
+
+    if cookie_name in cookies:
+        # Respond with cookie value
+        return Response.new(cookies[cookie_name].value)
+
+    return Response.new("No cookie with name: " + cookie_name)
+```
+
+</TabItem> </Tabs>
+
+:::note[External dependencies]
+
+This example requires the npm package [`cookie`](https://www.npmjs.com/package/cookie) to be installed in your JavaScript project.
+
+:::

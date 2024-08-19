@@ -1,0 +1,78 @@
+---
+pcx_content_type: reference
+title: Google Workspace
+rss: file
+head:
+  - tag: title
+    content: Google Workspace - CASB
+---
+
+import { DirectoryListing, Render } from "~/components";
+
+<Render
+  file="casb/integration-description"
+  params={{ one: "Google Workspace", two: "Google Workspace account" }}
+/>
+
+This integration covers the following Google Workspace products:
+
+<DirectoryListing />
+
+## Integration prerequisites
+
+<Render file="casb/google/google-prereqs" />
+
+## Integration permissions
+
+For the Google Workspace integration to function, Cloudflare CASB requires the following Google API permissions:
+
+- `https://www.googleapis.com/auth/admin.directory.domain.readonly`
+- `https://www.googleapis.com/auth/admin.directory.user.readonly`
+- `https://www.googleapis.com/auth/admin.directory.user.security`
+- `https://www.googleapis.com/auth/calendar`
+- `https://www.googleapis.com/auth/cloud-platform.read-only`
+- `https://www.googleapis.com/auth/drive.readonly`
+- `https://www.googleapis.com/auth/gmail.settings.basic`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Google Workspace Admin SDK Directory API](https://developers.google.com/admin-sdk/directory/v1/guides/authorizing).
+
+## Security findings
+
+<Render
+  file="casb/security-findings"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
+
+### User account settings
+
+<Render file="casb/google/user-account-settings" />
+
+### Inactive or suspended users
+
+<Render file="casb/google/inactive-suspended-users" />
+
+### File sharing
+
+<Render file="casb/google/file-sharing" />
+
+### Calendar sharing
+
+<Render file="casb/google/calendar-sharing" />
+
+### Data Loss Prevention (optional)
+
+<Render file="casb/data-loss-prevention" />
+
+<Render file="casb/google/google-dlp" />
+
+### Third-party apps
+
+<Render file="casb/google/third-party-apps" />
+
+### Gmail administrator settings
+
+<Render file="casb/google/gmail-admin-settings" />
+
+### Email forwarding
+
+<Render file="casb/google/email-forwarding" />

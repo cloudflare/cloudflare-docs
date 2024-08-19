@@ -1,0 +1,41 @@
+---
+title: Cards
+---
+
+Cards are a built-in component provided by [Starlight](https://starlight.astro.build/guides/components/#cards).
+
+## Cards
+
+```mdx live
+import { Card } from '~/components';
+
+<Card title="Check this out" icon="puzzle">
+  Interesting content you want to highlight.
+</Card>
+```
+
+## List cards
+
+```mdx live
+import { ListCard } from "~/components";
+
+<ListCard title="Links" icon="puzzle">
+  - foo
+  - bar
+  - baz
+</ListCard>
+```
+
+## Link title cards
+
+```mdx live
+import { LinkTitleCard } from '~/components';
+
+<LinkTitleCard
+  title="Check this out"
+  icon="puzzle"
+  href="/style-guide/components/cards/"
+>
+  Interesting content you want to highlight.
+</LinkTitleCard>
+```

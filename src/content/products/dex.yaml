@@ -1,0 +1,9 @@
+name: Digital Experience Monitoring
+
+product:
+  title: Digital Experience Monitoring
+  group: Cloudflare One
+  additional_groups: [Analytics]
+  url: /cloudflare-one/insights/dex/
+  grid_placeholder: true
+  wrap: true

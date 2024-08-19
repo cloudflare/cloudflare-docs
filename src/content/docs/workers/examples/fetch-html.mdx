@@ -1,0 +1,52 @@
+---
+type: example
+summary: Send a request to a remote server, read HTML from the response, and
+  serve that HTML.
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
+title: Fetch HTML
+updated: 2024-01-11
+sidebar:
+  order: 3
+description: Send a request to a remote server, read HTML from the response, and
+  serve that HTML.
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+<Render file="fetch-html-example-js" />
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async fetch(request: Request): Promise<Response> {
+		/**
+		 * Replace `remote` with the host you wish to send requests to
+		 */
+		const remote = "https://example.com";
+
+		return await fetch(remote, request);
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from js import fetch
+
+async def on_fetch(request):
+    # Replace `remote` with the host you wish to send requests to
+    remote = "https://example.com"
+    return await fetch(remote, request)
+```
+
+</TabItem> </Tabs>

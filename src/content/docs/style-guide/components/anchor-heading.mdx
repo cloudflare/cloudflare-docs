@@ -1,0 +1,15 @@
+---
+title: Anchor heading
+---
+
+The `AnchorHeading` component emulates the behaviour of the [`rehype-slug`](https://github.com/rehypejs/rehype-slug) and [`rehype-autolink-headings`](https://github.com/rehypejs/rehype-autolink-headings) plugins.
+
+It adds an `id` based on the output of [`github-slugger`](https://github.com/Flet/github-slugger/) to the heading, as well as adding a button to copy a link to that particular heading.
+
+This is only required when writing headings yourself inside components, Markdown (including partials) will have this applied via the aforementioned rehype plugins.
+
+```mdx live
+import { AnchorHeading } from "~/components"
+
+<AnchorHeading title="Foo & Bar & Baz" depth={2} />
+```

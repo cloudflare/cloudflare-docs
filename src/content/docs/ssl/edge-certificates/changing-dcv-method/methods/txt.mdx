@@ -1,0 +1,69 @@
+---
+title: TXT
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: TXT method — Domain Control Validation — SSL/TLS
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Render file="txt-validation-definition" /> <br />
+
+---
+
+## When to use
+
+Generally, you need to perform TXT-based DCV when your certificate [requires DCV](/ssl/edge-certificates/changing-dcv-method/) and you cannot perform [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+
+---
+
+## Setup
+
+### Specify DCV method
+
+<Render file="generic-validation-process" />
+
+### Get DCV values
+
+<Render file="txt-validation-preamble" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="API">
+
+<Render file="txt-validation-api" />
+
+</TabItem>
+
+<TabItem label="Dashboard">
+
+<Render file="txt-validation-dashboard" />
+
+</TabItem> </Tabs>
+
+### Update DNS records
+
+At your authoritative DNS provider, create a TXT record named the `txt_name` and containing the `txt_value`.
+
+Repeat this process for all the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
+
+If one or more of the hostnames on the certificate fail to validate, the certificate will not be issued or renewed.
+
+This means that a wildcard certificate covering `example.com` and `*.example.com` will require two DCV tokens to be placed at the authoritative DNS provider. Similarly, a certificate with five hostnames in the SAN (including a wildcard) will require five DCV tokens to be placed at the authoritative DNS provider.
+
+### Complete DCV
+
+Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
+
+<Render file="dcv-validate-patch" />
+
+TXT records used for DCV can be removed from your authoritative DNS provider as soon as the certificate is issued.
+
+## Renewal
+
+<Render file="dcv-certificate-renewal" />
+
+<Render file="dcv-renewal-fallback" />
+
+[^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

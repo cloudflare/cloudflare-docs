@@ -1,0 +1,76 @@
+---
+type: example
+summary: Return JSON directly from a Worker script, useful for building APIs and
+  middleware.
+demo: https://returning-json.workers-sites-examples.workers.dev
+tags:
+  - JSON
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+  - Rust
+preview:
+  - true
+pcx_content_type: example
+title: Return JSON
+updated: 2024-01-11
+sidebar:
+  order: 2
+description: Return JSON directly from a Worker script, useful for building APIs
+  and middleware.
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+<Render file="return-json-example-js" />
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const data = {
+			hello: "world",
+		};
+
+		return Response.json(data);
+	},
+} satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from js import Response, Headers
+import json
+
+def on_fetch(request):
+    data = json.dumps({"hello": "world"})
+    headers = Headers.new({"content-type": "application/json"}.items())
+    return Response.new(data, headers=headers)
+```
+
+</TabItem> <TabItem label="Rust" icon="seti:rust">
+
+```rs
+use serde::{Deserialize, Serialize};
+use worker::*;
+
+#[derive(Deserialize, Serialize, Debug)]
+struct Json {
+    hello: String,
+}
+
+#[event(fetch)]
+async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    let data = Json {
+        hello: String::from("world"),
+    };
+    Response::from_json(&data)
+}
+```
+
+</TabItem> </Tabs>

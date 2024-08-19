@@ -1,8 +1,0 @@
----
-_build:
-  publishResources: false
-  render: never
-  list: never
----
-
-The Cloudflare WARP client (known as the Cloudflare One Agent in mobile app stores) encrypts designated traffic from a user's device to Cloudflare's global network. In this learning path, we will first define all of your parameters and deployment rules, and then we will install and connect the client. If you prefer to start the client download now, refer to [Download WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/).

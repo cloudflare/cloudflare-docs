@@ -1,8 +1,0 @@
----
-_build:
-  publishResources: false
-  render: never
-  list: never
----
-
-You can include an external logo image to display on your custom block page. The block page resizes all images to 146x146 pixels. The URL must be valid and no longer than 2048 characters. Accepted file types include SVG, PNG, JPEG, and GIF.

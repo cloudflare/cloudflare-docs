@@ -1,0 +1,68 @@
+---
+title: Inline badge
+---
+
+## Example
+
+```mdx live
+import { InlineBadge } from '~/components';
+
+### Alpha <InlineBadge preset="alpha" />
+
+### Beta <InlineBadge preset="beta" />
+
+### Deprecated <InlineBadge preset="deprecated" />
+
+### Early Access <InlineBadge preset="early-access" />
+
+### Legacy <InlineBadge preset="legacy" />
+
+### Custom <InlineBadge text="Custom" variant="success" />
+```
+
+## Inputs
+
+Either `preset` or `text` and `variant` must be specified.
+
+### Presets
+
+- `alpha`
+    - **Text**: `Alpha`
+    - **Variant** `success`
+
+- `beta`
+    - **Text**: `Beta`
+    - **Variant** `caution`
+
+- `deprecated`
+    - **Text**: `Deprecated`
+    - **Variant** `danger`
+
+- `early-access`
+    - **Text**: `Early Access`
+    - **Variant** `note`
+
+- `legacy`
+    - **Text**: `Legacy`
+    - **Variant** `danger`
+
+### Text
+
+Any string.
+
+### Variant
+
+- `note`
+    - **Color**: Blue
+
+- `tip`
+    - **Color**: Purple
+
+- `danger`
+    - **Color**: Red
+
+- `caution`
+    - **Color**: Orange
+
+- `success`
+    - **Color**: Green

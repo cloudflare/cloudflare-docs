@@ -1,0 +1,15 @@
+---
+{}
+
+---
+
+* An [expression](/ruleset-engine/rules-language/expressions/) that specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
+* An [action](/ruleset-engine/rules-language/actions/) that specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the rate reaches the specified limit.
+
+Besides these two parameters, rate limiting rules require the following additional parameters:
+
+* **Characteristics**: The set of parameters that define how Cloudflare tracks the rate for this rule.
+* **Period**: The period of time to consider (in seconds) when evaluating the rate.
+* **Requests per period**: The number of requests over the period of time that will trigger the rate limiting rule.
+* **Duration** (or mitigation timeout): Once the rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
+* **Action behavior**: By default, Cloudflare will apply the rule action for the configured duration (or mitigation timeout), regardless of the request rate during this period. Some Enterprise customers can configure the rule to [throttle requests](/waf/rate-limiting-rules/parameters/#with-the-following-behavior) over the maximum rate, allowing incoming requests when the rate is lower than the configured limit.

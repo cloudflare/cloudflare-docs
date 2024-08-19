@@ -6,12 +6,13 @@ import * as core from '@actions/core';
 
 function getTopLevelFolder(path: string): string {
   const parts = path.split('/');
-  return parts[0];
+  return parts[2];
 }
+
 
 function getSubFolder(path: string): string {
   const parts = path.split('/');
-  return parts[1];
+  return parts[3];
 }
 
 function getChangedSubFolders(files: any[]): string[] {
@@ -22,7 +23,7 @@ function getChangedSubFolders(files: any[]): string[] {
     const topLevelFolder = getTopLevelFolder(path);
 
     // Check if the file is within the top-level /content folder
-    if (topLevelFolder === 'content') {
+    if (topLevelFolder === 'docs') {
       const subFolder = getSubFolder(path);
       changedFolders.add(subFolder);
     }

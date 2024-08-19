@@ -1,0 +1,39 @@
+---
+title: Configure tunnel endpoints
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head: []
+description: Cloudflare recommends two tunnels for each ISP and network location
+  router combination, one per Cloudflare endpoint. Learn how to configure IPsec
+  or GRE tunnels.
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+<Render file="tunnel-endpoints/tunnel-endpoints" product="magic-transit" params={{ one: "(this address space is also a link-local address)" }} />
+
+## GRE and IPsec tunnels
+
+<Render file="tunnel-endpoints/gre-ipsec" product="magic-transit" params={{ one: "Magic WAN", two: "/magic-wan/reference/tunnels/", three: "/magic-wan/reference/tunnels/#supported-configuration-parameters" }} />
+
+### Anti-replay protection
+
+<Render file="tunnel-endpoints/anti-replay" product="magic-transit" params={{ one: "Magic WAN", two: "/magic-wan/reference/anti-replay-protection/" }} />
+
+## Add tunnels
+
+<Render file="tunnel-endpoints/add-tunnels" product="magic-transit" params={{ one: "Magic WAN", two: "Magic WAN > Configuration", three: "/magic-wan/configuration/manually/how-to/tunnel-health-checks/", four: "/magic-wan/reference/tunnel-health-checks/", five: "/magic-wan/reference/anti-replay-protection/", six: "bidirectional", seven: "/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/" }} />
+
+## Bidirectional vs unidirectional health checks
+
+<Render file="tunnel-endpoints/bi-uni-health-checks" product="magic-transit" params={{ one: "/magic-wan/reference/tunnel-health-checks/" }} />
+
+### Legacy health checks system
+
+<Render file="legacy-hc-system" product="magic-transit" />
+
+## Next steps
+
+Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-wan/configuration/manually/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare.

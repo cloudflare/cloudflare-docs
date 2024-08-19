@@ -1,0 +1,49 @@
+---
+pcx_content_type: configuration
+title: BigCommerce
+head:
+  - tag: title
+    content: BigCommerce | Provider guides
+description: Learn how to configure your Enterprise zone with BigCommerce.
+
+---
+
+import { Render } from "~/components"
+
+<Render file="provider-guide-intro" params={{ one: "BigCommerce" }} />
+
+## Benefits
+
+<Render file="provider-guide-benefits" params={{ one: "BigCommerce" }} />
+
+## How it works
+
+For more details about how O2O is different than other Cloudflare setups, refer to [How O2O works](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
+
+## Enable
+
+BigCommerce customers can enable O2O on any Cloudflare zone plan.
+
+To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
+
+| Type    | Name              | Target                    | Proxy status |
+| ------- | ----------------- | ------------------------- | ------------ |
+| `CNAME` | `<YOUR_HOSTNAME>` | `shops.mybigcommerce.com` | Proxied      |
+
+:::note
+
+
+For more details about a BigCommerce setup, refer to their [support guide](https://support.bigcommerce.com/s/article/Cloudflare-for-Performance-and-Security?language=en_US#orange-to-orange).
+
+If you cannot activate your domain using [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), reach out to your account team.
+
+
+:::
+
+## Product compatibility
+
+<Render file="provider-guide-compatibility" />
+
+## Additional support
+
+<Render file="provider-guide-help" params={{ one: "BigCommerce" }} />

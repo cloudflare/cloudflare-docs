@@ -1,0 +1,28 @@
+---
+title: Adjust the time range
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Adjust the time range in Network Analytics
+
+---
+
+## Using the timeframe drop-down list
+
+Use the timeframe drop-down list to change the time range over which Network Analytics displays data. When you select a timeframe, the entire view is updated to reflect your choice.
+
+In the Network Analytics dashboard, the range of historical data you can query is 120 days.
+
+When you select *Previous 30 minutes*, the **Network Analytics** card will show the data from the last 30 minutes, refreshing every 20 seconds. A *Live* notification appears next to the statistic drop-down list to let you know that the view keeps updating automatically:
+
+![Timeframe drop-down with Previous 30 minutes selected.](~/assets/images/analytics/network-analytics/timeframe-selector.png)
+
+## Zooming in the chart
+
+To zoom in a specific period, select and drag to define a region in the **Packets summary** (or **Bits summary**) chart. To zoom out, select **X** in the time range selector.
+
+![User zooming in a given period in the Network Analytics traffic chart.](/images/analytics/network-analytics/chart-zoom-in.gif)
+
+The effective resolution goes up when you zoom in and goes down when you zoom out, due to the [Adaptive Bit Rate](/analytics/network-analytics/understand/concepts/#adaptive-bit-rate-sampling). This means that a big packet burst that lasted a few seconds may look less impactful when analyzing a chart displaying data for 24 hours or more.

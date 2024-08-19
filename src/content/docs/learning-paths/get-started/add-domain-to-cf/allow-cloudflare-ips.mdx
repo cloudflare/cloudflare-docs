@@ -1,0 +1,28 @@
+---
+title: Allow Cloudflare IP addresses
+pcx_content_type: overview
+sidebar:
+  order: 2
+
+---
+
+import { Render } from "~/components"
+
+<Render file="allow-cloudflare-ips" product="fundamentals" />
+
+## Review external tools
+
+To avoid blocking Cloudflare IP addresses unintentionally, review your external tools to check that:
+
+* Any security plugins — such as those for WordPress — allow Cloudflare IP addresses.
+* The [mod\_security](https://github.com/SpiderLabs/ModSecurity) plugin is up to date.
+
+## Configure origin server
+
+### Allowlist Cloudflare IP addresses
+
+<Render file="allow-cloudflare-ips-tactical" product="fundamentals" />
+
+### Block other IP addresses (recommended)
+
+<Render file="block-cloudflare-ips-tactical" product="fundamentals" />

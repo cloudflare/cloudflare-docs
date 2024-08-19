@@ -1,0 +1,28 @@
+name: Stream
+
+product:
+  title: Stream
+  url: /stream/
+  group: Developer platform
+  additional_groups: [Media]
+  preview_tryout: true
+
+meta:
+  title: Cloudflare Stream docs
+  description: Store, encode, deliver, and play videos on your sites and applications.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/c/developers/stream/52
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/stream
+  learning_center: https://www.cloudflare.com/learning/video/what-is-streaming/
+  discord: https://discord.com/channels/595317990191398933/893253103695065128
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: stream

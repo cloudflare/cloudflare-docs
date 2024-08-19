@@ -1,0 +1,95 @@
+---
+title: Migrate from unstable_dev
+pcx_content_type: concept
+sidebar:
+  order: 3
+head: []
+description: Migrate from the
+  [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests
+  with the Workers Vitest integration.
+
+---
+
+The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
+
+This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/).
+
+## Reference a Worker for integration testing
+
+With `unstable_dev`, to trigger a `fetch` event, you would do this:
+
+```js
+import { unstable_dev } from "wrangler"
+
+it("dispatches fetch event", () => {
+  const worker = await unstable_dev("src/index.ts");
+  const resp = await worker.fetch("http://example.com");
+  ...
+})
+```
+
+With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the default export defined by the `main` option in your `wrangler.toml`. This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
+
+```js
+import { SELF } from "cloudflare:test";
+import "../src/"; // Currently required to automatically rerun tests when `main` changes
+
+it("dispatches fetch event", async () => {
+	const response = await SELF.fetch("http://example.com");
+	...
+});
+```
+
+## Stop a Worker
+
+With the Workers Vitest integration, there is no need to stop a Worker via `worker.stop()`. This functionality is handled automatically after tests run.
+
+## Import Wrangler configuration
+
+Via the `unstable_dev` API, you can reference a `wrangler.toml` configuration file by adding it as an option:
+
+```js
+await unstable_dev("src/index.ts", {
+  config: "wrangler.toml",
+});
+```
+
+With the Workers Vitest integration, you can now set this reference to `wrangler.toml` in `vitest.config.js` for all of your tests:
+
+```js null {5-7}
+export default defineWorkersConfig({
+  test: {
+    poolOptions: {
+      workers: {
+        wrangler: {
+          configPath: "wrangler.toml",
+        },
+      },
+    },
+  },
+});
+---
+```
+
+## Test service Workers
+
+Unlike the `unstable_dev` API, the Workers Vitest integration does not support testing Workers using the service worker format. You will need to first [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) in order to use the Workers Vitest integration.
+
+## Define types
+
+You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) to define types for all of your tests.
+
+```diff
+- import { unstable_dev } from "wrangler";
+- import type { UnstableDevWorker } from "wrangler";
++ import worker from "src/index.ts";
+
+  describe("Worker", () => {
+-   let worker: UnstableDevWorker;
+    ...
+  });
+```
+
+## Related resources
+
+* [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) - Write unit tests against Workers.

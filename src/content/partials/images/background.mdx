@@ -1,0 +1,23 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Background color to add underneath the image. Applies to images with transparency (for example, PNG) and images resized with `fit=pad`. Accepts any CSS color using CSS4 modern syntax, such as `rgb(255 255 0)` and `rgba(255 255 0 100)`. 
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    background=%23RRGGBB
+
+    OR
+
+    background=red
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {background: "#RRGGBB"}}
+  ```
+  </TabItem>
+</Tabs>

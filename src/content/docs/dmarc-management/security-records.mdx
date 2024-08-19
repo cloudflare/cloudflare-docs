@@ -1,0 +1,29 @@
+---
+title: Security records
+pcx_content_type: how-to
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Configure email security records
+description: Learn how to configure SPF records, DKIM records, and DMARC records
+  in your Cloudflare account to help improve email security.
+
+---
+
+import { Render } from "~/components"
+
+<Render file="domain-spoofing" />
+
+## Create security records
+
+To set up email security records:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Email** > **DMARC Management**.
+3. In **Email record overview**, select **View records**.
+4. Use the available options to set up SPF, DKIM, and DMARC records. This page will also list any previous records you might already have in your account.
+
+## Edit or delete records
+
+Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for more information.

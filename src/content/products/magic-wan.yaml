@@ -1,0 +1,31 @@
+name: Magic WAN
+
+product:
+  title: Magic WAN
+  url: /magic-wan/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare Magic WAN docs
+  description: Magic WAN replaces legacy WAN architectures with Cloudflare’s
+    network, providing global connectivity, cloud-based security, performance,
+    and control through one simple user interface.
+  author: "@cloudflare"
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan
+  learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
+
+externals:
+  - title: Magic WAN home
+    url: https://www.cloudflare.com/magic-wan/
+  - title: "Blog: Magic WAN & Magic Firewall"
+    url: https://blog.cloudflare.com/magic-wan-firewall/
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: magic-wan

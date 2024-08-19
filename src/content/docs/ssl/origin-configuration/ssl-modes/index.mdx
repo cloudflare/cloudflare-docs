@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: Encryption modes
+sidebar:
+  order: 1
+head: []
+description: Encryption modes allow you to control how Cloudflare connects to
+  your origin web server and how certificates presented by your origin are
+  validated.
+---
+
+import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
+
+<Render file="encryption-mode-definition" /> <br />
+
+If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
+
+For more details on how encryption modes fit into the bigger picture of Cloudflare SSL/TLS protection, refer to [Concepts](/ssl/concepts/#ssltls-certificate).
+
+:::note[Tip:]
+
+If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/).
+
+:::
+
+## Available encryption modes
+
+<DirectoryListing />
+
+## Update your encryption mode
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="change-encryption-mode-dash" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="change-encryption-mode-api" />
+
+</TabItem> </Tabs>
+
+<Render file="configuration-rule-promotion" product="rules" />

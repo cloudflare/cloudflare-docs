@@ -1,0 +1,156 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Head.astro";
+import { differenceInCalendarDays } from "date-fns";
+import "littlefoot/dist/littlefoot.css";
+
+import { getEntry } from "astro:content";
+import { getPageDescription } from "~/util/description";
+
+const currentSection = Astro.url.pathname.split("/")[1];
+
+if (currentSection) {
+  const product = await getEntry("products", currentSection)
+
+  if (product) {
+    if (product.data.meta.title) {
+      const title = `${Astro.props.entry.data.title} | ${product.data.meta.title}`;
+      Astro.props.entry.data.head.push({
+        tag: "title",
+        attrs: {},
+        content: title
+      });
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: { property: "og:title", content: title },
+      });
+    }
+    if (product.data.product.title) {
+      const productName = product.data.product.title;
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "pcx_product",
+          content: productName
+        },
+        content: "",
+      });
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "algolia_product_filter",
+          content: productName
+        },
+        content: "",
+      });
+    }
+    if (product.data.product.group) {
+      Astro.props.entry.data.head.push({
+        tag: "meta",
+        attrs: {
+          name: "pcx_content_group",
+          content: product.data.product.group
+        },
+        content: "",
+      });
+  }
+}
+}
+
+Astro.props.entry.data.description ??= await getPageDescription(Astro.props.entry);
+
+// Adding metadata used for reporting and search indexing
+
+// content type
+if (Astro.props.entry.data.pcx_content_type) {
+  const contentType = Astro.props.entry.data.pcx_content_type
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "pcx_content_type",
+      content: Astro.props.entry.data.pcx_content_type
+    },
+    content: "",
+  });
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "algolia_content_type",
+      content: Astro.props.entry.data.pcx_content_type
+    },
+    content: "",
+  });
+}
+
+// other products
+if (Astro.props.entry.data.products) {
+  const additionalProducts = Astro.props.entry.data.products
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "pcx_additional_products",
+      content: additionalProducts.toString()
+    },
+    content: "",
+  });
+}
+
+// other products
+if (Astro.props.entry.data.tags) {
+  const pageTags = Astro.props.entry.data.tags
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "pcx_tags",
+      content: pageTags.toString()
+    },
+    content: "",
+  });
+}
+
+if (Astro.props.entry.data.updated) {
+  const daysBetween = differenceInCalendarDays(new Date(), Astro.props.entry.data.updated)
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      name: "pcx_last_reviewed",
+      content: daysBetween
+    },
+    content: "",
+  });
+}
+
+// end metadata
+
+if (Astro.props.entry.data.pcx_content_type === "changelog") {
+    const href = new URL(Astro.site);
+    href.pathname = Astro.props.entry.slug.concat("/index.xml");
+
+  Astro.props.entry.data.head.push({
+    tag: "link",
+    attrs: {
+      rel: "alternate",
+      type: "application/rss+xml",
+      href: href,
+    },
+    content: "",
+  });
+}
+---
+
+<script>
+  import littlefoot from "littlefoot";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    littlefoot();
+    document
+      .querySelectorAll("span.littlefoot")
+      .forEach((x) => x.classList.add("not-content"));
+  });
+</script>
+<script>
+  import mermaid from "mermaid";
+
+  mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+</script>
+<Default {...Astro.props}><slot /></Default>

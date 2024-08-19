@@ -1,0 +1,24 @@
+name: WARP Client
+
+product:
+  title: WARP Client
+  url: /warp-client/
+  group: Consumer services
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare WARP client docs
+  description: The Cloudflare WARP client allows individuals or organizations to
+    have a faster, more secure and private experience online.
+  author: "@cloudflare"
+
+externals:
+  - title: Blog announcement
+    url: https://blog.cloudflare.com/warp-for-desktop/
+  - title: 1.1.1.1 homepage
+    url: https://1.1.1.1
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: warp-client

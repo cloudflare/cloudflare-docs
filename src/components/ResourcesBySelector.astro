@@ -1,0 +1,35 @@
+---
+import { getCollection, z } from "astro:content";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	tags: z.string().array().optional(),
+	types: z.string().array(),
+	products: z.string().array().optional(),
+});
+
+const { tags, types, products } = props.parse(Astro.props);
+
+const resources = await getCollection("docs", ({ data }) => {
+	return (
+		types.includes(data.pcx_content_type ?? "") &&
+		(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
+		(products ? data.products?.some((v: string) => products.includes(v)) : true)
+	);
+});
+---
+
+<ul>
+	{
+		resources.map((page) => {
+			const description = page.data.description;
+			return (
+				<li>
+					<a href={`/${page.slug}/`}>{page.data.title}</a>
+					{description && `: ${description}`}
+				</li>
+			);
+		})
+	}
+</ul>

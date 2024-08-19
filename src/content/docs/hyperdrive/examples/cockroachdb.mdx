@@ -1,0 +1,44 @@
+---
+type: example
+summary: Connect Hyperdrive to a CockroachDB database.
+pcx_content_type: example
+title: Connect to CockroachDB
+sidebar:
+  order: 9
+description: Connect Hyperdrive to a CockroachDB database.
+
+---
+
+import { Render } from "~/components"
+
+This example shows you how to connect Hyperdrive to a [CockroachDB](https://www.cockroachlabs.com/) database cluster. CockroachDB is a PostgreSQL-compatible distributed SQL database with strong consistency guarantees.
+
+## 1. Allow Hyperdrive access
+
+To allow Hyperdrive to connect to your database, you will need to ensure that Hyperdrive has valid user credentials and network access.
+
+### CockroachDB Console
+
+The steps below assume you have an [existing CockroachDB Cloud account](https://www.cockroachlabs.com/docs/cockroachcloud/quickstart) and database cluster created.
+
+To create and/or fetch your database credentials:
+
+1. Go to the [CockroachDB Cloud console](https://cockroachlabs.cloud/clusters) and select the cluster you want Hyperdrive to connect to.
+2. Select **SQL Users** from the sidebar on the left, and select **Add User**.
+3. Enter a username (for example, \`hyperdrive-user), and select **Generate & Save Password**.
+4. Note down the username and copy the password to a temporary location.
+
+To retrieve your database connection details:
+
+1. Go to the [CockroachDB Cloud console](https://cockroachlabs.cloud/clusters) and select the cluster you want Hyperdrive to connect to.
+2. Select **Connect** in the top right.
+3. Choose the user you created, for example,`hyperdrive-user`.
+4. Select the database, for example `defaultdb`.
+5. Select **General connection string** as the option.
+6. In the text box below, select **Copy** to copy the connection string.
+
+By default, the CockroachDB cloud enables connections from the public Internet (`0.0.0.0/0`). If you have changed these settings on an existing cluster, you will need to allow connections from the public Internet for Hyperdrive to connect.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />

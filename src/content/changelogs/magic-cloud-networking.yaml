@@ -1,0 +1,15 @@
+---
+link: "/magic-cloud-networking/changelog/"
+productName: Magic Cloud Networking
+productLink: "/magic-cloud-networking/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+- publish_date: '2024-08-14'
+  title: GCP on-ramps
+  description: |-
+    Magic Cloud Networking supports Google Cloud Platform.
+- publish_date: '2024-07-01'
+  title: Closed beta launch
+  description: |-
+    The Magic Cloud Networking closed beta release is available, with the managed cloud on-ramps feature.
