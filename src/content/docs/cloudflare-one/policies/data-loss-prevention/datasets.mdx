@@ -87,3 +87,9 @@ Uploaded DLP datasets are read-only. To update a dataset, you must upload a new 
 5. Select **Save dataset**.
 
 Your new dataset will replace the original dataset.
+
+:::caution[Remove existing column entries]
+
+If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
+
+:::
