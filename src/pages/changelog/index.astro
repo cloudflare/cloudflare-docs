@@ -63,10 +63,10 @@ const { products, productAreas, changelogs } = await getChangelogs();
 			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
 
 			if (productAreaFilter.value === "all" && productFilter.value === "all") {
-				dates.forEach((x) => () => {
+				dates.forEach((x) => {
 					x.style.display = "";
 				});
-				entries.forEach((x) => () => {
+				entries.forEach((x) => {
 					x.style.display = "";
 				});
 				continue;
