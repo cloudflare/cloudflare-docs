@@ -82,8 +82,38 @@ function workersPlaygroundButton() {
 	});
 }
 
+function outputCodeblocks() {
+	return definePlugin({
+		name: "Adds the '.code-output' class if 'output' is passed on the opening codefence.",
+		hooks: {
+			preprocessMetadata: async (context) => {
+				if (!context.codeBlock.meta.includes("output")) return;
+				context.codeBlock.props.frame = "none";
+			},
+			postprocessRenderedBlock: async (context) => {
+				if (!context.codeBlock.meta.includes("output")) return;
+				context.renderData.blockAst.properties.className.push("code-output");
+				context.addStyles(`
+					div.expressive-code:has(figure.code-output) {
+						margin-top: 0 !important;
+					}
+
+					.code-output .copy {
+						display: none !important;
+					}
+
+					.code-output > pre {
+						border-top-width: 0 !important;
+						background: var(--sl-color-gray-6) !important;
+					}
+				`);
+			},
+		},
+	});
+}
+
 export default {
-	plugins: [workersPlaygroundButton()],
+	plugins: [workersPlaygroundButton(), outputCodeblocks()],
 	themes: [darkTheme, lightTheme],
 	styleOverrides: {
 		textMarkers: {
