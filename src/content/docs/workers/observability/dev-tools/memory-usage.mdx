@@ -1,0 +1,86 @@
+---
+title: Profiling Memory
+weight: 4
+pcx_content_type: concept
+meta:
+  description: Learn how to profile Memory usage to avoid out-of-memory errors and optimize your Worker
+---
+
+Understanding Worker memory usage can be important in optimizing performance, avoiding out of memory (OOM)
+errors when hitting [Worker memroy limits](/workers/platform/limits/#memory), and fixing memory leaks.
+
+Worker memory usage can be profiled using a memory snapshot in DevTools. This allows you to view a summary
+of total memory use, see what data types contribute to memory use, and get details on specific objects
+in memory.
+
+## Taking a snapshot
+
+To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
+hitting <kbd>d</kbd> from within you terminal. This will open the DevTools in a browser window.
+Now, when you access your worker locally, it can be debugged and profiled via this DevTool instance.
+
+After DevTools is open, click on the "Memory" tab. You should see a "Take snapshot" button at the bottom.
+
+First, send requests to your Worker to start using memory. Optionally include a debugger to make sure
+you can pause execution at the proper time. Then hit "Take snapshot", and begin inspecting your memory.
+
+## An Example Snapshot
+
+Let's look at some example code to learn how to analyze a memory snapshot. Say we have the following Worker code:
+
+```js
+---
+filename: index.js
+---
+let responseText = 'Hello world!';
+
+export default {
+	async fetch(request, env, ctx) {
+		let now = new Date().toISOString();
+		responseText = responseText + ` (Requested at: ${now})`;
+		return new Response(responseText.slice(0, 53));
+	},
+};
+```
+
+The first time we push the code, it responds exactly like we want. However, after letting it run for
+a while, we notice errors that say we have hit the memory limit. We must have a memory leak. Let's use
+DevTools to figure out what is happening.
+
+First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
+navigate o the "Memory" tab.
+
+Next, we'll send many requests to the Worker to generate fake traffic. We can do this with `curl` or by hitting
+reload on the browser repeatedly. Other Workers may require more realistic traffic patterns to reproduce a memory
+leak, but ours can be more simply reproduced.
+
+Then, we hit the "Take Snapshot" button and view the results.
+
+We'll first navigate to "Statistics" in the dropdown to get a high level sense of what contributes to our memory.
+
+![Memory Statistics](~/assets/images/workers/observability/memory-stats.png)
+
+Looking at these statistics, we can see that we're alloting a lot of memory to strings at 67 kB. This is
+likely the source of the memory leak. If we were to make more requests and take another snapshot, we would see
+this number growing.
+
+Looking at the memory summary, we can find the issue.
+
+![Memory Summary](~/assets/images/workers/observability/memory-summary.png)
+
+The summary lists data types by the amount of memory they take up. When you click into "(string)", you can see
+a string that is far larger than the rest. The text shows that we are appending "Requested at" and a date repeatedly,
+then inadvertantly overwriting the global variable with an increasingly large replacement string:
+
+```js
+responseText = responseText + ` (Requested at: ${now})`;
+```
+
+Using Memory Snapshotting in DevTools, we've identified the object and line of code that has caused our memory leak.
+We could then easily fix our memory leak with a small code change.
+
+## Additional Resources
+
+To learn more about how to use Memory Snapshotting, see [Google's documentation on Memory Heap Snapshots](https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots).
+
+To learn how to use DevTools to gain insight into CPU usage, see the [CPU Profiling Documentation](/workers/observability/dev-tools/cpu-usage/).

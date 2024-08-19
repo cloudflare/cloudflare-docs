@@ -1,0 +1,99 @@
+---
+pcx_content_type: concept
+title: Profiling CPU usage
+weight: 4
+description: Learn how to profile CPU usage and ensure CPU-time per request stays under Workers limits
+head: []
+---
+
+CPU-intensive tasks can often slow down a worker's request or startup time. If a Worker spends too much time
+performing CPU operations, it may hit [a per-request CPU limit](/workers/platform/limits/#cpu-time) or
+[startup time limit](/workers/platform/limits/#worker-startup-time) and return an error.
+
+Understanding CPU usage in your Worker requests is helpful to improve worker speed and avoid CPU limits.
+Profiling via DevTools is a helpful tool for identifying and fixing code that uses too much CPU.
+
+:::note
+To avoid side channel attacks, Workers [disallow timers](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading)
+for CPU time. This makes the platform more secure but can make it more difficult to debug in production. DevTools are
+particularly helpful because local development does not have these restrictions, making measuring CPU possible.
+:::
+
+## Taking a profile
+
+To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
+hitting <kbd>d</kbd> from within you terminal. This will open the DevTools in a browser window.
+Now, when you access your worker locally, it can be debugged and profiled via this DevTool instance.
+
+After DevTools is open, click on the "Profiler" tab. You should see a `Start` button at the bottom. Clicking
+this will record CPU usage as your Worker receives new requests.
+
+Click `Start`, make requests to your Worker in a different tab, then click `Stop`. You now have a CPU Profile.
+
+## Example Profiling
+
+Let's look at some example code to learn how to read a CPU profile. Say we have the following Worker code:
+
+```js
+---
+filename: index.js
+---
+const addNumbers = (body) => {
+	for (let i = 0; i < 5000; ++i) {
+		body = body + ' ' + i;
+	}
+	return body;
+};
+
+const moreAddition = (body) => {
+	for (let i = 5001; i < 15000; ++i) {
+		body = body + ' ' + i;
+	}
+	return body;
+};
+
+export default {
+	async fetch(request, env, ctx) {
+		let body = 'Hello Profiler! - ';
+		body = addNumbers(body);
+		body = moreAddition(body);
+		return new Response(body);
+	},
+};
+
+```
+
+We want to find which part of the code is taking up too much CPU. Maybe this code is slower than we expect it
+to be, or maybe we are hitting the Worker's limit on CPU time. How do we use DevTool profiling to identify the
+CPU-heavy code and fix the issue?
+
+First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
+navigate o the "Profiler" tab and take a profile by hitting start and sending a request.
+
+![CPU Profile](~/assets/images/workers/observability/profile.png)
+
+The top chart in this image shows a timeline of the profile, and we have used it to zoom in on a specific request.
+
+The chart below shows the CPU time used for various tasks in the Worker's request. In this screenshot, you can see the
+"fetch" time at the top, and the subscomponent of fetch below, including our two functions "addNumbers" and
+"more Additions". By hovering over each box, you can get more information, and by clicking the box, you will get
+taken to the source code where it is defined.
+
+Using this graph, we can easily answer the question of "what is taking CPU time?". The "addNumbers" function has
+a very small box, representing 0.3ms of CPU time, whereas the "moreAdditions" box is larger, representing 2.2ms of CPU time.
+
+It is clear that if we want to make our response times faster, we need to optimize "moreAdditions".
+
+Alternatively, we could change the visuzliation from "Chart" to "Heavy (Bottom Up)" for another way to visuzlize the data.
+
+![CPU Profile](~/assets/images/workers/observability/heavy.png)
+
+This shows the relative times alloted to each function. At the top of the list, we see that most of the time was spent idle,
+but after that "moreAdditions" is clearly the slowest portion of our Worker. We can see that gargabe collection also represents
+a large percentage of time. This suggests that memory optimization may be useful.
+
+## Additional Resources
+
+To learn more about how to use the CPU profiler, see [Google's documentation on Profiling the CPU in DevTools](https://developer.chrome.com/docs/devtools/performance/nodejs#profile).
+
+To learn how to use DevTools to gain insight into memory, see the [Memory Usage Documentation](/workers/observability/dev-tools/memory-usage/).
