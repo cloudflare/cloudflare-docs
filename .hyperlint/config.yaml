@@ -1,8 +1,11 @@
-content_dir: /content
+content_dir: /src/content
 authorized_users:
+	- crwaters16
+	- dcpena
   - kodster28
   - KianNH
   - pedrosousa
+	- ranbel
 style_guide:
   enabled: true
   unmanaged_vale: true
