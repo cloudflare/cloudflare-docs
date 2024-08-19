@@ -24,7 +24,17 @@ import '@astrojs/starlight/style/markdown.css';
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+const { tableOfContents } = Astro.props.entry.data;
 ---
+
+{
+	tableOfContents === false &&
+		<style>
+			:root {
+				--sl-content-width: 60rem;
+			}
+		</style>
+}
 
 <div class="sl-markdown-content">
     <slot />
