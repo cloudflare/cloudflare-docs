@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Manage | Page Rules
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
@@ -17,7 +16,7 @@ You can manage Page Rules in the Cloudflare dashboard or via API.
 
 ## Create a page rule
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To create a page rule in the dashboard:
 
@@ -29,8 +28,8 @@ To create a page rule in the dashboard:
 6. In the **Order** dropdown, specify the desired order: *First, Last* or *Custom*.
 7. To save, select one of the following options:
 
-   * **Save as Draft** to save the rule and leave it disabled.
-   * **Save and Deploy Page Rule** to save the rule and enable it immediately.
+   - **Save as Draft** to save the rule and leave it disabled.
+   - **Save and Deploy Page Rule** to save the rule and enable it immediately.
 
 For ideas about what rules you can create, refer to [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
@@ -44,15 +43,14 @@ You may also want to review the documentation on [wildcard matching](/rules/page
 
 :::note[Notes]
 
+- Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
 
-* Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
-
-* Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/). 
+- Cloudflare does not support non-ASCII characters — such as punycode/unicode domain — in Page Rules. Instead, you could URL-encode the string using [Punycode converter](https://www.punycoder.com/).
   :::
 
 ## Edit a page rule
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit a page rule in the dashboard:
 
@@ -60,8 +58,8 @@ To edit a page rule in the dashboard:
 2. Go to **Rules** > **Page Rules**.
 3. For a specific rule:
 
-   * To enable or disable the rule, select the on/off toggle.
-   * To modify the URL pattern, settings, and order, select **Edit** (wrench icon). Then, enter the information you want to change.
+   - To enable or disable the rule, select the on/off toggle.
+   - To modify the URL pattern, settings, and order, select **Edit** (wrench icon). Then, enter the information you want to change.
 
 </TabItem> <TabItem label="API">
 
@@ -73,7 +71,7 @@ To entirely replace the configuration of a page rule, send a [`PUT` request](/ap
 
 ## Delete a page rule
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a page rule in the dashboard:
 

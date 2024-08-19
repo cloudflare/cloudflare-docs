@@ -5,20 +5,19 @@ sidebar:
   order: 3
 head: []
 description: Learn how to set up and maintain monitors for your load balancer.
-
 ---
 
-import { GlossaryDefinition, Render, TabItem, Tabs } from "~/components"
+import { GlossaryDefinition, Render, TabItem, Tabs } from "~/components";
 
 <GlossaryDefinition term="monitor" />
 
 For more details about monitors, refer to [Monitors](/load-balancing/monitors/).
 
-***
+---
 
 ## Create a monitor
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 **Set up the monitor**
 
@@ -40,11 +39,11 @@ Once your monitor is created, you need to attach it to a pool:
 
 4. Update the following information:
 
-   * **Monitor**: Select your monitor.
-   * **Health Monitor Regions:** Specifies geographic regions from which Cloudflare should send health monitor requests. Because of [how monitors check pool health](/load-balancing/monitors/#health-monitor-regions), selecting multiple regions could increase the load on your servers.
-   * **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
+   - **Monitor**: Select your monitor.
+   - **Health Monitor Regions:** Specifies geographic regions from which Cloudflare should send health monitor requests. Because of [how monitors check pool health](/load-balancing/monitors/#health-monitor-regions), selecting multiple regions could increase the load on your servers.
+   - **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
 
-5. Select **Save**. The status of your health monitor will be *unknown* until the results of the first check are available.
+5. Select **Save**. The status of your health monitor will be _unknown_ until the results of the first check are available.
 
 </TabItem> <TabItem label="API">
 
@@ -62,11 +61,11 @@ Once your monitor is created, save its `id` property. Include this value in the 
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Edit a monitor
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit a monitor in the dashboard:
 
@@ -84,11 +83,11 @@ To update specific settings without having to resubmit the entire configuration,
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Delete a monitor
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a monitor in the dashboard:
 

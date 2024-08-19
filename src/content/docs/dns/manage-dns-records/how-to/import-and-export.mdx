@@ -3,17 +3,19 @@ pcx_content_type: how-to
 title: Import and export records
 sidebar:
   order: 2
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Use import and export to have more control over your DNS records and make processes like migrating a domain or bulk editing [record comments](/dns/manage-dns-records/reference/record-attributes/) easier.
 
 ## Import records
 
 :::caution
- <Render file="zone-file-size-limit" /> 
+
+{" "}
+
+<Render file="zone-file-size-limit" />
 :::
 
 ### Format your zone file
@@ -24,7 +26,7 @@ If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `
 
 ### Import zone file to Cloudflare
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To import a zone file using the dashboard:
 
@@ -40,13 +42,13 @@ To import records using the API, send a [POST request](/api/operations/dns-recor
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Export records
 
 You can also bulk export records from Cloudflare.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To export records using the dashboard:
 
@@ -61,7 +63,7 @@ To export records using the API, send a [GET request](/api/operations/dns-record
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## DNS record attributes
 
@@ -71,7 +73,7 @@ When exporting or importing a zone file, Cloudflare formats [comments and tags](
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Only tags**         | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`. When enclosed within double quotes (`"`), tag values are represented as JSON strings, so other quotes within the value can be escaped as `\"`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. |
 | **Only a comment**    | Comments have [fewer limitations](/dns/manage-dns-records/reference/record-attributes/#comments) on characters, meaning that the comment is included verbatim.<br/><br/>If the comment includes the string `cf_tags=`, you need to include an additional ` cf_tags=` at the end of the line.                                                                                                                                                                                                    |
-| **Comment and tags**  | The zone file comment would be of the form ; `<comment>` cf\_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`.                                                                                                                                                                                                                                                                                                                                               |
+| **Comment and tags**  | The zone file comment would be of the form ; `<comment>` cf_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`.                                                                                                                                                                                                                                                                                                                                                |
 | **Neither attribute** | The comment in the zone file may be empty or omitted entirely. Comments in the zone file that do not immediately follow a record are also ignored.                                                                                                                                                                                                                                                                                                                                              |
 
 ```txt title="Example zone file"

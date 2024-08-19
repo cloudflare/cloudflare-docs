@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Advanced certificates - DigiCert migration guide
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Starting on **August 31, 2023**, new Cloudflare accounts will not have the option to choose DigiCert as a certificate authority (CA) for [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
@@ -17,21 +16,18 @@ On **October 5, 2023**, Cloudflare will stop using DigiCert as a CA for new adva
 
 :::caution
 
-
 The advanced certificate renewals offboarding has been postponed and started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
-
 
 :::
 
 On **October 26, 2023**, Cloudflare will gradually stop using DigiCert as the CA for advanced certificate renewals. This will not affect existing advanced certificates, only their renewals.
 
-<Render file="digicert-caa-warning" /><br />
+<Render file="digicert-caa-warning" />
+<br />
 
 ## Summary of changes
 
 This table provides a summary of the differences between DigiCert and Cloudflare's other CAs.
-
-
 
 | Area                                  | DigiCert                                                                                                                                                         | Other CAs                                                                                                                                                                                                                                                                                                                   | Actions required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -47,17 +43,15 @@ This table provides a summary of the differences between DigiCert and Cloudflare
 
 If your system integrates with the Cloudflare API to [order advanced certificates](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack), you will need to update the following fields:
 
-* The `"certificate_authority"` field should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
-* The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
-* The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
+- The `"certificate_authority"` field should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
+- The `"validation_method"` field should either use [`"http"`](/ssl/edge-certificates/changing-dcv-method/methods/http/) (only available for [non-wildcard hostnames](/ssl/reference/migration-guides/dcv-update/)) or [`"txt"`](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
+- The `"validity_days"` field should either use `14`, `30`, or `90` (14 or 30 day certificates will use Google Trust Services as the issuing CA).
 
 ### Changes after October 26, 2023
 
 :::caution
 
-
 The advanced certificate renewals offboarding started gradually rolling out on October 26, 2023. This process is expected to be complete by the end of March 2024.
-
 
 :::
 
@@ -69,9 +63,7 @@ Throughout the gradual rollout, DigiCert certificates renewed after October 26, 
 
 :::note
 
-
 Certificates with 14 and 30 day validity periods will be renewed with Google Trust Services. 90 day certificates will either use Let's Encrypt or Google Trust Services.
-
 
 :::
 
@@ -113,7 +105,7 @@ If you want to take control of migrating your certificates and choose a particul
 
 For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](/dns/zone-setups/full-setup/setup/#verify-changes).
 
-<Render file="full-zone-acm-dcv" /> <br/>
+<Render file="full-zone-acm-dcv" /> <br />
 
 #### DCV - Partial zones
 
@@ -131,7 +123,7 @@ Notifications can be sent to an email address or a webhook.
 
 <Render file="txt-validation-preamble" />
 
-<Tabs> <TabItem label="API">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="API">
 
 <Render file="txt-validation-api" />
 
