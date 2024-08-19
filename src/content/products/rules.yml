@@ -5,12 +5,13 @@ product:
   title: Rules
   url: /rules/
   group: Cloudflare essentials
-  additional_groups: [Application performance, Application security, Network security]
+  additional_groups:
+    [Application performance, Application security, Network security]
 
 meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/general/rules/66
@@ -21,6 +22,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: rules

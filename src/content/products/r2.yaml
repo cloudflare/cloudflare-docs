@@ -9,7 +9,7 @@ product:
 meta:
   title: Cloudflare R2 docs
   description: Store large amounts of unstructured data without egress fees.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40
@@ -22,6 +22,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: r2

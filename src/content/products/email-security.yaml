@@ -8,7 +8,7 @@ product:
 meta:
   title: Cloudflare Cloud Email Security (formerly Area 1) docs
   description: Cloudflare Cloud Email Security (formerly Area 1) is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/security
@@ -19,6 +19,6 @@ externals:
     url: https://www.cloudflare.com/products/zero-trust/email-security/
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: email-security

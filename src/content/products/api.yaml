@@ -7,10 +7,10 @@ product:
 
 meta:
   title: Cloudflare API docs
-  description: Cloudflare’s API tokens allow you to make calls to our API to alter
+  description:
+    Cloudflare’s API tokens allow you to make calls to our API to alter
     different settings.
-  author: '@cloudflare'
-
+  author: "@cloudflare"
 
 externals:
   - title: Full API docs
@@ -19,6 +19,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: api

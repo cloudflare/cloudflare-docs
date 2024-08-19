@@ -11,7 +11,7 @@ meta:
   title: Cloudflare Fundamentals docs
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: How Cloudflare works
@@ -20,6 +20,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: fundamentals

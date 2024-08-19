@@ -12,7 +12,7 @@ meta:
     infrastructure. Define and store configuration in source code repositories
     like GitHub, track and version changes over time, and roll back when
     needed—all without needing to learn the Cloudflare APIs
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: GitHub @cloudflare/terraform-provider-cloudflare
@@ -27,6 +27,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: terraform

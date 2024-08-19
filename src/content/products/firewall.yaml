@@ -11,7 +11,7 @@ meta:
   description: Create rules that examine incoming HTTP traffic against a set of
     powerful filters to block, challenge, log, or allow matching requests.
     Firewall Rules have been replaced with WAF custom rules.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -23,6 +23,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: firewall

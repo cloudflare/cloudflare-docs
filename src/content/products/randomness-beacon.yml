@@ -9,15 +9,15 @@ product:
 
 meta:
   title: Cloudflare Randomness Beacon docs
-  description: 'Explore drand: a distributed service providing public randomness
-    in an application-agnostic, secure, and efficient way.'
-  author: '@cloudflare'
+  description: "Explore drand: a distributed service providing public randomness
+    in an application-agnostic, secure, and efficient way."
+  author: "@cloudflare"
 
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2.bak
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: randomness-beacon
