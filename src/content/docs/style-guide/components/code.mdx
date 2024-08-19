@@ -53,11 +53,15 @@ index_name = "tutorial-index"
 
 ````mdx
 ```sh
-echo "foo"
+npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ```
 
 ```sh output
-foo
+✅ Successfully created index 'tutorial-index'
+
+[[vectorize]]
+binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+index_name = "tutorial-index"
 ```
 ````
 
