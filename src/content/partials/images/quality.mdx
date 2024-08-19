@@ -1,0 +1,28 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+:::note[Note]
+At the moment, this setting only works directly with [image transformations](/images/transform-images/).
+:::
+
+Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    quality=50
+    ```
+  </TabItem>
+  <TabItem label="URL format alias">
+  ```js 
+  q=50
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {quality: 50}}
+  ```
+  </TabItem>
+</Tabs>
