@@ -106,6 +106,16 @@ function outputCodeblocks() {
 						border-top-width: 0 !important;
 						background: var(--sl-color-gray-6) !important;
 					}
+
+					.code-output > pre > code {
+						user-select: none;
+						transition: opacity 0.5s ease;
+					}
+
+					.code-output > pre > code:hover {
+						cursor: default;
+						opacity: 0.5;
+					}
 				`);
 			},
 		},
