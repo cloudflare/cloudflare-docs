@@ -6,10 +6,10 @@ sidebar:
 head:
   - tag: title
     content: Full - SSL/TLS encryption modes
-
+description: Cloudflare matches the browser request protocol when connecting to the origin. If the browser uses HTTP, Cloudflare connects to the origin via HTTP; if HTTPS, Cloudflare uses HTTPS without validating the origin’s certificate. This mode is common for origins that use self-signed or otherwise invalid certificates.
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
@@ -26,9 +26,7 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 :::note
 
-
 In addition to **Full** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
-
 
 :::
 

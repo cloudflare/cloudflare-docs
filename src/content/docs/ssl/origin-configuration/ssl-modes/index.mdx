@@ -7,28 +7,44 @@ head: []
 description: Encryption modes allow you to control how Cloudflare connects to
   your origin web server and how certificates presented by your origin are
   validated.
-
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs } from "~/components"
+import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
 
-<Render file="encryption-mode-definition" /> <br/>
+<Render file="encryption-mode-definition" /> <br />
 
 If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
 
 For more details on how encryption modes fit into the bigger picture of Cloudflare SSL/TLS protection, refer to [Concepts](/ssl/concepts/#ssltls-certificate).
 
-:::note[Tip:]
-
-
-If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/).
-
-
-:::
-
 ## Available encryption modes
 
-<DirectoryListing />
+:::note
+We are gradually rolling out the new [Automated SSL/TLS feature](#automatic-ssltls-default).
+
+If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#custom-ssltls) options in your dashboard.
+:::
+
+### Automatic SSL/TLS (default)
+
+Automatic SSL/TLS uses the SSL/TLS Recommender to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
+
+If you want to opt out via the API, you can make this API call on or before the grace period expiration date (September 16, 2024).
+
+```bash
+ curl --request PATCH \
+  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
+  --header 'Authorization: Bearer <CF_API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{"value":"custom"}'
+
+```
+
+### Custom SSL/TLS
+
+To use Custom SSL/TLS, select the custom option (if you prefer to manually set the encryption mode instead of using [Automatic SSL/TLS](#automatic-ssltls-default)):
+
+<DirectoryListing descriptions />
 
 ## Update your encryption mode
 
