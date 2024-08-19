@@ -137,7 +137,7 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     value   = "${cloudflare_tunnel.auto_tunnel.cname}"
+     content   = "${cloudflare_tunnel.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
    }
