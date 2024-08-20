@@ -3,16 +3,15 @@ pcx_content_type: how-to
 title: Manual deployment
 sidebar:
   order: 2
-
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components"
+import { Details, GlossaryTooltip, Render } from "~/components";
 
 If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare Zero Trust instance.
 
 ## Prerequisites
 
-* [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
+- [Set device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to specify which users can connect.
 
 ## Windows, macOS, and Linux
 
@@ -33,7 +32,7 @@ To enroll your device using the terminal:
 3. Enroll into Cloudflare Zero Trust using your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip>:
 
    ```sh
-   $ warp-cli teams-enroll <your-team-name>
+   warp-cli teams-enroll <your-team-name>
    ```
 
 4. In the browser window that opens, complete the authentication steps required by your organization.
@@ -45,9 +44,8 @@ To enroll your device using the terminal:
 6. Verify the registration in the terminal:
 
    ```sh
-   $ warp-cli account
+   warp-cli account
    ```
-
 
 <Details header="Troubleshoot missing registration">
 
@@ -59,18 +57,17 @@ The registration process may take a few minutes to complete. If the registration
 4. In the terminal, run the following command using the URL obtained in the previous step.
 
    ```sh
-   $ warp-cli teams-enroll-token com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>
+   warp-cli teams-enroll-token com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>
    ```
 
 If you get an API error, then the token has expired. Generate a new one by refreshing the web page and quickly grab the new token from the page source.
-
 
 </Details>
 
 7. If you did not configure WARP to [auto-connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect), manually turn on WARP:
 
    ```sh
-   $ warp-cli connect
+   warp-cli connect
    ```
 
 The device is now protected by your organization's Zero Trust policies. For more information on all available commands, run `warp-cli --help`.

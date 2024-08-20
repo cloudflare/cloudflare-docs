@@ -2,7 +2,6 @@
 pcx_content_type: reference
 title: Using JSON
 slug: 1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json
-
 ---
 
 Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS data. For lack of an agreed upon JSON schema for DNS over HTTPS in the Internet Engineering Task Force (IETF), Cloudflare has chosen to follow the same schema as Google's DNS over HTTPS resolver.
@@ -20,46 +19,46 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 
 ## Examples
 
-Example request:
+Example request and response:
 
 ```sh
-$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
+curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
 ```
 
-Example response:
-
-```json
+```json output
 {
-  "Status": 0,
-  "TC": false,
-  "RD": true,
-  "RA": true,
-  "AD": true,
-  "CD": false,
-  "Question": [
-    {
-      "name": "example.com.",
-      "type": 28
-    }
-  ],
-  "Answer": [
-    {
-      "name": "example.com.",
-      "type": 28,
-      "TTL": 1726,
-      "data": "2606:2800:220:1:248:1893:25c8:1946"
-    }
-  ]
+	"Status": 0,
+	"TC": false,
+	"RD": true,
+	"RA": true,
+	"AD": true,
+	"CD": false,
+	"Question": [
+		{
+			"name": "example.com.",
+			"type": 28
+		}
+	],
+	"Answer": [
+		{
+			"name": "example.com.",
+			"type": 28,
+			"TTL": 1726,
+			"data": "2606:2800:220:1:248:1893:25c8:1946"
+		}
+	]
 }
 ```
 
 In the case of an invalid request a `400 Bad Request` error is returned:
 
 ```sh
-$ curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+curl --header "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+```
 
+```json output
 {
-  "error": "Invalid CD flag `2`. Expected to be empty or one of `0`, `false`, `1`, or `true`."
+	"error": "Invalid CD flag `2`. Expected to be empty or one of `0`, `false`, `1`, or `true`."
 }
 ```
 
