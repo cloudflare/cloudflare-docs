@@ -2,15 +2,14 @@
 pcx_content_type: example
 summary: Create a compression rule to set Brotli as the only supported
   compression algorithm for a specific URI path.
-product:
+products:
   - Compression Rules
 title: Use only Brotli compression for a specific path
 description: Create a compression rule to set Brotli as the only supported
   compression algorithm for a specific URI path.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following example rule will configure only Brotli compression for a specific URI path.
 
@@ -18,18 +17,18 @@ The following example rule will configure only Brotli compression for a specific
 
 **When incoming requests match**
 
-* Custom filter expression:
+- Custom filter expression:
 
-  * *URI Path* *equals* `/download/assets.tar`
+  - _URI Path_ _equals_ `/download/assets.tar`
 
 **Then**
 
-* **Compression options**: Custom
-* **Define a custom order for compression types**: `Brotli`
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Brotli`
 
 </Example>
 
-Since the rule configuration does not include *Auto* at the end of the custom algorithms list, the response will be uncompressed if the web visitor does not support Brotli.
+Since the rule configuration does not include _Auto_ at the end of the custom algorithms list, the response will be uncompressed if the web visitor does not support Brotli.
 
 ## Example API request
 

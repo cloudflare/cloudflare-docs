@@ -22,7 +22,6 @@ export const baseSchema = z.object({
 	products: z.string().array().optional(),
 	languages: z.string().array().optional(),
 	summary: z.string().optional(),
-  product: z.string().array().optional(),
-  goal: z.string().array().optional(),
-  operation: z.string().array().optional(),
+	goal: z.string().array().optional(),
+	operation: z.string().array().optional(),
 });

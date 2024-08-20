@@ -2,15 +2,14 @@
 pcx_content_type: example
 summary: Create a redirect rule to redirect visitors from `/contact-us/` to the
   page's new path `/contacts/`.
-product:
+products:
   - Redirect Rules
 title: Redirect visitors to a new page URL
 description: Create a redirect rule to redirect visitors from `/contact-us/` to
   the page's new path `/contacts/`.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 This example static redirect for zone `example.com` will redirect visitors requesting the `/contact-us/` page to the new page URL `/contacts/`.
 
@@ -18,19 +17,19 @@ This example static redirect for zone `example.com` will redirect visitors reque
 
 **When incoming requests match**
 
-* **Field:** *URI Path*
-* **Operator:** *equals*
-* **Value:** `/contact-us/`
+- **Field:** _URI Path_
+- **Operator:** _equals_
+- **Value:** `/contact-us/`
 
 If you are using the Expression Editor, enter the following expression:<br/>
 `http.request.uri.path eq "/contact-us/"`
 
 **Then**
 
-* **Type:** *Static*
-* **URL:** `/contacts/`
-* **Status code:** *301*
-* **Preserve query string:** Enabled
+- **Type:** _Static_
+- **URL:** `/contacts/`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
 
 </Example>
 
