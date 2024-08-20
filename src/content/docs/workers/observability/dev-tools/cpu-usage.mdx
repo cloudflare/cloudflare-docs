@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Profiling CPU usage
 weight: 4
 description: Learn how to profile CPU usage and ensure CPU-time per request stays under Workers limits
-head: []
 ---
 
 CPU-intensive tasks can often slow down a worker's request or startup time. If a Worker spends too much time
@@ -34,10 +33,7 @@ Click `Start`, make requests to your Worker in a different tab, then click `Stop
 
 Let's look at some example code to learn how to read a CPU profile. Say we have the following Worker code:
 
-```js
----
-filename: index.js
----
+```js title="index.js"
 const addNumbers = (body) => {
 	for (let i = 0; i < 5000; ++i) {
 		body = body + ' ' + i;
@@ -60,7 +56,6 @@ export default {
 		return new Response(body);
 	},
 };
-
 ```
 
 We want to find which part of the code is taking up too much CPU. Maybe this code is slower than we expect it
