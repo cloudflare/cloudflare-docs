@@ -83,7 +83,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
      required_providers {
        cloudflare = {
          source = "cloudflare/cloudflare"
-         version = ">= 4.9.0"
+         version = ">= 4.39.0"
        }
        google = {
          source = "hashicorp/google"
@@ -137,7 +137,7 @@ The following configuration will modify settings in your Cloudflare account.
    resource "cloudflare_record" "http_app" {
      zone_id = var.cloudflare_zone_id
      name    = "http_app"
-     value   = "${cloudflare_tunnel.auto_tunnel.cname}"
+     content   = "${cloudflare_tunnel.auto_tunnel.cname}"
      type    = "CNAME"
      proxied = true
    }
