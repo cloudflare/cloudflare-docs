@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Full - SSL/TLS encryption modes
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
@@ -26,9 +25,7 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 :::note
 
-
 In addition to **Full** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
-
 
 :::
 
@@ -42,7 +39,7 @@ Before enabling **Full** mode, make sure your origin allows HTTPS connections on
 
 ### Process
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="change-encryption-mode-dash" />
 
