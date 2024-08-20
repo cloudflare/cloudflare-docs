@@ -1,12 +1,11 @@
 ---
 {}
-
 ---
 
 1. In your configuration directory, create a `.tfvars` file:
 
    ```sh
-   $ touch terraform.tfvars
+   touch terraform.tfvars
    ```
 
    Terraform will automatically use these variables if the file is named `terraform.tfvars`, otherwise the variable file will need to be manually passed in.
@@ -26,5 +25,5 @@
 
 :::caution
 
-To prevent accidentally exposing sensitive credentials, do not save `terraform.tfvars` in your version control system. For example, if your version control is git, add `terraform.tfvars` to your `.gitignore` file. 
+To prevent accidentally exposing sensitive credentials, do not save `terraform.tfvars` in your version control system. For example, if your version control is git, add `terraform.tfvars` to your `.gitignore` file.
 :::

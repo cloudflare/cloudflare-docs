@@ -9,12 +9,9 @@ products:
 languages:
   - JavaScript
   - Rust
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
@@ -28,9 +25,9 @@ To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers
 
 In this tutorial, you will learn how to:
 
-* Upload Images to Cloudflare with the Cloudflare dashboard or API.
-* Set up a Worker project with Wrangler.
-* Manipulate images with image transformations in your Worker.
+- Upload Images to Cloudflare with the Cloudflare dashboard or API.
+- Set up a Worker project with Wrangler.
+- Manipulate images with image transformations in your Worker.
 
 ## Upload your image
 
@@ -52,7 +49,7 @@ To upload an image using the Cloudflare dashboard:
 To upload your image with the [Upload via URL](/images/upload-images/upload-url/) API, refer to the example below:
 
 ```sh
-$ curl --request POST \
+curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1 \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'url=<PATH_TO_IMAGE>' \
@@ -61,30 +58,30 @@ $ curl --request POST \
 
 ```
 
-* `ACCOUNT_ID`: The current user's account id which can be found in your account settings.
-* `API_TOKEN`: Needs to be generated to scoping Images permission.
-* `PATH_TO_IMAGE`: Indicates the URL for the image you want to upload.
+- `ACCOUNT_ID`: The current user's account id which can be found in your account settings.
+- `API_TOKEN`: Needs to be generated to scoping Images permission.
+- `PATH_TO_IMAGE`: Indicates the URL for the image you want to upload.
 
 You will then receive a response similar to this:
 
 ```json
 {
-"result": {
- "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
- "filename": "image.jpeg",
- "metadata": {
-   "key": "value",
- },
- "uploaded": "2022-01-31T16:39:28.458Z",
- "requireSignedURLs": false,
- "variants": [
-   "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public","https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail"
- ]
-},
-"success": true,
-"errors": [],
-"messages": []
-
+	"result": {
+		"id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
+		"filename": "image.jpeg",
+		"metadata": {
+			"key": "value"
+		},
+		"uploaded": "2022-01-31T16:39:28.458Z",
+		"requireSignedURLs": false,
+		"variants": [
+			"https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
+			"https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail"
+		]
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -96,17 +93,17 @@ After uploading your image, create a Worker that will enable you to transform te
 
 You will need the following before you begin:
 
-* A recent version of [Rust](https://rustup.rs/).
-* Access to the `cargo-generate` subcommand:
+- A recent version of [Rust](https://rustup.rs/).
+- Access to the `cargo-generate` subcommand:
 
   ```sh
-  $ cargo install cargo-generate
+  cargo install cargo-generate
   ```
 
 Create a new Worker project using the `worker-rust` template:
 
 ```sh
-$ cargo generate https://github.com/cloudflare/rustwasm-worker-template
+cargo generate https://github.com/cloudflare/rustwasm-worker-template
 ```
 
 You will now make a few changes to the files in your project directory.
@@ -133,7 +130,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 2. Update the `Cargo.toml` file in your `worker-to-text` project directory to use [text-to-png](https://github.com/RookAndPawn/text-to-png), a Rust package for rendering text to PNG. Add the package as a dependency by running:
 
 ```sh
-$ cargo add text-to-png@0.2.0
+cargo add text-to-png@0.2.0
 ```
 
 3. Import the `text_to_png` library into your `worker-to-text` project's `lib.rs` file.
@@ -327,7 +324,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 After you have finished updating your project, start a local server for developing your Worker by running:
 
 ```sh
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 This should spin up a `localhost` instance with the image displayed:
@@ -348,7 +345,7 @@ name = "worker-to-text"
 Then run the `npx wrangler deploy` command to deploy your Worker.
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 A `.workers.dev` domain will be generated for your Worker after running `wrangler deploy`. You will use this domain in the main thumbnail image.
@@ -357,31 +354,43 @@ A `.workers.dev` domain will be generated for your Worker after running `wrangle
 
 Create a Worker to serve the image you uploaded to Images by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'thumbnail-image'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"thumbnail-image"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "JavaScript",
+	}}
+/>
 
 To start developing your Worker, `cd` into your new project directory:
 
 ```sh
-$ cd thumbnail-image
+cd thumbnail-image
 ```
 
 This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:
 
 ```js
 export default {
- async fetch(request, env) {
-   const url = new URL(request.url)
-   if (url.pathname === '/original-image') {
-     const image = await fetch(
-       `https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`
-     );
-     return image;
-   }
-   return new Response('Image Resizing with a Worker')
- }
-}
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		if (url.pathname === "/original-image") {
+			const image = await fetch(
+				`https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`,
+			);
+			return image;
+		}
+		return new Response("Image Resizing with a Worker");
+	},
+};
 ```
 
 Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/).
@@ -394,56 +403,55 @@ You will now use [Cloudflare image transformations](/images/transform-images/), 
 
 ```js null {11}
 export default {
- async fetch(request, env) {
-   const url = new URL(request.url)
-   if (url.pathname === '/original-image') {
-     const image = await fetch(
-       `https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`
-     );
-     return image;
-   }
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		if (url.pathname === "/original-image") {
+			const image = await fetch(
+				`https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`,
+			);
+			return image;
+		}
 
-   if (url.pathname === '/thumbnail') { }
+		if (url.pathname === "/thumbnail") {
+		}
 
-   return new Response('Image Resizing with a Worker')
- }
-}
+		return new Response("Image Resizing with a Worker");
+	},
+};
 ```
 
 Next, use the `fetch` method to apply the image transformation changes on top of the background image. The overlay options are nested in `options.cf.image`.
 
 ```js null {12,13,14,15,16,17,18}
 export default {
- async fetch(request, env) {
-   const url = new URL(request.url)
+	async fetch(request, env) {
+		const url = new URL(request.url);
 
-   if (url.pathname === '/original-image') {
-     const image = await fetch(
-       `https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`
-     );
-     return image;
-   }
+		if (url.pathname === "/original-image") {
+			const image = await fetch(
+				`https://imagedelivery.net/${env.CLOUDFLARE_ACCOUNT_HASH}/${IMAGE_ID}/public`,
+			);
+			return image;
+		}
 
-  if (url.pathname === '/thumbnail') {
-    fetch(imageURL, {
-      cf: {
-        image: {}
-      }
-    })
-  }
+		if (url.pathname === "/thumbnail") {
+			fetch(imageURL, {
+				cf: {
+					image: {},
+				},
+			});
+		}
 
-   return new Response('Image Resizing with a Worker')
- }
-}
+		return new Response("Image Resizing with a Worker");
+	},
+};
 ```
 
 The `imageURL` is the URL of the image you want to use as a background image. In the `cf.image` object, specify the options you want to apply to the background image.
 
 :::note
 
-
 At time of publication, Cloudflare image transformations do not allow resizing images in a Worker that is stored in Cloudflare Images. Instead of using the image you served on the `/original-image` route, you will use the same image from a different source.
-
 
 :::
 
@@ -452,13 +460,14 @@ Add your background image to an assets directory on GitHub and push your changes
 Replace the `imageURL` value with the copied remote URL.
 
 ```js null {2,3}
-if (url.pathname === '/thumbnail') {
- const imageURL = "https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true"
- fetch(imageURL, {
-   cf: {
-     image: {}
-   }
- })
+if (url.pathname === "/thumbnail") {
+	const imageURL =
+		"https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true";
+	fetch(imageURL, {
+		cf: {
+			image: {},
+		},
+	});
 }
 ```
 
@@ -466,18 +475,18 @@ Next, add overlay options in the image object. Resize the image to the preferred
 
 ```js null {3,4,5,6,7,8,9,10,11,12}
 fetch(imageURL, {
- cf: {
-   image: {
-     width: 1280,
-     height: 720,
-     draw: [
-       {
-         url: 'https://text-to-image.examples.workers.dev',
-         left: 40,
-       },
-     ],
-   },
- },
+	cf: {
+		image: {
+			width: 1280,
+			height: 720,
+			draw: [
+				{
+					url: "https://text-to-image.examples.workers.dev",
+					left: 40,
+				},
+			],
+		},
+	},
 });
 ```
 
@@ -493,7 +502,7 @@ name = "thumbnail-image"
 Deploy your Worker by running:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.
@@ -508,25 +517,25 @@ To add dynamic text, append any text attached to the `/thumbnail` URL using quer
 
 ```js
 for (const title of url.searchParams.values()) {
-  try {
-    const editedImage = await fetch(imageURL, {
-      cf: {
-        image: {
-          width: 1280,
-          height: 720,
-          draw: [
-            {
-              url: `https://text-to-image.examples.workers.dev/?${title}`,
-              left: 50
-            }
-          ],
-        },
-      },
-    });
-    return editedImage;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const editedImage = await fetch(imageURL, {
+			cf: {
+				image: {
+					width: 1280,
+					height: 720,
+					draw: [
+						{
+							url: `https://text-to-image.examples.workers.dev/?${title}`,
+							left: 50,
+						},
+					],
+				},
+			},
+		});
+		return editedImage;
+	} catch (error) {
+		console.log(error);
+	}
 }
 ```
 

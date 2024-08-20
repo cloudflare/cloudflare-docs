@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Wasm in JavaScript
-
 ---
 
 Wasm can be used from within a Worker written in JavaScript or TypeScript by importing a Wasm module,
@@ -43,7 +42,7 @@ Review the following example module (`;;` denotes a comment):
 Using [`wat2wasm`](https://github.com/WebAssembly/wabt), convert the WAT format to WebAssembly Binary Format:
 
 ```sh
-$ wat2wasm src/simple.wat -o src/simple.wasm
+wat2wasm src/simple.wat -o src/simple.wasm
 ```
 
 ## Bundling
@@ -55,15 +54,15 @@ Wrangler will bundle any Wasm module that ends in `.wasm` or `.wasm?module`, so 
 After you have converted the WAT format to WebAssembly Binary Format, import and use the Wasm module in your existing JavaScript or TypeScript Worker:
 
 ```typescript
-import mod from './simple.wasm'
+import mod from "./simple.wasm";
 
 // Define imports available to Wasm instance.
 const importObject = {
-  imports: {
-    imported_func: (arg: number) => {
-      console.log(`Hello from JavaScript: ${arg}`)
-    }
-  },
+	imports: {
+		imported_func: (arg: number) => {
+			console.log(`Hello from JavaScript: ${arg}`);
+		},
+	},
 };
 
 // Create instance of WebAssembly Module `mod`, supplying
@@ -72,14 +71,14 @@ const importObject = {
 const instance = await WebAssembly.instantiate(mod, importObject);
 
 export default {
-  async fetch() {
-    // Invoke the `exported_func` from our Wasm Instance with
-    // an argument.
-    const retval = instance.exports.exported_func(42);
-    // Return the return value!
-    return new Response(`Success: ${retval}`);
-  }
-}
+	async fetch() {
+		// Invoke the `exported_func` from our Wasm Instance with
+		// an argument.
+		const retval = instance.exports.exported_func(42);
+		// Return the return value!
+		return new Response(`Success: ${retval}`);
+	},
+};
 ```
 
 When invoked, this Worker should log `Hello from JavaScript: 42` and return `Success: 42`, demonstrating the ability to invoke Wasm methods with arguments from JavaScript and vice versa.

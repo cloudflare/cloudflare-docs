@@ -9,12 +9,9 @@ tags:
 languages:
   - TypeScript
   - SQL
-
 ---
 
-
-
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
@@ -31,18 +28,30 @@ To continue:
 
 First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'postgres-tutorial'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"postgres-tutorial"}
+/>
 
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
 
 Now, move into the newly created directory:
 
 ```sh
-$ cd postgres-tutorial
+cd postgres-tutorial
 ```
 
 ### Enable Node.js compatibility
@@ -58,7 +67,7 @@ node_compat = true
 To connect to a PostgreSQL database, you will need the `pg` library. In your Worker application directory, run the following command to install the library:
 
 ```sh
-$ npm install pg
+npm install pg
 ```
 
 Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earlier versions do not support the Cloudflare Workers [TCP Sockets API](/workers/runtime-apis/tcp-sockets/).
@@ -83,7 +92,10 @@ Replace `username`, `password`, `host`, `port`, and `database` with the appropri
 Set your connection string as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) with the example variable name `DB_URL`:
 
 ```sh
-$ npx wrangler secret put DB_URL
+npx wrangler secret put DB_URL
+```
+
+```sh output
 ➜  wrangler secret put DB_URL
 -------------------------------------------------------
 ? Enter a secret value: › ********************
@@ -106,7 +118,10 @@ DB_NAME = "productsdb"
 To set your password as a [secret](/workers/configuration/secrets/) so that it is not stored as plain text, use [`wrangler secret put`](/workers/wrangler/commands/#secret). `DB_PASSWORD` is an example variable name for this secret to be accessed in your Worker:
 
 ```sh
-$ npx wrangler secret put DB_PASSWORD
+npx wrangler secret put DB_PASSWORD
+```
+
+```sh output
 -------------------------------------------------------
 ? Enter a secret value: › ********************
 ✨ Success! Uploaded secret DB_PASSWORD
@@ -133,11 +148,11 @@ await client.connect();
 
 ```typescript
 const client = new Client({
-  user: env.DB_USERNAME,
-  password: env.DB_PASSWORD,
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  database: env.DB_NAME
+	user: env.DB_USERNAME,
+	password: env.DB_PASSWORD,
+	host: env.DB_HOST,
+	port: env.DB_PORT,
+	database: env.DB_NAME,
 });
 await client.connect();
 ```
@@ -147,7 +162,6 @@ await client.connect();
 To demonstrate how to interact with the products database, you will fetch data from the `products` table by querying the table when a request is received.
 
 :::note
-
 
 If you are following along in your own PostgreSQL instance, set up the `products` using the following SQL `CREATE TABLE` statement. This statement defines the columns and their respective data types for the `products` table:
 
@@ -160,29 +174,28 @@ CREATE TABLE products (
 );
 ```
 
-
 :::
 
 Replace the existing code in your `worker.ts` file with the following code:
 
 ```typescript
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    const client = new Client(env.DB_URL);
-    await client.connect();
+	async fetch(request, env, ctx): Promise<Response> {
+		const client = new Client(env.DB_URL);
+		await client.connect();
 
-    // Query the products table
-    const result = await client.query("SELECT * FROM products");
+		// Query the products table
+		const result = await client.query("SELECT * FROM products");
 
-    // Return the result as JSON
-    const resp = new Response(JSON.stringify(result.rows), {
-      headers: { "Content-Type": "application/json" },
-    });
+		// Return the result as JSON
+		const resp = new Response(JSON.stringify(result.rows), {
+			headers: { "Content-Type": "application/json" },
+		});
 
-    // Clean up the client
-    ctx.waitUntil(client.end());
-    return resp;
-  },
+		// Clean up the client
+		ctx.waitUntil(client.end());
+		return resp;
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -193,7 +206,7 @@ This code establishes a connection to the PostgreSQL database within your Worker
 Run the following command to deploy your Worker:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -211,26 +224,26 @@ Add the following code snippet inside the `fetch` event handler in your `worker.
 ```typescript
 const url = new URL(request.url);
 if (request.method === "POST" && url.pathname === "/products") {
-  // Parse the request's JSON payload
-  const productData = await request.json();
+	// Parse the request's JSON payload
+	const productData = await request.json();
 
-  // Insert the new product into the database
-  const insertQuery = `
+	// Insert the new product into the database
+	const insertQuery = `
     INSERT INTO products (name, description, price)
     VALUES ($1, $2, $3)
     RETURNING *
   `;
-  const values = [productData.name, productData.description, productData.price];
-  const insertResult = await client.query(insertQuery, values);
+	const values = [productData.name, productData.description, productData.price];
+	const insertResult = await client.query(insertQuery, values);
 
-  // Return the inserted row as JSON
-  const insertResp = new Response(JSON.stringify(insertResult.rows[0]), {
-    headers: { "Content-Type": "application/json" },
-  });
+	// Return the inserted row as JSON
+	const insertResp = new Response(JSON.stringify(insertResult.rows[0]), {
+		headers: { "Content-Type": "application/json" },
+	});
 
-  // Clean up the client
-  ctx.waitUntil(client.end());
-  return insertResp;
+	// Clean up the client
+	ctx.waitUntil(client.end());
+	return insertResp;
 }
 ```
 
@@ -248,25 +261,25 @@ Modify your existing Worker code to accommodate the new feature:
 
 ```typescript
 if (request.method === "POST" && url.pathname === "/products") {
-  // (Insert a new row as detailed in the code snippet above)
+	// (Insert a new row as detailed in the code snippet above)
 } else if (request.method === "GET" && url.pathname === "/products") {
-  // (Fetch data from the products table as detailed in Step 5)
+	// (Fetch data from the products table as detailed in Step 5)
 }
 ```
 
 After making these changes, deploy the Worker again by running:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 You can now use your Cloudflare Worker to insert new rows into the `products` table. To test this functionality, send a `POST` request to your Worker's URL with the `/products` path, along with a JSON payload containing the new product data:
 
 ```json
 {
-  "name": "Sample Product",
-  "description": "This is a sample product",
-  "price": 19.99
+	"name": "Sample Product",
+	"description": "This is a sample product",
+	"price": 19.99
 }
 ```
 
