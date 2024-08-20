@@ -36,7 +36,19 @@ For specific guidance on making API calls, refer to the following resources:
 * [API schema docs](/api/) for request and response payloads for each endpoint.
 * The first-party libraries for [Go](https://github.com/cloudflare/cloudflare-go), [Typescript](https://github.com/cloudflare/cloudflare-typescript), [Python](https://github.com/cloudflare/cloudflare-python), or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare).
 
-## Pagination
+## Query parameters
+
+Several Cloudflare endpoints have optional query parameters to filter incoming results, such as [List Zones](/api/operations/zones-get).
+
+When adding those query parameters, make sure you enclose the URL in quotes `'`, or the API call might error.
+
+```bash "account.id=<ACCOUNT_ID>"
+ curl 'https://api.cloudflare.com/client/v4/zones?account.id=<ACCOUNT_ID>' \
+ --header 'Authorization: Bearer <CF_API_TOKEN>' \
+ --header 'Content-Type: application/json'
+```
+
+### Pagination
 
 Sometimes there will be too many results to display via the default page size, for example you might receive the following:
 
@@ -47,7 +59,7 @@ Sometimes there will be too many results to display via the default page size, f
 "total_count": 200,
 ```
 
-There are two options, which can be combined to paginate across the results.
+There are two query parameter options, which can be combined to paginate across the results.
 
 * `page=x` enables you to select a specific page.
 * `per_page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
