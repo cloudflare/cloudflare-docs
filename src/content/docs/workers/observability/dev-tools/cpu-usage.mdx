@@ -5,11 +5,11 @@ weight: 4
 description: Learn how to profile CPU usage and ensure CPU-time per request stays under Workers limits
 ---
 
-CPU-intensive tasks can often slow down a worker's request or startup time. If a Worker spends too much time
+CPU-intensive tasks can often slow down a Worker's request or startup time. If a Worker spends too much time
 performing CPU operations, it may hit [a per-request CPU limit](/workers/platform/limits/#cpu-time) or
 [startup time limit](/workers/platform/limits/#worker-startup-time) and return an error.
 
-Understanding CPU usage in your Worker requests is helpful to improve worker speed and avoid CPU limits.
+Understanding CPU usage in your Worker requests is helpful to improve Worker speed and avoid CPU limits.
 Profiling via DevTools is a helpful tool for identifying and fixing code that uses too much CPU.
 
 :::note
@@ -21,8 +21,8 @@ particularly helpful because local development does not have these restrictions,
 ## Taking a profile
 
 To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
-hitting <kbd>d</kbd> from within you terminal. This will open the DevTools in a browser window.
-Now, when you access your worker locally, it can be debugged and profiled via this DevTool instance.
+hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window.
+Now, when you access your Worker locally, it can be debugged and profiled through this DevTools instance.
 
 After DevTools is open, click on the "Profiler" tab. You should see a `Start` button at the bottom. Clicking
 this will record CPU usage as your Worker receives new requests.
@@ -35,26 +35,26 @@ Let's look at some example code to learn how to read a CPU profile. Say we have 
 
 ```js title="index.js"
 const addNumbers = (body) => {
-	for (let i = 0; i < 5000; ++i) {
-		body = body + ' ' + i;
-	}
-	return body;
+  for (let i = 0; i < 5000; ++i) {
+    body = body + " " + i;
+  }
+  return body;
 };
 
 const moreAddition = (body) => {
-	for (let i = 5001; i < 15000; ++i) {
-		body = body + ' ' + i;
-	}
-	return body;
+  for (let i = 5001; i < 15000; ++i) {
+    body = body + " " + i;
+  }
+  return body;
 };
 
 export default {
-	async fetch(request, env, ctx) {
-		let body = 'Hello Profiler! - ';
-		body = addNumbers(body);
-		body = moreAddition(body);
-		return new Response(body);
-	},
+  async fetch(request, env, ctx) {
+    let body = "Hello Profiler! - ";
+    body = addNumbers(body);
+    body = moreAddition(body);
+    return new Response(body);
+  },
 };
 ```
 
@@ -63,14 +63,14 @@ to be, or maybe we are hitting the Worker's limit on CPU time. How do we use Dev
 CPU-heavy code and fix the issue?
 
 First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
-navigate o the "Profiler" tab and take a profile by hitting start and sending a request.
+navigate to the "Profiler" tab and take a profile by hitting start and sending a request.
 
 ![CPU Profile](~/assets/images/workers/observability/profile.png)
 
 The top chart in this image shows a timeline of the profile, and we have used it to zoom in on a specific request.
 
 The chart below shows the CPU time used for various tasks in the Worker's request. In this screenshot, you can see the
-"fetch" time at the top, and the subscomponent of fetch below, including our two functions "addNumbers" and
+"fetch" time at the top, and the subscomponents of fetch below, including our two functions "addNumbers" and
 "more Additions". By hovering over each box, you can get more information, and by clicking the box, you will get
 taken to the source code where it is defined.
 
@@ -84,7 +84,7 @@ Alternatively, we could change the visuzliation from "Chart" to "Heavy (Bottom U
 ![CPU Profile](~/assets/images/workers/observability/heavy.png)
 
 This shows the relative times alloted to each function. At the top of the list, we see that most of the time was spent idle,
-but after that "moreAdditions" is clearly the slowest portion of our Worker. We can see that gargabe collection also represents
+but after that "moreAdditions" is clearly the slowest portion of our Worker. We can see that garbage collection also represents
 a large percentage of time. This suggests that memory optimization may be useful.
 
 ## Additional Resources

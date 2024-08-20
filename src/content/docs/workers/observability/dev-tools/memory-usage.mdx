@@ -17,47 +17,47 @@ in memory.
 
 To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
 hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window.
-Now, when you access your worker locally, it can be debugged and profiled via this DevTool instance.
+Now, when you access your worker locally, it can be debugged and profiled through this DevTools instance.
 
 After DevTools is open, click on the "Memory" tab. You should see a "Take snapshot" button at the bottom.
 
-First, send requests to your Worker to start using memory. Optionally include a debugger to make sure
-you can pause execution at the proper time. Then hit "Take snapshot", and begin inspecting your memory.
+First, send multiple requests to your Worker to start allocating memory. Optionally include a debugger to make
+sure you can pause execution at the proper time. Then hit "Take snapshot", and begin inspecting your memory.
 
 ## An Example Snapshot
 
 Let's look at some example code to learn how to analyze a memory snapshot. Say we have the following Worker code:
 
 ```js title="index.js"
-let responseText = 'Hello world!';
+let responseText = "Hello world!";
 
 export default {
-	async fetch(request, env, ctx) {
-		let now = new Date().toISOString();
-		responseText = responseText + ` (Requested at: ${now})`;
-		return new Response(responseText.slice(0, 53));
-	},
+  async fetch(request, env, ctx) {
+    let now = new Date().toISOString();
+    responseText = responseText + ` (Requested at: ${now})`;
+    return new Response(responseText.slice(0, 53));
+  },
 };
 ```
 
 The first time we push the code, it responds exactly like we want. However, after letting it run for
-a while, we notice errors that say we have hit the memory limit. We must have a memory leak. Let's use
-DevTools to figure out what is happening.
+a while, we notice errors indicating that we have reached the memory limit. We must have a memory leak.
+Let's use DevTools to figure out what is happening.
 
 First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
 navigate to the "Memory" tab.
 
-Next, we'll send many requests to the Worker to generate fake traffic. We can do this with `curl` or by hitting
-reload on the browser repeatedly. Other Workers may require more realistic traffic patterns to reproduce a memory
+Next, we’ll generate a large volume of traffic to the Worker by sending requests. We can do this with `curl` or by
+hitting reload on the browser repeatedly. Other Workers may require more realistic traffic patterns to reproduce a memory
 leak, but ours can be more simply reproduced.
 
-Then, we hit the "Take Snapshot" button and view the results.
+Then, we click the "Take Snapshot" button and view the results.
 
 We'll first navigate to "Statistics" in the dropdown to get a high level sense of what contributes to our memory.
 
 ![Memory Statistics](~/assets/images/workers/observability/memory-stats.png)
 
-Looking at these statistics, we can see that we're alloting a lot of memory to strings at 67 kB. This is
+Looking at these statistics, we can see that we're allocating a lot of memory to strings at 67 kB. This is
 likely the source of the memory leak. If we were to make more requests and take another snapshot, we would see
 this number growing.
 
@@ -67,14 +67,14 @@ Looking at the memory summary, we can find the issue.
 
 The summary lists data types by the amount of memory they take up. When you click into "(string)", you can see
 a string that is far larger than the rest. The text shows that we are appending "Requested at" and a date repeatedly,
-then inadvertently overwriting the global variable with an increasingly large replacement string:
+inadvertently overwriting the global variable with an increasingly large string:
 
 ```js
 responseText = responseText + ` (Requested at: ${now})`;
 ```
 
 Using Memory Snapshotting in DevTools, we've identified the object and line of code that has caused our memory leak.
-We could then easily fix our memory leak with a small code change.
+We can now fix the memory leak with a small code change.
 
 ## Additional Resources
 
