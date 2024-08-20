@@ -148,8 +148,9 @@ dig +short DS cloudflare.com
 
 When using the `+trace` option, `dig` confirms whether an answer is returned by the nameserver for `cloudflare.com` or the nameserver for `.com`.  In this example, the `DS` record for `cloudflare.com` is returned by `e.gtld-servers.net`:
 
-````sh
+```sh
 dig DS cloudflare.com +trace
+```
 
 ```sh output
 [...]
@@ -159,7 +160,7 @@ com.            172800  IN  NS  e.gtld-servers.net.
 [...]
 ;; Received 1213 bytes from 2001:502:1ca1::30#53(e.gtld-servers.net) in 37 ms
 
-````
+```
 
 </Example>
 
