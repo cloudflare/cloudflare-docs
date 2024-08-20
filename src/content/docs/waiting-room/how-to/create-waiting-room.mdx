@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Create a waiting room
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 You can create a waiting room from the dashboard or via API.
 
@@ -17,7 +16,7 @@ You can create a waiting room from the dashboard or via API.
 For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).
 :::
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Within your application, go to **Traffic** > **Waiting Room**.
 2. Select **Create**.
@@ -33,9 +32,9 @@ For additional context on creating a waiting room, refer to [Get started](/waiti
 
 To create a Waiting Room using the API, send a [`POST` request](/api/operations/waiting-room-create-waiting-room) to the `/zones/{zone_identifier}/waiting_rooms` endpoint:
 
-* For parameter references, refer to [Configuration settings](/waiting-room/reference/configuration-settings/)
-* For authentication instructions, refer to [Create an API token](/fundamentals/api/get-started/create-token/).
-* For help with endpoints and pagination, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+- For parameter references, refer to [Configuration settings](/waiting-room/reference/configuration-settings/)
+- For authentication instructions, refer to [Create an API token](/fundamentals/api/get-started/create-token/).
+- For help with endpoints and pagination, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
 ```json title="Request"
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_identifier}/waiting_rooms" \
@@ -65,32 +64,32 @@ The response contains the complete definition of the newly created Waiting Room.
 
 ```json title="Response"
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-      "id": "1111111111111111111111",
-      "created_on": "2023-01-01T05:20:00.12345Z",
-      "modified_on": "2023-01-01T05:20:00.12345Z",
-      "name": "shop_waiting_room",
-      "description": "Waiting room for webshop",
-      "host": "shop.example.com",
-      "path": "/shop",
-      "queue_all": true,
-      "new_users_per_minute": 200,
-      "total_active_users": 300,
-      "session_duration": 1,
-      "disable_session_renewal": false,
-      "json_response_enabled": false,
-      "queueing_method": "fifo",
-      "queueing_status_code": 202,
-      "cookie_attributes": {
-        "samesite": "auto",
-        "secure": "auto"
-      },
-    }
-  ]
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"id": "1111111111111111111111",
+			"created_on": "2023-01-01T05:20:00.12345Z",
+			"modified_on": "2023-01-01T05:20:00.12345Z",
+			"name": "shop_waiting_room",
+			"description": "Waiting room for webshop",
+			"host": "shop.example.com",
+			"path": "/shop",
+			"queue_all": true,
+			"new_users_per_minute": 200,
+			"total_active_users": 300,
+			"session_duration": 1,
+			"disable_session_renewal": false,
+			"json_response_enabled": false,
+			"queueing_method": "fifo",
+			"queueing_status_code": 202,
+			"cookie_attributes": {
+				"samesite": "auto",
+				"secure": "auto"
+			}
+		}
+	]
 }
 ```
 

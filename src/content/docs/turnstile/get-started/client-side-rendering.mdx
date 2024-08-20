@@ -82,12 +82,6 @@ To:
 https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit
 ```
 
-Or:
-
-```txt
-https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback
-```
-
 When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps. To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
@@ -217,8 +211,8 @@ The Turnstile widget can have two different fixed sizes or a flexible width size
 | Size    | Width | Height |
 | ------- | ----- | ------ |
 | Normal  | 300px | 65px   |
-| Flexible | 100% (min: 300px) | 120px |
-| Compact | 130px | 120px  |
+| Flexible | 100% (min: 300px) | 65px |
+| Compact | 150px | 140px  |
 
 ## Configurations
 

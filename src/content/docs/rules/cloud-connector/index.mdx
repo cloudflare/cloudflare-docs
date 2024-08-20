@@ -4,7 +4,6 @@ pcx_content_type: concept
 sidebar:
   order: 8
   badge:
-    variant: caution
     text: Beta
 ---
 
@@ -22,7 +21,7 @@ First, you configure a Cloud Connector rule that specifies:
 - The cloud provider and a supported cloud service that will accept traffic.
 - The traffic that will be routed to that cloud service.
 
-Then, Cloudflare will create the [necessary configurations](#applied-configurations) so that the content is accessible for requests matching your Cloud Connector rule.
+Then, Cloudflare will create the [necessary configurations](#applied-configurations) so that the content is accessible for requests matching your Cloud Connector rule. Your object storage bucket should be public for Cloud Connector to work.
 
 Cloud Connector rules are evaluated last in the request evaluation workflow. When there is a rule match and you have other rules changing the same settings, the Cloud Connector rule will win over other rules.
 

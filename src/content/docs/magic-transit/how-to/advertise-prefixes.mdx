@@ -32,13 +32,9 @@ List all prefixes and the [autonomous systems (ASNs)](https://www.cloudflare.com
 </Details>
 
 :::note[Note]
-
-
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
-
-
 :::
 
 ## Add an IP prefix
@@ -58,11 +54,7 @@ After you add the prefix, you can edit its status.
 4. Select **Edit IP Prefix** to save your changes.
 
 :::note[Note:]
-
-
 To avoid latency and potentially dropped routes, enable prefix advertisement from Cloudflare before withdrawing the advertisement from your data center.
-
-
 :::
 
 ## Delete a prefix
@@ -101,14 +93,14 @@ Below you can find example peering configurations for [Cisco IOS](https://www.ci
 ```txt
 ip route {{ <YOUR-MAGIC-TRANSIT-PREFIX> }} Null0
 ip prefix-list magic-transit-prefix seq 5 permit {{ <YOUR-MAGIC-TRANSIT-PREFIX> }}
- 
+
 route-map cloudflare-magic-transit-out permit 1
 match ip address prefix-list magic-transit-prefix
 !
 route-map cloudflare-magic-transit-out deny 99
- 
+
 route-map reject-all deny 99
- 
+
 router bgp {{ <YOUR-ASN> }}
 neighbor 141.101.67.22 remote-as 13335
 neighbor 141.101.67.22 ebgp-multihop 64
@@ -140,7 +132,7 @@ set protocols bgp group CF_ROUTE_REFLECTORS neighbor 141.101.67.22 description "
 set protocols bgp group CF_ROUTE_REFLECTORS peer-as 13335
 set protocols bgp group CF_ROUTE_REFLECTORS import REJECT-ALL
 set protocols bgp group CF_ROUTE_REFLECTORS export BGP-CONTROL-OUT
- 
+
 set policy-options policy-statement REJECT-ALL then reject
 set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> from route-filter 104.245.62.0/24 exact
 set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> from protocol static

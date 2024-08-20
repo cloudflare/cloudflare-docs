@@ -16,16 +16,18 @@ const { term, prepend, link } = props.parse(Astro.props);
 
 const tooltip = await getGlossaryEntry(term);
 
-const definition = prepend
+let definition = prepend
 	? prepend.concat(tooltip.general_definition)
 	: tooltip.general_definition;
+
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
 ---
 
 <span
 	id={tooltip.term}
 	data-tooltip
 	data-content={marked.parse(definition)}
-	class="border-b-2 border-dashed border-orange-400"
+	class="border-b-2 border-dashed border-accent-600"
 	>{
 		link ? (
 			<a href={link}>

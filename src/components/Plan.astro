@@ -1,6 +1,7 @@
 ---
 import { z } from "astro:content";
 import { indexPlans } from "~/util/plans";
+import { zodEnumFromObjKeys } from "~/util/helpers";
 
 const mappings = {
 	all: "Available on all plans",
@@ -14,14 +15,11 @@ const mappings = {
 	"workers-paid": "Available on Workers Paid plan",
 } as const satisfies Record<string, string>;
 
-const keys = Object.keys(mappings);
-
 type Props = z.infer<typeof props>;
 
 const props = z
 	.object({
-		// @ts-ignore this is functional but TS is upset
-		type: z.enum(keys),
+		type: zodEnumFromObjKeys(mappings),
 	})
 	.or(
 		z.object({

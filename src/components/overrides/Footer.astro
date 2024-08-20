@@ -112,13 +112,13 @@ if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_R
         {links.map(([text, href]) => (
           <a
             href={href}
-            class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-200"
+            class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-600 dark:decoration-accent-200"
           >
             <span>{text}</span>
           </a>
         ))}
         {isProduction && 
-          <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-200">
+          <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
             <OneTrust />
           </div>
         }

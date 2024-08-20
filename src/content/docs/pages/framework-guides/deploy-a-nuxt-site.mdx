@@ -6,7 +6,7 @@ description: Web framework making Vue.js-based development simple and powerful.
 
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components"
+import { PagesBuildPreset, Render, TabItem, Tabs, ResourcesBySelector, ExternalResources } from "~/components"
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
@@ -165,3 +165,18 @@ export default defineEventHandler(({ context }) => {
 </TabItem> </Tabs>
 
 <Render file="framework-guides/learn-more" params={{ one: "Nuxt" }} />
+
+## Related resources
+
+### Tutorials
+
+For more tutorials involving Nuxt, refer to the following resources:
+
+<ResourcesBySelector tags={["Nuxt"]} types={["tutorial"]} />
+
+
+### Demo apps
+
+For demo applications using Nuxt, refer to the following resources:
+
+<ExternalResources tags={["Nuxt"]} type="apps" />

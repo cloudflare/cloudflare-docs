@@ -6,19 +6,18 @@ sidebar:
 head:
   - tag: title
     content: Get started with content scanning
-
 ---
 
-import { Details, TabItem, Tabs } from "~/components"
+import { Details, TabItem, Tabs } from "~/components";
 
 :::note
 
-WAF content scanning is available to customers on an Enterprise plan with a paid add-on. 
+WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
 :::
 
 ## 1. Enable WAF content scanning
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
@@ -43,13 +42,13 @@ Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to va
 
 You can use the [EICAR anti-malware test file](https://www.eicar.org/download-anti-malware-testfile/) to test content scanning (select the ZIP format).
 
-Alternatively, create a WAF custom rule like described in the next step using a *Log* action instead of a mitigation action like *Block*. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
+Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
 
 ## 3. Create a WAF custom rule
 
 Create a WAF [custom rule](/waf/custom-rules/) that blocks detected malicious content objects uploaded to your application.
 
-For example, create a custom rule with the *Block* action and the following expression:
+For example, create a custom rule with the _Block_ action and the following expression:
 
 | Field                        | Operator | Value |
 | ---------------------------- | -------- | ----- |
@@ -63,12 +62,11 @@ If you use the Expression Editor, enter the following expression:
 
 This rule will match requests where the WAF detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/about/content-scanning/#content-scanning-fields).
 
-
 <Details header="Optional: Combine with other Rules language fields">
 
 You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine content scanning with other security features. For example:
 
-* The following expression will match requests with malicious content objects uploaded to a specific endpoint:
+- The following expression will match requests with malicious content objects uploaded to a specific endpoint:
 
   | Field                        | Operator | Value        | Logic |
   | ---------------------------- | -------- | ------------ | ----- |
@@ -81,7 +79,7 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
   (cf.waf.content_scan.has_malicious_obj and http.request.uri.path contains "upload.php")
   ```
 
-* The following expression will match requests from bots uploading content objects:
+- The following expression will match requests from bots uploading content objects:
 
   | Field              | Operator  | Value | Logic |
   | ------------------ | --------- | ----- | ----- |
@@ -94,7 +92,6 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
   (cf.waf.content_scan.has_obj and cf.bot_management.score lt 10)
   ```
 
-
 </Details>
 
 For additional examples, refer to [Example rules](/waf/about/content-scanning/example-rules/).
@@ -103,7 +100,7 @@ For additional examples, refer to [Example rules](/waf/about/content-scanning/ex
 
 To check uploaded content in a way that is not covered by the default configuration, add a [custom scan expression](/waf/about/content-scanning/#custom-scan-expressions).
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
@@ -148,10 +145,10 @@ lookup_json_string(http.request.body.raw, "file")
 The custom scan expression will scan any string found in an HTTP body with the following JSON string:
 
 ```json
-{"file": "<BASE64_ENCODED_STRING>"}
+{ "file": "<BASE64_ENCODED_STRING>" }
 ```
 
 :::note[Note]
 
-The content scanner will automatically decode Base64 strings. 
+The content scanner will automatically decode Base64 strings.
 :::

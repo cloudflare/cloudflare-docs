@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Network Interconnect docs
   description: For a faster, more reliable, and more secure experience than
     connecting over the Internet.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Blog announcement
@@ -21,6 +21,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: network-interconnect

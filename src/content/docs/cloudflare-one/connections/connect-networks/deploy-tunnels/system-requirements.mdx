@@ -27,7 +27,7 @@ When `cloudflared` receives a request from a WARP device, it uses the ports on t
 * `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
 * The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.
 
-<Tabs> <TabItem label="linux">
+<Tabs> <TabItem label="Linux">
 
 To increase the number of ports available to `cloudflared` on Linux:
 
@@ -45,7 +45,7 @@ $ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.co
 $ sudo sysctl -p /etc/sysctl.conf
 ```
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 To increase the number of ports available to `cloudflared` on  Windows, set the [dynamic port range](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting) for TCP and UDP:
 

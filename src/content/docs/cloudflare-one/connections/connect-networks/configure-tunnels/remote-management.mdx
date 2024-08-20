@@ -14,7 +14,7 @@ If you created a Cloudflare Tunnel [from the dashboard](/cloudflare-one/connecti
 
 You can modify the Cloudflare Tunnel service with one or more [general-purpose tunnel parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/).
 
-<Tabs> <TabItem label="linux">
+<Tabs> <TabItem label="Linux">
 
 On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
 
@@ -39,7 +39,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    RestartSec=5s
    ```
 
-</TabItem> <TabItem label="macos">
+</TabItem> <TabItem label="macOS">
 
 On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
 
@@ -90,7 +90,7 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
    $ sudo launchctl start com.cloudflare.cloudflared
    ```
 
-</TabItem> <TabItem label="windows">
+</TabItem> <TabItem label="Windows">
 
 On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
 

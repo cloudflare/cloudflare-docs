@@ -10,7 +10,7 @@ meta:
   title: Cloudflare API Shield docs
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield
@@ -20,6 +20,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: api-shield

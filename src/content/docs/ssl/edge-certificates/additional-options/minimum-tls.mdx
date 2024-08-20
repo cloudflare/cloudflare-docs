@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Minimum TLS Version
 sidebar:
   order: 13
-
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components"
+import { FeatureTable, TabItem, Tabs } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -14,11 +13,9 @@ For example, if TLS 1.1 is selected, visitors attempting to connect using TLS 1.
 
 :::note
 
-
 If you are looking to restrict cipher suites, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 For guidance on which TLS version to use, refer to [TLS protocols](/ssl/reference/protocols/).
-
 
 :::
 
@@ -42,7 +39,7 @@ If you have an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-ce
 
 To manage the TLS version applied to your whole zone when proxied through Cloudflare:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select your website.
@@ -61,8 +58,8 @@ Use the [Edit zone setting](/api/operations/zone-settings-edit-single-setting) e
 
 This is currently only available via the API:
 
-* Use the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint to specify different values for `min_tls_version`.
-* Use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint to clear previously defined `min_tls_version` setting.
+- Use the [Edit TLS setting for hostname](/api/operations/per-hostname-tls-settings-put) endpoint to specify different values for `min_tls_version`.
+- Use the [Delete TLS setting for hostname](/api/operations/per-hostname-tls-settings-delete) endpoint to clear previously defined `min_tls_version` setting.
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 

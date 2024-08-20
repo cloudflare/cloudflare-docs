@@ -1,7 +1,6 @@
 ---
 title: HuggingFace
 pcx_content_type: get-started
-
 ---
 
 [HuggingFace](https://huggingface.co/) helps users build, deploy and train machine learning models.
@@ -27,7 +26,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/
 
 If you are using the HuggingFace.js library, you can set your inference endpoint like this:
 
-```javascript
+```js title="JavaScript"
 import { HfInferenceEndpoint } from '@huggingface/inference';
 
 const accountId = '{account_id}';
@@ -37,6 +36,8 @@ const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/
 const apiToken = env.HF_API_TOKEN;
 
 const hf = new HfInferenceEndpoint(
+  baseURL,
+  apiToken
   baseURL,
   apiToken
 );

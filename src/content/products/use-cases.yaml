@@ -8,13 +8,13 @@ product:
 meta:
   title: Cloudflare use cases
   description: Discover what's possible with Cloudflare.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 externals:
   - title: Cloudflare home
     url: https://www.cloudflare.com/
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: use-cases

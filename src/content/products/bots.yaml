@@ -8,9 +8,10 @@ product:
 
 meta:
   title: Cloudflare bot solutions docs
-  description: Cloudflare’s bot solutions identify and mitigate automated traffic
+  description:
+    Cloudflare’s bot solutions identify and mitigate automated traffic
     to protect your domain from bad bots.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -22,6 +23,6 @@ externals:
     url: https://www.cloudflare.com/products/bot-management
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: bots
