@@ -80,18 +80,19 @@ r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_I
 Example request using cURL:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs' \
--H 'X-Auth-Key: <API_KEY>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'Content-Type: application/json' \
--d '{
-"name": "<DOMAIN_NAME>",
-"output_options": {
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
+  "output_options": {
     "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
     "timestamp_format": "rfc3339"
-},
-"destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
-"dataset": "http_requests",
-"enabled": true
-}'| jq .
+  },
+  "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
+  "dataset": "http_requests",
+  "enabled": true
+}'
 ```

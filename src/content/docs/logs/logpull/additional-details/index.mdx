@@ -11,11 +11,10 @@ sidebar:
 To estimate the amount of data for a zone per day (the number of log lines and the amount of bytes they take up), request a 1% or 10% sample of data for a 1-hour period (use 10% if your volume is low). Note that `start=2018-12-15T00:00:00Z` and `end=2018-12-15T01:00:00Z` span a 1-hour period, and `sample=0.1`.
 
 ```bash
-curl -s \
-    -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-12-15T00:00:00Z&end=2018-12-15T01:00:00Z&sample=0.1" \
-    >sample.log
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/received?start=2018-12-15T00:00:00Z&end=2018-12-15T01:00:00Z&sample=0.1" \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+> sample.log
 ...
 $ wc -l sample.log
 83 sample.log
@@ -32,7 +31,7 @@ To get a good estimate of daily traffic, it is best to get at least 30 log lines
 
 Responses are compressed by default (gzip). `cURL` decompresses responses transparently, unless called with:
 
-`-H "accept-encoding: gzip"`
+`--header "Accept-Encoding: gzip"`
 
 In that case, the output remains gzipped. Compressed data is approximately 5-10% of its uncompressed size. This means that a 1GB uncompressed response gets compressed down to 50-100MB.
 

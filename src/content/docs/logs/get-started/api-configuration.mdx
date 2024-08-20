@@ -38,7 +38,7 @@ For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutori
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
@@ -50,12 +50,14 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
+--data '{
+  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
+}'
 ```
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
@@ -113,12 +115,14 @@ For more information on the value for your cloud storage provider, consult the f
 To check if a destination is already in use:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
---data '{"destination_conf":"s3://foo"}' | jq .
+--data '{
+  "destination_conf": "s3://foo"
+}'
 ```
 
 Response
@@ -157,8 +161,8 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
 :::
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -171,7 +175,7 @@ curl --silent --request POST \
     "timestamp_format": "rfc3339"
   },
   "kind": "edge"
-}' | jq .
+}'
 ```
 
 ## Options
@@ -192,15 +196,15 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 To check if the selected **logpull\_options** are valid:
 
 ```bash
-curl --silent --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin" \
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
   "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
   "dataset": "http_requests"
-}' | jq .
+}'
 ```
 
 Response

@@ -95,19 +95,20 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 Example request using cURL:
 
 ```bash
-curl -s -X POST \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
 --data '{
-"name":"<DOMAIN_NAME>",
-"destination_conf":"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
-"output_options": {
+  "name":"<DOMAIN_NAME>",
+  "destination_conf":"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+  "output_options": {
     "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
     "timestamp_format": "rfc3339"
-    },
-"dataset": "http_requests"}' | jq .
+  },
+  "dataset": "http_requests"
+}'
 ```
 
 Response:
@@ -117,13 +118,13 @@ Response:
   "errors": [],
   "messages": [],
   "result": {
-    "id": 100,
+    "id": <JOB_ID>,
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
     },
     "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
     "last_complete": null,
@@ -141,8 +142,11 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. Use the job 
 Example request using cURL:
 
 ```bash
-curl -s -X PUT \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' | jq .
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--data '{
+  "enabled": true
+}'
 ```
 
 Response:
@@ -152,13 +156,13 @@ Response:
   "errors": [],
   "messages": [],
   "result": {
-    "id": 100,
+    "id": <JOB_ID>,
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
     "output_options": {
-        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-        "timestamp_format": "rfc3339"
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
     },
     "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
     "last_complete": null,

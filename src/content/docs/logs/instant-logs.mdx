@@ -70,16 +70,17 @@ Below we have three examples of filters:
 Example request using cURL:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge/jobs' \
--H 'X-Auth-Key: <KEY>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'Content-Type: application/json' \
--d '{
-    "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
-    "sample": 1,
-    "filter": "",
-    "kind": "instant-logs"
-}' | jq .
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/edge/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
+  "sample": 100,
+  "filter": "",
+  "kind": "instant-logs"
+}'
 ```
 
 Response:
@@ -88,17 +89,17 @@ The response will include a new field called **destination\_conf**. The value of
 
 ```bash
 {
-    "errors": [],
-    "messages": [],
-    "result": {
-        "id": 401,
-        "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
-        "sample": 100,
-        "filter": "",
-        "destination_conf": "wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987",
-        "kind": "instant-logs"
-    },
-    "success": true
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
+    "sample": 100,
+    "filter": "",
+    "destination_conf": "wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987",
+    "kind": "instant-logs"
+  },
+  "success": true
 }
 ```
 

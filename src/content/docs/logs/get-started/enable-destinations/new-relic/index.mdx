@@ -86,21 +86,23 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 Example request using cURL:
 
 ```bash
-curl -s https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs -X POST -d '
+curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '
 {
   "name": "<DOMAIN_NAME>",
   "output_options": {
-      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "unix"
+    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "unix"
   },
   "destination_conf": "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
   "max_upload_bytes": 5000000,
   "dataset": "http_requests",
   "enabled": true
-}' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" | jq .
+}'
 ```
 
 Response:
@@ -114,7 +116,7 @@ Response:
       "destination_conf" : "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
       "enabled" : true,
       "error_message" : null,
-      "id" : 100,
+      "id" : <JOB_ID>,
       "kind" : "",
       "last_complete" : null,
       "last_error" : null,
@@ -137,11 +139,14 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use
 Example request using cURL:
 
 ```bash
-curl -s -X PUT \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' \
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" | jq .
+--header "Content-Type: application/json" \
+--data '{
+  "enabled": true
+}'
 ```
 
 Response:
@@ -155,7 +160,7 @@ Response:
       "destination_conf" : "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
       "enabled" : true,
       "error_message" : null,
-      "id" : 100,
+      "id" : <JOB_ID>,
       "kind" : "",
       "last_complete" : "null",
       "last_error" : null,

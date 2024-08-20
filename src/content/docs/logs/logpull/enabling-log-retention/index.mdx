@@ -28,7 +28,9 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 ### Check whether log retention is turned on:
 
 ```sh
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
 ```
 
 #### Response:
@@ -49,13 +51,22 @@ $ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://
 On Linux or macOS:
 
 ```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--data '{
+  "flag": true
+}'
 ```
 
 On Windows in Command Prompt:
 
 ```
-curl.exe -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d "{""flag"":true}"
+C:\>curl --request POST ^
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag ^
+--header "X-Auth-Email: <EMAIL>" ^
+--header "X-Auth-Key: <API_KEY>" ^
+--data "{""flag"": true}"
 ```
 
 For further help with API calls on Windows, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows).

@@ -64,20 +64,21 @@ The `ownership_challenge` parameter is not required to create a Logpush job to a
 ## Example curl request
 
 ```bash
-$ curl -s https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs -X POST -d '
-{
+$ curl --request POST \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
   "name": "theburritobot.com-https",
   "output_options": {
-      "field_names": ["EdgeStartTimestamp", "RayID"],
-      "timestamp_format": "rfc3339"
+    "field_names": ["EdgeStartTimestamp", "RayID"],
+    "timestamp_format": "rfc3339"
   },
   "destination_conf": "https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
   "max_upload_bytes": 5000000,
   "max_upload_records": 1000,
   "dataset": "http_requests",
   "enabled": true
-}' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json"
+}'
 ```
