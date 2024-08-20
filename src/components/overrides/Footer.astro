@@ -18,7 +18,7 @@ if (currentSection) {
   const product = await getEntry("products", currentSection);
 
   if (product) {
-    if (product.data.resources.dashboard_link) {
+    if (product.data.resources?.dashboard_link) {
       links["Cloudflare Dashboard"] = product.data.resources.dashboard_link;
     }
   }
