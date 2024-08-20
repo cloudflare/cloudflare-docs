@@ -21,6 +21,8 @@ let definition = prepend
 	: tooltip.general_definition;
 
 definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+
+definition = definition.split(/\r?\n/)[0];
 ---
 
 <span
