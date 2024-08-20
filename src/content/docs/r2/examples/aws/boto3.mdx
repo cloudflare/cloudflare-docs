@@ -1,12 +1,12 @@
 ---
 title: boto3
 pcx_content_type: configuration
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 You must configure [`boto3`](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) to use a preconstructed `endpoint_url` value. This can be done through any `boto3` usage that accepts connection arguments; for example:
 
@@ -46,11 +46,14 @@ s3.delete_object(Bucket=<R2_BUCKET_NAME>, Key=<FILE_KEY_NAME>)
 ```
 
 ```sh
-$ python main.py
-# Buckets:
-#  -  user-uploads
-#  -  my-bucket-name
-# Objects:
-#  -  cat.png
-#  -  todos.txt
+python main.py
+```
+
+```sh output
+Buckets:
+ -  user-uploads
+ -  my-bucket-name
+Objects:
+ -  cat.png
+ -  todos.txt
 ```
