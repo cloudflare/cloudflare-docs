@@ -5,7 +5,6 @@ title: Troubleshooting
 head:
   - tag: title
     content: Troubleshooting | Custom certificates
-
 ---
 
 ## Generic troubleshooting
@@ -19,7 +18,7 @@ You can use an external tool such as the [SSLShopper Certificate Key Matcher](ht
 You can use `openssl` to check all the details of your certificate:
 
 ```bash
-$ openssl x509 -in certificate.crt -noout -text
+openssl x509 -in certificate.crt -noout -text
 ```
 
 Then, make sure all the information is correct before uploading.
@@ -35,7 +34,7 @@ The certificate you are trying to upload is invalid. For example, there might be
 Carefully check the content of the certificate. You may use `openssl` to check all the details of your certificate:
 
 ```bash
-$ openssl x509 -in certificate.crt -noout -text
+openssl x509 -in certificate.crt -noout -text
 ```
 
 ## You have reached the maximum number of custom certificates. (Code: 1212)
@@ -66,7 +65,7 @@ You are trying to upload a custom certificate that does not support any cipher t
 
 **Solution**
 
-Modify the certificate so that it supports chromium-supported ciphers	and try again.
+Modify the certificate so that it supports chromium-supported ciphers and try again.
 
 ## You have reached your quota for the requested resource. (Code: 2005)
 
@@ -113,7 +112,7 @@ Cloudflare verifies that uploaded custom certificates include a hostname for the
 Make sure your certificate contains a Subject Alternative Name (SAN) specifying a hostname in your zone. You can use the `openssl` command below and look for `Subject Alternative Name` in the output.
 
 ```bash
-$ openssl x509 -in certificateFile.pem -noout -text
+openssl x509 -in certificateFile.pem -noout -text
 ```
 
 If it does not exist, you will need to request a new certificate.
