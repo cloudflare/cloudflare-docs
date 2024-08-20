@@ -6,6 +6,7 @@ sidebar:
 head:
   - tag: title
     content: Full - SSL/TLS encryption modes
+description: Cloudflare matches the browser request protocol when connecting to the origin. If the browser uses HTTP, Cloudflare connects to the origin via HTTP; if HTTPS, Cloudflare uses HTTPS without validating the origin’s certificate. This mode is common for origins that use self-signed or otherwise invalid certificates.
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
