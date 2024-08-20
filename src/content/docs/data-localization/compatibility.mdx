@@ -134,4 +134,4 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^30]: Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
 [^31]: DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.
 [^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.
-[^33]: Outgoing zone transfers will not carry any regional service IPs, instead the IPs will become the Earth region.
+[^33]: [Outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) will carry Earth region proxy IPs, thus making regional service dysfunctional.
