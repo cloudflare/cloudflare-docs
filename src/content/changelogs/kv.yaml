@@ -7,10 +7,10 @@ productAreaLink: /workers/platform/changelog/platform/
 entries:
 
 - publish_date: "2024-08-08"
-	title: New KV Analytics API
-	description: |-
-		Workers KV now has a new [analytics API](/kv/observability/metrics-analytics/) that leverages the [GraphQL Analytics API](/analytics/graphql-api/) used by many other Cloudflare products.
+  title: New KV Analytics API
+  description: |-
+    Workers KV now has a new [analytics API](/kv/observability/metrics-analytics/) that leverages the [GraphQL Analytics API](/analytics/graphql-api/) used by many other Cloudflare products.
     The new analytics API provides per-account and per-namespace metrics on both operations and storage, including latency metrics for both read and write operations to Workers KV.
 
-		The legacy Workers KV [analytics REST API](/api/operations/workers-kv-request-analytics-query-request-analytics) will be turned off as of January 31st, 2025.
-		Developers using this API will receive a series of email notifications prior to the shutdown of the legacy API.
+    The legacy Workers KV [analytics REST API](/api/operations/workers-kv-request-analytics-query-request-analytics) will be turned off as of January 31st, 2025.
+    Developers using this API will receive a series of email notifications prior to the shutdown of the legacy API.
