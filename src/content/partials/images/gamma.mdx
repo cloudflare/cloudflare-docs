@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    gamma=0.5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {gamma: 0.5}}
+  ```
+  </TabItem>
+</Tabs>

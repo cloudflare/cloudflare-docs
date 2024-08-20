@@ -4,10 +4,9 @@ title: User Agent Blocking
 source: https://support.cloudflare.com/hc/en-us/articles/115001856951-Understanding-Cloudflare-User-Agent-Blocking
 sidebar:
   order: 3
-
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components"
+import { FeatureTable, TabItem, Tabs } from "~/components";
 
 User Agent Blocking rules block specific browser or web application [`User-Agent` request headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). These rules apply to the entire domain instead of individual subdomains.
 
@@ -19,8 +18,8 @@ Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) ins
 
 For example, a custom rule equivalent to the User Agent Blocking [example rule](#create-a-user-agent-blocking-rule) provided in this page could have the following configuration:
 
-* **Expression**: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
-* **Action**: (a block or challenge action) 
+- **Expression**: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
+- **Action**: (a block or challenge action)
   :::
 
 ## Availability
@@ -31,17 +30,17 @@ Cloudflare User Agent Blocking is available on all plans. The number of availabl
 
 ## Create a User Agent Blocking rule
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
 2. Go to **Security** > **WAF**, and select the **Tools** tab.
 
-3. Under **User Agent Blocking**, select **Create blocking rule**. 
+3. Under **User Agent Blocking**, select **Create blocking rule**.
 
 4. Enter a descriptive name for the rule in **Name/Description**.
 
-5. In **Action**, select the action to perform: *Managed Challenge*, *Block*, *JS Challenge*, or *Interactive Challenge*.
+5. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
 
 6. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
 
@@ -72,5 +71,5 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/ua_rules" \
 
 ## Related resources
 
-* [Secure your application](/learning-paths/application-security/)
-* [Cloudflare Zone Lockdown](/waf/tools/zone-lockdown/)
+- [Secure your application](/learning-paths/application-security/)
+- [Cloudflare Zone Lockdown](/waf/tools/zone-lockdown/)

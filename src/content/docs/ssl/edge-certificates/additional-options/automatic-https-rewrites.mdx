@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Automatic HTTPS Rewrites
 sidebar:
   order: 14
-
 ---
 
-import { FeatureTable, Render, TabItem, Tabs } from "~/components"
+import { FeatureTable, Render, TabItem, Tabs } from "~/components";
 
 Automatic HTTPS Rewrites prevents end users from seeing "mixed content" errors by rewriting URLs from `http` to `https` for resources or links on your web site that can be served with HTTPS.
 
@@ -22,15 +21,13 @@ Mixed content is often due to factors not under the website owner’s control su
 
 :::note
 
-
 For security reasons, this feature will run on URLs pointing to `localhost` if the URL is fetching an active resource (script, iframe, link, object, etc.).
-
 
 :::
 
 ## Enable Automatic HTTPS Rewrites
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To enable **Automatic HTTPS Rewrites** in the dashboard:
 

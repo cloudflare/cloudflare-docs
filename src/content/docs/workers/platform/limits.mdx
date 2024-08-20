@@ -23,7 +23,7 @@ import { Render } from "~/components"
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500                                                                                                                                                                                                                                                                |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250                                                                                                                                                                                                                                                                |
 
-<sup>1</sup> If you are running into Workers script limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+<sup>1</sup> If you are running into limits, your project may be a good fit for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 <Render file="limits_increase" />
 
@@ -266,15 +266,11 @@ Total Upload: 259.61 KiB / gzip: 47.23 KiB
 
 Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
 
-<Render file="limits_increase" />
-
 ***
 
 ## Worker startup time
 
 A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
-
-<Render file="limits_increase" />
 
 ***
 
@@ -290,13 +286,9 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
 
-<Render file="limits_increase" />
-
 ## Number of routed zones per Worker
 
 When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
-
-<Render file="limits_increase" />
 
 ***
 

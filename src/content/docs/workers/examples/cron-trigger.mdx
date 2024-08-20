@@ -11,18 +11,17 @@ title: Setting Cron Triggers
 sidebar:
   order: 1001
 description: Set a Cron Trigger for your Worker.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
-  async scheduled(event, env, ctx) {
-    console.log("cron processed");
-  },
+	async scheduled(event, env, ctx) {
+		console.log("cron processed");
+	},
 };
 ```
 
@@ -31,9 +30,13 @@ export default {
 ```ts
 interface Env {}
 export default {
-  async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {
-    console.log("cron processed");
-  },
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
+	},
 };
 ```
 

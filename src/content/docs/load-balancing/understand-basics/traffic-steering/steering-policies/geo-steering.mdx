@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Geo steering
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 **Geo steering** directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers.
 
@@ -25,10 +24,10 @@ Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-
 
 :::caution
 
-If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method. 
+If you add a pool to a region, you cannot [delete this pool](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from the **Geo steering** configuration. The configuration is **not** automatically removed when you change to a different **Traffic Steering** method.
 :::
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 
@@ -49,17 +48,29 @@ In the example below, `WNAM` and `ENAM` represent the West and East Coasts of No
 ```json title="Request"
 // PUT /zones/:zone_id/load_balancers
 {
-  "description": "Load Balancer for www.example.com",
-  "name": "www.example.com",
-  "ttl": 30,
-  "proxied": true,
-  "fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
-  "default_pools": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-  "region_pools": {
-    "WNAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-    "ENAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
-    "EEU": ["ff02c959d17f7bb2b1184a202e3c0af7", "17b5962d775c646f3f9725cbc7a53df4"]
-  }
+	"description": "Load Balancer for www.example.com",
+	"name": "www.example.com",
+	"ttl": 30,
+	"proxied": true,
+	"fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
+	"default_pools": [
+		"17b5962d775c646f3f9725cbc7a53df4",
+		"ff02c959d17f7bb2b1184a202e3c0af7"
+	],
+	"region_pools": {
+		"WNAM": [
+			"17b5962d775c646f3f9725cbc7a53df4",
+			"ff02c959d17f7bb2b1184a202e3c0af7"
+		],
+		"ENAM": [
+			"17b5962d775c646f3f9725cbc7a53df4",
+			"ff02c959d17f7bb2b1184a202e3c0af7"
+		],
+		"EEU": [
+			"ff02c959d17f7bb2b1184a202e3c0af7",
+			"17b5962d775c646f3f9725cbc7a53df4"
+		]
+	}
 }
 ```
 
@@ -69,7 +80,7 @@ If you only define `WNAM`, then traffic from the East Coast will be routed to th
 
 ### Country steering
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 When [creating or editing a load balancer](/load-balancing/load-balancers/create-load-balancer/):
 

@@ -1,0 +1,15 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Adds a border around the image. The border is added after resizing. Border width takes `dpr` into account, and can be specified either using a single `width` property, or individually for each side.
+
+<Tabs>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {border: {color: "rgb(0,0,0,0)", top: 5, right: 10, bottom: 5, left: 10}}}
+  cf: {image: {border: {color: "#FFFFFF", width: 10}}}
+  ```
+  </TabItem>
+</Tabs>

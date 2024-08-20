@@ -2,10 +2,9 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/203306930-Understanding-Cloudflare-Tor-support-and-Onion-Routing
 title: Onion Routing and Tor support
-
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components"
+import { FeatureTable, TabItem, Tabs } from "~/components";
 
 Improve the Tor user experience by enabling Onion Routing, which enables Cloudflare to serve your website’s content directly through the Tor network and without requiring exit nodes.
 
@@ -23,8 +22,8 @@ One way to address this threat score is to create [custom WAF rules](/waf/custom
 
 The other way to improve the Tor user experience is through Onion Routing. This improves Tor browsing as follows:
 
-* Tor users no longer access your site via exit nodes, which can sometimes be compromised, and may snoop on user traffic.
-* Human Tor users and bots can be distinguished by our Onion services, such that interactive challenges are only served to malicious bot traffic. 
+- Tor users no longer access your site via exit nodes, which can sometimes be compromised, and may snoop on user traffic.
+- Human Tor users and bots can be distinguished by our Onion services, such that interactive challenges are only served to malicious bot traffic.
 
 [Tor Browser](https://tb-manual.torproject.org/about/) users receive an [alt-svc header](https://httpwg.org/specs/rfc7838.html#alt-svc) as part of the response to the first request to your website. The browser then creates a Tor Circuit to access this website using the `.onion` TLD service provided by this header.
 
@@ -32,7 +31,7 @@ You should note that the visible domain in the UI remains unchanged, as the host
 
 ## Enable Onion Routing
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To enable **Onion Routing** in the dashboard:
 

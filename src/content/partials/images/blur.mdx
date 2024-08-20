@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    blur=50
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {blur: 50}}
+  ```
+  </TabItem>
+</Tabs>

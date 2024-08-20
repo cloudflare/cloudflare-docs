@@ -58,8 +58,11 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
   "recording": {
     "mode": "automatic",
     "requireSignedURLs": false,
-    "allowedOrigins": null
-  }
+    "allowedOrigins": null,
+    "hideLiveViewerCount": false
+  },
+  "deleteRecordingAfterDays": null,
+  "preferLowLatency": false
 }
 ```
 
@@ -67,23 +70,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 
 [API Reference Docs for `/live_inputs`](/api/operations/stream-live-inputs-create-a-live-input)
 
-
-
-* `mode` string default: `off`
-
-  * When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
-
 * `preferLowLatency` boolean default: `false` <InlineBadge preset="beta" />
 
   * When set to true, this live input will be enabled for the beta Low-Latency HLS pipeline. The Stream built-in player will automatically use LL-HLS when possible. (Recording `mode` property must also be set to `automatic`.)
-
-* `timeoutSeconds` integer default: `0`
-
-  * The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
-
-* `requireSignedURLs` boolean default: `false`
-
-  * The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
 * `deleteRecordingAfterDays` integer default: `null` (any)
 
@@ -93,10 +82,27 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 
     Note that if the value is added to a live input while a stream is live, the property will only apply to future streams.
 
+* `timeoutSeconds` integer default: `0`
+
+  * The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
+
+The following four properties are nested under the `recoring` object.
+
+* `mode` string default: `off`
+
+  * When the mode property is set to `automatic`, the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays. By default, recording mode is set to `off`, and the input will not be recorded or available for playback.
+
+* `requireSignedURLs` boolean default: `false`
+
+  * The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+
 * `allowedOrigins` integer default: `null` (any)
 
   * The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
+* `hideLiveViewerCount` boolean default: `false`
+
+  * Restrict access to the live viewer count and remove the value from the player.
 
 
 ## Manage live inputs
