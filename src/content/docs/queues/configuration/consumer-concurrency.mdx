@@ -92,23 +92,21 @@ To set a fixed maximum number of concurrent consumer invocations for a given que
 
 To remove the limit, remove the `max_concurrency` setting from the `[[queues.consumers]]` configuration for a given queue and call `npx wrangler deploy` to push your configuration update.
 
-{/\* <!-- Not yet available but will be very soon
+    {/* Not yet available but will be very soon
 
-### wrangler CLI
+    ### wrangler CLI
 
-```sh
-# where `N` is a positive integer between 1 and 10
-$ wrangler queues consumer update <script-name> --max-concurrency=N
-```
+    ```sh
+    # where `N` is a positive integer between 1 and 10
+    wrangler queues consumer update <script-name> --max-concurrency=N
+    ```
 
-To remove the limit and allow Queues to scale your consumer to the maximum number of invocations, call `consumer update` without any flags:
+    To remove the limit and allow Queues to scale your consumer to the maximum number of invocations, call `consumer update` without any flags:
 
-```sh
-# Call update without passing a flag to allow concurrency to scale to the maximum
-$ wrangler queues consumer update <script-name>
-```
-
---> \*/}
+    ````sh
+    # Call update without passing a flag to allow concurrency to scale to the maximum
+    wrangler queues consumer update <script-name>
+    ``` */}
 
 ## Billing
 
@@ -122,3 +120,7 @@ Billing for consumers follows the [Workers standard usage model](/workers/platfo
 ### Example
 
 A consumer Worker that takes 2 seconds to process a batch of messages will incur the same overall costs to process 50 million (50,000,000) messages, whether it does so concurrently (faster) or individually (slower).
+
+```
+
+```
