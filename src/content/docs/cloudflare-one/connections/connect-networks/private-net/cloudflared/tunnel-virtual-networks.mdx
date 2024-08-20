@@ -113,49 +113,50 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
          cloudflared tunnel vnet list
          ```
 
-{/_ Commenting out notes within tabs for now
-:::note[Default virtual network]
-All accounts come pre-configured with a virtual network named `default`. You can choose a new default by typing `cloudflared tunnel vnet update --default <virtual-network-name>`.
-:::
-_/} 4. Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective virtual networks.
+    	{/* Commenting out notes within tabs for now
+    	:::note[Default virtual network]
+    	All accounts come pre-configured with a virtual network named `default`. You can choose a new default by typing `cloudflared tunnel vnet update --default <virtual-network-name>`.
+    	::: */}
+
+4.  Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective virtual networks.
 
          ```sh
          cloudflared tunnel route ip add --vnet staging-vnet 10.128.0.3/32 staging-tunnel
          cloudflared tunnel route ip add --vnet production-vnet 10.128.0.3/32 production-tunnel
          ```
 
-{/_
-:::note
-If no `--vnet` option is specified, the tunnel will be assigned to the default virtual network; this applies to any pre-existing private networks in your account.
-:::
-_/} 5. Verify that the IP routes are listed correctly:
+        {/* :::note
+        If no `--vnet` option is specified, the tunnel will be assigned to the default virtual network; this applies to any pre-existing private networks in your account.
+        ::: */}
 
-         ```sh
-         cloudflared tunnel route ip list
-         ```
+5.  Verify that the IP routes are listed correctly:
 
-      We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
+             ```sh
+             cloudflared tunnel route ip list
+             ```
 
-      6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+          We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
 
-         ```txt
-         tunnel: <Tunnel-UUID>
-         credentials-file: /root/.cloudflared/credentials-file.json
-         warp-routing:
-            enabled: true
-         ```
+          6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
 
-      7. Run your tunnel.
+             ```txt
+             tunnel: <Tunnel-UUID>
+             credentials-file: /root/.cloudflared/credentials-file.json
+             warp-routing:
+                enabled: true
+             ```
 
-         ```sh
-         cloudflared tunnel run staging-tunnel
-         ```
+          7. Run your tunnel.
 
-      8. Within your production environment, repeat Steps 6 and 7 for `production-tunnel`.
+             ```sh
+             cloudflared tunnel run staging-tunnel
+             ```
 
-      You can use now the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+          8. Within your production environment, repeat Steps 6 and 7 for `production-tunnel`.
 
-   </TabItem>
+          You can use now the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+
+  </TabItem>
 </Tabs>
 
 ## Delete a virtual network
