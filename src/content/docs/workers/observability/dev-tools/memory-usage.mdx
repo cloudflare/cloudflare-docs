@@ -7,7 +7,7 @@ meta:
 ---
 
 Understanding Worker memory usage can be important in optimizing performance, avoiding out of memory (OOM)
-errors when hitting [Worker memroy limits](/workers/platform/limits/#memory), and fixing memory leaks.
+errors when hitting [Worker memory limits](/workers/platform/limits/#memory), and fixing memory leaks.
 
 Worker memory usage can be profiled using a memory snapshot in DevTools. This allows you to view a summary
 of total memory use, see what data types contribute to memory use, and get details on specific objects
@@ -16,7 +16,7 @@ in memory.
 ## Taking a snapshot
 
 To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
-hitting <kbd>d</kbd> from within you terminal. This will open the DevTools in a browser window.
+hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window.
 Now, when you access your worker locally, it can be debugged and profiled via this DevTool instance.
 
 After DevTools is open, click on the "Memory" tab. You should see a "Take snapshot" button at the bottom.
@@ -48,7 +48,7 @@ a while, we notice errors that say we have hit the memory limit. We must have a 
 DevTools to figure out what is happening.
 
 First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
-navigate o the "Memory" tab.
+navigate to the "Memory" tab.
 
 Next, we'll send many requests to the Worker to generate fake traffic. We can do this with `curl` or by hitting
 reload on the browser repeatedly. Other Workers may require more realistic traffic patterns to reproduce a memory
@@ -70,7 +70,7 @@ Looking at the memory summary, we can find the issue.
 
 The summary lists data types by the amount of memory they take up. When you click into "(string)", you can see
 a string that is far larger than the rest. The text shows that we are appending "Requested at" and a date repeatedly,
-then inadvertantly overwriting the global variable with an increasingly large replacement string:
+then inadvertently overwriting the global variable with an increasingly large replacement string:
 
 ```js
 responseText = responseText + ` (Requested at: ${now})`;
