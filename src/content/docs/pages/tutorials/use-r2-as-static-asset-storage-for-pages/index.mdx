@@ -50,7 +50,7 @@ With the bucket created, we can upload media files to R2. I’ll drag and drop t
 Alternatively, an R2 bucket can be created with Wrangler from the command line by running:
 
 ```sh
-$ npx wrangler r2 bucket create <bucket_name>
+npx wrangler r2 bucket create <bucket_name>
 # i.e
 # npx wrangler r2 bucket create cat-media
 ```
@@ -58,7 +58,7 @@ $ npx wrangler r2 bucket create <bucket_name>
 Files can be uploaded to the bucket with the following command:
 
 ```sh
-$ npx wrangler r2 object put <bucket_name>/<file_name> -f <path_to_file>
+npx wrangler r2 object put <bucket_name>/<file_name> -f <path_to_file>
 # i.e
 # npx wrangler r2 object put cat-media/videos/video1.mp4 -f ~/Downloads/videos/video1.mp4
 ```

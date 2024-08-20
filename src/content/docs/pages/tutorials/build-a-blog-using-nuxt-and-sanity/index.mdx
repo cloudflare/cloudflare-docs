@@ -9,17 +9,16 @@ tags:
   - Vue
 languages:
   - JavaScript
-
 ---
 
-import { Stream } from "~/components"
+import { Stream } from "~/components";
 
 In this tutorial, you will build a blog application using Nuxt.js and Sanity.io and deploy it on Cloudflare Pages. Nuxt.js is a powerful static site generator built on the front-end framework Vue.js. Sanity.io is a headless CMS tool built for managing your application's data without needing to maintain a database.
 
 ## Prerequisites
 
-* A recent version of [npm](https://docs.npmjs.com/getting-started) on your computer
-* A [Sanity.io](https://www.sanity.io) account
+- A recent version of [npm](https://docs.npmjs.com/getting-started) on your computer
+- A [Sanity.io](https://www.sanity.io) account
 
 ## Creating a new Sanity project
 
@@ -30,7 +29,7 @@ To begin, create a new Sanity project, using one of Sanity's templates, the blog
 Create your new Sanity project by installing the `@sanity/cli` client from npm, and running `sanity init` in your terminal:
 
 ```sh title="Installing the Sanity client and creating a new project"
-$ npm install -g @sanity/cli && sanity init
+npm install -g @sanity/cli && sanity init
 ```
 
 When you create a Sanity project, you can choose to use one of their pre-defined schemas. Schemas describe the shape of your data in your Sanity dataset -- if you were to start a brand new project, you may choose to initialize the schema from scratch, but for now, select the **Blog** schema.
@@ -40,8 +39,8 @@ When you create a Sanity project, you can choose to use one of their pre-defined
 With your project created, you can navigate into the folder and start up the studio locally:
 
 ```sh title="Starting the Sanity studio"
-$ cd my-sanity-project
-$ sanity start
+cd my-sanity-project
+sanity start
 ```
 
 The Sanity studio is where you can create new records for your dataset. By default, running the studio locally makes it available at `localhost:3333`– go there now and create your author record. You can also create blog posts here.
@@ -53,7 +52,7 @@ The Sanity studio is where you can create new records for your dataset. By defau
 When you are ready to deploy your studio, run `sanity deploy` to choose a unique URL for your studio. This means that you (or anyone else you invite to manage your blog) can access the studio at a `yoururl.sanity.studio` domain.
 
 ```sh title="Deploying the studio"
-$ sanity deploy
+sanity deploy
 ```
 
 Once you have deployed your Sanity studio:
@@ -72,7 +71,7 @@ This means that requests that come to your Sanity dataset from your Nuxt applica
 Next, create a Nuxt.js project. In a new terminal, use `create-nuxt-app` to set up a new Nuxt project:
 
 ```sh title="Creating a new Nuxt.js project"
-$ npx create-nuxt-app blog
+npx create-nuxt-app blog
 ```
 
 Importantly, ensure that you select a rendering mode of **Universal (SSR / SSG)** and a deployment target of **Static (Static/JAMStack hosting)**, while going through the setup process.
@@ -80,8 +79,8 @@ Importantly, ensure that you select a rendering mode of **Universal (SSR / SSG)*
 After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose npm as your package manager, `npm run dev`):
 
 ```sh title="Starting a Nuxt.js development server"
-$ cd blog
-$ yarn dev
+cd blog
+yarn dev
 ```
 
 ### Integrating Sanity.io
@@ -89,20 +88,20 @@ $ yarn dev
 After your Nuxt.js application is set up, add Sanity's `@sanity/nuxt` plugin to your Nuxt project:
 
 ```sh title="Adding @nuxt/sanity"
-$ yarn add @nuxtjs/sanity @sanity/client
+yarn add @nuxtjs/sanity @sanity/client
 ```
 
 To configure the plugin in your Nuxt.js application, you will need to provide some configuration details. The easiest way to do this is to copy the `sanity.json` folder from your studio into your application directory (though there are other methods, too: [refer to the `@nuxt/sanity` documentation](https://sanity.nuxtjs.org/getting-started/quick-start/).
 
 ```sh title="Adding sanity.json"
-$ cp ../my-sanity-project/sanity.json .
+cp ../my-sanity-project/sanity.json .
 ```
 
 Finally, add `@nuxtjs/sanity` as a **build module** in your Nuxt configuration:
 
 ```js title="nuxt.config.js"
 {
-  buildModules: ['@nuxtjs/sanity'];
+	buildModules: ["@nuxtjs/sanity"];
 }
 ```
 
@@ -116,48 +115,48 @@ To begin, update the `index` page, which will be rendered when you visit the roo
 
 ```html title="pages/index.vue"
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">My Blog</h1>
-    </div>
-    <div class="posts">
-      <div v-for="post in posts" :key="post._id">
-        <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div>
+			<h1 class="title">My Blog</h1>
+		</div>
+		<div class="posts">
+			<div v-for="post in posts" :key="post._id">
+				<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from "@nuxtjs/sanity";
 
-  export default {
-    async asyncData({ $sanity }) {
-      const query = groq`*[_type == "post"]`;
-      const posts = await $sanity.fetch(query);
-      return { posts };
-    },
-  };
+	export default {
+		async asyncData({ $sanity }) {
+			const query = groq`*[_type == "post"]`;
+			const posts = await $sanity.fetch(query);
+			return { posts };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
-  .posts {
-    margin: 2rem 0;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
+	.posts {
+		margin: 2rem 0;
+	}
 </style>
 ```
 
-Vue SFCs, or *single file components*, are a unique Vue feature that allow you to combine JavaScript, HTML and CSS into a single file. In `pages/index.vue`, a `template` tag is provided, which represents the Vue component.
+Vue SFCs, or _single file components_, are a unique Vue feature that allow you to combine JavaScript, HTML and CSS into a single file. In `pages/index.vue`, a `template` tag is provided, which represents the Vue component.
 
 Importantly, `v-for` is used as a directive to tell Vue to render HTML for each `post` in an array of `posts`:
 
 ```html title="Inspecting the v-for directive"
 <div v-for="post in posts" :key="post._id">
-  <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+	<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
 </div>
 ```
 
@@ -180,11 +179,11 @@ Nuxt has built-in support for these kind of pages, by creating a new file in `pa
 
 ```html title="pages/_slug.vue"
 <script>
-  export default {
-    async asyncData({ params, $sanity }) {
-      console.log(params); // { slug: "hello-world" }
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			console.log(params); // { slug: "hello-world" }
+		},
+	};
 </script>
 ```
 
@@ -192,41 +191,41 @@ With that in mind, you can build `pages/_slug.vue` to take the incoming `slug` v
 
 ```html title="pages/_slug.vue"
 <template>
-  <div class="container">
-    <div v-if="post">
-      <h1 class="title" v-text="post.title" />
-      <div class="content"></div>
-    </div>
-    <h4><a href="/">← Go back</a></h4>
-  </div>
+	<div class="container">
+		<div v-if="post">
+			<h1 class="title" v-text="post.title" />
+			<div class="content"></div>
+		</div>
+		<h4><a href="/">← Go back</a></h4>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from "@nuxtjs/sanity";
 
-  export default {
-    async asyncData({ params, $sanity }) {
-      const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
-      const post = await $sanity.fetch(query);
-      return { post };
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
+			const post = await $sanity.fetch(query);
+			return { post };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
 
-  .content {
-    margin: 2rem 0;
-    max-width: 38rem;
-  }
+	.content {
+		margin: 2rem 0;
+		max-width: 38rem;
+	}
 
-  p {
-    margin: 1rem 0;
-  }
+	p {
+		margin: 1rem 0;
+	}
 </style>
 ```
 
@@ -239,22 +238,22 @@ You have rendered the `post` title for our blog, but you are still missing the c
 First, install the npm package:
 
 ```sh title="Add sanity-blocks-vue-component package"
-$ yarn add sanity-blocks-vue-component
+yarn add sanity-blocks-vue-component
 ```
 
 After the package is installed, create `plugins/sanity-blocks.js`, which will import the component and register it as the Vue component `block-content`:
 
 ```js title="plugins/sanity-blocks.js"
-import Vue from 'vue';
-import BlockContent from 'sanity-blocks-vue-component';
-Vue.component('block-content', BlockContent);
+import Vue from "vue";
+import BlockContent from "sanity-blocks-vue-component";
+Vue.component("block-content", BlockContent);
 ```
 
 In your Nuxt configuration, `nuxt.config.js`, import that file as part of the `plugins` directive:
 
 ```js title="nuxt.config.js"
 {
-  plugins: ['@/plugins/sanity-blocks.js'];
+	plugins: ["@/plugins/sanity-blocks.js"];
 }
 ```
 
@@ -262,43 +261,47 @@ In `pages/_slug.vue`, you can now use the `<block-content>` component to render 
 
 ```html title="pages/_slug.vue" {6}
 <template>
-  <div class="container">
-    <div v-if="post">
-      <h1 class="title" v-text="post.title" />
-      <div class="content">
-        <block-content :blocks="child" v-for="child in post.body" :key="child._id" />
-      </div>
-    </div>
-    <h4><a href="/">← Go back</a></h4>
-  </div>
+	<div class="container">
+		<div v-if="post">
+			<h1 class="title" v-text="post.title" />
+			<div class="content">
+				<block-content
+					:blocks="child"
+					v-for="child in post.body"
+					:key="child._id"
+				/>
+			</div>
+		</div>
+		<h4><a href="/">← Go back</a></h4>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from "@nuxtjs/sanity";
 
-  export default {
-    async asyncData({ params, $sanity }) {
-      const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
-      const post = await $sanity.fetch(query);
-      return { post };
-    },
-  };
+	export default {
+		async asyncData({ params, $sanity }) {
+			const query = groq`*[_type == "post" && slug.current == "${params.slug}"][0]`;
+			const post = await $sanity.fetch(query);
+			return { post };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
 
-  .content {
-    margin: 2rem 0;
-    max-width: 38rem;
-  }
+	.content {
+		margin: 2rem 0;
+		max-width: 38rem;
+	}
 
-  p {
-    margin: 1rem 0;
-  }
+	p {
+		margin: 1rem 0;
+	}
 </style>
 ```
 
@@ -306,57 +309,60 @@ In `pages/index.vue`, you can use the `block-content` component to render a summ
 
 ```html title="pages/index.vue" {11-13,39}
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">My Blog</h1>
-    </div>
-    <div class="posts">
-      <div v-for="post in posts" :key="post._id">
-        <h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
-        <div class="summary">
-          <block-content
-            :blocks="post.body[0]"
-            v-bind:key="post.body[0]._id"
-            v-if="post.body.length"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div>
+			<h1 class="title">My Blog</h1>
+		</div>
+		<div class="posts">
+			<div v-for="post in posts" :key="post._id">
+				<h2><a v-bind:href="post.slug.current" v-text="post.title" /></h2>
+				<div class="summary">
+					<block-content
+						:blocks="post.body[0]"
+						v-bind:key="post.body[0]._id"
+						v-if="post.body.length"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-  import { groq } from '@nuxtjs/sanity';
+	import { groq } from "@nuxtjs/sanity";
 
-  export default {
-    async asyncData({ $sanity }) {
-      const query = groq`*[_type == "post"]`;
-      const posts = await $sanity.fetch(query);
-      return { posts };
-    },
-  };
+	export default {
+		async asyncData({ $sanity }) {
+			const query = groq`*[_type == "post"]`;
+			const posts = await $sanity.fetch(query);
+			return { posts };
+		},
+	};
 </script>
 
 <style>
-  .container {
-    margin: 2rem;
-    min-height: 100vh;
-  }
-  .posts {
-    margin: 2rem 0;
-  }
-  .summary {
-    margin-top: 0.5rem;
-  }
+	.container {
+		margin: 2rem;
+		min-height: 100vh;
+	}
+	.posts {
+		margin: 2rem 0;
+	}
+	.summary {
+		margin-top: 0.5rem;
+	}
 </style>
 ```
 
-<Stream videoId="cdf12588663302139f022c26c4e5cede" videoTitle="Nuxt & Sanity video" />
+<Stream
+	videoId="cdf12588663302139f022c26c4e5cede"
+	videoTitle="Nuxt & Sanity video"
+/>
 
 There are many other things inside of your blog schema that you can add to your project. As an exercise, consider one of the following to continue developing your understanding of how to build with a headless CMS:
 
-* Create `pages/authors.vue`, and render a list of authors (similar to `pages/index.vue`, but for objects with `_type == "author"`)
-* Read the Sanity docs on [using references in GROQ](https://www.sanity.io/docs/how-queries-work#references-and-joins-db43dfd18d7d), and use it to render author information in a blog post page
+- Create `pages/authors.vue`, and render a list of authors (similar to `pages/index.vue`, but for objects with `_type == "author"`)
+- Read the Sanity docs on [using references in GROQ](https://www.sanity.io/docs/how-queries-work#references-and-joins-db43dfd18d7d), and use it to render author information in a blog post page
 
 ## Publishing with Cloudflare Pages
 
@@ -368,7 +374,7 @@ After you have pushed your project to GitHub, deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose *Nuxt*. Pages will set the correct fields for you automatically.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
@@ -382,7 +388,7 @@ Now, when you make a change to your Sanity.io dataset, Sanity will make a reques
 
 By completing this guide, you have successfully deployed your own blog, powered by Nuxt, Sanity.io, and Cloudflare Pages. You can find the source code for both codebases on GitHub:
 
-* Blog front end: [https://github.com/signalnerve/nuxt-sanity-blog](https://github.com/signalnerve/nuxt-sanity-blog)
-* Sanity dataset: [https://github.com/signalnerve/sanity-blog-schema](https://github.com/signalnerve/sanity-blog-schema)
+- Blog front end: [https://github.com/signalnerve/nuxt-sanity-blog](https://github.com/signalnerve/nuxt-sanity-blog)
+- Sanity dataset: [https://github.com/signalnerve/sanity-blog-schema](https://github.com/signalnerve/sanity-blog-schema)
 
 If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. Refer to the [Build an API for your front end using Pages Functions tutorial](/pages/tutorials/build-an-api-with-pages-functions/) to learn more.
