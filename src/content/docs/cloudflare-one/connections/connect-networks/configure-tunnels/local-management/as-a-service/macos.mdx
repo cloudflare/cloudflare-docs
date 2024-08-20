@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Run as a service on macOS
-
 ---
 
 You can install `cloudflared` as a system service on macOS.
@@ -33,7 +32,7 @@ You can install the service to either run at login or at boot.
 Open a terminal window and run the following command:
 
 ```sh
-$ cloudflared service install
+cloudflared service install
 ```
 
 Cloudflare Tunnel will be installed as a launch agent and start whenever you log in, using your local user configuration found in `~/.cloudflared/`.
@@ -43,7 +42,7 @@ Cloudflare Tunnel will be installed as a launch agent and start whenever you log
 Open a terminal window and run the following command:
 
 ```sh
-$ sudo cloudflared service install
+sudo cloudflared service install
 ```
 
 Cloudflare Tunnel will be installed as a launch daemon and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
@@ -53,7 +52,7 @@ Cloudflare Tunnel will be installed as a launch daemon and start whenever your s
 Run the following command:
 
 ```sh
-$ sudo launchctl start com.cloudflare.cloudflared
+sudo launchctl start com.cloudflare.cloudflared
 ```
 
 The output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and `/Library/Logs/com.cloudflare.cloudflared.out.log`.
@@ -63,6 +62,6 @@ The output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` 
 You can now [route traffic through your tunnel](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#5-start-routing-traffic). If you add IP routes or otherwise change the configuration, restart the service to load the new configuration:
 
 ```sh
-$ sudo launchctl stop com.cloudflare.cloudflared
-$ sudo launchctl start com.cloudflare.cloudflared
+sudo launchctl stop com.cloudflare.cloudflared
+sudo launchctl start com.cloudflare.cloudflared
 ```

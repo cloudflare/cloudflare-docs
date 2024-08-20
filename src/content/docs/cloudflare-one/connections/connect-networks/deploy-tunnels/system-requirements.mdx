@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: System requirements
 sidebar:
   order: 3
-
 ---
 
-import { Render, TabItem, Tabs, TunnelCalculator } from "~/components"
+import { Render, TabItem, Tabs, TunnelCalculator } from "~/components";
 
 Our connector, `cloudflared`, was designed to be lightweight and flexible enough to be effectively deployed on Raspberry Pi, your laptop or a server in a data center. <Render file="tunnel/tunnel-capacity-intro" product="cloudflare-one" />
 
@@ -14,9 +13,9 @@ Our connector, `cloudflared`, was designed to be lightweight and flexible enough
 
 For most use cases, we recommend the following baseline configuration:
 
-* Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
-* Size each host with minimum 4GB of RAM and 4 CPU cores.
-* Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
+- Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
+- Size each host with minimum 4GB of RAM and 4 CPU cores.
+- Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
 
 This setup is usually sufficient to handle traffic from 8,000 WARP users (4,000 per host). The actual amount of resources used by `cloudflared` will depend on many variables, including the number of requests per second, bandwidth, network path and hardware. As additional users are onboarded, or if network traffic increases beyond your existing [tunnel capacity](#estimated-throughput), you can scale your tunnel by adding an additional `cloudflared` host in that location.
 
@@ -24,8 +23,8 @@ This setup is usually sufficient to handle traffic from 8,000 WARP users (4,000 
 
 When `cloudflared` receives a request from a WARP device, it uses the ports on the host machine to evaluate and forward the request to your origin service. Every machine by system design is hardware-limited to a maximum 65,535 ports. Additionally, each service on the machine has a limited number of ports that it can consume. For this reason, we recommend the following deployment model:
 
-* `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
-* The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.
+- `cloudflared` should be deployed on a dedicated host machine. This model is typically appropriate, but there may be serverless or clustered workflows where a dedicated host is not possible.
+- The host machine should allocate 50,000 ports to be available for use by the `cloudflared` service. The remaining ports are reserved for system administrative processes.
 
 <Tabs> <TabItem label="Linux">
 
@@ -34,20 +33,20 @@ To increase the number of ports available to `cloudflared` on Linux:
 If your machine has a `/etc/sysctl.d/` directory:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
-$ sudo sysctl -p /etc/sysctl.d/99-cloudflared.conf
+echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
+sudo sysctl -p /etc/sysctl.d/99-cloudflared.conf
 ```
 
 Otherwise:
 
 ```sh
-$ echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.conf
-$ sudo sysctl -p /etc/sysctl.conf
+echo 'net.ipv4.ip_local_port_range = 11000 60999' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p /etc/sysctl.conf
 ```
 
 </TabItem> <TabItem label="Windows">
 
-To increase the number of ports available to `cloudflared` on  Windows, set the [dynamic port range](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting) for TCP and UDP:
+To increase the number of ports available to `cloudflared` on Windows, set the [dynamic port range](https://learn.microsoft.com/en-us/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting) for TCP and UDP:
 
 ```txt
 netsh int ipv4 set dynamicport tcp start=11000 num=50000
@@ -69,21 +68,21 @@ On Linux and macOS, `ulimit` settings determine the system resources available t
 To view your current ulimits, open a terminal and run:
 
 ```sh
-$ ulimit -a
+ulimit -a
 ```
 
 To set the open files `ulimit`:
 
 ```sh
-$ ulimit -n 70000
+ulimit -n 70000
 ```
 
 ## Estimated throughput
 
 Most private network traffic proxied by `cloudflared` falls in one of two categories:
 
-* TCP requests (more common, less resource intensive)
-* UDP requests (less common, more resource intensive)
+- TCP requests (more common, less resource intensive)
+- UDP requests (less common, more resource intensive)
 
 TCP traffic uses and releases ports almost instantaneously. This means that in order to overload a `cloudflared` instance with 50,000 available ports, your organization would need to continuously generate 50,001 TCP requests per second.
 
@@ -97,8 +96,8 @@ To calculate your tunnel capacity:
 
 1. Set up a [metrics service](/cloudflare-one/tutorials/grafana/) when you run the tunnel.
 2. After a week or so, query the following [tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#cloudflared-metrics):
-   * `cloudflared_tcp_total_sessions`
-   * `cloudflared_udp_total_sessions`
+   - `cloudflared_tcp_total_sessions`
+   - `cloudflared_udp_total_sessions`
 3. Compute the average **TCP requests per second** and **Non-DNS UDP requests per second** by dividing total sessions by total time.
 4. In your private DNS resolver, obtain the average **Private DNS requests per second**.
 5. Input your values into our sizing calculator:

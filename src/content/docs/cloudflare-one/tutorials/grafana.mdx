@@ -3,7 +3,6 @@ updated: 2023-12-06
 category: 🌐 Connections
 pcx_content_type: tutorial
 title: Monitor Cloudflare Tunnel with Grafana
-
 ---
 
 [Grafana](https://grafana.com/) is a dashboard tool that visualizes data stored in other databases. You can use Grafana to convert your [tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) into actionable insights.
@@ -25,35 +24,31 @@ flowchart LR
 
 This tutorial covers how to create the metrics endpoint, set up the Prometheus server, and view the data in Grafana.
 
-
 ## Before you begin
 
-
-* You will need a Cloudflare Tunnel. To create a tunnel, refer to our [getting started guide](/cloudflare-one/connections/connect-networks/get-started/).
+- You will need a Cloudflare Tunnel. To create a tunnel, refer to our [getting started guide](/cloudflare-one/connections/connect-networks/get-started/).
 
 ## Create the metrics endpoint
-
 
 If your tunnel was created via the CLI, run the following command on the `cloudflared` server (`192.168.1.1`):
 
 ```sh
-$ cloudflared tunnel --metrics 192.168.1.1:60123 run my-tunnel
+cloudflared tunnel --metrics 192.168.1.1:60123 run my-tunnel
 ```
 
 If your tunnel was created via the dashboard, the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#metrics) flag must be added to your `cloudflared` system service configuration. Refer to [Add tunnel run parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#add-tunnel-run-parameters) for instructions on how to do this.
 
 ## Set up Prometheus
 
-
-
 On the Prometheus and Grafana server (`192.168.1.2`):
 
 1. [Download](https://prometheus.io/download/) Prometheus.
 
 2. Extract Prometheus:
+
    ```sh
-   $ tar xvfz prometheus-*.tar.gz
-   $ cd prometheus-*
+   tar xvfz prometheus-*.tar.gz
+   cd prometheus-*
    ```
 
 3. Open `prometheus.yml` in a text editor and add the `cloudflared` job to the end of the file:
@@ -97,7 +92,7 @@ On the Prometheus and Grafana server (`192.168.1.2`):
 4. Start Prometheus:
 
    ```sh
-   $ ./prometheus --config.file="prometheus.yml"
+   ./prometheus --config.file="prometheus.yml"
    ```
 
    You can optionally configure Prometheus to run as a service so that it does not need to be manually started if the machine reboots.
@@ -110,21 +105,21 @@ On the Prometheus and Grafana server (`192.168.1.2`):
 
 Refer to [Available metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to check what other metrics are available.
 
-
 ## Connect Grafana to Prometheus
-
 
 1. [Download](https://grafana.com/grafana/download) and install Grafana.
 
 2. Start Grafana as a system service:
+
    ```sh
-   $ sudo systemctl daemon-reload
-   $ sudo systemctl start grafana-server
+   sudo systemctl daemon-reload
+   sudo systemctl start grafana-server
    ```
 
 3. Verify that Grafana is running:
+
    ```sh
-   $ sudo systemctl status grafana-server
+   sudo systemctl status grafana-server
    ```
 
 4. Open a browser and go to `http://localhost:3000/`. The default HTTP port that Grafana listens to is `3000` unless you have configured a different port.
@@ -151,5 +146,3 @@ Refer to [Available metrics](/cloudflare-one/connections/connect-networks/monito
 ![Grafana dashboard showing a tunnel metrics graph](~/assets/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Grafana-dashboard.png)
 
 You can add operations to the queries to modify what is displayed. For example, you could show all tunnel requests over a recent period of time, such as a day, rather than all tunnel requests since metrics began reporting.
-
-
