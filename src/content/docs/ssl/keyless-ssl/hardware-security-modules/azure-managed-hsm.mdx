@@ -47,13 +47,12 @@ brew install azure-cli
 
 1. Log in through the Azure CLI and create a resource group for the Managed HSM in one of the supported regions:
 
-   ```
-       $ az login
-       $ az group create --name HSMgroup --location southcentralus
-
-    {{<Aside type="note" header="Note:">}}
+   ```sh
+   $ az login
+   $ az group create --name HSMgroup --location southcentralus
    ```
 
+   :::note
    For a list of supported regions, see the [Microsoft documentation](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=key-vault). 
    :::
 
