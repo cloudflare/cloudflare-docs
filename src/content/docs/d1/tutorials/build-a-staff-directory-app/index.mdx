@@ -11,10 +11,7 @@ tags:
 languages:
   - TypeScript
   - SQL
-
 ---
-
-
 
 In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app.
 To do this, you will first need to set up a [D1 database](/d1/get-started/) to manage data seamlessly, then you will develop and deploy your application using the [HonoX Framework](https://github.com/honojs/honox) and [Cloudflare Pages](/pages).
@@ -23,8 +20,8 @@ To do this, you will first need to set up a [D1 database](/d1/get-started/) to m
 
 Before moving forward with this tutorial, make sure you have the following:
 
-* A Cloudflare account, if you do not have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
-* A recent version of [npm](https://docs.npmjs.com/getting-started) installed.
+- A Cloudflare account, if you do not have one, [sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing.
+- A recent version of [npm](https://docs.npmjs.com/getting-started) installed.
 
 If you do not want to go through with the setup now, [view the completed code](https://github.com/lauragift21/staff-directory) on GitHub.
 
@@ -35,7 +32,7 @@ In this tutorial, you will use [HonoX](https://github.com/honojs/honox), a meta-
 To get started, run the following command:
 
 ```sh
-$ npm create hono@latest
+npm create hono@latest
 ```
 
 During the setup process, you will be asked to provide a name for your project directory and to choose a template. When making your selection, choose the `x-basic` template.
@@ -68,7 +65,7 @@ The project includes directories for app code, routes, and server setup, alongsi
 To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/workers/wrangler), which supports the `wrangler d1` command for D1 database operations. Create a new database named `staff-directory` with the following command:
 
 ```sh
-$ npx wrangler d1 create staff-directory
+npx wrangler d1 create staff-directory
 ```
 
 After creating your database, you will need to set up a [binding](/workers/runtime-apis/bindings/) in the Wrangler configuration file to integrate your database with your application.
@@ -94,23 +91,26 @@ You have now configured your application to access and interact with your D1 dat
 You will also need to make adjustments to your Vite config file in `vite.config.js`. Add the following config settings to ensure that Vite is properly set up to work with Cloudflare bindings in local environment:
 
 ```ts
-import adapter from '@hono/vite-dev-server/cloudflare'
+import adapter from "@hono/vite-dev-server/cloudflare";
 
 export default defineConfig(({ mode }) => {
-  if (mode === 'client') {
-    return {
-      plugins: [client()]
-    }
-  } else {
-    return {
-      plugins: [honox({
-	      devServer: {
-		    adapter
-	      }
-      }), pages()]
-    }
-  }
-})
+	if (mode === "client") {
+		return {
+			plugins: [client()],
+		};
+	} else {
+		return {
+			plugins: [
+				honox({
+					devServer: {
+						adapter,
+					},
+				}),
+				pages(),
+			],
+		};
+	}
+});
 ```
 
 ## 4. Interact with D1
@@ -118,7 +118,7 @@ export default defineConfig(({ mode }) => {
 To interact with your D1 database, you can directly issue SQL commands using the `wrangler d1 execute` command:
 
 ```sh
-$ wrangler d1 execute staff-directory --command "SELECT name FROM sqlite_schema WHERE type ='table'"
+wrangler d1 execute staff-directory --command "SELECT name FROM sqlite_schema WHERE type ='table'"
 ```
 
 The command above allows you to run queries or operations directly from the command line.
@@ -151,10 +151,10 @@ INSERT INTO locations (location_name) VALUES ('London, UK'), ('Paris, France'), 
 INSERT INTO departments (department_name) VALUES ('Software Engineering'), ('Product Management'), ('Information Technology (IT)'), ('Quality Assurance (QA)'), ('User Experience (UX)/User Interface (UI) Design'), ('Sales and Marketing'), ('Human Resources (HR)'), ('Customer Support'), ('Research and Development (R&D)'), ('Finance and Accounting');
 ```
 
-The above queries will create three tables:  `Locations`, `Departments`, and `Employees`. To populate these tables with initial data, use the `INSERT INTO` command. After preparing your schema file with these commands, you can apply it to the D1 database. Do this by using the `--file` flag to specify the schema file for execution:
+The above queries will create three tables: `Locations`, `Departments`, and `Employees`. To populate these tables with initial data, use the `INSERT INTO` command. After preparing your schema file with these commands, you can apply it to the D1 database. Do this by using the `--file` flag to specify the schema file for execution:
 
 ```sh
-$ wrangler d1 execute staff-directory --file=./schema.sql
+wrangler d1 execute staff-directory --file=./schema.sql
 ```
 
 To execute the schema locally and seed data into your local directory, pass the `--local` flag to the above command.
@@ -167,15 +167,15 @@ After setting up your D1 database and configuring the `wrangler.toml` file as ou
 
 ```ts
 export const findAllEmployees = async (db: D1Database) => {
-  const query = `
+	const query = `
       SELECT employees.*, locations.location_name, departments.department_name
       FROM employees
       JOIN locations ON employees.location_id = locations.location_id
       JOIN departments ON employees.department_id = departments.department_id
       `;
-  const { results } = await db.prepare(query).all();
-  const employees = results;
-  return employees;
+	const { results } = await db.prepare(query).all();
+	const employees = results;
+	return employees;
 };
 ```
 
@@ -183,16 +183,23 @@ export const findAllEmployees = async (db: D1Database) => {
 
 ```ts
 export const createEmployee = async (db: D1Database, employee: Employee) => {
-  const query = `
+	const query = `
       INSERT INTO employees (name, position, join_date, image_url, department_id, location_id)
       VALUES (?, ?, ?, ?, ?, ?)`;
 
-  const results  = await db
-    .prepare(query)
-    .bind(employee.name, employee.position,  employee.join_date, employee.image_url, employee.department_id, employee.location_id)
-    .run();
-  const employees = results;
-  return employees;
+	const results = await db
+		.prepare(query)
+		.bind(
+			employee.name,
+			employee.position,
+			employee.join_date,
+			employee.image_url,
+			employee.department_id,
+			employee.location_id,
+		)
+		.run();
+	const employees = results;
+	return employees;
 };
 ```
 
@@ -200,7 +207,7 @@ For a complete list of all the queries used in the application, refer to the [db
 
 ## 6. Develop the UI
 
-The application uses `hono/jsx` for rendering. You can set up a Renderer  in `app/routes/_renderer.tsx` using the JSX-rendered middleware, serving as the entry point for your application:
+The application uses `hono/jsx` for rendering. You can set up a Renderer in `app/routes/_renderer.tsx` using the JSX-rendered middleware, serving as the entry point for your application:
 
 ```ts
 import { jsxRenderer } from 'hono/jsx-renderer'
@@ -224,19 +231,19 @@ export default jsxRenderer(({ children, title }) => {
 Add the bindings defined earlier in `global.d.ts` file where the global type definitions for TypeScript is defined ensuring type consistency across your application:
 
 ```ts
-declare module 'hono' {
-  interface Env {
-    Variables: {}
-    Bindings: {
-      DB: D1Database
-    }
-  }
+declare module "hono" {
+	interface Env {
+		Variables: {};
+		Bindings: {
+			DB: D1Database;
+		};
+	}
 }
 ```
 
 This application uses [Tailwind CSS](https://tailwindcss.com/) for styling. To use Tailwind CSS, refer to the [TailwindCSS documentation](https://v2.tailwindcss.com/docs), or follow the steps [provided on GitHub](https://github.com/honojs/honox?tab=readme-ov-file#using-tailwind-css).
 
-To display a list of employees, invoke the `findAllEmployees` function from your `db.ts` file and call that within the `routes/index.tsx` file.  The `createRoute()` function present in the file serves as a helper function for defining routes that handle different  HTTP methods like `GET`, `POST`, `PUT`, or `DELETE`.
+To display a list of employees, invoke the `findAllEmployees` function from your `db.ts` file and call that within the `routes/index.tsx` file. The `createRoute()` function present in the file serves as a helper function for defining routes that handle different HTTP methods like `GET`, `POST`, `PUT`, or `DELETE`.
 
 ```ts
 import { css } from 'hono/css'
@@ -309,36 +316,36 @@ The code snippet demonstrates how to import the `findAllEmployees`, `findAllLoca
 Use the `export POST` route to create a new employee through the `/admin` page:
 
 ```ts null {26}
-import { createRoute } from 'honox/factory'
-import type { Employee } from '../../db'
-import { getFormDataValue, getFormDataNumber } from '../../utils/formData'
-import { createEmployee } from '../../db'
+import { createRoute } from "honox/factory";
+import type { Employee } from "../../db";
+import { getFormDataValue, getFormDataNumber } from "../../utils/formData";
+import { createEmployee } from "../../db";
 
 export const POST = createRoute(async (c) => {
-  try {
-    const formData = await c.req.formData();
-    const imageFile = formData.get('image_file');
-    let imageUrl = '';
+	try {
+		const formData = await c.req.formData();
+		const imageFile = formData.get("image_file");
+		let imageUrl = "";
 
-    // TODO: process image url with R2
+		// TODO: process image url with R2
 
-    const employeeData: Employee = {
-      employee_id: getFormDataValue(formData, 'employee_id'),
-      name: getFormDataValue(formData, 'name'),
-      position: getFormDataValue(formData, 'position'),
-      image_url: imageUrl,
-      join_date: getFormDataValue(formData, 'join_date'),
-      department_id: getFormDataNumber(formData, 'department_id'),
-      location_id: getFormDataNumber(formData, 'location_id'),
-      location_name: '',
-      department_name: ''
-    };
+		const employeeData: Employee = {
+			employee_id: getFormDataValue(formData, "employee_id"),
+			name: getFormDataValue(formData, "name"),
+			position: getFormDataValue(formData, "position"),
+			image_url: imageUrl,
+			join_date: getFormDataValue(formData, "join_date"),
+			department_id: getFormDataNumber(formData, "department_id"),
+			location_id: getFormDataNumber(formData, "location_id"),
+			location_name: "",
+			department_name: "",
+		};
 
-    await createEmployee(c.env.DB, employeeData);
-    return c.redirect('/', 303);
-  } catch (error) {
-    return new Response('Error processing your request', { status: 500 });
-  }
+		await createEmployee(c.env.DB, employeeData);
+		return c.redirect("/", 303);
+	} catch (error) {
+		return new Response("Error processing your request", { status: 500 });
+	}
 });
 ```
 
@@ -355,10 +362,10 @@ To store an image in an R2 bucket:
 Use the `wrangler r2 bucket create` command to create a bucket:
 
 ```sh
-$ wrangler r2 bucket create employee-avatars
+wrangler r2 bucket create employee-avatars
 ```
 
-Once the bucket is created, add the R2 bucket binding to your `wrangler.toml`  file:
+Once the bucket is created, add the R2 bucket binding to your `wrangler.toml` file:
 
 ```toml
 [[r2_buckets]]
@@ -369,14 +376,14 @@ bucket_name = "employee-avatars"
 Pass the R2 binding to the `global.d.ts` file:
 
 ```ts
-declare module 'hono' {
- interface Env {
-    Variables: {}
-    Bindings: {
-      DB: D1Database,
-      MY_BUCKET: R2Bucket
-    }
-  }
+declare module "hono" {
+	interface Env {
+		Variables: {};
+		Bindings: {
+			DB: D1Database;
+			MY_BUCKET: R2Bucket;
+		};
+	}
 }
 ```
 
@@ -384,16 +391,16 @@ To store the uploaded image in the R2 bucket, you can use the `put()` method pro
 
 ```ts
 if (imageFile instanceof File) {
-  const key = `${new Date().getTime()}-${imageFile.name}`;
-  const fileBuffer = await imageFile.arrayBuffer();
+	const key = `${new Date().getTime()}-${imageFile.name}`;
+	const fileBuffer = await imageFile.arrayBuffer();
 
-  await c.env.MY_BUCKET.put(key, fileBuffer, {
-	httpMetadata: {
-	  contentType: imageFile.type || 'application/octet-stream',
-	},
-  });
-  console.log(`File uploaded successfully: ${key}`);
-  imageUrl = `https://pub-8d936184779047cc96686a631f318fce.r2.dev/${key}`;
+	await c.env.MY_BUCKET.put(key, fileBuffer, {
+		httpMetadata: {
+			contentType: imageFile.type || "application/octet-stream",
+		},
+	});
+	console.log(`File uploaded successfully: ${key}`);
+	imageUrl = `https://pub-8d936184779047cc96686a631f318fce.r2.dev/${key}`;
 }
 ```
 
