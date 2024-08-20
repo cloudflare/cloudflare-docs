@@ -3,26 +3,25 @@ updated: 2022-07-19
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
 title: Connect through Cloudflare Access using kubectl
-
 ---
 
 You can connect to machines over `kubectl` using Cloudflare's Zero Trust platform.
 
 **This walkthrough covers how to:**
 
-* Build a policy in Cloudflare Access to secure the machine
-* Connect a machine to Cloudflare's network using kubectl
-* Connect from a client machine
+- Build a policy in Cloudflare Access to secure the machine
+- Connect a machine to Cloudflare's network using kubectl
+- Connect from a client machine
 
 **Before you start**
 
-* [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 
 **Time to complete:**
 
 30 minutes
 
-***
+---
 
 ## Create a Zero Trust policy
 
@@ -48,7 +47,7 @@ Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare 
 Run the following command to authenticate cloudflared into your Cloudflare account.
 
 ```sh
-$ cloudflared tunnel login
+cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to log in to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -60,7 +59,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 Next, create a tunnel with the command below.
 
 ```sh
-$ cloudflared tunnel create <NAME>
+cloudflared tunnel create <NAME>
 ```
 
 Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A single Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
@@ -68,7 +67,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
 ```sh
-$ cloudflared tunnel list
+cloudflared tunnel list
 ```
 
 ## Configure the Tunnel
@@ -78,7 +77,7 @@ You can now [configure the tunnel](/cloudflare-one/connections/connect-networks/
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
 ```sh
-$ vim ~/.cloudflared/config.yml
+vim ~/.cloudflared/config.yml
 ```
 
 Next, configure the Tunnel, replacing the example ID below with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
@@ -118,7 +117,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
 ```sh
-$ cloudflared tunnel run <NAME>
+cloudflared tunnel run <NAME>
 ```
 
 We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/) that is configured to launch on start.
@@ -130,13 +129,13 @@ You can now connect from a client machine using `cloudflared`.
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
 
 ```sh
-$ brew install cloudflared
+brew install cloudflared
 ```
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
 ```sh
-$ cloudflared access tcp --hostname azure.widgetcorp.tech --url 127.0.0.1:1234
+cloudflared access tcp --hostname azure.widgetcorp.tech --url 127.0.0.1:1234
 ```
 
 With this service running, you can run a `kubectl` command and `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider. Once authenticated, `cloudflared` will expose the connection to the client machine at the local URL specified in the command.
@@ -144,5 +143,5 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 `kubeconfig` does not support proxy command configurations at this time, though the community has submitted plans to do so. In the interim, users can alias the cluster's API server to save time.
 
 ```sh
-$ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
+alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```

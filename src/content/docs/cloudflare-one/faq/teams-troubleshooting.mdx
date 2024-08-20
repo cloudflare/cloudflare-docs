@@ -5,10 +5,9 @@ sidebar:
   order: 4
 head: []
 description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
@@ -39,26 +38,26 @@ To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/
 
 Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
-* **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
+- **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
 
-  * The server certificate issuer is unknown or is not trusted by the service.
-  * The server certificate is revoked and fails a CRL check.
-  * There is at least one expired certificate in the certificate chain for the server certificate.
-  * The common name on the certificate does not match the URL you are trying to reach.
-  * The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic\&Vendor=Google\&CertificateStatus=Active\&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check.
+  - There is at least one expired certificate in the certificate chain for the server certificate.
+  - The common name on the certificate does not match the URL you are trying to reach.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
-* **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
-  * Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
-  * Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
-  * Redirect all HTTPS requests to HTTP.
+  - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Redirect all HTTPS requests to HTTP.
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
 
-* Operating System (Windows 10, macOS 10.x, iOS 14.x)
-* Web browser (Chrome, Firefox, Safari, Edge)
-* URL of the request
-* Screenshot or copy/paste of the content from the error page
+- Operating System (Windows 10, macOS 10.x, iOS 14.x)
+- Web browser (Chrome, Firefox, Safari, Edge)
+- URL of the request
+- Screenshot or copy/paste of the content from the error page
 
 For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
@@ -68,10 +67,10 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 You may not see analytics on the Overview page for the following reasons:
 
-* **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
-* **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-* **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
-* **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, file a support ticket.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
+- **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
+- **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
+- **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, file a support ticket.
 
 ## I see a "No Browsers Available" alert.
 
@@ -127,7 +126,7 @@ ResolveUnicastSingleLabel=yes
 3. Restart the service:
 
 ```sh
-$ sudo systemctl restart systemd-resolved.service
+sudo systemctl restart systemd-resolved.service
 ```
 
 ## Windows incorrectly shows `No Internet access` when WARP is enabled.
@@ -160,14 +159,14 @@ If you continue to have issues with Microsoft 365 applications, consider enablin
 
 Cloudflare Browser Isolation leverages Network Vector Rendering (NVR) technology. This allows us to deliver a secure, performant remote computing experience without the bandwidth limitations of traditional solutions. While we expect most websites to work perfectly, some browser features and web technologies such as WebGL (Web Graphics Library) are unsupported.
 
-WebGL is a JavaScript API for rendering high-performance interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins.  Support for WebGL is present in all modern browsers.  However, the user's device must also have access to the underlying [hardware](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API#browser_compatibility) that supports these features.
+WebGL is a JavaScript API for rendering high-performance interactive 2D and 3D graphics within any compatible web browser without the use of plug-ins. Support for WebGL is present in all modern browsers. However, the user's device must also have access to the underlying [hardware](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API#browser_compatibility) that supports these features.
 
 When running remote browser isolation in a virtualized environment, the user's device may not have access to the required system resources. To resolve the error, you can configure your browser to render vector graphics entirely through software, without using the hardware acceleration provided by a GPU.
 
 To enable software rasterization:
 
 1. Go to `chrome://flags/#override-software-rendering-list`.
-2. Set **Override software rendering list** to *Enabled*.
+2. Set **Override software rendering list** to _Enabled_.
 3. Select **Relaunch** to apply the change.
 
 ## I cannot send emails on port `25`.

@@ -3,12 +3,15 @@ pcx_content_type: concept
 title: Load balancing
 sidebar:
   order: 51
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="tunnel/dns-record" product="cloudflare-one" params={{ one: "a Load Balancing endpoint", two: "a load balancer pool" }} />
+<Render
+	file="tunnel/dns-record"
+	product="cloudflare-one"
+	params={{ one: "a Load Balancing endpoint", two: "a load balancer pool" }}
+/>
 
 ## Add a tunnel to a load balancer pool
 
@@ -25,18 +28,18 @@ If you want to add a [monitor](/load-balancing/monitors/) to your load balancer 
 You can add Cloudflare Tunnel to an existing load balancer pool directly from `cloudflared`:
 
 ```sh
-$ cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
+cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
 ```
 
-* `<hostname>`: the DNS hostname of the load balancer, for example `lb.example.com`.
+- `<hostname>`: the DNS hostname of the load balancer, for example `lb.example.com`.
 
-* `<load balancer pool>`: the name of the [pool](/load-balancing/pools/create-pool/#create-a-pool) that will contain the tunnel subdomain.
+- `<load balancer pool>`: the name of the [pool](/load-balancing/pools/create-pool/#create-a-pool) that will contain the tunnel subdomain.
 
 This command creates an LB DNS record that points the specified hostname to the subdomain of your tunnel (`<UUID>.cfargotunnel.com`). Traffic will not be proxied unless the tunnel is running.
 
 :::note
 
-To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system. 
+To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system.
 :::
 
 </TabItem>
