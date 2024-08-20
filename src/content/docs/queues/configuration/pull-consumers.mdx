@@ -237,30 +237,30 @@ Additionally:
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
-{/\* <!--
+    {/* <!--
 
-## Examples
+    ## Examples
 
-### TypeScript (Node.js)
+    ### TypeScript (Node.js)
 
-The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+    The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
+    In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
 
-```ts
+    ```ts
 
-```
+    ```
 
-### Go
+    ### Go
 
-The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+    The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-```go
+    ```go
 
 
-```
+    ```
 
---> \*/}
+    --> */}
 
 ## Content types
 
