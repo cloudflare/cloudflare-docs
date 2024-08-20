@@ -7,16 +7,13 @@ head:
   - tag: title
     content: Get started | Static site | Next.js apps
 description: Deploy a static site built using Next.js to Cloudflare Pages
-
 ---
 
-import { PagesBuildPreset, Render } from "~/components"
+import { PagesBuildPreset, Render } from "~/components";
 
 :::note
 
-
 Do not use this guide unless you have a specific use case for static exports. Cloudflare recommends using the [Deploy a Next.js site](/pages/framework-guides/nextjs/ssr/get-started/) guide.
-
 
 :::
 
@@ -31,13 +28,13 @@ This guide will instruct you how to deploy a static site Next.js project with [s
 If you already have a Next.js project that you wish to deploy, ensure that it is [configured for static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports), change to its directory, and proceed to the next step. Otherwise, use `create-next-app` to create a new Next.js project.
 
 ```sh
-$ npx create-next-app --example with-static-export my-app
+npx create-next-app --example with-static-export my-app
 ```
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template. Change to this directory to continue.
 
 ```sh
-$ cd my-app
+cd my-app
 ```
 
 ### Create a GitHub repository
@@ -45,9 +42,9 @@ $ cd my-app
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
-$ git remote add origin https://github.com/<GH_USERNAME>/<REPOSITORY_NAME>.git
-$ git branch -M main
-$ git push -u origin main
+git remote add origin https://github.com/<GH_USERNAME>/<REPOSITORY_NAME>.git
+git branch -M main
+git push -u origin main
 ```
 
 ### Deploy your application to Cloudflare Pages
@@ -56,7 +53,7 @@ To deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Next.js (Static HTML Export)* as your **Framework preset**. Your selection will provide the following information.
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js (Static HTML Export)_ as your **Framework preset**. Your selection will provide the following information.
 
 <PagesBuildPreset framework="next-js-static" />
 

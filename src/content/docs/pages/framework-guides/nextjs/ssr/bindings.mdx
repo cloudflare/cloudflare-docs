@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Using bindings in your Next.js app
-
 ---
 
 Once you have [set up next-on-pages](/pages/framework-guides/nextjs/ssr/get-started/), you can access [bindings](/workers/runtime-apis/bindings/) from any route of your Next.js app via `getRequestContext`:
@@ -17,13 +16,13 @@ import { getRequestContext } from "@cloudflare/next-on-pages";
 export const runtime = "edge";
 
 export async function GET(request) {
-  let responseText = "Hello World";
+	let responseText = "Hello World";
 
-  const myKv = getRequestContext().env.MY_KV_NAMESPACE;
-  await myKv.put("foo", "bar");
-  const foo = await myKv.get("foo");
+	const myKv = getRequestContext().env.MY_KV_NAMESPACE;
+	await myKv.put("foo", "bar");
+	const foo = await myKv.get("foo");
 
-  return new Response(foo);
+	return new Response(foo);
 }
 ```
 
@@ -36,7 +35,7 @@ To ensure that the `env` object from `getRequestContext().env` above has accurat
 Install Workers Types:
 
 ```sh
-$ npm install --save-dev @cloudflare/workers-types
+npm install --save-dev @cloudflare/workers-types
 ```
 
 Add Workers Types to your `tsconfig.json` file, replacing the date below with your project's [compatibility date](/workers/configuration/compatibility-dates/):
@@ -63,13 +62,13 @@ interface CloudflareEnv {
 Access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
 
 ```js
-import { getRequestContext } from '@cloudflare/next-on-pages';
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export const runtime = "edge";
 
 export async function GET(request) {
-  const { env, cf, ctx } = getRequestContext();
+	const { env, cf, ctx } = getRequestContext();
 
-  // ...
+	// ...
 }
 ```

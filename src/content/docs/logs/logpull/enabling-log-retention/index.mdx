@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Enabling log retention
 sidebar:
   order: 13
-
 ---
 
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logs/logpull/understanding-the-basics/#data-retention-period)).
@@ -12,14 +11,12 @@ By default, your HTTP request logs are not retained. When using the Logpull API 
 
 There are two endpoints for managing log retention:
 
-* `GET /logs/control/retention/flag` - returns whether retention is on
-* `POST /logs/control/retention/flag` - turns retention on or off
+- `GET /logs/control/retention/flag` - returns whether retention is on
+- `POST /logs/control/retention/flag` - turns retention on or off
 
 :::note[Note]
 
-
 To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share.
-
 
 :::
 
@@ -28,19 +25,19 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 ### Check whether log retention is turned on:
 
 ```sh
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
 ```
 
 #### Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "flag": false
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"flag": false
+	},
+	"success": true
 }
 ```
 
@@ -62,18 +59,18 @@ For further help with API calls on Windows, refer to [Making API calls on Window
 
 #### Parameters
 
-* *flag* - can be either `true` or `false`
+- _flag_ - can be either `true` or `false`
 
 #### Response:
 
 ```json
 {
-  "errors": [],
-  "messages": [],
-  "result": {
-    "flag": true
-  },
-  "success": true
+	"errors": [],
+	"messages": [],
+	"result": {
+		"flag": true
+	},
+	"success": true
 }
 ```
 

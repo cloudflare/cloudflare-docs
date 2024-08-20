@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Svelte
-
 ---
 
-import { PagesBuildPreset, Render } from "~/components"
+import { PagesBuildPreset, Render } from "~/components";
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
 
@@ -18,7 +17,7 @@ Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) C
 To use `create-cloudflare` to create a new Svelte project, run the following command:
 
 ```sh
-$ npm create cloudflare@latest my-svelte-app -- --framework=svelte
+npm create cloudflare@latest my-svelte-app -- --framework=svelte
 ```
 
 SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this guide. Choose the options that suit your project.
@@ -28,7 +27,7 @@ SvelteKit will prompt you for customization choices. For the template option, ch
 After you have installed your project dependencies, start your application:
 
 ```sh
-$ npm run dev
+npm run dev
 ```
 
 <Render file="tutorials-before-you-start" />
@@ -86,33 +85,29 @@ declare namespace App {
 
 ```js
 export async function post(context) {
-  const counter = context.platform.env.COUNTER.idFromName("A");
+	const counter = context.platform.env.COUNTER.idFromName("A");
 }
 ```
 
 :::note
 
-
 In addition to the Cloudflare adapter, review other adapters you can use in your project:
 
-* [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto)
+- [`@sveltejs/adapter-auto`](https://www.npmjs.com/package/@sveltejs/adapter-auto)
 
   SvelteKit's default adapter automatically chooses the adapter for your current environment. If you use this adapter, [no configuration is needed](https://kit.svelte.dev/docs/adapter-auto). However, the default adapter introduces a few disadvantages for local development because it has no way of knowing what platform the application is going to be deployed to.
 
 To solve this issue, provide a `CF_PAGES` variable to SvelteKit so that the adapter can detect the Pages platform. For example, when locally building the application: `CF_PAGES=1 vite build`.
 
-* [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static)
+- [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static)
   Only produces client-side static assets (no server-side rendering) and is compatible with Cloudflare Pages.
   Review the [official SvelteKit documentation](https://kit.svelte.dev/docs/adapter-static) for instructions on how to set up the adapter. Keep in mind that if you decide to use this adapter, the build directory, instead of `.svelte-kit/cloudflare`, becomes `build`. You must also configure your Cloudflare Pages application's build directory accordingly.
-
 
 :::
 
 :::caution
 
-
 If you are using any adapter different from the default SvelteKit adapter, remember to commit and push your adapter setting changes to your GitHub repository before attempting the deployment.
-
 
 :::
 
@@ -147,9 +142,7 @@ Additionally, you will have access to [preview deployments](/pages/configuration
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
@@ -160,16 +153,16 @@ In SvelteKit, functions are written as endpoints. Functions contained in the `/f
 To have the functionality equivalent to Pages Functions [`onRequests`](/pages/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
 
 ```ts
-import type { RequestHandler } from './$types';
+import type { RequestHandler } from "./$types";
 
 export const GET = (({ url }) => {
-  return new Response(String(Math.random()));
+	return new Response(String(Math.random()));
 }) satisfies RequestHandler;
 ```
 
 :::note[SvelteKit API Routes]
 
-For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server). 
+For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 :::
 
 <Render file="framework-guides/learn-more" params={{ one: "Svelte" }} />

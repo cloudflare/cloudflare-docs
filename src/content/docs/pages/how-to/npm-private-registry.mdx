@@ -1,7 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Install private packages
-
 ---
 
 Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough focuses specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
@@ -10,9 +9,7 @@ You will be be adjusting the [environment variables](/pages/configuration/build-
 
 :::caution
 
-
 Be sure to trigger a new deployment after changing any settings.
-
 
 :::
 
@@ -24,10 +21,10 @@ With npm, you can [create and view tokens through its website](https://docs.npmj
 
 ```sh
 # Verify the current npm user is correct
-$ npm whoami
+npm whoami
 
 # Create a readonly token
-$ npm token create --read-only
+npm token create --read-only
 #-> Enter password, if prompted
 #-> Enter 2FA code, if configured
 ```
@@ -42,9 +39,7 @@ In your Pages project's **Settings** > **Environment variables**, add a new [env
 
 :::caution
 
-
 Add the `NPM_TOKEN` variable to both the **Production** and **Preview** environments.
-
 
 :::
 
@@ -64,9 +59,7 @@ Here, all packages under the `@foobar` scope are directed towards the GitHub Pac
 
 :::note
 
-
 You only need to define an Access Token for the npm registry (refer to `TOKEN_FOR_NPM` in the example) if it is hosting private packages that your application requires.
-
 
 :::
 
