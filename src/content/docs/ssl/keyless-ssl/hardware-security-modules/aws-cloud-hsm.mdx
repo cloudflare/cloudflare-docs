@@ -3,27 +3,24 @@ pcx_content_type: tutorial
 title: AWS cloud HSM
 sidebar:
   order: 2
-
 ---
 
 :::note[Note]
 
-
 This example imports an existing key pair, but you may prefer to [generate your key on the HSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-keys.html).
-
 
 :::
 
-***
+---
 
 ## Before you start
 
 Make sure you have:
 
-* Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
-* Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
+- Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
+- Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
 
-***
+---
 
 ## 1. Import the public and private key to the HSM
 
@@ -66,7 +63,7 @@ Command: logoutHSM
 Command: exit
 ```
 
-***
+---
 
 ## 2. Modify the gokeyless config file and restart the service
 
@@ -88,6 +85,6 @@ add:
 With the config file saved, restart `gokeyless` and verify it started successfully.
 
 ```sh
-$ sudo systemctl restart gokeyless.service
-$ sudo systemctl status gokeyless.service -l
+sudo systemctl restart gokeyless.service
+sudo systemctl status gokeyless.service -l
 ```

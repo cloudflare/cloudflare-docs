@@ -2,7 +2,6 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360058639551-WordPress-com-and-Cloudflare
 title: WordPress.com and Cloudflare
-
 ---
 
 ## Getting started with WordPress.com and Cloudflare
@@ -13,8 +12,8 @@ Cloudflare and WordPress.com are partnering to offer customers Cloudflare's perf
 
 During this process, Cloudflare scans your existing WordPress.com DNS records and displays them. The records will look similar to the examples below.
 
-* `A example.com 192.0.78.12`
-* `A example.com 192.0.78.13`
+- `A example.com 192.0.78.12`
+- `A example.com 192.0.78.13`
 
 WordPress.com does not guarantee the IP address will never change. For maximum uptime, you should complete the following:
 
@@ -30,7 +29,7 @@ WordPress.com does not guarantee the IP address will never change. For maximum u
 
 Congratulations! Your site is now accelerated and protected by Cloudflare.
 
-***
+---
 
 ## Enabling additional Cloudflare products
 
@@ -76,11 +75,11 @@ The [Automatic Platform Optimization
 (APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
 feature requires that you be on a [Full
 Setup](/dns/zone-setups/full-setup/)
-using Cloudflare nameservers. 
+using Cloudflare nameservers.
 :::
 
-* Cloudflare free plan + $5/month APO add-on or a Pro or Business plan subscription (includes APO)
-* WordPress.com Business plan or above (requires plugins)
+- Cloudflare free plan + $5/month APO add-on or a Pro or Business plan subscription (includes APO)
+- WordPress.com Business plan or above (requires plugins)
 
 ### **Install and enable APO**
 
@@ -92,7 +91,7 @@ using Cloudflare nameservers.
 
 For more details, refer to [Understanding Automatic Platform Optimization (APO) with WordPress](/automatic-platform-optimization/).
 
-***
+---
 
 ## Troubleshooting
 
@@ -111,7 +110,10 @@ For more details, refer to [Understanding Automatic Platform Optimization (APO) 
 In a terminal, use the following cURL. The header `'accept: text/html'` is important
 
 ```sh
-$ curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
+curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
+```
+
+```sh output
 < cf-cache-status: HIT
 < cf-apo-via: cache
 < cf-edge-cache: cache,platform=wordpress
@@ -119,8 +121,8 @@ $ curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1
 
 As always, `cf-cache-status` displays if the asset hit the cache or was considered dynamic and served from the origin.
 
-* The `cf-apo-via` header returns the APO status for the given request.
-* The `cf-edge-cache` header means the WordPress plugin is installed and enabled.
+- The `cf-apo-via` header returns the APO status for the given request.
+- The `cf-edge-cache` header means the WordPress plugin is installed and enabled.
 
 ### How can I verify APO and the WordPress.com integration works?
 
