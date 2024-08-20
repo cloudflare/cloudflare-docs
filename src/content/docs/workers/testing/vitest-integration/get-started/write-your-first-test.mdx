@@ -5,37 +5,34 @@ sidebar:
   order: 1
 head: []
 description: Write unit tests against Workers.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 This guide will instruct you through installing and setting up the `@cloudflare/vitest-pool-workers` package. This will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
 
 ## Prerequisites
 
-* Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project).
+- Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project).
 
-* Make sure that your Worker is developed using the ES modules format. To migrate from the service worker format to the ES modules format, refer to the [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide.
+- Make sure that your Worker is developed using the ES modules format. To migrate from the service worker format to the ES modules format, refer to the [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide.
 
-* In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
+- In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
 
 ## Install Vitest and `@cloudflare/vitest-pool-workers`
 
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
 
 ```sh
-$ npm install vitest@1.5.0 --save-dev --save-exact
-$ npm install @cloudflare/vitest-pool-workers --save-dev
+npm install vitest@1.5.0 --save-dev --save-exact
+npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
 The above commands will add the packages to your `package.json` file and install them as dev dependencies.
 
 :::note
 
-
-Currently, the `@cloudflare/vitest-pool-workers` package *only* works with Vitest 1.5.0.
-
+Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 1.5.0.
 
 :::
 
@@ -48,21 +45,19 @@ You can reference a `wrangler.toml` file to leverage its `main` entry point, [co
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
 export default defineWorkersConfig({
-  test: {
-    poolOptions: {
-      workers: {
-        wrangler: { configPath: "./wrangler.toml" },
-      },
-    },
-  },
+	test: {
+		poolOptions: {
+			workers: {
+				wrangler: { configPath: "./wrangler.toml" },
+			},
+		},
+	},
 });
 ```
 
 :::note
 
-
 For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest-integration/configuration/).
-
 
 :::
 
@@ -74,16 +69,16 @@ For example, to add bindings that will be used in tests, you can add `miniflare`
 
 ```js null {6-8}
 export default defineWorkersConfig({
-  test: {
-    poolOptions: {
-      workers: {
-        main: "./src/index.ts",
-        miniflare: {
-          kvNamespaces: ["TEST_NAMESPACE"],
-        },
-      },
-    },
-  },
+	test: {
+		poolOptions: {
+			workers: {
+				main: "./src/index.ts",
+				miniflare: {
+					kvNamespaces: ["TEST_NAMESPACE"],
+				},
+			},
+		},
+	},
 });
 ```
 
@@ -91,9 +86,7 @@ This configuration would add a KV namespace `TEST_NAMESPACE` that was only acces
 
 :::note
 
-
 For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
-
 
 :::
 
@@ -125,9 +118,9 @@ If you created a basic Worker via the guide listed above, you should have the fo
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response("Hello World!");
-  },
+	async fetch(request, env, ctx) {
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -148,28 +141,36 @@ This Worker receives a request, and returns a response of `"Hello World!"`. In o
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+import {
+	env,
+	createExecutionContext,
+	waitOnExecutionContext,
+} from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
 
 describe("Hello World worker", () => {
-  it("responds with Hello World!", async () => {
-    const request = new Request("http://example.com");
-    // Create an empty context to pass to `worker.fetch()`
-    const ctx = createExecutionContext();
-    const response = await worker.fetch(request, env, ctx);
-    // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-    await waitOnExecutionContext(ctx);
-    expect(await response.text()).toBe("Hello World!");
-  });
+	it("responds with Hello World!", async () => {
+		const request = new Request("http://example.com");
+		// Create an empty context to pass to `worker.fetch()`
+		const ctx = createExecutionContext();
+		const response = await worker.fetch(request, env, ctx);
+		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
+		await waitOnExecutionContext(ctx);
+		expect(await response.text()).toBe("Hello World!");
+	});
 });
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-import { env, createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+import {
+	env,
+	createExecutionContext,
+	waitOnExecutionContext,
+} from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 // Could import any other source file/function here
 import worker from "../src";
@@ -179,15 +180,15 @@ import worker from "../src";
 const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
 describe("Hello World worker", () => {
-  it("responds with Hello World!", async () => {
-    const request = new IncomingRequest("http://example.com");
-    // Create an empty context to pass to `worker.fetch()`
-    const ctx = createExecutionContext();
-    const response = await worker.fetch(request, env, ctx);
-    // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-    await waitOnExecutionContext(ctx);
-    expect(await response.text()).toBe("Hello World!");
-  });
+	it("responds with Hello World!", async () => {
+		const request = new IncomingRequest("http://example.com");
+		// Create an empty context to pass to `worker.fetch()`
+		const ctx = createExecutionContext();
+		const response = await worker.fetch(request, env, ctx);
+		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
+		await waitOnExecutionContext(ctx);
+		expect(await response.text()).toBe("Hello World!");
+	});
 });
 ```
 
@@ -199,15 +200,15 @@ Add functionality to handle a `404` path on the Worker. This functionality will 
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const { pathname } = new URL(request.url);
+	async fetch(request, env, ctx) {
+		const { pathname } = new URL(request.url);
 
-    if (pathname === "/404") {
-      return new Response("Not found", { status: 404 });
-    }
+		if (pathname === "/404") {
+			return new Response("Not found", { status: 404 });
+		}
 
-    return new Response("Hello World!");
-  },
+		return new Response("Hello World!");
+	},
 };
 ```
 
@@ -216,14 +217,14 @@ export default {
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-    const { pathname } = new URL(request.url);
+		const { pathname } = new URL(request.url);
 
-    if(pathname === "/404") {
-      return new Response("Not found", { status: 404 });
-    }
+		if (pathname === "/404") {
+			return new Response("Not found", { status: 404 });
+		}
 
 		return new Response("Hello World!");
-	}
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -235,14 +236,14 @@ To test this, add the following to your test file:
 
 ```js
 it("responds with not found and proper status for /404", async () => {
-  const request = new Request("http://example.com/404");
-  // Create an empty context to pass to `worker.fetch()`
-  const ctx = createExecutionContext();
-  const response = await worker.fetch(request, env, ctx);
-  // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-  await waitOnExecutionContext(ctx);
-  expect(await response.status).toBe(404);
-  expect(await response.text()).toBe("Not found");
+	const request = new Request("http://example.com/404");
+	// Create an empty context to pass to `worker.fetch()`
+	const ctx = createExecutionContext();
+	const response = await worker.fetch(request, env, ctx);
+	// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
+	await waitOnExecutionContext(ctx);
+	expect(await response.status).toBe(404);
+	expect(await response.text()).toBe("Not found");
 });
 ```
 
@@ -250,14 +251,14 @@ it("responds with not found and proper status for /404", async () => {
 
 ```ts
 it("responds with not found and proper status for /404", async () => {
-  const request = new IncomingRequest("http://example.com/404");
-  // Create an empty context to pass to `worker.fetch()`
-  const ctx = createExecutionContext();
-  const response = await worker.fetch(request, env, ctx);
-  // Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-  await waitOnExecutionContext(ctx);
-  expect(await response.status).toBe(404);
-  expect(await response.text()).toBe("Not found");
+	const request = new IncomingRequest("http://example.com/404");
+	// Create an empty context to pass to `worker.fetch()`
+	const ctx = createExecutionContext();
+	const response = await worker.fetch(request, env, ctx);
+	// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
+	await waitOnExecutionContext(ctx);
+	expect(await response.status).toBe(404);
+	expect(await response.text()).toBe("Not found");
 });
 ```
 
@@ -265,4 +266,4 @@ it("responds with not found and proper status for /404", async () => {
 
 ## Related resources
 
-* [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.
+- [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.

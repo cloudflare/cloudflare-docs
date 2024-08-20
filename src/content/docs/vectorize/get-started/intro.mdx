@@ -3,10 +3,9 @@ title: Introduction to Vectorize
 pcx_content_type: get-started
 sidebar:
   order: 2
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 <Render file="vectorize-beta" />
 
@@ -14,9 +13,9 @@ Vectorize is Cloudflare's vector database. Vector databases allow you to use mac
 
 This guide will instruct you through:
 
-* Creating your first Vectorize index.
-* Connecting a [Cloudflare Worker](/workers/) to your index.
-* Inserting and performing a similarity search by querying your index.
+- Creating your first Vectorize index.
+- Connecting a [Cloudflare Worker](/workers/) to your index.
+- Inserting and performing a similarity search by querying your index.
 
 ## Prerequisites
 
@@ -36,9 +35,7 @@ To continue, you will need:
 
 :::note[New to Workers?]
 
-
 Refer to [How Workers works](/workers/reference/how-workers-works/) to learn about the Workers serverless execution model works. Go to the [Workers Get started guide](/workers/get-started/guide/) to set up your first Worker.
-
 
 :::
 
@@ -46,22 +43,32 @@ You will create a new project that will contain a Worker, which will act as the 
 
 Create a new project named `vectorize-tutorial` by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'vectorize-tutorial'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"vectorize-tutorial"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 This will create a new `vectorize-tutorial` directory. Your new `vectorize-tutorial` directory will include:
 
-* A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-* A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your index.
+- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
+- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `vectorize-tutorial` Worker will access your index.
 
 :::note
-
 
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
 For example: `CI=true npm create cloudflare@latest vectorize-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
-
 
 :::
 
@@ -72,7 +79,7 @@ A vector database is distinct from a traditional SQL or NoSQL database. A vector
 To create your first Vectorize index, change into the directory you just created for your Workers project:
 
 ```sh
-$ cd vectorize-tutorial
+cd vectorize-tutorial
 ```
 
 :::note[Using Vectorize v1?]
@@ -83,9 +90,9 @@ Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, d
 
 To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
-* A combination of lowercase and/or numeric ASCII characters, shorter than 32 characters, starts with a letter, and uses dashes (-) instead of spaces.
-* Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
-* Only used for describing the index, and is not directly referenced in code.
+- A combination of lowercase and/or numeric ASCII characters, shorter than 32 characters, starts with a letter, and uses dashes (-) instead of spaces.
+- Descriptive of the use-case and environment. For example, "production-doc-search" or "dev-recommendation-engine".
+- Only used for describing the index, and is not directly referenced in code.
 
 In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be Euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
@@ -94,8 +101,10 @@ In addition, you will need to define both the `dimensions` of the vectors you wi
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
+```
 
+```sh output
 ✅ Successfully created index 'tutorial-index'
 
 [[vectorize]]
@@ -119,9 +128,9 @@ index_name = "tutorial-index"
 
 Specifically:
 
-* The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
-* The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
-* Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
+- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
+- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
 ## 4. Insert vectors
 
@@ -143,18 +152,38 @@ export interface Env {
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
-	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
-	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
-	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
-	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2],
+		metadata: { url: "/products/sku/13913913" },
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8],
+		metadata: { url: "/products/sku/10148191" },
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8],
+		metadata: { url: "/products/sku/97913813" },
+	},
+	{
+		id: "4",
+		values: [75.1, 67.1, 29.9],
+		metadata: { url: "/products/sku/418313" },
+	},
+	{
+		id: "5",
+		values: [58.8, 6.7, 3.4],
+		metadata: { url: "/products/sku/55519183" },
+	},
 ];
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
-			return new Response('', { status: 404 });
+			return new Response("", { status: 404 });
 		}
 
 		// You only need to insert vectors into your index once
@@ -168,8 +197,8 @@ export default {
 			return Response.json(inserted);
 		}
 
-		return Response.json({text: "nothing to do... yet"}, { status: 404 })
-	}
+		return Response.json({ text: "nothing to do... yet" }, { status: 404 });
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -201,18 +230,38 @@ export interface Env {
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-	{ id: '1', values: [32.4, 74.1, 3.2], metadata: { url: '/products/sku/13913913' } },
-	{ id: '2', values: [15.1, 19.2, 15.8], metadata: { url: '/products/sku/10148191' } },
-	{ id: '3', values: [0.16, 1.2, 3.8], metadata: { url: '/products/sku/97913813' } },
-	{ id: '4', values: [75.1, 67.1, 29.9], metadata: { url: '/products/sku/418313' } },
-	{ id: '5', values: [58.8, 6.7, 3.4], metadata: { url: '/products/sku/55519183' } },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2],
+		metadata: { url: "/products/sku/13913913" },
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8],
+		metadata: { url: "/products/sku/10148191" },
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8],
+		metadata: { url: "/products/sku/97913813" },
+	},
+	{
+		id: "4",
+		values: [75.1, 67.1, 29.9],
+		metadata: { url: "/products/sku/418313" },
+	},
+	{
+		id: "5",
+		values: [58.8, 6.7, 3.4],
+		metadata: { url: "/products/sku/55519183" },
+	},
 ];
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		let path = new URL(request.url).pathname;
 		if (path.startsWith("/favicon")) {
-			return new Response('', { status: 404 });
+			return new Response("", { status: 404 });
 		}
 
 		// You only need to insert vectors into your index once
@@ -241,7 +290,11 @@ export default {
 		// By default, vector values are not returned, as in many cases the
 		// vector id and scores are sufficient to map the vector back to the
 		// original content it represents.
-		const matches = await env.VECTORIZE_INDEX.query(queryVector, { topK: 3, returnValues: true, returnMetadata: true });
+		const matches = await env.VECTORIZE_INDEX.query(queryVector, {
+			topK: 3,
+			returnValues: true,
+			returnMetadata: true,
+		});
 
 		return Response.json({
 			// This will return the closest vectors: you will notice that the vector
@@ -259,7 +312,7 @@ export default {
 Before deploying your Worker globally, log in with your Cloudflare account by running:
 
 ```sh
-$ npx wrangler login
+npx wrangler login
 ```
 
 You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
@@ -267,7 +320,7 @@ You will be directed to a web page asking you to log in to the Cloudflare dashbo
 From here, you can deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Once deployed, preview your Worker at `https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev`.
@@ -292,37 +345,36 @@ You will notice that `id: 5` has a `score` of `0.999909486`. Because you are usi
 ```json
 // https://vectorize-tutorial.<YOUR_SUBDOMAIN>.workers.dev/
 {
-  "matches": {
-    "count": 3,
-    "matches": [
-      {
-        "id": "5",
-        "score": 0.999909486,
-        "values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
-        "metadata": {
-          "url": "/products/sku/55519183"
-        }
-      },
-      {
-        "id": "4",
-        "score": 0.789848214,
-        "values": [75.0999984741211, 67.0999984741211, 29.899999618530273],
-        "metadata": {
-          "url": "/products/sku/418313"
-        }
-      },
-      {
-        "id": "2",
-        "score": 0.611976262,
-        "values": [15.100000381469727, 19.200000762939453, 15.800000190734863],
-        "metadata": {
-          "url": "/products/sku/10148191"
-        }
-      }
-    ]
-  }
+	"matches": {
+		"count": 3,
+		"matches": [
+			{
+				"id": "5",
+				"score": 0.999909486,
+				"values": [58.79999923706055, 6.699999809265137, 3.4000000953674316],
+				"metadata": {
+					"url": "/products/sku/55519183"
+				}
+			},
+			{
+				"id": "4",
+				"score": 0.789848214,
+				"values": [75.0999984741211, 67.0999984741211, 29.899999618530273],
+				"metadata": {
+					"url": "/products/sku/418313"
+				}
+			},
+			{
+				"id": "2",
+				"score": 0.611976262,
+				"values": [15.100000381469727, 19.200000762939453, 15.800000190734863],
+				"metadata": {
+					"url": "/products/sku/10148191"
+				}
+			}
+		]
+	}
 }
-
 ```
 
 From here, experiment by passing a different `queryVector` and observe the results: the matches and the `score` should change based on the change in distance between the query vector and the vectors in our index.
@@ -333,8 +385,8 @@ By finishing this tutorial, you have successfully created and queried your first
 
 ## Related resources
 
-* [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
-* Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
-* Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
-* [Euclidean Distance vs Cosine Similarity](https://www.baeldung.com/cs/euclidean-distance-vs-cosine-similarity).
-* [Dot product](https://en.wikipedia.org/wiki/Dot_product).
+- [Build an end-to-end vector search application](/vectorize/get-started/embeddings/) using Workers AI and Vectorize.
+- Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
+- Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.
+- [Euclidean Distance vs Cosine Similarity](https://www.baeldung.com/cs/euclidean-distance-vs-cosine-similarity).
+- [Dot product](https://en.wikipedia.org/wiki/Dot_product).

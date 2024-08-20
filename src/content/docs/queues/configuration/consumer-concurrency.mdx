@@ -103,7 +103,7 @@ To remove the limit, remove the `max_concurrency` setting from the `[[queues.con
 
     To remove the limit and allow Queues to scale your consumer to the maximum number of invocations, call `consumer update` without any flags:
 
-    ````sh
+    ```sh
     # Call update without passing a flag to allow concurrency to scale to the maximum
     wrangler queues consumer update <script-name>
     ``` */}
