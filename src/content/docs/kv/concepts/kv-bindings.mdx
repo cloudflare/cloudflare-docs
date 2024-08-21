@@ -10,7 +10,7 @@ KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a
 
 Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml).
 
-## Reference KV from Workers
+## Referencing KV from Workers
 
 A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
@@ -49,7 +49,26 @@ export default {
 };
 ```
 
-## Reference KV from Durable Objects and Workers using ES modules format
+## Using KV binding when developing locally
+
+When you use Wrangler to develop locally with the `wrangler dev` command, Wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return `null`.
+
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the `wrangler.toml` file. This is how a `wrangler.toml` file looks with the `preview_id` specified.
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "worker"
+
+# ...
+
+kv_namespaces = [
+  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db", preview_id="06779da6940b431db6e566b484a6a769a7a" }
+]
+```
+
+## Referencing KV from Durable Objects and Workers using ES modules format
 
 [Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
