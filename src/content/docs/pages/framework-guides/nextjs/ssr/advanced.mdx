@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Advanced Usage
-
 ---
 
 ## Custom Worker Entrypoint
@@ -18,18 +17,18 @@ This can help you intercept logs from your app, catch and handle uncaught except
 1. Create a new file in your Next.js project, with a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), that looks like this:
 
 ```ts
-import nextOnPagesHandler from '@cloudflare/next-on-pages/fetch-handler';
+import nextOnPagesHandler from "@cloudflare/next-on-pages/fetch-handler";
 
 export default {
-  async fetch(request, env, ctx) {
-    // do something before running the next-on-pages handler
+	async fetch(request, env, ctx) {
+		// do something before running the next-on-pages handler
 
-    const response = await nextOnPagesHandler.fetch(request, env, ctx);
+		const response = await nextOnPagesHandler.fetch(request, env, ctx);
 
-    // do something after running the next-on-pages handler
+		// do something after running the next-on-pages handler
 
-    return response;
-  },
+		return response;
+	},
 } as ExportedHandler<{ ASSETS: Fetcher }>;
 ```
 
@@ -38,5 +37,5 @@ This looks like a Worker — but it does not need its own `wrangler.toml` file.
 2. Pass the entrypoint argument to the next-on-pages CLI with the path to your handler.
 
 ```sh
-$ npx @cloudflare/next-on-pages --custom-entrypoint=./custom-entrypoint.ts
+npx @cloudflare/next-on-pages --custom-entrypoint=./custom-entrypoint.ts
 ```

@@ -1,8 +1,8 @@
 ---
-hidden: true
 title: Player API
 pcx_content_type: reference
-
+sidebar:
+  hidden: true
 ---
 
 Attributes are added in the `<stream>` tag without quotes, as you can see below:
@@ -14,25 +14,20 @@ Attributes are added in the `<stream>` tag without quotes, as you can see below:
 Multiple attributes can be used together, added one after each other like this:
 
 ```
- <stream attribute-1 attribute-2 attribute-3 src="5d5bc37ffcf54c9b82e996823bffbb81"></stream>
+<stream attribute-1 attribute-2 attribute-3 src="5d5bc37ffcf54c9b82e996823bffbb81"></stream>
 ```
 
 ## Supported attributes
 
-
-
 * `autoplay` boolean
 
-  ```
-  *   Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
+  * Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
-      {{<Aside>}}
-  ```
-
+  :::note
   To disable video autoplay, the `autoplay` attribute needs to be removed altogether as this attribute. Setting `autoplay="false"` will not work; the video will autoplay if the attribute is there in the `<stream>` tag.
 
-In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/). 
-:::
+  In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/). 
+  :::
 
 * `controls` boolean
 
@@ -52,12 +47,9 @@ In addition, some browsers now prevent videos with audio from playing automatica
 
 * `preload` string | null
 
-  ```
-  *   This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may choose to include this attribute as a boolean attribute without a value, or you may specify the value `preload="auto"` to preload the beginning of the video. Not including the attribute or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
+  * This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may choose to include this attribute as a boolean attribute without a value, or you may specify the value `preload="auto"` to preload the beginning of the video. Not including the attribute or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
 
-      {{<Aside>}}
-  ```
-
+  :::note
   The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible. 
   :::
 
@@ -73,11 +65,7 @@ In addition, some browsers now prevent videos with audio from playing automatica
 
   * The width of the video's display area, in CSS pixels.
 
-
-
 ## Methods
-
-
 
 * `play()` Promise
 
@@ -87,11 +75,7 @@ In addition, some browsers now prevent videos with audio from playing automatica
 
   * Pause video playback.
 
-
-
 ## Properties
-
-
 
 * `autoplay`
 
@@ -133,13 +117,9 @@ In addition, some browsers now prevent videos with audio from playing automatica
 
   * Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
 
-
-
 ## Events
 
 ### Standard video element events
-
-
 
 Stream supports most of the [standardized media element events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events).
 
@@ -227,13 +207,9 @@ Stream supports most of the [standardized media element events](https://develope
 
   * Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
 
-
-
 ### Non-standard events
 
 Non-standard events are prefixed with `stream-` to distinguish them from standard events.
-
-
 
 * `stream-adstart`
 
@@ -246,4 +222,3 @@ Non-standard events are prefixed with `stream-` to distinguish them from standar
 * `stream-adtimeout`
 
   * Fires when `ad-url` attribute is present and the ad took too long to load.
-

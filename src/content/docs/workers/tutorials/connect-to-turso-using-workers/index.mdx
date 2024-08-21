@@ -7,18 +7,15 @@ title: Connect to and query your Turso database using Workers
 languages:
   - TypeScript
   - SQL
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 This tutorial will guide you on how to build globally distributed applications with Cloudflare Workers, and [Turso](https://chiselstrike.com/), an edge-hosted distributed database based on libSQL. By using Workers and Turso, you can create applications that are close to your end users without having to maintain or operate infrastructure in tens or hundreds of regions.
 
 :::note
 
-
 For a more seamless experience, refer to the [Turso Database Integration guide](/workers/databases/native-integrations/turso/). The Turso Database Integration will connect your Worker to a Turso database by getting the right configuration from Turso and adding it as [secrets](/workers/configuration/secrets/) to your Worker.
-
 
 :::
 
@@ -26,10 +23,10 @@ For a more seamless experience, refer to the [Turso Database Integration guide](
 
 Before continuing with this tutorial, you should have:
 
-* Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
-* Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
-* A [GitHub account](https://github.com/), required for authenticating to Turso.
-* A basic familiarity with installing and using command-line interface (CLI) applications.
+- Successfully [created up your first Cloudflare Worker](/workers/get-started/guide/) and/or have deployed a Cloudflare Worker before.
+- Installed [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers.
+- A [GitHub account](https://github.com/), required for authenticating to Turso.
+- A basic familiarity with installing and using command-line interface (CLI) applications.
 
 ## Install the Turso CLI
 
@@ -37,16 +34,19 @@ You will need the Turso CLI to create and populate a database. Run either of the
 
 ```sh
 # On macOS or Linux with Homebrew
-$ brew install chiselstrike/tap/turso
+brew install chiselstrike/tap/turso
 
 # Manual scripted installation
-$ curl -sSfL <https://get.tur.so/install.sh> | bash
+curl -sSfL <https://get.tur.so/install.sh> | bash
 ```
 
 After you have installed the Turso CLI, verify that the CLI is in your shell path:
 
 ```sh
-$ turso --version
+turso --version
+```
+
+```sh output
 # This should output your current Turso CLI version (your installed version may be higher):
 turso version v0.51.0
 ```
@@ -56,7 +56,10 @@ turso version v0.51.0
 Before you create your first Turso database, you need to log in to the CLI using your GitHub account by running:
 
 ```sh
-$ turso auth login
+turso auth login
+```
+
+```sh output
 
 Waiting for authentication...
 ✔  Success! Logged in as <your GitHub username>
@@ -67,7 +70,10 @@ Waiting for authentication...
 After you have authenticated, you can create a database by running `turso db create <DATABASE_NAME>`. Turso will automatically choose a location closest to you.
 
 ```sh
-$ turso db create my-db
+turso db create my-db
+```
+
+```sh output
 # Example:
 [===>                ]
 Creating database my-db in Los Angeles, California (US) (lax)
@@ -78,7 +84,7 @@ Created database my-db in Los Angeles, California (US) (lax) in 34 seconds.
 With your first database created, you can now connect to it directly and execute SQL against it:
 
 ```sh
-$ turso db shell my-db
+turso db shell my-db
 ```
 
 To get started with your database, create and define a schema for your first table. In this example, you will create a `example_users` table with one column: `email` (of type `text`) and then populate it with one email address.
@@ -100,22 +106,34 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 
 To create a new Workers project (named `worker-turso-ts`), run the following:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'worker-turso-ts'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"worker-turso-ts"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 To start developing your Worker, `cd` into your new project directory:
 
 ```sh
-$ cd worker-turso-ts
+cd worker-turso-ts
 ```
 
 In your project directory, you now have the following files:
 
-* `wrangler.toml`: Your Wrangler configuration file.
-* `src/index.ts`: A minimal Hello World Worker written in TypeScript
-* `package.json`: A minimal Node dependencies configuration file.
-* `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated.
+- `wrangler.toml`: Your Wrangler configuration file.
+- `src/index.ts`: A minimal Hello World Worker written in TypeScript
+- `package.json`: A minimal Node dependencies configuration file.
+- `tsconfig.json`: TypeScript configuration that includes Workers types. Only generated if indicated.
 
 For this tutorial, only the `wrangler.toml` and `src/index.ts` files are relevant. You will not need to edit the other files, and they should be left as is.
 
@@ -129,8 +147,10 @@ The Turso client library requires two pieces of information to make a connection
 To get the URL for your database, run the following Turso CLI command, and copy the result:
 
 ```sh
-$ turso db show my-db --url
-# Output:
+turso db show my-db --url
+```
+
+```sh output
 libsql://my-db-<your-github-username>.turso.io
 ```
 
@@ -146,7 +166,7 @@ Save the changes to `wrangler.toml`.
 Next, create a long-lived authentication token for your Worker to use when connecting to your database. Run the following Turso CLI command, and copy the output to your clipboard:
 
 ```sh
-$ turso db tokens create my-db -e none
+turso db tokens create my-db -e none
 # Will output a long text string (an encoded JSON Web Token)
 ```
 
@@ -154,7 +174,7 @@ To keep this token secret:
 
 1. You will create a `.dev.vars` file for local development. Do not commit this file to source control. You should add `.dev.vars to your `.gitignore\` file if you are using Git.
 
-* You will also create a [secret](/workers/configuration/secrets/) to keep your authentication token confidential.
+- You will also create a [secret](/workers/configuration/secrets/) to keep your authentication token confidential.
 
 First, create a new file called `.dev.vars` with the following structure. Paste your authentication token in the quotation marks:
 
@@ -166,8 +186,10 @@ Save your changes to `.dev.vars`. Next, store the authentication token as a secr
 
 ```sh
 # Ensure you specify the secret name exactly: your Worker will need to reference it later.
-$  npx wrangler secret put LIBSQL_DB_AUTH_TOKEN
--------------------------------------------------------
+npx wrangler secret put LIBSQL_DB_AUTH_TOKEN
+```
+
+```sh output
 ? Enter a secret value: › <paste your token here>
 ```
 
@@ -178,7 +200,7 @@ Select `<Enter>` on your keyboard to save the token as a secret. Both `LIBSQL_DB
 Install the Turso client library and a router:
 
 ```sh
-$ npm install @libsql/client itty-router
+npm install @libsql/client itty-router
 ```
 
 The `@libsql/client` library allows you to query a Turso database. The `itty-router` library is a lightweight router you will use to help handle incoming requests to the worker.
@@ -198,78 +220,78 @@ import { Client as LibsqlClient, createClient } from "@libsql/client/web";
 import { Router, RouterType } from "itty-router";
 
 export interface Env {
-    // The environment variable containing your the URL for your Turso database.
-    LIBSQL_DB_URL?: string;
-    // The Secret that contains the authentication token for your Turso database.
-    LIBSQL_DB_AUTH_TOKEN?: string;
+	// The environment variable containing your the URL for your Turso database.
+	LIBSQL_DB_URL?: string;
+	// The Secret that contains the authentication token for your Turso database.
+	LIBSQL_DB_AUTH_TOKEN?: string;
 
-    // These objects are created before first use, then stashed here
-    // for future use
-    router?: RouterType;
+	// These objects are created before first use, then stashed here
+	// for future use
+	router?: RouterType;
 }
 
 export default {
-    async fetch(request, env): Promise<Response> {
-        if (env.router === undefined) {
-            env.router = buildRouter(env);
-        }
+	async fetch(request, env): Promise<Response> {
+		if (env.router === undefined) {
+			env.router = buildRouter(env);
+		}
 
-        return env.router.handle(request);
-    },
+		return env.router.handle(request);
+	},
 } satisfies ExportedHandler<Env>;
 
 function buildLibsqlClient(env: Env): LibsqlClient {
-    const url = env.LIBSQL_DB_URL?.trim();
-    if (url === undefined) {
-        throw new Error("LIBSQL_DB_URL env var is not defined");
-    }
+	const url = env.LIBSQL_DB_URL?.trim();
+	if (url === undefined) {
+		throw new Error("LIBSQL_DB_URL env var is not defined");
+	}
 
-    const authToken = env.LIBSQL_DB_AUTH_TOKEN?.trim();
-    if (authToken === undefined) {
-        throw new Error("LIBSQL_DB_AUTH_TOKEN env var is not defined");
-    }
+	const authToken = env.LIBSQL_DB_AUTH_TOKEN?.trim();
+	if (authToken === undefined) {
+		throw new Error("LIBSQL_DB_AUTH_TOKEN env var is not defined");
+	}
 
-    return createClient({ url, authToken });
+	return createClient({ url, authToken });
 }
 
 function buildRouter(env: Env): RouterType {
-    const router = Router();
+	const router = Router();
 
-    router.get("/users", async () => {
-        const client = buildLibsqlClient(env);
-        const rs = await client.execute("select * from example_users");
-        return Response.json(rs);
-    });
+	router.get("/users", async () => {
+		const client = buildLibsqlClient(env);
+		const rs = await client.execute("select * from example_users");
+		return Response.json(rs);
+	});
 
-    router.get("/add-user", async (request) => {
-        const client = buildLibsqlClient(env);
-        const email = request.query.email;
-        if (email === undefined) {
-            return new Response("Missing email", { status: 400 });
-        }
-        if (typeof email !== "string") {
-            return new Response("email must be a single string", { status: 400 });
-        }
-        if (email.length === 0) {
-            return new Response("email length must be > 0", { status: 400 });
-        }
+	router.get("/add-user", async (request) => {
+		const client = buildLibsqlClient(env);
+		const email = request.query.email;
+		if (email === undefined) {
+			return new Response("Missing email", { status: 400 });
+		}
+		if (typeof email !== "string") {
+			return new Response("email must be a single string", { status: 400 });
+		}
+		if (email.length === 0) {
+			return new Response("email length must be > 0", { status: 400 });
+		}
 
-        try {
-            await client.execute({
-                sql: "insert into example_users values (?)",
-                args: [email],
-            });
-        } catch (e) {
-            console.error(e);
-            return new Response("database insert failed");
-        }
+		try {
+			await client.execute({
+				sql: "insert into example_users values (?)",
+				args: [email],
+			});
+		} catch (e) {
+			console.error(e);
+			return new Response("database insert failed");
+		}
 
-        return new Response("Added");
-    });
+		return new Response("Added");
+	});
 
-    router.all("*", () => new Response("Not Found.", { status: 404 }));
+	router.all("*", () => new Response("Not Found.", { status: 404 }));
 
-    return router;
+	return router;
 }
 ```
 
@@ -277,11 +299,11 @@ Save your `src/index.ts` file with your changes.
 
 Note:
 
-* The libSQL client library import '@libsql/client/web' must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
-* The `Env` interface contains the environment variable and secret you defined earlier.
-* The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
-* The `/users` route fetches all rows from the `example_users` table you created in the Turso shell. It simply serializes the `ResultSet` object as JSON directly to the caller.
-* The `/add-user` route inserts a new row using a value provided in the query string.
+- The libSQL client library import '@libsql/client/web' must be imported exactly as shown when working with Cloudflare workers. The non-web import will not work in the Workers environment.
+- The `Env` interface contains the environment variable and secret you defined earlier.
+- The `Env` interface also caches the libSQL client object and router, which are created on the first request to the Worker.
+- The `/users` route fetches all rows from the `example_users` table you created in the Turso shell. It simply serializes the `ResultSet` object as JSON directly to the caller.
+- The `/add-user` route inserts a new row using a value provided in the query string.
 
 With your environment configured and your code ready, you will now test your Worker locally before you deploy.
 
@@ -290,7 +312,7 @@ With your environment configured and your code ready, you will now test your Wor
 To run a local instance of our Worker (entirely on your machine), run the following command:
 
 ```sh
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 You should be able to review output similar to the following:
@@ -320,15 +342,19 @@ Connect to it and validate your Worker returns the email address you inserted wh
 You should see JSON similar to the following containing the data from the `example_users` table:
 
 ```json
-{"columns":["email"],"rows":[{"email":"foo@bar.com"}],"rowsAffected":0}
+{
+	"columns": ["email"],
+	"rows": [{ "email": "foo@bar.com" }],
+	"rowsAffected": 0
+}
 ```
 
 :::caution
 
 If you see an error instead of a list of users, double check that:
 
-* You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
-* You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
+- You have entered the correct value for your `LIBSQL_DB_URL` in `wrangler.toml`.
+- You have set a secret called `LIBSQL_DB_AUTH_TOKEN` with your database authentication token.
 
 Both of these need to be present and match the variable names in your Worker's code.
 :::
@@ -344,7 +370,7 @@ Quit Wrangler by typing `q` into the shell where it was started.
 After you have validated that your Worker can connect to your Turso database, deploy your Worker. Run the following Wrangler command to deploy your Worker to the Cloudflare global network:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 The first time you run this command, it will launch a browser, ask you to sign in with your Cloudflare account, and grant permissions to Wrangler.
@@ -367,12 +393,12 @@ You have now deployed a Worker that can connect to your Turso database, query it
 
 To clean up the resources you created as part of this tutorial:
 
-* If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the deployed Worker.
-* You can also delete your Turso database via `turso db destroy my-db`.
+- If you do not want to keep this Worker, run `npx wrangler delete worker-turso-ts` to delete the deployed Worker.
+- You can also delete your Turso database via `turso db destroy my-db`.
 
 ## Related resources
 
-* Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
-* Understand how to [debug your Cloudflare Worker](/workers/observability/).
-* Join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
-* Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).
+- Find the [complete project source code on GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-turso-ts/).
+- Understand how to [debug your Cloudflare Worker](/workers/observability/).
+- Join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
+- Join the [ChiselStrike (Turso) Discord](https://discord.com/invite/4B5D7hYwub).

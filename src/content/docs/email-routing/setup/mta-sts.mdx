@@ -3,7 +3,6 @@ title: Configure MTA-STS
 pcx_content_type: how-to
 sidebar:
   order: 4
-
 ---
 
 MTA Strict Transport Security ([MTA-STS](https://datatracker.ietf.org/doc/html/rfc8461)) was introduced by email service providers including Microsoft, Google and Yahoo as a solution to protect against downgrade and man-in-the-middle attacks in SMTP sessions, as well as solving the lack of security-first communication standards in email.
@@ -18,7 +17,10 @@ Suppose that `example.com` is your domain and uses Email Routing. Here is how yo
 3. Confirm that the record was created:
 
 ```sh
-$ dig txt _mta-sts.example.com
+dig txt _mta-sts.example.com
+```
+
+```sh output
 _mta-sts.example.com. 300 IN  CNAME _mta-sts.mx.cloudflare.net.
 _mta-sts.mx.cloudflare.net. 300 IN  TXT "v=STSv1; id=20230615T153000;"
 ```
@@ -40,7 +42,10 @@ To do this you need to deploy a Worker that allows email clients to pull Cloudfl
 You can then confirm that your policy file is working with the following:
 
 ```sh
-$ curl https://mta-sts.example.com/.well-known/mta-sts.txt
+curl https://mta-sts.example.com/.well-known/mta-sts.txt
+```
+
+```sh output
 version: STSv1
 mode: enforce
 mx: *.mx.cloudflare.net

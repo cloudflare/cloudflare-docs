@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Managed deployment
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="warp/mdm-intro" />
 
@@ -14,9 +13,7 @@ This page provides generic instructions for an automated deployment. If you want
 
 :::caution
 
-
 <Render file="warp/mdm-dash-conflict" />
-
 
 :::
 
@@ -100,7 +97,7 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 3. (Optional) If you want to manually place the file in `/Library/Managed Preferences` (rather than use a management tool), convert the `plist` into binary format:
 
 ```sh
-$ plutil -convert binary1 com.cloudflare.warp.plist
+plutil -convert binary1 com.cloudflare.warp.plist
 ```
 
 The plist must be pushed by an MDM tool in order to persist after reboot. Manually-placed files will be automatically deleted by the OS.
@@ -132,7 +129,7 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 :::note[Migrate from 1.1.1.1]
 
-The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/). 
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
 :::
 
 The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
@@ -160,7 +157,7 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 :::note[Migrate from 1.1.1.1]
 
-The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/). 
+The legacy Android client, [1.1.1.1 + WARP: Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/download-warp/cloudflare-one-agent-migration/).
 :::
 
 The Cloudflare WARP Android client, known in the Google Play store as [Cloudflare One Agent](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent), allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
@@ -184,13 +181,13 @@ If your MDM tool does not support XML, you may need to convert the XML to JSON. 
 
 ```json
 {
-  "organization": "your-team-name",
-  "gateway_unique_id": "your_gateway_doh_subdomain",
-  "onboarding": true,
-  "switch_locked": true,
-  "auto_connect": 0,
-  "service_mode": "warp",
-  "support_url": "https://support.example.com"
+	"organization": "your-team-name",
+	"gateway_unique_id": "your_gateway_doh_subdomain",
+	"onboarding": true,
+	"switch_locked": true,
+	"auto_connect": 0,
+	"service_mode": "warp",
+	"support_url": "https://support.example.com"
 }
 ```
 

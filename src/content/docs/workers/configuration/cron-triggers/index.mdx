@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Cron Triggers
 head: []
 description: Enable your Worker to be executed on a schedule.
-
 ---
 
 ## Background
@@ -22,8 +21,8 @@ To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/ru
 
 Refer to the following examples to write your code:
 
-* [Setting Cron Triggers](/workers/examples/cron-trigger/)
-* [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
+- [Setting Cron Triggers](/workers/examples/cron-trigger/)
+- [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
 
 ### 2. Update configuration
 
@@ -75,40 +74,36 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 
 Some common time intervals that may be useful for setting up your Cron Trigger:
 
+- `* * * * *`
 
+  - At every minute
 
-* `* * * * *`
+- `*/30 * * * *`
 
-  * At every minute
+  - At every 30th minute
 
-* `*/30 * * * *`
+- `45 * * * *`
 
-  * At every 30th minute
+  - On the 45th minute of every hour
 
-* `45 * * * *`
+- `0 17 * * sun` or `0 17 * * 1`
 
-  * On the 45th minute of every hour
+  - 5PM on Sunday
 
-* `0 17 * * sun` or `0 17 * * 1`
+- `10 7 * * mon-fri` or `10 7 * * 2-6`
 
-  * 5PM on Sunday
+  - 7:10AM on weekdays
 
-* `10 7 * * mon-fri` or `10 7 * * 2-6`
+- `0 15 1 * *`
 
-  * 7:10AM on weekdays
+  - 3PM on first day of the month
 
-* `0 15 1 * *`
+- `0 18 * * 6L` or `0 18 * * friL`
 
-  * 3PM on first day of the month
+  - 6PM on the last Friday of the month
 
-* `0 18 * * 6L` or `0 18 * * friL`
-
-  * 6PM on the last Friday of the month
-
-* `59 23 LW * *`
-  * 11:59PM on the last weekday of the month
-
-
+- `59 23 LW * *`
+  - 11:59PM on the last weekday of the month
 
 ## Test Cron Triggers
 
@@ -116,18 +111,16 @@ The recommended way of testing Cron Triggers is using Wrangler.
 
 :::note[Cron Trigger changes take time to propagate.]
 
-
 Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
-
 
 :::
 
-Test  Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Test Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-$ npx wrangler dev --test-scheduled
+npx wrangler dev --test-scheduled
 
-$ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 ```
 
 ## View past events
@@ -136,9 +129,7 @@ Users can review the execution history of their Cron Triggers in **Past Cron Eve
 
 :::note
 
-
 It can take up to 30 minutes before events are displayed in **Past Cron Events** when creating a new Worker or changing a Worker's name.
-
 
 :::
 
@@ -156,9 +147,7 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 
 :::note
 
-
 You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
-
 
 :::
 
@@ -183,5 +172,5 @@ Green Compute can be configured at the account level:
 
 ## Related resources
 
-* [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
-* Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+- Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

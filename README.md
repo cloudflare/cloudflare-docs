@@ -14,7 +14,7 @@ You must have a recent version of Node.js (22+) installed. You may use [Volta](h
 
 ```sh
 $ curl https://get.volta.sh | bash
-$ volta install node
+$ volta install node@22
 ```
 
 Install the Node.js dependencies for this project using npm or another package manager:

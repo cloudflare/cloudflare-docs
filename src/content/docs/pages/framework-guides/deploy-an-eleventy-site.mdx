@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Eleventy
-
 ---
 
-import { PagesBuildPreset, Render } from "~/components"
+import { PagesBuildPreset, Render } from "~/components";
 
 [Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 
@@ -13,7 +12,7 @@ import { PagesBuildPreset, Render } from "~/components"
 Install the `eleventy` CLI by running the following command in your terminal:
 
 ```sh
-$ npm install -g @11ty/eleventy
+npm install -g @11ty/eleventy
 ```
 
 ## Creating a new project
@@ -21,9 +20,9 @@ $ npm install -g @11ty/eleventy
 There are a lot of [starter projects](https://www.11ty.dev/docs/starter/) available on the Eleventy website. As an example, use the `eleventy-base-blog` project by running the following commands in your terminal:
 
 ```sh
-$ git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
-$ cd my-blog-name
-$ npm install
+git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
+cd my-blog-name
+npm install
 ```
 
 <Render file="tutorials-before-you-start" />
@@ -33,9 +32,9 @@ $ npm install
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following command in your terminal:
 
 ```sh
-$ git remote set-url origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
+git remote set-url origin https://github.com/yourgithubusername/githubrepo
+git branch -M main
+git push -u origin main
 ```
 
 ## Deploy with Cloudflare Pages
@@ -44,15 +43,13 @@ To deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select *Eleventy* as your **Framework preset**. Your selection will provide the following information:
+3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Eleventy_ as your **Framework preset**. Your selection will provide the following information:
 
 <PagesBuildPreset framework="eleventy" />
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 

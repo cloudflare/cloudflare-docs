@@ -3,10 +3,9 @@ pcx_content_type: get-started
 title: Reuse sessions
 sidebar:
   order: 3
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 The best way to improve the performance of your browser rendering worker is to reuse sessions. One way to do that is via [Durable Objects](/browser-rendering/get-started/browser-rendering-with-do/), which allows you to keep a long running connection from a worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
 
@@ -18,16 +17,28 @@ In short, this entails using `browser.disconnect()` instead of `browser.close()`
 
 Create a new Worker project named `browser-worker` by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'browser-worker'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"browser-worker"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 ## 2. Install Puppeteer
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 ```sh
-$ npm install @cloudflare/puppeteer --save-dev
+npm install @cloudflare/puppeteer --save-dev
 ```
 
 ## 3. Configure `wrangler.toml`
@@ -57,64 +68,69 @@ interface Env {
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
-		let reqUrl = url.searchParams.get("url") || 'https://example.com';
+		let reqUrl = url.searchParams.get("url") || "https://example.com";
 		reqUrl = new URL(reqUrl).toString(); // normalize
 
 		// Pick random session from open sessions
-		let sessionId = await this.getRandomSession(env.MYBROWSER)
-		let browser, launched
+		let sessionId = await this.getRandomSession(env.MYBROWSER);
+		let browser, launched;
 		if (sessionId) {
 			try {
-				browser = await puppeteer.connect(env.MYBROWSER, sessionId)
+				browser = await puppeteer.connect(env.MYBROWSER, sessionId);
 			} catch (e) {
 				// another worker may have connected first
-				console.log(`Failed to connect to ${sessionId}. Error ${e}`)
+				console.log(`Failed to connect to ${sessionId}. Error ${e}`);
 			}
 		}
 		if (!browser) {
 			// No open sessions, launch new session
-			browser = await puppeteer.launch(env.MYBROWSER)
-			launched = true
+			browser = await puppeteer.launch(env.MYBROWSER);
+			launched = true;
 		}
 
-		sessionId = browser.sessionId() // get current session id
+		sessionId = browser.sessionId(); // get current session id
 
 		// Do your work here
 		const page = await browser.newPage();
 		const response = await page.goto(reqUrl);
-		const html = await response!.text()
+		const html = await response!.text();
 
 		// All work done, so free connection (IMPORTANT!)
-		await browser.disconnect()
+		await browser.disconnect();
 
-		return new Response(`${launched ? 'Launched' : 'Connected to'} ${sessionId} \n-----\n` + html, {
-			headers: {
-				"content-type": "text/plain",
-			}
-		})
+		return new Response(
+			`${launched ? "Launched" : "Connected to"} ${sessionId} \n-----\n` + html,
+			{
+				headers: {
+					"content-type": "text/plain",
+				},
+			},
+		);
 	},
 
 	// Pick random free session
 	// Other custom logic could be used instead
 	async getRandomSession(endpoint: puppeteer.BrowserWorker): Promise<string> {
-		const sessions: puppeteer.ActiveSession[] = await puppeteer.sessions(endpoint);
-		console.log(`Sessions: ${JSON.stringify(sessions)}`)
+		const sessions: puppeteer.ActiveSession[] =
+			await puppeteer.sessions(endpoint);
+		console.log(`Sessions: ${JSON.stringify(sessions)}`);
 		const sessionsIds = sessions
-			.filter(v => {
+			.filter((v) => {
 				return !v.connectionId; // remove sessions with workers connected to them
 			})
-			.map(v => {
+			.map((v) => {
 				return v.sessionId;
 			});
 		if (sessionsIds.length === 0) {
-			return
+			return;
 		}
 
-		const sessionId = sessionsIds[Math.floor(Math.random() * sessionsIds.length)];
+		const sessionId =
+			sessionsIds[Math.floor(Math.random() * sessionsIds.length)];
 
 		return sessionId!;
-	}
-}
+	},
+};
 ```
 
 Besides `puppeteer.sessions()`, we've added other methods to facilitate session management - check them out [here](../../platform/puppeteer/#session-management).
