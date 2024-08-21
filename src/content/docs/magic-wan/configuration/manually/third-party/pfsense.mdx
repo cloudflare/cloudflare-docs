@@ -47,18 +47,18 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
    - **Interface address**: `10.252.2.26/31`
    - **Customer endpoint**: `203.0.113.254`
    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
-   - **Health check rate**: *Medium*
-   - **Health check type**: *Request*
-   - **Health check direction**: *Bidirectional*
+   - **Health check rate**: _Medium_
+   - **Health check type**: _Request_
+   - **Health check direction**: _Bidirectional_
 2. Select **Add pre-shared key later** > **Add tunnels**.
 3. Repeat the process to create a second IPsec tunnel with the following options:
    - **Tunnel name**: `PF_TUNNEL_02`
    - **Interface address**: `10.252.2.28/31`
    - **Customer endpoint**: `203.0.113.254`
    - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
-   - **Health check rate**: *Medium*
-   - **Health check type**: *Request*
-   - **Health check direction**: *Bidirectional*
+   - **Health check rate**: _Medium_
+   - **Health check type**: _Request_
+   - **Health check direction**: _Bidirectional_
 4. Select **Add pre-shared key later** > **Add tunnels**.
 
 ### Generate pre-shared keys
@@ -114,20 +114,20 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
 - **General Information**
   - **Description**: `CF1_IPsec_P1`
 - **IKE Endpoint Configuration**
-  - **Key exchange version**: *IKE\_v2*
-  - **Internet Protocol**: *IPv4*
-  - **Interface**: *WAN*
+  - **Key exchange version**: _IKE\_v2_
+  - **Internet Protocol**: _IPv4_
+  - **Interface**: _WAN_
   - **Remote gateway**: Enter your Cloudflare Anycast IP address.
 - **Phase 1 Proposal (Authentication)**
-  - **Authentication method**: *Mutual PSK*
-  - **My identifier**: *User Fully qualified domain name* > `ipsec@long_string_of_letters_and_numbers` <br/> (You can get this identifier from your Cloudflare IPsec tunnel configuration > **User ID**)
-  - **Peer identifier**: *Peer IP Address* (your Cloudflare Anycast IP)
+  - **Authentication method**: _Mutual PSK_
+  - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br/> (You can get this identifier from your Cloudflare IPsec tunnel configuration > **User ID**)
+  - **Peer identifier**: _Peer IP Address_ (your Cloudflare Anycast IP)
   - **Pre-Shared Key**: Enter the PSK you have on your Cloudflare IPsec tunnel.
 - **Phase 1 proposal (Encryption algorithm)**
-  - **Encryption algorithm**: *AES 256 bits*
-  - **Key length**: *256 bits*
-  - **Hash algorithm**: *SHA256*
-  - **DH key group**: *14*
+  - **Encryption algorithm**: _AES 256 bits_
+  - **Key length**: _256 bits_
+  - **Hash algorithm**: _SHA256_
+  - **DH key group**: _14_
   - **Lifetime**: `28800`
 
 <div class="full-img">
@@ -148,15 +148,15 @@ Add a new IPsec tunnel [Phase 2 entry](https://docs.netgate.com/pfsense/en/lates
 
 - **General Information**
   - **Description**: `CF1_IPsec_P2`
-  - **Mode**: *Routed (VTI)*
+  - **Mode**: _Routed (VTI)_
 - **Networks**
-  - **Local Network**: *Address* > Upper IP address in the `/31` assigned in Cloudflare tunnel. For example, `10.252.2.27` for tunnel 1 and `10.252.2.29` for tunnel 2.
-  - **Remote Network**: *Address* > Lower IP address in the `/31` for Cloudflare side. For example, `10.252.2.26` for tunnel 1, and `10.252.2.28` for tunnel 2.
+  - **Local Network**: _Address_ > Upper IP address in the `/31` assigned in Cloudflare tunnel. For example, `10.252.2.27` for tunnel 1 and `10.252.2.29` for tunnel 2.
+  - **Remote Network**: _Address_ > Lower IP address in the `/31` for Cloudflare side. For example, `10.252.2.26` for tunnel 1, and `10.252.2.28` for tunnel 2.
 - **Phase 2 Proposal (SA/Key Exchange)**
-  - **Protocol**: *ESP*
-  - **Encryption algorithm**: *AES 256 bits*
-  - **Hash algorithm**: *SHA256*
-  - **DH key group**: *14*
+  - **Protocol**: _ESP_
+  - **Encryption algorithm**: _AES 256 bits_
+  - **Hash algorithm**: _SHA256_
+  - **DH key group**: _14_
   - **Lifetime**: `3600`
 
 <div class="full-img">

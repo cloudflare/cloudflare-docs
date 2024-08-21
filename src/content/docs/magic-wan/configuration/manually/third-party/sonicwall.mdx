@@ -59,12 +59,12 @@ Static routes are required for any networks that will be reached via the IPsec t
 1. Go to **Network** > **IPsec VPN** > **Rules and Settings**.
 2. Select **Add**.
 3. In **General** > **Security Policy** group, add the following settings:
-   - **Authentication Method**: *IKE Using Preshared Secret*.
+   - **Authentication Method**: _IKE Using Preshared Secret_.
    - **IPsec Primary Gateway Name or Address**: Enter Cloudflare's anycast IP address for the primary gateway (in blue).
 4. In the **IKE Authentication** group, add the following settings:
    - **Shared secret**: Paste the pre-shared key you use to create the IPsec tunnel in step 1 (in purple).
-   - **Local IKE ID**: Select *Domain name* from the dropdown menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
-   - **Peer IKE IDE**: Select *IPv4* Address from the dropdown menu, and enter the Cloudflare anycast IP address (in blue).
+   - **Local IKE ID**: Select _Domain name_ from the dropdown menu, and paste here the **FQDN ID** you saved from step 1, after creating the IPsec tunnel (in green).
+   - **Peer IKE IDE**: Select _IPv4_ Address from the dropdown menu, and enter the Cloudflare anycast IP address (in blue).
 
 <div class="large-img">
 
@@ -74,17 +74,17 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 5. Select **Proposals**. VPN Policy is somewhat flexible. Adjust these settings to match your organization's preferred security policy. As an example, you can use the settings in the examples below.
 6. In the **IKE (Phase 1) Proposal** group, select the following settings:
-   - **Exchange**: *IKEv2 Mode*
-   - **DH Group**: *Group 14*
-   - **Encryption**: *AES-256*
-   - **Authentication**: *SHA256*
+   - **Exchange**: _IKEv2 Mode_
+   - **DH Group**: _Group 14_
+   - **Encryption**: _AES-256_
+   - **Authentication**: _SHA256_
    - **Life Time (seconds)**: `28800`
 7. In the **IPsec (Phase 2) Proposal** group, add the following settings:
-   - **Protocol**: *ESP*
-   - **Encryption**: *AESGCM16-256*
-   - **Authentication**: *None*
+   - **Protocol**: _ESP_
+   - **Encryption**: _AESGCM16-256_
+   - **Authentication**: _None_
    - **Enable Perfect Forward Secrecy**: Enabled
-   - **DH Group**: *Group 14*
+   - **DH Group**: _Group 14_
    - **Life Time (seconds)**: `28800`
 
 <div class="large-img">
@@ -142,7 +142,7 @@ To add an address object:
 
 1. Select **Object** > **Match Objects** > **Addresses**
 2. Select **Address Objects** > **Add**.
-3. Enter the information for your address object - refer to the topology image for the examples this tutorial is using. Since the addresses are in the VPN zone, set the **Zone Assignment** for the object to *VPN*.
+3. Enter the information for your address object - refer to the topology image for the examples this tutorial is using. Since the addresses are in the VPN zone, set the **Zone Assignment** for the object to _VPN_.
 4. Select **Save**. The window will stay on to facilitate multiple entries. Select **X** to close it.
 
 <div class="large-img">
@@ -177,7 +177,7 @@ An additional access rule is required for Magic WAN health checks to work proper
 1. Select **Policy** > **Rules and Policies**.
 2. Select **Access Rules** > **Add**.
 3. Enter a descriptive name for your policy.
-4. In **Source / Destination** > **Destination > Port/Services**, select *ICMP* from the dropdown.
+4. In **Source / Destination** > **Destination > Port/Services**, select _ICMP_ from the dropdown.
 5. Select **Optional Settings**.
 6. In **Others**, enable **Allow Management traffic**.
 
