@@ -18,6 +18,24 @@ Only available on Enterprise plans.
 
 By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's public DNS resolver, for resolution. Enterprise users can instead create Gateway policies to route DNS queries to custom resolvers.
 
+```mermaid
+flowchart TD
+    %% Accessibility
+    accTitle: How Gateway routes DNS queries
+    accDescr: Flowchart describing the order Cloudflare Gateway routes a DNS query from an endpoint through DNS and resolver policies back to the user.
+
+    %% Flowchart
+    user(["User"])-->endpoint[/"Gateway DNS endpoint"/]
+
+    endpoint-->query["DNS policy (query)"]
+
+    query-->resolver["Resolver policy"]
+
+    resolver--"Routes to </br>custom resolver"-->response["DNS policy (response)"]
+
+    response--"Returns response"-->user
+```
+
 ## Use cases
 
 You may use resolver policies if you require access to non-publicly routed domains, such as private network services or internal resources. You may also use resolver policies if you need to access a protected DNS service or want to simplify DNS management for multiple locations.
