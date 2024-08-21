@@ -11,7 +11,7 @@ _build:
 ```bash
 curl --silent --request GET \
  --url https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
- --header 'Authorization: Bearer <API_TOKEN>' \
+ --header "Authorization: Bearer <API_TOKEN>" \
  --header 'Content-Type: application/json' | jq .result
 ```
 
