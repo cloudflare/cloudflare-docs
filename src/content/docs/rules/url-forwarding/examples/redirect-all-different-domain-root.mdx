@@ -2,23 +2,22 @@
 pcx_content_type: example
 summary: Create a redirect rule to redirect all URLs for a domain to point to
   the root of a new domain, including any subdomains of the old domain.
-product:
+products:
   - Redirect Rules
 title: Redirect requests for a domain to a new domain
 description: Create a redirect rule to redirect all URLs for a domain to point
   to the root of a new domain, including any subdomains of the old domain.
-
 ---
 
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
 
 1. Create a Bulk Redirect List with the following URL redirect:
 
-   * **Source URL**: `example.com/`
-   * **Target URL**: `https://example.net/`
-   * **Subpath matching**: Enabled
-   * **Include subdomains**: Enabled
-   * **Preserve path suffix**: Disabled
+   - **Source URL**: `example.com/`
+   - **Target URL**: `https://example.net/`
+   - **Subpath matching**: Enabled
+   - **Include subdomains**: Enabled
+   - **Preserve path suffix**: Disabled
 
 2. Create a Bulk Redirect Rule that enables this list.
 
