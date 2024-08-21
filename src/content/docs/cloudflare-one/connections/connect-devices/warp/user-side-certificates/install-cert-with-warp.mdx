@@ -5,11 +5,9 @@ sidebar:
   order: 1
 head: []
 description: Automatically deploy a root certificate on desktop devices.
-
 ---
 
-
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 <Details header="Feature availability">
 
@@ -19,13 +17,12 @@ import { Details } from "~/components"
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅            | 2023.3.381.0         |
-| macOS    | ✅            | 2023.3.381.0         |
-| Linux    | ✅            | 2023.3.381.0         |
-| iOS      | ❌            |                      |
-| Android  | ❌            |                      |
-| ChromeOS | ❌            |                      |
-
+| Windows  | ✅           | 2023.3.381.0         |
+| macOS    | ✅           | 2023.3.381.0         |
+| Linux    | ✅           | 2023.3.381.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
 
 </Details>
 
@@ -48,7 +45,6 @@ Next, [verify](#view-the-installed-certificate) that the certificate was success
 :::note[Important]
 
 WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
-
 
 :::
 
@@ -76,7 +72,7 @@ The certificate is also placed in `%ProgramData%\Cloudflare\installed_cert.pem` 
 Certain macOS versions (`13.5` for example) do not allow WARP to automatically trust the certificate. To manually trust the certificate:
 
 1. Select **Trust**.
-2. Set **When using this certificate** to *Always Trust*. 
+2. Set **When using this certificate** to _Always Trust_.
    :::
 
 The certificate is also placed in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
@@ -90,19 +86,19 @@ If you do not see the certificate, run the following commands to update the syst
 1. Go to the system certificate store.
 
    ```sh
-   $ cd /usr/local/share/ca-certificates
+   cd /usr/local/share/ca-certificates
    ```
 
 2. Rename the certificate, changing the file extension to `.crt`.
 
    ```sh
-   $ sudo mv managed-warp.pem managed-warp.crt
+   sudo mv managed-warp.pem managed-warp.crt
    ```
 
 3. Update your list of custom CA certificates.
 
    ```sh
-   $ sudo update-ca-certificates
+   sudo update-ca-certificates
    ```
 
 The certificate is also placed in `/var/lib/cloudflare-warp/installed_cert.pem` for reference by scripts or tools.

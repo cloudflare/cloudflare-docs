@@ -3,10 +3,9 @@ title: Vectorize API
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This page covers the Vectorize API available within [Cloudflare Workers](/workers/), including usage examples.
 
@@ -16,10 +15,10 @@ This page covers the Vectorize API available within [Cloudflare Workers](/worker
 
 ```ts
 let vectorsToInsert = [
-    {id: "123", values: [32.4, 6.5, 11.2, 10.3, 87.9]},
-    {id: "456", values: [2.5, 7.8, 9.1, 76.9, 8.5]},
-]
-let inserted = await env.YOUR_INDEX.insert(vectorsToInsert)
+	{ id: "123", values: [32.4, 6.5, 11.2, 10.3, 87.9] },
+	{ id: "456", values: [2.5, 7.8, 9.1, 76.9, 8.5] },
+];
+let inserted = await env.YOUR_INDEX.insert(vectorsToInsert);
 ```
 
 Inserts vectors into the index. Returns the count of vectors inserted and their IDs.
@@ -32,11 +31,11 @@ If you need to update existing vectors, use the [upsert](#upsert-vectors) operat
 
 ```ts
 let vectorsToUpsert = [
-    {id: "123", values: [32.4, 6.5, 11.2, 10.3, 87.9]},
-    {id: "456", values: [2.5, 7.8, 9.1, 76.9, 8.5]},
-    {id: "768", values: [29.1, 5.7, 12.9, 15.4, 1.1]}
-]
-let upserted = await env.YOUR_INDEX.upsert(vectorsToUpsert)
+	{ id: "123", values: [32.4, 6.5, 11.2, 10.3, 87.9] },
+	{ id: "456", values: [2.5, 7.8, 9.1, 76.9, 8.5] },
+	{ id: "768", values: [29.1, 5.7, 12.9, 15.4, 1.1] },
+];
+let upserted = await env.YOUR_INDEX.upsert(vectorsToUpsert);
 ```
 
 Upserts vectors into an index. Returns the count of vectors upserted and their IDs.
@@ -48,18 +47,22 @@ Upserting does not merge or combine the values or metadata of an existing vector
 ### Query vectors
 
 ```ts
-let queryVector = [32.4, 6.55, 11.2, 10.3, 87.9]
-let matches = await env.YOUR_INDEX.query(queryVector)
+let queryVector = [32.4, 6.55, 11.2, 10.3, 87.9];
+let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
 Query an index with the provided vector, returning the score(s) of the closest vectors based on the configured distance metric.
 
-* Configure the number of returned matches by setting `topK` (default: 3)
-* Return vector values by setting `returnValues: true` (default: false)
-* Return vector metadata by setting `returnMetadata: true` (default: false)
+- Configure the number of returned matches by setting `topK` (default: 3)
+- Return vector values by setting `returnValues: true` (default: false)
+- Return vector metadata by setting `returnMetadata: true` (default: false)
 
 ```ts
-let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnValues: true, returnMetadata: true })
+let matches = await env.YOUR_INDEX.query(queryVector, {
+	topK: 5,
+	returnValues: true,
+	returnMetadata: true,
+});
 ```
 
 ### Get vectors by ID
@@ -97,9 +100,7 @@ Enable metadata filtering on the specified property. Limited to 10 properties.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize create-metadata-index <index-name> --property-name='some-prop' --type='string'
-
-
+wrangler vectorize create-metadata-index <index-name> --property-name='some-prop' --type='string'
 ```
 
 ### Delete Metadata Index
@@ -111,8 +112,7 @@ Allow Vectorize to delete the specified metadata index.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop'
-
+wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop'
 ```
 
 ### List Metadata Indexes
@@ -124,8 +124,7 @@ List metadata properties on which metadata filtering is enabled.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize list-metadata-index <index-name>
-
+wrangler vectorize list-metadata-index <index-name>
 ```
 
 ### Get Index Info
@@ -137,30 +136,28 @@ Get additional details about the index.
 Run the following `wrangler vectorize` command:
 
 ```sh
-$ wrangler vectorize info <name>
-
+wrangler vectorize info <name>
 ```
-
 
 ## Vectors
 
 A vector represents the vector embedding output from a machine learning model.
 
-* `id` - a unique `string` identifying the vector in the index. This should map back to the ID of the document, object or database identifier that the vector values were generated from.
-* `namespace` - an optional partition key within a index. Operations are performed per-namespace, so this can be used to create isolated segments within a larger index.
-* `values` - an array of `number`, `Float32Array`, or `Float64Array` as the vector embedding itself. This must be a dense array, and the length of this array must match the `dimensions` configured on the index.
-* `metadata` - an optional set of key-value pairs that can be used to store additional metadata alongside a vector.
+- `id` - a unique `string` identifying the vector in the index. This should map back to the ID of the document, object or database identifier that the vector values were generated from.
+- `namespace` - an optional partition key within a index. Operations are performed per-namespace, so this can be used to create isolated segments within a larger index.
+- `values` - an array of `number`, `Float32Array`, or `Float64Array` as the vector embedding itself. This must be a dense array, and the length of this array must match the `dimensions` configured on the index.
+- `metadata` - an optional set of key-value pairs that can be used to store additional metadata alongside a vector.
 
 ```ts
 let vectorExample = {
-    id: "12345",
-    values: [32.4, 6.55, 11.2, 10.3, 87.9],
-    metadata: {
-        "key": "value",
-        "hello": "world",
-        "url": "r2://bucket/some/object.json"
-    }
-}
+	id: "12345",
+	values: [32.4, 6.55, 11.2, 10.3, 87.9],
+	metadata: {
+		key: "value",
+		hello: "world",
+		url: "r2://bucket/some/object.json",
+	},
+};
 ```
 
 ## Binding to a Worker

@@ -2,27 +2,33 @@
 pcx_content_type: reference
 title: Google Calendar
 rss: file
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "Google Calendar", two: "Google Workspace account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "Google Calendar", two: "Google Workspace account" }}
+/>
 
 ## Integration prerequisites
 
-<Render file="casb/google-prereqs" />
+<Render file="casb/google/google-prereqs" />
 
 ## Integration permissions
 
-<Render file="casb/integration-perms" params={{ one: "Google Workspace", two: "google-workspace" }} />
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Google Calendar", two: "google-workspace/google-calendar" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "Google Calendar", two: "google-workspace/google-calendar" }}
+/>
 
 ### Calendar sharing
 
-| Finding                                       | Severity | Description                                                                           |
-| --------------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
-| Google Workspace Calendar Publicly Accessible | Medium   | A user's Google Calendar is publicly accessible on the Internet that anyone can read. |
+<Render file="casb/google/calendar-sharing" />

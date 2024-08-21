@@ -4,8 +4,19 @@ import type { APIRoute } from 'astro';
 import { marked } from 'marked';
 import { getWranglerChangelog } from '~/util/changelogs';
 import { slug } from "github-slugger"
+import { entryToString } from '~/util/container';
 
 export const GET: APIRoute = async (context) => {
+    function walkTokens(token: Token) {
+        if (token.type === 'image' || token.type === 'link') {
+            if (token.href.startsWith("/")) {
+                token.href = context.site + token.href.slice(1);
+            }
+        }
+    }
+
+    marked.use({ walkTokens });
+
     const changelogs = await getCollection("changelogs")
 
     changelogs.push(await getWranglerChangelog());
@@ -20,7 +31,7 @@ export const GET: APIRoute = async (context) => {
 
                 if (!page) throw new Error(`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`)
 
-                description = page.body;
+                description = await entryToString(page) ?? page.body;
             } else {
                 description = entry.description;
             }

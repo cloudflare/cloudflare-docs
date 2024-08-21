@@ -11,7 +11,7 @@ product:
 meta:
   title: Cloudflare Web3 docs
   description: Cloudflare offers gateways to various networks to help Web3 developers do what they do best, develop applications without having to worry about running infrastructure.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/web3
@@ -22,6 +22,6 @@ externals:
     url: https://cloudflare.com/web3/
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: web3

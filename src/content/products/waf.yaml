@@ -1,6 +1,5 @@
 name: WAF
 
-
 product:
   title: WAF
   url: /waf/
@@ -10,7 +9,7 @@ meta:
   title: Cloudflare Web Application Firewall (WAF) docs
   description: Protect against web application vulnerabilities with Cloudflare’s
     Web Application Firewall (WAF).
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   community: https://community.cloudflare.com/c/security/6
@@ -24,6 +23,6 @@ externals:
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: waf

@@ -4,42 +4,39 @@ title: OneDrive
 rss: file
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "OneDrive", two: "Microsoft 365 account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "OneDrive", two: "Microsoft 365 account" }}
+/>
 
 ## Integration prerequisites
 
-<Render file="casb/m365-prereqs" />
+<Render file="casb/microsoft/m365-prereqs" />
 
 ## Integration permissions
 
-<Render file="casb/integration-perms" params={{ one: "Microsoft 365", two: "microsoft-365" }} />
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+/>
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "OneDrive", two: "microsoft-365/onedrive" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "OneDrive", two: "microsoft-365/onedrive" }}
+/>
 
 ### File sharing
 
-Get alerted when files in your Microsoft 365 account have their permissions changed to a less secure setting.
-
-| Finding                                             | Severity |
-| --------------------------------------------------- | -------- |
-| Microsoft File Publicly Accessible Read and Write   | Critical |
-| Microsoft Folder Publicly Accessible Read and Write | Critical |
-| Microsoft File Publicly Accessible Read Only        | High     |
-| Microsoft Folder Publicly Accessible Read Only      | High     |
-| Microsoft File Shared Company Wide Read and Write   | Medium   |
-| Microsoft File Shared Company Wide Read Only        | Medium   |
-| Microsoft Folder Shared Company Wide Read and Write | Medium   |
-| Microsoft Folder Shared Company Wide Read Only      | Medium   |
+<Render file="casb/microsoft/file-sharing" />
 
 ### Data Loss Prevention (optional)
 
 <Render file="casb/data-loss-prevention" />
 
-<Render file="casb/m365-dlp-findings" />
+<Render file="casb/microsoft/m365-dlp-findings" />

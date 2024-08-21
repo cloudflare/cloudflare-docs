@@ -3,10 +3,9 @@ title: SSH proxy and command logs
 pcx_content_type: how-to
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Zero Trust supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
 
@@ -14,8 +13,8 @@ You can create network policies to manage and monitor SSH access to your applica
 
 ## Prerequisites
 
-* [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
-* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on end-user devices.
+- [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
+- [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on end-user devices.
 
 ## 1. Ensure Unix usernames match user SSO identities
 
@@ -29,7 +28,7 @@ Instead of traditional SSH keys, Gateway uses short-lived certificates to authen
 
 :::note
 
-Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint. 
+Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
 :::
 
 To generate a Gateway SSH proxy CA and get its public key:
@@ -60,7 +59,7 @@ To generate a Gateway SSH proxy CA and get its public key:
 Cloudflare's SSH proxy only works with servers running on the default port 22. Open the `sshd_config` file and verify that no other `Port` values are specified.
 
 ```sh
-$ cat /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config
 ```
 
 ## 6. Restart your SSH server
@@ -79,7 +78,7 @@ $ cat /etc/ssh/sshd_config
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 
-5. In the **Action** dropdown, select *Audit SSH*.
+5. In the **Action** dropdown, select _Audit SSH_.
 
 6. (Optional) Enable **SSH Command Logging**. If you have not already uploaded an SSH encryption public key, follow the steps in [Configure SSH Command Logging](#optional-configure-ssh-command-logging).
 
@@ -92,7 +91,7 @@ Users can use any SSH client to connect to the target resource, as long as they 
 Users must specify their desired username to connect with as part of the SSH command:
 
 ```sh
-$ ssh <username>@<hostname>
+ssh <username>@<hostname>
 ```
 
 :::note
@@ -100,9 +99,8 @@ $ ssh <username>@<hostname>
 If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
 ```sh
-$ ssh-keygen -R <targetIP or hostname>
+ssh-keygen -R <targetIP or hostname>
 ```
-
 
 :::
 
@@ -115,8 +113,11 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 2. Using the `ssh-log-cli` utility, generate a public and private key pair.
 
    ```sh
-   $ ./ssh-log-cli generate-key-pair -o sshkey
-   $ ls
+   ./ssh-log-cli generate-key-pair -o sshkey
+   ls
+   ```
+
+   ```sh output
    README.md    ssh-log-cli    sshkey    sshkey.pub
    ```
 
@@ -137,7 +138,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#optional-configure-ssh-command-logging):
 
    ```sh
-   $ ./ssh-log-cli decrypt -i sshlog -k sshkey
+   ./ssh-log-cli decrypt -i sshlog -k sshkey
    ```
 
    This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.
