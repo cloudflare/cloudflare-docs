@@ -33,7 +33,8 @@ Cloudflare Adaptive DDoS Protection is available to Enterprise customers accordi
 
 
 
-<sup>1</sup> *WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription.*<br/> <sup>2</sup> *Magic Transit and Spectrum BYOIP customers on an Enterprise plan.*
+<sup>1</sup> *WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription.*<br/> 
+<sup>2</sup> *Magic Transit and Spectrum BYOIP customers on an Enterprise plan.*
 
 ## How it works
 
@@ -48,14 +49,13 @@ Cloudflare may change the logic of these protection rules from time to time to i
 Cloudflare’s network is built to automatically monitor and mitigate large DDoS attacks. Cloudflare also helps mitigate smaller DDoS attacks, based on the following general rules:
 
 * For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the *High* (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by [configuring the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-dashboard/).
-
 * For zones on Pro, Business, and Enterprise plans, Cloudflare performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal origin traffic levels before applying DDoS mitigations.
 
 Cloudflare determines the error rate based on all HTTP errors in the 52X range (Internal Server Error) and in the 53X range, except for [error 530](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-530). Currently, for DDoS mitigations based on HTTP error rate, you cannot exclude specific HTTP error codes.
 
 For more information on the types of DDoS attacks covered by Cloudflare's DDoS protection, refer to [DDoS attack coverage](/ddos-protection/about/attack-coverage/).
 
-***
+---
 
 ## View flagged traffic
 

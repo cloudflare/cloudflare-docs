@@ -15,7 +15,6 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 To address a false negative:
 
 * If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the *Under Attack* mode and creating <GlossaryTooltip term="rate limiting">rate limiting</GlossaryTooltip> rules and WAF custom rules as needed.
-
 * If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules/) to help mitigate the attack.
 
 ## Incomplete mitigations
@@ -30,38 +29,21 @@ The system chooses the mitigation action based on the logic and the DDoS protect
 If you are experiencing a DDoS attack detected by Cloudflare and the applied mitigation action is not sufficiently strict, change the rule action to *Block*:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-
 2. Go to the analytics dashboard and apply filters to the displayed data.
-
-   <Details header="For WAF/CDN customers">
-
-   3. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
-
-   4. Go to **Security** > **Events**.
-
-   5. Select **Add filter** and filter by `Service equals HTTP DDoS`.
-
-   </Details>
-
-
-   <Details header="For Magic Transit and Spectrum customers">
-
-   6. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
-
-   7. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
-
-   </Details>
-
+  <Details header="For WAF/CDN customers">
+  3. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+  4. Go to **Security** > **Events**.
+  5. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+  </Details>
+  <Details header="For Magic Transit and Spectrum customers">
+  6. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+  7. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+  </Details>
 8. Scroll down to **Top events by source** > **HTTP DDoS rules**.
-
 9. Copy the rule name.
-
 10. Go to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
-
 11. Select **Browse rules** and paste the rule name in the search field.
-
 12. Change the rule’s **Action** to *Block*.
-
 13. Select **Next** and then select **Save**.
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
