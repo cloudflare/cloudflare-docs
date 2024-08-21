@@ -5,11 +5,10 @@ pcx_content_type: navigation
 title: Examples
 sidebar:
   order: 5
-
 ---
 
-import { GlossaryTooltip, ListExamples } from "~/components"
+import { GlossaryTooltip, ListExamples } from "~/components";
 
 Explore the following <GlossaryTooltip term="code example">examples</GlossaryTooltip> for Hyperdrive.
 
-<ListExamples directory="hyperdrive/examples/"/>
+<ListExamples directory={["hyperdrive/examples/"]} />

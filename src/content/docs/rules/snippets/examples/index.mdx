@@ -5,13 +5,15 @@ pcx_content_type: navigation
 title: Examples
 sidebar:
   order: 3
-
 ---
 
-import { ListExamples } from "~/components"
+import { ListExamples } from "~/components";
 
 Refer to the following examples to get started creating your snippet code.
 
 Refer to [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/) for overall guidance.
 
-<ListExamples directory="rules/snippets/examples/" filters={["goal","operation"]} />
+<ListExamples
+	directory={["rules/snippets/examples/"]}
+	filters={["goal", "operation"]}
+/>

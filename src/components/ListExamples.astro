@@ -6,23 +6,31 @@ import { CardGrid, LinkTitleCard } from "~/components";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	directory: z.string().optional(),
+	directory: z.string().array().optional(),
 	filters: z.string().array().optional(),
 });
 
 const { directory, filters } = props.parse(Astro.props);
 
-let target = Astro.params.slug?.split("/")[0];
+let target: any[] = new Array();
+let defaultValue = Astro.params.slug?.split("/")[0].concat("/");
 
 if (directory) {
 	target = directory;
 } else {
-	target = target?.concat("/");
+	target.push(defaultValue);
 }
 
-const examples = await getCollection("docs", (entry) => {
-	return entry.data.pcx_content_type === "example" && entry.slug.startsWith(target);
-});
+let examples = new Array();
+
+for (let item of target) {
+	const exampleGroup = await getCollection("docs", (entry) => {
+		return (
+			entry.data.pcx_content_type === "example" && entry.slug.startsWith(item)
+		);
+	});
+	examples.push(exampleGroup);
+}
 
 const filterValues: Record<string, string[]> = {};
 if (filters) {
