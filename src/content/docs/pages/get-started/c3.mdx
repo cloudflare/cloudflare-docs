@@ -8,10 +8,9 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Cloudflare provides a CLI command for creating new Workers and Pages projects — `npm create cloudflare`, powered by the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare).
 
@@ -27,20 +26,20 @@ Running this command will prompt you to install the [`create-cloudflare`](https:
 
 If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
 
-* [Analog](/pages/framework-guides/deploy-an-analog-site/)
-* [Angular](/pages/framework-guides/deploy-an-angular-site/)
-* [Astro](/pages/framework-guides/deploy-an-astro-site/)
-* [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
-* [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/)
-* [Hono](/pages/framework-guides/deploy-a-hono-site/)
-* [Next.js](/pages/framework-guides/nextjs/)
-* [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
-* [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
-* [React](/pages/framework-guides/deploy-a-react-site/)
-* [Remix](/pages/framework-guides/deploy-a-remix-site/)
-* [Solid](/pages/framework-guides/deploy-a-solid-site/)
-* [Svelte](/pages/framework-guides/deploy-a-svelte-site/)
-* [Vue](/pages/framework-guides/deploy-a-vue-site/)
+- [Analog](/pages/framework-guides/deploy-an-analog-site/)
+- [Angular](/pages/framework-guides/deploy-an-angular-site/)
+- [Astro](/pages/framework-guides/deploy-an-astro-site/)
+- [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
+- [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/)
+- [Hono](/pages/framework-guides/deploy-a-hono-site/)
+- [Next.js](/pages/framework-guides/nextjs/)
+- [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
+- [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
+- [React](/pages/framework-guides/deploy-a-react-site/)
+- [Remix](/pages/framework-guides/deploy-a-remix-site/)
+- [Solid](/pages/framework-guides/deploy-a-solid-site/)
+- [Svelte](/pages/framework-guides/deploy-a-svelte-site/)
+- [Vue](/pages/framework-guides/deploy-a-vue-site/)
 
 When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating a new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating you project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
 
@@ -68,159 +67,157 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 <Tabs> <TabItem label="npm">
 
 ```sh
-$ npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
+npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 ```
 
 </TabItem> <TabItem label="yarn">
 
 ```sh
-$ yarn create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
+yarn create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 ```
 
 </TabItem> <TabItem label="pnpm">
 
 ```sh
-$ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
+pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 ```
 
 </TabItem> <TabItem label="bun">
 
 ```sh
-$ bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
+bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 ```
 
 </TabItem> </Tabs>
 
+- `DIRECTORY` string optional
 
+  - The directory where the application should be created. The name of the application is taken from the directory name.
 
-* `DIRECTORY` string optional
-  * The directory where the application should be created. The name of the application is taken from the directory name.
+- `NESTED ARGS..` string\[] optional
 
-* `NESTED ARGS..` string\[] optional
-  * CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
+  - CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
 
-* `--category` string optional
+- `--category` string optional
 
-  * The kind of templates that should be created.
+  - The kind of templates that should be created.
 
-  * The possible values for this option are:
+  - The possible values for this option are:
 
-    * `hello-world`: Hello World example
-    * `web-framework`: Framework Starter
-    * `demo`: Demo application
-    * `remote-template`: Template from a GitHub repo
+    - `hello-world`: Hello World example
+    - `web-framework`: Framework Starter
+    - `demo`: Demo application
+    - `remote-template`: Template from a GitHub repo
 
-* `--type` string optional
+- `--type` string optional
 
-  * The type of application that should be created.
+  - The type of application that should be created.
 
-  * The possible values for this option are:
+  - The possible values for this option are:
 
-    * `hello-world`: A basic "Hello World" Cloudflare Worker.
-    * `hello-world-durable-object`: A [Durable Object](/durable-objects/) and a Worker to communicate with it.
-    * `common`: A Cloudflare Worker which implements a common example of routing/proxying functionalities.
-    * `scheduled`: A scheduled Cloudflare Worker (triggered via [Cron Triggers](/workers/configuration/cron-triggers/)).
-    * `queues`: A Cloudflare Worker which is both a consumer and produced of [Queues](/queues/).
-    * `openapi`: A Worker implementing an OpenAPI REST endpoint.
-    * `pre-existing`: Fetch a Worker initialized from the Cloudflare dashboard.
+    - `hello-world`: A basic "Hello World" Cloudflare Worker.
+    - `hello-world-durable-object`: A [Durable Object](/durable-objects/) and a Worker to communicate with it.
+    - `common`: A Cloudflare Worker which implements a common example of routing/proxying functionalities.
+    - `scheduled`: A scheduled Cloudflare Worker (triggered via [Cron Triggers](/workers/configuration/cron-triggers/)).
+    - `queues`: A Cloudflare Worker which is both a consumer and produced of [Queues](/queues/).
+    - `openapi`: A Worker implementing an OpenAPI REST endpoint.
+    - `pre-existing`: Fetch a Worker initialized from the Cloudflare dashboard.
 
-* `--framework` string optional
+- `--framework` string optional
 
-  * The type of framework to use to create a web application (when using this option, `--type` is ignored).
+  - The type of framework to use to create a web application (when using this option, `--type` is ignored).
 
-  * The possible values for this option are:
+  - The possible values for this option are:
 
-    * `angular`
-    * `astro`
-    * `docusaurus`
-    * `gatsby`
-    * `hono`
-    * `next`
-    * `nuxt`
-    * `qwik`
-    * `react`
-    * `remix`
-    * `solid`
-    * `svelte`
-    * `vue`
+    - `angular`
+    - `astro`
+    - `docusaurus`
+    - `gatsby`
+    - `hono`
+    - `next`
+    - `nuxt`
+    - `qwik`
+    - `react`
+    - `remix`
+    - `solid`
+    - `svelte`
+    - `vue`
 
-* `--template` string optional
-  * Create a new project via an external template hosted in a git repository
+- `--template` string optional
 
-  * The value for this option may be specified as any of the following:
+  - Create a new project via an external template hosted in a git repository
 
-    * `user/repo`
-    * `git@github.com:user/repo`
-    * `https://github.com/user/repo`
-    * `user/repo/some-template` (subdirectories)
-    * `user/repo#canary` (branches)
-    * `user/repo#1234abcd` (commit hash)
-    * `bitbucket:user/repo` (BitBucket)
-    * `gitlab:user/repo` (GitLab)
+  - The value for this option may be specified as any of the following:
+
+    - `user/repo`
+    - `git@github.com:user/repo`
+    - `https://github.com/user/repo`
+    - `user/repo/some-template` (subdirectories)
+    - `user/repo#canary` (branches)
+    - `user/repo#1234abcd` (commit hash)
+    - `bitbucket:user/repo` (BitBucket)
+    - `gitlab:user/repo` (GitLab)
 
     See the `degit` [docs](https://github.com/Rich-Harris/degit) for more details.
 
     At a minimum, templates must contain the following:
 
-    * `package.json`
-    * `wrangler.toml`
-    * `src/` containing a worker script referenced from `wrangler.toml`
+    - `package.json`
+    - `wrangler.toml`
+    - `src/` containing a worker script referenced from `wrangler.toml`
 
     See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/templates) of this repo for more examples.
 
-* `--deploy` boolean (default: true) optional
+- `--deploy` boolean (default: true) optional
 
-  * Deploy your application after it has been created.
+  - Deploy your application after it has been created.
 
-* `--lang`string (default: ts) optional
+- `--lang`string (default: ts) optional
 
-  * The programming language of the template.
+  - The programming language of the template.
 
-  * The possible values for this option are:
+  - The possible values for this option are:
 
-    * `ts`
-    * `js`
-    * `python`
+    - `ts`
+    - `js`
+    - `python`
 
-* `--ts`boolean (default: true) optional
+- `--ts`boolean (default: true) optional
 
-  * Use TypeScript in your application. Deprecated. Please use `--lang=ts` instead.
+  - Use TypeScript in your application. Deprecated. Please use `--lang=ts` instead.
 
-* `--git` boolean (default: true) optional
+- `--git` boolean (default: true) optional
 
-  * Initialize a local git repository for your application.
+  - Initialize a local git repository for your application.
 
-* `--open` boolean (default: true) optional
+- `--open` boolean (default: true) optional
 
-  * Open with your browser the deployed application (this option is ignored if the application is not deployed).
+  - Open with your browser the deployed application (this option is ignored if the application is not deployed).
 
-* `--existing-script` string optional
+- `--existing-script` string optional
 
-  * The name of an existing Cloudflare Workers script to clone locally. When using this option, `--type` is coerced to `pre-existing`.
+  - The name of an existing Cloudflare Workers script to clone locally. When using this option, `--type` is coerced to `pre-existing`.
 
-  * When `--existing-script` is specified, `deploy` will be ignored.
+  - When `--existing-script` is specified, `deploy` will be ignored.
 
-* `-y`, `--accept-defaults` boolean optional
+- `-y`, `--accept-defaults` boolean optional
 
-  * Use all the default C3 options each can also be overridden by specifying it.
+  - Use all the default C3 options each can also be overridden by specifying it.
 
-* `--auto-update` boolean (default: true) optional
+- `--auto-update` boolean (default: true) optional
 
-  * Automatically uses the latest version of C3.
+  - Automatically uses the latest version of C3.
 
-* `-v`, `--version` boolean optional
+- `-v`, `--version` boolean optional
 
-  * Show version number.
+  - Show version number.
 
-* `-h`, `--help` boolean optional
+- `-h`, `--help` boolean optional
 
-  * Show a help message.
+  - Show a help message.
 
 :::note
 
-
 All the boolean options above can be specified with or without a value, for example `--open` and `--open true` have the same effect, prefixing `no-` to the option's name negates it, so for example `--no-open` and `--open false` have the same effect.
 
-
 :::
-

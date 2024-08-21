@@ -1,10 +1,9 @@
 ---
 pcx_content_type: configuration
 title: Supabase
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
 
@@ -18,8 +17,8 @@ To set up an integration with Supabase:
 
 2. Create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
 
-   * Use the table editor, which allows you to set up Postgres similar to a spreadsheet.
-   * Alternatively, use the [SQL editor](https://supabase.com/docs/guides/database/overview#the-sql-editor):
+   - Use the table editor, which allows you to set up Postgres similar to a spreadsheet.
+   - Alternatively, use the [SQL editor](https://supabase.com/docs/guides/database/overview#the-sql-editor):
 
    ```sql
    CREATE TABLE countries (
@@ -44,10 +43,10 @@ To set up an integration with Supabase:
    4. Select **Integrations** > **Supabase**.
    5. Follow the setup flow, selecting the database created in step 1.
 
-5. In your Worker, install the `@supabase/supabase-js`  driver to connect to your database and start manipulating data:
+5. In your Worker, install the `@supabase/supabase-js` driver to connect to your database and start manipulating data:
 
    ```sh
-   $ npm install @supabase/supabase-js
+   npm install @supabase/supabase-js
    ```
 
 6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.

@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Stytch
 sidebar:
   order: 1
-
 ---
 
 The Stytch Pages Plugin is a middleware which validates all requests and their `session_token`.
@@ -11,7 +10,7 @@ The Stytch Pages Plugin is a middleware which validates all requests and their `
 ## Installation
 
 ```sh
-$ npm install @cloudflare/pages-plugin-stytch
+npm install @cloudflare/pages-plugin-stytch
 ```
 
 ## Usage
@@ -21,9 +20,9 @@ import stytchPlugin from "@cloudflare/pages-plugin-stytch";
 import { envs } from "@cloudflare/pages-plugin-stytch/api";
 
 export const onRequest: PagesFunction = stytchPlugin({
-  project_id: "YOUR_STYTCH_PROJECT_ID",
-  secret: "YOUR_STYTCH_PROJECT_SECRET",
-  env: envs.live
+	project_id: "YOUR_STYTCH_PROJECT_ID",
+	secret: "YOUR_STYTCH_PROJECT_SECRET",
+	env: envs.live,
 });
 ```
 

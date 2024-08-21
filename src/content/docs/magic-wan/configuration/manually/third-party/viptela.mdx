@@ -10,19 +10,15 @@ Cloudflare partners with Cisco's SD-WAN solution to provide users with an integr
 
 Before setting up a connection between Cisco SD-WAN and Cloudflare, you must have:
 
-* Purchased Magic WAN and Secure Web Gateway.
-* Cloudflare provision Magic WAN and Secure Web Gateway.
-* Received two Cloudflare tunnel endpoints (anycast IP address) assigned to Magic WAN.
-* Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
-* A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment.
-* The software version for the Cisco SD-WAN edge device should be Cisco SD-WAN Release 20.6.2 or above.
+- Purchased Magic WAN and Secure Web Gateway.
+- Cloudflare provision Magic WAN and Secure Web Gateway.
+- Received two Cloudflare tunnel endpoints (anycast IP address) assigned to Magic WAN.
+- Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment.
+- Release 20.6 Controllers and vEdge Device Builds. You should also pair them with devices that are on at least version Cisco IOS XE SD-WAN 17.6. Refer to [Cisco documentation](https://www.cisco.com/c/en/us/support/docs/routers/sd-wan/215676-cisco-tac-and-bu-recommended-sd-wan-soft.html) to learn more Cisco softweare versions.
 
 :::note[Note]
-
-
-The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router. For connectivity, GRE tunnels were used.
-
-
+The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router. For connectivity, we used GRE tunnels.
 :::
 
 ## 1. Create a SIG template on Cisco vManage

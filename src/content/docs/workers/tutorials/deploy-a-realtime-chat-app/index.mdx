@@ -8,12 +8,9 @@ products:
   - Durable Objects
 languages:
   - JavaScript
-
 ---
 
-
-
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
 
@@ -28,7 +25,7 @@ To continue with this tutorial, you must purchase the [Workers Paid plan](/worke
 Open your terminal and clone the [workers-chat-demo](https://github.com/cloudflare/workers-chat-demo) repository:
 
 ```sh
-$ git clone https://github.com/cloudflare/workers-chat-demo.git
+git clone https://github.com/cloudflare/workers-chat-demo.git
 ```
 
 ## Authenticate Wrangler
@@ -36,7 +33,7 @@ $ git clone https://github.com/cloudflare/workers-chat-demo.git
 After you have cloned the repository, authenticate Wrangler by running:
 
 ```sh
-$ npx wrangler login
+npx wrangler login
 ```
 
 ## Deploy your project
@@ -44,7 +41,7 @@ $ npx wrangler login
 When you are ready to deploy your application, run:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Your application will be deployed to your `*.workers.dev` subdomain.
@@ -73,7 +70,7 @@ routes = [
 
 To test your live application:
 
-1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > your Worker > **Triggers** >  **Routes** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
+1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > your Worker > **Triggers** > **Routes** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
 2. Enter a name in the **your name** field.
 3. Choose whether to enter a public room or create a private room.
 4. Send the link to other participants. You will be able to view room participants on the right side of the screen.
@@ -112,6 +109,6 @@ By completing this tutorial, you have deployed a real-time chat application with
 
 Continue building with other Cloudflare Workers tutorials below.
 
-* [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
-* [Create SMS notifications for your GitHub repository using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
-* [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)
+- [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
+- [Create SMS notifications for your GitHub repository using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
+- [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)

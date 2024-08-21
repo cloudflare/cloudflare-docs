@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: TypeScript
 sidebar:
   order: 8
-
 ---
 
 Pages Functions supports TypeScript. Author any files in your `/functions` directory with a `.ts` extension instead of a `.js` extension to start using TypeScript.
@@ -11,19 +10,19 @@ Pages Functions supports TypeScript. Author any files in your `/functions` direc
 To add the runtime types to your project, run:
 
 ```sh
-$ npm install --save-dev typescript @cloudflare/workers-types
+npm install --save-dev typescript @cloudflare/workers-types
 ```
 
 Then configure the runtime types by creating a `functions/tsconfig.json` file:
 
 ```json
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["esnext"],
-    "types": ["@cloudflare/workers-types"]
-  }
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"lib": ["esnext"],
+		"types": ["@cloudflare/workers-types"]
+	}
 }
 ```
 
@@ -31,11 +30,9 @@ If you already have a `tsconfig.json` at the root of your project, you may wish 
 
 ```json
 {
-  "include": ["src/**/*"],
-  "exclude": ["functions/**/*"],
-  "compilerOptions": {
-
-  }
+	"include": ["src/**/*"],
+	"exclude": ["functions/**/*"],
+	"compilerOptions": {}
 }
 ```
 
@@ -47,7 +44,7 @@ interface Env {
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
-	const value = await context.env.KV.get('example');
- 	return new Response(value);
-}
+	const value = await context.env.KV.get("example");
+	return new Response(value);
+};
 ```

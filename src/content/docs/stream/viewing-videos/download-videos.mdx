@@ -3,7 +3,6 @@ title: Download videos
 pcx_content_type: how-to
 sidebar:
   order: 6
-
 ---
 
 When you upload a video to Stream, it can be streamed using HLS/DASH. However, for certain use-cases (such as offline viewing), you may want to download the MP4. You can enable MP4 support on a per video basis by following the steps below:
@@ -28,16 +27,16 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/do
 
 ```json title="Response"
 {
-  "result": {
-    "default": {
-      "status": "inprogress",
-      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
-      "percentComplete": 75.0
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"default": {
+			"status": "inprogress",
+			"url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
+			"percentComplete": 75.0
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -53,16 +52,16 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/do
 
 ```json title="Response"
 {
-  "result": {
-    "default": {
-      "status": "ready",
-      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
-      "percentComplete": 100.0
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"default": {
+			"status": "ready",
+			"url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
+			"percentComplete": 100.0
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -81,7 +80,7 @@ The `filename` can be a maximum of 120 characters long and composed of `abcdefgh
 The generated MP4 download files can be retrieved via the link in the download API response.
 
 ```sh
-$ curl -L https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4 > download.mp4
+curl -L https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4 > download.mp4
 ```
 
 ## Secure video downloads

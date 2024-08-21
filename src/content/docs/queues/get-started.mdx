@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Get started
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. By following this guide, you will create your first queue, a Worker to publish messages to that queue, and a consumer Worker to consume messages from that queue.
 
@@ -29,16 +28,28 @@ You will access your queue from a Worker, the producer Worker. You must create a
 
 To create a producer Worker, run:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'producer-worker'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"producer-worker"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker", three: "TypeScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker",
+		three: "TypeScript",
+	}}
+/>
 
 This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 
 Move into the newly created directory:
 
 ```sh
-$ cd producer-worker
+cd producer-worker
 ```
 
 ## 3. Create a queue
@@ -48,7 +59,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-$ npx wrangler queues create <MY-QUEUE-NAME>
+npx wrangler queues create <MY-QUEUE-NAME>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`.
@@ -114,7 +125,7 @@ In a production application, you would likely use a [`try...catch`](https://deve
 With your `wrangler.toml` file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 You should see output that resembles the below, with a `*.workers.dev` URL by default.
@@ -137,9 +148,7 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 :::note
 
-
 Queues also supports [pull-based consumers](/queues/configuration/pull-consumers/), which allows any HTTP-based client to consume messages from a queue. This guide creates a push-based consumer using Cloudflare Workers.
-
 
 :::
 
@@ -201,7 +210,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 With your `wrangler.toml` file and `index.ts` file configured, publish your consumer Worker by running:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 ## 6. Read messages from your queue
@@ -211,7 +220,7 @@ After you set up consumer Worker, you can read messages from the queue.
 Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
 
 ```sh
-$ npx wrangler tail
+npx wrangler tail
 ```
 
 With `wrangler tail` running, open the Worker URL you opened in [step 4](/queues/get-started/#4-set-up-your-producer-worker).
@@ -230,4 +239,4 @@ By completing this guide, you have now created a queue, a producer Worker that p
 
 ## Related resources
 
-* Learn more about [Cloudflare Workers](/workers/) and the applications you can build on Cloudflare.
+- Learn more about [Cloudflare Workers](/workers/) and the applications you can build on Cloudflare.
