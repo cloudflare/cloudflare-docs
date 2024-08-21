@@ -10,6 +10,7 @@ const props = z
 	.object({
 		filename: z.string().optional(),
 		tabsWrapper: z.boolean().default(true),
+		playground: z.boolean().default(false),
 	})
 	.or(
 		z.object({
@@ -18,10 +19,11 @@ const props = z
 				ts: z.string(),
 			}),
 			tabsWrapper: z.boolean().default(true),
+			playground: z.boolean().default(false),
 		}),
 	);
 
-const { filename, tabsWrapper } = props.parse(Astro.props);
+const { filename, tabsWrapper, playground } = props.parse(Astro.props);
 
 let jsTitle, tsTitle;
 if (filename) {
@@ -63,7 +65,7 @@ const TabsWrapper = tabsWrapper ? Tabs : Fragment;
 
 <TabsWrapper syncKey="workersExamples">
 	<TabItem label="JavaScript" icon="seti:javascript">
-		<Code lang="js" code={js} title={jsTitle} />
+		<Code lang="js" code={js} title={jsTitle} meta={playground ? "playground" : undefined} />
 	</TabItem>
 	<TabItem label="TypeScript" icon="seti:typescript">
 		<Code lang="ts" code={code} title={tsTitle} />
