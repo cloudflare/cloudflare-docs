@@ -53,19 +53,19 @@ As a result, tunnel health may be in different states in different parts of the 
 
 ### Degraded
 
-* When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.two} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
-* {props.two} requires two failures so that a single lost packet does not trigger a penalty.
-* {props.two} then immediately sets the tunnel status to degraded and applies a priority penalty.
+- When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.two} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
+- {props.two} requires two failures so that a single lost packet does not trigger a penalty.
+- {props.two} then immediately sets the tunnel status to degraded and applies a priority penalty.
 
 ### Down
 
-* When all health checks of at least three samples in the last one second fail, {props.two} immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
-* A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
+- When all health checks of at least three samples in the last one second fail, {props.two} immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
+- A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
 
 When {props.two} identifies a route that is not healthy, it applies these penalties:
 
-* **Degraded**: Add `500,000` to priority.
-* **Down**: Add `1,000,000` to priority.
+- **Degraded**: Add `500,000` to priority.
+- **Down**: Add `1,000,000` to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during <a href={props.three}>routing configuration</a>.
 
@@ -85,15 +85,15 @@ Tunnels in a degraded state transition to healthy when the failure rate for the 
 
 :::note[Note]
 
-Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state. 
+Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
 :::
 
 ## Example
 
 Consider two tunnels and their associated routing priorities. Remember that lower route values have priority.
 
-* Tunnel 1, route priority `100`
-* Tunnel 2, route priority `200`
+- Tunnel 1, route priority `100`
+- Tunnel 2, route priority `200`
 
 When both tunnels are in a healthy state, routing priority directs traffic exclusively to Tunnel 1 because its route priority of 100 beats that of Tunnel 2. Tunnel 2 does not receive any traffic, except for tunnel health check probes. Endpoint health checks only flow over Tunnel 1 to their destination inside the origin network.
 
