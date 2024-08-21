@@ -5,15 +5,13 @@ sidebar:
   order: 2
 head: []
 description: Override caching settings on a per-request basis.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Enable and customize your gateway cache to serve requests directly from Cloudflare’s cache, instead of the original model provider, for faster requests and cost savings.
 
 :::note
-
 
 Currently caching is supported only for text and image responses, and it applies only to identical requests. This is helpful for use cases when there are limited prompt options - for example, a support bot that asks "How can I help you?" and lets the user select an answer from a limited set of options works well with the current caching configuration.
 We plan on adding semantic search for caching in the future to improve cache hit rates.
@@ -21,7 +19,7 @@ We plan on adding semantic search for caching in the future to improve cache hit
 
 ## Default configuration
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To set the default caching configuration in the dashboard:
 
@@ -37,8 +35,8 @@ To set the default caching configuration using the API:
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-* `AI Gateway - Read`
-* `AI Gateway - Edit`
+- `AI Gateway - Read`
+- `AI Gateway - Edit`
 
 2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
 3. Using that API token and Account ID, send a [`POST` request](/api/operations/aig-config-create-gateway) to create a new Gateway and include a value for the `cache_ttl`.

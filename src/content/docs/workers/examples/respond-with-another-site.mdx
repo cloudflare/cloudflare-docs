@@ -17,12 +17,11 @@ sidebar:
   order: 12
 description: Respond to the Worker request with the response from another
   website (example.com in this example).
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="respond-another-site-example-js" />
 
@@ -30,19 +29,19 @@ import { Render, TabItem, Tabs } from "~/components"
 
 ```ts
 export default {
-  async fetch(request): Promise<Response> {
-    async function MethodNotAllowed(request) {
-      return new Response(`Method ${request.method} not allowed.`, {
-        status: 405,
-        headers: {
-          Allow: "GET",
-        },
-      });
-    }
-    // Only GET requests work with this proxy.
-    if (request.method !== "GET") return MethodNotAllowed(request);
-    return fetch(`https://example.com`);
-  },
+	async fetch(request): Promise<Response> {
+		async function MethodNotAllowed(request) {
+			return new Response(`Method ${request.method} not allowed.`, {
+				status: 405,
+				headers: {
+					Allow: "GET",
+				},
+			});
+		}
+		// Only GET requests work with this proxy.
+		if (request.method !== "GET") return MethodNotAllowed(request);
+		return fetch(`https://example.com`);
+	},
 } satisfies ExportedHandler;
 ```
 

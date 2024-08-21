@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Static Forms
 sidebar:
   order: 1
-
 ---
 
 The Static Forms Pages Plugin intercepts all form submissions made which have the `data-static-form-name` attribute set. This allows you to take action on these form submissions by, for example, saving the submission to KV.
@@ -11,7 +10,7 @@ The Static Forms Pages Plugin intercepts all form submissions made which have th
 ## Installation
 
 ```sh
-$ npm install @cloudflare/pages-plugin-static-forms
+npm install @cloudflare/pages-plugin-static-forms
 ```
 
 ## Usage
@@ -20,21 +19,23 @@ $ npm install @cloudflare/pages-plugin-static-forms
 import staticFormsPlugin from "@cloudflare/pages-plugin-static-forms";
 
 export const onRequest: PagesFunction = staticFormsPlugin({
-  respondWith: ({ formData, name }) => {
-    const email = formData.get('email')
-    return new Response(`Hello, ${email}! Thank you for submitting the ${name} form.`)
-  }
+	respondWith: ({ formData, name }) => {
+		const email = formData.get("email");
+		return new Response(
+			`Hello, ${email}! Thank you for submitting the ${name} form.`,
+		);
+	},
 });
 ```
 
 ```html
 <body>
-  <h1>Sales enquiry</h1>
-  <form data-static-form-name="sales">
-    <label>Email address <input type="email" name="email" /></label>
-    <label>Message <textarea name="message"></textarea></label>
-    <button type="submit">Submit</button>
-  </form>
+	<h1>Sales enquiry</h1>
+	<form data-static-form-name="sales">
+		<label>Email address <input type="email" name="email" /></label>
+		<label>Message <textarea name="message"></textarea></label>
+		<button type="submit">Submit</button>
+	</form>
 </body>
 ```
 

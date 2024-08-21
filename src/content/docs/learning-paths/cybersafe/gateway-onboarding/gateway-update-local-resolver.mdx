@@ -3,10 +3,9 @@ title: Update local DNS resolver
 pcx_content_type: learning-unit
 sidebar:
   order: 3
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 With a Gateway location created, you have the ability to send traffic to your environment. You can test without risk by changing your DNS resolvers in your browser or network settings.
 
@@ -14,48 +13,41 @@ With a Gateway location created, you have the ability to send traffic to your en
 
 To configure your device to send traffic to Gateway:
 
-
 <Details header="macOS">
 
 ![macOS DNS Resolver Options](~/assets/images/dns/dns-resolvers-macosx.png)
 
-
 </Details>
-
 
 <Details header="Windows">
 
 ![Windows DNS Resolver Options](~/assets/images/dns/dns-resolvers-windows.png)
 
-
 </Details>
-
 
 <Details header="Linux">
 
 ```sh
-$ cat /etc/resolv.conf
+cat /etc/resolv.conf
+```
+
+```sh output
 
 nameserver 172.64.X.X
 nameserver 172.64.X.X
 ```
 
-
 </Details>
-
 
 <Details header="iPhone">
 
 ![iPhone DNS Resolver Options](~/assets/images/dns/dns-resolvers-iphone.png)
 
-
 </Details>
-
 
 <Details header="Android">
 
 ![Android DNS Resolver Options](~/assets/images/dns/dns-resolvers-android.png)
-
 
 </Details>
 
@@ -64,6 +56,7 @@ nameserver 172.64.X.X
 To configure your browser to send traffic to Gateway:
 
 1. Obtain your DNS over HTTPS (DoH) address:
+
    1. Go to **Gateway** > **DNS Locations**.
    2. Select the default location.
    3. Copy your **DNS over HTTPS** hostname: `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`

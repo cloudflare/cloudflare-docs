@@ -1,7 +1,6 @@
 ---
 pcx_content_type: integration-guide
 title: Microsoft Azure
-
 ---
 
 This tutorial provides information on how to connect Cloudflare Magic WAN to your Azure Virtual Network, using the Azure Virtual Network Gateway.
@@ -64,8 +63,8 @@ Tunnel health checks make use of ICMP probes sent from the Cloudflare side of th
 
 There is an important distinction between how to configure Cloudflare and Azure to support the health checks:
 
-* Magic IPsec Tunnel configuration settings requires specifying a discrete IP address (`/31` netmask recommended)
-* Azure Local Network Gateway settings require specifying a subnet (in CIDR notation)
+- Magic IPsec Tunnel configuration settings requires specifying a discrete IP address (`/31` netmask recommended)
+- Azure Local Network Gateway settings require specifying a subnet (in CIDR notation)
 
 Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
 
@@ -103,13 +102,13 @@ Choose the following settings when creating your VPN Connection:
 4. **BGP**: **Disabled**
 5. **IPsec / IKE policy**: **Custom**
    1. **IKE Phase 1**
-      1. **Encryption**: *GCMAES256* or *AES256*
-      2. **Integrity/PRF**: *SHA256*
-      3. **DH Group**: *DHGroup14*
+      1. **Encryption**: _GCMAES256_ or _AES256_
+      2. **Integrity/PRF**: _SHA256_
+      3. **DH Group**: _DHGroup14_
    2. **IKE Phase 2(IPsec)**
-      1. **IPsec Encryption**: *GCMAES256* or *AES256*
-      2. **IPsec Integrity**: *SHA256*
-      3. **PFS Group**: *PFS2048*
+      1. **IPsec Encryption**: _GCMAES256_ or _AES256_
+      2. **IPsec Integrity**: _SHA256_
+      3. **PFS Group**: _PFS2048_
    3. **IPsec SA lifetime in KiloBytes**: `0`
    4. **IPsec SA lifetime in seconds**: `27000`
    5. **Use policy based traffic selector**: **Disable**
@@ -153,18 +152,20 @@ More details on how to install the root CA certificate can be found in [User-sid
 Once the root CA certificate is installed, open a web browser or use curl to validate Internet connectivity:
 
 ```sh
-$ curl https://ipinfo.io
+curl https://ipinfo.io
+```
 
+```json output
 {
-  "ip": "104.xxx.xxx.225",
-  "city": "Reston",
-  "region": "Virginia",
-  "country": "US",
-  "loc": "xx.xxxx,-xx.xxxx",
-  "org": "AS13335 Cloudflare, Inc.",
-  "postal": "20190",
-  "timezone": "America/New_York",
-  "readme": "https://ipinfo.io/missingauth"
+	"ip": "104.xxx.xxx.225",
+	"city": "Reston",
+	"region": "Virginia",
+	"country": "US",
+	"loc": "xx.xxxx,-xx.xxxx",
+	"org": "AS13335 Cloudflare, Inc.",
+	"postal": "20190",
+	"timezone": "America/New_York",
+	"readme": "https://ipinfo.io/missingauth"
 }
 ```
 

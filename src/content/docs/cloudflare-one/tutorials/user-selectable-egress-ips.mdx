@@ -4,16 +4,13 @@ category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Use virtual networks to change user egress IPs
-
 ---
 
-import { Details, TabItem, Tabs } from "~/components"
+import { Details, TabItem, Tabs } from "~/components";
 
 :::note
 
-
 Only available on Enterprise plans.
-
 
 :::
 
@@ -21,26 +18,22 @@ This tutorial gives administrators an easy way to allow their users to change th
 
 Changing egress IPs can be useful in quality assurance (QA) and other similar scenarios in which users both use their local egress location and either switch to or simulate other remote locations.
 
-
 ## Before you begin
-
 
 Make sure you have:
 
-* [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
-* [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
-  * Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
-  * Routed `10.0.0.0/8` through one tunnel.
-  * Routed `192.168.88.0/24` through the other tunnel.
-* Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
-
+- [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
+- [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
+  - Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+  - Routed `10.0.0.0/8` through one tunnel.
+  - Routed `192.168.88.0/24` through the other tunnel.
+- Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 ## Create a virtual network for each egress route
 
-
 First, create [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to your dedicated egress IPs.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. In **Network locations**, go to **Virtual networks** and select **Manage**.
@@ -72,13 +65,11 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 </TabItem> </Tabs>
 
-
 ## Assign each virtual network to each tunnel
-
 
 After creating your virtual networks, route your private network CIDRs over each virtual network. This ensures that users can reach all services on your network regardless of which egress IP they use.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Go to **Networks** > **Tunnels**.
 2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
@@ -138,13 +129,11 @@ Each tunnel connected to your private network should have each of your virtual n
 | **Tunnel 2** | `192.168.88.0/24` | `vnet-AMER`     |
 |              | `192.168.88.0/24` | `vnet-EMEA`     |
 
-
 ## Create virtual network egress policies
-
 
 Next, assign your dedicated egress IPs to each virtual network using Gateway egress policies.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress Policies**.
 
@@ -152,11 +141,11 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 3. Name your policy. We recommend including the country or region traffic will egress from.
 
-4. Add the virtual network with the *Virtual Network* selector. For example:
+4. Add the virtual network with the _Virtual Network_ selector. For example:
 
    | Selector        | Operator | Value       |
    | --------------- | -------- | ----------- |
-   | Virtual Network | is       | *vnet-AMER* |
+   | Virtual Network | is       | _vnet-AMER_ |
 
 5. In **Select an egress IP**, choose **Use dedicated Cloudflare egress IPs**. Choose the dedicated IPv4 and IPv6 addresses you want traffic to egress with.
 
@@ -211,7 +200,7 @@ Each policy you create should correspond to a different primary dedicated egress
 2. In a terminal, run the following command to check the default egress IP address.
 
    ```sh
-   $ curl ifconfig.me -4
+   curl ifconfig.me -4
    ```
 
    The command should output your organization's default egress IP.
@@ -220,9 +209,7 @@ Each policy you create should correspond to a different primary dedicated egress
 
 4. Check the egress IP address by running `curl ifconfig.me -4` again. The command should output the IP address specified in your egress policy.
 
-
 </Details>
-
 
 <Details header="iOS and Android">
 
@@ -231,10 +218,6 @@ Each policy you create should correspond to a different primary dedicated egress
 3. In Cloudflare One Agent, go to **Advanced** > **Connection options** > **Virtual networks**. Choose a virtual network you created.
 4. Check the egress IP address by reloading the browser page from Step 1. The IP address specified in your egress policy should appear in **IP Address**.
 
-
 </Details>
 
 While your users are connected to a virtual network, their traffic will route via the dedicated egress IP specified. You can repeat these steps to test that each virtual network is egressing from the correct IP.
-
-
-

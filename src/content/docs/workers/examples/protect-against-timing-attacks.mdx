@@ -14,10 +14,9 @@ sidebar:
   order: 1001
 description: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 The [`crypto.subtle.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function compares two values using a constant-time algorithm. The time taken is independent of the contents of the values.
 
@@ -29,40 +28,40 @@ Handling of secrets should be taken with care to not introduce timing side chann
 
 In order to compare two strings, you must use the [`TextEncoder`](/workers/runtime-apis/encoding/#textencoder) API.
 
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+<Tabs syncKey="workersExamples"> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 interface Environment {
-  MY_SECRET_VALUE?: string;
+	MY_SECRET_VALUE?: string;
 }
 
 export default {
-  async fetch(req: Request, env: Environment) {
-    if (!env.MY_SECRET_VALUE) {
-      return new Response("Missing secret binding", { status: 500 });
-    }
+	async fetch(req: Request, env: Environment) {
+		if (!env.MY_SECRET_VALUE) {
+			return new Response("Missing secret binding", { status: 500 });
+		}
 
-    const authToken = req.headers.get("Authorization") || "";
+		const authToken = req.headers.get("Authorization") || "";
 
-    if (authToken.length !== env.MY_SECRET_VALUE.length) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+		if (authToken.length !== env.MY_SECRET_VALUE.length) {
+			return new Response("Unauthorized", { status: 401 });
+		}
 
-    const encoder = new TextEncoder();
+		const encoder = new TextEncoder();
 
-    const a = encoder.encode(authToken);
-    const b = encoder.encode(env.MY_SECRET_VALUE);
+		const a = encoder.encode(authToken);
+		const b = encoder.encode(env.MY_SECRET_VALUE);
 
-    if (a.byteLength !== b.byteLength) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+		if (a.byteLength !== b.byteLength) {
+			return new Response("Unauthorized", { status: 401 });
+		}
 
-    if (!crypto.subtle.timingSafeEqual(a, b)) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+		if (!crypto.subtle.timingSafeEqual(a, b)) {
+			return new Response("Unauthorized", { status: 401 });
+		}
 
-    return new Response("Welcome!");
-  },
+		return new Response("Welcome!");
+	},
 };
 ```
 

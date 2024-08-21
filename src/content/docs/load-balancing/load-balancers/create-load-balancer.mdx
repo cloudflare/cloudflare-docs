@@ -5,18 +5,17 @@ sidebar:
   order: 4
 head: []
 description: Learn how to set up and maintain load balancers.
-
 ---
 
-import { AvailableNotifications, Render, TabItem, Tabs } from "~/components"
+import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
 
-<Render file="load-balancer-definition" /> <br/>
+<Render file="load-balancer-definition" /> <br />
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/load-balancers/).
 
 ## Create a load balancer
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Render file="load-balancer-create" />
 
@@ -34,17 +33,15 @@ You can also configure separate load balancers for each domain and reuse monitor
 
 :::note
 
-
 Sharing load balancers across sites is only supported if the target zone is on a [full DNS setup](/dns/zone-setups/full-setup/). It is not supported if the target zone is on a `CNAME` setup.
-
 
 :::
 
-***
+---
 
 ## Edit a load balancer
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit a load balancer in the dashboard:
 
@@ -61,13 +58,13 @@ To update specific settings without having to resubmit the entire configuration,
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Delete a load balancer
 
 If you delete or disable a load balancer, your endpoint's response to requests will depend on your [existing DNS records](/load-balancing/load-balancers/dns-records/#disabling-a-load-balancer).
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a load balancer in the dashboard:
 
@@ -80,12 +77,15 @@ To delete a load balancer using the API, send a [DELETE](/api/operations/load-ba
 
 </TabItem> </Tabs>
 
-***
+---
 
 ## Set up alerts
 
 You can configure alerts to receive notifications for changes in the health status of your pools or endpoints.
 
-<AvailableNotifications product="Load Balancing" notificationFilter="Load Balancing Health Alert" />
+<AvailableNotifications
+	product="Load Balancing"
+	notificationFilter="Load Balancing Health Alert"
+/>
 
 <Render file="get-started" product="notifications" />

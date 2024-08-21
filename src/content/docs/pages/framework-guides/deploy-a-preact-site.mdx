@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Preact
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 
@@ -16,8 +15,8 @@ You will use [`wmr`](https://github.com/preactjs/wmr), an all-in-one development
 Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) command in your terminal, giving it a title:
 
 ```sh
-$ npm init wmr your-project-name
-$ cd your-project-name
+npm init wmr your-project-name
+cd your-project-name
 ```
 
 <Render file="tutorials-before-you-start" />
@@ -53,9 +52,7 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 :::note
 
-
 **Note:** You will notice that within the `package.json` file, the `"build"` script uses the `--prerender` flag. With this, `wmr` produces static HTML pages – along with their assets – which is perfect for Pages.
-
 
 :::
 
@@ -67,9 +64,7 @@ Additionally, you will have access to [preview deployments](/pages/configuration
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
