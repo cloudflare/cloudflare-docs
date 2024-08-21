@@ -147,7 +147,6 @@ For example, consider a scenario with many very low-bandwidth TCP connections an
 
 :::note[Note]
 
-
 {props.one} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to <a href={props.three}>Configure static routes</a> for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
@@ -155,6 +154,5 @@ For example, in a scenario where you want to route 70% of your traffic through I
 Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
 For more on {props.one} tunnel weights, contact your Cloudflare customer service manager.
-
 
 :::

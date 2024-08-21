@@ -17,17 +17,13 @@ When a probe attempt fails for a [healthy](#health-state-and-prioritization) tun
 
 :::note[Note]
 
-
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, change your health check type to **Request** in your tunnels. Refer to <a href={props.five}>Configure tunnel endpoints</a> to learn how to change this setting.
 
-
 :::
-
 
 <Details header="Wireshark example of health check packets">
 
 ![Wireshark example for tunnel health checks with ICMP reply packet](~/assets/images/magic-transit/tunnel-health-check-packets.png)
-
 
 </Details>
 
@@ -41,11 +37,9 @@ Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are pref
 
 :::note[Note]
 
-
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In the example from the previous paragraph, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
-
 
 :::
 
