@@ -16,29 +16,10 @@ description: Access custom Cloudflare properties and control how Cloudflare
   features are applied to every request.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(req) {
-		const data =
-			req.cf !== undefined
-				? req.cf
-				: { error: "The `cf` object is not available inside the preview." };
-
-		return new Response(JSON.stringify(data, null, 2), {
-			headers: {
-				"content-type": "application/json;charset=UTF-8",
-			},
-		});
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(req): Promise<Response> {
@@ -55,8 +36,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 import json

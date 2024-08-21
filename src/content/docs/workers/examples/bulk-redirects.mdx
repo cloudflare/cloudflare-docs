@@ -17,37 +17,10 @@ description: Redirect requests to certain URLs based on a mapped object to the
   request's URL.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request) {
-		const externalHostname = "examples.cloudflareworkers.com";
-
-		const redirectMap = new Map([
-			["/bulk1", "https://" + externalHostname + "/redirect2"],
-			["/bulk2", "https://" + externalHostname + "/redirect3"],
-			["/bulk3", "https://" + externalHostname + "/redirect4"],
-			["/bulk4", "https://google.com"],
-		]);
-
-		const requestURL = new URL(request.url);
-		const path = requestURL.pathname;
-		const location = redirectMap.get(path);
-
-		if (location) {
-			return Response.redirect(location, 301);
-		}
-		// If request not in map, return the original request
-		return fetch(request);
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -72,8 +45,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, fetch, URL

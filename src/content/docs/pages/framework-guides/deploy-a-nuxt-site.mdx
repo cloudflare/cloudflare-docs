@@ -145,9 +145,7 @@ In Nuxt, add server-side code via [Server Routes and Middleware](https://nuxt.co
 
 The following code block shows an example of accessing a KV namespace in Nuxt.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```javascript null {2}
+```javascript {2}
 export default defineEventHandler(({ context }) => {
 	const MY_KV = context.cloudflare.env.MY_KV;
 
@@ -156,20 +154,6 @@ export default defineEventHandler(({ context }) => {
 	};
 });
 ```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```typescript null {2}
-export default defineEventHandler(({ context }) => {
-	const MY_KV = context.cloudflare.env.MY_KV;
-
-	return {
-		// ...
-	};
-});
-```
-
-</TabItem> </Tabs>
 
 <Render file="framework-guides/learn-more" params={{ one: "Nuxt" }} />
 

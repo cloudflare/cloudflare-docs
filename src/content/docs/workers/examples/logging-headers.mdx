@@ -17,21 +17,10 @@ sidebar:
 description: Examine the contents of a Headers object by logging to console with a Map.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request) {
-		console.log(new Map(request.headers));
-		return new Response("Hello world");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -40,8 +29,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response

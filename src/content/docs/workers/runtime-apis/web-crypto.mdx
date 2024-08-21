@@ -6,7 +6,7 @@ description: A set of low-level functions for common cryptographic tasks.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TypeScriptExample } from "~/components"
 
 ## Background
 
@@ -60,36 +60,7 @@ The Web Crypto API differs significantly from the [Node.js Crypto API](/workers/
 
 ### Usage
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-  async fetch(req) {
-    // Fetch from origin
-    const res = await fetch(req);
-
-    // We need to read the body twice so we `tee` it (get two instances)
-    const [bodyOne, bodyTwo] = res.body.tee();
-    // Make a new response so we can set the headers (responses from `fetch` are immutable)
-    const newRes = new Response(bodyOne, res);
-    // Create a SHA-256 digest stream and pipe the body into it
-    const digestStream = new crypto.DigestStream("SHA-256");
-    bodyTwo.pipeTo(digestStream);
-    // Get the final result
-    const digest = await digestStream.digest;
-    // Turn it into a hex string
-    const hexString = [...new Uint8Array(digest)]
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('')
-    // Set a header with the SHA-256 hash and return the response
-    newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
-    return newRes;
-  }
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export default {
   async fetch(req): Promise<Response> {
@@ -115,8 +86,7 @@ export default {
   }
 } satisfies ExportedHandler;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## Methods
 

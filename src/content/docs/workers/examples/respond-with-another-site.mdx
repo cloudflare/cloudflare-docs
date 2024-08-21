@@ -19,14 +19,10 @@ description: Respond to the Worker request with the response from another
   website (example.com in this example).
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-<Render file="respond-another-site-example-js" />
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -44,8 +40,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, fetch, Headers

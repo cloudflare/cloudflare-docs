@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TypeScriptExample, PackageManagers } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -76,45 +76,7 @@ kv_namespaces = [
 
 ## 5. Code
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-Update `src/index.js` with your Worker code:
-
-```js
-import puppeteer from "@cloudflare/puppeteer";
-
-export default {
-	async fetch(request, env) {
-		const { searchParams } = new URL(request.url);
-		let url = searchParams.get("url");
-		let img;
-		if (url) {
-			url = new URL(url).toString(); // normalize
-			img = await env.BROWSER_KV_DEMO.get(url, { type: "arrayBuffer" });
-			if (img === null) {
-				const browser = await puppeteer.launch(env.MYBROWSER);
-				const page = await browser.newPage();
-				await page.goto(url);
-				img = await page.screenshot();
-				await env.BROWSER_KV_DEMO.put(url, img, {
-					expirationTtl: 60 * 60 * 24,
-				});
-				await browser.close();
-			}
-			return new Response(img, {
-				headers: {
-					"content-type": "image/jpeg",
-				},
-			});
-		} else {
-			return new Response("Please add an ?url=https://example.com/ parameter");
-		}
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-Update `src/worker.ts` with your Worker code:
-
+<TypeScriptExample>
 ```ts
 import puppeteer from "@cloudflare/puppeteer";
 
@@ -152,8 +114,7 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 This Worker instantiates a browser using Puppeteer, opens a new page, navigates to what you put in the `"url"` parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot.
 

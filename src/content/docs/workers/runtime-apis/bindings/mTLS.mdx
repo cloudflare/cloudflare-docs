@@ -6,7 +6,7 @@ description: Configure your Worker to present a client certificate to services
   that enforce an mTLS connection.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a server presents a certificate for the client to authenticate in order to prove their identity. For even tighter security, some services require that the client also present a certificate.
 
@@ -53,19 +53,8 @@ mTLS certificate bindings present an API similar to [service bindings](/workers/
 
 ### Interface
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, environment) {
-		return await environment.MY_CERT.fetch("https://a-secured-origin.com");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```js
+<TypeScriptExample>
+```ts
 interface Env {
   MY_CERT: Fetcher;
 }
@@ -76,5 +65,4 @@ export default {
     }
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>

@@ -12,8 +12,6 @@ description: Query your D1 database from a Remix application.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
-
 Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) from Remix using Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
 
 To set up a new Remix site on Cloudflare Pages that can query D1:
@@ -26,8 +24,6 @@ The following example shows you how to define a Remix [`loader`](https://remix.r
 
 * Bindings are passed through on the `context.env` parameter passed to a `LoaderFunction`.
 * If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access D1's [client API](/d1/build-with-d1/d1-client-api/#query-statement-methods) methods via `context.env.DB`.
-
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import type { LoaderFunction } from "@remix-run/cloudflare";
@@ -58,5 +54,3 @@ export default function Index() {
   );
 }
 ```
-
-</TabItem> </Tabs>

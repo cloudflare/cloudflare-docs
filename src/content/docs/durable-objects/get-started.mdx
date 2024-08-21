@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TypeScriptExample, PackageManagers } from "~/components";
 
 This guide will instruct you through:
 
@@ -66,42 +66,19 @@ If you do not use JavaScript or TypeScript, you will need a [shim](https://devel
 
 Your `MyDurableObject` class will have a constructor with two parameters. The first parameter, `state`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export class MyDurableObject {
-	constructor(state, env) {}
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export class MyDurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
 }
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 Workers communicate with a Durable Object via the fetch API. Like a Worker, a Durable Object listens for incoming fetch events by registering an event handler. For a Durable Object, the fetch handler is defined as a method on the class.
 
 Your file should now look like:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export class MyDurableObject {
-	constructor(state, env) {}
-
-	async fetch(request) {
-		return new Response("Hello World");
-	}
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export class MyDurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
@@ -111,8 +88,7 @@ export class MyDurableObject {
 	}
 }
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
 
@@ -134,24 +110,7 @@ This is achieved by configuring a binding in the calling Worker for each Durable
 
 To communicate with a Durable Object, the fetch handler should look like the following:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, env) {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
-
-		let stub = env.MY_DURABLE_OBJECT.get(id);
-
-		let response = await stub.fetch(request);
-
-		return response;
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -165,8 +124,7 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 In the code above, you have:
 

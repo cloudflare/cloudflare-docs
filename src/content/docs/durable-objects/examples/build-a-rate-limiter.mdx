@@ -11,7 +11,7 @@ description: Build a rate limiter using Durable Objects and Workers.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TypeScriptExample } from "~/components"
 
 This example shows how to build a rate limiter using Durable Objects and Workers that can be used to protect upstream resources, including third-party APIs that your application relies on and/or services that may be costly for you to invoke.
 
@@ -40,84 +40,7 @@ This example uses Durable Object's [Alarms API](/durable-objects/api/alarms) to 
 
 The first implementation of a rate limiter is below:
 
-<Tabs>
-<TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import { DurableObject } from "cloudflare:workers";
-
-// Worker
-export default {
-  async fetch(request, env, _ctx) {
-    // Determine the IP address of the client
-    const ip = request.headers.get("CF-Connecting-IP");
-    if (ip === null) {
-      return new Response("Could not determine client IP", { status: 400 });
-    }
-
-    // Obtain an identifier for a Durable Object based on the client's IP address
-    const id = env.RATE_LIMITER.idFromName(ip);
-
-    try {
-      const stub = env.RATE_LIMITER.get(id);
-      const milliseconds_to_next_request = await stub.getMillisecondsToNextRequest();
-      if (milliseconds_to_next_request > 0) {
-        // Alternatively one could sleep for the necessary length of time
-        return new Response("Rate limit exceeded", { status: 429 });
-      }
-    } catch (error) {
-      return new Response("Could not connect to rate limiter", { status: 502 });
-    }
-
-    // TODO: Implement me
-    return new Response("Call some upstream resource...")
-  }
-};
-
-// Durable Object
-export class RateLimiter extends DurableObject {
-  static milliseconds_per_request = 1;
-  static milliseconds_for_updates = 5000;
-  static capacity = 10000;
-
-  constructor(ctx, env) {
-    super(ctx, env);
-    this.tokens = RateLimiter.capacity;
-  }
-
-  async getMillisecondsToNextRequest() {
-    this.checkAndSetAlarm()
-
-    let milliseconds_to_next_request = RateLimiter.milliseconds_per_request;
-    if (this.tokens > 0) {
-      this.tokens -= 1;
-      milliseconds_to_next_request = 0;
-    }
-
-    return milliseconds_to_next_request;
-  }
-
-  async checkAndSetAlarm() {
-    let currentAlarm = await this.ctx.storage.getAlarm();
-    if (currentAlarm == null) {
-      this.ctx.storage.setAlarm(Date.now() +
-        RateLimiter.milliseconds_for_updates * RateLimiter.milliseconds_per_request);
-    }
-  }
-
-  async alarm() {
-    if (this.tokens < RateLimiter.capacity) {
-      this.tokens = Math.min(RateLimiter.capacity,
-        this.tokens + RateLimiter.milliseconds_for_updates);
-      this.checkAndSetAlarm()
-    }
-  }
-}
-```
-
-</TabItem>
-<TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
@@ -195,43 +118,12 @@ export class RateLimiter extends DurableObject {
   }
 }
 ```
-
-</TabItem>
-</Tabs>
+</TypeScriptExample>
 
 While the token bucket algorithm is popular for implementing rate limiting and uses Durable Object features, there is a simpler approach:
 
-<Tabs>
-<TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-// Durable Object
-export class RateLimiter extends DurableObject {
-  static milliseconds_per_request = 1;
-  static milliseconds_for_grace_period = 5000;
-
-  constructor(ctx, env) {
-    super(ctx, env);
-    this.nextAllowedTime = 0;
-  }
-
-  async getMillisecondsToNextRequest() {
-    const now = Date.now();
-
-    this.nextAllowedTime = Math.max(now, this.nextAllowedTime);
-    this.nextAllowedTime += RateLimiter.milliseconds_per_request;
-
-    const value = Math.max(0,
-      this.nextAllowedTime - now - RateLimiter.milliseconds_for_grace_period);
-    return value;
-  }
-}
-```
-
-</TabItem>
-<TabItem label="TypeScript" icon="seti:typescript">
-
-```ts title="index.ts"
+<TypeScriptExample filename="index.ts">
+```ts
 // Durable Object
 export class RateLimiter extends DurableObject {
   static milliseconds_per_request = 1;
@@ -256,9 +148,7 @@ export class RateLimiter extends DurableObject {
   }
 }
 ```
-
-</TabItem>
-</Tabs>
+</TypeScriptExample>
 
 Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 

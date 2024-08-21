@@ -18,14 +18,10 @@ sidebar:
 description: Deliver an HTML page from an HTML string directly inside the Worker script.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-<Render file="return-html-example-js" />
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -43,8 +39,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, Headers

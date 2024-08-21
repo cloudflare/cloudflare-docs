@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TypeScriptExample } from "~/components"
 
 [Puppeteer](https://pptr.dev/) is one of the most popular libraries that abstract the lower-level DevTools protocol from developers and provides a high-level API that you can use to easily instrument Chrome/Chromium and automate browsing sessions. Puppeteer is used for tasks like creating screenshots, crawling pages, and testing web applications.
 
@@ -24,25 +24,7 @@ npm install @cloudflare/puppeteer --save-dev
 
 Once the [browser binding](/browser-rendering/platform/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, Puppeteer can be used in a Worker:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import puppeteer from "@cloudflare/puppeteer";
-
-export default {
-	async fetch(request, env) {
-		const browser = await puppeteer.launch(env.MYBROWSER);
-		const page = await browser.newPage();
-		await page.goto("https://example.com");
-		const metrics = await page.metrics();
-		await browser.close();
-		return Response.json(metrics);
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 import puppeteer from "@cloudflare/puppeteer";
 
@@ -61,8 +43,7 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the `env.MYBROWSER` browser, opens a [new page](https://pptr.dev/api/puppeteer.browser.newpage), [goes to](https://pptr.dev/api/puppeteer.page.goto) [https://example.com/](https://example.com/), gets the page load [metrics](https://pptr.dev/api/puppeteer.page.metrics), [closes](https://pptr.dev/api/puppeteer.browser.close) the browser and prints metrics in JSON.
 

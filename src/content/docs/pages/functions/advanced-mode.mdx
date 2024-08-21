@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TypeScriptExample } from "~/components"
 
 Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
 
@@ -20,28 +20,9 @@ In advanced mode, your Function will assume full control of all incoming HTTP re
 
 After making a `_worker.js` file in your output directory, add the following code snippet:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    if (url.pathname.startsWith('/api/')) {
-      // TODO: Add your custom /api/* logic here.
-      return new Response('Ok');
-    }
-    // Otherwise, serve the static assets.
-    // Without this, the Worker will error and no assets will be served.
-    return env.ASSETS.fetch(request);
-  },
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 // Note: You would need to compile your TS into JS and output it as a `_worker.js` file. We do not read `_worker.ts`
-
 interface Env {
   ASSETS: Fetcher;
 }
@@ -59,8 +40,7 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 In the above code, you have configured your Function to return a response under all requests headed for `/api/`. Otherwise, your Function will fallback to returning static assets.
 

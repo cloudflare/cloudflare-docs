@@ -17,14 +17,10 @@ description: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-<Render file="fetch-html-example-js" />
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request: Request): Promise<Response> {
@@ -37,8 +33,8 @@ export default {
 	},
 };
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import fetch

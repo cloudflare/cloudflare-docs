@@ -13,20 +13,9 @@ sidebar:
 description: Set a Cron Trigger for your Worker.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async scheduled(event, env, ctx) {
-		console.log("cron processed");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 interface Env {}
 export default {
@@ -39,8 +28,7 @@ export default {
 	},
 };
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## Set Cron Triggers in Wrangler
 

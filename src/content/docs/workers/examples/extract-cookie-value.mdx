@@ -16,28 +16,10 @@ description: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import { parse } from "cookie";
-export default {
-	async fetch(request) {
-		// The name of the cookie
-		const COOKIE_NAME = "__uid";
-		const cookie = parse(request.headers.get("Cookie") || "");
-		if (cookie[COOKIE_NAME] != null) {
-			// Respond with the cookie value
-			return new Response(cookie[COOKIE_NAME]);
-		}
-		return new Response("No cookie with name: " + COOKIE_NAME);
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 import { parse } from "cookie";
 export default {
@@ -53,8 +35,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from http.cookies import SimpleCookie

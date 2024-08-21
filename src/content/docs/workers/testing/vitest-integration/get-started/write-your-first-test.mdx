@@ -7,7 +7,7 @@ head: []
 description: Write unit tests against Workers.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 This guide will instruct you through installing and setting up the `@cloudflare/vitest-pool-workers` package. This will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
 
@@ -114,18 +114,7 @@ Save this file, and you are ready to write your first test.
 
 If you created a basic Worker via the guide listed above, you should have the following fetch handler in the `src` folder:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, env, ctx) {
-		return new Response("Hello World!");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -133,38 +122,11 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 This Worker receives a request, and returns a response of `"Hello World!"`. In order to test this, create a `test` folder with the following test file:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-} from "cloudflare:test";
-import { describe, it, expect } from "vitest";
-// Could import any other source file/function here
-import worker from "../src";
-
-describe("Hello World worker", () => {
-	it("responds with Hello World!", async () => {
-		const request = new Request("http://example.com");
-		// Create an empty context to pass to `worker.fetch()`
-		const ctx = createExecutionContext();
-		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toBe("Hello World!");
-	});
-});
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 import {
 	env,
@@ -191,29 +153,11 @@ describe("Hello World worker", () => {
 	});
 });
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 Add functionality to handle a `404` path on the Worker. This functionality will return the text `Not found` as well as the status code `404`.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, env, ctx) {
-		const { pathname } = new URL(request.url);
-
-		if (pathname === "/404") {
-			return new Response("Not found", { status: 404 });
-		}
-
-		return new Response("Hello World!");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -227,28 +171,11 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 To test this, add the following to your test file:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-it("responds with not found and proper status for /404", async () => {
-	const request = new Request("http://example.com/404");
-	// Create an empty context to pass to `worker.fetch()`
-	const ctx = createExecutionContext();
-	const response = await worker.fetch(request, env, ctx);
-	// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-	await waitOnExecutionContext(ctx);
-	expect(await response.status).toBe(404);
-	expect(await response.text()).toBe("Not found");
-});
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 it("responds with not found and proper status for /404", async () => {
 	const request = new IncomingRequest("http://example.com/404");
@@ -261,8 +188,7 @@ it("responds with not found and proper status for /404", async () => {
 	expect(await response.text()).toBe("Not found");
 });
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## Related resources
 

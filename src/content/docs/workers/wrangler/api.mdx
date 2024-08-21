@@ -9,7 +9,7 @@ description: A set of programmatic APIs that can be integrated with local
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TypeScriptExample } from "~/components"
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
@@ -83,34 +83,7 @@ To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
 #### Single Worker example
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-const { unstable_dev } = require("wrangler");
-
-describe("Worker", () => {
-  let worker;
-
-  beforeAll(async () => {
-    worker = await unstable_dev("src/index.js", {
-      experimental: { disableExperimentalWarning: true },
-    });
-  });
-
-  afterAll(async () => {
-    await worker.stop();
-  });
-
-  it("should return Hello World", async () => {
-    const resp = await worker.fetch();
-    const text = await resp.text();
-    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-  });
-});
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 import { unstable_dev } from "wrangler";
 import type { UnstableDevWorker } from "wrangler";
@@ -135,8 +108,7 @@ describe("Worker", () => {
   });
 });
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 #### Multi-Worker example
 
@@ -144,47 +116,7 @@ You can test Workers that call other Workers. In the below example, we refer to 
 
 If you shut down the child Worker prematurely, the parent Worker will not know the child Worker exists and your tests will fail.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-import { unstable_dev } from "wrangler";
-
-describe("multi-worker testing", () => {
-  let childWorker;
-  let parentWorker;
-
-  beforeAll(async () => {
-    childWorker = await unstable_dev("src/child-worker.js", {
-      config: "src/child-wrangler.toml",
-      experimental: { disableExperimentalWarning: true },
-    });
-    parentWorker = await unstable_dev("src/parent-worker.js", {
-      config: "src/parent-wrangler.toml",
-      experimental: { disableExperimentalWarning: true },
-    });
-  });
-
-  afterAll(async () => {
-    await childWorker.stop();
-    await parentWorker.stop();
-  });
-
-  it("childWorker should return Hello World itself", async () => {
-    const resp = await childWorker.fetch();
-    const text = await resp.text();
-    expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-  });
-
-  it("parentWorker should return Hello World by invoking the child worker", async () => {
-    const resp = await parentWorker.fetch();
-    const parsedResp = await resp.text();
-    expect(parsedResp).toEqual("Parent worker sees: Hello World!");
-  });
-});
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 import { unstable_dev } from "wrangler";
 import type { UnstableDevWorker } from "wrangler";
@@ -222,8 +154,7 @@ describe("multi-worker testing", () => {
   });
 });
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## `getPlatformProxy`
 

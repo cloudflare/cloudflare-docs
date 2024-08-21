@@ -13,35 +13,9 @@ sidebar:
 description: Set multiple Cron Triggers on three different schedules.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async scheduled(event, env, ctx) {
-		// Write code for updating your API
-		switch (event.cron) {
-			case "*/3 * * * *":
-				// Every three minutes
-				await updateAPI();
-				break;
-			case "*/10 * * * *":
-				// Every ten minutes
-				await updateAPI2();
-				break;
-			case "*/45 * * * *":
-				// Every forty-five minutes
-				await updateAPI3();
-				break;
-		}
-		console.log("cron processed");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 interface Env {}
 export default {
@@ -69,8 +43,7 @@ export default {
 	},
 };
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## Test Cron Triggers using Wrangler
 

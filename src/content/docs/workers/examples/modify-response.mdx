@@ -17,60 +17,10 @@ description: Fetch and modify response properties which are immutable by
   creating a copy first.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request) {
-		/**
-		 * @param {string} headerNameSrc Header to get the new value from
-		 * @param {string} headerNameDst Header to set based off of value in src
-		 */
-		const headerNameSrc = "foo"; //"Orig-Header"
-		const headerNameDst = "Last-Modified";
-
-		/**
-		 * Response properties are immutable. To change them, construct a new
-		 * Response and pass modified status or statusText in the ResponseInit
-		 * object. Response headers can be modified through the headers `set` method.
-		 */
-		const originalResponse = await fetch(request);
-
-		// Change status and statusText, but preserve body and headers
-		let response = new Response(originalResponse.body, {
-			status: 500,
-			statusText: "some message",
-			headers: originalResponse.headers,
-		});
-
-		// Change response body by adding the foo prop
-		const originalBody = await originalResponse.json();
-		const body = JSON.stringify({ foo: "bar", ...originalBody });
-		response = new Response(body, response);
-
-		// Add a header using set method
-		response.headers.set("foo", "bar");
-
-		// Set destination header to the value of the source header
-		const src = response.headers.get(headerNameSrc);
-
-		if (src != null) {
-			response.headers.set(headerNameDst, src);
-			console.log(
-				`Response header "${headerNameDst}" was set to "${response.headers.get(
-					headerNameDst,
-				)}"`,
-			);
-		}
-		return response;
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -118,8 +68,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, fetch, JSON

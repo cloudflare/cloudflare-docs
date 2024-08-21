@@ -6,7 +6,7 @@ description: Attach text strings and JSON values as environment variables to you
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TypeScriptExample } from "~/components"
 
 ## Background
 
@@ -22,18 +22,7 @@ Text and JSON values are defined via the `[vars]` configuration in your `wrangle
 
 Refer to the following example on how to access the `API_HOST` environment variable in your Worker code:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-  async fetch(request, env, ctx) {
-    return new Response(`API host: ${env.API_HOST}`);
-  }
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export interface Env {
   API_HOST: string;
@@ -46,7 +35,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 `vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 

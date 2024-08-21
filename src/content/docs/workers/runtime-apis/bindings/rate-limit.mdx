@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TypeScriptExample } from "~/components"
 
 The Rate Limiting API lets you define rate limits and write code around them in your Worker.
 
@@ -24,11 +24,9 @@ The Rate Limiting API is backed by the same infrastructure that serves the [Rate
 
 :::caution[The Rate Limiting API is in open beta]
 
-
 * You must use version 3.45.0 or later of the [Wrangler CLI](/workers/wrangler)
 
 We want your feedback. Tell us what you'd like to see in the [#workers-discussions](https://discord.com/channels/595317990191398933/779390076219686943) or [#workers-help](https://discord.com/channels/595317990191398933/1052656806058528849) channels of the [Cloudflare Developers Discord](https://discord.cloudflare.com/). You can find the an archive of the previous discussion in [#rate-limiting-beta](https://discord.com/channels/595317990191398933/1225429769219211436)
-
 
 :::
 
@@ -55,25 +53,7 @@ simple = { limit = 100, period = 60 }
 
 This binding makes the `MY_RATE_LIMITER` binding available, which provides a `limit()` method:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```javascript
-export default {
-  async fetch(request, env) {
-    const { pathname } = new URL(request.url)
-
-    const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }) // key can be any string of your choosing
-    if (!success) {
-      return new Response(`429 Failure – rate limit exceeded for ${pathname}`, { status: 429 })
-    }
-
-    return new Response(`Success!`)
-  }
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 interface Env {
   MY_RATE_LIMITER: any;
@@ -92,8 +72,7 @@ export default {
   }
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 The `limit()` API accepts a single argument — a configuration object with the `key` field.
 

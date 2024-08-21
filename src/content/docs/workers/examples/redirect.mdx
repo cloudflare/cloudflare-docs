@@ -20,16 +20,12 @@ description: Redirect requests from one URL to another or from one set of URLs
   to another set.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 ## Redirect all requests to one URL
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-<Render file="redirect-example-js" />
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples"> 
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -39,8 +35,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response
@@ -69,27 +65,8 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 
 ## Redirect requests from one domain to another
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request) {
-		const base = "https://example.com";
-		const statusCode = 301;
-
-		const url = new URL(request.url);
-		const { pathname, search } = url;
-
-		const destinationURL = `${base}${pathname}${search}`;
-		console.log(destinationURL);
-
-		return Response.redirect(destinationURL, statusCode);
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<Tabs syncKey="workersExamples">
+<TypeScriptExample tabsWrapper={false}>
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
@@ -106,8 +83,8 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
-
-</TabItem> <TabItem label="Python" icon="seti:python">
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
 
 ```py
 from js import Response, URL

@@ -13,8 +13,6 @@ description: Query a D1 database from a SvelteKit application.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
-
 [SvelteKit](https://kit.svelte.dev/) is a full-stack framework that combines the Svelte front-end framework with Vite for server-side capabilities and rendering. You can query D1 from SvelteKit by configuring a [server endpoint](https://kit.svelte.dev/docs/routing#server) with a binding to your D1 database(s).
 
 To set up a new SvelteKit site on Cloudflare Pages that can query D1:
@@ -31,9 +29,7 @@ The following example shows you how to create a server endpoint configured to qu
 
 The example also shows you how to configure both your app-wide types within `src/app.d.ts` to recognize your `D1Database` binding, import the `@sveltejs/adapter-cloudflare` adapter into `svelte.config.js`, and configure it to apply to all of your routes.
 
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
-
-```ts
+```ts title="src/app.d.ts"
 import type { RequestHandler } from "@sveltejs/kit";
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
@@ -68,7 +64,7 @@ declare global {
 export {};
 ```
 
-```js
+```js title="svelte.config.js"
 import adapter from '@sveltejs/adapter-cloudflare';
 
 export default {
@@ -84,5 +80,3 @@ export default {
 };
 
 ```
-
-</TabItem> </Tabs>
