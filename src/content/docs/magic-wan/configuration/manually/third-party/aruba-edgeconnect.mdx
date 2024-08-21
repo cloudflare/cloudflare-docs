@@ -12,9 +12,7 @@ This tutorial describes how to configure the EdgeConnect device for both east-we
 
 :::caution
 
-
 Note that north-south traffic routed through Cloudflare's Secure Web Gateway is an optional add-on feature set and requires a Cloudflare Zero Trust account.
-
 
 :::
 
@@ -28,7 +26,6 @@ Before setting up a connection between EdgeConnect and Cloudflare, you must have
 - The EdgeConnect devices used in this tutorial and on v9.0.
 
 ## Example scenario
-
 
 <Details header="GRE tunnel configuration">
 
@@ -52,9 +49,7 @@ The Deployment screenshot displays several different IP addresses and interfaces
 - **IP/Mask (WAN) 10.2.0.2/24** - This defines the WAN0 interface IP of the EdgeConnect appliance.
 - **Next Hop 10.2.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP.
 
-
 </Details>
-
 
 <Details header="IPsec tunnel configuration">
 
@@ -77,7 +72,6 @@ The Deployment screenshot displays several different IP addresses and interfaces
 - **IP/Mask (WAN) 10.32.0.2/24** - This defines the WAN0 interface IP of the EdgeConnect appliance.
 - **Next Hop 10.32.0.1**  - This example uses Google Cloud. This IP defines the default gateway IP for the subnet and is built into GCP.
 
-
 </Details>
 
 ## 1. Define a common site on the Orchestrator
@@ -89,7 +83,6 @@ This step is only required if Cloudflare is used for east-west traffic routing.
 ## 2. Configure overlay policies
 
 We use Aruba Orchestrator's Business Intent Overlays to create intuitive policies which automatically identify and steer application traffic to Cloudflare. Two Business Intent Overlay (BIO) policies are created in this example.
-
 
 <Details header="GRE tunnel configuration">
 
@@ -109,7 +102,6 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ![Business Intent Overlay screen with breakout and CF overlays](~/assets/images/magic-wan/third-party/aruba-edge-connect/biz-intent-overlay.png)
 </Details>
-
 
 <Details header="IPsec tunnel configuration">
 
@@ -132,7 +124,6 @@ The service name used to send traffic through the tunnel created in the next ste
 
 ## 3. Create tunnels on Cloudflare and EdgeConnect
 
-
 <Details header="GRE tunnel configuration">
 
 ![Diagram of GCP, Aruba Orchestratror, and Cloudflare products](~/assets/images/magic-wan/third-party/aruba-edge-connect/gcp-edgeconnect-diagram.png)
@@ -149,7 +140,6 @@ The service name used to send traffic through the tunnel created in the next ste
 ![GRE tunnels information for each branch](~/assets/images/magic-wan/third-party/aruba-edge-connect/gre-tunnels-edgeconnect.png)
 
 </Details>
-
 
 <Details header="IPsec tunnel configuration">
 
@@ -273,7 +263,6 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 ## 4. Create static routes on Cloudflare and EdgeConnect
 
-
 <Details header="GRE tunnel configuration">
 
 1. Define static routes on the Cloudflare dashboard for the LAN subnet(s) attached to the EdgeConnect appliance. Use the private IP pair for the EdgeConnect tunnel endpoint.
@@ -290,7 +279,6 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 </Details>
 
-
 <Details header="IPsec tunnel configuration">
 
 ![Static route values from Cloudflare dashboard](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-ipsec.png)
@@ -306,7 +294,6 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 </Details>
 
 ## 5. Validate traffic flow
-
 
 <Details header="GRE tunnel configuration">
 
@@ -336,9 +323,7 @@ The traceroute shows the path going from the client (`10.3.0.3`) <br/>
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 
-
 </Details>
-
 
 <Details header="IPsec tunnel configuration">
 
