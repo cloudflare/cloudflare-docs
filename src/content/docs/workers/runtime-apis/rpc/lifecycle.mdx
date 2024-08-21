@@ -7,7 +7,6 @@ head:
   - tag: title
     content: Workers RPC — Lifecycle
 description: Memory management, resource management, and the lifecycle of RPC stubs.
-
 ---
 
 ## Lifetimes, Memory and Resource Management
@@ -30,8 +29,8 @@ To ensure resources are properly disposed of, you should use [Explicit Resource 
 
 Explicit Resource Management adds the following language features:
 
-* The [`using` declaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
-* [`Symbol.dispose` and `Symbol.asyncDispose`](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#additions-to-symbol)
+- The [`using` declaration](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#using-declarations)
+- [`Symbol.dispose` and `Symbol.asyncDispose`](https://github.com/tc39/proposal-explicit-resource-management?tab=readme-ov-file#additions-to-symbol)
 
 If a variable is declared with `using`, when the variable is no longer in scope, the variable's disposer will be invoked. For example:
 
@@ -51,7 +50,7 @@ function sendEmail(id, message) {
 Because it has not yet landed in V8, the `using` keyword is not yet available directly in the Workers runtime. To use it in your code, you must use a prerelease version of the [Wrangler CLI](/workers/wrangler/) to run and deploy your Worker:
 
 ```sh
-$ npx wrangler@using-keyword-experimental dev
+npx wrangler@using-keyword-experimental dev
 ```
 
 This version of Wrangler will transpile `using` into direct calls to `Symbol.dispose()`, before running your code or deploying it to Cloudflare.
@@ -60,9 +59,9 @@ The following code:
 
 ```js
 {
-  using counter = await env.COUNTER_SERVICE.newCounter();
-  await counter.increment(2);
-  await counter.increment(4);
+	using counter = await env.COUNTER_SERVICE.newCounter();
+	await counter.increment(2);
+	await counter.increment(4);
 }
 ```
 
@@ -70,13 +69,13 @@ The following code:
 
 ```js
 {
-  const counter = await env.COUNTER_SERVICE.newCounter();
-  try {
-    await counter.increment(2);
-    await counter.increment(4);
-  } finally {
-    counter[Symbol.dispose]();
-  }
+	const counter = await env.COUNTER_SERVICE.newCounter();
+	try {
+		await counter.increment(2);
+		await counter.increment(4);
+	} finally {
+		counter[Symbol.dispose]();
+	}
 }
 ```
 
@@ -96,15 +95,17 @@ For example, the Worker below does not make use of the `using` declaration, but 
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    let authResult = await env.AUTH_SERVICE.checkCookie(req.headers.get("Cookie"));
-    if (!authResult.authorized) {
-      return new Response("Not authorized", {status: 403});
-    }
-    let profile = await authResult.user.getProfile();
+	async fetch(request, env, ctx) {
+		let authResult = await env.AUTH_SERVICE.checkCookie(
+			req.headers.get("Cookie"),
+		);
+		if (!authResult.authorized) {
+			return new Response("Not authorized", { status: 403 });
+		}
+		let profile = await authResult.user.getProfile();
 
-    return new Response(`Hello, ${profile.name}!`);
-  },
+		return new Response(`Hello, ${profile.name}!`);
+	},
 };
 ```
 
@@ -134,9 +135,9 @@ A class that extends [`RpcTarget`](/workers/runtime-apis/rpc/) can optionally im
 
 ```js
 class Foo extends RpcTarget {
-  [Symbol.dispose]() {
-    // ...
-  }
+	[Symbol.dispose]() {
+		// ...
+	}
 }
 ```
 
@@ -168,14 +169,14 @@ In order to avoid this situation, you can manually create a stub locally, and th
 import { RpcTarget, RpcStub } from "cloudflare:workers";
 
 class Foo extends RpcTarget {
-  // ...
+	// ...
 }
 
 let obj = new Foo();
 let stub = new RpcStub(obj);
-await rpc1(stub.dup());  // sends a dup of `stub`
-await rpc2(stub.dup());  // sends another dup of `stub`
-stub[Symbol.dispose]();  // disposes the original stub
+await rpc1(stub.dup()); // sends a dup of `stub`
+await rpc2(stub.dup()); // sends another dup of `stub`
+stub[Symbol.dispose](); // disposes the original stub
 
 // obj's disposer will be called when the other two stubs
 // are disposed remotely.

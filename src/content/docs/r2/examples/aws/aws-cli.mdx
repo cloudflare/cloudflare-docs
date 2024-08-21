@@ -1,17 +1,20 @@
 ---
 title: aws CLI
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 With the [`aws`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) CLI installed, you may run [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config) to configure a new profile. You will be prompted with a series of questions for the new profile's details.
 
 ```shell
-$ aws configure
+aws configure
+```
+
+```sh output
 AWS Access Key ID [None]: <access_key_id>
 AWS Secret Access Key [None]: <access_key_secret>
 Default region name [None]: auto
@@ -21,7 +24,7 @@ Default output format [None]: json
 You may then use the `aws` CLI for any of your normal workflows.
 
 ```sh
-$ aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage.com
+aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage.com
 # {
 #     "Buckets": [
 #         {
@@ -35,7 +38,7 @@ $ aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage
 #     }
 # }
 
-$ aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestorage.com --bucket sdk-example
+aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestorage.com --bucket sdk-example
 # {
 #     "Contents": [
 #         {
@@ -56,5 +59,7 @@ You can also generate presigned links which allow you to share public access to 
 ```sh
 # You can pass the --expires-in flag to determine how long the presigned link is valid.
 $ aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
+# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
 # https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```

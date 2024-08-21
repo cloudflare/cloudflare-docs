@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Certificate statuses
 sidebar:
   order: 8
-
 ---
 
 Certificates statuses show which stage of the issuance process each certificate is in.
@@ -34,21 +33,21 @@ If your zone is already active when you upload a custom certificate, you will no
 
 When you create certificates in your [staging environment](/ssl/edge-certificates/staging-environment/), those staging certificates have their own set of statuses:
 
-* **Staging deployment**: Similar to **Pending Deployment**, but for staging certificates.
-* **Staging active**: Similar to **Active**, but for staging certificates.
-* **Deactivating**: Your staging certificate is in the process of becoming **Inactive**.
-* **Inactive**: Your staging certificate is not at the edge, but you can deploy it if needed.
+- **Staging deployment**: Similar to **Pending Deployment**, but for staging certificates.
+- **Staging active**: Similar to **Active**, but for staging certificates.
+- **Deactivating**: Your staging certificate is in the process of becoming **Inactive**.
+- **Inactive**: Your staging certificate is not at the edge, but you can deploy it if needed.
 
 ## Client certificates
 
 When you use [client certificates](/ssl/client-certificates/), those client certificates have their own set of statuses:
 
-* **Active**: The client certificate is active.
-* **Revoked**: The client certificate is revoked.
-* **Pending Reactivation**: The client certificate was revoked, but it is being restored.
-* **Pending Revocation**: The client certificate was active, but it is being revoked.
+- **Active**: The client certificate is active.
+- **Revoked**: The client certificate is revoked.
+- **Pending Reactivation**: The client certificate was revoked, but it is being restored.
+- **Pending Revocation**: The client certificate was active, but it is being revoked.
 
-***
+---
 
 ## Monitor certificate statuses
 
@@ -69,5 +68,5 @@ For more details on certificate validation, refer to [Issue and validate certifi
 To view certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/)).
 
 ```sh
-$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
+openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
 ```

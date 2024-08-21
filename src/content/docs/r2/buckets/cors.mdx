@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Configure CORS
 sidebar:
   order: 3
-
 ---
 
 [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) is a standardized method that prevents domain X from accessing the resources of domain Y. It does so by using special headers in HTTP responses from domain Y, that allow your browser to verify that domain Y permits domain X to access these resources.
@@ -20,9 +19,9 @@ CORS is used when you interact with a bucket from a web browser, and you have tw
 
 Before you configure CORS, you must have:
 
-* An R2 bucket with at least one object. If you need to create a bucket, refer to [Create a public bucket](/r2/buckets/public-buckets/).
-* A domain you can use to access the object. This can also be a `localhost`.
-* (Optional) Access keys. An access key is only required when creating a presigned URL.
+- An R2 bucket with at least one object. If you need to create a bucket, refer to [Create a public bucket](/r2/buckets/public-buckets/).
+- A domain you can use to access the object. This can also be a `localhost`.
+- (Optional) Access keys. An access key is only required when creating a presigned URL.
 
 ## Use CORS with a public bucket
 
@@ -60,7 +59,7 @@ const url = await getSignedUrl(
 	}),
 	{
 		expiresIn: 60 * 60 * 24 * 7, // 7d
-	}
+	},
 );
 console.log(url);
 ```
@@ -70,7 +69,7 @@ console.log(url);
 Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
 
 ```sh
-$ curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
+curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
 ```
 
 ## Add CORS policies from the dashboard
@@ -104,31 +103,27 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
 
 ```json
 [
-  {
-    "AllowedOrigins": [
-       "http://localhost:3000"
-    ],
-    "AllowedMethods": [
-       "GET"
-    ]
-  }
+	{
+		"AllowedOrigins": ["http://localhost:3000"],
+		"AllowedMethods": ["GET"]
+	}
 ]
 ```
 
 In general, a good strategy for making sure you have set the correct CORS rules is to look at the network request that is being blocked by your browser.
 
-* Make sure the rule's `AllowedOrigins` includes the origin where the request is being made from. (like `http://localhost:3000` or `https://yourdomain.com`)
-* Make sure the rule's `AllowedMethods` includes the blocked request's method.
-* Make sure the rule's `AllowedHeaders` includes the blocked request's headers.
+- Make sure the rule's `AllowedOrigins` includes the origin where the request is being made from. (like `http://localhost:3000` or `https://yourdomain.com`)
+- Make sure the rule's `AllowedMethods` includes the blocked request's method.
+- Make sure the rule's `AllowedHeaders` includes the blocked request's headers.
 
 Also note that CORS rule propagation can, in rare cases, take up to 30 seconds.
 
 ## Common Issues
 
-* Only a cross-origin request will include CORS response headers.
-  * A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
-  * A request without an `Origin` HTTP request header will *not* return any CORS response headers. Origin values must match exactly.
-* The value(s) for `AllowedOrigins` in your CORS policy must be a valid [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does *not* include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
-  * Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
-  * Invalid `AllowedOrigins` value: `https://static.example.com/` or `https://static.example.com/fonts/Calibri.woff2` - incorrectly includes the path component.
-* If you need to access specific header values via JavaScript on the origin page, such as when using a video player, ensure you set `Access-Control-Expose-Headers` correctly and include the headers your JavaScript needs access to, such as `Content-Length`.
+- Only a cross-origin request will include CORS response headers.
+  - A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
+  - A request without an `Origin` HTTP request header will _not_ return any CORS response headers. Origin values must match exactly.
+- The value(s) for `AllowedOrigins` in your CORS policy must be a valid [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
+  - Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
+  - Invalid `AllowedOrigins` value: `https://static.example.com/` or `https://static.example.com/fonts/Calibri.woff2` - incorrectly includes the path component.
+- If you need to access specific header values via JavaScript on the origin page, such as when using a video player, ensure you set `Access-Control-Expose-Headers` correctly and include the headers your JavaScript needs access to, such as `Content-Length`.

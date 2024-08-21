@@ -6,10 +6,9 @@ title: Connect to Google Cloud SQL
 sidebar:
   order: 10
 description: Connect Hyperdrive to a Google Cloud SQL database instance.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This example shows you how to connect Hyperdrive to a Google Cloud SQL PostgreSQL database instance.
 
@@ -46,7 +45,7 @@ The [gcloud CLI](https://cloud.google.com/sdk/docs/install) allows you to create
 Use `gcloud sql` to create a new user (for example, `hyperdrive-user`) with a strong password:
 
 ```sh
-$ gcloud sql users create hyperdrive-user --instance=YOUR_INSTANCE_NAME --password=SUFFICIENTLY_LONG_PASSWORD
+gcloud sql users create hyperdrive-user --instance=YOUR_INSTANCE_NAME --password=SUFFICIENTLY_LONG_PASSWORD
 ```
 
 Run the following command to enable [Internet access](https://cloud.google.com/sql/docs/postgres/configure-ip) to your database instance:
@@ -54,7 +53,7 @@ Run the following command to enable [Internet access](https://cloud.google.com/s
 ```sh
 # If you have any existing authorized networks, ensure you provide those as a comma separated list.
 # The gcloud CLI will replace any existing authorized networks with the list you provide here.
-$ gcloud sql instances patch YOUR_INSTANCE_NAME --authorized-networks="0.0.0.0/0"
+gcloud sql instances patch YOUR_INSTANCE_NAME --authorized-networks="0.0.0.0/0"
 ```
 
 Refer to [Google Cloud's documentation](https://cloud.google.com/sql/docs/postgres/create-manage-users) for additional configuration options.

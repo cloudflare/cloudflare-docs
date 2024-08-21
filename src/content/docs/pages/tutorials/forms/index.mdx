@@ -8,18 +8,13 @@ tags:
   - Forms
 languages:
   - JavaScript
-
 ---
-
-
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
 :::note[MDN Introductory Series]
 
-
 This tutorial will briefly touch upon the basics of HTML forms. For a more in-depth overview, refer to MDN's [Web Forms – Working with user data](https://developer.mozilla.org/en-US/docs/Learn/Forms) introductory series.
-
 
 :::
 
@@ -35,11 +30,11 @@ Below is an example HTML5 form with a few inputs and their validation rules defi
 
 ```html
 <form method="POST" action="/api/submit">
-  <input type="text" name="fullname" pattern="[A-Za-z]+" required />
-  <input type="email" name="email" required />
-  <input type="number" name="age" min="18" required />
+	<input type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<input type="email" name="email" required />
+	<input type="number" name="age" min="18" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -51,24 +46,28 @@ To enable this, you must create a `<label>` element for each input and assign ea
 
 ```html
 <form method="POST" action="/api/submit">
-  <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<label for="i-fullname">Full Name</label>
+	<input
+		id="i-fullname"
+		type="text"
+		name="fullname"
+		pattern="[A-Za-z]+"
+		required
+	/>
 
-  <label for="i-email">Email Address</label>
-  <input id="i-email" type="email" name="email" required />
+	<label for="i-email">Email Address</label>
+	<input id="i-email" type="email" name="email" required />
 
-  <label for="i-age">Your Age</label>
-  <input id="i-age" type="number" name="age" min="18" required />
+	<label for="i-age">Your Age</label>
+	<input id="i-age" type="number" name="age" min="18" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
 :::note
 
-
 Your `for` and `id` values do not need to exactly match the values shown above. You may use any `id` values so long as they are unique to the HTML document. A `<label>` can only be linked with an `<input>` if the `for` and `id` attributes match.
-
 
 :::
 
@@ -78,19 +77,25 @@ By default, HTML forms send their contents in the `application/x-www-form-urlenc
 
 ```html
 <form method="POST" action="/api/submit" enctype="multipart/form-data">
-  <label for="i-fullname">Full Name</label>
-  <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
+	<label for="i-fullname">Full Name</label>
+	<input
+		id="i-fullname"
+		type="text"
+		name="fullname"
+		pattern="[A-Za-z]+"
+		required
+	/>
 
-  <label for="i-email">Email Address</label>
-  <input id="i-email" type="email" name="email" required />
+	<label for="i-email">Email Address</label>
+	<input id="i-email" type="email" name="email" required />
 
-  <label for="i-age">Your Age</label>
-  <input id="i-age" type="number" name="age" min="18" required />
+	<label for="i-age">Your Age</label>
+	<input id="i-age" type="number" name="age" min="18" required />
 
-  <label for="i-avatar">Profile Picture</label>
-  <input id="i-avatar" type="file" name="avatar" required />
+	<label for="i-avatar">Profile Picture</label>
+	<input id="i-avatar" type="file" name="avatar" required />
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -102,9 +107,7 @@ The rest of this tutorial will focus on building an HTML form on Pages, includin
 
 :::note[GitHub Repository]
 
-
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
-
 
 :::
 
@@ -114,15 +117,15 @@ To begin, create a [new GitHub repository](https://repo.new/). Then create a new
 
 ```sh
 # create new directory
-$ mkdir new-project
+mkdir new-project
 # enter new directory
-$ cd new-project
+cd new-project
 # initialize git
-$ git init
+git init
 # attach remote
-$ git remote add origin git@github.com:<username>/<repo>.git
+git remote add origin git@github.com:<username>/<repo>.git
 # change default branch name
-$ git branch -M main
+git branch -M main
 ```
 
 You may now begin working in the `new-project` directory you created.
@@ -139,60 +142,65 @@ Copy and paste the following content into your `public/index.html` file:
 
 ```html
 <html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <form method="POST" action="/api/submit">
-      <div class="input">
-        <label for="name">Full Name</label>
-        <input id="name" name="name" type="text" />
-      </div>
+	<head>
+		<meta charset="utf8" />
+		<title>Form Demo</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	</head>
+	<body>
+		<form method="POST" action="/api/submit">
+			<div class="input">
+				<label for="name">Full Name</label>
+				<input id="name" name="name" type="text" />
+			</div>
 
-      <div class="input">
-        <label for="email">Email Address</label>
-        <input id="email" name="email" type="email" />
-      </div>
+			<div class="input">
+				<label for="email">Email Address</label>
+				<input id="email" name="email" type="email" />
+			</div>
 
-      <div class="input">
-        <label for="referers">How did you hear about us?</label>
-        <select id="referers" name="referers">
-          <option hidden disabled selected value></option>
-          <option value="Facebook">Facebook</option>
-          <option value="Twitter">Twitter</option>
-          <option value="Google">Google</option>
-          <option value="Bing">Bing</option>
-          <option value="Friends">Friends</option>
-        </select>
-      </div>
+			<div class="input">
+				<label for="referers">How did you hear about us?</label>
+				<select id="referers" name="referers">
+					<option hidden disabled selected value></option>
+					<option value="Facebook">Facebook</option>
+					<option value="Twitter">Twitter</option>
+					<option value="Google">Google</option>
+					<option value="Bing">Bing</option>
+					<option value="Friends">Friends</option>
+				</select>
+			</div>
 
-      <div class="checklist">
-        <label>What are your favorite movies?</label>
-        <ul>
-          <li>
-            <input id="m1" type="checkbox" name="movies" value="Space Jam" />
-            <label for="m1">Space Jam</label>
-          </li>
-          <li>
-            <input id="m2" type="checkbox" name="movies" value="Little Rascals" />
-            <label for="m2">Little Rascals</label>
-          </li>
-          <li>
-            <input id="m3" type="checkbox" name="movies" value="Frozen" />
-            <label for="m3">Frozen</label>
-          </li>
-          <li>
-            <input id="m4" type="checkbox" name="movies" value="Home Alone" />
-            <label for="m4">Home Alone</label>
-          </li>
-        </ul>
-      </div>
+			<div class="checklist">
+				<label>What are your favorite movies?</label>
+				<ul>
+					<li>
+						<input id="m1" type="checkbox" name="movies" value="Space Jam" />
+						<label for="m1">Space Jam</label>
+					</li>
+					<li>
+						<input
+							id="m2"
+							type="checkbox"
+							name="movies"
+							value="Little Rascals"
+						/>
+						<label for="m2">Little Rascals</label>
+					</li>
+					<li>
+						<input id="m3" type="checkbox" name="movies" value="Frozen" />
+						<label for="m3">Frozen</label>
+					</li>
+					<li>
+						<input id="m4" type="checkbox" name="movies" value="Home Alone" />
+						<label for="m4">Home Alone</label>
+					</li>
+				</ul>
+			</div>
 
-      <button type="submit">Submit</button>
-    </form>
-  </body>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
 </html>
 ```
 
@@ -200,11 +208,9 @@ This HTML document will contain a form with a few fields for the user to fill ou
 
 :::note[Optional content]
 
-
 Technically, only the `<form>` and its child elements are necessary. The `<head>` and the enclosing `<html>` and `<body>` tags are optional and not strictly necessary for a valid HTML document.
 
 The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
-
 
 :::
 
@@ -233,7 +239,7 @@ The `<form>` will send `POST` requests, which means that the `functions/api/subm
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  // TODO: Handle the form submission
+	// TODO: Handle the form submission
 }
 ```
 
@@ -248,17 +254,17 @@ For illustrative purposes, the example application's form handler will reply wit
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  try {
-    let input = await context.request.formData();
-    let pretty = JSON.stringify([...input], null, 2);
-    return new Response(pretty, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-  } catch (err) {
-    return new Response('Error parsing JSON content', { status: 400 });
-  }
+	try {
+		let input = await context.request.formData();
+		let pretty = JSON.stringify([...input], null, 2);
+		return new Response(pretty, {
+			headers: {
+				"Content-Type": "application/json;charset=utf-8",
+			},
+		});
+	} catch (err) {
+		return new Response("Error parsing JSON content", { status: 400 });
+	}
 }
 ```
 
@@ -271,30 +277,30 @@ However, if you want to reply with a JSON object instead of the key-value pairs 
  * POST /api/submit
  */
 export async function onRequestPost(context) {
-  try {
-    let input = await context.request.formData();
+	try {
+		let input = await context.request.formData();
 
-    // Convert FormData to JSON
-    // NOTE: Allows multiple values per key
-    let output = {};
-    for (let [key, value] of input) {
-      let tmp = output[key];
-      if (tmp === undefined) {
-        output[key] = value;
-      } else {
-        output[key] = [].concat(tmp, value);
-      }
-    }
+		// Convert FormData to JSON
+		// NOTE: Allows multiple values per key
+		let output = {};
+		for (let [key, value] of input) {
+			let tmp = output[key];
+			if (tmp === undefined) {
+				output[key] = value;
+			} else {
+				output[key] = [].concat(tmp, value);
+			}
+		}
 
-    let pretty = JSON.stringify(output, null, 2);
-    return new Response(pretty, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
-  } catch (err) {
-    return new Response('Error parsing JSON content', { status: 400 });
-  }
+		let pretty = JSON.stringify(output, null, 2);
+		return new Response(pretty, {
+			headers: {
+				"Content-Type": "application/json;charset=utf-8",
+			},
+		});
+	} catch (err) {
+		return new Response("Error parsing JSON content", { status: 400 });
+	}
 }
 ```
 
@@ -308,22 +314,22 @@ If you have not already done so, save your progress within `git` and then push t
 
 ```sh
 # Add all files
-$ git add -A
+git add -A
 # Commit w/ message
-$ git commit -m "working example"
+git commit -m "working example"
 # Push commit(s) to remote
-$ git push -u origin main
+git push -u origin main
 ```
 
 Your work now resides within the GitHub repository, which means that Pages is able to access it too.
 
 If this is your first Cloudflare Pages project, refer to the [Get started guide](/pages/get-started/) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-* **Project name** – Your choice
-* **Production branch** – `main`
-* **Framework preset** – None
-* **Build command** – None / Empty
-* **Build output directory** – `public`
+- **Project name** – Your choice
+- **Production branch** – `main`
+- **Framework preset** – None
+- **Build command** – None / Empty
+- **Build output directory** – `public`
 
 After clicking the **Save and Deploy** button, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -333,5 +339,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-* [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
-* [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-pages-functions/)
+- [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

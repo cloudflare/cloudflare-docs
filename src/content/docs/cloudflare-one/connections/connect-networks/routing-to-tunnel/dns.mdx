@@ -3,12 +3,15 @@ pcx_content_type: how-to
 title: DNS records
 sidebar:
   order: 51
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="tunnel/dns-record" product="cloudflare-one" params={{ one: "an origin target", two: "a DNS record" }} />
+<Render
+	file="tunnel/dns-record"
+	product="cloudflare-one"
+	params={{ one: "an origin target", two: "a DNS record" }}
+/>
 
 ## Create a DNS record for the tunnel
 
@@ -20,9 +23,9 @@ To create a new DNS record for your tunnel:
 2. Go to **DNS** > **Records**.
 3. Select **Add record**.
 4. Input the following information:
-   * **Type**: *CNAME*
-   * **Name**: Subdomain of your application
-   * **IPv4 address**: `<UUID>.cfargotunnel.com`
+   - **Type**: _CNAME_
+   - **Name**: Subdomain of your application
+   - **IPv4 address**: `<UUID>.cfargotunnel.com`
 5. Select **Save**.
 
 ![Example of fields completed to create a new CNAME record.](~/assets/images/cloudflare-one/connections/connect-apps/dns/dns-record.png)
@@ -34,14 +37,14 @@ To create a new DNS record for your tunnel:
 You can create a new DNS record directly from `cloudflared`:
 
 ```sh
-$ cloudflared tunnel route dns <UUID or NAME> www.app.com
+cloudflared tunnel route dns <UUID or NAME> www.app.com
 ```
 
 This command create a `CNAME` record that points to the tunnel subdomain, but will not proxy traffic if the tunnel is not currently running.
 
 :::note
 
-To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system. 
+To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system.
 :::
 
 </TabItem>

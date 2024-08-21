@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: RDP
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The Remote Desktop Protocol (RDP) provides a graphical interface for users to connect to a computer remotely. RDP is most commonly used to facilitate simple remote access to machines or workstations which users cannot physically access. However, this also makes RDP connections the frequent subject of attacks, since a misconfiguration can inadvertently allow unauthorized access to the machine.
 
@@ -14,8 +13,8 @@ With Cloudflare Zero Trust, you can enjoy the convenience of making your RDP ser
 
 Cloudflare Zero Trust offers two solutions to provide secure access to RDP servers:
 
-* [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-rdp-server-with-warp-to-tunnel)
-* [Public hostname routing with `cloudflared access`](#connect-to-rdp-server-with-cloudflared-access)
+- [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-rdp-server-with-warp-to-tunnel)
+- [Public hostname routing with `cloudflared access`](#connect-to-rdp-server-with-cloudflared-access)
 
 ## Set up an RDP server in GCP
 
@@ -27,9 +26,9 @@ This example walks through how to set up an RDP server on a Google Cloud Platfor
 4. Name your VM instance, for example `windows-rdp-server`.
 5. Configure your VM instance:
    1. Scroll down to **Boot Disk** and select **Change**.
-   2. For **Operating system**, select *Windows Server*.
-   3. Choose a **Version** with Desktop Experience, for example *Windows Server 2016 Datacenter*.
-6. Once your VM is running, open the dropdown next to **RDP** and select *View gcloud command to reset password*.
+   2. For **Operating system**, select _Windows Server_.
+   3. Choose a **Version** with Desktop Experience, for example _Windows Server 2016 Datacenter_.
+6. Once your VM is running, open the dropdown next to **RDP** and select _View gcloud command to reset password_.
 7. Select **Run in Cloud Shell**.
 8. Run the command in the Cloud Shell terminal. You will be asked to confirm the password reset.
 9. Copy the auto-generated password and username to a safe place.
@@ -40,7 +39,7 @@ You can use any RDP client to access and configure the RDP server.
 
 To access the server through Microsoft Remote Desktop:
 
-1. Download and install [Microsoft Remote Desktop](https://apps.microsoft.com/store/detail/microsoft-remote-desktop/9WZDNCRFJ3PS?hl=en-us\&gl=us).
+1. Download and install [Microsoft Remote Desktop](https://apps.microsoft.com/store/detail/microsoft-remote-desktop/9WZDNCRFJ3PS?hl=en-us&gl=us).
 2. Once downloaded, open Microsoft Remote Desktop and select **Add a PC**.
 3. For **PC name**, enter the public IP address of your RDP server. In GCP, this is the **External IP** of the VM instance.
 4. For **User account**, select **Add User Account** and enter your auto-generated password and username.
@@ -52,7 +51,7 @@ You can now remotely access and configure your RDP server.
 
 :::note
 
-By default, Internet Explorer will be installed and configured in [Enhanced Security mode](https://learn.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/enhanced-security-configuration-faq#internet-explorer-enhanced-security-configuration). If the browser is slow or unable to load, you can turn off Enhanced Security and install an alternate browser such as Google Chrome. 
+By default, Internet Explorer will be installed and configured in [Enhanced Security mode](https://learn.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/enhanced-security-configuration-faq#internet-explorer-enhanced-security-configuration). If the browser is slow or unable to load, you can turn off Enhanced Security and install an alternate browser such as Google Chrome.
 :::
 
 ## Connect to RDP server with WARP to Tunnel
@@ -95,7 +94,7 @@ You now have secure, remote access to the RDP server.
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
 
-3. For **Service**,  select *RDP* and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
+3. For **Service**, select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
 
 4. Select **Save hostname**.
 
@@ -107,14 +106,14 @@ You now have secure, remote access to the RDP server.
 2. Run this command to open an RDP listening port:
 
    ```sh
-   $ cloudflared access rdp --hostname rdp.example.com --url rdp://localhost:3389
+   cloudflared access rdp --hostname rdp.example.com --url rdp://localhost:3389
    ```
 
    This process will need to be configured to stay alive and autostart. If the process is killed, users will not be able to connect.
 
 :::note
 
-If the client machine is running Windows, port `3389` may already be consumed locally.  Select an alternative port to `3389` that is not being used. 
+If the client machine is running Windows, port `3389` may already be consumed locally. Select an alternative port to `3389` that is not being used.
 :::
 
 3. While `cloudflared access` is running, connect from an RDP client such as Microsoft Remote Desktop:

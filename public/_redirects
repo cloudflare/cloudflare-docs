@@ -1,7 +1,7 @@
 # homepage
 /docs/ /products/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
-/dashboarding-landing/ / 301
+/dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
 

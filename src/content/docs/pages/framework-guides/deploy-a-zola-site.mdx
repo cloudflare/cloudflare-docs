@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Zola
-
 ---
 
-import { PagesBuildPreset, Render } from "~/components"
+import { PagesBuildPreset, Render } from "~/components";
 
 [Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you will create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
 
@@ -17,7 +16,7 @@ First, [install](https://www.getzola.org/documentation/getting-started/installat
 If you use the package manager [Homebrew](https://brew.sh), run the `brew install` command in your terminal to install Zola:
 
 ```sh
-$ brew install zola
+brew install zola
 ```
 
 ### Windows (Chocolatey)
@@ -25,7 +24,7 @@ $ brew install zola
 If you use the package manager [Chocolatey](https://chocolatey.org/), run the `choco install` command in your terminal to install Zola:
 
 ```sh
-$ choco install zola
+choco install zola
 ```
 
 ### Windows (Scoop)
@@ -33,7 +32,7 @@ $ choco install zola
 If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Zola:
 
 ```sh
-$ scoop install zola
+scoop install zola
 ```
 
 ### Linux (pkg)
@@ -41,7 +40,7 @@ $ scoop install zola
 Your Linux distro's package manager may include Zola. If this is the case, you can install it directly using your distro's package manager -- for example, using `pkg`, run the following command in your terminal:
 
 ```sh
-$ pkg install zola
+pkg install zola
 ```
 
 If your package manager does not include Zola or you would like to download a release directly, refer to the [**Manual**](/pages/framework-guides/deploy-a-zola-site/#manual-installation) section below.
@@ -57,7 +56,7 @@ For more instruction on installing these releases, refer to [Zola's install guid
 With Zola installed, create a new project by running the `zola init` command in your terminal using the default template:
 
 ```sh
-$ zola init my-zola-project
+zola init my-zola-project
 ```
 
 Upon running `zola init`, you will prompted with three questions:
@@ -93,9 +92,7 @@ After configuring your site, you can begin your first deploy. You should see Clo
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
