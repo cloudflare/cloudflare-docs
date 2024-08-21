@@ -11,19 +11,19 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Software version tested
 
-* PAN-OS 9.1.14-h4
+- PAN-OS 9.1.14-h4
 
 ## Use Cases
 
-* **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-* **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 ## Prerequisites
 
 This tutorial assumes you have a standalone NGFW with two network interfaces:
 
-* One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network);
-* And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
+- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network);
+- And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
 
@@ -53,8 +53,8 @@ Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
-* `172.64.240.253`: Use with the primary IPsec tunnel.
-* `172.64.240.254`: Use with the secondary IPsec tunnel.
+- `172.64.240.253`: Use with the primary IPsec tunnel.
+- `172.64.240.254`: Use with the secondary IPsec tunnel.
 
 :::caution
 You need to [configure bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
@@ -63,26 +63,26 @@ You need to [configure bidirectional health checks](/magic-wan/configuration/man
 #### Add IPsec tunnels
 
 1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
-   * **Tunnel name**: `SFO_IPSEC_TUN01`
-   * **Interface address**: `10.252.2.96/31`
-   * **Customer endpoint**: `203.0.113.254`
-   * **Cloudflare endpoint**: `162.159.66.164`
-   * **Health check rate**: *Low* (default value is *Medium*)
-   * **Health check type**: *Reply*
-   * **Health check target**: *Custom* (default is *Default*)
-   * **Target address**: `172.64.240.253`
+   - **Tunnel name**: `SFO_IPSEC_TUN01`
+   - **Interface address**: `10.252.2.96/31`
+   - **Customer endpoint**: `203.0.113.254`
+   - **Cloudflare endpoint**: `162.159.66.164`
+   - **Health check rate**: *Low* (default value is *Medium*)
+   - **Health check type**: *Reply*
+   - **Health check target**: *Custom* (default is *Default*)
+   - **Target address**: `172.64.240.253`
 
 2. Select **Add pre-shared key later** > **Add tunnels**.
 
 3. Repeat the process to create a second IPsec tunnel with the following options:
-   * **Tunnel name**: `SFO_IPSEC_TUN02`
-   * **Interface address**: `10.252.2.98/31`
-   * **Customer endpoint**: `203.0.113.254`
-   * **Cloudflare endpoint**: `172.64.242.164`
-   * **Health check rate**: *Low* (default value is *Medium*)
-   * **Health check type**: *Reply*
-   * **Health check target**: *Custom* (default is *Default*)
-   * **Target address**: `172.64.240.254`
+   - **Tunnel name**: `SFO_IPSEC_TUN02`
+   - **Interface address**: `10.252.2.98/31`
+   - **Customer endpoint**: `203.0.113.254`
+   - **Cloudflare endpoint**: `172.64.242.164`
+   - **Health check rate**: *Low* (default value is *Medium*)
+   - **Health check type**: *Reply*
+   - **Health check target**: *Custom* (default is *Default*)
+   - **Target address**: `172.64.240.254`
 
 #### Generate Pre-shared keys
 
@@ -110,15 +110,15 @@ Create a [static route](/magic-wan/configuration/manually/how-to/configure-stati
 
 #### Tunnel 01
 
-* **Description**: `SFO_VLAN100_01`
-* **Prefix**: `10.1.100.0/24`
-* **Tunnel/Next hop**: `SFO_IPSEC_TUN01`
+- **Description**: `SFO_VLAN100_01`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN01`
 
 #### Tunnel 02
 
-* **Description**: `SFO_VLAN100_02`
-* **Prefix**: `10.1.100.0/24`
-* **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
+- **Description**: `SFO_VLAN100_02`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
 
 ![Add static routes for each of the IPsec tunnels you created in the previous step](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
 
@@ -675,9 +675,9 @@ With the IKE Gateways defined, the next step is to configure two IPsec Tunnels -
 
 There are a few prerequisites you should be aware of before continuing:
 
-* Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
-* Disable Replay Protection, under the Advanced Options.
-* Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
+- Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
+- Disable Replay Protection, under the Advanced Options.
+- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
 
 #### Set up via dashboard
 
@@ -990,8 +990,8 @@ Palo Alto Networks Next-Generation Firewall will not allow for configuring two r
 
 The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
-* **VLAN0010**: `10.1.10.0/24`
-* **VLAN0020**: `10.1.20.0/24`
+- **VLAN0010**: `10.1.10.0/24`
+- **VLAN0020**: `10.1.20.0/24`
 
 ##### VLAN0010 (`10.1.10.0/24`) via tunnel.1
 
@@ -1095,8 +1095,8 @@ The construct of the security policies may seem counter-intuitive - this is due 
 
 Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
 
-* **CF\_Health\_Check\_Anycast\_01**: `172.64.240.253`
-* **CF\_Health\_Check\_Anycast\_02**: `172.64.240.254`
+- **CF\_Health\_Check\_Anycast\_01**: `172.64.240.253`
+- **CF\_Health\_Check\_Anycast\_02**: `172.64.240.254`
 
 #### Security Policy - Tunnel health checks
 
@@ -1164,11 +1164,11 @@ Traffic matching the Security Rule defined in the last step must be routed symme
 
 Ensure have the following:
 
-* **Source Zone**: `Cloudflare_L3_Zone`
-* **Source Addresses**: `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02`
-* **Destination Zone**: `Cloudflare_L3_Zone`
-* **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
-* **Application**: `icmp` and `ping`
+- **Source Zone**: `Cloudflare_L3_Zone`
+- **Source Addresses**: `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02`
+- **Destination Zone**: `Cloudflare_L3_Zone`
+- **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
+- **Application**: `icmp` and `ping`
 
 ##### Set up via dashboard tunnel.1
 
@@ -1294,16 +1294,16 @@ If the traffic is not ingressing/egressing the same interface, you likely have a
 
 As mentioned earlier, this tutorial includes examples for two different use-cases:
 
-* **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-* **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 #### Magic WAN only
 
 Rules must be defined to facilitate traffic from the trust network to the Magic WAN protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
 
-* From Trust to Magic WAN protected sites.
+- From Trust to Magic WAN protected sites.
 
-* From Magic WAN protected sites to Trust.
+- From Magic WAN protected sites to Trust.
 
 ##### Trust to Magic WAN dashboard
 
@@ -1487,13 +1487,13 @@ This section covers adding in support for the use of Cloudflare Gateway. Adding 
 
 This use case can be supported in one of two ways:
 
-* **Option 1**
-  * **Security Rule**: Extend the scope of the `Trust_to_Cloudflare_Magic_WAN_Allow` rule to allow any destination address.
-  * **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
+- **Option 1**
+  - **Security Rule**: Extend the scope of the `Trust_to_Cloudflare_Magic_WAN_Allow` rule to allow any destination address.
+  - **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
 
-* **Option 2**
-  * **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
-  * **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
+- **Option 2**
+  - **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
+  - **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
 
 The following examples are based on Option 2.
 
@@ -1501,7 +1501,7 @@ The following examples are based on Option 2.
 
 This example assumes the security rules and policy-based forwarding rules from the previous sections have been configured and are directly above the rules configured in this section.
 
-Also, traffic from Trust to the Internet would typically be defined as `Trust_L3_Zone` to `Untrust_L3_Zone`. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference `Trust_L3_Zone` to `Cloudflare_L3_Zone`. 
+Also, traffic from Trust to the Internet would typically be defined as `Trust_L3_Zone` to `Untrust_L3_Zone`. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference `Trust_L3_Zone` to `Cloudflare_L3_Zone`.
 :::
 
 ### Security Rule: Trust to Gateway Egress
