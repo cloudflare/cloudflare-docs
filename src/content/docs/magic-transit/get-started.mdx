@@ -26,9 +26,9 @@ Magic Transit relies on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip
 
 The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
-* Support anycast tunneling.
-* Allow configuration of at least one tunnel per Internet service provider (ISP).
-* Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
+- Support anycast tunneling.
+- Allow configuration of at least one tunnel per Internet service provider (ISP).
+- Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
 
 ### Draft Letter of Agency
 
@@ -89,8 +89,8 @@ You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place be
 
 Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:
 
-* GRE tunnels over Classic CNI: 1476 bytes
-* Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
+- GRE tunnels over Classic CNI: 1476 bytes
+- Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
 
 MSS clamps are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
 

@@ -12,12 +12,12 @@ Cloudflare measures the Magic Transit <GlossaryTooltip term="prefix">prefix</Glo
 
 List all prefixes and the [autonomous systems (ASNs)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) where they should originate. When specifying prefixes, observe these guidelines:
 
-* Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
-* Internet Routing Registry entries and <GlossaryTooltip term="letter of agency">Letters of Agency (LOA)</GlossaryTooltip> must match the prefixes and originating prefixes you submit to Cloudflare.
-* When using contiguous prefixes, specify aggregate prefixes where possible.
-* When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
-* If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
-* Prefixes using BGP-controlled advertisements cannot be used in conjunction with dynamic advertisement (via dashboard/API). Please specify your preferred on-demand advertisement method during the prefix onboarding.
+- Prefixes must support at least 256 hosts (`/24` in classless inter-domain routing CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
+- Internet Routing Registry entries and <GlossaryTooltip term="letter of agency">Letters of Agency (LOA)</GlossaryTooltip> must match the prefixes and originating prefixes you submit to Cloudflare.
+- When using contiguous prefixes, specify aggregate prefixes where possible.
+- When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
+- If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
+- Prefixes using BGP-controlled advertisements cannot be used in conjunction with dynamic advertisement (via dashboard/API). Please specify your preferred on-demand advertisement method during the prefix onboarding.
 
 
 <Details header="Prefix configuration example">
@@ -50,7 +50,7 @@ After you add the prefix, you can edit its status.
 
 1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Edit**.
 2. On the **Edit IP Prefix** page under **Status**, choose a status.
-3. *(Optional)* Edit the description for your prefix.
+3. _(Optional)_ Edit the description for your prefix.
 4. Select **Edit IP Prefix** to save your changes.
 
 :::note[Note:]
@@ -74,9 +74,9 @@ Prefixes can be advertised from Cloudflare’s network in a supported on-demand 
 
 To begin using BGP control, contact your account team with the following information:
 
-* BGP endpoint IP addresses
-* Prefixes you want to use with BGP control
-* Your ASN for the BGP session
+- BGP endpoint IP addresses
+- Prefixes you want to use with BGP control
+- Your ASN for the BGP session
 
 After receiving your information, Cloudflare will update firewall filters to establish the BGP session and provide you with the BGP endpoints to control your prefixes.
 
