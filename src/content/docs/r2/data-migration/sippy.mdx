@@ -1,5 +1,5 @@
 ---
-title: Sippy (beta)
+title: Sippy
 pcx_content_type: how-to
 learning_center:
   title: What is data migration?
@@ -11,14 +11,6 @@ sidebar:
 import { Render } from "~/components";
 
 Sippy is a data migration service that allows you to copy data from other cloud providers to R2 as the data is requested, without paying unnecessary cloud egress fees typically associated with moving large amounts of data.
-
-:::note[Open Beta]
-
-This feature is currently in beta. We do not recommend using Sippy for production traffic while in beta.
-
-To report bugs or request features, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or fill out our [feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
-
-:::
 
 Migration-specific egress fees are reduced by leveraging requests within the flow of your application where you would already be paying egress fees to simultaneously copy objects to R2.
 
@@ -81,6 +73,48 @@ For information on required parameters and examples of how to enable Sippy, refe
 If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions), you will need to pass a `cf-r2-jurisdiction` request header with that jurisdiction. For example, `cf-r2-jurisdiction: eu`.
 
 :::
+
+### View migration metrics
+
+When enabled, Sippy exposes metrics that help you understand the progress of your ongoing migrations.
+
+<table>
+	<tbody>
+		<th colspan="5" rowspan="1" style="width:220px">
+			Metric
+		</th>
+		<th colspan="5" rowspan="1">
+			Description
+		</th>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Requests served by Sippy
+			</td>
+			<td colspan="5" rowspan="1">
+				The percentage of overall requests served by R2 over a period of time.{" "}
+				<br />A higher percentage indicates that fewer requests need to be made
+				to the source bucket.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" rowspan="1">
+				Data migrated by Sippy
+			</td>
+			<td colspan="5" rowspan="1">
+				The amount of data that has been copied from the source bucket to R2
+				over a period of time. Reported in bytes.
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+To view current and historical metrics:
+
+2. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+3. Go to the [R2 tab](https://dash.cloudflare.com/?to=/:account/r2) and select your bucket.
+4. Select the **Metrics** tab.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
 
 ## Disable Sippy on your R2 bucket
 
