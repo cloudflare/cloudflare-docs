@@ -20,6 +20,7 @@
     "@astrojs/starlight-docsearch": "^0.1.1",
     "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^5.1.0",
+    "@codingheads/sticky-header": "^1.0.2",
     "algoliasearch": "^4.24.0",
     "astro": "^4.14.2",
     "astro-breadcrumbs": "^2.3.1",
