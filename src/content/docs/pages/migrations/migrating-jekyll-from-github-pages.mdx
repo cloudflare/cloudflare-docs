@@ -7,7 +7,6 @@ tags:
   - Jekyll
 languages:
   - Ruby
-
 ---
 
 In this tutorial, you will learn how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
@@ -23,9 +22,7 @@ Including build times, this tutorial should take you less than 15 minutes to com
 
 :::note
 
-
 If you have a Jekyll-based site not deployed on GitHub Pages, refer to [the Jekyll framework guide](/pages/framework-guides/deploy-a-jekyll-site/).
-
 
 :::
 
@@ -44,9 +41,7 @@ If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your mach
 
 :::note
 
-
 If your GitHub Pages repository already has a `Gemfile` and `Gemfile.lock` present, you can skip this step entirely. The GitHub Pages environment assumes a default set of Jekyll plugins that are not explicitly specified in a `Gemfile`.
-
 
 :::
 
@@ -55,8 +50,8 @@ Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependenc
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
 ```sh title="Create a Gemfile"
-$ cd my-github-pages-repo
-$ bundle init
+cd my-github-pages-repo
+bundle init
 ```
 
 Open the `Gemfile` that was created for you, and add the following line to the bottom of the file:
@@ -81,7 +76,7 @@ gem "github-pages", "~> 215", group: :jekyll_plugins
 Run `bundle update`, which will install the `github-pages` gem for you, and create a `Gemfile.lock` file with the resolved dependency versions.
 
 ```sh title="Running bundle update"
-$ bundle update
+bundle update
 # Bundler will show a lot of output as it fetches the dependencies
 ```
 
@@ -90,9 +85,9 @@ This should complete successfully. If not, verify that you have copied the `gith
 You will now need to commit these files to your repository so that Cloudflare Pages can reference them in the following steps:
 
 ```sh title="Commit Gemfile and Gemfile.lock"
-$ git add Gemfile Gemfile.lock
-$ git commit -m "deps: added Gemfiles"
-$ git push origin main
+git add Gemfile Gemfile.lock
+git commit -m "deps: added Gemfiles"
+git push origin main
 ```
 
 ## Configuring your Pages project
@@ -101,9 +96,7 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 :::note
 
-
 If you are configuring your Cloudflare Pages site for the first time, refer to the [Git integration guide](/pages/get-started/git-integration/), which explains how to connect your existing Git repository to Cloudflare Pages.
-
 
 :::
 
@@ -127,9 +120,7 @@ After you have configured your site, you can begin your first deploy. You should
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
@@ -145,6 +136,6 @@ Refer to the [adding a custom domain](/pages/configuration/custom-domains/#add-a
 
 ## What's next?
 
-* Learn how to [customize HTTP response headers](/pages/how-to/add-custom-http-headers/) for your Pages site using Cloudflare Workers.
-* Understand how to [rollback a potentially broken deployment](/pages/configuration/rollbacks/) to a previously working version.
-* [Configure redirects](/pages/configuration/redirects/) so that visitors are always directed to your 'canonical' custom domain.
+- Learn how to [customize HTTP response headers](/pages/how-to/add-custom-http-headers/) for your Pages site using Cloudflare Workers.
+- Understand how to [rollback a potentially broken deployment](/pages/configuration/rollbacks/) to a previously working version.
+- [Configure redirects](/pages/configuration/redirects/) so that visitors are always directed to your 'canonical' custom domain.

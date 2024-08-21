@@ -11,44 +11,35 @@ sidebar:
 head:
   - tag: title
     content: Add a site
-
 ---
 
-
-
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 In this tutorial, you will go through step-by-step instructions to bring an existing site to Cloudflare using Pulumi Infrastructure as Code (IaC) so that you can become familiar with the resource management lifecycle. In particular, you will create a Zone and a DNS record to resolve your newly added site. This tutorial adopts the IaC principle to complete the steps listed in the [Add site tutorial](/fundamentals/setup/manage-domains/add-site/).
 
 :::note
 
-You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare. 
+You will provision resources that qualify under free tier offerings for both Pulumi Cloud and Cloudflare.
 :::
-
-
-
 
 Ensure you have:
 
-* A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Your token must have:
-  * `Zone-Zone-Edit` permission
-  * `Zone-DNS-Edit` permission
-  * `include-All zones from an account-<your account>` zone resource
-* A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
-* The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
-* A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
-* A domain name. You may use `example.com` to complete the tutorial.
-
-
-
+- A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) before continuing. Your token must have:
+  - `Zone-Zone-Edit` permission
+  - `Zone-DNS-Edit` permission
+  - `include-All zones from an account-<your account>` zone resource
+- A Pulumi Cloud account. You can sign up for an [always-free, individual tier](https://app.pulumi.com/signup).
+- The [Pulumi CLI](/pulumi/installing/) is installed on your machine.
+- A [Pulumi-supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) is configured. (TypeScript, JavaScript, Python, Go, .NET, Java, or use YAML)
+- A domain name. You may use `example.com` to complete the tutorial.
 
 ### a. Create a directory
 
 Use a new and empty directory for this tutorial.
 
 ```sh
-$ mkdir addsite-cloudflare
-$ cd addsite-cloudflare
+mkdir addsite-cloudflare
+cd addsite-cloudflare
 ```
 
 ### b. Login
@@ -56,14 +47,14 @@ $ cd addsite-cloudflare
 At the prompt, press Enter to log into your Pulumi Cloud account via the browser. Alternatively, you may provide a [Pulumi Cloud access token](https://www.pulumi.com/docs/pulumi-cloud/access-management/access-tokens/).
 
 ```sh
-$ pulumi login
+pulumi login
 ```
 
 ### c. Create a program
 
 :::note
 
-A Pulumi program is code written in a [supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) that defines infrastructure resources. 
+A Pulumi program is code written in a [supported programming language](https://github.com/pulumi/pulumi?tab=readme-ov-file#languages) that defines infrastructure resources.
 :::
 
 To create a program, select your language of choice and run the `pulumi` command:
@@ -71,49 +62,49 @@ To create a program, select your language of choice and run the `pulumi` command
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
-$ pulumi new javascript --name addsite-cloudflare --yes
+pulumi new javascript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```sh
-$ pulumi new typescript --name addsite-cloudflare --yes
+pulumi new typescript --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```sh
-$ pulumi new python --name addsite-cloudflare --yes
+pulumi new python --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label="go">
 
 ```sh
-$ pulumi new go --name addsite-cloudflare --yes
+pulumi new go --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label="Java">
 
 ```sh
-$ pulumi new java --name addsite-cloudflare --yes
+pulumi new java --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label=".NET">
 
 ```sh
-$ pulumi new csharp --name addsite-cloudflare --yes
+pulumi new csharp --name addsite-cloudflare --yes
 # wait a few seconds while the project is initialized
 ```
 
 </TabItem> <TabItem label="YAML">
 
 ```sh
-$ pulumi new yaml --name addsite-cloudflare --yes
+pulumi new yaml --name addsite-cloudflare --yes
 ```
 
 </TabItem> </Tabs>
@@ -122,33 +113,33 @@ $ pulumi new yaml --name addsite-cloudflare --yes
 
 You will need:
 
-* Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
-* A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
-* A domain. For instance, `example.com`.
+- Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
+- A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
+- A domain. For instance, `example.com`.
 
 :::note
 
-A Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/) is a YAML file containing configurations and secrets that pertain to your application and infrastructure. These can be accessed in several ways, including a Pulumi program. All ESC Environments reside in your Pulumi Cloud account. 
+A Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/) is a YAML file containing configurations and secrets that pertain to your application and infrastructure. These can be accessed in several ways, including a Pulumi program. All ESC Environments reside in your Pulumi Cloud account.
 :::
 
 ```sh
 # Define an ESC Environment name
-$ E=my-dev-env
+E=my-dev-env
 
 # Create a new Pulumi ESC Environment
-$ pulumi config env init --env $E --yes --stack dev
+pulumi config env init --env $E --yes --stack dev
 
 # Replace API_TOKEN with your Cloudflare API Token
-$ pulumi env set $E --secret  pulumiConfig.cloudflare:apiToken API_TOKEN
+pulumi env set $E --secret  pulumiConfig.cloudflare:apiToken API_TOKEN
 
 # Replace abc123 with your Cloudflare Account ID
-$ pulumi env set $E --plaintext pulumiConfig.accountId abc123
+pulumi env set $E --plaintext pulumiConfig.accountId abc123
 
 # Replace example.com with your registered domain, or leave as is
-$ pulumi env set $E --plaintext pulumiConfig.domain example.com
+pulumi env set $E --plaintext pulumiConfig.domain example.com
 
 # Review your ESC Environment
-$ pulumi env open $E
+pulumi env open $E
 {
   "pulumiConfig": {
     "accountId": "111222333",
@@ -162,22 +153,21 @@ $ pulumi env open $E
 
 :::note
 
-A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack. 
+A Pulumi [stack](https://www.pulumi.com/docs/concepts/stack/) is an instance of a Pulumi program. Stacks are independently configurable and may represent different environments (development, staging, production) or feature branches. For this tutorial, you'll use the `dev` stack.
 :::
 
 To instantiate your `dev` stack, run:
 
 ```sh
-$ pulumi up --yes --stack dev
+pulumi up --yes --stack dev
 # wait a few seconds for the stack to be instantiated.
 ```
 
 At this point, you have not defined any resources so you'll have an empty stack.
 
+:::note
 
- :::note
-
-A domain, or site, is known as a Zone in Cloudflare. 
+A domain, or site, is known as a Zone in Cloudflare.
 :::
 
 You will now add the Pulumi Cloudflare package and a Cloudflare Zone resource to your Pulumi program.
@@ -187,23 +177,32 @@ You will now add the Pulumi Cloudflare package and a Cloudflare Zone resource to
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```sh
-$ npm install @pulumi/cloudflare
+npm install @pulumi/cloudflare
+```
+
+```sh output
 added 1 package ...
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```sh
-$ npm install @pulumi/cloudflare
+npm install @pulumi/cloudflare
+```
+
+```sh output
 added 1 package ...
 ```
 
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```sh
-$ echo "pulumi_cloudflare>=5.35,<6.0.0" >> requirements.txt
-$ source venv/bin/activate
-$ pip install -r requirements.txt
+echo "pulumi_cloudflare>=5.35,<6.0.0" >> requirements.txt
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```sh output
 ...
 Collecting pulumi-cloudflare
 ...
@@ -212,7 +211,10 @@ Collecting pulumi-cloudflare
 </TabItem> <TabItem label="go">
 
 ```sh
-$ go get github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare
+go get github.com/pulumi/pulumi-cloudflare/sdk/v3/go/cloudflare
+```
+
+```sh output
 go: downloading github.com/pulumi/pulumi-cloudflare ...
 ```
 
@@ -234,7 +236,10 @@ Below are Apache Maven instructions. For other Java project managers such as Gra
 1. Run:
 
 ```sh
-$ mvn clean install
+mvn clean install
+```
+
+```sh output
 ...
 [INFO] BUILD SUCCESS
 ...
@@ -243,7 +248,10 @@ $ mvn clean install
 </TabItem> <TabItem label=".NET">
 
 ```sh
-$ dotnet add package Pulumi.Cloudflare
+dotnet add package Pulumi.Cloudflare
+```
+
+```sh output
 ...
 info : Adding PackageReference for package 'Pulumi.Cloudflare' into project
 ...
@@ -272,10 +280,10 @@ const domain = config.require("domain");
 
 // Create a Cloudflare resource (Zone)
 const zone = new cloudflare.Zone("my-zone", {
-    zone: domain,
-    accountId: accountId,
-    plan: "free",
-    jumpStart: true,
+	zone: domain,
+	accountId: accountId,
+	plan: "free",
+	jumpStart: true,
 });
 
 // Export the zone ID
@@ -290,14 +298,14 @@ import * as cloudflare from "@pulumi/cloudflare";
 
 const config = new pulumi.Config();
 const accountId = config.require("accountId");
-const domain = config.require("domain")
+const domain = config.require("domain");
 
 // Create a Cloudflare resource (Zone)
 const zone = new cloudflare.Zone("my-zone", {
-    zone: domain,
-    accountId: accountId,
-    plan: "free",
-    jumpStart: true,
+	zone: domain,
+	accountId: accountId,
+	plan: "free",
+	jumpStart: true,
 });
 
 // Export the zone ID
@@ -449,7 +457,7 @@ outputs:
 ### c. Apply the changes
 
 ```sh
-$ pulumi up --yes --stack dev
+pulumi up --yes --stack dev
 # wait a few seconds while the changes take effect
 ```
 
@@ -458,12 +466,12 @@ $ pulumi up --yes --stack dev
 Review the value of `zoneId` to confirm the Zone creation.
 
 ```sh
-$ pulumi stack output zoneId
-d8fcb6d731fe1c2d75e2e8d6ad63fad5
+pulumi stack output zoneId
 ```
 
-
-
+```sh output
+d8fcb6d731fe1c2d75e2e8d6ad63fad5
+```
 
 Once you have added a domain to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
@@ -471,7 +479,7 @@ Once you have added a domain to Cloudflare, that domain will receive two assigne
 
 This process makes Cloudflare your authoritative DNS provider, allowing your DNS queries and web traffic to be served from and protected by the Cloudflare network.
 
-[Learn more about pending domains](/dns/zone-setups/reference/domain-status/) 
+[Learn more about pending domains](/dns/zone-setups/reference/domain-status/)
 :::
 
 ### a. Update the program
@@ -542,7 +550,7 @@ status: ${exampleZone.status}
 ### b. Apply the changes
 
 ```sh
-$ pulumi up --yes --stack dev
+pulumi up --yes --stack dev
 ```
 
 ### c. Obtain the nameservers
@@ -550,21 +558,21 @@ $ pulumi up --yes --stack dev
 Review the value of `nameservers` to retrieve the assigned nameservers:
 
 ```sh
-$ pulumi stack output --stack dev
+pulumi stack output --stack dev
 ```
 
 ### d. Update your registrar
 
 :::note
 
-If you use `example.com` as your site, skip ahead to [Add a DNS record](#add-a-dns-record). 
+If you use `example.com` as your site, skip ahead to [Add a DNS record](#add-a-dns-record).
 :::
 
 Update the nameservers at your registrar to activate Cloudflare services for your domain. Instructions are registrar-specific. You may be able to find guidance under [this consolidated list of common registrars](/dns/zone-setups/full-setup/setup/#update-your-registrar).
 
 :::caution
 
-Registrars take up to 24 hours to process nameserver changes. 
+Registrars take up to 24 hours to process nameserver changes.
 :::
 
 ### e. Check your domain status
@@ -572,11 +580,8 @@ Registrars take up to 24 hours to process nameserver changes.
 Once successfully registered, your domain `status` will change to `active`.
 
 ```sh
-$ pulumi stack output
+pulumi stack output
 ```
-
-
-
 
 You will now add a DNS record to your domain.
 
@@ -598,10 +603,10 @@ const domain = config.require("domain");
 
 // Create a Cloudflare resource (Zone)
 const zone = new cloudflare.Zone("my-zone", {
-    zone: domain,
-    accountId: accountId,
-    plan: "free",
-    jumpStart: true,
+	zone: domain,
+	accountId: accountId,
+	plan: "free",
+	jumpStart: true,
 });
 
 // Export the zone ID
@@ -610,11 +615,11 @@ exports.nameservers = zone.nameServers;
 exports.status = zone.status;
 
 const record = new cloudflare.Record("my-record", {
-  zoneId: zone.id,
-  name: domain,
-  value: "192.0.2.1",
-  type: "A",
-  proxied: true,
+	zoneId: zone.id,
+	name: domain,
+	value: "192.0.2.1",
+	type: "A",
+	proxied: true,
 });
 ```
 
@@ -626,14 +631,14 @@ import * as cloudflare from "@pulumi/cloudflare";
 
 const config = new pulumi.Config();
 const accountId = config.require("accountId");
-const domain = config.require("domain")
+const domain = config.require("domain");
 
 // Create a Cloudflare resource (Zone)
 const zone = new cloudflare.Zone("my-zone", {
-    zone: domain,
-    accountId: accountId,
-    plan: "free", // Choose the desired plan, e.g., "free", "pro", "business", etc.
-    jumpStart: true,
+	zone: domain,
+	accountId: accountId,
+	plan: "free", // Choose the desired plan, e.g., "free", "pro", "business", etc.
+	jumpStart: true,
 });
 
 // Export the zone ID
@@ -647,11 +652,11 @@ export const status = zone.status;
 
 // Set up a Record for your site
 const record = new cloudflare.Record("my-record", {
-    zoneId: zoneId,
-    name: domain,
-    value: "192.0.2.1",
-    type: "A",
-    proxied: true,
+	zoneId: zoneId,
+	name: domain,
+	value: "192.0.2.1",
+	type: "A",
+	proxied: true,
 });
 ```
 
@@ -861,50 +866,39 @@ outputs:
 ### b. Apply the changes
 
 ```sh
-$ pulumi up --yes --stack dev
+pulumi up --yes --stack dev
 ```
-
-
-
 
 You will run two `nslookup` commands against the Cloudflare-assigned nameservers.
 
 To test your site, run:
 
 ```sh
-$ DOMAIN=$(pulumi config get domain)
-$ NS1=$(pulumi stack output nameservers | jq '.[0]' -r)
-$ NS2=$(pulumi stack output nameservers | jq '.[1]' -r)
-$ nslookup $DOMAIN $NS1
-$ nslookup $DOMAIN $NS2
+DOMAIN=$(pulumi config get domain)
+NS1=$(pulumi stack output nameservers | jq '.[0]' -r)
+NS2=$(pulumi stack output nameservers | jq '.[1]' -r)
+nslookup $DOMAIN $NS1
+nslookup $DOMAIN $NS2
 ```
 
 For .NET use `Nameservers` as the Output.
 
 Confirm your response returns the IP address(es) for your site.
 
-
-
-
 In this last step, you will remove the resources and stack used throughout the tutorial.
 
 ### a. Delete the resources
 
 ```sh
-$ pulumi destroy --yes
+pulumi destroy --yes
 ```
 
 ### b. Remove the stack
 
 ```sh
-$ pulumi stack rm dev
+pulumi stack rm dev
 ```
-
-
-
 
 You have incrementally defined Cloudflare resources needed to add a site to Cloudflare. After each new resource, you apply the changes to your `dev` stack via the `pulumi up` command. You declare the resources in your programming language of choice and let Pulumi handle the rest.
 
 Follow the [Hello World tutorial](/pulumi/tutorial/hello-world/) to deploy a serverless app with Pulumi.
-
-

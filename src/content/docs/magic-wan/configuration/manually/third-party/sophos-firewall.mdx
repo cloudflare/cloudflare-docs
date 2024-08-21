@@ -1,20 +1,20 @@
 ---
 title: Sophos Firewall
 pcx_content_type: integration-guide
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This tutorial shows you how to use Magic WAN with the following versions of the Sophos Firewall:
 
-* **Sophos form factor tested:**
-  * Sophos Firewall XGS and XG series hardware
-  * Sophos Firewall virtual appliance on VMware
+- **Sophos form factor tested:**
 
-* **Sophos software versions tested:**
-  * SFOS  Version 19.0 MR2-Build 472
-  * SFOS  Version 19.5.1 MR1-Build 278
+  - Sophos Firewall XGS and XG series hardware
+  - Sophos Firewall virtual appliance on VMware
+
+- **Sophos software versions tested:**
+  - SFOS Version 19.0 MR2-Build 472
+  - SFOS Version 19.5.1 MR1-Build 278
 
 You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) to Magic WAN.
 
@@ -27,20 +27,20 @@ The following instructions show how to setup an IPsec connection on your Sophos 
 1. Go to **System** > **Profiles**.
 2. In **IPsec profiles**, select **Add**.
 3. In the **General settings** group, make sure you have the following settings:
-   * **Name**: Give your profile a descriptive name.
-   * **Key exchange**: **IKEv2**
-   * **Authentication mode**: **Main mode**
+   - **Name**: Give your profile a descriptive name.
+   - **Key exchange**: **IKEv2**
+   - **Authentication mode**: **Main mode**
 4. In the **Phase 1** group, make sure you have the following settings:
-   * **DH group (key group)**: *14(DH2048)*
-   * **Encryption**: *AES256*
-   * **Authentication**: *SHA2 256*
+   - **DH group (key group)**: _14(DH2048)_
+   - **Encryption**: _AES256_
+   - **Authentication**: _SHA2 256_
 5. In the **Phase 2** group, select the following:
-   * **PFS group (DH group)**: *Same as phase-1*
-   * **Key life**: *3600*
-   * **Encryption**: *AES256*
-   * **Authentication**: *SHA2 256*
+   - **PFS group (DH group)**: _Same as phase-1_
+   - **Key life**: _3600_
+   - **Encryption**: _AES256_
+   - **Authentication**: _SHA2 256_
 6. Enable **Dead Peer Detection**.
-7. In **When peer unreachable**, select *Re-initiate*.
+7. In **When peer unreachable**, select _Re-initiate_.
 8. Select **Save**.
 
 ![Start by setting up an IPsec profile.](~/assets/images/magic-wan/third-party/sophos-firewall/1-ipsec-profile.png)
@@ -52,14 +52,14 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
 1. Go to **Configure** > **Site-to-site VPN**.
 2. In **IPsec**, select **Add**.
 3. In the **General settings** group, make sure you have the following settings:
-   * **Name**: Give your site-to-site VPN a descriptive name.
-   * **Connection type**: *Tunnel interface*
-   * **Gateway type**: *Initiate the connection*
+   - **Name**: Give your site-to-site VPN a descriptive name.
+   - **Connection type**: _Tunnel interface_
+   - **Gateway type**: _Initiate the connection_
 4. In the **Encryption** group, make sure you have the following settings:
-   * **Authentication type**: **Preshared key**
+   - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
-   * **Gateway address**: Enter your Cloudflare anycast IP address provided by Cloudflare.
-   * **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
+   - **Gateway address**: Enter your Cloudflare anycast IP address provided by Cloudflare.
+   - **Local ID type**: Add the [IKE ID](/magic-wan/reference/tunnels/#supported-ike-id-formats) provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](~/assets/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 
@@ -143,13 +143,13 @@ To redirect traffic, you can add a static or an SD-WAN route.
 
 #### Static route
 
-Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-based route. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare\_MWAN example from above).
+Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-based route. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
 
 ![Go to static routes to add an XFRM interface-based route](~/assets/images/magic-wan/third-party/sophos-firewall/static-route.png)
 
 #### SD-WAN route
 
-1. Go to **Configure** > **Routing** > **Gateways** to create a custom gateway on the XFRM interface. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare\_MWAN example from above).
+1. Go to **Configure** > **Routing** > **Gateways** to create a custom gateway on the XFRM interface. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
 
 ![Go to Gateways to add an XFRM interface-based route](~/assets/images/magic-wan/third-party/sophos-firewall/1-sd-wan-gateway.png)
 
@@ -186,7 +186,13 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-<Render file="tunnel-healthchecks-dash" params={{ one: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.", two: "**Magic WAN** > **Tunnel health**" }} />
+<Render
+	file="tunnel-healthchecks-dash"
+	params={{
+		one: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
+		two: "**Magic WAN** > **Tunnel health**",
+	}}
+/>
 
 ### Make Cloudflare health checks work
 
@@ -219,7 +225,10 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{
 Packet flow will look like the following:
 
 ```sh
-$ tcpdump -nn proto 1
+tcpdump -nn proto 1
+```
+
+```sh output
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes
 
@@ -254,10 +263,10 @@ Access the CLI and type `system gre tunnel show` to check the status of a GRE tu
 
 If a tunnel shows a connected status at both ends, but is not established:
 
-* Check if the IPsec profile configuration is correct.
-* Make sure the corresponding tunnel interfaces are up.
-* Make sure routing configuration and route precedence are correctly set on SFOS.
-* Make sure a static back route is added on Cloudflare.
-* Firewall rules for specific zones and host or service must be added in SFOS. GRE and IPsec belong to the VPN zone.
-* Perform `tcpdump` to check if packets are going through the VPN or GRE tunnel as expected.
-* Perform a packet capture on Cloudflare to see if traffic is reaching the Cloudflare platform.
+- Check if the IPsec profile configuration is correct.
+- Make sure the corresponding tunnel interfaces are up.
+- Make sure routing configuration and route precedence are correctly set on SFOS.
+- Make sure a static back route is added on Cloudflare.
+- Firewall rules for specific zones and host or service must be added in SFOS. GRE and IPsec belong to the VPN zone.
+- Perform `tcpdump` to check if packets are going through the VPN or GRE tunnel as expected.
+- Perform a packet capture on Cloudflare to see if traffic is reaching the Cloudflare platform.

@@ -3,10 +3,9 @@ title: Insert vectors
 pcx_content_type: concept
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Vectorize indexes allow you to insert vectors at any point: Vectorize will optimize the index behind the scenes to ensure that vector search remains efficient, even as new vectors are added or existing vectors updated.
 
@@ -14,9 +13,9 @@ Vectorize indexes allow you to insert vectors at any point: Vectorize will optim
 
 Vectorize supports vectors in three formats:
 
-* An array of floating point numbers (converted into a JavaScript `number[]` array).
-* A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
-* A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
+- An array of floating point numbers (converted into a JavaScript `number[]` array).
+- A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
+- A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
 
 In most cases, a `number[]` array is the easiest when dealing with other APIs, and is the return type of most machine-learning APIs.
 
@@ -28,9 +27,9 @@ Metadata keys cannot be empty, contain the dot character (`.`), contain the doub
 
 Metadata can be used to:
 
-* Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
-* The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
-* Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
+- Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
+- The raw content (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
+- Dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
 
 For example, a vector embedding representing an image could include the path to the [R2 object](/r2/) it was generated from, the format, and a category lookup:
 
@@ -55,21 +54,21 @@ To insert vectors with a namespace:
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-  {
-    id: "1",
-    values: [32.4, 74.1, 3.2],
-    namespace: "text",
-  },
-  {
-    id: "2",
-    values: [15.1, 19.2, 15.8],
-    namespace: "images",
-  },
-  {
-    id: "3",
-    values: [0.16, 1.2, 3.8],
-    namespace: "pdfs",
-  },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2],
+		namespace: "text",
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8],
+		namespace: "images",
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8],
+		namespace: "pdfs",
+	},
 ];
 
 // Insert your vectors, returning a count of the vectors inserted and their vector IDs.
@@ -80,7 +79,9 @@ To query vectors within a namespace:
 
 ```ts
 // Your queryVector will be searched against vectors within the namespace (only)
-let matches = await env.TUTORIAL_INDEX.query(queryVector, { namespace: "images" })
+let matches = await env.TUTORIAL_INDEX.query(queryVector, {
+	namespace: "images",
+});
 ```
 
 ## Examples
@@ -94,21 +95,21 @@ Use the `insert()` and `upsert()` methods available on an index from within a Cl
 // Vectors from a machine-learning model are typically ~100 to 1536 dimensions
 // wide (or wider still).
 const sampleVectors: Array<VectorizeVector> = [
-  {
-    id: "1",
-    values: [32.4, 74.1, 3.2],
-    metadata: { url: "/products/sku/13913913" },
-  },
-  {
-    id: "2",
-    values: [15.1, 19.2, 15.8],
-    metadata: { url: "/products/sku/10148191" },
-  },
-  {
-    id: "3",
-    values: [0.16, 1.2, 3.8],
-    metadata: { url: "/products/sku/97913813" },
-  },
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2],
+		metadata: { url: "/products/sku/13913913" },
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8],
+		metadata: { url: "/products/sku/10148191" },
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8],
+		metadata: { url: "/products/sku/97913813" },
+	},
 ];
 
 // Insert your vectors, returning a count of the vectors inserted and their vector IDs.
@@ -127,8 +128,8 @@ Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the g
 
 You can bulk upload vector embeddings directly:
 
-* The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
-* Vectors must be complete and include a unique string `id` per vector.
+- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
+- Vectors must be complete and include a unique string `id` per vector.
 
 An example NDJSON formatted file:
 
@@ -141,7 +142,7 @@ An example NDJSON formatted file:
 <Render file="vectorize-wrangler-version" />
 
 ```sh
-$ wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
+wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
 ```
 
 ### HTTP API

@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 As a best practice, we also recommend that you explicitly block all traffic that does not come from Cloudflare IP addresses or the IP addresses of your trusted partners, vendors, or applications.
@@ -9,9 +8,9 @@ For example, you might [update your iptables](https://www.linode.com/docs/guides
 
 ```sh
 # For IPv4 addresses
-$ iptables -A INPUT -p tcp -m multiport --dports http,https -j DROP
+iptables -A INPUT -p tcp -m multiport --dports http,https -j DROP
 # For IPv6 addresses
-$ ip6tables -A INPUT -p tcp -m multiport --dports http,https -j DROP
+ip6tables -A INPUT -p tcp -m multiport --dports http,https -j DROP
 ```
 
 For more specific guidance, contact your hosting provider or website administrator.
