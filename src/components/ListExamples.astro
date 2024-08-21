@@ -29,7 +29,7 @@ for (let item of target) {
 			entry.data.pcx_content_type === "example" && entry.slug.startsWith(item)
 		);
 	});
-	examples.push(exampleGroup);
+	examples = [...examples, ...exampleGroup];
 }
 
 const filterValues: Record<string, string[]> = {};
@@ -56,9 +56,11 @@ if (filters) {
 						</label>
 						<select id={filter} class="w-52 h-8 mt-2">
 							<option value="all">Select...</option>
-							{filterValues[filter].map((value) => (
-								<option value={value}>{value}</option>
-							))}
+							{filterValues[filter]
+								.sort((a, b) => a.localeCompare(b))
+								.map((value) => (
+									<option value={value}>{value}</option>
+								))}
 						</select>
 					</div>
 				))}
@@ -71,31 +73,35 @@ if (filters) {
 <div id="examples">
 	<CardGrid>
 		{
-			examples.map((example) => {
-				const filterAttributes = {};
-				if (filters) {
-					for (const filter of filters) {
-						const hasFilterableProperty = filter in example.data;
+			examples
+				.sort((a, b) => a.data.title.localeCompare(b.data.title))
+				.map((example) => {
+					const filterAttributes = {};
+					if (filters) {
+						for (const filter of filters) {
+							const hasFilterableProperty = filter in example.data;
 
-						if (hasFilterableProperty) {
-							// @ts-expect-error can't use TS generics inside JSX
-							filterAttributes[`data-${filter}`] =
-								// @ts-expect-error indexing frontmatter with string
-								example.data[filter];
+							if (hasFilterableProperty) {
+								// @ts-expect-error can't use TS generics inside JSX
+								filterAttributes[`data-${filter}`] =
+									// @ts-expect-error indexing frontmatter with string
+									example.data[filter];
+							}
 						}
 					}
-				}
 
-				return (
-					<LinkTitleCard
-						title={example.data.title}
-						href={`/${example.slug}/`}
-						data-example
-						{...filterAttributes}
-						set:html={marked.parse(example.data.description ?? "")}
-					/>
-				);
-			})
+					return (
+						<LinkTitleCard
+							title={example.data.title}
+							href={`/${example.slug}/`}
+							data-example
+							{...filterAttributes}
+							set:html={marked.parse(
+								`${example.data.description ?? ""}${example.data.products ? `\n\n<strong>${example.data.products.join(", ")}</strong>` : ""}`,
+							)}
+						/>
+					);
+				})
 		}
 	</CardGrid>
 </div>
