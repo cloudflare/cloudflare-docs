@@ -3,16 +3,13 @@ pcx_content_type: reference
 title: Gateway activity logs
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 
-
 Gateway logs will only show the public Source IP address. Private IP addresses are NAT-ed behind a public IP address.
-
 
 :::
 
@@ -34,8 +31,6 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 #### Basic information
 
-
-
 | Field                 | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **DNS**               | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                   |
@@ -44,11 +39,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                        |
 | **Resolver Decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                 |
 
-
-
 #### Matched policies
-
-
 
 | Field                  | Description                                          |
 | ---------------------- | ---------------------------------------------------- |
@@ -56,11 +47,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Policy ID**          | ID of the matched policy (if there is one).          |
 | **Policy Description** | Description of the matched policy (if there is one). |
 
-
-
 #### Custom resolver
-
-
 
 | Field                      | Description                                                 |
 | -------------------------- | ----------------------------------------------------------- |
@@ -69,11 +56,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Response**               | Status of the custom resolver response.                     |
 | **Time (in milliseconds)** | Duration of time it took for the custom resolver to respond |
 
-
-
 #### Identities
-
-
 
 | Field                  | Description                                                                                                                                                                                                                                                    |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -83,11 +66,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **Device ID**          | UUID of the device connected with the WARP client. Each unique device in your organization will have a UUID associated with it each time the device is registered for a particular email. The same physical device may have multiple UUIDs associated with it. |
 | **Last authenticated** | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                                                            |
 
-
-
 #### DNS query details
-
-
 
 | Field                           | Description                                                                                                                         |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -106,11 +85,7 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | **DNS Location**                | [User-configured location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) from where the DNS query was made. |
 | **Location ID**                 | ID of the DNS location where the query originated.                                                                                  |
 
-
-
 ### Resolver decisions
-
-
 
 | Name                     | Value | Description                                                 |
 | ------------------------ | ----- | ----------------------------------------------------------- |
@@ -123,15 +98,11 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 | `blockedRule`            | `9`   | IP address in the response matched a Block policy.          |
 | `allowedRule`            | `10`  | IP address in the response matched an Allow policy.         |
 
-
-
 ## Network logs
 
 :::caution[Failed connection logs]
 
-
 Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
-
 
 :::
 
@@ -139,22 +110,16 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 
 #### Basic information
 
-
-
 | Field                  | Description                                                                                                                                       |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**          | IP address of the user sending the packet.                                                                                                        |
 | **Source Internal IP** | Private IP address assigned by the user's local network.                                                                                          |
-| **Destination IP**     | IP address of the packet’s target.                                                                                                                |
+| **Destination IP**     | IP address of the packet's target.                                                                                                                |
 | **Action**             | The Gateway [Action](/cloudflare-one/policies/gateway/dns-policies/#actions) taken based on the first rule that matched (such as Allow or Block). |
 | **Session ID**         | ID of the unique session.                                                                                                                         |
 | **Time**               | Date and time of the session.                                                                                                                     |
 
-
-
 #### Matched policies
-
-
 
 | Field                  | Description                                           |
 | ---------------------- | ----------------------------------------------------- |
@@ -162,11 +127,7 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | **Policy ID**          | ID of the policy enforcing the decision Gateway made. |
 | **Policy Description** | Description of the matched policy (if there is one).  |
 
-
-
 #### Identities
-
-
 
 | Field                  | Description                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------- |
@@ -176,18 +137,14 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | **Device ID**          | ID of the device that sent the packet. This is generated by the WARP client.        |
 | **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                          |
 
-
-
 #### Network query details
-
-
 
 | Field                   | Description                                                                                                                                       |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source IP**           | IP address of the user sending the packet.                                                                                                        |
 | **Source Port**         | Source port number for the packet.                                                                                                                |
 | **Source Country**      | Country code for the packet source.                                                                                                               |
-| **Destination IP**      | IP address of the packet’s target.                                                                                                                |
+| **Destination IP**      | IP address of the packet's target.                                                                                                                |
 | **Destination Port**    | Destination port number for the packet.                                                                                                           |
 | **Destination Country** | Destination port number for the packet.                                                                                                           |
 | **Protocol**            | Protocol over which the packet was sent.                                                                                                          |
@@ -197,23 +154,17 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 | **Category details**    | Category or categories associated with the packet.                                                                                                |
 | **Proxy PAC Endpoint**  | [PAC file proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.          |
 
-
-
 ## HTTP logs
 
 :::note
 
-
 When an HTTP request results in an error, Gateway logs the first 512 bytes of the request for 30 days for internal troubleshooting. Otherwise, Gateway does not log HTTP bodies.
-
 
 :::
 
 ### Explanation of the fields
 
 #### Basic information
-
-
 
 | Field                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -229,11 +180,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **DLP profile entries**      | Name of the matched entry within the DLP profile (if there is one).                                                                               |
 | **Uploaded/downloaded file** | <Render file="gateway/uploaded-downloaded-file" />                                                                                                |
 
-
-
 #### Matched policies
-
-
 
 | Field                  | Description                                          |
 | ---------------------- | ---------------------------------------------------- |
@@ -241,11 +188,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Policy ID**          | ID of the matched policy (if there is one).          |
 | **Policy Description** | Description of the matched policy (if there is one). |
 
-
-
 #### Identities
-
-
 
 | Field                  | Description                                                                                                          |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -255,11 +198,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Device ID**          | ID of the device that made the request. This is generated by the WARP client on the device that created the request. |
 | **Last Authenticated** | Date and time the user last authenticated with Zero Trust.                                                           |
 
-
-
 #### HTTP query details
-
-
 
 | Field                      | Description                                                                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -277,11 +216,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Blocked file reason**    | Reason why the file was blocked if a file transfer occurred or was attempted.                               |
 | **Category details**       | Category the blocked file belongs to.                                                                       |
 
-
-
 #### File detection details
-
-
 
 | Field            | Description                                        |
 | ---------------- | -------------------------------------------------- |
@@ -292,8 +227,6 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Content type** | MIME type of the detected file.                    |
 | **Direction**    | Upload or download direction of the detected file. |
 | **Action**       | The Action Gateway applied to the request.         |
-
-
 
 ### Enhanced file detection
 

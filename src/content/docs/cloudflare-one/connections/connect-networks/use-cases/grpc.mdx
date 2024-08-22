@@ -3,15 +3,17 @@ pcx_content_type: how-to
 title: gRPC
 sidebar:
   order: 9
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 gRPC is a Remote Procedure Call (RPC) framework that allows client applications to call methods on a remote server as if they were running on the same local machine. You can connect gRPC servers and clients to Cloudflare's global network, making it easier to build applications that use services across different data centers and environments.
 
 <Render file="tunnel/grpc-support" /> <br /> <br />
-In this example, we will connect a gRPC server to Cloudflare using the `cloudflared` <GlossaryTooltip term="daemon">daemon</GlossaryTooltip>, secure the server with Gateway policies, and open a gRPC channel to the server using the Cloudflare WARP client.
+In this example, we will connect a gRPC server to Cloudflare using the
+`cloudflared` <GlossaryTooltip term="daemon">daemon</GlossaryTooltip>, secure
+the server with Gateway policies, and open a gRPC channel to the server using
+the Cloudflare WARP client.
 
 ## 1. Set up a gRPC server
 
@@ -61,7 +63,7 @@ For more details on setting up the Gateway proxy, refer to [Filter network traff
 
 ## 5. Set up the client
 
-gRPC clients can connect to the server by installing Cloudflare WARP on the device and enrolling in your Zero Trust organization. When the client makes a request to a private IP exposed through Cloudflare Tunnel, WARP routes the connection through Cloudflare’s network to the corresponding tunnel.
+gRPC clients can connect to the server by installing Cloudflare WARP on the device and enrolling in your Zero Trust organization. When the client makes a request to a private IP exposed through Cloudflare Tunnel, WARP routes the connection through Cloudflare's network to the corresponding tunnel.
 
 To set up the gRPC client:
 

@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Generic OIDC
 sidebar:
   order: 1
-
 ---
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
@@ -22,13 +21,13 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 3. Copy the content of these fields:
 
-   * Client ID
-   * Client secret
-   * Auth URL: The `authorization_endpoint` URL of your IdP
-   * Token URL: The `token_endpoint` URL of your IdP
-   * Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
+   - Client ID
+   - Client secret
+   - Auth URL: The `authorization_endpoint` URL of your IdP
+   - Token URL: The `token_endpoint` URL of your IdP
+   - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
-   You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
+   You can find these values on your identity provider's **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
 4. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
@@ -66,15 +65,15 @@ Cloudflare Access does not support partial OIDC claim value references or OIDC s
 
 ```json
 {
-  "config": {
-    "client_id": "<your client id>",
-    "client_secret": "<your client secret>",
-    "auth_url": "https://accounts.google.com/o/oauth2/auth",
-    "token_url": "https://accounts.google.com/o/oauth2/token",
-    "certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-    "scopes": ["openid", "email", "profile"]
-  },
-  "type": "oidc",
-  "name": "Generic Google"
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"auth_url": "https://accounts.google.com/o/oauth2/auth",
+		"token_url": "https://accounts.google.com/o/oauth2/token",
+		"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
+		"scopes": ["openid", "email", "profile"]
+	},
+	"type": "oidc",
+	"name": "Generic Google"
 }
 ```
