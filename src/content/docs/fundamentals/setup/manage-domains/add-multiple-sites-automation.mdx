@@ -2,43 +2,42 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
 
 Adding multiple sites can be useful when you:
 
-* Have multiple domains mapping back to a single, canonical domain (common for domains in different countries - such as `.com.au`, `.co.uk` - that you want protected by Cloudflare).
-* Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
-* Are moving an existing set of sites over to Cloudflare.
+- Have multiple domains mapping back to a single, canonical domain (common for domains in different countries - such as `.com.au`, `.co.uk` - that you want protected by Cloudflare).
+- Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
+- Are moving an existing set of sites over to Cloudflare.
 
 Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
 This tutorial assumes domains will be added using [full mode](/dns/zone-setups/full-setup/).
 
-***
+---
 
 ## Prerequisites
 
 To add multiple sites to Cloudflare via automation, you need:
 
-* An existing [Cloudflare account](/fundamentals/setup/account/create-account/).
-* Command line with `curl`
-* A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with one of the following permissions:
-  * Zone-level `Administrator`
-  * Zone-level `Zone: Edit` and `DNS: Edit`
-  * Account-level `Domain Administrator`
-* To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
-  * Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
+- An existing [Cloudflare account](/fundamentals/setup/account/create-account/).
+- Command line with `curl`
+- A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with one of the following permissions:
+  - Zone-level `Administrator`
+  - Zone-level `Zone: Edit` and `DNS: Edit`
+  - Account-level `Domain Administrator`
+- To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
+  - Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
 
 <Render file="dnssec-providers" product="dns" />
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-***
+---
 
 ## Add domains
 
@@ -67,14 +66,12 @@ To add multiple sites to Cloudflare via automation, you need:
 3. Open the command line and run:
 
 ```sh
-$ bash add-multiple-zones.sh
+bash add-multiple-zones.sh
 ```
 
 :::caution
 
-
 <Render file="automation-number-limitations" />
-
 
 :::
 
@@ -89,7 +86,7 @@ After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-s
 This tool is a requirement to complete any `Additional options` steps in this tutorial.
 
 ```sh
-$ echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
+echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 ```
 
 Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
@@ -100,8 +97,8 @@ Cloudflare offers a [quick scan](/dns/zone-setups/reference/dns-quick-scan/) tha
 
 This API call requires the domain `ID`. This can be found in the following locations:
 
-* [Create Zone](/api/operations/zones-post#Request)
-* [List Zones](/api/operations/zones-get)
+- [Create Zone](/api/operations/zones-post#Request)
+- [List Zones](/api/operations/zones-get)
 
 Using `jq` with the first option above, modify your script `add-multiple-zones.sh` to extract the domain ID and run a subsequent API call to quick scan DNS records.
 
@@ -142,8 +139,8 @@ For each domain to become active on Cloudflare, it must be activated in either [
 
 You can find your zones nameservers in the following locations:
 
-* [Create Zone](/api/operations/zones-post#Request)
-* [Zone Details](/api/operations/zones-0-get)
+- [Create Zone](/api/operations/zones-post#Request)
+- [Zone Details](/api/operations/zones-0-get)
 
 1. Modify your script `add-multiple-zones.sh` to print a CSV with data from the `Create Zone` JSON response.
 
@@ -182,17 +179,17 @@ You can find your zones nameservers in the following locations:
   cat /tmp/domain_nameservers.csv
 ```
 
-| ID          | ZONE          | NAME SERVERS                                      |
-| ----------- | ------------- | ------------------------------------------------- |
-| \<ZONE\_ID> | `example.com` | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` |
+| ID         | ZONE          | NAME SERVERS                                      |
+| ---------- | ------------- | ------------------------------------------------- |
+| \<ZONE_ID> | `example.com` | `arya.ns.cloudflare.com`, `tim.ns.cloudflare.com` |
 
 2. Use the values in the **NAME SERVERS** column to [update the nameservers](/dns/zone-setups/full-setup/setup/#update-your-registrar) at the registrar of each domain.
 
-***
+---
 
 ## Limitations
 
-<Render file="automation-number-limitations" /> <br/>
+<Render file="automation-number-limitations" /> <br />
 
 After that, you cannot have more pending sites than active sites associated with your Cloudflare account. We recommend waiting until your pending sites have been [activated](/dns/zone-setups/reference/domain-status/) before adding additional domains.
 

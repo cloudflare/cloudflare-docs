@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 The following procedure makes two changes to the `sshd_config` file on the remote target machine. The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
@@ -8,7 +7,7 @@ The following procedure makes two changes to the `sshd_config` file on the remot
 1. While staying within the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
 
    ```sh
-   $ vim /etc/ssh/sshd_config
+   vim /etc/ssh/sshd_config
    ```
 
 2. Go to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:

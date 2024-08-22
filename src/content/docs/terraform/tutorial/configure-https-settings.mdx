@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Configure HTTPS settings
-
 ---
 
 After proxying a basic website through Cloudflare, you can use Terraform to adjust zone settings. In this tutorial, you will configure some optional HTTPS settings and then push the updated configuration to GitHub for posterity.
@@ -17,17 +16,22 @@ You will use a new Git branch for the changes and then merge it into the `master
 
 In this step, modify the Terraform configuration to enable the following settings:
 
-* [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
-* [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
-* [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/)
+- [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/)
+- [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
+- [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/)
 
 Strict mode requires a valid SSL certificate on your origin — use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one.
 
 ```bash
-$ git checkout -b step3-https
-Switched to a new branch 'step3-https'
+git checkout -b step3-https
+```
 
-$ cat >> cloudflare.tf <<'EOF'
+```sh output
+Switched to a new branch 'step3-https'
+```
+
+```sh
+cat >> cloudflare.tf <<'EOF'
 
 resource "cloudflare_zone_settings_override" "example-com-settings" {
   zone_id = var.zone_id
@@ -46,7 +50,10 @@ EOF
 Review what Terraform is proposing before applying changes. The example output below is being filtered to ignore computed values — in this case, settings that will keep their default values.
 
 ```sh
-$ terraform plan | grep -v "(known after apply)"
+terraform plan | grep -v "(known after apply)"
+```
+
+```sh output
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
@@ -85,21 +92,39 @@ guarantee to take exactly these actions if you run "terraform apply" now.
 The proposed changes look good, so you can merge them into the `master` branch and then apply them with `terraform apply`. When working on a team, you may want to require pull requests and use this opportunity to peer review any proposed configuration changes.
 
 ```sh
-$ git add cloudflare.tf
-$ git commit -m "Step 3 - Enable TLS 1.3, Always Use HTTPS, and SSL Strict mode."
+git add cloudflare.tf
+git commit -m "Step 3 - Enable TLS 1.3, Always Use HTTPS, and SSL Strict mode."
+```
+
+```sh output
 [step3-https d540600] Step 3 - Enable TLS 1.3, Always Use HTTPS, and SSL Strict mode.
  1 file changed, 11 insertions(+)
+```
 
-$ git checkout master
+```sh
+git checkout master
+```
+
+```sh output
 Switched to branch 'master'
+```
 
-$ git merge step3-https
+```sh
+git merge step3-https
+```
+
+```sh output
 Updating d26f40b..d540600
 Fast-forward
  cloudflare.tf | 11 +++++++++++
  1 file changed, 11 insertions(+)
+```
 
-$ git push
+```sh
+git push
+```
+
+```sh output
 Counting objects: 3, done.
 Delta compression using up to 8 threads.
 Compressing objects: 100% (3/3), done.
@@ -115,7 +140,10 @@ To git@github.com:$GITHUB_USER/cf-config.git
 Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile `curl` against BoringSSL](https://everything.curl.dev/source/build/tls/boringssl#build-boringssl).
 
 ```sh
-$ curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+```
+
+```sh output
 * error:1000042e:SSL routines:OPENSSL_internal:TLSV1_ALERT_PROTOCOL_VERSION
 curl: (35) error:1000042e:SSL routines:OPENSSL_internal:TLSV1_ALERT_PROTOCOL_VERSION
 ```
@@ -123,7 +151,10 @@ curl: (35) error:1000042e:SSL routines:OPENSSL_internal:TLSV1_ALERT_PROTOCOL_VER
 As shown above, you should receive an error because TLS 1.3 is not yet enabled on your zone. Enable it by running `terraform apply` and try again.
 
 ```sh
-$ terraform apply --auto-approve
+terraform apply --auto-approve
+```
+
+```sh output
 
 Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
@@ -222,6 +253,9 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 Try the same command as before. The command will now succeed.
 
 ```sh
-$ curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+```
+
+```sh output
 * SSL connection using TLSv1.3 / AEAD-AES128-GCM-SHA256
 ```

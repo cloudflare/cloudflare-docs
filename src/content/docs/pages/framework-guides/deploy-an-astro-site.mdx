@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Astro
-
 ---
 
-import { PagesBuildPreset, Render } from "~/components"
+import { PagesBuildPreset, Render } from "~/components";
 
 [Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
 
@@ -17,7 +16,7 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 To use `create-cloudflare` to create a new Astro project, run the following command:
 
 ```sh
-$ npm create cloudflare@latest my-astro-app -- --framework=astro
+npm create cloudflare@latest my-astro-app -- --framework=astro
 ```
 
 Astro will ask:
@@ -37,7 +36,7 @@ You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages usin
 Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) to your project's `package.json` by running:
 
 ```sh
-$ npm run astro add cloudflare
+npm run astro add cloudflare
 ```
 
 <Render file="tutorials-before-you-start" />
@@ -75,9 +74,7 @@ Additionally, you will have access to [preview deployments](/pages/configuration
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
@@ -90,11 +87,11 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-  }),
+	adapter: cloudflare({
+		platformProxy: {
+			enabled: true,
+		},
+	}),
 });
 ```
 
@@ -113,14 +110,14 @@ First, you need to define Cloudflare runtime and KV type by updating the `env.d.
 
 type KVNamespace = import("@cloudflare/workers-types").KVNamespace;
 type ENV = {
-  // replace `MY_KV` with your KV namespace
-  MY_KV: KVNamespace;
+	// replace `MY_KV` with your KV namespace
+	MY_KV: KVNamespace;
 };
 
 // use a default runtime configuration (advanced mode).
 type Runtime = import("@astrojs/cloudflare").Runtime<ENV>;
 declare namespace App {
-  interface Locals extends Runtime {}
+	interface Locals extends Runtime {}
 }
 ```
 
@@ -129,14 +126,14 @@ You can then access your KV from an API endpoint in the following way:
 ```typescript null {3,4,5}
 import type { APIContext } from "astro";
 
-export async function get({locals}: APIContext) {
-  // the type KVNamespace comes from the @cloudflare/workers-types package
-  const { MY_KV } = locals.runtime.env;
+export async function get({ locals }: APIContext) {
+	// the type KVNamespace comes from the @cloudflare/workers-types package
+	const { MY_KV } = locals.runtime.env;
 
-  return {
-    // ...
-  };
-};
+	return {
+		// ...
+	};
+}
 ```
 
 Besides endpoints, you can also use bindings directly from your Astro components:

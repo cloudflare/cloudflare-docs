@@ -4,7 +4,6 @@ category: 🌐 Connections
 Difficulty: Advanced
 pcx_content_type: tutorial
 title: Use cloudflared to expose a Kubernetes app to the Internet
-
 ---
 
 You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
@@ -17,8 +16,8 @@ This architecture allows `cloudflared` instances to proxy Internet traffic into 
 
 **This tutorial covers how to:**
 
-* Deploy `cloudflared` in a replica model
-* Proxy traffic into a Kubernetes service with Tunnel
+- Deploy `cloudflared` in a replica model
+- Proxy traffic into a Kubernetes service with Tunnel
 
 **Time to complete: 45 minutes**
 
@@ -31,7 +30,7 @@ Start by [downloading and installing](/cloudflare-one/connections/connect-networ
 Once installed, you can use the `tunnel login` command in `cloudflared` to obtain a certificate.
 
 ```sh
-$ cloudflared tunnel login
+cloudflared tunnel login
 ```
 
 ## Create your Tunnel
@@ -39,7 +38,10 @@ $ cloudflared tunnel login
 In the example below, simply change `<example-tunnel>` to the name you wish to assign to your Tunnel.
 
 ```sh
-$ cloudflared tunnel create example-tunnel
+cloudflared tunnel create example-tunnel
+```
+
+```sh output
 Tunnel credentials written to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found. Keep this file secret. To revoke these credentials, delete the tunnel.
 
 Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
@@ -50,7 +52,7 @@ Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
 Next, you will upload the generated Tunnel credential file as a secret to your Kubernetes cluster. You will also need to provide the filepath that the Tunnel credentials file was created under. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
 
 ```sh
-$ kubectl create secret generic tunnel-credentials \
+kubectl create secret generic tunnel-credentials \
 --from-file=credentials.json=/Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json
 ```
 
@@ -69,7 +71,10 @@ Alternatively, you can perform this step from the command line by running `cloud
 Now, we'll deploy `cloudflared` by applying its [manifest](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml). This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared` instances running in this deployment. Then, those `cloudflared` instances will proxy the request to your [application's Service](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/app.yaml).
 
 ```sh
-$ kubectl apply -f cloudflared.yaml
+kubectl apply -f cloudflared.yaml
+```
+
+```sh output
 deployment.apps/cloudflared created
 configmap/cloudflared configured
 ```

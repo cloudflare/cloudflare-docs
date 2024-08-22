@@ -2,17 +2,16 @@
 pcx_content_type: example
 summary: Create a response header modification rule (part of Transform Rules) to
   remove the `cf-connecting-ip` HTTP header from the response.
-product:
+products:
   - Transform Rules
 operation:
   - Response modification
 title: Remove a response header
 description: Create a response header modification rule (part of Transform
   Rules) to remove the `cf-connecting-ip` HTTP header from the response.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following HTTP response header modification rule removes the `cf-connecting-ip` header from the response:
 
@@ -24,7 +23,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/private/")
 ```
 
-Selected operation under **Modify response header**: *Remove*
+Selected operation under **Modify response header**: _Remove_
 
 **Header name**: `cf-connecting-ip`
 

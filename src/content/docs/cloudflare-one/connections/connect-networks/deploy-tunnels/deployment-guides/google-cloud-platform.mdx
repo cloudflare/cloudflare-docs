@@ -3,24 +3,23 @@ pcx_content_type: how-to
 title: GCP
 sidebar:
   order: 5
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 This guide covers how to connect a Google Cloud Project (GCP) virtual machine to Cloudflare using our lightweight connector, `cloudflared`.
 
 We will deploy:
 
-* A Google Cloud Project (GCP) virtual machine that runs a basic HTTP server.
-* A Cloudflare Tunnel that allows users to connect to the service via either a public hostname or a private IP address.
+- A Google Cloud Project (GCP) virtual machine that runs a basic HTTP server.
+- A Cloudflare Tunnel that allows users to connect to the service via either a public hostname or a private IP address.
 
 ### Prerequisites
 
 To complete the following procedure, you will need to:
 
-* [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
-* [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) on an end-user device
+- [Add a website to Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) on an end-user device
 
 ## 1. Create a VM instance in GCP
 
@@ -34,11 +33,11 @@ To complete the following procedure, you will need to:
 
 5. Choose your desired operating system and specifications. For this example, you can use the following settings:
 
-   * **Machine family:** General Purpose
-   * **Series:** E2
-   * **Machine type:** e2-micro
-   * **Boot disk image:** Debian GNU/Linux 12
-   * **Firewalls**: Allow HTTP and HTTPS traffic
+   - **Machine family:** General Purpose
+   - **Series:** E2
+   - **Machine type:** e2-micro
+   - **Boot disk image:** Debian GNU/Linux 12
+   - **Firewalls**: Allow HTTP and HTTPS traffic
 
 6. Under **Advanced options** > **Management** > **Automation**, add the following startup script. This example deploys a basic Apache web server on port `80`.
 
@@ -60,11 +59,14 @@ To complete the following procedure, you will need to:
    1. Copy the **External IP** for the VM instance.
    2. Open a browser and go to `http://<EXTERNAL IP>`. You should see the **Hello Cloudflare!** test page.
 
-9. To login to the VM instance, open the dropdown next to **SSH** and select *Open in browser window*.
+9. To login to the VM instance, open the dropdown next to **SSH** and select _Open in browser window_.
 
 ## 2. Create a Cloudflare Tunnel
 
-<Render file="tunnel/cloud-create-tunnel" params={{ one: "GCP VM", two: "gcp" }} />
+<Render
+	file="tunnel/cloud-create-tunnel"
+	params={{ one: "GCP VM", two: "gcp" }}
+/>
 
 ## 3. Connect using a public hostname
 
@@ -74,15 +76,18 @@ To complete the following procedure, you will need to:
 
 To configure a private network route for your Cloudflare Tunnel:
 
-1. In the **Private Network** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`).  You can expand the IP range later if necessary.
-2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`.  We recommend re-adding the IPs that are not explicitly used by your GCP VM -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
+1. In the **Private Network** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`). You can expand the IP range later if necessary.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`. We recommend re-adding the IPs that are not explicitly used by your GCP VM -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
 3. To test on a user device:
 
    1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
    2. Open a terminal window and connect to the service using its private IP:
 
    ```sh
-   $ curl 10.0.0.2
+   curl 10.0.0.2
+   ```
+
+   ```sh output
    <html><body><h1>Hello Cloudflare!</h1>
    <p>This page was created for a Cloudflare demo.</p>
    </body></html>
@@ -96,7 +101,7 @@ To secure your VM instance, you can [configure your VPC firewall rules](https://
 
 :::note
 
-If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM. 
+If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
 :::
 
 After configuring your VPC firewall rules, verify that you can still access the service through Cloudflare Tunnel via its [public hostname](#3-connect-using-a-public-hostname) or [private IP](#4-connect-using-a-private-ip). The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://<EXTERNAL IP>` the test page should no longer load.
