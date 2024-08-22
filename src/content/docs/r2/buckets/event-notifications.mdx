@@ -33,6 +33,19 @@ To enable event notifications, add an event notification rule to your bucket by 
 npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
 ```
 
+To add filtering based on `prefix` or `suffix` use the `--prefix` or `--suffix` flag, respectively.
+
+```sh
+# Filter using prefix
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --prefix "<PREFIX_VALUE>"
+
+# Filter using suffix
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --suffix "<SUFFIX_VALUE>"
+
+# Filter using prefix and suffix. Both the conditions will be used for filtering
+$ npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> --prefix "<PREFIX_VALUE>" --suffix "<SUFFIX_VALUE>"
+```
+
 For a more complete step-by-step example, refer to the [Log and store upload events in R2 with event notifications](/r2/examples/upload-logs-event-notifications/) example.
 
 ## Event types
