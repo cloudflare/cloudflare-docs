@@ -48,7 +48,6 @@ Using ECMP has a number of consequences:
 As a result, ECMP provides load balancing across tunnels with the same prefix and priority.
 
 :::note[Note:]
-
 Packets in the same flow use the same tunnel unless the tunnel priority changes. Packets for different flows can use different tunnels depending on which tunnel the flow’s 4-tuple – source and destination IP and source and destination port – hash to.
 :::
 
@@ -146,7 +145,6 @@ Because ECMP is probabilistic, the algorithm routes roughly the same number of f
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
 :::note[Note]
-
 {props.one} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to <a href={props.three}>Configure static routes</a> for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
@@ -154,5 +152,4 @@ For example, in a scenario where you want to route 70% of your traffic through I
 Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
 For more on {props.one} tunnel weights, contact your Cloudflare customer service manager.
-
 :::
