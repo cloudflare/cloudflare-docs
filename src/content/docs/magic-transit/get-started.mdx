@@ -39,9 +39,7 @@ If you are an Internet service provider (ISP) and advertising <GlossaryTooltip t
 If you are using a [Cloudflare IP address](/magic-transit/cloudflare-ips/), you do not need to submit an LOA.
 
 :::note[Note]
-
 The LOA must be a PDF. Transit providers may reject the LOA if it is a JPG or PNG.
-
 :::
 
 ### Verify IRR entries
@@ -81,7 +79,6 @@ Once pre-flight checks are completed, Cloudflare will unlock your <GlossaryToolt
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
 :::caution[Important]
-
 You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place before routing changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
 
 Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:
@@ -90,5 +87,4 @@ Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interc
 - Express CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
 
 MSS clamps are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
-
 :::
