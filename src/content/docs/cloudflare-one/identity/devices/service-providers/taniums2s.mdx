@@ -1,0 +1,62 @@
+---
+pcx_content_type: how-to
+title: Tanium
+sidebar:
+  order: 4
+  hidden: true
+head:
+  - tag: title
+    content: Tanium - Posture checks
+
+---
+
+import { Render } from "~/components"
+
+<Render file="posture/service-provider-intro" params={{ one: "Tanium" }} />
+
+## Prerequisites
+
+* Either Tanium Cloud or on-premise installations of Tanium
+* Tanium agent is deployed on the device.
+* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
+
+## Set up Tanium as a service provider
+
+### 1. Get Tanium settings
+
+The following Tanium values are needed to set up the Tanium posture check:
+
+* Client Secret
+* Rest API URL
+
+To retrieve those values:
+
+1. Log in to your Tanium instance.
+2. Go to **Administration** > **API Tokens**.
+3. Select **New API Token**.
+4. Set **Expire in days** to an appropriate value for your organization. When this token expires, all device posture results will begin to fail unless updated.
+5. Set **Trusted IP addresses** to `0.0.0.0/0`.
+6. Select **Save**.
+7. Copy the **Client Secret** and **API URL** to a safe place.
+
+### 2. Add Tanium as a service provider
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2. Scroll down to **Device posture providers** and select **Add new**.
+3. Select **Tanium**.
+4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
+5. Enter the **Client Secret** and **Rest API URL** you noted down above.
+6. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query Tanium for information.
+7. Select **Save**.
+
+<Render file="posture/test-posture-provider" />
+
+### 3. Configure the posture check
+
+<Render file="posture/configure-posture-check" params={{ one: "Tanium" }} />
+
+## Device posture attributes
+
+| Selector    | Description                                                                                                                                                          |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Total score | `totalScore` of the device from [Tanium's EndpointRisk assessment](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk) |

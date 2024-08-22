@@ -1,3 +1,0 @@
-{{- $ruleId := .Inner -}}
-{{- $shortenedRuleId := print "..." (substr (trim $ruleId " ") -8) -}}
-<code class="ruleID"> <span class="ruleID" title="Click to copy the full ID" onclick="navigator.clipboard.writeText({{$ruleId}})">{{- $shortenedRuleId -}}&nbsp;<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" style="width: 16px;height: 18px;" class="icon-copy"><path d="M14 1.5H6l-.5.5v2.5h1v-2h7v7h-2v1H14l.5-.5V2l-.5-.5z"></path><path d="M2 5.5l-.5.5v8l.5.5h8l.5-.5V6l-.5-.5H2zm7.5 8h-7v-7h7v7z"></path></svg></span></code>

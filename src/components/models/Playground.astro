@@ -1,0 +1,22 @@
+---
+import { LinkButton } from "~/components";
+import { z } from "astro:content";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+---
+
+<h2>Use the Playground</h2>
+<p>
+	Try out this model with Workers AI Model Playground. It does not require any
+	setup or authentication and an instant way to preview and test a model
+	directly in the browser.
+</p>
+<LinkButton href={`https://playground.ai.cloudflare.com/?model=${name}`}>
+	Launch the Model Playground
+</LinkButton>

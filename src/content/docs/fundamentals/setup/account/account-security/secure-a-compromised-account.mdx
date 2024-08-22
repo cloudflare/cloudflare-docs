@@ -1,0 +1,37 @@
+---
+title: Secure compromised account
+pcx_content_type: tutorial
+
+---
+
+import { Render } from "~/components"
+
+If you observe suspicious activity within your Cloudflare account, secure your account with these steps.
+
+## Step 1 - Change your password
+
+For more guidance on changing your password, refer to [Change email address or password](/fundamentals/subscriptions-and-billing/change-password-or-email/).
+
+## Step 2 - Revoke active account sessions
+
+<Render file="revoke-active-sessions" />
+
+## Step 3 - Enable Two-Factor Authentication (2FA)
+
+To prevent future compromises, make sure that you have [Two-Factor Authentication (2FA)](/fundamentals/setup/account/account-security/2fa/) enabled on your account.
+
+## Step 4 - Change API keys and tokens
+
+### API keys
+
+<Render file="api-change-api-key" />
+
+### API tokens
+
+<Render file="api-roll-token" />
+
+## Step 5 - Review the audit log
+
+<Render file="view-audit-log" />
+
+If you notice any settings were changed, you should undo those changes.

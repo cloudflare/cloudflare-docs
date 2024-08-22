@@ -1,0 +1,51 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+:::note[Note]
+At the moment, this setting only works directly with [image transformations](/images/transform-images/).
+:::
+
+The `auto` option will serve the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used. Cloudflare will default to JPEG when possible due to the large size of PNG files.
+
+Workers integration supports:
+
+* `avif`: Generate images in AVIF format if possible (with WebP as a fallback).
+* `webp`: Generate images in Google WebP format. Set the quality to `100` to get the WebP lossless format.
+* `jpeg`: Generate images in interlaced progressive JPEG format, in which data is compressed in multiple passes of progressively higher detail.
+* `baseline-jpeg`: Generate images in baseline sequential JPEG format. It should be used in cases when target devices don't support progressive JPEG or other modern file formats.
+* `json`: Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain data such as image size (before and after resizing), source image's MIME type, and file size.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    format=auto
+    ```
+  </TabItem>
+  <TabItem label="URL format alias">
+  ```js 
+  f=auto
+  ```
+  </TabItem>
+    <TabItem label="Workers">
+  ```js 
+  cf: {image: {format: "avif"}}
+  ```
+  </TabItem>
+</Tabs>
+
+For the `format:auto` option to work with a custom Worker, you need to parse the `Accept` header. Refer to [this example Worker](/images/transform-images/transform-via-workers/#an-example-worker) for a complete overview of how to set up an image transformation Worker.
+
+```js title="Custom Worker for Image Resizing with format:auto"
+const accept = request.headers.get("accept");
+let image = {};
+
+if (/image\/avif/.test(accept)) {
+    image.format = "avif";
+} else if (/image\/webp/.test(accept)) {
+    image.format = "webp";
+}
+
+return fetch(url, {cf:{image}});
+```

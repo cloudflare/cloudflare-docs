@@ -1,0 +1,52 @@
+---
+pcx_content_type: example
+summary: Create two rewrite URL rules (part of Transform Rules) to rewrite the
+  path of the welcome page for visitors in specific countries.
+products:
+  - Transform Rules
+operation:
+  - Rewrite URL
+title: Rewrite page path for visitors in specific countries
+description: Create two rewrite URL rules (part of Transform Rules) to rewrite
+  the path of the welcome page for visitors in specific countries.
+---
+
+import { Example } from "~/components";
+
+To have a welcome page in two languages, create two rewrite URL rules with a static rewrite of the path component:
+
+**Rewrite URL rule #1**
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.request.uri.path == "/welcome.html" && ip.geoip.country == "GB"
+```
+
+Text after **Path** > **Rewrite to...** > _Static_:
+
+```txt
+/welcome-gb.html
+```
+
+</Example>
+
+**Rewrite URL rule #2**
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.request.uri.path == "/welcome.html" && ip.geoip.country == "PT"
+```
+
+Text after **Path** > **Rewrite to...** > _Static_:
+
+```txt
+/welcome-pt.html
+```
+
+</Example>

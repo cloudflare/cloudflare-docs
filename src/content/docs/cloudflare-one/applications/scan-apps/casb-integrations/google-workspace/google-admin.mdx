@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: Google Admin
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+  file="casb/integration-description"
+  params={{ one: "Google Admin", two: "Google Workspace account" }}
+/>
+
+## Integration prerequisites
+
+<Render file="casb/google/google-prereqs" />
+
+## Integration permissions
+
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
+
+## Security findings
+
+<Render
+  file="casb/security-findings"
+  params={{ one: "Google Admin", two: "google-workspace/google-admin" }}
+/>
+
+### User account settings
+
+<Render file="casb/google/user-account-settings" />
+
+### Inactive or suspended users
+
+<Render file="casb/google/inactive-suspended-users" />
+
+### Third-party apps
+
+<Render file="casb/google/third-party-apps" />

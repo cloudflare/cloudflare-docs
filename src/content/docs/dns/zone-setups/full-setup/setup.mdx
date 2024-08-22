@@ -1,0 +1,145 @@
+---
+title: Setup
+pcx_content_type: tutorial
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Change your nameservers (Full setup)
+
+---
+
+import { Render } from "~/components"
+
+<Render file="full-setup-definition" />
+
+## Before you begin
+
+
+
+Before you update your domain nameservers, make sure that you:
+
+* Already own a domain name (such as `example.com` or `cloudflare.com`).
+
+:::note
+
+
+If you do not already have a [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/), get one at-cost through [Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register).
+
+All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
+
+
+:::
+
+* Have previously created a [Cloudflare account](/fundamentals/setup/account/create-account/).
+* Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
+
+<Render file="dnssec-providers" />
+
+<Render file="dnssec-enabled-migration" />
+
+
+## Add site to Cloudflare
+
+
+In the Cloudflare dashboard, [add your domain](/fundamentals/setup/manage-domains/add-site/).
+
+## Review DNS records
+
+
+
+When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a full setup, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
+
+<Render file="dns-scan-intro" /> <br />
+
+<Render file="dns-scan-note" />
+
+<Render file="dns-scan-procedure" />
+
+<Render file="dns-nxdomain-warning" />
+
+
+
+## Update your nameservers
+
+<Render file="nameserver-preamble" />
+
+<Render file="minimize-downtime-tip" />
+
+### Get nameserver names
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
+
+   ![Find nameserver names on the Overview page of your domain](~/assets/images/dns/nameserver-names.png)
+
+<br/>
+3. Keep this window open while you perform the next step.
+
+:::note
+
+Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/). 
+:::
+
+### Update your registrar
+
+1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
+
+:::note
+
+Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details. 
+:::
+
+2. Remove your existing authoritative nameservers.
+
+3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
+
+<Render file="ns-update-providers" />
+
+:::note
+
+
+To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/full-setup/troubleshooting/).
+
+
+:::
+
+### Verify changes
+
+Wait up to 24 hours while your registrar updates your nameservers.
+
+When your domain is **Active**:
+
+* You will receive an email from Cloudflare.
+* Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
+* Online tools such as [https://www.whatsmydns.net/](https://www.whatsmydns.net/) will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
+* CLI commands will show your Cloudflare-assigned nameservers
+
+```txt
+*Linux/Unix*
+dig <DOMAIN_NAME> +trace @1.1.1.1
+dig <DOMAIN_NAME> +trace @8.8.8.8
+
+*Windows*
+nslookup <DOMAIN_NAME> 1.1.1.1
+nslookup <DOMAIN_NAME> 8.8.8.8
+```
+
+:::note
+
+
+If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/full-setup/troubleshooting/) and check with your domain registrar.
+
+
+:::
+
+
+
+## Re-enable DNSSEC
+
+When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
+
+You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.
+
+
+

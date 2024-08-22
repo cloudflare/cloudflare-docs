@@ -1,0 +1,54 @@
+---
+type: example
+summary: Get a specific `Set-Cookie` header and update it with a certain value.
+goal:
+  - Manage headers
+operation:
+  - Response modification
+  - Cookies manipulation
+products:
+  - Snippets
+pcx_content_type: example
+title: Override a Set-Cookie header with a certain value
+description: Get a specific `Set-Cookie` header and update it with a certain value.
+---
+
+```js
+export default {
+	async fetch(request) {
+		// Receive response from the origin
+		const response = await fetch(request);
+
+		// Create a new Headers object to modify response headers
+		const newHeaders = new Headers(response.headers);
+
+		// Get all Set-Cookie headers
+		const cookies = response.headers.get("Set-Cookie");
+		if (cookies) {
+			// Split the Set-Cookie headers
+			const cookieArray = cookies.split(/,(?=\s*[^;]+=[^;]+)/g);
+			const updatedCookies = cookieArray.map((cookie) => {
+				// For example, replace the currency value with GBP
+				if (cookie.trim().startsWith("currency=")) {
+					return cookie.replace(/currency=[^;]+/, "currency=GBP");
+				}
+				return cookie;
+			});
+
+			// Delete the existing Set-Cookie headers
+			newHeaders.delete("Set-Cookie");
+
+			// Add the updated Set-Cookie headers individually
+			updatedCookies.forEach((cookie) => {
+				newHeaders.append("Set-Cookie", cookie.trim());
+			});
+		}
+
+		// Return the modified response with updated headers
+		return new Response(response.body, {
+			status: response.status,
+			headers: newHeaders,
+		});
+	},
+};
+```

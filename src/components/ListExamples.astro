@@ -1,0 +1,158 @@
+---
+import { getCollection, z } from "astro:content";
+import { marked } from "marked";
+import { CardGrid, LinkTitleCard } from "~/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	directory: z.string().optional(),
+	filters: z.string().array().optional(),
+});
+
+const { directory, filters } = props.parse(Astro.props);
+
+let target = Astro.params.slug?.split("/")[0];
+
+if (directory) {
+	target = directory;
+} else {
+	target = target?.concat("/");
+}
+
+const examples = await getCollection("docs", (entry) => {
+	return entry.data.pcx_content_type === "example" && entry.slug.startsWith(target);
+});
+
+const filterValues: Record<string, string[]> = {};
+if (filters) {
+	for (const filter of filters) {
+		const values = examples.flatMap((x) =>
+			// @ts-expect-error indexing frontmatter with string
+			filter in x.data ? x.data[filter] : [],
+		);
+		const unique = [...new Set(values)];
+		filterValues[filter] = unique;
+	}
+}
+---
+
+{
+	filters && (
+		<>
+			<div id="filters" class="flex not-content">
+				{filters.map((filter) => (
+					<div class="flex flex-col mr-6">
+						<label for={filter}>
+							{filter[0].toUpperCase() + filter.slice(1)}
+						</label>
+						<select id={filter} class="w-52 h-8 mt-2">
+							<option value="all">Select...</option>
+							{filterValues[filter].map((value) => (
+								<option value={value}>{value}</option>
+							))}
+						</select>
+					</div>
+				))}
+			</div>
+			<div id="exampleCount">{examples.length} examples</div>
+		</>
+	)
+}
+
+<div id="examples">
+	<CardGrid>
+		{
+			examples.map((example) => {
+				const filterAttributes = {};
+				if (filters) {
+					for (const filter of filters) {
+						const hasFilterableProperty = filter in example.data;
+
+						if (hasFilterableProperty) {
+							// @ts-expect-error can't use TS generics inside JSX
+							filterAttributes[`data-${filter}`] =
+								// @ts-expect-error indexing frontmatter with string
+								example.data[filter];
+						}
+					}
+				}
+
+				return (
+					<LinkTitleCard
+						title={example.data.title}
+						href={`/${example.slug}/`}
+						data-example
+						{...filterAttributes}
+						set:html={marked.parse(example.data.description ?? "")}
+					/>
+				);
+			})
+		}
+	</CardGrid>
+</div>
+
+<script>
+	const filterContainer = document.querySelector("#filters");
+	const filters =
+		filterContainer?.querySelectorAll<HTMLSelectElement>("select");
+
+	const exampleContainer = document.querySelector("#examples");
+	const examples =
+		exampleContainer?.querySelectorAll<HTMLElement>("[data-example]");
+
+	function filterValues() {
+		if (!filters) return;
+
+		const values: Record<string, string> = {};
+
+		for (const filter of filters) {
+			values[filter.id] = filter.value;
+		}
+
+		return values;
+	}
+
+	function filterExamples() {
+		if (!examples) return;
+
+		const filters = filterValues();
+		if (!filters) return;
+
+		let numOfExamplesVisible = examples.length;
+		for (const example of examples) {
+			let shouldHideExample = false;
+
+			for (const [filter, value] of Object.entries(filters)) {
+				if (value !== "all") {
+					if (example.dataset[filter]?.includes(",")) {
+						const datasetValues = example.dataset[filter]?.split(",");
+						if (!datasetValues?.includes(value)) {
+							shouldHideExample = true;
+						}
+					} else if (example.dataset[filter] !== value) {
+						shouldHideExample = true;
+					}
+				}
+			}
+
+			if (shouldHideExample) {
+				example.style.display = "none";
+				numOfExamplesVisible--;
+			} else {
+				example.style.display = "";
+			}
+		}
+
+		const count = document.querySelector("#exampleCount");
+		if (!count) return;
+
+		count.textContent = `${numOfExamplesVisible} examples`;
+	}
+
+	if (filters) {
+		for (const filter of filters) {
+			filter.addEventListener("change", filterExamples);
+		}
+	}
+</script>

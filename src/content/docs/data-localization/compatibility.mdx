@@ -1,0 +1,136 @@
+---
+title: Product compatibility
+pcx_content_type: reference
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Cloudflare product compatibility
+
+---
+
+The table below provides a summary of the Data Localization Suite product's behavior with Cloudflare products. Refer to the table legend for guidance on interpreting the table.
+
+✅ Product works with no caveats <br/>
+🚧 Product can be used with some caveats <br/>
+✘ Product cannot be used <br/>
+⚫️ Not applicable
+
+## Application Performance
+
+| Product                | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ---------------------- | --------------- | ----------------- | -------------------------- |
+| Caching/CDN            | ✅              | ✅                 | ✅                        |
+| Cache Reserve          | ⚫️              | 🚧                 | ✅ [^29]                    |
+| DNS                    | ⚫️              | ⚫️                 | 🚧 [^32]                    |
+| HTTP/3 (with QUIC)     | ⚫️              | ✘                  | ⚫️                          |
+| Image Resizing         | ✅              | ✘                  | 🚧 [^1]                    |
+| Load Balancing         | ✅              | ✅                 | 🚧 [^1]                   |
+| Onion Routing          | ✘               | ✘                 | ✘                          |
+| Orange-to-Orange (O2O) | ✘               | ✘                 | ✘                          |
+| Stream Delivery        | ✅              | ✅                 | ✅                          |
+| Tiered Caching         | ✅              | 🚧 [^2]            | 🚧 [^30]                         |
+| Trace                  | ✘               | ✘                 | ✘                          |
+| Waiting Room           | ⚫️              | ✅                 | ✅                          |
+| Zaraz                  | ✅              | ✅                 | ✅                          |
+
+***
+
+## Application Security
+
+| Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ---------------------------- | --------------- | ----------------- | -------------------------- |
+| Advanced Certificate Manager | ⚫️              | ⚫️                | ⚫️                         |
+| Advanced DDoS Protection     | ✅               | ✅                 | 🚧 [^3]                   |
+| API Shield                   | ✅               | ✅                 | ✘ [^4]                    |
+| Bot Management               | ✅               | ✅                 | 🚧 [^5]                   |
+| DNS Firewall                 | ⚫️              | ⚫️                  | 🚧 [^1]                   |
+| Page Shield                  | ✅               | ✅                 | ✅                         |
+| Rate Limiting                | ✅               | ✅                 | 🚧 [^1]                     |
+| SSL                          | ✅               | ✅                 | ✅                          |
+| Cloudflare for SaaS          | ✘               | ✅                 | ✅                          |
+| Turnstile                    | ⚫️              | ✘                 | ✅                          |
+| WAF/L7 Firewall              | ✅               | ✅                 | ✅                          |
+| DMARC Management             | ⚫️              | ⚫️                | ✅                          |
+
+***
+
+## Developer Platform
+
+| Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ---------------------------- | --------------- | ----------------- | -------------------------- |
+| Cloudflare Images            | ⚫️              | ✘                 | ✘                          |
+| Cloudflare Pages             | ✘               | ✅ [^11]          | 🚧 [^1]                    |
+| Durable Objects              | ⚫️              | ✅ [^7]           | 🚧 [^1]                     |
+| Email Routing                | ⚫️              | ⚫️                | ✅                          |
+| R2                           | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                    |
+| Stream                       | ⚫️              | ✘                 | ✘                          |
+| Workers (deployed on a Zone) | ✅               | ✅                 | 🚧 [^1]                  |
+| Workers KV                   | ⚫️              | ✘                 | ✘                          |
+| Workers.dev                  | ✘               | ✘                 | ✘                          |
+
+***
+
+## Network Services
+
+| Product            | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ------------------ | --------------- | ----------------- | -------------------------- |
+| Argo Smart Routing | ✅               | ✘ [^9]           | ✘ [^10]                    |
+| Static IP/BYOIP    | ⚫️              | ✅ [^26]          | ⚫️                         |
+| Magic Firewall     | ⚫️              | ⚫️                | ✅                          |
+| Magic Transit      | ⚫️              | ⚫️                | 🚧 [^1]                     |
+| Magic WAN          | ⚫️              | ⚫️                | ✅                          |
+| Spectrum           | ✅               | ✅                 | ✅                          |
+
+***
+
+## Platform
+
+| Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ------- | --------------- | ----------------- | -------------------------- |
+| Logpull | ⚫️              | ⚫️                | 🚧 [^12]                    |
+| Logpush | ⚫️              | ✅                 | 🚧 [^13]                   |
+
+***
+
+## Zero Trust
+
+| Product           | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ----------------- | --------------- | ----------------- | -------------------------- |
+| Access            | 🚧 [^14]        | 🚧 [^15]           | 🚧 [^16]                   |
+| Browser Isolation | ⚫️              | 🚧 [^17]           | ✅                         |
+| CASB              | ⚫️              | ⚫️                 | ✘                          |
+| Cloudflare Tunnel | ⚫️              | 🚧 [^18]           | ⚫️                         |
+| DLP               | ⚫️ [^19]        | ⚫️ [^19]           | 🚧 [^31]                   |
+| Gateway           | 🚧 [^20]        | 🚧 [^21]           | 🚧 [^22]                   |
+| WARP              | ⚫️              | ⚫️                 | 🚧 [^1]                   |
+
+
+[^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+[^2]: Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.
+[^3]: Adaptive DDoS Protection is only supported for US CMB.
+[^4]: API shield will not yet work with Customer Metadata Boundary enabled outside of US region.
+[^5]: Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
+[^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+[^8]: Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
+[^9]: Argo cannot be used with Regional Services.
+[^10]: Argo cannot be used with Customer Metadata Boundary.
+[^11]: Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.
+[^12]: Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2025.
+[^13]: Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your Customer Success Manager if you need another dataset.
+[^14]: Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.
+[^15]: Can be localized to US FedRAMP region only. More regions coming in 2024.
+[^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
+[^17]: Currently may only be used with US FedRAMP region.
+[^18]: Only US FedRAMP region.
+[^19]: Uses Gateway HTTP and CASB.
+[^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
+[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
+[^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
+[^26]: Static IP/BYOIP can be used with the legacy Spectrum setup.
+[^27]: Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/data-localization/key-management/keyless-ssl/).
+[^28]: R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.
+[^29]: You cannot yet specify region location for object storage itself.
+[^30]: Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
+[^31]: DLP is part of Gateway HTTP, however, [DLP datasets](/cloudflare-one/policies/data-loss-prevention/datasets/#use-dlp-datasets) are not available outside US region when using Customer Metadata Boundary.
+[^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.

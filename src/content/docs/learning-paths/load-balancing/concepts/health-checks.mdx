@@ -1,0 +1,25 @@
+---
+title: Monitors and health checks
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+
+---
+
+import { GlossaryDefinition, Render } from "~/components"
+
+There's more to a load balancer than just distributing traffic, however.
+
+After all, what good would it be if your load balancer and pools send a request to a server that's offline? Or one that's already overloaded with traffic? Ideally, your load balancer should only forward requests that a server can take care of.
+
+That's where another part of the load balancing equation comes in: monitors and health checks.
+
+<Render file="health-check-diagram" product="load-balancing" />
+
+## How it works
+
+A monitor issues health checks periodically to evaluate the health of a each server within a pool.
+
+<GlossaryDefinition term="health check" />
+
+This system of request and response ensures that a load balancer knows which servers can handle incoming requests.

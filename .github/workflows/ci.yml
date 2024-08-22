@@ -19,11 +19,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: '0.125.6'
-          extended: true
+          node-version: 22
 
       - name: Get npm cache directory
         id: npm-cache-dir
@@ -40,24 +36,9 @@ jobs:
 
       - run: npm ci
 
-      - run: make build
+      - run: npx astro build
         env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
-
-      - name: Check - Broken Links
-        run: npm run crawl
-        if: success()
+          NODE_OPTIONS: "--max-old-space-size=4192"
 
       - name: Check - Validate redirects (infinite loops, sources with fragment)
         run: npx tsm bin/validate-redirects.ts
-
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - run: npm ci
-  #     - run: npm run lint

@@ -1,0 +1,21 @@
+name: China Network
+
+product:
+  title: China Network
+  url: /china-network/
+  group: Application performance
+  additional_groups: [Application security]
+
+meta:
+  title: Cloudflare China Network docs
+  description: The Cloudflare China Network is a global network that offers a fast experience for visitors inside and outside of China.
+  author: "@cloudflare"
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: china-network

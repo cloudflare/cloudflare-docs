@@ -1,0 +1,88 @@
+---
+pcx_content_type: reference
+title: Microsoft 365
+rss: file
+---
+
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
+
+<Render
+  file="casb/integration-description"
+  params={{ one: "Microsoft 365 (M365)", two: "Microsoft 365 account" }}
+/>
+
+This integration covers the following Microsoft 365 products:
+
+<DirectoryListing />
+
+## Integration prerequisites
+
+<Render file="casb/microsoft/m365-prereqs" />
+
+## Integration permissions
+
+For the Microsoft 365 integration to function, Cloudflare CASB requires the following delegated Microsoft Graph API permissions:
+
+- `Application.Read.All`
+- `Calendars.Read`
+- `Domain.Read.All`
+- `Group.Read.All`
+- `InformationProtectionPolicy.Read.All`
+- `MailboxSettings.Read`
+- `offline_access`
+- `RoleManagement.Read.All`
+- `User.Read.All`
+- `UserAuthenticationMethod.Read.All`
+- `Files.Read.All`
+- `AuditLog.Read.All`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
+
+## Security findings
+
+<Render
+  file="casb/security-findings"
+  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+/>
+
+### User account settings
+
+<Render file="casb/microsoft/user-account-settings" />
+
+### File sharing
+
+<Render file="casb/microsoft/file-sharing" />
+
+<Render file="casb/shared-links" />
+
+### Data Loss Prevention (optional)
+
+<Render file="casb/data-loss-prevention" />
+
+<Render file="casb/microsoft/m365-dlp-findings" />
+
+### Third-party apps
+
+<Render file="casb/microsoft/third-party-apps" />
+
+### Calendar sharing
+
+<Render file="casb/microsoft/calendar-sharing" />
+
+### Email administrator settings
+
+<Render file="casb/microsoft/email-admin-settings" />
+
+### Email forwarding
+
+<Render file="casb/microsoft/email-forwarding" />
+
+## Microsoft Information Protection (MIP) sensitivity labels
+
+:::note
+
+Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
+
+:::
+
+Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/microsoft-365/compliance/sensitivity-labels?view=o365-worldwide) to classify and protect sensitive data. When you add the CASB Microsoft 365 integration, Cloudflare will automatically retrieve the labels from your Microsoft account and populate them in a [DLP Profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/).

@@ -1,0 +1,208 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Sidebar.astro";
+
+import { AstroIcon } from "~/components";
+import { getEntry } from "astro:content";
+
+const { sidebar, slug } = Astro.props;
+
+interface Link {
+	type: "link";
+	label: string;
+	href: string;
+	isCurrent: boolean;
+	badge: any | undefined;
+	attrs: any;
+	order: number;
+}
+
+interface Group {
+	type: "group";
+	label: string;
+	entries: (Link | Group)[];
+	collapsed: boolean;
+	badge: Badge | undefined;
+	order: number;
+}
+``;
+
+type SidebarEntry = Link | Group;
+
+const currentSection = slug?.split("/")[0];
+
+let filtered = sidebar.filter(
+	(x) => x.label.toLowerCase() === currentSection,
+)[0] as Group;
+
+if (currentSection === "learning-paths") {
+	const module = slug.split("/")[1];
+	filtered.entries = filtered.entries.filter(
+		(x) => x.label.toLowerCase() === module,
+	);
+	filtered.entries = (filtered.entries[0] as Group).entries.filter(
+		(x) => x.type === "group",
+	);
+}
+
+if (!filtered.entries) {
+	throw new Error(`[Sidebar] Failed to find entries for ${currentSection}`);
+}
+
+function sortGroup(a: SidebarEntry, b: SidebarEntry): number {
+	const collator = new Intl.Collator("en");
+
+	if (a.order !== b.order) return a.order - b.order;
+
+	return collator.compare(a.label, b.label);
+}
+
+async function handleGroup(group: Group): Promise<SidebarEntry> {
+	const indexLink = group.entries.find(
+		(x) => x.type === "link" && x.href.endsWith(`/${group.label}/`),
+	) as Link | undefined;
+
+	if (!indexLink) {
+		throw new Error(`Unable to find index link in group ${group.label}`);
+	}
+
+	const indexPage = await getEntry("docs", indexLink.href.slice(1, -1));
+
+	if (!indexPage) {
+		throw new Error(`Unable to find index page with href ${indexLink}`);
+	}
+
+	const frontmatter = indexPage.data;
+
+	group.label = frontmatter.sidebar.group?.label ?? frontmatter.sidebar.label ?? frontmatter.title;
+	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+
+	if (frontmatter.hideChildren) {
+		return {
+			type: "link",
+			href: indexLink.href,
+			label: group.label,
+			order: group.order,
+			attrs: {},
+			isCurrent: indexLink.href.slice(1, -1) === Astro.params.slug,
+		} as Link;
+	}
+
+	for (const entry of group.entries.keys()) {
+		if (group.entries[entry].type === "group") {
+			group.entries[entry] = await handleGroup(group.entries[entry] as Group);
+		} else {
+			group.entries[entry] = await handleLink(group.entries[entry] as Link);
+		}
+	}
+
+	group.entries = group.entries.sort(sortGroup);
+
+	const indexIdx = group.entries.findIndex(
+		(x) => x.type === "link" && x.href === indexLink.href,
+	) as number;
+
+	if (indexPage.data.sidebar.group?.hideIndex) {
+		group.entries.splice(indexIdx, 1)[0];
+		return group;
+	}
+
+	group.entries.unshift(group.entries.splice(indexIdx, 1)[0]);
+	group.entries[0].label = indexPage.data.sidebar.label ?? "Overview";
+
+	return group;
+}
+
+async function handleLink(link: Link): Promise<Link> {
+	const slug = link.href.slice(1, -1);
+	const page = await getEntry("docs", slug);
+
+	if (!page) {
+		throw new Error(`Oops`);
+	}
+
+	const frontmatter = page.data;
+	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
+
+	if (slug === currentSection) {
+		link.order = 0;
+	}
+
+	if (frontmatter.external_link) {
+		return {
+			...link,
+			label: link.label.concat(" ↗"),
+			href: frontmatter.external_link,
+			badge: frontmatter.external_link.startsWith("/api") && {
+				text: "API",
+			},
+		};
+	}
+
+	return link;
+}
+
+filtered.entries = await Promise.all(
+	filtered.entries.map((entry) => {
+		if (entry.type === "group") {
+			return handleGroup(entry);
+		} else {
+			return handleLink(entry);
+		}
+	}),
+);
+
+filtered.entries = filtered.entries.sort(sortGroup);
+
+filtered.entries[0].label = "Overview";
+
+const lookupProductTitle = async (slug: string) => {
+	const segments = slug.split("/");
+	const product = segments[0];
+
+	if (product === "learning-paths") {
+		const path = segments[1];
+
+		const { data } = await getEntry("learning-paths", path);
+
+		return `${data.title} (Learning Paths)`;
+	}
+
+	const { data } = await getEntry("products", product);
+
+	return data.product.title;
+};
+---
+
+<a
+	href={"/" + currentSection + "/"}
+	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
+>
+	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
+	<span class="text-black dark:text-white">
+		<strong>
+			{lookupProductTitle(slug)}
+		</strong>
+	</span>
+</a>
+<Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
+
+<style is:global>
+:root {
+	a[aria-current="page"] {
+		background-color: var(--sidebar-blue-accent-600) !important;
+		border: 1px solid !important;
+		border-color: var(--blue-accent-900) !important;
+		color: var(--sidebar-blue-text) !important;
+	}
+}
+
+:root[data-theme="dark"] {
+	a[aria-current="page"] {
+		background-color: var(--sidebar-orange-accent-600) !important;
+		border: 1px solid !important;
+		border-color: var(--orange-accent-200) !important;
+		color: var(--sl-color-white) !important;
+	}
+}
+</style>

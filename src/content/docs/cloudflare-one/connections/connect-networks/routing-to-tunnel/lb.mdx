@@ -1,0 +1,71 @@
+---
+pcx_content_type: concept
+title: Load balancing
+sidebar:
+  order: 51
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Render
+	file="tunnel/dns-record"
+	product="cloudflare-one"
+	params={{ one: "a Load Balancing endpoint", two: "a load balancer pool" }}
+/>
+
+## Add a tunnel to a load balancer pool
+
+<Tabs> <TabItem label="Dashboard">
+
+To create a load balancer, refer to the [Load Balancing documentation](/load-balancing/load-balancers/create-load-balancer/). The endpoint address is the subdomain of your tunnel, `<UUID>.cfargotunnel.com`.
+
+If you want to add a [monitor](/load-balancing/monitors/) to your load balancer pool, you will need to add a host header to **Advanced health check settings**. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The monitor will not work without the host header if you are using a config file that defines the `ingress` field, as shown in [this example](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90).
+
+</TabItem>
+
+<TabItem label="cli">
+
+You can add Cloudflare Tunnel to an existing load balancer pool directly from `cloudflared`:
+
+```sh
+cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
+```
+
+- `<hostname>`: the DNS hostname of the load balancer, for example `lb.example.com`.
+
+- `<load balancer pool>`: the name of the [pool](/load-balancing/pools/create-pool/#create-a-pool) that will contain the tunnel subdomain.
+
+This command creates an LB DNS record that points the specified hostname to the subdomain of your tunnel (`<UUID>.cfargotunnel.com`). Traffic will not be proxied unless the tunnel is running.
+
+:::note
+
+To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system.
+:::
+
+</TabItem>
+
+</Tabs>
+
+## Optional Cloudflare settings
+
+The application will default to the Cloudflare settings for the load balancer hostname, including [cache rules](/cache/how-to/cache-rules/) and [firewall policies](/firewall/). You can change the settings for your hostname in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+## Known limitations
+
+### Monitors and TCP Tunnel origins
+
+If you have a tunnel to a port or SSH port, do not run a TCP health check.
+
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames) that returns a fixed HTTP status response — and create an **HTTP** [monitor](/load-balancing/monitors/) for that endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
+
+### Session affinity and replicas
+
+The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single endpoint. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
+
+### Local connection preference
+
+If you notice traffic imbalances across endpoints in different locations, you may have to adjust your load balancer setup.
+
+`cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
+
+The solution depends on the type of tunnel being used. If running [legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/), put your origins in different pools. If running [Cloudflare tunnel replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Cloudflare tunnels as distinct origins.

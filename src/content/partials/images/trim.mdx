@@ -1,0 +1,23 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Specifies a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account. For image transformations and Cloudflare Images, use as four numbers in pixels separated by a semicolon, in the form of `top;right;bottom;left` or via separate values `trim.width`,`trim.height`, `trim.left`,`trim.top`. For the Workers integration, specify an object with properties: `{top, right, bottom, left, width, height}`.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    trim=20;30;20;0
+    trim.width=678
+    trim.height=678
+    trim.left=30
+    trim.top=40
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {trim: {top: 12,  right: 78, bottom: 34, left: 56, width:678, height:678}}}
+  ```
+  </TabItem>
+</Tabs>

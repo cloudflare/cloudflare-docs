@@ -1,7 +1,0 @@
-name: Access
-
-product:
-  title: Access
-  group: Cloudflare One
-  url: /cloudflare-one/policies/access/
-  grid_placeholder: true

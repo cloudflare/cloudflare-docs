@@ -1,0 +1,66 @@
+---
+title: API token permissions
+pcx_content_type: reference
+sidebar:
+  order: 3
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+Permissions are segmented into three categories based on resource:
+
+- Zone permissions
+- Account permissions
+- User permissions
+
+Each category contains permission groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
+
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](/api/operations/permission-groups-list-permission-groups) endpoint.
+
+## User permissions
+
+The applicable scope of user permissions is `com.cloudflare.api.user`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="user-permissions-table" params={{ one: "Edit" }} />
+
+</TabItem> <TabItem label="API">
+
+<Render file="user-permissions-table" params={{ one: "Write" }} />
+
+</TabItem> </Tabs>
+
+## Account permissions
+
+The applicable scope of account permissions is `com.cloudflare.api.account`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render
+	file="account-permissions-table"
+	params={{ one: "Edit", two: "Cloudflare", three: "Cloudflare" }}
+/>
+
+</TabItem> <TabItem label="API">
+
+<Render
+	file="account-permissions-table"
+	params={{ one: "Write", two: "Argo", three: "" }}
+/>
+
+</TabItem> </Tabs>
+
+## Zone permissions
+
+The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="zone-permissions-table" params={{ one: "Edit" }} />
+
+</TabItem> <TabItem label="API">
+
+<Render file="zone-permissions-table" params={{ one: "Write" }} />
+
+</TabItem> </Tabs>

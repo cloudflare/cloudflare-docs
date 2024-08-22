@@ -1,8 +1,0 @@
-name: Zero Trust WARP Client
-
-product:
-  title: Zero Trust WARP Client
-  group: Cloudflare One
-  url: /cloudflare-one/connections/connect-devices/warp/
-  wrap: true
-  grid_placeholder: true

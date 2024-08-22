@@ -1,0 +1,24 @@
+---
+pcx_content_type: concept
+title: Single Redirects
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Single Redirects
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+Single Redirects allow you to create static or dynamic URL <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>. Dynamic URL redirects support advanced features such as string replacement operations, [wildcards](/ruleset-engine/rules-language/operators/#wildcard-matching), and [regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions) (depending on your Cloudflare plan).
+
+<Render file="snippets-alternative" params={{ one: "and customized redirect logic" }} /><br />
+
+***
+
+## Related resources
+
+* [Availability](/rules/url-forwarding/#availability): Information on the Single Redirects quotas and features per Cloudflare plan.
+* [Execution order](/rules/url-forwarding/#execution-order): Execution order of the different Rules products.
+* [Trace a request](/fundamentals/basic-tasks/trace-request/): Use Cloudflare Trace to determine if a redirect rule is triggering for a specific URL.

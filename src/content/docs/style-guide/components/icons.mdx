@@ -1,0 +1,27 @@
+---
+title: Icons
+---
+
+There are two icon components which pull from two different icon sets.
+
+## astro-icon
+
+The [`astro-icon`](https://www.astroicon.dev/) package is available to use as a standalone component.
+
+Primarily, this is used for Cloudflare product icons which are stored in `/src/icons/*.svg`.
+
+```mdx live
+import { AstroIcon } from "~/components";
+
+<AstroIcon name="workers" class="text-orange-400 text-5xl" />
+```
+
+## Starlight
+
+The Starlight icon set is available to use in `Tab`, `Card` and other Starlight components.
+
+```mdx live
+import { StarlightIcon } from "~/components";
+
+<StarlightIcon name="seti:shell" color="var(--sl-color-text-accent)" size="3rem" />
+```

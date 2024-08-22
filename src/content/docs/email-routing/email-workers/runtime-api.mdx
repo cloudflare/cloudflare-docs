@@ -1,0 +1,121 @@
+---
+title: Runtime API
+pcx_content_type: configuration
+sidebar:
+  order: 5
+
+---
+
+## Background
+
+An `EmailEvent` is the event type to programmatically process your emails with a Worker. You can reject, forward, or drop emails according to the logic you construct in your Worker.
+
+***
+
+## Syntax: Service Worker
+
+`EmailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the `email` event with `addEventListener`:
+
+```js
+addEventListener("email", (event) => {
+  event.message.forward("<YOUR_EMAIL>");
+});
+```
+
+### Properties
+
+
+
+* `event.message` EmailMessage
+
+  * An [`EmailMessage` object](#emailmessage-definition).
+
+
+
+***
+
+## Syntax: ES modules
+
+`EmailEvent` can be handled in Workers functions written using the [ES modules format](/workers/reference/migrate-to-module-workers/) by adding an `email` function to your module's exported handlers:
+
+```js
+export default {
+  async email(message, env, ctx) {
+    message.forward("<YOUR_EMAIL>");
+  },
+};
+```
+
+### Parameters
+
+
+
+* `message` EmailMessage
+
+  * An [`EmailMessage` object](#emailmessage-definition).
+
+* `env` object
+
+  * An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
+
+* `ctx` object
+  * An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
+
+
+
+***
+
+## `EmailMessage` definition
+
+```ts
+ interface EmailMessage<Body = unknown> {
+  readonly from: string;
+  readonly to: string;
+  readonly headers: Headers;
+  readonly raw: ReadableStream;
+  readonly rawSize: number;
+
+  public constructor(from: string, to: string, raw: ReadableStream | string);
+
+  setReject(reason: string): void;
+  forward(rcptTo: string, headers?: Headers): Promise<void>;
+  reply(message: EmailMessage): Promise<void>;
+}
+```
+
+
+
+* `from` string
+
+  * `Envelope From` attribute of the email message.
+
+* `to` string
+
+  * `Envelope To` attribute of the email message.
+
+* `headers` Headers
+
+  * A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
+
+* `raw` ReadableStream
+
+  * [Stream](/workers/runtime-apis/streams/readablestream) of the email message content.
+
+* `rawSize` number
+
+  * Size of the email message content.
+
+* <code>setReject(reasonstring)</code> : void
+
+  * Reject this email message by returning a permanent SMTP error back to the connecting client, including the given reason.
+
+* <code>forward(rcptTostring, headersHeadersoptional)</code> : Promise
+
+  * Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
+  * When the promise resolves, the message is confirmed to be forwarded to a verified destination address.
+
+* <code>reply(messageEmailMessage)</code> : Promise
+
+  * Reply to the sender of this email message with a new EmailMessage object.
+  * When the promise resolves, the message is confirmed to be replied.
+

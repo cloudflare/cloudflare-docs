@@ -1,0 +1,24 @@
+---
+inputParameters: param1;;param2
+
+---
+
+import { Markdown } from "~/components"
+
+Next, we will create a Cloudflare Tunnel in Zero Trust and run the tunnel on the {props.one}.
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com) and go to **Networks** > **Tunnels**.
+
+2. Select **Create a tunnel**.
+
+3. Choose **Cloudflared** for the connector type and select **Next**.
+
+4. Enter a name for your tunnel (for example, <code>{props.two}-tunnel</code>).
+
+5. Select **Save tunnel**.
+
+6. Under **Choose your environment**, select **Debian**. Copy the command shown in the dashboard and run it on your {props.one}.
+
+7. Once the command has finished running, your connector will appear in Zero Trust.
+
+8. Select **Next**.

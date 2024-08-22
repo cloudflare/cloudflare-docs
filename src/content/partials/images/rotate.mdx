@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    rotate=90
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {rotate: 90}}
+  ```
+  </TabItem>
+</Tabs>

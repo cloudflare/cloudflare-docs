@@ -1,0 +1,2604 @@
+---
+pcx_content_type: reference
+title: Commands
+head:
+  - tag: title
+    content: Commands - Wrangler
+description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
+---
+
+import { TabItem, Tabs } from "~/components";
+
+Wrangler offers a number of commands to manage your Cloudflare Workers.
+
+- [`docs`](#docs) - Open this page in your default browser.
+- [`init`](#init) - Create a new project from a variety of web frameworks and templates. (Deprecated — use `npm create cloudflare@latest` instead)
+- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`d1`](#d1) - Interact with D1.
+- [`vectorize`](#vectorize) - Interact with Vectorize indexes.
+- [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
+- [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
+- [`dev`](#dev) - Start a local server for developing your Worker.
+- [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`delete`](#delete-3) - Delete your Worker from Cloudflare.
+- [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
+- [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
+- [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
+- [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
+- [`secret`](#secret) - Manage the secret variables for a Worker.
+- [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
+- [`pages`](#pages) - Configure Cloudflare Pages.
+- [`queues`](#queues) - Configure Workers Queues.
+- [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
+- [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
+- [`versions`](#versions) - Retrieve details for recent versions.
+- [`deployments`](#deployments) - Retrieve details for recent deployments.
+- [`rollback`](#rollback) - Rollback to a recent deployment.
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+- [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
+- [`types`](#types) - Generate types from bindings and module rules in configuration.
+
+:::note
+
+The following global flags work on every command, with some exceptions for `pages` commands.
+
+- `--help` boolean
+  - Show help.
+- `--version` boolean
+  - Show version number.
+- `--config` string (not supported by Pages)
+  - Path to `.toml` configuration file.
+- `--experimental-json-config` boolean (not supported by Pages)
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
+
+:::
+
+---
+
+## How to run Wrangler commands
+
+This page provides a reference for Wrangler commands.
+
+```txt
+wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
+
+<Tabs> <TabItem label="npm">
+
+```sh
+npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```sh
+pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
+```
+
+</TabItem> </Tabs>
+
+You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
+
+```json
+{
+  ...
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+  ...
+}
+```
+
+You can then run them using your package manager of choice:
+
+<Tabs> <TabItem label="npm">
+
+```sh
+npm run deploy
+```
+
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn run deploy
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```sh
+pnpm run deploy
+```
+
+</TabItem> </Tabs>
+
+---
+
+## `docs`
+
+Open the Cloudflare developer documentation in your default browser.
+
+```txt
+wrangler docs [<COMMAND>]
+```
+
+- `COMMAND` string optional
+  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+
+## `init`
+
+Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
+
+```txt
+wrangler init [<NAME>] [OPTIONS]
+```
+
+- `NAME` string optional (default: name of working directory)
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `--yes` boolean optional
+  - Answer yes to any prompts for new projects.
+- `--from-dash` string optional
+  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
+  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
+
+---
+
+## `generate`
+
+:::note
+
+This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
+
+:::
+
+Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
+
+```txt
+wrangler generate [<NAME>] [TEMPLATE]
+```
+
+- `NAME` string optional (default: name of working directory)
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+- `TEMPLATE` string optional
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
+
+---
+
+## `d1`
+
+Interact with Cloudflare's D1 service.
+
+:::note
+
+Report D1 bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+:::
+
+### `create`
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+
+```txt
+wrangler d1 create <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the new D1 database.
+- `--location` string optional
+  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
+  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
+
+### `info`
+
+Get information about a D1 database, including the current database size and state.
+
+```txt
+wrangler d1 info <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to get information about.
+- `--json` boolean optional
+  - Return output as JSON rather than a table.
+
+### `list`
+
+List all D1 databases in your account.
+
+```txt
+wrangler d1 list [OPTIONS]
+```
+
+- `--json` boolean optional
+  - Return output as JSON rather than a table.
+
+### `delete`
+
+Delete a D1 database.
+
+```txt
+wrangler d1 delete <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to delete.
+- `-y, --skip-confirmation` boolean optional
+  - Skip deletion confirmation prompt.
+
+### `execute`
+
+Execute a query on a D1 database.
+
+```txt
+wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+:::note
+
+You must provide either `--command` or `--file` for this command to run successfully.
+
+:::
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to execute a query on.
+- `--command` string optional
+  - The SQL query you wish to execute.
+- `--file` string optional
+  - Path to the SQL file you wish to execute.
+- `-y, --yes` boolean optional
+  - Answer `yes` to any prompts.
+- `--local` boolean(default: true) optional
+  - Execute commands/files against a local database for use with [wrangler dev](#dev).
+- `--remote` boolean (default: false) optional
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+- `--persist-to` string optional
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--json` boolean optional
+  - Return output as JSON rather than a table.
+- `--preview` boolean optional
+  - Execute commands/files against a preview D1 database (as defined by `preview_database_id` in [Wrangler.toml](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` number optional
+  - Number of queries to send in a single batch.
+
+### `export`
+
+:::caution
+
+This command does not work with databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+Refer to the [Backups (Legacy)](/d1/reference/backups/) in the D1 documentation for more information on D1's backup approach during the alpha period. Also, please check the [Alpha version migration guide](/d1/platform/alpha-migration/) for more information on migrating your database to the current version.
+:::
+
+Export a D1 database or table's schema and/or content to a `.sql` file.
+
+```txt
+wrangler d1 export <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to export.
+- `--remote` boolean (default: false) optional
+  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](#dev).
+- `--output` string optional
+  - Path to the SQL file for your export.
+- `--table` string optional
+  - The name of the table within a D1 database to export.
+- `--no-data` boolean (default: false) optional
+  - Controls whether export SQL file contains database data. Note that `--no-data=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+- `--no-schema` boolean (default: false) optional
+  - Controls whether export SQL file contains database schema. Note that `--no-schema=true` is not recommended due to a known wrangler limitation that intreprets the value as false.
+
+### `time-travel restore`
+
+Restore a database to a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
+
+```txt
+wrangler d1 time-travel restore <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to execute a query on.
+- `--bookmark` string optional
+  - A D1 bookmark representing the state of a database at a specific point in time.
+- `--timestamp` string optional
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+- `--json` boolean optional
+  - Return output as JSON rather than a table.
+
+### `time-travel info`
+
+Inspect the current state of a database for a specific point-in-time using [Time Travel](/d1/reference/time-travel/).
+
+```txt
+wrangler d1 time-travel info <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to execute a query on.
+- `--timestamp` string optional
+  - A UNIX timestamp or JavaScript date-time `string` within the last 30 days.
+- `--json` boolean optional
+  - Return output as JSON rather than a table.
+
+### `backup create`
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+Initiate a D1 backup.
+
+```txt
+wrangler d1 backup create <DATABASE_NAME>
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to backup.
+
+### `backup list`
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+List all available backups.
+
+```txt
+wrangler d1 backup list <DATABASE_NAME>
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to list the backups of.
+
+### `backup restore`
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backup and restores for databases created during the beta/GA period.
+:::
+
+Restore a backup into a D1 database.
+
+```txt
+wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` string required
+  - The ID of the backup you wish to restore.
+
+### `backup download`
+
+:::caution
+
+This command only works on databases created during D1's alpha period. You can check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+
+This command will not work on databases that are created during the beta period, or after general availability (GA). To download existing data of a beta/GA database to your local machine refer to the `wrangler d1 export` command. Refer to [Time Travel](/d1/reference/time-travel/) in the D1 documentation for more information on D1's approach to backups for databases created during the beta/GA period.
+:::
+
+Download existing data to your local machine.
+
+```txt
+wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` string required
+  - The ID of the backup you wish to download.
+- `--output` string optional
+  - The `.sqlite3` file to write to (defaults to `'<DB_NAME>.<SHORT_BACKUP_ID>.sqlite3'`).
+
+### `migrations create`
+
+Create a new migration.
+
+This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
+
+`0000_create_user_table.sql`
+
+The filename will include a version number and the migration name you specify below.
+
+```txt
+wrangler d1 migrations create <DATABASE_NAME> <MIGRATION_NAME>
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database you wish to create a migration for.
+- `MIGRATION_NAME` string required
+  - A descriptive name for the migration you wish to create.
+
+### `migrations list`
+
+View a list of unapplied migration files.
+
+```txt
+wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database you wish to list unapplied migrations for.
+- `--local` boolean optional
+  - Show the list of unapplied migration files on your locally persisted D1 database.
+- `--persist-to` string optional
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` boolean optional
+  - Show the list of unapplied migration files on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+
+### `migrations apply`
+
+Apply any unapplied migrations.
+
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
+
+The progress of each migration will be printed in the console.
+
+When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
+
+If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
+
+```txt
+wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```
+
+- `DATABASE_NAME` string required
+  - The name of the D1 database you wish to apply your migrations on.
+- `--local` boolean (default: true)optional
+  - Execute any unapplied migrations on your locally persisted D1 database.
+- `--remote` boolean (default: false) optional
+  - Execute any unapplied migrations on your remote D1 database.
+- `--persist-to` string optional
+  - Specify directory to use for local persistence (for use in combination with `--local`).
+- `--preview` boolean optional
+  - Execute any unapplied migrations on your preview D1 database (as defined by `preview_database_id` in [`wrangler.toml`](/workers/wrangler/configuration/#d1-databases)).
+- `--batch-size` number optional
+  - Number of queries to send in a single batch.
+
+---
+
+## `hyperdrive`
+
+Manage [Hyperdrive](/hyperdrive/) database configurations.
+
+### `create`
+
+Create a new Hyperdrive configuration.
+
+```txt
+wrangler hyperdrive create <ID> [OPTIONS]
+```
+
+- `ID` string required
+  - The ID of the Hyperdrive configuration to create.
+- `--connection-string` string optional
+  - The database connection string in the form `postgres://user:password@hostname:port/database`.
+- `--host` string optional
+  - The hostname or IP address Hyperdrive should connect to.
+- `--port` number optional
+  - The database port to connect to.
+- `--scheme` string optional
+  - The scheme used to connect to the origin database - e.g. postgresql or postgres.
+- `--database` string optional
+  - The database (name) to connect to. For example, Postgres or defaultdb.
+- `--user` string optional
+  - The username used to authenticate to the database.
+- `--password` string optional
+  - The password used to authenticate to the database.
+- `--access-client-id` string optional
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `port`.
+- `--access-client-secret` string optional
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `port`.
+- `--caching-disabled` boolean optional
+  - Disables the caching of SQL responses.
+- `--max-age` number optional
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` number optional
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
+
+### `update`
+
+Update an existing Hyperdrive configuration.
+
+```txt
+wrangler hyperdrive update <ID> [OPTIONS]
+```
+
+- `ID` string required
+  - The ID of the Hyperdrive configuration to update.
+- `--name` string optional
+  - The new name of the Hyperdrive configuration.
+- `--origin-host` string optional
+  - The new database hostname or IP address Hyperdrive should connect to.
+- `--origin-port` string optional
+  - The new database port to connect to.
+- `--database` string optional
+  - The new database (name) to connect to. For example, Postgres or defaultdb.
+- `--origin-user` string optional
+  - The new username used to authenticate to the database.
+- `--origin-password` string optional
+  - The new password used to authenticate to the database.
+- `--access-client-id` string optional
+  - The Client ID of the Access token to use when connecting to the origin database, must be set with a Client Access Secret. Mutually exclusive with `origin-port`.
+- `--access-client-secret` string optional
+  - The Client Secret of the Access token to use when connecting to the origin database, must be set with a Client Access ID. Mutually exclusive with `origin-port`.
+- `--caching-disabled` boolean optional
+  - Disables the caching of SQL responses.
+- `--max-age` number optional
+  - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
+- `--swr` number optional
+  - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
+
+### `list`
+
+List all Hyperdrive configurations.
+
+```txt
+wrangler hyperdrive list
+```
+
+### `delete`
+
+Delete an existing Hyperdrive configuration.
+
+```txt
+wrangler hyperdrive delete <ID>
+```
+
+- `ID` string required
+  - The name of the Hyperdrive configuration to delete.
+
+### `get`
+
+Get an existing Hyperdrive configuration.
+
+```txt
+wrangler hyperdrive get <ID>
+```
+
+- `ID` string required
+  - The name of the Hyperdrive configuration to get.
+
+---
+
+## `vectorize`
+
+:::note
+
+Vectorize is currently in open beta. Report Vectorize bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+:::
+
+Interact with a [Vectorize](/vectorize/) vector database.
+
+### `create`
+
+Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+
+```txt
+wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>]
+```
+
+- `INDEX_NAME` string required
+  - The name of the new index to create. Cannot be changed.
+- `--dimensions` number optional
+  - The vector dimension width to configure the index for. Cannot be changed after creation.
+- `--metric` string optional
+  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```txt
+wrangler vectorize get <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
+
+### `list`
+
+List all Vectorize indexes in your account, including the configured dimensions and distance metric.
+
+```txt
+wrangler vectorize list
+```
+
+### `delete`
+
+Delete a Vectorize index.
+
+```txt
+wrangler vectorize delete <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to delete.
+- `--force` boolean optional
+  - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
+
+### `insert`
+
+Insert vectors into an index.
+
+```txt
+wrangler vectorize insert <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to delete.
+- `--file` string required
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` number optional
+  - The number of vectors to insert at a time (default: `5000`).
+
+---
+
+## `dev`
+
+Start a local server for developing your Worker.
+
+```txt
+wrangler dev [<SCRIPT>] [OPTIONS]
+```
+
+:::note
+
+None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+
+:::
+
+:::caution
+
+As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
+
+:::
+
+- `SCRIPT` string
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` string optional
+  - Name of the Worker.
+- `--no-bundle` boolean (default: false) optional
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--compatibility-date` string optional
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
+- `--compatibility-flags`, `--compatibility-flag` string\[] optional
+  - Flags to use for compatibility checks.
+- `--latest` boolean (default: true) optional
+  - Use the latest version of the Workers runtime.
+- `--ip` string optional
+  - IP address to listen on, defaults to `localhost`.
+- `--port` number optional
+  - Port to listen on.
+- `--inspector-port` number optional
+  - Port for devtools to connect to.
+- `--routes`, `--route` string\[] optional
+  - Routes to upload.
+  - For example: `--route example.com/*`.
+- `--host` string optional
+  - Host to forward requests to, defaults to the zone of project.
+- `--local-protocol` "http"|"https" (default: http) optional
+  - Protocol to listen to requests on.
+- `--https-key-path` string optional
+  - Path to a custom certificate key.
+- `--https-cert-path` string optional
+  - Path to a custom certificate.
+- `--local-upstream` string optional
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--legacy-assets` string optional experimental
+  - Root folder of static assets to be served.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` string optional experimental
+  - Root folder of static assets to be served.
+    :::caution
+    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    :::
+- `--site` string optional
+  - Root folder of static assets for Workers Sites.
+- `--site-include` string\[] optional
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+- `--site-exclude` string\[] optional
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--upstream-protocol` "http"|"https" (default: https) optional
+  - Protocol to forward requests to host on.
+- `--var` key:value\[] optional
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` key:value\[] optional
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--tsconfig` string optional
+  - Path to a custom `tsconfig.json` file.
+- `--minify` boolean optional
+  - Minify the Worker.
+- `--node-compat` boolean optional
+  - Enable Node.js compatibility.
+- `--persist-to` string optional
+  - Specify directory to use for local persistence.
+- `--remote` boolean (default: false) optional
+  - Develop against remote resources and data stored on Cloudflare's network.
+- `--test-scheduled` boolean (default: false) optional
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` "debug"|"info"|"log"|"warn"|"error"|"none" (default: log) optional
+  - Specify Wrangler's logging level.
+- `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
+  - Show the interactive dev session.
+
+`wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+
+---
+
+## `deploy`
+
+Deploy your Worker to Cloudflare.
+
+```txt
+wrangler deploy [<SCRIPT>] [OPTIONS]
+```
+
+:::note
+
+None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
+
+:::
+
+- `SCRIPT` string
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` string optional
+  - Name of the Worker.
+- `--no-bundle` boolean (default: false) optional
+  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--outdir` string optional
+  - Path to directory where Wrangler will write the bundled Worker files.
+- `--compatibility-date` string optional
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
+- `--compatibility-flags`, `--compatibility-flag` string\[] optional
+  - Flags to use for compatibility checks.
+- `--latest` boolean (default: true) optional
+  - Use the latest version of the Workers runtime.
+- `--legacy-assets` string optional experimental
+  - Root folder of static assets to be served.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --legacy-assets dist/ --latest`.
+- `--assets` string optional experimental
+  - Root folder of static assets to be served.
+    :::caution
+    This is an experimental feature and its behavior will be changing soon. Use `--legacy-assets` instead to ensure that you get consistent behavior when this option changes.
+    :::
+- `--site` string optional
+  - Root folder of static assets for Workers Sites.
+- `--site-include` string\[] optional
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
+- `--site-exclude` string\[] optional
+  - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--var` key:value\[] optional
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` key:value\[] optional
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--triggers`, `--schedule`, `--schedules` string\[] optional
+  - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
+- `--routes`, `--route` string\[] optional
+  - Routes where this Worker will be deployed.
+  - For example: `--route example.com/*`.
+- `--tsconfig` string optional
+  - Path to a custom `tsconfig.json` file.
+- `--minify` boolean optional
+  - Minify the bundled Worker before deploying.
+- `--node-compat` boolean optional
+  - Enable node.js compatibility.
+- `--dry-run` boolean (default: false) optional
+  - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
+- `--keep-vars` boolean (default: false) optional
+  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
+  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+- `--dispatch-namespace` string optional
+  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
+
+---
+
+## `publish`
+
+Publish your Worker to Cloudflare.
+
+```txt
+wrangler publish [OPTIONS]
+```
+
+:::note
+
+This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
+
+:::
+
+---
+
+## `delete`
+
+Delete your Worker and all associated Cloudflare developer platform resources.
+
+```txt
+wrangler delete [<SCRIPT>] [OPTIONS]
+```
+
+- `SCRIPT` string
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+- `--name` string optional
+  - Name of the Worker.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--dry-run` boolean (default: false) optional
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
+
+## `kv namespace`
+
+Manage Workers KV namespaces.
+
+:::note
+
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+:::
+
+:::caution
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+:::
+
+### `create`
+
+Create a new namespace.
+
+```txt
+wrangler kv namespace create <NAMESPACE> [OPTIONS]
+```
+
+- `NAMESPACE` string required
+  - The name of the new namespace.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace (the `preview_id` value).
+
+The following is an example of using the `create` command to create a KV namespace called `MY_KV`.
+
+```sh
+npx wrangler kv namespace create "MY_KV"
+```
+
+```sh output
+🌀 Creating namespace with title "worker-MY_KV"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
+kv_namespaces = [
+  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
+]
+```
+
+The following is an example of using the `create` command to create a preview KV namespace called `MY_KV`.
+
+```sh
+npx wrangler kv namespace create "MY_KV" --preview
+```
+
+```sh output
+🌀 Creating namespace with title "my-site-MY_KV_preview"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
+kv_namespaces = [
+  { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
+]
+```
+
+### `list`
+
+List all KV namespaces associated with the current account ID.
+
+```txt
+wrangler kv namespace list
+```
+
+The following is an example that passes the Wrangler command through the `jq` command:
+
+```sh
+npx wrangler kv namespace list | jq "."
+```
+
+```sh output
+[
+  {
+    "id": "06779da6940b431db6e566b4846d64db",
+    "title": "TEST_NAMESPACE"
+  },
+  {
+    "id": "32ac1b3c2ed34ed3b397268817dea9ea",
+    "title": "STATIC_CONTENT"
+  }
+]
+```
+
+### `delete`
+
+Delete a given namespace.
+
+```txt
+wrangler kv namespace delete {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+This command requires `--binding` or `--namespace-id`.
+:::
+
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+
+The following is an example of deleting a KV namespace called `MY_KV.`
+
+```sh
+npx wrangler kv namespace delete --binding=MY_KV
+```
+
+```sh output
+Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
+yes
+Deleting namespace f7b02e7fc70443149ac906dd81ec1791
+Deleted namespace f7b02e7fc70443149ac906dd81ec1791
+```
+
+The following is an example of deleting a preview KV namespace called `MY_KV`.
+
+```sh
+npx wrangler kv namespace delete --binding=MY_KV --preview
+```
+
+```sh output
+Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
+yes
+Deleting namespace 15137f8edf6c09742227e99b08aaf273
+Deleted namespace 15137f8edf6c09742227e99b08aaf273
+```
+
+## `kv key`
+
+Manage key-value pairs within a Workers KV namespace.
+
+:::note
+
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+:::
+
+:::caution
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+:::
+
+### `put`
+
+Write a single key-value pair to a particular namespace.
+
+```txt
+wrangler kv key put <KEY> {<VALUE>|--path=<PATH>} {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+This command requires a `VALUE` or `--path`.<br/>
+This command requires a `--binding` or `--namespace-id` flag.
+:::
+
+- `KEY` string required
+  - The key to write to.
+- `VALUE` string optional
+  - The value to write.
+- `--path` optional
+  - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--ttl` number optional
+  - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
+- `--expiration` number optional
+  - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
+- `--metadata` string optional
+  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+The following is an example that puts a key-value into the namespace with binding name of `MY_KV`.
+
+```sh
+npx wrangler kv key put --binding=MY_KV "my-key" "some-value"
+```
+
+```sh output
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
+```
+
+The following is an example that puts a key-value into the preview namespace with binding name of `MY_KV`.
+
+```sh
+npx wrangler kv key put --binding=MY_KV --preview "my-key" "some-value"
+```
+
+```sh output
+Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
+```
+
+The following is an example that puts a key-value into a namespace, with a time-to-live value of `10000` seconds.
+
+```sh
+npx wrangler kv key put --binding=MY_KV "my-key" "some-value" --ttl=10000
+```
+
+```sh output
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
+```
+
+The following is an example that puts a key-value into a namespace, where the value is read from the `value.txt` file.
+
+```sh
+npx wrangler kv key put --binding=MY_KV "my-key" --path=value.txt
+```
+
+```sh output
+Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
+```
+
+### `list`
+
+Output a list of all keys in a given namespace.
+
+```txt
+wrangler kv key list {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+This command requires `--binding` or `--namespace-id`.
+:::
+
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--prefix` string optional
+  - Only list keys that begin with the given prefix.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+Below is an example that passes the Wrangler command through the `jq` command:
+
+```sh
+npx wrangler kv key list --binding=MY_KV --prefix="public" | jq "."
+```
+
+```sh output
+[
+  {
+    "name": "public_key"
+  },
+  {
+    "name": "public_key_with_expiration",
+    "expiration": "2019-09-10T23:18:58Z"
+  }
+]
+```
+
+### `get`
+
+Read a single value by key from the given namespace.
+
+```txt
+wrangler kv key get <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+Exactly one of `--binding` or `--namespace-id` is required.
+:::
+
+- `KEY` string required
+  - The key value to get.
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
+- `--namespace-id` string
+  - The ID of the namespace to get from.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--text` boolean optional
+  - Decode the returned value as a UTF-8 string.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+The following is an example that gets the value of the `"my-key"` key from the KV namespace with binding name `MY_KV`.
+
+```sh
+npx wrangler kv key get --binding=MY_KV "my-key"
+```
+
+```sh output
+value
+```
+
+### `delete`
+
+Remove a single key value pair from the given namespace.
+
+```txt
+wrangler kv key delete <KEY> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+Exactly one of `--binding` or `--namespace-id` is required.
+:::
+
+- `KEY` string required
+  - The key value to get.
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+The following is an example that deletes the key-value pair with key `"my-key"` from the KV namespace with binding name `MY_KV`.
+
+```sh
+npx wrangler kv key delete --binding=MY_KV "my-key"
+```
+
+```sh output
+Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
+```
+
+## `kv bulk`
+
+Manage multiple key-value pairs within a Workers KV namespace in batches.
+
+:::note
+
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+:::
+
+:::caution
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+:::
+
+### `put`
+
+Write a JSON file containing an array of key-value pairs to the given namespace.
+
+```txt
+wrangler kv bulk put <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+This command requires `--binding` or `--namespace-id`.
+:::
+
+- `FILENAME` string required
+  - The JSON file containing an array of key-value pairs to write to the namespace.
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
+
+```json
+[
+	{
+		"key": "test_key",
+		"value": "test_value",
+		"expiration_ttl": 3600
+	}
+]
+```
+
+KV namespace values can only store strings. In order to save complex a value, stringify it to JSON:
+
+```json
+[
+	{
+		"key": "test_key",
+		"value": "{\"name\": \"test_value\"}",
+		"expiration_ttl": 3600
+	}
+]
+```
+
+Refer to the full schema for key-value entries uploaded via the bulk API:
+
+- `key` string required
+  - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
+- `value` string required
+  - The UTF-8 encoded string to be stored, up to 25 MB in length.
+- `metadata` object optional
+  - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
+- `expiration` number optional
+  - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
+- `expiration_ttl` number optional
+  - The number of seconds the document should exist before expiring. Must be at least `60` seconds.
+- `base64` boolean optional
+  - When true, the server will decode the value as base64 before storing it. This is useful for writing values that would otherwise be invalid JSON strings, such as images. Defaults to `false`.
+
+:::note
+
+If both `expiration` and `expiration_ttl` are specified for a given key, the API will prefer `expiration_ttl`.
+:::
+
+The following is an example of writing all the key-value pairs found in the `allthethingsupload.json` file.
+
+```sh
+npx wrangler kv bulk put --binding=MY_KV allthethingsupload.json
+```
+
+```sh output
+Success!
+```
+
+### `delete`
+
+Delete all keys read from a JSON file within a given namespace.
+
+```txt
+wrangler kv bulk delete <FILENAME> {--binding=<BINDING>|--namespace-id=<NAMESPACE_ID>} [OPTIONS]
+```
+
+:::caution
+
+This command requires `--binding` or `--namespace-id`.
+:::
+
+- `FILENAME` string required
+  - The JSON file containing an array of keys to delete from the namespace.
+- `--binding` string
+  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+- `--namespace-id` string
+  - The ID of the namespace to delete.
+- `--env` string optional
+  - Perform on a specific environment.
+- `--preview` boolean optional
+  - Interact with a preview namespace instead of production.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+This command takes a JSON file as an argument containing an array of keys to delete.
+The following is an example of the JSON input:
+
+```json
+["test_key_1", "test_key_2"]
+```
+
+The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.
+
+```sh
+npx wrangler kv bulk delete --binding=MY_KV allthethingsdelete.json
+```
+
+```sh output
+? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
+Success!
+```
+
+---
+
+## `r2 bucket`
+
+Interact with buckets in an R2 store.
+
+:::note
+
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
+:::
+
+### `create`
+
+Create a new R2 bucket.
+
+```txt
+wrangler r2 bucket create <NAME>
+```
+
+- `NAME` string required
+  - The name of the new R2 bucket.
+- `--storage-class` "Standard"|"InfrequentAccess" optional
+  - The default storage class for objects uploaded to the bucket.
+- `--jurisdiction` string optional
+  - The jurisdiction where the R2 bucket is created. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+### `delete`
+
+Delete an R2 bucket.
+
+```txt
+wrangler r2 bucket delete <NAME>
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to delete.
+
+### `list`
+
+List R2 bucket in the current account.
+
+```txt
+wrangler r2 bucket list
+```
+
+### `notification create`
+
+:::note
+
+Event notifications is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 event notification feedback form](https://forms.gle/2HBKD9zG9PFiU4v79).
+:::
+
+Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
+
+```txt
+wrangler r2 bucket notification create <NAME> [OPTIONS]
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to create an event notification rule for.
+- `--event-type` "object-create"|"object-delete" required
+  - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
+- `--queue` string required
+  - The name of the queue that will receive event notification messages.
+- `--prefix` string optional
+  - Specifies the key name prefix that an object must match to trigger event notifications.
+- `--suffix` string optional
+  - Specifies the key name suffix that an object must match to trigger event notifications.
+
+### `notification delete`
+
+Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
+
+```txt
+wrangler r2 bucket notification delete <NAME> [OPTIONS]
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to delete an event notification rule for.
+- `--queue` string required
+  - The name of the queue that corresponds to the event notification rule.
+
+### `notification get`
+
+Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+
+```txt
+wrangler r2 bucket notification get <NAME>
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to get event notification configuration for.
+
+### `sippy enable`
+
+:::note
+
+Sippy is currently in beta. To report bugs or request features, fill out the [Cloudflare R2 incremental migration feedback form](https://forms.gle/7WuCsbu5LmWkQVu76).
+:::
+
+Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy enable <NAME> [OPTIONS]
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to enable Sippy.
+- `--provider` "AWS"|"GCS" required
+  - The provider of your source object storage bucket.
+- `--bucket` string required
+  - The name of your source object storage bucket.
+- `--r2-key-id` string required
+  - Your R2 Access Key ID. Requires read and write access.
+- `--r2-secret-access-key` string required
+  - Your R2 Secret Access Key. Requires read and write access.
+- `--jurisdiction` string optional
+  - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- **AWS S3 provider-specific options:**
+- `--key-id` string optional
+  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--secret-access-key` string optional
+  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
+- `--region` string optional
+  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
+- **Google Cloud Storage provider-specific options:**
+- `--service-account-key-file` string optional
+  - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--client-email` string optional
+  - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- `--private-key` string optional
+  - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
+- Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
+
+### `sippy disable`
+
+Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy disable <NAME>
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to disable Sippy.
+
+### `sippy get`
+
+Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
+
+```txt
+wrangler r2 bucket sippy get <NAME>
+```
+
+- `NAME` string required
+  - The name of the R2 bucket to get the status of Sippy.
+
+---
+
+## `r2 object`
+
+Interact with R2 objects.
+
+:::note
+
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
+:::
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```txt
+wrangler r2 object get <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` string required
+  - The source object path in the form of `{bucket}/{key}`.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```txt
+wrangler r2 object put <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` string required
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` string optional
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` boolean optional
+  - Enables the file to be piped in, rather than specified with the `--file` option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` string optional
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` string optional
+  - Specifies presentational information for the object.
+- `--content-encoding` string optional
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the `Content-Type` header field.
+- `--content-language` string optional
+  - The language the content is in.
+- `--cache-control` string optional
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` string optional
+  - The date and time at which the object is no longer cacheable.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+### `delete`
+
+Delete an object in an R2 bucket.
+
+```txt
+wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
+```
+
+- `OBJECT_PATH` string required
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--local` boolean optional
+  - Interact with locally persisted data.
+- `--persist-to` string optional
+  - Specify directory for locally persisted data.
+
+---
+
+## `secret`
+
+Manage the secret variables for a Worker.
+
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
+
+### `put`
+
+Create or replace a secret for a Worker.
+
+```txt
+wrangler secret put <KEY> [OPTIONS]
+```
+
+- `KEY` string required
+
+  - The variable name for this secret to be accessed in the Worker.
+
+- `--name` string optional
+
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+- `--env` string optional
+  - Perform on a specific environment.
+
+When running this command, you will be prompted to input the secret's value:
+
+```sh
+npx wrangler secret put FOO
+```
+
+```sh output
+? Enter a secret value: › ***
+🌀 Creating the secret for script worker-app
+✨ Success! Uploaded secret FOO
+```
+
+The `put` command can also receive piped input. For example:
+
+```sh
+echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
+```
+
+### `delete`
+
+Delete a secret for a Worker.
+
+```txt
+wrangler secret delete <KEY> [OPTIONS]
+```
+
+- `KEY` string required
+
+  - The variable name for this secret to be accessed in the Worker.
+
+- `--name` string optional
+
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+- `--env` string optional
+  - Perform on a specific environment.
+
+### `list`
+
+List the names of all the secrets for a Worker.
+
+```txt
+wrangler secret list [OPTIONS]
+```
+
+- `--name` string optional
+
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+- `--env` string optional
+
+  - Perform on a specific environment
+
+The following is an example of listing the secrets for the current Worker.
+
+```sh
+npx wrangler secret list
+```
+
+```sh output
+[
+  {
+    "name": "FOO",
+    "type": "secret_text"
+  }
+]
+```
+
+---
+
+## `secret:bulk`
+
+Upload multiple secrets for a Worker at once.
+
+```txt
+wrangler secret:bulk [<FILENAME>] [OPTIONS]
+```
+
+- `FILENAME` string optional
+
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
+- `--name` string optional
+
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+- `--env` string optional
+  - Perform on a specific environment.
+
+The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
+
+```json
+{
+	"secret-name-1": "secret-value-1",
+	"secret-name-2": "secret-value-2"
+}
+```
+
+```sh
+npx wrangler secret:bulk < secrets.json
+```
+
+```sh output
+🌀 Creating the secrets for the Worker "script-name"
+✨ Successfully created secret for key: secret-name-1
+...
+🚨 Error uploading secret for key: secret-name-1
+✨ Successfully created secret for key: secret-name-2
+
+Finished processing secrets JSON file:
+✨ 1 secrets successfully uploaded
+🚨 1 secrets failed to upload
+```
+
+## `tail`
+
+Start a session to livestream logs from a deployed Worker.
+
+```txt
+wrangler tail <WORKER> [OPTIONS]
+```
+
+- `WORKER` string required
+  - The name of your Worker or the route the Worker is running on.
+- `--format` "json"|"pretty" optional
+  - The format of the log entries.
+- `--status` "ok"|"error"|"canceled" optional
+  - Filter by invocation status.
+- `--header` string optional
+  - Filter by HTTP header.
+- `--method` string optional
+  - Filter by HTTP method.
+- `--sampling-rate` number optional
+  - Add a fraction of requests to log sampling rate (between `0` and `1`).
+- `--search` string optional
+  - Filter by a text match in `console.log` messages.
+- `--ip` (string|"self")\[] optional
+  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+- `--version-id` string optional
+  - Filter by Worker version.
+
+After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
+
+If your Worker has a high volume of traffic, the tail might enter sampling mode. This will cause some of your messages to be dropped and a warning to appear in your tail logs. To prevent messages from being dropped, add the options listed above to filter the volume of tail messages.
+
+:::note
+
+It may take up to 1 minute (60 seconds) for a tail to exit sampling mode after adding an option to filter tail messages.
+:::
+
+If sampling persists after using options to filter messages, consider using [instant logs](https://developers.cloudflare.com/logs/instant-logs/).
+
+---
+
+## `pages`
+
+Configure Cloudflare Pages.
+
+### `dev`
+
+Develop your full-stack Pages application locally.
+
+```txt
+wrangler pages dev [<DIRECTORY>] [OPTIONS]
+```
+
+- `DIRECTORY` string optional
+  - The directory of static assets to serve.
+- `--local` boolean optional (default: true)
+  - Run on your local machine.
+- `--ip` string optional
+  - IP address to listen on, defaults to `localhost`.
+- `--port` number optional (default: 8788)
+  - The port to listen on (serve from).
+- `--binding` string\[] optional
+  - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
+- `--kv` string\[] optional
+  - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
+- `--r2` string\[] optional
+  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
+- `--d1` string\[] optional
+  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
+- `--do` string\[] optional
+  - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
+- `--live-reload` boolean optional (default: false)
+  - Auto reload HTML pages when change is detected.
+- `--compatibility-flag` string\[] optional
+  - Runtime compatibility flags to apply.
+- `--compatibility-date` string optional
+  - Runtime compatibility date to apply.
+- `--show-interactive-dev-session` boolean optional (default: true if the terminal supports interactivity)
+  - Show the interactive dev session.
+- `--https-key-path` string optional
+  - Path to a custom certificate key.
+- `--https-cert-path` string optional
+  - Path to a custom certificate.
+
+### `project list`
+
+List your Pages projects.
+
+```txt
+wrangler pages project list
+```
+
+### `project create`
+
+Create a new Cloudflare Pages project.
+
+```txt
+wrangler pages project create <PROJECT_NAME> [OPTIONS]
+```
+
+- `PROJECT_NAME` string required
+  - The name of your Pages project.
+- `--production-branch` string optional
+  - The name of the production branch of your project.
+
+### `project delete`
+
+Delete a Cloudflare Pages project.
+
+```txt
+wrangler pages project delete <PROJECT_NAME> [OPTIONS]
+```
+
+- `PROJECT_NAME` string required
+  - The name of the Pages project to delete.
+- `--yes` boolean optional
+  - Answer `"yes"` to confirmation prompt.
+
+### `deployment list`
+
+List deployments in your Cloudflare Pages project.
+
+```txt
+wrangler pages deployment list [--project-name <PROJECT_NAME>]
+```
+
+- `--project-name` string optional
+  - The name of the project you would like to list deployments for.
+
+### `deployment tail`
+
+Start a session to livestream logs from your deployed Pages Functions.
+
+```txt
+wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
+```
+
+- `DEPLOYMENT` string optional
+  - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
+- `--project-name` string optional
+  - The name of the project you would like to tail.
+- `--environment` "production"|"preview" optional
+  - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
+- `--format` "json"|"pretty" optional
+  - The format of the log entries.
+- `--status` "ok"|"error"|"canceled" optional
+  - Filter by invocation status.
+- `--header` string optional
+  - Filter by HTTP header.
+- `--method` string optional
+  - Filter by HTTP method.
+- `--sampling-rate` number optional
+  - Add a percentage of requests to log sampling rate.
+- `--search` string optional
+  - Filter by a text match in `console.log` messages.
+- `--ip` (string|"self")\[] optional
+  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+
+:::note
+
+Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
+:::
+
+After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
+
+### `deploy`
+
+Deploy a directory of static assets as a Pages deployment.
+
+```txt
+wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
+```
+
+- `BUILD_OUTPUT_DIRECTORY` string optional
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
+- `--project-name` string optional
+  - The name of the project you want to deploy to.
+- `--branch` string optional
+  - The name of the branch you want to deploy to.
+- `--commit-hash` string optional
+  - The SHA to attach to this deployment.
+- `--commit-message` string optional
+  - The commit message to attach to this deployment.
+- `--commit-dirty` boolean optional
+  - Whether or not the workspace should be considered dirty for this deployment.
+
+:::note
+
+Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
+
+:::
+
+### `publish`
+
+Publish a directory of static assets as a Pages deployment.
+
+```txt
+wrangler pages publish [<DIRECTORY>] [OPTIONS]
+```
+
+:::note
+
+This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](#deploy-1). It will be removed in v4.
+
+:::
+
+### `secret put`
+
+Create or update a secret for a Pages project.
+
+```txt
+wrangler pages secret put <KEY> [OPTIONS]
+```
+
+- `KEY` string required
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` string optional
+
+  - The name of your Pages project.
+
+### `secret delete`
+
+Delete a secret from a Pages project.
+
+```txt
+wrangler pages secret delete <KEY> [OPTIONS]
+```
+
+- `KEY` string required
+
+  - The variable name for this secret to be accessed in the Pages project.
+
+- `--project-name` string optional
+
+  - The name of your Pages project.
+
+### `secret list`
+
+List the names of all the secrets for a Pages project.
+
+```txt
+wrangler pages secret list [OPTIONS]
+```
+
+- `--project-name` string optional
+
+  - The name of your Pages project.
+
+### `secret bulk`
+
+Upload multiple secrets for a Pages project at once.
+
+```txt
+wrangler pages secret bulk [<FILENAME>] [OPTIONS]
+```
+
+- `FILENAME` string optional
+
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
+
+- `--project-name` string optional
+
+  - The name of your Pages project.
+
+---
+
+## `queues`
+
+:::note
+
+Queues is currently in open beta. Report Queues bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+:::
+
+Manage your Workers [Queues](/queues/) configurations.
+
+### `create`
+
+Create a new Queue.
+
+```txt
+wrangler queues create <name> [OPTIONS]
+```
+
+- `name` string required
+  - The name of the queue to create.
+- `--delivery-delay-secs` number optional
+  - How long a published message should be delayed for, in seconds. Must be a positive integer.
+
+### `delete`
+
+Delete an existing queue.
+
+```txt
+wrangler queues delete <name> [OPTIONS]
+```
+
+- `name` string required
+  - The name of the queue to delete.
+
+### `list`
+
+List all queues in the current account.
+
+```txt
+wrangler queues list [OPTIONS]
+```
+
+### `consumer`
+
+Manage queue consumer configurations.
+
+### `consumer add <script-name>`
+
+Add a Worker script as a [queue consumer](/queues/reference/how-queues-works/#consumers).
+
+```txt
+wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
+```
+
+- `queue-name` string required
+  - The name of the queue to add the consumer to.
+- `script-name` string required
+  - The name of the Workers script to add as a consumer of the named queue.
+- `--batch-size` number optional
+  - Maximum number of messages per batch. Must be a positive integer.
+- `--batch-timeout` number optional
+  - Maximum number of seconds to wait to fill a batch with messages. Must be a positive integer.
+- `--message-retries` number optional
+  - Maximum number of retries for each message. Must be a positive integer.
+- `--max-concurrency` number optional
+  - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
+- `--retry-delay-secs` number optional
+  - How long a retried message should be delayed for, in seconds. Must be a positive integer.
+
+### `consumer remove`
+
+Remove a consumer from a queue.
+
+```txt
+wrangler queues consumer remove <queue-name> <script-name>
+```
+
+- `queue-name` string required
+  - The name of the queue to remove the consumer from.
+- `script-name` string required
+  - The name of the Workers script to remove as the consumer.
+
+---
+
+## `login`
+
+Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
+
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
+
+```txt
+wrangler login [OPTIONS]
+```
+
+- `--scopes-list` string optional
+  - List all the available OAuth scopes with descriptions.
+- `--scopes $SCOPES` string optional
+  - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
+    for example, `npx wrangler login --scopes account:read user:read`.
+
+:::note
+
+`wrangler login` uses all the available scopes by default if no flags are provided.
+:::
+
+If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
+
+### Use `wrangler login` on a remote machine
+
+If you are using Wrangler from a remote machine, but run the login flow from your local browser, you will receive the following error message after logging in:`This site can't be reached`.
+
+To finish the login flow, run `wrangler login` and go through the login flow in the browser:
+
+```sh
+npx wrangler login
+```
+
+```sh output
+ ⛅️ wrangler 2.1.6
+-------------------
+Attempting to login via OAuth...
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
+```
+
+The browser login flow will redirect you to a `localhost` URL on your machine.
+
+Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL. Copy and paste the `localhost` URL that was generated during the `wrangler login` flow and run:
+
+```sh
+curl <LOCALHOST_URL>
+```
+
+---
+
+## `logout`
+
+Remove Wrangler's authorization for accessing your account. This command will invalidate your current OAuth token.
+
+```txt
+wrangler logout
+```
+
+If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **My Profile** > **API Tokens**.
+3. Select the three-dot menu on your Wrangler token.
+4. Select **Delete**.
+
+---
+
+## `whoami`
+
+Retrieve your user information and test your authentication configuration.
+
+```txt
+wrangler whoami
+```
+
+---
+
+## `versions`
+
+[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+:::caution
+
+The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
+
+The minimum required wrangler version to use these commands is 3.40.0.
+
+:::
+
+### `upload`
+
+Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
+
+```txt
+wrangler versions upload [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `--tag` string optional
+  - Add a version tag. Accepts empty string.
+- `--message` string optional
+  - Add a version message. Accepts empty string.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+### `deploy`
+
+Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
+
+```txt
+wrangler versions deploy [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+:::note
+
+The non-interactive version of this prompt is: `wrangler versions deploy version-id-1@percentage-1% version-id-2@percentage-2 -y --experimental-versions`
+
+For example:
+`wrangler versions deploy 095f00a7-23a7-43b7-a227-e4c97cab5f22@10%   1a88955c-2fbd-4a72-9d9b-3ba1e59842f2@90% -y --experimental-versions`
+
+:::
+
+### `list`
+
+Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+
+```txt
+wrangler versions list [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+### `secret put`
+
+Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions secret put <KEY> [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `KEY` string required
+  - The variable name for this secret to be accessed in the Worker.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` string optional
+  - Perform on a specific environment.
+
+### `secret delete`
+
+Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions delete <KEY> [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `KEY` string required
+  - The variable name for this secret to be accessed in the Worker.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` string optional
+  - Perform on a specific environment.
+
+### `secret bulk`
+
+Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+
+```txt
+wrangler versions secret bulk <FILENAME> [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `FILENAME` string optional
+  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--env` string optional
+  - Perform on a specific environment.
+
+---
+
+## `triggers`
+
+This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+:::caution
+
+The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
+
+The minimum required wrangler version to use these commands is 3.40.0.
+
+:::
+
+### `deploy`
+
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
+
+```txt
+wrangler triggers deploy [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for `wrangler versions` commands. Can be replaced with `--x-versions`.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+\--
+
+## `deployments`
+
+[Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
+
+:::note
+
+Deployments are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+:::
+
+### `view`
+
+Retrieve details for the specified [deployment](/workers/configuration/versions-and-deployments/#deployments), or the latest if no ID is provided. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on a [rollback](/workers/configuration/versions-and-deployments/rollbacks/).
+
+```txt
+wrangler deployments view [OPTIONS]
+```
+
+- `DEPLOYMENT_ID` string optional
+  - The ID of the deployment you wish to view.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+### `list`
+
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on a rollback.
+
+```txt
+wrangler deployments list [OPTIONS]
+```
+
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+:::note
+
+`Deployment ID` will be changed to `Version ID` in a future version of Wrangler. To learn more, refer to [Versions & deployments](/workers/configuration/versions-and-deployments).
+
+:::
+
+:::note
+
+The `--experimental-versions` flag is required to use the new commands below. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
+
+The minimum required wrangler version to use these commands is 3.40.0.
+:::
+
+### `list --experimental-versions`
+
+Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
+
+```txt
+wrangler deployments list [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+
+  - Required for version commands. Can be replaced with `--x-versions`.
+
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+### `status`
+
+Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
+
+```txt
+wrangler deployments status --experimental-versions
+```
+
+- `--experimental-versions` string required
+
+  - Required for version commands. Can be replaced with `--x-versions`.
+
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+
+## `rollback`
+
+:::note
+
+[Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) is currently in open beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+:::
+
+[Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a specified [version](/workers/configuration/versions-and-deployments/#versions) by ID, or to the previous version if no ID is provided. The `rollback` command will prompt you for confirmation of the rollback. On confirmation, you will be prompted to provide an optional rollback message.
+
+There are limitations on which versions you can rollback to. Refer to [Rollbacks Limits](/workers/configuration/versions-and-deployments/rollbacks/#limits) for more information.
+
+:::caution
+
+A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
+:::
+
+### `rollback`
+
+```txt
+wrangler rollback [<DEPLOYMENT_ID>] [OPTIONS]
+```
+
+- `DEPLOYMENT_ID` string optional
+  - The ID of the deployment you wish to roll back to.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--message` string optional
+  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
+
+### `rollback --experimental-versions`
+
+```txt
+wrangler rollback [<VERSION_ID>] [OPTIONS] --experimental-versions
+```
+
+- `--experimental-versions` string required
+  - Required for version commands. Can be replaced with `--x-versions`.
+- `VERSION_ID` string optional
+  - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
+- `--name` string optional
+  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+- `--message` string optional
+  - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
+
+---
+
+## dispatch namespace
+
+### `list`
+
+List all dispatch namespaces.
+
+```txt
+wrangler dispatch-namespace list
+```
+
+### `get`
+
+Get information about a dispatch namespace.
+
+```txt
+wrangler dispatch-namespace get <NAME>
+```
+
+- `NAME` string required
+
+  - The name of the dispatch namespace to get details about.
+
+### `create`
+
+Create a dispatch namespace.
+
+```txt
+wrangler dispatch-namespace create <NAME>
+```
+
+- `NAME` string required
+
+  - The name of the dispatch namespace to create.
+
+### `delete`
+
+Delete a dispatch namespace.
+
+```txt
+wrangler dispatch-namespace get <NAME>
+```
+
+:::note
+
+You must delete all user Workers in the dispatch namespace before it can be deleted.
+:::
+
+- `NAME` string required
+
+  - The name of the dispatch namespace to delete.
+
+### `rename`
+
+Rename a dispatch namespace.
+
+```txt
+wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
+```
+
+- `OLD_NAME` string required
+
+  - The previous name of the dispatch namespace.
+
+- `NEW_NAME` string required
+
+  - The new name of the dispatch namespace.
+
+---
+
+## `mtls-certificate`
+
+Manage client certificates used for mTLS connections in subrequests.
+
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+
+### `upload`
+
+Upload a client certificate.
+
+```txt
+wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
+```
+
+- `--cert` string required
+  - A path to the TLS certificate to upload. Certificate chains are supported.
+- `--key` string required
+  - A path to the private key to upload.
+- `--name` string optional
+  - The name assigned to the mTLS certificate at upload.
+
+The following is an example of using the `upload` command to upload an mTLS certificate.
+
+```sh
+npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-origin-cert
+```
+
+```sh output
+Uploading mTLS Certificate my-origin-cert...
+Success! Uploaded mTLS Certificate my-origin-cert
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
+
+```toml
+mtls_certificates = [
+  { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
+]
+```
+
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
+
+### `list`
+
+List mTLS certificates associated with the current account ID.
+
+```txt
+wrangler mtls-certificate list
+```
+
+The following is an example of using the `list` command to upload an mTLS certificate.
+
+```sh
+npx wrangler mtls-certificate list
+```
+
+```sh output
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Name: my-origin-cert
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+
+ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
+Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+```
+
+### `delete`
+
+Delete a client certificate.
+
+```txt
+wrangler mtls-certificate delete {--id <ID|--name <NAME>}
+```
+
+- `--id` string
+  - The ID of the mTLS certificate.
+- `--name` string
+  - The name assigned to the mTLS certificate at upload.
+
+The following is an example of using the `delete` command to delete an mTLS certificate.
+
+```sh
+npx wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+```
+
+```sh output
+Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
+yes
+Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
+Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
+```
+
+---
+
+## `types`
+
+Generate types from bindings and module rules in configuration.
+
+```txt
+wrangler types [<PATH>] [OPTIONS]
+```
+
+- `PATH` string (default: `worker-configuration.d.ts`)
+
+  - The path to where the declaration file for your Worker will be written.
+  - The path to the declaration file must have a `d.ts` extension.
+
+- `--env-interface` string (default: `Env`)
+  - The name of the interface to generate for the environment object.
+  - Not valid if the Worker uses the Service Worker syntax.
+
+{/* <!--TODO Add examples of DTS generated output --> */}

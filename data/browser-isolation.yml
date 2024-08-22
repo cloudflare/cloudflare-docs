@@ -1,7 +1,0 @@
-name: Browser Isolation
-
-product:
-  title: Browser Isolation
-  group: Cloudflare One
-  url: /cloudflare-one/policies/browser-isolation/
-  grid_placeholder: true

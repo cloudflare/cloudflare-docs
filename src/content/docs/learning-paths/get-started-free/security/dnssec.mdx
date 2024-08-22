@@ -1,0 +1,35 @@
+---
+title: DNSSEC
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+
+---
+
+import { Render } from "~/components"
+
+<Render file="dnssec-definition" product="dns" />
+
+***
+
+## Setup
+
+Your DNSSEC setup can be different depending on where you registered your domain name:
+
+### Cloudflare Registrar
+
+<Render file="enable-dnssec" product="registrar" />
+
+### Other registrars
+
+First, activate DNSSEC in the Cloudflare dashboard:
+
+<Render file="dnssec-cloudflare-steps" product="dns" />
+
+<Render file="dnssec-registrar-steps" product="dns" />
+
+***
+
+## Verify DNSSEC
+
+<Render file="verify-dnssec" product="registrar" />
