@@ -13,23 +13,18 @@ description: Create a redirect rule to redirect all requests for
 
 import { Example } from "~/components";
 
-This example dynamic redirect will redirect all requests for `smallshop.example.com` to a different hostname using HTTPS, keeping the original path and query string.
+This example dynamic redirect will redirect all requests for `smallshop.example.com` to a different hostname `globalstore.example.net` using HTTPS, keeping the original path and query string.
 
 <Example>
 
 **When incoming requests match**
 
-- **Field:** _Hostname_
-- **Operator:** _equals_
-- **Value:** `smallshop.example.com`
-
-If you are using the Expression Editor, enter the following expression:<br/>
-`(http.host eq "smallshop.example.com")`
+- **Wildcard pattern**
+  - **Request URL**: `http*://smallshop.example.com/*`
 
 **Then**
 
-- **Type:** _Dynamic_
-- **Expression:** `concat("https://globalstore.example.net", http.request.uri.path)`
+- **Target URL**: `https://globalstore.example.net/${2}`
 - **Status code:** _301_
 - **Preserve query string:** Enabled
 
