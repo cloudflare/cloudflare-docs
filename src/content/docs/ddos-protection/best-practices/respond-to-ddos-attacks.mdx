@@ -13,7 +13,7 @@ Cloudflare's network automatically mitigates large <GlossaryTooltip term="distr
 
 All customers should perform the following steps to better secure their application:
 
-1. Make sure all [DDoS managed rulesets](/ddos-protection/managed-rulesets/) are set to default settings (*High* sensitivity level and mitigation actions) for optimal DDoS activation.
+1. Make sure all [DDoS managed rulesets](/ddos-protection/managed-rulesets/) are set to default settings (_High_ sensitivity level and mitigation actions) for optimal DDoS activation.
 2. Deploy [WAF custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) to enforce a combined positive and negative security model. Reduce the traffic allowed to your website based on your known usage.
 3. Make sure your origin is not exposed to the public Internet, meaning that access is only possible from [Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). As an extra security precaution, we recommend contacting your hosting provider and requesting new origin server IPs if they have been targeted directly in the past.
 4. If you have [Managed IP Lists](/waf/tools/lists/managed-lists/#managed-ip-lists) or [Bot Management](/bots/plans/bm-subscription/), consider using these in WAF custom rules.

@@ -27,14 +27,14 @@ In the case of HTTPS DDoS attacks, service providers only see encrypted payloads
 
 The Cloudflare DDoS Botnet Threat Feed is available in early access for free to service providers. To get access, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/). For more information, refer to the [Terms of Use](https://www.cloudflare.com/en-gb/service-specific-terms-application-services/#ddos-botnet-threat-feed).
 
-***
+---
 
 ## Before you begin
 
 Make sure that:
 
-* You have [created a Cloudflare account](/fundamentals/setup/account/).
-* You have access to the DDoS Botnet Threat Feed. If not, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/).
+- You have [created a Cloudflare account](/fundamentals/setup/account/).
+- You have access to the DDoS Botnet Threat Feed. If not, [sign up to the waiting list](https://www.cloudflare.com/lp/botnet-threat-feed/).
 
 ## Get started
 
@@ -50,23 +50,23 @@ Make sure that:
 
 You must [obtain a Cloudflare API token](/fundamentals/api/get-started/create-token/) with at least the following account-level permission:
 
-* *DDoS Botnet Feed* > *Read*
+- _DDoS Botnet Feed_ > _Read_
 
 ### 3. Call Botnet Threat Feed API
 
 Invoke one of the Botnet Threat Feed API endpoints:
 
-* [Get full report](#get-full-report)
-* [Get day report](#get-day-report)
+- [Get full report](#get-full-report)
+- [Get day report](#get-day-report)
 
-***
+---
 
 ## Available API endpoints
 
 :::caution[Important notes]
 
-* The API URI path is planned to change from `.../botnet_feed/...` to `.../ddos_botnet_feed/...` in the future.
-* Responses with no IP addresses in the results (empty state) will return an `HTTP 200` status code (success), with an empty list in the `result` property.
+- The API URI path is planned to change from `.../botnet_feed/...` to `.../ddos_botnet_feed/...` in the future.
+- Responses with no IP addresses in the results (empty state) will return an `HTTP 200` status code (success), with an empty list in the `result` property.
   :::
 
 To invoke an API endpoint, append the operation endpoint to the Cloudflare API base URL:
@@ -79,8 +79,8 @@ https://api.cloudflare.com/client/v4
 
 Retrieves all the data in the botnet tracking database for a given ASN (currently two weeks worth of data).
 
-* HTTP verb: `GET`
-* Operation endpoint: `/accounts/{account_id}/botnet_feed/asn/{asn}/full_report`
+- HTTP verb: `GET`
+- Operation endpoint: `/accounts/{account_id}/botnet_feed/asn/{asn}/full_report`
 
 The provided `{asn}` must be affiliated with your account.
 
@@ -110,8 +110,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/botnet_feed/asn
 
 Retrieves all the data the botnet tracking database has for a given ASN on a given date. This operation currently allows dates greater than two weeks prior, but in this case it will return an empty dataset (the database currently stores two-weeks worth of data).
 
-* HTTP verb: `GET`
-* Operation endpoint: `/accounts/{account_id}/botnet_feed/asn/{asn}/day_report?date={date}`
+- HTTP verb: `GET`
+- Operation endpoint: `/accounts/{account_id}/botnet_feed/asn/{asn}/day_report?date={date}`
 
 The provided `{asn}` must be affiliated with your account.
 
