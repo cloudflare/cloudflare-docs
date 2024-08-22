@@ -25,13 +25,10 @@ You can create overrides at the zone level and at the account level. Account-lev
 
 :::caution[Important]
 
-
 - The HTTP DDoS Attack Protection managed ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`.
 - <Render file="managed-rulesets/read-only-rules-note" />
 - If you configure both account-level and zone-level overrides, only the zone-level overrides (the most specific ones) will be evaluated.
 - Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
-
-
 :::
 
 ### Creating multiple rules
