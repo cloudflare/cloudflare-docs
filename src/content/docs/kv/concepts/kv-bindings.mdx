@@ -55,10 +55,7 @@ When you use Wrangler to develop locally with the `wrangler dev` command, Wrangl
 
 To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This will use the `preview_id` of the KV binding configuration in the `wrangler.toml` file. This is how a `wrangler.toml` file looks with the `preview_id` specified.
 
-```toml
----
-filename: wrangler.toml
----
+```toml title="wrangler.toml"
 name = "worker"
 
 # ...
