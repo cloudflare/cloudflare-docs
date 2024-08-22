@@ -34,22 +34,22 @@ import "instantsearch.css/themes/satellite.css";
 
 	// Functions needed for dropdowns, pulled from https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-dropdown/js/
 
-	function hasClassName(elem, className) {
+	function hasClassName(elem: HTMLElement, className: string) {
 		return elem.className.split(" ").indexOf(className) >= 0;
 	}
 
-	function addClassName(elem, className) {
+	function addClassName(elem: HTMLElement, className: string) {
 		elem.className = [...elem.className.split(" "), className].join(" ");
 	}
 
-	function removeClassName(elem, className) {
+	function removeClassName(elem: HTMLElement, className: string) {
 		elem.className = elem.className
 			.split(" ")
 			.filter((name) => name !== className)
 			.join(" ");
 	}
 
-	function capitalize(str) {
+	function capitalize(str: string) {
 		if (typeof str !== "string") return "";
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
@@ -58,7 +58,7 @@ import "instantsearch.css/themes/satellite.css";
 	const CLASS_BUTTON = "ais-Dropdown-button";
 	const CLASS_CLOSE_BUTTON = "ais-Dropdown-close";
 
-	const cx = (...args) => args.filter(Boolean).join(" ");
+	const cx = (...args: string[]) => args.filter(Boolean).join(" ");
 
 	export function createDropdown(
 		baseWidget,

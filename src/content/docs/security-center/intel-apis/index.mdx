@@ -3,33 +3,32 @@ pcx_content_type: navigation
 title: Threat Intelligence APIs
 sidebar:
   order: 3
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Cloudflare provides a series of endpoints covering various areas of internet security and insights. Based on your Cloudflare plan type, the [limit](/security-center/intel-apis/limits/) of API calls will vary per month.
 
-| Intelligence Endpoint                                                                        | Definition                                                                                                                                                       |
-| -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview)                        | Provides an overview of the Autonomous System Number (ASN) and a list of subnets for it.                                                                         |
-| [Domain Intelligence](/api/operations/domain-intelligence-get-domain-details)                | Provides security details and statistics about a domain.                                                                                                         |
-| [Domain History](/api/operations/domain-history-get-domain-history)                          | Provides historical security threat and content categories that are currently and previously assigned to a domain.                                               |
-| [IP Intelligence](/api/operations/ip-intelligence-get-ip-overview)                           | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address.                                              |
-| [Passive DNS by IP](/api/operations/passive-dns-by-ip-get-passive-dns-by-ip)                 | Provides a list of all the domains, including first seen and last seen dates, that have resolved to a specific IP address.                                       |
-| [Phishing Intelligence](/api/operations/phishing-url-information-get-results-for-a-url-scan) | Provides phishing details about a URL.                                                                                                                           |
-| [Miscategorization Intelligence](/api/operations/miscategorization-create-miscategorization) | Enables users to submit requests for modifying a domain's category, subsequently undergoing review by the Cloudflare Intelligence team.                          |
-| [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new)            | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories.                          |
-| [Request for Information](/api/operations/cloudforce-one-request-new)                        | Creates a targeted inquiry for specific intelligence insights to help organizations understand and respond to imminent security threats and vulnerabilities.     |
-| [WHOIS](/api/operations/whois-record-get-whois-record)                                       | Provides the WHOIS registration information for a specific domain.                                                                                               |
-| [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br/>(early access)           | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. |
+| Intelligence Endpoint                                                                                 | Definition                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ASN Intelligence](/api/operations/asn-intelligence-get-asn-overview)                                 | Provides an overview of the Autonomous System Number (ASN) and a list of subnets for it.                                                                         |
+| [Custom Indicator Feed Download](/api/operations/custom-indicator-feeds-download-indicator-feed-data) | Provides the ability to download any custom indicator feeds that users create.                                                                                   |
+| [Domain Intelligence](/api/operations/domain-intelligence-get-domain-details)                         | Provides security details and statistics about a domain.                                                                                                         |
+| [Domain History](/api/operations/domain-history-get-domain-history)                                   | Provides historical security threat and content categories that are currently and previously assigned to a domain.                                               |
+| [IP Intelligence](/api/operations/ip-intelligence-get-ip-overview)                                    | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address.                                              |
+| [Passive DNS by IP](/api/operations/passive-dns-by-ip-get-passive-dns-by-ip)                          | Provides a list of all the domains, including first seen and last seen dates, that have resolved to a specific IP address.                                       |
+| [Phishing Intelligence](/api/operations/phishing-url-information-get-results-for-a-url-scan)          | Provides phishing details about a URL.                                                                                                                           |
+| [Miscategorization Intelligence](/api/operations/miscategorization-create-miscategorization)          | Enables users to submit requests for modifying a domain's category, subsequently undergoing review by the Cloudflare Intelligence team.                          |
+| [Priority Intelligence Requirements](/api/operations/cloudforce-one-priority-new)                     | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories.                          |
+| [Request for Information](/api/operations/cloudforce-one-request-new)                                 | Creates a targeted inquiry for specific intelligence insights to help organizations understand and respond to imminent security threats and vulnerabilities.     |
+| [WHOIS](/api/operations/whois-record-get-whois-record)                                                | Provides the WHOIS registration information for a specific domain.                                                                                               |
+| [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br/>(early access)                    | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. |
 
 ## API Examples
 
 Below you can find examples of Threat Intelligence API calls. Make sure you are using an [API Token](/fundamentals/api/get-started/create-token/) with the appropriate edit permissions. For comprehensive details, navigate to the respective API documentation using the links above.
 
 ### ASN Intelligence
-
 
 <Details header="Get ASN Overview" open>
 
@@ -51,11 +50,56 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/asn/13335
 }
 ```
 
+</Details>
+
+### Custom Indicator Feed Download
+
+<Details header="Download Custom Indicator Feed" open>
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/10d79d097895ae7ed7942a2b3832186c/intel/indicator-feeds/31/download" \
+--header "Authorization: Bearer <API_TOKEN>" | jq .
+
+# Example response:
+{
+    "result": [
+        {
+            "type": "bundle",
+            "id": "bundle--f4a735b7-b330-465d-8e6e-87b3c6a01287",
+            "objects":
+                [
+                    {
+                        "type": "indicator",
+                        "spec_version": "2.1",
+                        "id": "indicator--3d0ad6e0-3d49-4575-a0cb-d0e5c8b81f08",
+                        "created": "2024-07-18T00:00:00Z",
+                        "modified": "2024-07-18T00:00:00Z",
+                        "name": "Malicious domain ahilesopolker.com",
+                        "description": "This domain is associated with malicious activity.",
+                        "pattern": "[domain-name:value = 'ahilesopolker.com']",
+                        "pattern_type": "stix",
+                        "valid_from": "2024-07-18T00:00:00Z"
+                    },
+                    {
+                        "type": "domain-name",
+                        "spec_version": "2.1",
+                        "id": "domain-name--b252f8d7-5b63-4b59-9d58-8f313db76c35",
+                        "value": "ahilesopolker.com",
+                        "object_marking_refs": [ "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da" ],
+                        "created": "2024-07-18T00:00:00Z",
+                        "modified": "2024-07-18T00:00:00Z"
+                        }
+],
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
 
 </Details>
 
 ### Domain Intelligence
-
 
 <Details header="Get Domain Details">
 
@@ -107,11 +151,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain?do
 }
 ```
 
-
 </Details>
 
 ### Domain History
-
 
 <Details header="Get Domain History">
 
@@ -156,11 +198,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/domain-hi
 }
 ```
 
-
 </Details>
 
 ### IP Intelligence
-
 
 <Details header="Get IP Overview">
 
@@ -196,11 +236,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/ip?ipv4=1
 }
 ```
 
-
 </Details>
 
 ### Passive DNS by IP
-
 
 <Details header="Get Passive DNS by IP">
 
@@ -249,11 +287,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/dns?ipv4=
 
 ```
 
-
 </Details>
 
 ### Phishing Intelligence
-
 
 <Details header="Get results for a URL scan">
 
@@ -293,11 +329,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/brand-protectio
 }
 ```
 
-
 </Details>
 
 ### Miscategorization Intelligence
-
 
 <Details header="Create Miscategorization">
 
@@ -333,11 +367,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/miscatego
 }
 ```
 
-
 </Details>
 
 ### WHOIS
-
 
 <Details header="Get WHOIS Record">
 
@@ -369,6 +401,5 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/intel/whois?dom
     "messages": []
 }
 ```
-
 
 </Details>

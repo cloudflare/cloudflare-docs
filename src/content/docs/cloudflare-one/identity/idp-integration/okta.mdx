@@ -42,6 +42,11 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 
 9. Set the **Groups claim filter** to *Matches regex* and its value to `.*`.
 
+    :::note
+
+    Groups managed outside of Okta (for example, Entra ID/Azure AD or Google groups) may require different regex values. For more information, refer to the [Okta documentation](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups?language=en_US).
+    :::
+
 10. In the **General** tab, copy the **Client ID** and **Client secret**.
 
     ![Finding your Client credentials in Okta](~/assets/images/cloudflare-one/identity/okta/okta-3.png)

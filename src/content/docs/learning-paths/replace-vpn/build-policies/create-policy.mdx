@@ -3,16 +3,15 @@ title: Secure your first application
 pcx_content_type: overview
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 To ensure holistic security precautions, we recommend securing each distinct private application with at least two policies:
 
-* A [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) with the appropriate identity and device posture values, targeting the domain list that defines your application. Policy enforcement happens at the request resolution event, before the user’s device makes a connection request to the application itself; if denied here, no traffic will reach your private network.
+- A [Gateway DNS policy](/cloudflare-one/policies/gateway/dns-policies/) with the appropriate identity and device posture values, targeting the domain list that defines your application. Policy enforcement happens at the request resolution event, before the user’s device makes a connection request to the application itself; if denied here, no traffic will reach your private network.
 
-* A [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/) with the same identity and device posture values as the DNS policy, targeting the IP list that defines your application.  You can optionally include the domain list by matching the SNI header. Then, you can include any combinations of ports or protocols that are relevant for application access. Network policy enforcement happens after the user passes the DNS policy, when the user's device attempts to connect to the target application.
+- A [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/) with the same identity and device posture values as the DNS policy, targeting the IP list that defines your application. You can optionally include the domain list by matching the SNI header. Then, you can include any combinations of ports or protocols that are relevant for application access. Network policy enforcement happens after the user passes the DNS policy, when the user's device attempts to connect to the target application.
 
 ## Create a Gateway policy
 
@@ -20,7 +19,7 @@ To create a new policy, open [Zero Trust](https://one.dash.cloudflare.com/) and 
 
 ## Example DNS policy
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value                  |
 | ---------------- | -------- | ---------------------- |
@@ -83,7 +82,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 ## Example network policy
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value              |
 | ---------------- | -------- | ------------------ |
@@ -144,7 +143,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 
 We recommend adding a catch-all policy to the bottom of your network policy list. An effective Zero Trust model should prioritize default-deny actions to avoid any overly permissive policy building. For example,
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 | Traffic Selector | Operator | Value                        | Logic |
 | ---------------- | -------- | ---------------------------- | ----- |
@@ -208,5 +207,5 @@ To learn how multiple policies interact, refer to [Order of enforcement](/cloudf
 
 :::note
 
-It is not recommended to employ a default-deny model while testing. Instead, build your explicit application policies and [monitor your logs](/cloudflare-one/insights/logs/gateway-logs/) to determine if your policies are working as expected. If you do not see the policies triggering in your logs, you may need to tune your policies and review what kind of information (identity groups, device posture values, etc.) is being sent with your traffic. 
+It is not recommended to employ a default-deny model while testing. Instead, build your explicit application policies and [monitor your logs](/cloudflare-one/insights/logs/gateway-logs/) to determine if your policies are working as expected. If you do not see the policies triggering in your logs, you may need to tune your policies and review what kind of information (identity groups, device posture values, etc.) is being sent with your traffic.
 :::

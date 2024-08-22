@@ -3,17 +3,16 @@ pcx_content_type: how-to
 title: SSH
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The Secure Shell Protocol (SSH) enables users to remotely access devices through the command line. With Cloudflare Zero Trust, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.
 
 Cloudflare Zero Trust offers two solutions to provide secure access to SSH servers:
 
-* [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-ssh-server-with-warp-to-tunnel)
-* [Public hostname routing with `cloudflared access`](#connect-to-ssh-server-with-cloudflared-access)
+- [Private subnet routing with Cloudflare WARP to Tunnel](#connect-to-ssh-server-with-warp-to-tunnel)
+- [Public hostname routing with `cloudflared access`](#connect-to-ssh-server-with-cloudflared-access)
 
 ## Set up an SSH server in GCP
 
@@ -26,7 +25,7 @@ Before creating your VM instance you will need to create an SSH key pair.
 1. Open a terminal and type the following command:
 
    ```sh
-   $ ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
+   ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
    ```
 
 2. Enter your passphrase when prompted. It will need to be entered twice.
@@ -36,14 +35,14 @@ Before creating your VM instance you will need to create an SSH key pair.
 3. In the command line, enter:
 
    ```sh
-   $ cat ~/.ssh/gcp_ssh.pub
+   cat ~/.ssh/gcp_ssh.pub
    ```
 
 4. Copy the output. This will be used when creating the VM instance in GCP.
 
 :::note
 
-You can configure SSH servers that do not require SSH keys and instead rely exclusively on Cloudflare Zero Trust policies or [short-lived certificates](/cloudflare-one/identity/users/short-lived-certificates/) to secure the server. 
+You can configure SSH servers that do not require SSH keys and instead rely exclusively on Cloudflare Zero Trust policies or [short-lived certificates](/cloudflare-one/identity/users/short-lived-certificates/) to secure the server.
 :::
 
 ### 2. Create a VM instance in GCP
@@ -57,11 +56,11 @@ Now that the SSH key pair has been created, you can create a VM instance.
 5. Scroll down to **Advanced options** > **Security** > **Manage Access**.
 6. Under **Add manually generated SSH keys**, select **Add item** and paste the public key that you have created.
 7. Select **Create**.
-8. Once your VM instance is running, open the dropdown next to **SSH** and select *Open in browser window*.
+8. Once your VM instance is running, open the dropdown next to **SSH** and select _Open in browser window_.
 
 :::note
 
-In order to be able to establish an SSH connection, do not enable [OS Login](https://cloud.google.com/compute/docs/oslogin) on the VM instance. 
+In order to be able to establish an SSH connection, do not enable [OS Login](https://cloud.google.com/compute/docs/oslogin) on the VM instance.
 :::
 
 ## Connect to SSH server with WARP to Tunnel
@@ -82,10 +81,10 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ### 4. Connect as a user
 
-Once you have set up the application and the user device, the user can now SSH into the machine using its private IP address.  If your SSH server requires an SSH key, the key should be included in the command.
+Once you have set up the application and the user device, the user can now SSH into the machine using its private IP address. If your SSH server requires an SSH key, the key should be included in the command.
 
 ```sh
-$ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
+ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 ```
 
 ## Connect to SSH server with `cloudflared access`
@@ -98,7 +97,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `ssh.example.com`).
 
-3. For **Service**,  select *SSH* and enter `localhost:22`. If the SSH server is on a different machine from where you installed the tunnel, enter `<server IP>:22`.
+3. For **Service**, select _SSH_ and enter `localhost:22`. If the SSH server is on a different machine from where you installed the tunnel, enter `<server IP>:22`.
 
 4. Select **Save hostname**.
 
@@ -115,7 +114,7 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 2. Make a one-time change to your SSH configuration file:
 
    ```sh
-   $ vim ~/.ssh/config
+   vim ~/.ssh/config
    ```
 
 3. Input the following values; replacing `ssh.example.com` with the hostname you created.
@@ -130,7 +129,7 @@ Users can connect from their device by [authenticating through `cloudflared`](#n
 4. You can now test the connection by running a command to reach the service:
 
    ```sh
-   $ ssh <username>@ssh.example.com
+   ssh <username>@ssh.example.com
    ```
 
    When the command is run, `cloudflared` will launch a browser window to prompt you to authenticate with your identity provider before establishing the connection from your terminal.

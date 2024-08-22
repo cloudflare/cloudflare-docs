@@ -1,9 +1,8 @@
 ---
 inputParameters: productName;;backgroundInfoPath;;networkAnalyticsPath;;healthChecks
-
 ---
 
-import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
 
 {props.one} customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> for a Magic Tunnel drops below the selected <a href={props.two}>service-level objective (SLO)</a>.
 
@@ -13,18 +12,18 @@ Magic Tunnel health alerts will monitor the health check success rate of each Ma
 
 If a Magic Tunnel health alert is fired, customers can expect the following data in the email, webhook, and PagerDuty notification:
 
-* Cloudflare account name
-* Cloudflare account ID
-* Alert type
-* Tunnel name
-* Tunnel ID
-* Tunnel status
-* Alert SLO
-* Timestamp
+- Cloudflare account name
+- Cloudflare account ID
+- Alert type
+- Tunnel name
+- Tunnel ID
+- Tunnel status
+- Alert SLO
+- Timestamp
 
 ## Set up Magic Tunnel health alerts
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
@@ -32,7 +31,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 4. Enter a name and description for the notification.
 5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
 6. Choose the tunnels you want to receive alerts for.
-7. Select the **Alert Sensitivity Level** threshold. It is predefined for *Medium*, but you can choose between *High*, *Medium*, and *Low*.
+7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_.
 8. Select **Create** when you are done.
 
 </TabItem> <TabItem label="API">
@@ -76,9 +75,9 @@ Currently, there are three SLO threshold values that are supported by the API. T
 
 With these settings, at 100% failure Cloudflare will send alerts at the following time frames, after a problem is detected:
 
-* **High sensitivity**: First alert within 10 minutes.
-* **Medium sensitivity**: First alert within 20 minutes.
-* **Low sensitivity**: First alert within 30 minutes.
+- **High sensitivity**: First alert within 10 minutes.
+- **Medium sensitivity**: First alert within 20 minutes.
+- **Low sensitivity**: First alert within 30 minutes.
 
 Refer to the <a href={props.two}>Magic tunnels background information page</a> for more information on this topic.
 
@@ -86,6 +85,6 @@ Refer to the <a href={props.two}>Magic tunnels background information page</a> f
 
 To test whether a specific alert sensitivity level works for your use case:
 
-1. [Create an alert](#setup-ha) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to <a href={props.three}>Network Analytics</a> to learn how you can view real-time and historical data about your network.
+1. [Create an alert](#set-up-magic-tunnel-health-alerts) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to <a href={props.three}>Network Analytics</a> to learn how you can view real-time and historical data about your network.
 2. Disable the tunnel you are testing, so there is 100% <a href={props.four}>health check failure</a>.
 3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).

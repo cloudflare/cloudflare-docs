@@ -4,38 +4,37 @@ title: Gmail
 rss: file
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="casb/integration-description" params={{ one: "Gmail", two: "Google Workspace account" }} />
+<Render
+  file="casb/integration-description"
+  params={{ one: "Gmail", two: "Google Workspace account" }}
+/>
 
 ## Integration prerequisites
 
-<Render file="casb/google-prereqs" />
+<Render file="casb/google/google-prereqs" />
 
 ## Integration permissions
 
-<Render file="casb/integration-perms" params={{ one: "Google Workspace", two: "google-workspace" }} />
+<Render
+  file="casb/integration-perms"
+  params={{ one: "Google Workspace", two: "google-workspace" }}
+/>
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Gmail", two: "google-workspace/gmail" }} />
+<Render
+  file="casb/security-findings"
+  params={{ one: "Gmail", two: "google-workspace/gmail" }}
+/>
 
 ### Gmail administrator settings
 
-| Finding                                                   | Severity | Description                                                                                                                  |
-| --------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Google Workspace Domain SPF Record Allows Any IP Address  | High     | A Google Workspace Domain SPF record allows any email to be sent from any IP address on your behalf.                         |
-| Google Workspace Domain SPF Record Not Present            | Medium   | An SPF record does not exist for a Google Workspace Domain.                                                                  |
-| Google Workspace Domain DMARC Record Not Present          | Medium   | A DMARC record does not exist for a Google Workspace Domain.                                                                 |
-| Google Workspace Domain DMARC Not Enforced                | Medium   | A DMARC record for a Google Workspace Domain is not enforced.                                                                |
-| Google Workspace Domain DMARC Not Enforced for Subdomains | Medium   | A DMARC record for a Google Workspace Subdomain is not configured to quarantine or reject messages that fail authentication. |
-| Google Workspace Domain DMARC Only Partially Enforced     | Medium   | A DMARC record for a Google Workspace Domain is not configured to quarantine or reject messages that fail authentication.    |
+<Render file="casb/google/gmail-admin-settings" />
 
 ### Email forwarding
 
-| Finding                                      | Severity | Description                                                                                                                      |
-| -------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Google Workspace User Delegates Email Access | High     | A user has delegated access to their inbox to another party. Delegates can read, send, and delete messages on the user's behalf. |
+<Render file="casb/google/email-forwarding" />

@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Managed networks
 sidebar:
   order: 3
-
 ---
 
-import { Details, TabItem, Tabs } from "~/components"
+import { Details, TabItem, Tabs } from "~/components";
 
 Cloudflare WARP allows you to selectively apply WARP client settings if the device is connected to a secure network location such as an office.
 
@@ -23,7 +22,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 1. Generate a TLS certificate:
 
 ```sh
-$ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
 ```
 
 The command will output a certificate in PEM format and its private key. Store these files in a secure place.
@@ -34,7 +33,6 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 :::
 
 2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
-
 
 <Details header="nginx in Docker">
 
@@ -64,15 +62,15 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
 2. Add the nginx image to your Docker compose file:
 
    ```yml
-   version: '3.3'
+   version: "3.3"
    services:
    nginx:
-      image: nginx:latest
-      ports:
-         - 3333:443
-      volumes:
-         - ./nginx.conf:/etc/nginx/nginx.conf:ro
-         - ./certs:/certs:ro
+     image: nginx:latest
+     ports:
+       - 3333:443
+     volumes:
+       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+       - ./certs:/certs:ro
    ```
 
    If needed, replace `./nginx.conf` and `./certs` with the locations of your nginx configuration file and certificate.
@@ -80,12 +78,10 @@ If needed, replace `/certs/example.pem` and `/certs/example.key` with the locati
 3. Start the server:
 
    ```sh
-   $ docker-compose up -d
+   docker-compose up -d
    ```
 
-
 </Details>
-
 
 <Details header="Python">
 
@@ -119,16 +115,15 @@ To serve the TLS certificate using Python:
 2. Run the script:
 
    ```sh
-   $ python3 myserver.py
+   python3 myserver.py
    ```
-
 
 </Details>
 
 3. To test that the server is working, run a curl command from the end user's device:
 
 ```sh
-$ curl --verbose --insecure https://<private-server-IP>:3333/
+curl --verbose --insecure https://<private-server-IP>:3333/
 ```
 
 You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
@@ -144,7 +139,7 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 To obtain the SHA-256 fingerprint of a local certificate:
 
 ```sh
-$ openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
+openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
 ```
 
 The output will look something like:
@@ -158,7 +153,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 To obtain the SHA-256 fingerprint of a remote server:
 
 ```sh
-$ openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
+openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
 ```
 
 The output will look something like:
@@ -205,5 +200,5 @@ To check if the WARP client detects the network location:
 
 ## Best practices
 
-* The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
-* Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
+- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.

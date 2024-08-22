@@ -7,7 +7,6 @@ sidebar:
 head:
   - tag: title
     content: Generate a key pair in the command line
-
 ---
 
 Generate a public/private key pair using the Cloudflare [`matched-data-cli`](https://github.com/cloudflare/matched-data-cli) command-line tool. After generating a key pair, enter the generated public key in the payload logging configuration.
@@ -21,16 +20,19 @@ Do the following:
 3. Open a terminal and go to the local folder containing the `matched-data-cli` tool.
 
    ```sh
-   ~ $ cd matched-data-cli
+   cd matched-data-cli
    ```
 
 4. Run the following command:
 
    ```sh
-   ~/matched-data-cli $ ./matched-data-cli generate-key-pair
+   ./matched-data-cli generate-key-pair
+   ```
+
+   ```sh output
    {
-     "private_key": "uBS5eBttHrqkdY41kbZPdvYnNz8Vj0TvKIUpjB1y/GA=",
-     "public_key": "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
+    "private_key": "uBS5eBttHrqkdY41kbZPdvYnNz8Vj0TvKIUpjB1y/GA=",
+    "public_key": "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
    }
    ```
 

@@ -3,16 +3,15 @@ title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 2
-
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components"
+import { Render, TabItem, Tabs, PackageManagers } from "~/components";
 
 This guide will instruct you through:
 
-* Writing a class that defines a Durable Object.
-* Instantiating and communicating with a Durable Object from another Worker via the `Fetch` API.
-* Deploying a Durable Object.
+- Writing a class that defines a Durable Object.
+- Instantiating and communicating with a Durable Object from another Worker via the `Fetch` API.
+- Deploying a Durable Object.
 
 <Render file="prereqs" product="workers" />
 
@@ -30,18 +29,30 @@ You will access your Durable Object from a [Worker](/workers/). Your Worker appl
 
 To create a Worker project, run:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'durable-object-starter'} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"durable-object-starter"}
+/>
 
 Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/install-and-update/), the Workers CLI. You will use Wrangler to test and deploy your project.
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Hello World example", two: "Hello World Worker Using Durable Objects", three: "JavaScript / Typescript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Hello World example",
+		two: "Hello World Worker Using Durable Objects",
+		three: "JavaScript / Typescript",
+	}}
+/>
 
 This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
 
 Move into your new directory:
 
 ```sh
-$ cd durable-object-starter
+cd durable-object-starter
 ```
 
 ## 3. Write a class to define a Durable Object
@@ -59,7 +70,7 @@ Your `MyDurableObject` class will have a constructor with two parameters. The fi
 
 ```js
 export class MyDurableObject {
-  constructor(state, env) {}
+	constructor(state, env) {}
 }
 ```
 
@@ -67,7 +78,7 @@ export class MyDurableObject {
 
 ```ts
 export class MyDurableObject {
-  constructor(state: DurableObjectState, env: Env) {}
+	constructor(state: DurableObjectState, env: Env) {}
 }
 ```
 
@@ -81,11 +92,11 @@ Your file should now look like:
 
 ```js
 export class MyDurableObject {
-  constructor(state, env) {}
+	constructor(state, env) {}
 
-  async fetch(request) {
-    return new Response("Hello World");
-  }
+	async fetch(request) {
+		return new Response("Hello World");
+	}
 }
 ```
 
@@ -93,11 +104,11 @@ export class MyDurableObject {
 
 ```ts
 export class MyDurableObject {
-  constructor(state: DurableObjectState, env: Env) {}
+	constructor(state: DurableObjectState, env: Env) {}
 
-  async fetch(request: Request) {
-    return new Response("Hello World");
-  }
+	async fetch(request: Request) {
+		return new Response("Hello World");
+	}
 }
 ```
 
@@ -107,9 +118,7 @@ A Worker can pass information to a Durable Object via headers, the HTTP method, 
 
 :::note
 
-
 HTTP requests received by a Durable Object do not come directly from the Internet. HTTP requests come from other Workers and other Durable Objects. Durable Objects use HTTP for familiarity, but plan to introduce other protocols in the future.
-
 
 :::
 
@@ -129,15 +138,15 @@ To communicate with a Durable Object, the fetch handler should look like the fol
 
 ```js
 export default {
-  async fetch(request, env) {
-    let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+	async fetch(request, env) {
+		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-    let stub = env.MY_DURABLE_OBJECT.get(id);
+		let stub = env.MY_DURABLE_OBJECT.get(id);
 
-    let response = await stub.fetch(request);
+		let response = await stub.fetch(request);
 
-    return response;
-  },
+		return response;
+	},
 };
 ```
 
@@ -145,15 +154,15 @@ export default {
 
 ```ts
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+	async fetch(request, env, ctx): Promise<Response> {
+		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-    let stub = env.MY_DURABLE_OBJECT.get(id);
+		let stub = env.MY_DURABLE_OBJECT.get(id);
 
-    let response = await stub.fetch(request);
+		let response = await stub.fetch(request);
 
-    return response;
-  },
+		return response;
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -165,7 +174,7 @@ In the code above, you have:
 2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/best-practices/access-durable-objects-from-a-worker/#generate-ids-randomly). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
 3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path.
 4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
-5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL.  The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept  permanently.
+5. Forwarded the request to the Durable Object. `stub.fetch()` has the same signature as the global `fetch()` function, except that the request is always sent to the object, regardless of the request's URL. The first time you send a request to a new object, the object will be created for us. If you do not store durable state in the object, it will automatically be deleted later (and recreated if you request it again). If you store durable state, then the object may be evicted from memory but its durable state will be kept permanently.
 6. Received an HTTP response back to the client with `return response`.
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/) to learn more about communicating to a Durable Object.
@@ -189,9 +198,9 @@ bindings = [
 
 The `[[durable_objects.bindings]]` section contains the following fields:
 
-* `name` - Required. The binding name to use within your Worker.
-* `class_name` - Required. The class name you wish to bind to.
-* `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
+- `name` - Required. The binding name to use within your Worker.
+- `class_name` - Required. The class name you wish to bind to.
+- `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
 
 ## 6. Configure Durable Object classes with migrations
 
@@ -214,7 +223,7 @@ Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects
 To test your Durable Object locally, run [`wrangler dev`](/workers/wrangler/commands/#dev):
 
 ```sh
-$ npx wrangler dev
+npx wrangler dev
 ```
 
 In your console, you should see a`Hello world` string returned by the Durable Object.
@@ -224,7 +233,7 @@ In your console, you should see a`Hello world` string returned by the Durable Ob
 To deploy your Durable Object Worker:
 
 ```sh
-$ npx wrangler deploy
+npx wrangler deploy
 ```
 
 Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
@@ -235,6 +244,6 @@ By finishing this tutorial, you have successfully created, tested and deployed a
 
 ### Related resources
 
-* [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
-* [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
-* [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.
+- [Access a Durable Object from a Worker](/durable-objects/best-practices/access-durable-objects-from-a-worker/)
+- [Create Durable Object stubs](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/)
+- [Miniflare](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare) - Helpful tools for mocking and testing your Durable Objects.

@@ -2,15 +2,14 @@
 pcx_content_type: example
 summary: Create a redirect rule to redirect visitors from an old URL format with
   locale information to a new URL format.
-product:
+products:
   - Redirect Rules
 title: Remove locale from URL path
 description: Create a redirect rule to redirect visitors from an old URL format
   with locale information to a new URL format.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 This example dynamic redirect for zone `example.com` will redirect visitors from an old URL format that included the locale (for example, `/en-us/<page_name>`) to the new format `/<page_name>`.
 
@@ -18,19 +17,19 @@ This example dynamic redirect for zone `example.com` will redirect visitors from
 
 **When incoming requests match**
 
-* **Field:** *URI Path*
-* **Operator:** *matches regex*
-* **Value:** `^/[A-Za-z]{2}-[A-Za-z]{2}/`
+- **Field:** _URI Path_
+- **Operator:** _matches regex_
+- **Value:** `^/[A-Za-z]{2}-[A-Za-z]{2}/`
 
 If you are using the Expression Editor, enter the following expression:<br/>
 `http.request.uri.path matches "^/[A-Za-z]{2}-[A-Za-z]{2}/"`
 
 **Then**
 
-* **Type:** *Dynamic*
-* **Expression:** `regex_replace(http.request.uri.path, "^/[A-Za-z]{2}-[A-Za-z]{2}/(.*)", "/${1}")`
-* **Status code:** *301*
-* **Preserve query string:** Enabled
+- **Type:** _Dynamic_
+- **Expression:** `regex_replace(http.request.uri.path, "^/[A-Za-z]{2}-[A-Za-z]{2}/(.*)", "/${1}")`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
 
 </Example>
 

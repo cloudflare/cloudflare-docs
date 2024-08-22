@@ -12,7 +12,7 @@ import { FeatureTable } from "~/components"
 Cloud Connector allows you to route matching incoming traffic from your website to a public cloud provider that you define such as AWS, Google Cloud, and Azure. With Cloud Connector you can make Cloudflare the control center for your web traffic, including traffic served from public cloud providers, without having to configure additional rules.
 
 :::note
-We are gradually rolling out access to Cloud Connector throughout 2024. Refer to [Availability](#availability) for details. Support for Cloudflare R2 will be added soon.
+Support for Cloudflare R2 will be added soon.
 :::
 
 ## How it works
@@ -21,7 +21,7 @@ First, you configure a Cloud Connector rule that specifies:
 - The cloud provider and a supported cloud service that will accept traffic.
 - The traffic that will be routed to that cloud service.
 
-Then, Cloudflare will create the [necessary configurations](#applied-configurations) so that the content is accessible for requests matching your Cloud Connector rule.
+Then, Cloudflare will create the [necessary configurations](#applied-configurations) so that the content is accessible for requests matching your Cloud Connector rule. Your object storage bucket should be public for Cloud Connector to work.
 
 Cloud Connector rules are evaluated last in the request evaluation workflow. When there is a rule match and you have other rules changing the same settings, the Cloud Connector rule will win over other rules.
 
@@ -33,6 +33,6 @@ Cloud Connector will perform the following configurations automatically, dependi
 
 ## Availability
 
-Cloud Connector is being rolled out gradually throughout 2024 to all customers. Once you have access, the Cloudflare dashboard will show a new **Cloud Connector** tab under **Rules** at the zone level. The maximum number of rules depends on your Cloudflare plan:
+Cloud Connector is available in beta to all customers. The maximum number of rules depends on your Cloudflare plan:
 
 <FeatureTable id="rules.cloud_connector" />

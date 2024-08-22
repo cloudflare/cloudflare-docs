@@ -94,14 +94,14 @@ accTitle: Magic WAN Connector connects to the router in the site, and only some 
 
 If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow the following traffic:
 
-| Protocol/port          | Destination IP/URL                      | Purpose                                                                                                                                                                                                                                              |
-| ---------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `UDP/53`               | DNS destination IP `1.1.1.1`            | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API endpoints.                                                                                                                     |
-| `TCP/443`              | -                                       | The Connector will open outbound HTTPS connections over this port for control plane operations.                                                                                                                                                      |
-| `UDP/4500`             | Destination IP `162.159.64.1`           | Needed for Connector's initialization and discovery traffic through outbound connections.                                                                                                                                                            |
-| `UDP/4500`             | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare <GlossaryTooltip term="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">anycast IPs</GlossaryTooltip> assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
-| `TCP/7844`, `UDP/7844` | Outbound connections                    | This is for debugging facilities in the Connector.                                                                                                                                                                                                   |
-| `UDP/123`              | `http://time.cloudflare.com/`           | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services.                                                                                                                                                                   |
+| Protocol/port | Destination IP/URL | Purpose |
+| --- | --- |--- |
+| `UDP/53` | DNS destination IP `1.1.1.1` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API |
+| `TCP/443` | - | The Connector will open outbound HTTPS connections over this port for control plane operations. |
+| `UDP/4500` | Destination IP `162.159.64.1` | Needed for Connector's initialization and discovery traffic through outbound connections. |
+| `UDP/4500` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare <GlossaryTooltip term="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">anycast IPs</GlossaryTooltip> assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
+| `TCP/7844`, `UDP/7844` | Outbound connections | This is for debugging facilities in the Connector. |
+| `UDP/123` | `http://time.cloudflare.com/` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services. |
 
 ## Activate connector
 
@@ -133,12 +133,10 @@ Because Connectors in high availability configurations share a single site, you 
 Make sure all IPs are part of the same subnet.
 
 :::note
-
-
 * Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
 * High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
-* In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized. 
-  :::
+* In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+:::
 
 ### ​​Create a high availability configuration
 

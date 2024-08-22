@@ -16,9 +16,13 @@ const { term, prepend, link } = props.parse(Astro.props);
 
 const tooltip = await getGlossaryEntry(term);
 
-const definition = prepend
+let definition = prepend
 	? prepend.concat(tooltip.general_definition)
 	: tooltip.general_definition;
+
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+
+definition = definition.split(/\r?\n/)[0];
 ---
 
 <span

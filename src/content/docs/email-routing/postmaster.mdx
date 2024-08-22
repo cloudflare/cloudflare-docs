@@ -6,7 +6,6 @@ sidebar:
 head: []
 description: Reference page with postmaster information for professionals, as
   well as a known limitations section.
-
 ---
 
 This page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
@@ -21,7 +20,7 @@ Email Routing supports [Authenticated Received Chain (ARC)](http://arc-spec.org/
 
 ### Contact information
 
-The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas\&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
 
 ### DKIM signature
 
@@ -34,7 +33,10 @@ Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did
 Below is the DKIM key for `email.cloudflare.net`:
 
 ```sh
-$ dig TXT 2022._domainkey.email.cloudflare.net +short
+dig TXT 2022._domainkey.email.cloudflare.net +short
+```
+
+```sh output
 
 "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnraPy1d8e6+lzeE1HIoUvYWoAOUSREkNHcwxA/ueVM8f6FKXvPu/9gVpgkn8iUyaCfk2z1MW+OVLuFeH64YRMa39mkaQalgke2tZ05SnjRUtYEHYvfrqPuMT+Ouk+GecpgvrtMq5gMXm6ZfeUhQkdWxmMQJGf4fdW5I0piUQJMhK/Qc1dNRSskk" "TiUtXKnsEdjTN2xcnHhyj985S0xOEAxm9Uj1rykPqVvKpqEdjUkujbXOwR0KmHTvPyFpBjCCfxAVqOwwo9zBYuvk/nh0qlDgLIpy0SimrYhNFCq2XBxIj4tdUzIl7qZ5Ck6zLCQ+rjzJ4sm/zA+Ov9kDkbcmyrwIDAQAB"
 ```
@@ -50,16 +52,23 @@ Currently, Email Routing will connect to the upstream SMTP servers using IPv6 if
 Below is an example of a popular provider that supports IPv6:
 
 ```sh
-$ dig mx gmail.com
- 
+dig mx gmail.com
+```
+
+```sh output
+
 gmail.com. 3084 IN MX 5 gmail-smtp-in.l.google.com.
 gmail.com. 3084 IN MX 20 alt2.gmail-smtp-in.l.google.com.
 gmail.com. 3084 IN MX 40 alt4.gmail-smtp-in.l.google.com.
 gmail.com. 3084 IN MX 10 alt1.gmail-smtp-in.l.google.com.
 gmail.com. 3084 IN MX 30 alt3.gmail-smtp-in.l.google.com.
- 
-$ dig AAAA gmail-smtp-in.l.google.com
- 
+```
+
+```sh
+dig AAAA gmail-smtp-in.l.google.com
+```
+
+```sh output
 gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 ```
 
@@ -86,10 +95,18 @@ In addition to the outbound prefixes, Email Routing will use the domain `email.c
 PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
 
 ```sh
-$ dig a0-7.email.cloudflare.net +short
-104.30.0.7
+dig a0-7.email.cloudflare.net +short
+```
 
-$ dig -x 104.30.0.7 +short
+```sh output
+104.30.0.7
+```
+
+```sh
+dig -x 104.30.0.7 +short
+```
+
+```sh output
 a0-7.email.cloudflare.net.
 ```
 
@@ -107,7 +124,7 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 `2405:8100:c000::/38`
 
-*Ranges last updated: December 13th, 2023*
+_Ranges last updated: December 13th, 2023_
 
 ### Sender rewriting
 
@@ -141,9 +158,9 @@ v=spf1 include:_spf.mx.cloudflare.net ~all
 
 In the example above:
 
-* `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
-* `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
-* `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
+- `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
+- `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
+- `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
 
 If we do a TXT query to `_spf.mx.cloudflare.net`, we get:
 
@@ -153,12 +170,12 @@ _spf.mx.cloudflare.net. 300 IN TXT "v=spf1 ip4:104.30.0.0/20 ~all"
 
 This response means:
 
-* Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
-* Otherwise, `SoftFail`.
+- Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
+- Otherwise, `SoftFail`.
 
 You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and Phishing](https://blog.cloudflare.com/tackling-email-spoofing/) blog.
 
-***
+---
 
 ## Known limitations
 
@@ -170,8 +187,8 @@ Email Routing does not support [internationalized email addresses](https://en.wi
 
 This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the `@` symbol). Refer to the following examples:
 
-* `info@piñata.es` - Supported.
-* `piñata@piñata.es` - Not supported.
+- `info@piñata.es` - Supported.
+- `piñata@piñata.es` - Not supported.
 
 ### Non-delivery reports (NDRs)
 

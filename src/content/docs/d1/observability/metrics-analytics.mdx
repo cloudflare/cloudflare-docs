@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Metrics and analytics
 sidebar:
   order: 10
-
 ---
 
 D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
@@ -52,9 +51,9 @@ You can programmatically query analytics for your D1 databases via the [GraphQL 
 
 D1's GraphQL datasets require an `accountTag` filter with your Cloudflare account ID and include:
 
-* `d1AnalyticsAdaptiveGroups`
-* `d1StorageAdaptiveGroups`
-* `d1QueriesAdaptiveGroups`
+- `d1AnalyticsAdaptiveGroups`
+- `d1StorageAdaptiveGroups`
+- `d1QueriesAdaptiveGroups`
 
 ### Examples
 
@@ -80,7 +79,7 @@ query {
 				dimensions {
 					date
 					databaseId
-				} 
+				}
 			}
 		}
 	}
@@ -108,7 +107,7 @@ query {
 				dimensions {
 					date
 					databaseId
-				} 
+				}
 			}
 		}
 	}
@@ -143,25 +142,25 @@ query {
 
 D1 exposes metrics that let you understand and debug query performance. These metrics can be accessed via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights`command.
 
-* Query strings are captured to make it easier to analyze metrics across query executions. Bound [parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
-* Experimental wrangler command options and output can change. Run `wrangler d1 insights --help` to view the current command.
+- Query strings are captured to make it easier to analyze metrics across query executions. Bound [parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
+- Experimental wrangler command options and output can change. Run `wrangler d1 insights --help` to view the current command.
 
 ### Examples
 
 To find top 10 queries by execution count:
 
 ```sh
-$ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --count=10
+npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --count=10
 ```
 
 To find top 10 queries by average execution time:
 
 ```sh
-$ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --count=10
+npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --count=10
 ```
 
 To find top 10 queries by rows written in last 7 days:
 
 ```sh
-$ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --count=10 --timePeriod=7d
+npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --count=10 --timePeriod=7d
 ```

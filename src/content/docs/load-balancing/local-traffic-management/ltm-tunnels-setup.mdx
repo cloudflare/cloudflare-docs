@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Set up private IPs with Tunnel
 sidebar:
   order: 2
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Consider the following steps to learn how to configure Cloudflare local traffic management (LTM) solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private or internal services.
 
@@ -39,13 +38,13 @@ To assign the virtual network to the tunnel:
 To create a virtual network:
 
 ```sh
-$ cloudflared tunnel vnet add <VNET_NAME>
+cloudflared tunnel vnet add <VNET_NAME>
 ```
 
 To assign the virtual network to the tunnel:
 
 ```sh
-$ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
+cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 ```
 
 </TabItem> </Tabs>
@@ -61,12 +60,12 @@ The specific configuration will vary depending on your use case. Refer to the fo
 
 :::note
 
-* Currently, Cloudflare does not support entering the same endpoint IP addresses more than once, even when using different virtual networks.
-* All endpoints with private IPs must have `virtual_network_id` specified.
+- Currently, Cloudflare does not support entering the same endpoint IP addresses more than once, even when using different virtual networks.
+- All endpoints with private IPs must have `virtual_network_id` specified.
 
 :::
 
-<Tabs>
+<Tabs syncKey="dashPlusAPI">
 
 <TabItem label="Dashboard">
 
@@ -113,6 +112,6 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/
 
 :::caution[Spectrum limitations]
 
-If you will use the load balancer with [Spectrum](/spectrum/), consider the applicable [limitations](/load-balancing/additional-options/spectrum/#limitations) on load balancing and monitoring options. 
+If you will use the load balancer with [Spectrum](/spectrum/), consider the applicable [limitations](/load-balancing/additional-options/spectrum/#limitations) on load balancing and monitoring options.
 
 :::

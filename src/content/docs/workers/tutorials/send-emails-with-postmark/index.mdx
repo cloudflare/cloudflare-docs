@@ -8,39 +8,36 @@ tags:
   - Email
 languages:
   - JavaScript
-
 ---
-
-
 
 In this tutorial, you will learn how to send transactional emails from Workers using [Postmark](https://postmarkapp.com/). At the end of this tutorial, you’ll be able to:
 
-* Create a Worker to send emails.
-* Sign up and add a Cloudflare domain to Postmark.
-* Send emails from your Worker using Postmark.
-* Store API keys securely with secrets.
+- Create a Worker to send emails.
+- Sign up and add a Cloudflare domain to Postmark.
+- Send emails from your Worker using Postmark.
+- Store API keys securely with secrets.
 
 ## Prerequisites
 
 To continue with this tutorial, you’ll need:
 
-* A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you don’t already have one.
-* A [registered](/registrar/get-started/register-domain/) domain.
-* Installed [npm](https://docs.npmjs.com/getting-started).
-* A [Postmark account](https://account.postmarkapp.com/sign_up).
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages), if you don’t already have one.
+- A [registered](/registrar/get-started/register-domain/) domain.
+- Installed [npm](https://docs.npmjs.com/getting-started).
+- A [Postmark account](https://account.postmarkapp.com/sign_up).
 
 ## Create a Worker project
 
 Start by using [C3](/pages/get-started/c3/) to create a Worker project in the command line, then, answer the prompts:
 
 ```sh
-$ npm create cloudflare@latest
+npm create cloudflare@latest
 ```
 
 Alternatively, you can use CLI arguments to speed things up:
 
 ```sh
-$ npm create cloudflare@latest email-with-postmark -- --type=hello-world --ts=false --git=true --deploy=false
+npm create cloudflare@latest email-with-postmark -- --type=hello-world --ts=false --git=true --deploy=false
 ```
 
 This creates a simple hello-world Worker having the following content:
@@ -48,10 +45,9 @@ This creates a simple hello-world Worker having the following content:
 ```js
 export default {
 	async fetch(request, env, ctx) {
-		return new Response('Hello World!');
+		return new Response("Hello World!");
 	},
 };
-
 ```
 
 ## Add your domain to Postmark
@@ -67,7 +63,6 @@ Next, you’re presented with a list of DNS records to add to your Cloudflare do
 :::note
 
 If you need more help adding DNS records in Cloudflare, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
-
 
 :::
 
@@ -85,23 +80,22 @@ The final step is putting it all together in a Worker. In your Worker, make a po
 
 [Postmark’s JavaScript library](https://www.npmjs.com/package/postmark) is currently not supported on Workers. Use the [email API](https://postmarkapp.com/developer/user-guide/send-email-with-api) instead.
 
-
 :::
 
 ```jsx
 export default {
 	async fetch(request, env, ctx) {
-		return await fetch('https://api.postmarkapp.com/email', {
-			method: 'POST',
+		return await fetch("https://api.postmarkapp.com/email", {
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
-				'X-Postmark-Server-Token': 'your_postmark_api_token_here',
+				"Content-Type": "application/json",
+				"X-Postmark-Server-Token": "your_postmark_api_token_here",
 			},
 			body: JSON.stringify({
-				From: 'hello@example.com',
-				To: 'someone@example.com',
-				Subject: 'Hello World',
-				HtmlBody: '<p>Hello from Workers</p>',
+				From: "hello@example.com",
+				To: "someone@example.com",
+				Subject: "Hello World",
+				HtmlBody: "<p>Hello from Workers</p>",
 			}),
 		});
 	},
@@ -111,7 +105,7 @@ export default {
 To test your code locally, run the following command and navigate to [http://localhost:8787/](http://localhost:8787/) in a browser:
 
 ```sh
-$ npm start
+npm start
 ```
 
 Deploy your Worker with `npm run deploy`.
@@ -129,7 +123,7 @@ POSTMARK_API_TOKEN=your_postmark_api_token_here
 Also ensure the secret is added to your deployed worker by running:
 
 ```sh title="Add secret to deployed Worker"
-$ npx wrangler secret put POSTMARK_API_TOKEN
+npx wrangler secret put POSTMARK_API_TOKEN
 ```
 
 The added secret can be accessed on via the `env` parameter passed to your Worker’s fetch event handler:
@@ -137,17 +131,17 @@ The added secret can be accessed on via the `env` parameter passed to your Worke
 ```jsx
 export default {
 	async fetch(request, env, ctx) {
-		return await fetch('https://api.postmarkapp.com/email', {
-			method: 'POST',
+		return await fetch("https://api.postmarkapp.com/email", {
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
-				'X-Postmark-Server-Token': env.POSTMARK_API_TOKEN,
+				"Content-Type": "application/json",
+				"X-Postmark-Server-Token": env.POSTMARK_API_TOKEN,
 			},
 			body: JSON.stringify({
-				From: 'hello@example.com',
-				To: 'someone@example.com',
-				Subject: 'Hello World',
-				HtmlBody: '<p>Hello from Workers</p>',
+				From: "hello@example.com",
+				To: "someone@example.com",
+				Subject: "Hello World",
+				HtmlBody: "<p>Hello from Workers</p>",
 			}),
 		});
 	},
@@ -158,6 +152,6 @@ And finally, deploy this update with `npm run deploy`.
 
 ## Related resources
 
-* [Storing API keys and tokens with Secrets](/workers/configuration/secrets/).
-* [Transferring your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/).
-* [Send emails from Workers](/email-routing/email-workers/send-email-workers/)
+- [Storing API keys and tokens with Secrets](/workers/configuration/secrets/).
+- [Transferring your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/).
+- [Send emails from Workers](/email-routing/email-workers/send-email-workers/)

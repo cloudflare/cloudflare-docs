@@ -1,7 +1,7 @@
 # homepage
 /docs/ /products/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
-/dashboarding-landing/ / 301
+/dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
 
@@ -1005,10 +1005,12 @@
 /stream/uploading-videos/using-webhooks/ /stream/manage-video-library/using-webhooks/ 301
 /stream/edit-manage-videos/edit-videos/adding-captions/ /stream/edit-videos/adding-captions/ 301
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
-/stream/changelog/ /stream/platform/changelog/ 301
-/stream/changelog/index.xml /stream/platform/changelog/index.xml 301
-/stream/webrtc-beta/ /stream/platform/webrtc-beta/ 301
-/stream/faq/ /stream/reference/faq/ 301
+/stream/platform/changelog/ /stream/changelog/ 301
+/stream/platform/changelog/index.xml /stream/changelog/index.xml 301
+/stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
+/stream/reference/faq/ /stream/faq/ 301
+/stream/platform/ /stream/platform/changelog/ 301
+/stream/reference/ /stream/faq/ 301
 
 # support
 
@@ -1471,6 +1473,8 @@
 /vectorize/platform/client-api/ /vectorize/reference/client-api/ 301
 /vectorize/changelog/ /vectorize/platform/changelog/ 301
 /vectorize/configuration/ /vectorize/best-practices/ 301
+/vectorize/examples/langchain/ https://js.langchain.com/v0.1/docs/integrations/vectorstores/cloudflare_vectorize/ 301
+/vectorize/examples/rag/ /reference-architecture/diagrams/ai/ai-rag/ 301
 
 
 # version management

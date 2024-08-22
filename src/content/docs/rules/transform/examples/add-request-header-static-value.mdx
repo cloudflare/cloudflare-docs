@@ -3,7 +3,7 @@ pcx_content_type: example
 summary: Create a request header modification rule (part of Transform Rules) to
   add an `X-Source` HTTP header to the request with a static value
   (`Cloudflare`).
-product:
+products:
   - Transform Rules
 operation:
   - Request modification
@@ -11,10 +11,9 @@ title: Add request header with a static value
 description: Create a request header modification rule (part of Transform Rules)
   to add an `X-Source` HTTP header to the request with a static value
   (`Cloudflare`).
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following HTTP request header modification rule adds a header named `X-Source` with a static value (`Cloudflare`) to the request:
 
@@ -26,7 +25,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify request header**: *Set static*
+Selected operation under **Modify request header**: _Set static_
 
 **Header name**: `X-Source`
 

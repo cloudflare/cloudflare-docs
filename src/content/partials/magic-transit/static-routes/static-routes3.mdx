@@ -1,9 +1,8 @@
 ---
 inputParameters: createPath;;tunnelEndpoints;;ipRanges
-
 ---
 
-import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 ## Scoped routes for anycast GRE or IPsec tunnels
 
@@ -21,10 +20,10 @@ Regions and regional objects are automatically updated. If you route traffic thr
 
 | Prefix            | NextHop        | Priority | Region code |
 | ----------------- | -------------- | -------- | ----------- |
-| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    | *AFR*       |
-| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    | *EEUR*      |
-| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    | *ENAM*      |
-| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    | *ME*        |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    | _AFR_       |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    | _EEUR_      |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    | _ENAM_      |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    | _ME_        |
 
 **Region codes and associated regions**
 
@@ -32,15 +31,15 @@ Cloudflare has nine geographic regions across the world which are listed below.
 
 | Region code | Region                |
 | ----------- | --------------------- |
-| *AFR*       | Africa                |
-| *APAC*      | Asia Pacific          |
-| *EEUR*      | Eastern Europe        |
-| *ENAM*      | Eastern North America |
-| *ME*        | Middle East           |
-| *OC*        | Oceania               |
-| *SAM*       | South America         |
-| *WEUR*      | Western Europe        |
-| *WNAM*      | Western North America |
+| _AFR_       | Africa                |
+| _APAC_      | Asia Pacific          |
+| _EEUR_      | Eastern Europe        |
+| _ENAM_      | Eastern North America |
+| _ME_        | Middle East           |
+| _OC_        | Oceania               |
+| _SAM_       | South America         |
+| _WEUR_      | Western Europe        |
+| _WNAM_      | Western North America |
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information.
 
@@ -48,16 +47,17 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 By default, you can only add static routes with [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP prefixes like:
 
-* `10.0.0.0/8`
-* `172.16.0.0/12`
-* `192.168.0.0/16`
+- `10.0.0.0/8`
+- `172.16.0.0/12`
+- `192.168.0.0/16`
 
-{props.three}
-If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare customer service manager.
+<Markdown text={props.three} />
+If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare
+customer service manager.
 
 ## ​​Create a static route
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **{props.one}**.
@@ -109,7 +109,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
 
 ## ​​Edit a static route
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **Static routes**, select **Edit** next to the route you want to modify.
 2. Enter the updated route information.
@@ -155,7 +155,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
 
 ## ​​Delete static route
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **Static routes**, locate the static route you want to modify and select **Delete**.
 2. Confirm the action by selecting the checkbox and select **Delete**.

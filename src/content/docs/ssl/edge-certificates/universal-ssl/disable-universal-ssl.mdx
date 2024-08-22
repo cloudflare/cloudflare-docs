@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Disable Universal SSL certificates
 sidebar:
   order: 3
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Some customers may need to manage their own SSL certificates or rely on specific Certificate Authorities.
 
@@ -18,22 +17,22 @@ To avoid errors with your domain, either [upload a custom certificate](/ssl/edge
 
 If you disable Universal SSL, you may experience errors with the following scenarios:
 
-* **Enabled features**:
+- **Enabled features**:
 
-  * [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/)
-  * [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
-  * [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/)
+  - [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/)
+  - [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
+  - [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/)
 
-* **Other setups**:
+- **Other setups**:
 
-  * [Page rules](/rules/page-rules/) that redirect traffic to HTTPS
-  * HTTP to HTTPS redirects at your origin web server
+  - [Page Rules](/rules/page-rules/) that redirect traffic to HTTPS
+  - HTTP to HTTPS redirects at your origin web server
 
 ## Disable Universal SSL certificate
 
 Before you disable Universal SSL/TLS, make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To disable Universal SSL in the dashboard:
 
@@ -56,7 +55,7 @@ Even with Universal SSL disabled, some features such as [AMP Real URL](/speed/op
 
 ## Re-enable Universal SSL
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To re-enable Universal SSL in the dashboard:
 

@@ -6,6 +6,22 @@ productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
 
+- publish_date: '2024-08-22'
+  title: Simplified UI for Single Redirects with wildcard support
+  description:  |-
+    The simplified UI for [Single Redirects](/rules/url-forwarding/single-redirects/) is now available to all users, making URL redirects easier and more intuitive. This update builds on the recent [wildcard support](/ruleset-engine/rules-language/functions/#wildcard_replace) in Ruleset Engine products.
+    Access the new UI under **Rules > Redirect Rules**. Learn more about wildcard support and our open-source Rust crate in the [blog post](https://blog.cloudflare.com/wildcard-rules).
+
+- publish_date: '2024-08-20'
+  title: Cloud Connector now available to all customers
+  description:  |-
+    Cloud Connector (beta) is now available to all customers. For setup details, refer to the [documentation](/rules/cloud-connector/), explore [examples](/rules/cloud-connector/examples/), and check out the [blog post](https://blog.cloudflare.com/cloud-connector).
+
+- publish_date: '2024-08-16'
+  title: Cloud Connector now available to all free customers
+  description:  |-
+    Cloud Connector (beta) is now available to all free and a subset of paid customers. This rollout will be [gradually extended](/rules/cloud-connector/#availability) to all Cloudflare users, simplifying multi-cloud management and enhancing integration with Cloudflare's Connectivity Cloud. For more information, refer to the [blog post](https://blog.cloudflare.com/cloud-connector).
+
 - publish_date: '2024-08-12'
   title: Cloudflare Snippets limits have been upgraded
   description: |-

@@ -1,17 +1,16 @@
 ---
 {}
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 ## Create a list from a CSV file
 
 Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
 
-* Each line should be a single entry.
-* Trailing whitespaces are not allowed.
-* CRLF (Windows) and LF (Unix) line endings are valid.
+- Each line should be a single entry.
+- Trailing whitespaces are not allowed.
+- CRLF (Windows) and LF (Unix) line endings are valid.
 
 To upload the list to Zero Trust:
 
@@ -21,11 +20,11 @@ To upload the list to Zero Trust:
 4. Drag and drop a file into the **CSV file** window, or select a file.
 5. Select **Create**.
 
-You can now use this list in the policy builder by choosing the *in list* operator.
+You can now use this list in the policy builder by choosing the _in list_ operator.
 
 ## Create a list manually
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 2. Select **Create manual list**.
@@ -52,4 +51,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
 
 </TabItem> </Tabs>
 
-You can now use this list in the policy builder by choosing the *in list* operator.
+You can now use this list in the policy builder by choosing the _in list_ operator.
