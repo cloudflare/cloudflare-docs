@@ -1,16 +1,15 @@
 ---
 pcx_content_type: reference
-title: Create zone apex record
+title: Create Zone Apex Record
 sidebar:
   order: 3
-
 ---
 
-import { Example } from "~/components"
+import { Example, DeveloperCard } from "~/components"
 
-When you add a domain to Cloudflare, you may also need to create a DNS record on your zone apex (`example.com`).
+## Welcome to Your DNS Guide
 
-To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) using `@` for the **Name**.
+When adding a domain to Cloudflare, you might need to create a DNS record on your zone apex (`example.com`). This guide will help you create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/) using `@` for the **Name**.
 
 <Example>
 
@@ -20,12 +19,29 @@ To do this, create a corresponding [`A`, `AAAA`, or `CNAME` record](/dns/manage-
 
 </Example>
 
-## Domain redirects
+### Domain Redirects
 
-Once you create a domain, you may want to route that traffic to other places.
+Once you create a domain, you may want to route that traffic to other places. Here are some helpful links:
+- [Redirect domain to subdomain](/fundamentals/setup/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain)
+- [Redirect one domain to another](/fundamentals/setup/manage-domains/redirect-domain/)
 
-For more guidance, refer to [Redirect domain to subdomain](/fundamentals/setup/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/setup/manage-domains/redirect-domain/).
+### Free SSL Certificates
 
-## Get free SSL certificates
+Cloudflare offers free, unshared, publicly trusted [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.
 
-Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.
+---
+
+## About Me
+
+<DeveloperCard>
+
+### Developer: iBoss21
+As a passionate developer, I specialize in creating immersive roleplay servers. Currently, I manage two major projects:
+- **The Lux Empire RP**: A FiveM server built on the QBCore framework, featuring realistic roleplay, multiple languages, and a diverse community.
+- **The Land of Wolves**: A RedM server set in 19th century Georgia, focusing on historical accuracy and rich cultural heritage.
+
+My expertise lies in server security, custom frameworks, and creating unique gameplay experiences for roleplay enthusiasts.
+
+</DeveloperCard>
+
+Feel free to explore the world of DNS management or reach out to discuss how we can enhance your server experience!
