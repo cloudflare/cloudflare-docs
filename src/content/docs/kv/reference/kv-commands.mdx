@@ -18,50 +18,7 @@ To update your Wrangler installation, follow the [Wrangler Install and Update gu
 
 Manage KV namespaces.
 
-### create
-
-Creates a new KV namespace.
-
-```sh
-wrangler kv namespace create <NAMESPACE> [OPTIONS]
-```
-
-- `NAMESPACE` string required
-  - The name of the new namespace.
-- `--env` string optional
-  - Perform on a specific environment.
-- `--preview` boolean optional
-  - Interact with a preview namespace (the `preview_id` value).
-
-#### `create` command to create a KV namespace called `MY_KV`
-
-```sh
-wrangler kv namespace create "MY_KV"
-```
-
-```sh output
-🌀 Creating namespace with title "worker-MY_KV"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-```
-
-#### `create` command to create a preview KV namespace called `MY_KV`
-
-```sh
-wrangler kv namespace create "MY_KV" --preview
-```
-
-```sh output
-🌀 Creating namespace with title "my-site-MY_KV_preview"
-✨ Success!
-Add the following to your configuration file in your kv_namespaces array:
-kv_namespaces = [
-  { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
-]
-```
+<Render file="/wrangler-commands/kv/create.mdx" product="workers">
 
 ### list
 
