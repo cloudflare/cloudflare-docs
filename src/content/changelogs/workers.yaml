@@ -8,17 +8,38 @@ entries:
 - publish_date: '2024-08-19'
   description: |-
     -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
+- publish_date: '2024-08-15'
+  description: |-
+    - Updated v8 to version 12.8.
+- publish_date: '2024-08-14'
+  description: |-
+    - When using the `nodejs_compat_v2` compatibility flag, the `setImmediate(fn)` API from Node.js is now available at the global scope.
+    - The `internal_writable_stream_abort_clears_queue` compatibility flag will ensure that certain `WritableStream` `abort()` operations are handled immediately rather than lazily, ensuring that the stream is appropriately aborted when the consumer of the stream is no longer active.
 - publish_date: '2024-07-19'
   description: |-
-    -  Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+    - Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+- publish_date: '2024-07-18'
+  description: |-
+    - Added a new `truncated` flag to [Tail Worker](/workers/observability/logging/tail-workers/) events to indicate when the event buffer is full and events are being dropped.
+- publish_date: '2024-07-17'
+  description: |-
+    - Updated v8 to version 12.7.
 - publish_date: '2024-07-11'
   description: |-
-    -  Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
-    -  Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
-    -  Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
+    - Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
+    - Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
+    - Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
+- publish_date: '2024-07-03'
+  description: |-
+    - The [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) implementation now includes the scrypt(...) and scryptSync(...) APIs.
+    - Workers now support the standard [EventSource](/workers/runtime-apis/eventsource/) API.
+    - Fixed a bug where when writing to an HTTP Response body would sometimes hang when the client disconnected (and sometimes throw an exception). It will now always throw an exception.
 - publish_date: '2024-07-01'
   description: |-
     - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
+- publish_date: '2024-06-28'
+  description: |-
+    - Fixed a bug which caused `Date.now()` to return skewed results if called before the first I/O of the first request after a Worker first started up. The value returned would be offset backwards by the amount of CPU time spent starting the Worker (compiling and running global scope), making it seem like the first I/O (e.g. first fetch()) was slower than it really was. This skew had nothing to do with Spectre mitigations; it was simply a longstanding bug.
 - publish_date: '2024-06-24'
   description: |-
     - [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
@@ -34,7 +55,7 @@ entries:
     - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
 - publish_date: '2024-06-03'
   description: |-
-    -  Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+    - Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
 - publish_date: '2024-05-17'
   description: |-
     - Updated v8 to version 12.6.

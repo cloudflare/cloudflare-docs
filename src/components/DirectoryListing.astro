@@ -29,9 +29,10 @@ pages.sort(sortBySidebarOrder);
     {
         pages.map((page) => {
             const description = descriptions && page.data.description;
+            const href = page.data.external_link ?? "/" + page.slug + "/";
             return (
                 <li>
-                    <a href={`/${page.slug}/`}>{page.data.title}</a>{description && 
+                    <a href={href}>{page.data.title}</a>{description &&
                         <span>: </span>
                         <Fragment set:html={marked.parseInline(description)} />
                     }

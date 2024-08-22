@@ -3,7 +3,7 @@ pcx_content_type: example
 summary: Create a response header modification rule (part of Transform Rules) to
   set an `X-Bot-Score` HTTP header in the response to a static value
   (`Cloudflare`).
-product:
+products:
   - Transform Rules
 operation:
   - Response modification
@@ -11,10 +11,9 @@ title: Set response header with a static value
 description: Create a response header modification rule (part of Transform
   Rules) to set an `X-Bot-Score` HTTP header in the response to a static value
   (`Cloudflare`).
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following HTTP response header modification rule sets a header named `X-Source` to a static value (`Cloudflare`) in the response:
 
@@ -26,7 +25,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify response header**: *Set static*
+Selected operation under **Modify response header**: _Set static_
 
 **Header name**: `X-Source`
 

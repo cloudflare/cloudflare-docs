@@ -2,17 +2,16 @@
 pcx_content_type: example
 summary: Create a request header modification rule (part of Transform Rules) to
   add a `X-Bot-Score` HTTP header to the request with the current bot score.
-product:
+products:
   - Transform Rules
 operation:
   - Request modification
 title: Add a request header with the current bot score
 description: Create a request header modification rule (part of Transform Rules)
   to add a `X-Bot-Score` HTTP header to the request with the current bot score.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 The following HTTP request header modification rule adds a header named `X-Bot-Score` with the current bot score to the request:
 
@@ -24,7 +23,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify request header**: *Set dynamic*
+Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `X-Bot-Score`
 

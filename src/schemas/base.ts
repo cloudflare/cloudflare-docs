@@ -22,10 +22,16 @@ export const baseSchema = z.object({
 	products: z.string().array().optional(),
 	languages: z.string().array().optional(),
 	summary: z.string().optional(),
-	sidebar: z.object({
-		group: z.object({
-			label: z.string().optional(),
-			hideIndex: z.boolean().default(false)
-		}).optional()
-	}).optional()
+	goal: z.string().array().optional(),
+	operation: z.string().array().optional(),
+	sidebar: z
+		.object({
+			group: z
+				.object({
+					label: z.string().optional(),
+					hideIndex: z.boolean().default(false),
+				})
+				.optional(),
+		})
+		.optional(),
 });

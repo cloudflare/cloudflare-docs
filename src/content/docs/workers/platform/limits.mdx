@@ -57,10 +57,10 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 ## Worker limits
 
 | Feature                  | Free                                       | [Bundled usage model](/workers/platform/pricing/#example-pricing-bundled-usage-model) | [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) and [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model                                         |
-| ------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| ------------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | none                                                                                  | none                                                                                                                                                                                                          |
 | [Worker memory](#memory) | 128 MB                                     | 128 MB                                                                                | 128 MB                                                                                                                                                                                                        |
-| [CPU time](#cpu-time)    | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/)  | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer)                                           |     |
+| [CPU time](#cpu-time)    | 10 ms                                      | 50 ms HTTP request <br/> 50 ms [Cron Trigger](/workers/configuration/cron-triggers/)  | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer)                                           |
 | [Duration](#duration)    | None                                       | none                                                                                  | 15 min [Cron Trigger](/workers/configuration/cron-triggers/) <br/> 15 min [Durable Object Alarm](/durable-objects/api/alarms/) <br/> 15 min [Queue Consumer](/queues/configuration/javascript-apis/#consumer) |
 
 ### Duration
@@ -78,9 +78,11 @@ CPU time is the amount of time the CPU actually spends doing work, during a give
 
 <Render file="isolate-cpu-flexibility" /> <br />
 
+You can also set a custom limit on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
+
 :::note
 
-On the Unbound billing model, scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes.
+Scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have different limits on CPU time based on the schedule interval. When the schedule interval is less than 1 hour, a Scheduled Worker may run for up to 30 seconds. When the schedule interval is more than 1 hour, a scheduled Worker may run for up to 15 minutes. 
 :::
 
 ---
@@ -259,6 +261,8 @@ Note that larger Worker bundles can impact the start-up time of the Worker, as t
 ## Worker startup time
 
 A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+
+You can measure your Worker's startup time by deploying it to Cloudflare using [Wrangler](/workers/wrangler/). When you run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload --experimental-versions`, Wrangler will output the startup time of your Worker in the command-line output, using the `startup_time_ms` field in the [Workers Script API](/api/operations/worker-script-upload-worker-module) or [Workers Versions API](/api/operations/worker-versions-upload-version#request-body).
 
 ---
 
