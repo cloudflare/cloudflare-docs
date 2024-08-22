@@ -23,11 +23,12 @@ if (directory) {
 
 const examples = await getCollection("docs", (entry) => {
 	return (
-		(entry.data.pcx_content_type === "example" &&
-			entry.slug.startsWith(target)) ||
-		(entry.data.pcx_content_type === "example" &&
-			additionalProducts !== undefined &&
-			entry.data.products?.some((v: string) => additionalProducts?.includes(v)))
+		entry.data.pcx_content_type === "example" &&
+		(entry.slug.startsWith(target) ||
+			(additionalProducts !== undefined &&
+				entry.data.products?.some((v: string) =>
+					additionalProducts?.includes(v),
+				)))
 	);
 });
 
