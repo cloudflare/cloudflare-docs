@@ -3,14 +3,11 @@ pcx_content_type: tutorial
 title: Entrust nShield Connect
 sidebar:
   order: 6
-
 ---
 
 :::note[Note]
 
-
 This example assumes you have already configured the nShield Connect device and generated or imported your private keys.
-
 
 :::
 
@@ -19,7 +16,10 @@ Since the keys are already in place, we merely need to build the configuration f
 We ask `pkcs11-tool` (provided by the `opensc` package) to display the objects stored in the token:
 
 ```txt
-$ pkcs11-tool --module /opt/nfast/toolkits/pkcs11/libcknfast.so -O
+pkcs11-tool --module /opt/nfast/toolkits/pkcs11/libcknfast.so -O
+```
+
+```txt output
 Using slot 0 with a present token (0x1d622495)
 Private Key Object; RSA
   label:      rsa-privkey
@@ -49,6 +49,6 @@ add
 Save the config file, restart `gokeyless`, and verify it started successfully.
 
 ```sh
-$ sudo systemctl restart gokeyless.service
-$ sudo systemctl status gokeyless.service -l
+sudo systemctl restart gokeyless.service
+sudo systemctl status gokeyless.service -l
 ```

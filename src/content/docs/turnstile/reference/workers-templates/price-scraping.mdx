@@ -7,7 +7,7 @@ languages:
   - JavaScript
 preview:
   - true
-pcx_content_type: configuration
+pcx_content_type: example
 title: Price scraping
 demo: https://pricing.httpmachine.com/
 sidebar:
@@ -62,7 +62,7 @@ async function getPrice(token){
    const priceInfoURL = "/get-price"
    // the element id we are appending our price information
    const priceBox = document.getElementById('price-box');
-  
+
    // await response from pricing endpoint protected by Turnstile Server-Side Validation
    const response = await fetch(
        priceInfoURL, {

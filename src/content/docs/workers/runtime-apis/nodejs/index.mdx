@@ -4,10 +4,9 @@ title: Node.js compatibility
 head: []
 description: Implemented Node.js runtime APIs and enablement instructions for
   your Worker project.
-
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
 
@@ -19,10 +18,10 @@ Node.js APIs are available under the `node:` prefix, and this prefix must be use
 
 ```js
 // Do this:
-import { Buffer } from 'node:buffer';
+import { Buffer } from "node:buffer";
 
 // Do not do this:
-import { Buffer } from 'buffer';
+import { Buffer } from "buffer";
 ```
 
 Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
@@ -42,7 +41,7 @@ compatibility_flags = [ "nodejs_compat" ]
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
 ```sh
-$ npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
 ```
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
@@ -66,4 +65,4 @@ compatibility_flags = [ "nodejs_als" ]
 
 ## Related resources
 
-* Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

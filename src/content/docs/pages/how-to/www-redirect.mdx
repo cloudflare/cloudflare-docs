@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Redirecting www to domain apex
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 Learn how to redirect a `www` subdomain to your apex domain (`example.com`).
 
@@ -41,12 +40,12 @@ To redirect your `www` subdomain to your domain apex:
 It may take a moment for this DNS change to propagate, but once complete, you can run the following command in your terminal.
 
 ```sh
-$ curl --head -i https://www.example.com/
+curl --head -i https://www.example.com/
 ```
 
 Then, inspect the output to verify that the `location` header and status code are being set as configured.
 
 ## Related resources
 
-* [Redirect `*.pages.dev` to a custom domain](/pages/how-to/redirect-to-custom-domain/)
-* [Handle redirects with Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
+- [Redirect `*.pages.dev` to a custom domain](/pages/how-to/redirect-to-custom-domain/)
+- [Handle redirects with Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
