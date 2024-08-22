@@ -97,7 +97,7 @@ if (filters) {
 							data-example
 							{...filterAttributes}
 							set:html={marked.parse(
-								`${example.data.description ?? ""}${example.data.products ? `\n\n<strong>${example.data.products.join(", ")}</strong>` : ""}`,
+								`${example.data.description ?? ""}${example.data.products && additionalProducts ? `\n\n<strong>${example.data.products.join(", ")}</strong>` : ""}`,
 							)}
 						/>
 					);
