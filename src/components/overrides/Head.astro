@@ -136,6 +136,25 @@ if (Astro.props.entry.data.pcx_content_type === "changelog") {
     content: "",
   });
 }
+
+if (Astro.props.entry.data.external_link) {
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      content: "noindex",
+      name: "robots",
+    },
+    content: ""
+  });
+  Astro.props.entry.data.head.push({
+    tag: "meta",
+    attrs: {
+      content: `0; url=${Astro.props.entry.data.external_link}`,
+      "http-equiv": "refresh",
+    },
+    content: ""
+  });
+}
 ---
 
 <script>
