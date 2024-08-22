@@ -36,6 +36,8 @@ flowchart TD
     response--"Returns response"-->user
 ```
 
+Gateway will route user traffic to your configured DNS resolver based on the matching policy, even if your resolvers' IP addresses overlap.
+
 ## Use cases
 
 You may use resolver policies if you require access to non-publicly routed domains, such as private network services or internal resources. You may also use resolver policies if you need to access a protected DNS service or want to simplify DNS management for multiple locations.
