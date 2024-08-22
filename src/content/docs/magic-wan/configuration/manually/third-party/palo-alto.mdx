@@ -577,17 +577,17 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 :::
 
-| Tab              | Option               | Value                                                                                                                                                                                                                   |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **General tab**  | Name                 | `CF_Magic_WAN_IKE_01`                                                                                                                                                                                                   |
-|                  | Version              | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting.                                                                                                                                    |
-|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                                                                                                                                         |
-|                  | Peer address         | `CF_Magic_WAN_Anycast_01`                                                                                                                                                                                               |
-|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                                                                                                                                  |
-|                  | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.                                                                                                          |
-|                  | Peer Identification  | _None_                                                                                                                                                                                                                  |
-| **Advanced tab** | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_                                                                                                                                                                                                  |
-|                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
+| Tab 					  	| Option  | Value 							 |
+| ----------------- | ------- | -------------------- |
+| **General tab**   | Name 		|`CF_Magic_WAN_IKE_01` |
+|                   | Version | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting. |
+|                   | Local IP Address     | `Internet_L3_203-0-113-254--24`  |
+|                   | Peer address         | `CF_Magic_WAN_Anycast_01` |
+|                   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. |
+|                   | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                   | Peer Identification  | _None_ |
+| **Advanced tab**  | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+|                   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 ![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
 ![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
@@ -598,16 +598,16 @@ Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 :::
 
-| Tab              | Option               | Value                                                                                                                                                                                                                   |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **General tab**  | Name                 | `CF_Magic_WAN_IKE_02`                                                                                                                                                                                                   |
-|                  | Version              | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting.                                                                                                                                    |
-|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                                                                                                                                         |
-|                  | Peer address         | `CF_Magic_WAN_Anycast_02`                                                                                                                                                                                               |
-|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                                                                                                                                  |
-|                  | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.                                                                                                          |
-|                  | Peer Identification  | _None_                                                                                                                                                                                                                  |
-| **Advanced tab** | IKE crypto profile   | _CF_IKE_Crypto_CBC_                                                                                                                                                                                                  |
+| Tab              | Option               | Value |
+| ---------------- | -------------------- |------ |
+| **General tab**  | Name                 | `CF_Magic_WAN_IKE_02` |
+|                  | Version              | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting. |
+|                  | Local IP Address     | `Internet_L3_203-0-113-254--24` |
+|                  | Peer address         | `CF_Magic_WAN_Anycast_02` |
+|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. |
+|                  | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                  | Peer Identification  | _None_ |
+| **Advanced tab** | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
 |                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 ![IKE gateway settings for tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
