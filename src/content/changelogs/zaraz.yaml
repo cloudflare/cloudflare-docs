@@ -9,7 +9,7 @@ entries:
   description: |
     * **Automatic Actions**: Automatic Event Tracking is now fully available
     * **Consent Management**: Fixed issues with rendering the Consent modal on iOS
-    * **Zaraz Debugger**: Remove redundent messages related to `__zarazEcommerce`
+    * **Zaraz Debugger**: Remove redundant messages related to `__zarazEcommerce`
     * **Zaraz Debugger**: Fixed bug that prevented the debugger to load when certain Custom HTML tools were used
 - publish_date: '2024-08-15'
   description: |
