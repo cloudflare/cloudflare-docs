@@ -10,4 +10,3 @@ authorized_users:
   - RebeccaTamachiro
 style_guide:
   enabled: true
-  unmanaged_vale: true

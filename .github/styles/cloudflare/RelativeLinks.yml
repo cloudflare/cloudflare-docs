@@ -12,3 +12,4 @@ raw:
   - '\[.+\]\(https?:\/\/developers\.cloudflare\.com\/.+\)'
   - '\[.+\]\(https?:\/\/github\.cloudflare\.com\/.+\)'
   - '\[.*?\]\(http:\/\/localhost:1111\/.*?\)'
+  - '\[[^\]]+\]\(https?:\/\/developers\.cloudflare\.com\/.*?\)'
