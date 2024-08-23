@@ -20,13 +20,13 @@ Refer to [appearance modes](/turnstile/get-started/client-side-rendering/#appear
 
 ### Light mode
 
-![Managed challenge](~/assets/images/turnstile/light-verify.png)
+![Managed challenge](~/assets/images/turnstile/light-regular.png)
 ![Verifying the challenge](~/assets/images/turnstile/light-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/light-success.png)
 
 ### Dark mode
 
-![Managed challenge](~/assets/images/turnstile/dark-verify.png)
+![Managed challenge](~/assets/images/turnstile/dark-regular.png)
 ![Verifying the challenge](~/assets/images/turnstile/dark-verifying.png)
 ![Successful managed challenge](~/assets/images/turnstile/dark-success.png)
 
@@ -47,3 +47,27 @@ Visitors will see a widget with a loading bar while the browser challenges run. 
 ## Invisible
 
 This mode is similar to non-interactive mode where visitors will never interact with the Turnstile widget. Visitors will not see a widget or any indication that an invisible browser challenge is in progress. Invisible challenges should take a few seconds to complete.
+
+## Error states
+
+### Unknown error states
+
+![Unknown error state](~/assets/images/turnstile/unknown-error-state.png)
+
+When an unknown error occurs during the challenge, visitors will encounter this widget state. Visitors can refresh and retry the challenge. If the error persists, they can submit a feedback form by selecting Send feedback on the widget. 
+
+Refer to [Feedback reports](/turnstile/troubleshooting/feedback-reports) for more information.
+
+### Interaction timed out state
+
+![Interaction timed out](~/assets/images/turnstile/interaction-timed-out.png)
+
+### Challenge timed out state
+
+![Challenge timed out](~/assets/images/turnstile/challenge-timed-out.png)
+
+### Outdated or unsupported browser
+
+![Unsupported browser](~/assets/images/turnstile/unsupported-browser.png)
+
+Visitors with outdated browsers or unsupported browsers will encouter this widget state. Refer to [Supported browsers](/waf/reference/cloudflare-challenges/#browser-support) for more information regarding supported browsers.

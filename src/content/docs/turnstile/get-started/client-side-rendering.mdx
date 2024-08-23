@@ -205,6 +205,8 @@ If a widget is visible, its appearance can be controlled via the `appearance` pa
 
 By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
 
+Refer to [Widget types](/turnstile/concepts/widget-types/) to see widgets by type and state.
+
 ## Widget size
 
 The Turnstile widget can have two different fixed sizes or a flexible width size when using the Managed or Non-interactive modes:
@@ -214,6 +216,18 @@ The Turnstile widget can have two different fixed sizes or a flexible width size
 | Normal  | 300px | 65px   |
 | Flexible | 100% (min: 300px) | 65px |
 | Compact | 150px | 140px  |
+
+```html title="Flexible width example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="flexible"></div>
+</div>
+```
+
+```html title="Compact mode example"
+<div style="display: block; flex-flow: row;">
+    <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-size="compact"></div>
+</div>
+```
 
 ## Configurations
 
