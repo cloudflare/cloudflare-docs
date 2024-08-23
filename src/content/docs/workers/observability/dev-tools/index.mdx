@@ -8,15 +8,16 @@ meta:
 
 ## Using DevTools
 
-When running your Worker locally using `wrangler dev`, you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler-devtools?cf_target_id=115890352C73E75FD7D837D0B8720E96) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview). This provides a wide variety of tools to help you debug your Worker when it is not running correctly.
+When running your Worker locally using `wrangler dev`, you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler-devtools?cf_target_id=115890352C73E75FD7D837D0B8720E96) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
+This provides tools to help you debug and optimize your Workers.
 
 :::note
-Many users will have experience with Chrome's DevTools from frontend development. It is worth noting that these DevTools are being used with backend Worker code and _not_ any client-side JavaScript you may be shipping to the end user.
+You may have experience with Chrome's DevTools from frontend development. Notably Worker DevTools are used for backend code and _not_ client-side JavaScript.
 :::
 
 ## Opening DevTools
 
-To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window. Now, when you access your worker locally, it can be debugged and profiled via this DevTools instance.
+To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by hitting <kbd>d</kbd> from your terminal. This opens DevTools in a browser window. Now when you access this worker locally, it can be debugged and profiled with this DevTools instance.
 
 Alternatively, both the [Cloudflare Dashboard](https://dash.cloudflare.com/) and the [Worker's Playground](https://workers.cloudflare.com/playground) include the developer tools in their UI.
 

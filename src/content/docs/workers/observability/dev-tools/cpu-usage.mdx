@@ -5,87 +5,85 @@ weight: 4
 description: Learn how to profile CPU usage and ensure CPU-time per request stays under Workers limits
 ---
 
-CPU-intensive tasks can often slow down a Worker's request or startup time. If a Worker spends too much time
-performing CPU operations, it may hit [a per-request CPU limit](/workers/platform/limits/#cpu-time) or
-[startup time limit](/workers/platform/limits/#worker-startup-time) and return an error.
+CPU-intensive tasks can slow down a Worker's request or startup time. If a Worker spends too much time
+performing CPU operations, responses may be slow or startup may fail due to
+[startup time limits](/workers/platform/limits/#worker-startup-time).
 
-Understanding CPU usage in your Worker requests is helpful to improve Worker speed and avoid CPU limits.
-Profiling via DevTools is a helpful tool for identifying and fixing code that uses too much CPU.
+Profiling in DevTools can help you identify and fix code that uses too much CPU.
 
-:::note
-To avoid side channel attacks, Workers [disallow timers](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading)
-for CPU time. This makes the platform more secure but can make it more difficult to debug in production. DevTools are
-particularly helpful because local development does not have these restrictions, making measuring CPU possible.
-:::
+Measuring execution time of specific functions in production can be difficult because Workers
+[only increment timers on I/O](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading)
+for security purposes. However, measuring CPU execution times is possible in local development with DevTools.
 
 ## Taking a profile
 
-To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
-hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window.
-Now, when you access your Worker locally, it can be debugged and profiled through this DevTools instance.
+To get started:
 
-After DevTools is open, click on the "Profiler" tab. You should see a `Start` button at the bottom. Clicking
-this will record CPU usage as your Worker receives new requests.
+- Run `wrangler dev` to run your Worker
+- Hit <kbd>d</kbd> from your terminal to open DevTools
+- Click on the "Profiler" tab
+- Click `Start` to begin recording CPU usage
+- Send requests to your Worker from a new tab
+- Click `Stop`
 
-Click `Start`, make requests to your Worker in a different tab, then click `Stop`. You now have a CPU Profile.
+You now have a CPU profile.
 
 ## Example Profiling
 
-Let's look at some example code to learn how to read a CPU profile. Say we have the following Worker code:
+Let's look at example code to learn how to read a CPU profile. Imagine you have the following Worker code:
 
 ```js title="index.js"
 const addNumbers = (body) => {
-  for (let i = 0; i < 5000; ++i) {
-    body = body + " " + i;
-  }
-  return body;
+	for (let i = 0; i < 5000; ++i) {
+		body = body + " " + i;
+	}
+	return body;
 };
 
 const moreAddition = (body) => {
-  for (let i = 5001; i < 15000; ++i) {
-    body = body + " " + i;
-  }
-  return body;
+	for (let i = 5001; i < 15000; ++i) {
+		body = body + " " + i;
+	}
+	return body;
 };
 
 export default {
-  async fetch(request, env, ctx) {
-    let body = "Hello Profiler! - ";
-    body = addNumbers(body);
-    body = moreAddition(body);
-    return new Response(body);
-  },
+	async fetch(request, env, ctx) {
+		let body = "Hello Profiler! - ";
+		body = addNumbers(body);
+		body = moreAddition(body);
+		return new Response(body);
+	},
 };
 ```
 
-We want to find which part of the code is taking up too much CPU. Maybe this code is slower than we expect it
-to be, or maybe we are hitting the Worker's limit on CPU time. How do we use DevTool profiling to identify the
+You want to find which part of the code is causing slow response times. How do you use DevTool profiling to identify the
 CPU-heavy code and fix the issue?
 
-First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
+First, as mentioned above, you open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, you
 navigate to the "Profiler" tab and take a profile by hitting start and sending a request.
 
 ![CPU Profile](~/assets/images/workers/observability/profile.png)
 
-The top chart in this image shows a timeline of the profile, and we have used it to zoom in on a specific request.
+The top chart in this image shows a timeline of the profile, and you can use it to zoom in on a specific request.
 
-The chart below shows the CPU time used for various tasks in the Worker's request. In this screenshot, you can see the
-"fetch" time at the top, and the subscomponents of fetch below, including our two functions "addNumbers" and
-"more Additions". By hovering over each box, you can get more information, and by clicking the box, you will get
-taken to the source code where it is defined.
+The chart below shows the CPU time used for operations run during the request. In this screenshot, you can see
+"fetch" time at the top and the subscomponents of fetch beneath, including the two functions `addNumbers` and
+`moreAdditions`. By hovering over each box, you get more information, and by clicking the box, you navigate
+to the function's source code.
 
-Using this graph, we can easily answer the question of "what is taking CPU time?". The "addNumbers" function has
-a very small box, representing 0.3ms of CPU time, whereas the "moreAdditions" box is larger, representing 2.2ms of CPU time.
+Using this graph, you can answer the question of "what is taking CPU time?". The `addNumbers` function has
+a very small box, representing 0.3ms of CPU time. The `moreAdditions` box is larger, representing 2.2ms of CPU time.
 
-It is clear that if we want to make our response times faster, we need to optimize "moreAdditions".
+Therefore, if you want to make response times faster, you need to optimize `moreAdditions`.
 
-Alternatively, we could change the visuzliation from "Chart" to "Heavy (Bottom Up)" for another way to visuzlize the data.
+You can also change the visualization from ‘Chart’ to ‘Heavy (Bottom Up)’ for an alternative view.
 
 ![CPU Profile](~/assets/images/workers/observability/heavy.png)
 
-This shows the relative times alloted to each function. At the top of the list, we see that most of the time was spent idle,
-but after that "moreAdditions" is clearly the slowest portion of our Worker. We can see that garbage collection also represents
-a large percentage of time. This suggests that memory optimization may be useful.
+This shows the relative times allocated to each function. At the top of the list, `moreAdditions` is clearly the
+slowest portion of your Worker. You can see that garbage collection also represents a large percentage of time, so
+memory optimization could be useful.
 
 ## Additional Resources
 

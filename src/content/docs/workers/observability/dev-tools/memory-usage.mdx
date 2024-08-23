@@ -6,75 +6,77 @@ meta:
   description: Learn how to profile Memory usage to avoid out-of-memory errors and optimize your Worker
 ---
 
-Understanding Worker memory usage can be important in optimizing performance, avoiding out of memory (OOM)
-errors when hitting [Worker memory limits](/workers/platform/limits/#memory), and fixing memory leaks.
+Understanding Worker memory usage helps:
 
-Worker memory usage can be profiled using a memory snapshot in DevTools. This allows you to view a summary
-of total memory use, see what data types contribute to memory use, and get details on specific objects
-in memory.
+- optimize performance
+- avoid Out of Memory (OOM) errors when hitting [Worker memory limits](/workers/platform/limits/#memory)
+- fix memory leaks
+
+You can profile memory usage using a snapshot in DevTools. This lets you view a summary of
+memory usage, see how much memory is allocated to different data types, and get details on
+specific objects in memory.
 
 ## Taking a snapshot
 
-To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools by
-hitting <kbd>d</kbd> from within your terminal. This will open the DevTools in a browser window.
-Now, when you access your worker locally, it can be debugged and profiled through this DevTools instance.
+To get started:
 
-After DevTools is open, click on the "Memory" tab. You should see a "Take snapshot" button at the bottom.
+- Run `wrangler dev` to run your Worker
+- Hit <kbd>d</kbd> from your terminal to open DevTools
+- Click on the "Memory" tab
+- Send requests to your Worker to start allocating memory
+  - Optionally include a debugger to make sure you can pause execution at the proper time
+- Click `Take snapshot`
 
-First, send multiple requests to your Worker to start allocating memory. Optionally include a debugger to make
-sure you can pause execution at the proper time. Then hit "Take snapshot", and begin inspecting your memory.
+You can now inspect Worker memory.
 
 ## An Example Snapshot
 
-Let's look at some example code to learn how to analyze a memory snapshot. Say we have the following Worker code:
+Let's look at some example code to learn how to read a memory snapshot. Imagine you have the following Worker code:
 
 ```js title="index.js"
 let responseText = "Hello world!";
 
 export default {
-  async fetch(request, env, ctx) {
-    let now = new Date().toISOString();
-    responseText = responseText + ` (Requested at: ${now})`;
-    return new Response(responseText.slice(0, 53));
-  },
+	async fetch(request, env, ctx) {
+		let now = new Date().toISOString();
+		responseText = responseText + ` (Requested at: ${now})`;
+		return new Response(responseText.slice(0, 53));
+	},
 };
 ```
 
-The first time we push the code, it responds exactly like we want. However, after letting it run for
-a while, we notice errors indicating that we have reached the memory limit. We must have a memory leak.
-Let's use DevTools to figure out what is happening.
+While this code worked well initially, over time you notice slower responses and
+Out of Memory errors. Using DevTools, you can find out if this is a memory leak.
 
-First, as we mentioned above, we would open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, we would
-navigate to the "Memory" tab.
+First, as mentioned above, you open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`.
+Then, you navigate to the "Memory" tab.
 
-Next, we’ll generate a large volume of traffic to the Worker by sending requests. We can do this with `curl` or by
-hitting reload on the browser repeatedly. Other Workers may require more realistic traffic patterns to reproduce a memory
-leak, but ours can be more simply reproduced.
+Next, generate a large volume of traffic to the Worker by sending requests. You can do this with `curl` or by
+repeatedly reloading the browser. Note that other Workers may require more specific requests to reproduce
+a memory leak.
 
-Then, we click the "Take Snapshot" button and view the results.
+Then, click the "Take Snapshot" button and view the results.
 
-We'll first navigate to "Statistics" in the dropdown to get a high level sense of what contributes to our memory.
+First, navigate to "Statistics" in the dropdown to get a general sense of what takes up memory.
 
 ![Memory Statistics](~/assets/images/workers/observability/memory-stats.png)
 
-Looking at these statistics, we can see that we're allocating a lot of memory to strings at 67 kB. This is
-likely the source of the memory leak. If we were to make more requests and take another snapshot, we would see
-this number growing.
-
-Looking at the memory summary, we can find the issue.
+Looking at these statistics, you can see that a lot of memory is dedicated to strings at 67 kB. This is
+likely the source of the memory leak. If you make more requests and take another snapshot, you would see
+this number grow.
 
 ![Memory Summary](~/assets/images/workers/observability/memory-summary.png)
 
-The summary lists data types by the amount of memory they take up. When you click into "(string)", you can see
-a string that is far larger than the rest. The text shows that we are appending "Requested at" and a date repeatedly,
+The memory summary lists data types by the amount of memory they take up. When you click into "(string)", you can see
+a string that is far larger than the rest. The text shows that you are appending "Requested at" and a date repeatedly,
 inadvertently overwriting the global variable with an increasingly large string:
 
 ```js
 responseText = responseText + ` (Requested at: ${now})`;
 ```
 
-Using Memory Snapshotting in DevTools, we've identified the object and line of code that has caused our memory leak.
-We can now fix the memory leak with a small code change.
+Using Memory Snapshotting in DevTools, you've identified the object and line of code causing the memory leak.
+You can now fix it with a small code change.
 
 ## Additional Resources
 
