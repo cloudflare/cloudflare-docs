@@ -84,9 +84,9 @@ If an endpoint is currently protected by a learned schema, the date of the last 
 
 Schema Validation’s default action is visible on the main Schema Validation page. This action applies to any endpoint with its action set to `Default`.
 
-* `Log` action: logs events to [Firewall Events](/firewall/).
-* `Block` action: blocks requests that fail the schema for an endpoint and logs events to [Firewall Events](/firewall/).
-* `None` action: non-compliant requests are neither logged nor blocked.
+- `Log` action: logs events to [Firewall Events](/firewall/).
+- `Block` action: blocks requests that fail the schema for an endpoint and logs events to [Firewall Events](/firewall/).
+- `None` action: non-compliant requests are neither logged nor blocked.
 
 To change the default action:
 
@@ -179,9 +179,9 @@ As such, if you need to support `application/json` and `application/xml` on the 
 
 Cloudflare allows specifying the following media-ranges in the OpenAPI request body content map:
 
-* `*/*`
-* `application/*`
-* `application/json`.
+- `*/*`
+- `application/*`
+- `application/json`.
 
 Media-ranges can also be configured to enforce a `charset` parameter. For this, Cloudflare only accepts the `charset` parameter with a static value of `utf-8` as part of the media-range specification and when configured, we will similarly require the request's content-type to carry this charset.
 
