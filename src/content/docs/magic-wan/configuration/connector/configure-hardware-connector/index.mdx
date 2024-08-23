@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: Configure hardware Connector
 sidebar:
   order: 3
+  label: Configure hardware Connector
 
 ---
 
@@ -16,7 +17,7 @@ You also need to purchase a Magic WAN Connector before you can start configuring
 
 Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
 
-***
+---
 
 ## High availability configurations
 
@@ -32,7 +33,7 @@ If you do not need a high availability configuration for you premises, proceed t
 You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again. Plan accordingly to create a high availability configuration from the start if needed.
 :::
 
-***
+---
 
 ## Port speeds
 
@@ -40,7 +41,7 @@ The hardware version of the Magic WAN connector includes two [SFP+ ports](https:
 
 Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for details on this topic.
 
-***
+---
 
 ## Configure Cloudflare dashboard settings
 
@@ -118,7 +119,7 @@ To use your Connector on a network configuration with a static IP:
 3. Adjust your physical connections as required to match the configuration specified in the [site configuration](#1-create-a-site) step (for example, static IP WAN plugged into a physical port with no DHCP connection).
 4. Power cycle the Connector.
 
-***
+---
 
 ## About high availability configurations
 
@@ -159,13 +160,13 @@ To set up a high availability configuration:
 13. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node’s health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node’s probing link should be connected over a switch, and cannot be a direct connection.
 14. Follow the instructions in [Set up your Magic WAN Connector](#set-up-your-magic-wan-connector) and [Activate connector](#activate-connector) to finish setting up your Connectors.
 
-***
+---
 
 ## IP sec tunnels and static routes
 
 <Render file="connector/ipsec-static-tunnels" />
 
-***
+---
 
 ## Next steps
 
