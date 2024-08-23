@@ -25,7 +25,7 @@ To access a D1 database outside of a Worker project, you need to create an API u
 
 :::note
 
-D1 uses patameterized queries. This prevents SQL injection. To make your API more secure, validate the input using a library like [zod](https://zod.dev/).
+D1 uses parameterized queries. This prevents SQL injection. To make your API more secure, validate the input using a library like [zod](https://zod.dev/).
 
 :::
 
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS posts (
 );
 ```
 
-Optinally, you can add the below INSERT statement to populate the table.
+Optionally, you can add the below INSERT statement to populate the table.
 
 ```sql frame="none"
 INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
