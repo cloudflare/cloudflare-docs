@@ -1168,6 +1168,7 @@
 /turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
+/turnstile/troubleshooting/infinite-loops/ /turnstile/troubleshooting/challenge-solve-issues/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
