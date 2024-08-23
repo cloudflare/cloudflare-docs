@@ -31,13 +31,13 @@ If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#cus
 
 Automatic SSL/TLS uses the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/) to identify and apply the most secure encryption mode for your website. It continuously assesses your traffic to determine if a more secure option is needed based on your origin certification or capabilities, and updates your settings automatically to ensure the highest level of security for your domain.
 
-Cloudflare is enabling Automatic SSL/TLS on the following dates:
+Oct 21, all unset zones in recommender will remain unset in automatic upgrader
 
-| Plan           | Using SSL/TLS recommender? | Grace period ends |
-| -------------- | -------------------------- | ----------------- |
-| Non-Enterprise | Yes                        | September 9th, 2024 |
-| Enterprise     | Yes                        | October 7th, 2024   |
-| All plans      | No                         | October 21st, 2024  |
+Cloudflare is rolling out Automatic SSL/TLS on the following dates:
+
+- **September 9th, 2024**: All non-Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated.
+- **October 7th, 2024**: All Enterprise plans that are using the SSL/TLS recommender and have not opted out will be migrated.
+- **October 21st, 2024**: Any zone that has not opted into the SSL/TLS recommender will not be migrated.
 
 #### Opt out single zone
 
