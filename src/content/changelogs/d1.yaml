@@ -8,7 +8,7 @@ entries:
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
     description: |-
-      Following the [deprecation warning](/d1/platform/changelog/#2024-04-30) on 2024-04-30, D1 alpha databases have stopped accepting queries.
+      Following the [deprecation warning](/d1/platform/changelog/#2024-04-30) on 2024-04-30, D1 alpha databases have stopped accepting queries (you are still able to create and retrieve backups).
 
       Requests to D1 alpha databases now respond with a HTTP 400 error, containing the following text:
 
