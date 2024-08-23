@@ -5,9 +5,8 @@ weight: 4
 description: Learn how to profile CPU usage and ensure CPU-time per request stays under Workers limits
 ---
 
-CPU-intensive tasks can slow down a Worker's request or startup time. If a Worker spends too much time
-performing CPU operations, responses may be slow or startup may fail due to
-[startup time limits](/workers/platform/limits/#worker-startup-time).
+If a Worker spends too much time performing CPU-intensive tasks, responses may be slow or the Worker might
+fail to startup due to [time limits](/workers/platform/limits/#worker-startup-time).
 
 Profiling in DevTools can help you identify and fix code that uses too much CPU.
 
@@ -17,9 +16,9 @@ for security purposes. However, measuring CPU execution times is possible in loc
 
 ## Taking a profile
 
-To get started:
+To generate a CPU profile:
 
-- Run `wrangler dev` to run your Worker
+- Run `wrangler dev` to start your Worker
 - Hit <kbd>d</kbd> from your terminal to open DevTools
 - Click on the "Profiler" tab
 - Click `Start` to begin recording CPU usage
@@ -28,9 +27,9 @@ To get started:
 
 You now have a CPU profile.
 
-## Example Profiling
+## An Example Profile
 
-Let's look at example code to learn how to read a CPU profile. Imagine you have the following Worker code:
+Let's look at an example to learn how to read a CPU profile. Imagine you have the following Worker:
 
 ```js title="index.js"
 const addNumbers = (body) => {
@@ -57,11 +56,11 @@ export default {
 };
 ```
 
-You want to find which part of the code is causing slow response times. How do you use DevTool profiling to identify the
+You want to find which part of the code causes slow response times. How do you use DevTool profiling to identify the
 CPU-heavy code and fix the issue?
 
 First, as mentioned above, you open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, you
-navigate to the "Profiler" tab and take a profile by hitting start and sending a request.
+navigate to the "Profiler" tab and take a profile by pressing `Start` and sending a request.
 
 ![CPU Profile](~/assets/images/workers/observability/profile.png)
 

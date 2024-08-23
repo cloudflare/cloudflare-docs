@@ -6,21 +6,18 @@ meta:
   description: Learn how to profile Memory usage to avoid out-of-memory errors and optimize your Worker
 ---
 
-Understanding Worker memory usage helps:
+Understanding Worker memory usage can help you optimize performance, avoid Out of Memory (OOM) errors
+when hitting [Worker memory limits](/workers/platform/limits/#memory), and fix memory leaks.
 
-- optimize performance
-- avoid Out of Memory (OOM) errors when hitting [Worker memory limits](/workers/platform/limits/#memory)
-- fix memory leaks
-
-You can profile memory usage using a snapshot in DevTools. This lets you view a summary of
-memory usage, see how much memory is allocated to different data types, and get details on
-specific objects in memory.
+You can profile memory usage with snapshots in DevTools. Memory snapshots let you view a summary of
+memory usage, see how much memory is allocated to different data types, and get details on specific
+objects in memory.
 
 ## Taking a snapshot
 
-To get started:
+To generate a memory snapshot:
 
-- Run `wrangler dev` to run your Worker
+- Run `wrangler dev` to start your Worker
 - Hit <kbd>d</kbd> from your terminal to open DevTools
 - Click on the "Memory" tab
 - Send requests to your Worker to start allocating memory
@@ -31,7 +28,7 @@ You can now inspect Worker memory.
 
 ## An Example Snapshot
 
-Let's look at some example code to learn how to read a memory snapshot. Imagine you have the following Worker code:
+Let's look at an example to learn how to read a memory snapshot. Imagine you have the following Worker:
 
 ```js title="index.js"
 let responseText = "Hello world!";
