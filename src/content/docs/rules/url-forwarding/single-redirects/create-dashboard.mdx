@@ -18,7 +18,7 @@ import { Render } from "~/components"
 5. Under **When incoming requests match**, select one of the following options:
     - 5.1. **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
         - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/files/*`.
-        - **Then...**: Define the [URL redirect settings](http://localhost:1111/rules/url-forwarding/single-redirects/settings/) including:
+        - **Then...**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
             - **Target URL**: Enter the target URL, which can be static (e.g., `https://example.com`) or dynamic (e.g., `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) like `${1}`, `${2}`, etc., to define dynamic target URLs.
             - **Status code**: Select the status code for the redirect (e.g., `301`).
             - **Preserve query string**: Choose whether to keep the query string from the original request.
