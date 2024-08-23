@@ -1,0 +1,20 @@
+---
+title: Dispositions and attributes
+pcx_content_type: reference
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip } from "~/components"
+
+Email Security uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
+
+## Dispositions
+
+Any traffic that flows through Email Security is given a final disposition, which represents our evaluation of that specific message. Each message will receive only one disposition header, so your organization can take clear and specific actions on different message types.
+
+You can use disposition values when [setting up auto-moves](/cloudflare-one/email-security/auto-moves/).
+
+### Available values
+
+<Render file="email-security/dispositions-and-attributes" />
