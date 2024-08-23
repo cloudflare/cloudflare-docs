@@ -20,6 +20,7 @@ export const baseSchema = z.object({
 			z.literal("concept"),
 			z.literal("reference"),
 			z.literal("reference-architecture"),
+			z.literal("reference-architecture-diagram"),
 			z.literal("tutorial"),
 			z.literal("api"),
 			z.literal("troubleshooting"),
