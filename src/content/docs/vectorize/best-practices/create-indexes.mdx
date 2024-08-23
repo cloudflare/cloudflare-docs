@@ -23,11 +23,7 @@ The configuration of an index cannot be changed after creation.
 
 <Render file="vectorize-wrangler-version" />
 
-:::note[Using Vectorize v1?]
-
-Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
-
-:::
+<Render file="vectorize-legacy" />
 
 To create an index with `wrangler`:
 
@@ -40,6 +36,38 @@ To create an index that can accept vector embeddings from Worker's AI's [`@cf/ba
 ```sh
 npx wrangler vectorize create your-index-name --dimensions=768 --metric=cosine
 ```
+
+### HTTP API
+
+Vectorize also supports creating indexes via [REST API](/api/operations/vectorize-create-vectorize-index).
+
+For example, to create an index directly from a Python script:
+
+```py
+import requests
+
+url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/v2/indexes".format("your-account-id")
+
+headers = {
+    "Authorization": "Bearer <your-api-token>"
+}
+
+body = {
+	"name": "demo-index"
+	"description": "some index description",
+  "config": {
+    "dimensions": 1024,
+    "metric": "euclidean"
+  },
+}
+
+resp = requests.post(url, headers=headers, json=body)
+
+print('Status Code:', resp.status_code)
+print('Response JSON:', resp.json())
+```
+
+This script should print the response with a status code 201, along with a JSON response body indicating the creation of an index with the provided configuration.
 
 ## Dimensions
 
