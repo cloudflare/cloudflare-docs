@@ -1,5 +1,0 @@
-Wrangler
-wrangler
-Cloudflare
-cloudflared
-Internet
