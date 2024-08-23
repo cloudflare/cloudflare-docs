@@ -75,7 +75,7 @@ The put() method returns a Promise that you should `await` on to verify a succes
 
 ### Concurrent writes to the same key
 
-Due to the eventually consistent nature of KV, concurrent writes to the same key can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
+Due to the eventually consistent nature of KV, concurrent writes to the same key can end up overwriting one another. It is a common pattern to write data from a single process with Wrangler or the API. This avoids competing concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace. 
 
 If concurrent writes are made to the same key, the last write will take precedence. 
 
