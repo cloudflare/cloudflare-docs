@@ -11,19 +11,19 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Software version tested
 
-* PAN-OS 9.1.14-h4
+- PAN-OS 9.1.14-h4
 
 ## Use Cases
 
-* **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-* **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 ## Prerequisites
 
 This tutorial assumes you have a standalone NGFW with two network interfaces:
 
-* One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network);
-* And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
+- One in a trust security zone (`Trust_L3_Zone`) with an [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) non-Internet routable IP address (internal network);
+- And the other in an untrust security zone (`Untrust_L3_Zone`) with a legally routable IP address (Internet facing).
 
 Additionally, there must be a default gateway set on the Virtual Router (default) pointing to the router of your Internet service provider(s).
 
@@ -53,8 +53,8 @@ Use the Cloudflare dashboard or API to [configure two IPsec Tunnels](/magic-wan/
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
-* `172.64.240.253`: Use with the primary IPsec tunnel.
-* `172.64.240.254`: Use with the secondary IPsec tunnel.
+- `172.64.240.253`: Use with the primary IPsec tunnel.
+- `172.64.240.254`: Use with the secondary IPsec tunnel.
 
 :::caution
 You need to [configure bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
@@ -63,26 +63,26 @@ You need to [configure bidirectional health checks](/magic-wan/configuration/man
 #### Add IPsec tunnels
 
 1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/) instructions to create the required IPsec tunnels with the following options:
-   * **Tunnel name**: `SFO_IPSEC_TUN01`
-   * **Interface address**: `10.252.2.96/31`
-   * **Customer endpoint**: `203.0.113.254`
-   * **Cloudflare endpoint**: `162.159.66.164`
-   * **Health check rate**: *Low* (default value is *Medium*)
-   * **Health check type**: *Reply*
-   * **Health check target**: *Custom* (default is *Default*)
-   * **Target address**: `172.64.240.253`
+   - **Tunnel name**: `SFO_IPSEC_TUN01`
+   - **Interface address**: `10.252.2.96/31`
+   - **Customer endpoint**: `203.0.113.254`
+   - **Cloudflare endpoint**: `162.159.66.164`
+   - **Health check rate**: _Low_ (default value is _Medium_)
+   - **Health check type**: _Reply_
+   - **Health check target**: _Custom_ (default is _Default_)
+   - **Target address**: `172.64.240.253`
 
 2. Select **Add pre-shared key later** > **Add tunnels**.
 
 3. Repeat the process to create a second IPsec tunnel with the following options:
-   * **Tunnel name**: `SFO_IPSEC_TUN02`
-   * **Interface address**: `10.252.2.98/31`
-   * **Customer endpoint**: `203.0.113.254`
-   * **Cloudflare endpoint**: `172.64.242.164`
-   * **Health check rate**: *Low* (default value is *Medium*)
-   * **Health check type**: *Reply*
-   * **Health check target**: *Custom* (default is *Default*)
-   * **Target address**: `172.64.240.254`
+   - **Tunnel name**: `SFO_IPSEC_TUN02`
+   - **Interface address**: `10.252.2.98/31`
+   - **Customer endpoint**: `203.0.113.254`
+   - **Cloudflare endpoint**: `172.64.242.164`
+   - **Health check rate**: _Low_ (default value is _Medium_)
+   - **Health check type**: _Reply_
+   - **Health check target**: _Custom_ (default is _Default_)
+   - **Target address**: `172.64.240.254`
 
 #### Generate Pre-shared keys
 
@@ -110,15 +110,15 @@ Create a [static route](/magic-wan/configuration/manually/how-to/configure-stati
 
 #### Tunnel 01
 
-* **Description**: `SFO_VLAN100_01`
-* **Prefix**: `10.1.100.0/24`
-* **Tunnel/Next hop**: `SFO_IPSEC_TUN01`
+- **Description**: `SFO_VLAN100_01`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN01`
 
 #### Tunnel 02
 
-* **Description**: `SFO_VLAN100_02`
-* **Prefix**: `10.1.100.0/24`
-* **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
+- **Description**: `SFO_VLAN100_02`
+- **Prefix**: `10.1.100.0/24`
+- **Tunnel/Next hop**: `SFO_IPSEC_TUN02`
 
 ![Add static routes for each of the IPsec tunnels you created in the previous step](~/assets/images/magic-wan/third-party/palo-alto/cloudflare_dash_ipsec/10_magic_ipsec_static_routes.png)
 
@@ -154,8 +154,6 @@ Any configuration changes should be applied to the objects and will automaticall
 Any objects without a netmask specified are `/32`.
 :::
 
-
-
 | Name                            | Type       | Address            | Tags                 |
 | ------------------------------- | ---------- | ------------------ | -------------------- |
 | `CF_Health_Check_Anycast_01`    | IP Netmask | `172.64.240.253`   | `Cloudflare_L3_Zone` |
@@ -187,8 +185,6 @@ Any objects without a netmask specified are `/32`.
 | `VLAN0020_10-1-20-0--24`        | IP Netmask | `10.1.20.0/24`     | `Cloudflare_L3_Zone` |
 | `VLAN0100_10-1-100-0--24`       | IP Netmask | `10.1.100.0/24`    | `Trust_L3_Zone`      |
 | `VLAN0100_L3_10-1-100-254--24`  | IP Netmask | `10.1.10.254/24`   | `Trust_L3_Zone`      |
-
-
 
 Use the Palo Alto Networks Next-Generation Firewall command-Line to set the objects:
 
@@ -257,8 +253,6 @@ set address VLAN0100_L3_10-1-100-254--24 tag Trust_L3_Zone
 
 The **Address Group** object used in this configuration provides a single object representation of the entire Cloudflare IPv4 public address space.
 
-
-
 | Name                         | Type   | Addresses            | Tags                 |
 | ---------------------------- | ------ | -------------------- | -------------------- |
 | `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_01` | `Cloudflare_L3_Zone` |
@@ -277,8 +271,6 @@ The **Address Group** object used in this configuration provides a single object
 | `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_14` | `Cloudflare_L3_Zone` |
 | `Cloudflare_IPv4_Static_Grp` | Static | `Cloudflare_IPv4_15` | `Cloudflare_L3_Zone` |
 
-
-
 Use the Palo Alto Networks Next-Generation Firewall command-Line to set the address group object:
 
 ```bash
@@ -292,7 +284,7 @@ While not covered by this tutorial, it is also possible to use External Dynamic 
 
 ### Interface Mgmt - Network Profiles
 
-**Interface Mgmt** profiles control what traffic is allowed *to* the firewall, as opposed to *through* the firewall.
+**Interface Mgmt** profiles control what traffic is allowed _to_ the firewall, as opposed to _through_ the firewall.
 
 Adding an Interface Mgmt profile to the tunnel interfaces will provide the ability to ping the Virtual Tunnel Interface on your firewall(s).
 
@@ -334,13 +326,13 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 
 | Name             | Option             | Value                                               |
 | ---------------- | ------------------ | --------------------------------------------------- |
-| **ethernet1/1**  | Interface Type     | *Layer3*                                            |
-|                  | Netflow Profile    | *None*                                              |
-| **Config tab**   | Virtual Router     | *default*                                           |
-|                  | Security Zone      | *Trust\_L3\_Zone*                                   |
+| **ethernet1/1**  | Interface Type     | _Layer3_                                            |
+|                  | Netflow Profile    | _None_                                              |
+| **Config tab**   | Virtual Router     | _default_                                           |
+|                  | Security Zone      | _Trust_L3_Zone_                                   |
 | **IPv4 tab**     | Type               | **Static**                                          |
 |                  | IP                 | `VLAN0100_L3_10-1-100-254--24` <br/> address object |
-| **Advanced tab** | Management Profile | *Mgmt\_Services*                                    |
+| **Advanced tab** | Management Profile | _Mgmt_Services_                                    |
 
 ![Set up ethernet1/1 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/01_ethernet-1-1_page1.png)
 ![Set up ethernet1/1 on the dashboard](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Ethernet_Interfaces/02_ethernet-1-1_page2.png)
@@ -350,13 +342,13 @@ Follow the guidance on the images below to set up the Ethernet interfaces throug
 
 | Name             | Option              | Value                                                |
 | ---------------- | ------------------- | ---------------------------------------------------- |
-| **ethernet1/2**  | Interface Type      | *Layer3*                                             |
-|                  | Netflow Profile     | *None*                                               |
-| **Config tab**   | Virtual Router      | *default*                                            |
-|                  | Security Zone       | *Untrust\_L3\_Zone*                                  |
+| **ethernet1/2**  | Interface Type      | _Layer3_                                             |
+|                  | Netflow Profile     | _None_                                               |
+| **Config tab**   | Virtual Router      | _default_                                            |
+|                  | Security Zone       | _Untrust_L3_Zone_                                  |
 | **IPv4 tab**     | Type                | **Static**                                           |
 |                  | IP                  | `Internet_L3_203-0-113-254--24` <br/> address object |
-| **Advanced tab** | Management Profile  | *Allow\_Ping*                                        |
+| **Advanced tab** | Management Profile  | _Allow_Ping_                                        |
 |                  | MTU                 | `576 - 1500`                                         |
 |                  | Adjust TCP MSS      | **Enable**                                           |
 |                  | IPv4 MSS Adjustment | `64`                                                 |
@@ -402,11 +394,11 @@ MTU is set to `1450`. This value may need to be adjusted for optimal performance
 
 | Name             | Option             | Value                                             |
 | ---------------- | ------------------ | ------------------------------------------------- |
-| **tunnel.1**     | Netflow Profile    | *None*                                            |
-| **Config tab**   | Virtual Router     | *default*                                         |
-|                  | Security Zone      | *Cloudflare\_L3\_Zone*                            |
+| **tunnel.1**     | Netflow Profile    | _None_                                            |
+| **Config tab**   | Virtual Router     | _default_                                         |
+|                  | Security Zone      | _Cloudflare_L3_Zone_                            |
 | **IPv4 tab**     | IP                 | `CF_MWAN_IPsec_VTI_01_Local` <br/> address object |
-| **Advanced tab** | Management Profile | *Allow\_Ping*                                     |
+| **Advanced tab** | Management Profile | _Allow_Ping_                                     |
 |                  | MTU                | `1450`                                            |
 
 ![Set up tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/01_tunnel_1_page1.png)
@@ -417,11 +409,11 @@ MTU is set to `1450`. This value may need to be adjusted for optimal performance
 
 | Name             | Option             | Value                                             |
 | ---------------- | ------------------ | ------------------------------------------------- |
-| **tunnel.2**     | Netflow Profile    | *None*                                            |
-| **Config tab**   | Virtual Router     | *default*                                         |
-|                  | Security Zone      | *Cloudflare\_L3\_Zone*                            |
+| **tunnel.2**     | Netflow Profile    | _None_                                            |
+| **Config tab**   | Virtual Router     | _default_                                         |
+|                  | Security Zone      | _Cloudflare_L3_Zone_                            |
 | **IPv4 tab**     | IP                 | `CF_MWAN_IPsec_VTI_02_Local` <br/> address object |
-| **Advanced tab** | Management Profile | *Allow\_Ping*                                     |
+| **Advanced tab** | Management Profile | _Allow_Ping_                                     |
 |                  | MTU                | `1450`                                            |
 
 ![Set up tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_interfaces/Tunnel_Interfaces/04_tunnel_2_page1.png)
@@ -467,34 +459,34 @@ Any Magic WAN protected networks that are not local should be considered part of
 
 | Name            | Option                  | Value           |
 | --------------- | ----------------------- | --------------- |
-| `Trust_L3_zone` | Log setting             | *None*          |
-|                 | Type                    | *Layer3*        |
+| `Trust_L3_zone` | Log setting             | _None_          |
+|                 | Type                    | _Layer3_        |
 |                 | Interfaces              | **ethernet1/1** |
-|                 | Zone Protection Profile | *None*          |
+|                 | Zone Protection Profile | _None_          |
 
-![The Palo Alto interface showing the Trust\_L3\_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
+![The Palo Alto interface showing the Trust_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/01_trust_zone.png)
 
 ##### `Untrust_L3_zone`
 
 | Name              | Option                  | Value                 |
 | ----------------- | ----------------------- | --------------------- |
-| `Untrust_L3_zone` | Log setting             | *None*                |
-|                   | Type                    | *Layer3*              |
+| `Untrust_L3_zone` | Log setting             | _None_                |
+|                   | Type                    | _Layer3_              |
 |                   | Interfaces              | **ethernet1/2**       |
-|                   | Zone Protection Profile | *Untrust\_Zone\_Prof* |
+|                   | Zone Protection Profile | _Untrust_Zone_Prof_ |
 
-![The Palo Alto interface showing the Untrust\_L3\_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
+![The Palo Alto interface showing the Untrust_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/02_untrust_zone.png)
 
 ##### `Cloudflare_L3_zone`
 
 | Name                 | Option                  | Value                           |
 | -------------------- | ----------------------- | ------------------------------- |
-| `Cloudflare_L3_zone` | Log setting             | *None*                          |
-|                      | Type                    | *Layer3*                        |
+| `Cloudflare_L3_zone` | Log setting             | _None_                          |
+|                      | Type                    | _Layer3_                        |
 |                      | Interfaces              | **tunnel.1** <br/> **tunnel.2** |
-|                      | Zone Protection Profile | *None*                          |
+|                      | Zone Protection Profile | _None_                          |
 
-![The Palo Alto interface showing the Cloudflare\_L3\_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
+![The Palo Alto interface showing the Cloudflare_L3_Zone](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/03_cloudflare_zone.png)
 ![The Palo Alto interface showing the Tunnel Interfaces overview section](~/assets/images/magic-wan/third-party/palo-alto/panw_zones/04_zones_overview.png)
 
 #### Set up via command line
@@ -585,21 +577,17 @@ Define two IKE Gateways to establish the two IPsec tunnels to Cloudflare. Make s
 Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 :::
 
-
-
-| Tab              | Option               | Value                                                                                                                                                                                                                   |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **General tab**  | Name                 | `CF_Magic_WAN_IKE_01`                                                                                                                                                                                                   |
-|                  | Version              | *IKEv2 only mode*. <br/> Make sure both IKE Gateways are based only on this setting.                                                                                                                                    |
-|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                                                                                                                                         |
-|                  | Peer address         | `CF_Magic_WAN_Anycast_01`                                                                                                                                                                                               |
-|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                                                                                                                                  |
-|                  | Local Identification | *FQDN (hostname)*. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.                                                                                                          |
-|                  | Peer Identification  | *None*                                                                                                                                                                                                                  |
-| **Advanced tab** | IKE Crypto Profile   | *CF\_IKE\_Crypto\_CBC*                                                                                                                                                                                                  |
-|                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
-
-
+| Tab 					  	| Option  | Value 							 |
+| ----------------- | ------- | -------------------- |
+| **General tab**   | Name 		|`CF_Magic_WAN_IKE_01` |
+|                   | Version | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting. |
+|                   | Local IP Address     | `Internet_L3_203-0-113-254--24`  |
+|                   | Peer address         | `CF_Magic_WAN_Anycast_01` |
+|                   | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. |
+|                   | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                   | Peer Identification  | _None_ |
+| **Advanced tab**  | IKE Crypto Profile   | _CF_IKE_Crypto_CBC_ |
+|                   | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
 
 ![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/03_ike_gw01_page1.png)
 ![IKE gateway settings for tunnel 1](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/04_ike_gw01_page2.png)
@@ -610,21 +598,17 @@ Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 Make sure you select `CF_IKE_Crypto_CBC` as the IKE Crypto profile.
 :::
 
-
-
-| Tab              | Option               | Value                                                                                                                                                                                                                   |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **General tab**  | Name                 | `CF_Magic_WAN_IKE_02`                                                                                                                                                                                                   |
-|                  | Version              | *IKEv2 only mode*. <br/> Make sure both IKE Gateways are based only on this setting.                                                                                                                                    |
-|                  | Local IP Address     | `Internet_L3_203-0-113-254--24`                                                                                                                                                                                         |
-|                  | Peer address         | `CF_Magic_WAN_Anycast_02`                                                                                                                                                                                               |
-|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel.                                                                                                                                  |
-|                  | Local Identification | *FQDN (hostname)*. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel.                                                                                                          |
-|                  | Peer Identification  | *None*                                                                                                                                                                                                                  |
-| **Advanced tab** | IKE crypto profile   | *CF\_IKE\_Crypto\_CBC*                                                                                                                                                                                                  |
+| Tab              | Option               | Value |
+| ---------------- | -------------------- |------ |
+| **General tab**  | Name                 | `CF_Magic_WAN_IKE_02` |
+|                  | Version              | _IKEv2 only mode_. <br/> Make sure both IKE Gateways are based only on this setting. |
+|                  | Local IP Address     | `Internet_L3_203-0-113-254--24` |
+|                  | Peer address         | `CF_Magic_WAN_Anycast_02` |
+|                  | Pre-Shared Key       | This value can be obtained from the Cloudflare dashboard - value is unique per tunnel. |
+|                  | Local Identification | _FQDN (hostname)_. <br/> You can obtain this value from the Cloudflare Dashboard - value is unique per tunnel. |
+|                  | Peer Identification  | _None_ |
+| **Advanced tab** | IKE crypto profile   | _CF_IKE_Crypto_CBC_ |
 |                  | Liveness Check       | The default value (five seconds) is sufficient. This setting is used to periodically determine if there are any underlying connectivity issues that may adversely affect the creation of Phase 1 Security Associations. |
-
-
 
 ![IKE gateway settings for tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/05_ike_gw02_page1.png)
 ![IKE gateway settings for tunnel 2](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/06_ike_gw02_page2.png)
@@ -675,9 +659,9 @@ With the IKE Gateways defined, the next step is to configure two IPsec Tunnels -
 
 There are a few prerequisites you should be aware of before continuing:
 
-* Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
-* Disable Replay Protection, under the Advanced Options.
-* Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
+- Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
+- Disable Replay Protection, under the Advanced Options.
+- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
 
 #### Set up via dashboard
 
@@ -686,8 +670,8 @@ There are a few prerequisites you should be aware of before continuing:
 | Name                    | Option                   | Value                     |
 | ----------------------- | ------------------------ | ------------------------- |
 | `CF_Magic_WAN_IPsec_01` | Tunnel interface         | tunnel.1                  |
-|                         | IKE Gateway              | *CF\_Magic\_WAN\_IKE\_01* |
-|                         | IPsec crypto profile     | *CF\_IKE\_Crypto\_CBC*    |
+|                         | IKE Gateway              | _CF_Magic_WAN_IKE_01_ |
+|                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**               |
 
 ![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/07_ipsec_tun01_page1.png)
@@ -698,8 +682,8 @@ There are a few prerequisites you should be aware of before continuing:
 | Name                    | Option                   | Value                     |
 | ----------------------- | ------------------------ | ------------------------- |
 | `CF_Magic_WAN_IPsec_02` | Tunnel interface         | tunnel.2                  |
-|                         | IKE Gateway              | *CF\_Magic\_WAN\_IKE\_02* |
-|                         | IPsec crypto profile     | *CF\_IKE\_Crypto\_CBC*    |
+|                         | IKE Gateway              | _CF_Magic_WAN_IKE_02_ |
+|                         | IPsec crypto profile     | _CF_IKE_Crypto_CBC_    |
 |                         | Enable Replay Protection | **Disable**               |
 
 ![Set up the IPsec tunnel](~/assets/images/magic-wan/third-party/palo-alto/panw_ipsec_tunnels/09_ipsec_tun02_page1.png)
@@ -787,7 +771,6 @@ admin@panvm03> show vpn ike-sa gateway CF_Magic_WAN_IKE_02
 There is no IKEv1 phase-1 SA found.
 
 There is no IKEv1 phase-2 SA found.
-
 
 IKEv2 SAs
 Gateway ID      Peer-Address           Gateway Name           Role SN       Algorithm             Established     Expiration      Xt Child  ST
@@ -966,7 +949,7 @@ First, ensure the General tab displays both the Ethernet and tunnel interfaces. 
 
 1. Open the **Router settings** for the default Virtual Router and select the **ECMP** tab.
 2. Select the checkboxes next to **Enable**, **Symmetric Return**, and **Strict Source Path** (all three checkboxes should be selected).
-3. Under **Load Balance**, change the **Method** from *IP Modulo* to *Weighted Round Robin* and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
+3. Under **Load Balance**, change the **Method** from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
 
 ![Make sure all checkboxes are selected](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/02_virtual_router_ecmp.png)
 
@@ -990,20 +973,20 @@ Palo Alto Networks Next-Generation Firewall will not allow for configuring two r
 
 The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
-* **VLAN0010**: `10.1.10.0/24`
-* **VLAN0020**: `10.1.20.0/24`
+- **VLAN0010**: `10.1.10.0/24`
+- **VLAN0020**: `10.1.20.0/24`
 
 ##### VLAN0010 (`10.1.10.0/24`) via tunnel.1
 
 | Name                       | Option      | Value                              |
 | -------------------------- | ----------- | ---------------------------------- |
-| `Magic_WAN_VLAN0010_Tun01` | Destination | *VLAN0010\_10-1-10-0--24*          |
-|                            | Interface   | *tunnel.1*                         |
-|                            | Next hop    | *IP Address*                       |
-|                            |             | *CF\_MWAN\_IPsec\_VTI\_01\_Remote* |
+| `Magic_WAN_VLAN0010_Tun01` | Destination | _VLAN0010_10-1-10-0--24_          |
+|                            | Interface   | _tunnel.1_                         |
+|                            | Next hop    | _IP Address_                       |
+|                            |             | _CF_MWAN_IPsec_VTI_01_Remote_ |
 |                            | Metric      | `10`                               |
-|                            | Route Table | *Unicast*                          |
-|                            | BFD Profile | *Disable BFD*                      |
+|                            | Route Table | _Unicast_                          |
+|                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/03_virtual_router_static_vlan0010_tun01.png)
 
@@ -1011,13 +994,13 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 | Name                       | Option      | Value                              |
 | -------------------------- | ----------- | ---------------------------------- |
-| `Magic_WAN_VLAN0010_Tun02` | Destination | *VLAN0010\_10-1-10-0--24*          |
-|                            | Interface   | *tunnel.2*                         |
-|                            | Next hop    | *IP Address*                       |
-|                            |             | *CF\_MWAN\_IPsec\_VTI\_02\_Remote* |
+| `Magic_WAN_VLAN0010_Tun02` | Destination | _VLAN0010_10-1-10-0--24_          |
+|                            | Interface   | _tunnel.2_                         |
+|                            | Next hop    | _IP Address_                       |
+|                            |             | _CF_MWAN_IPsec_VTI_02_Remote_ |
 |                            | Metric      | `11`                               |
-|                            | Route Table | *Unicast*                          |
-|                            | BFD Profile | *Disable BFD*                      |
+|                            | Route Table | _Unicast_                          |
+|                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0010 (10.1.10.0/24 via tunnel.2)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/04_virtual_router_static_vlan0010_tun02.png)
 
@@ -1025,13 +1008,13 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 | Name                       | Option      | Value                              |
 | -------------------------- | ----------- | ---------------------------------- |
-| `Magic_WAN_VLAN0020_Tun01` | Destination | *VLAN0020\_10-1-20-0--24*          |
-|                            | Interface   | *tunnel.1*                         |
-|                            | Next hop    | *IP Address*                       |
-|                            |             | *CF\_MWAN\_IPsec\_VTI\_01\_Remote* |
+| `Magic_WAN_VLAN0020_Tun01` | Destination | _VLAN0020_10-1-20-0--24_          |
+|                            | Interface   | _tunnel.1_                         |
+|                            | Next hop    | _IP Address_                       |
+|                            |             | _CF_MWAN_IPsec_VTI_01_Remote_ |
 |                            | Metric      | `10`                               |
-|                            | Route Table | *Unicast*                          |
-|                            | BFD Profile | *Disable BFD*                      |
+|                            | Route Table | _Unicast_                          |
+|                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/05_virtual_router_static_vlan0020_tun01.png)
 
@@ -1039,13 +1022,13 @@ The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 | Name                       | Option      | Value                              |
 | -------------------------- | ----------- | ---------------------------------- |
-| `Magic_WAN_VLAN0020_Tun02` | Destination | *VLAN0020\_10-1-20-0--24*          |
-|                            | Interface   | *tunnel.2*                         |
-|                            | Next hop    | *IP Address*                       |
-|                            |             | *CF\_MWAN\_IPsec\_VTI\_02\_Remote* |
+| `Magic_WAN_VLAN0020_Tun02` | Destination | _VLAN0020_10-1-20-0--24_          |
+|                            | Interface   | _tunnel.2_                         |
+|                            | Next hop    | _IP Address_                       |
+|                            |             | _CF_MWAN_IPsec_VTI_02_Remote_ |
 |                            | Metric      | `11`                               |
-|                            | Route Table | *Unicast*                          |
-|                            | BFD Profile | *Disable BFD*                      |
+|                            | Route Table | _Unicast_                          |
+|                            | BFD Profile | _Disable BFD_                      |
 
 ![Static Route - VLAN0020 (10.1.20.0/24 via tunnel.1)](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/06_virtual_router_static_vlan0020_tun02.png)
 
@@ -1095,8 +1078,8 @@ The construct of the security policies may seem counter-intuitive - this is due 
 
 Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
 
-* **CF\_Health\_Check\_Anycast\_01**: `172.64.240.253`
-* **CF\_Health\_Check\_Anycast\_02**: `172.64.240.254`
+- **CF_Health_Check_Anycast_01**: `172.64.240.253`
+- **CF_Health_Check_Anycast_02**: `172.64.240.254`
 
 #### Security Policy - Tunnel health checks
 
@@ -1108,25 +1091,21 @@ Cloudflare health checks are sent from random servers across Cloudflare's global
 
 ##### Setup via dashboard
 
-
-
 | Name                            | Option              | Value                                                                       |
 | ------------------------------- | ------------------- | --------------------------------------------------------------------------- |
-| `Cloudflare_Tunnel_Bidirect_HC` | Rule Type           | *universal (default)*                                                       |
+| `Cloudflare_Tunnel_Bidirect_HC` | Rule Type           | _universal (default)_                                                       |
 |                                 | Description         | `Permit bidirectional HCs`                                                  |
-|                                 | Group Rules By Tag  | *None*                                                                      |
-| **Source tab**                  | Source Zone         | **Cloudflare\_L3\_Zone**                                                    |
-|                                 | Source Address      | **CF\_Health\_Check\_Anycast\_01** <br/> **CF\_Health\_Check\_Anycast\_02** |
-| **Destination tab**             | Destination Zone    | **Cloudflare\_L3\_Zone**                                                    |
-|                                 | Destination Address | **Cloudflare\_IPv4\_Static\_Grp**                                           |
+|                                 | Group Rules By Tag  | _None_                                                                      |
+| **Source tab**                  | Source Zone         | **Cloudflare_L3_Zone**                                                    |
+|                                 | Source Address      | **CF_Health_Check_Anycast_01** <br/> **CF_Health_Check_Anycast_02** |
+| **Destination tab**             | Destination Zone    | **Cloudflare_L3_Zone**                                                    |
+|                                 | Destination Address | **Cloudflare_IPv4_Static_Grp**                                           |
 | **Application tab**             | Applications        | **icmp** <br/> **ping**                                                     |
-| **Actions tab**                 | Action              | *Allow*                                                                     |
+| **Actions tab**                 | Action              | _Allow_                                                                     |
 |                                 | Log Setting         | **Log at Session End**                                                      |
-|                                 | Profile type        | *None*                                                                      |
-|                                 | Schedule            | *None*                                                                      |
-|                                 | QoS Marking         | *None*                                                                      |
-
-
+|                                 | Profile type        | _None_                                                                      |
+|                                 | Schedule            | _None_                                                                      |
+|                                 | QoS Marking         | _None_                                                                      |
 
 ![Bidirectioanl Health Check Rule - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/01_bidirect_hc_general.png)
 ![Bidirectioanl Health Check Rule - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/02_bidirect_hc_source.png)
@@ -1164,30 +1143,26 @@ Traffic matching the Security Rule defined in the last step must be routed symme
 
 Ensure have the following:
 
-* **Source Zone**: `Cloudflare_L3_Zone`
-* **Source Addresses**: `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02`
-* **Destination Zone**: `Cloudflare_L3_Zone`
-* **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
-* **Application**: `icmp` and `ping`
+- **Source Zone**: `Cloudflare_L3_Zone`
+- **Source Addresses**: `CF_Health_Check_Anycast_01` and `CF_Health_Check_Anycast_02`
+- **Destination Zone**: `Cloudflare_L3_Zone`
+- **Destination Addresses**: `Cloudflare_IPv4_Static_Grp`
+- **Application**: `icmp` and `ping`
 
 ##### Set up via dashboard tunnel.1
 
-
-
 | Name                                    | Option              | Value                              |
 | --------------------------------------- | ------------------- | ---------------------------------- |
-| `PBF_Cloudflare_Health_Check_01`        | Tags                | *Cloudflare\_L3\_Zone*             |
-|                                         | Group Rules By Tag  | *None*                             |
-| **Source tab**                          | Type                | *Zone*                             |
-|                                         | Zone                | **Cloudflare\_L3\_Zone**           |
-|                                         | Source Address      | **CF\_Health\_Check\_Anycast\_01** |
-| **Destination/Application/Service tab** | Destination Address | **Cloudflare\_IPv4\_Static\_Grp**  |
-| **Forwarding tab**                      | Action              | *Forward*                          |
-|                                         | Egress interface    | *tunnel.1*                         |
-|                                         | Next Hop            | *IP Address*                       |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_01\_Remote* |
-
-
+| `PBF_Cloudflare_Health_Check_01`        | Tags                | _Cloudflare_L3_Zone_             |
+|                                         | Group Rules By Tag  | _None_                             |
+| **Source tab**                          | Type                | _Zone_                             |
+|                                         | Zone                | **Cloudflare_L3_Zone**           |
+|                                         | Source Address      | **CF_Health_Check_Anycast_01** |
+| **Destination/Application/Service tab** | Destination Address | **Cloudflare_IPv4_Static_Grp**  |
+| **Forwarding tab**                      | Action              | _Forward_                          |
+|                                         | Egress interface    | _tunnel.1_                         |
+|                                         | Next Hop            | _IP Address_                       |
+|                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_ |
 
 ![Bidirectional Health Checks via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/01_pbf_hc_01_general.png)
 ![Bidirectional Health Checks via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/02_pbf_hc_01_source.png)
@@ -1196,22 +1171,18 @@ Ensure have the following:
 
 ##### Set up via dashboard tunnel.2
 
-
-
 | Name                                    | Option              | Value                              |
 | --------------------------------------- | ------------------- | ---------------------------------- |
-| `PBF_Cloudflare_Health_Check_02`        | Tags                | *Cloudflare\_L3\_Zone*             |
-|                                         | Group Rules By Tag  | *None*                             |
-| **Source tab**                          | Type                | *Zone*                             |
-|                                         | Zone                | **Cloudflare\_L3\_Zone**           |
-|                                         | Source Address      | **CF\_Health\_Check\_Anycast\_02** |
-| **Destination/Application/service tab** | Destination Address | **Cloudflare\_IPv4\_Static\_Grp**  |
-| **Forwarding tab**                      | Action              | *Forward*                          |
-|                                         | Egress interface    | *tunnel.2*                         |
-|                                         | Next Hop            | *IP Address*                       |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_02\_Remote* |
-
-
+| `PBF_Cloudflare_Health_Check_02`        | Tags                | _Cloudflare_L3_Zone_             |
+|                                         | Group Rules By Tag  | _None_                             |
+| **Source tab**                          | Type                | _Zone_                             |
+|                                         | Zone                | **Cloudflare_L3_Zone**           |
+|                                         | Source Address      | **CF_Health_Check_Anycast_02** |
+| **Destination/Application/service tab** | Destination Address | **Cloudflare_IPv4_Static_Grp**  |
+| **Forwarding tab**                      | Action              | _Forward_                          |
+|                                         | Egress interface    | _tunnel.2_                         |
+|                                         | Next Hop            | _IP Address_                       |
+|                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_ |
 
 ![Bidirectional Health Checks via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/05_pbf_hc_02_general.png)
 ![Bidirectional Health Checks via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/06_pbf_hc_02_source.png)
@@ -1294,36 +1265,32 @@ If the traffic is not ingressing/egressing the same interface, you likely have a
 
 As mentioned earlier, this tutorial includes examples for two different use-cases:
 
-* **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-* **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 #### Magic WAN only
 
 Rules must be defined to facilitate traffic from the trust network to the Magic WAN protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
 
-* From Trust to Magic WAN protected sites.
+- From Trust to Magic WAN protected sites.
 
-* From Magic WAN protected sites to Trust.
+- From Magic WAN protected sites to Trust.
 
 ##### Trust to Magic WAN dashboard
 
-
-
 | Name                                  | Option              | Value                                                         |
 | ------------------------------------- | ------------------- | ------------------------------------------------------------- |
-| `Trust_to_Cloudflare_Magic_WAN_Allow` | Rule Type           | *universal (default)*                                         |
-|                                       | Group Rules by Tag  | *None*                                                        |
-| **Source tab**                        | Source Zone         | **Trust\_L3\_Zone**                                           |
-|                                       | Source Address      | **VLAN0100\_10-1-100-0--24**                                  |
-| **Destination tab**                   | Destination Zone    | **Cloudflare\_L3\_Zone**                                      |
-|                                       | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** |
-| **Actions tab**                       | Action              | *Allow*                                                       |
+| `Trust_to_Cloudflare_Magic_WAN_Allow` | Rule Type           | _universal (default)_                                         |
+|                                       | Group Rules by Tag  | _None_                                                        |
+| **Source tab**                        | Source Zone         | **Trust_L3_Zone**                                           |
+|                                       | Source Address      | **VLAN0100_10-1-100-0--24**                                  |
+| **Destination tab**                   | Destination Zone    | **Cloudflare_L3_Zone**                                      |
+|                                       | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** |
+| **Actions tab**                       | Action              | _Allow_                                                       |
 |                                       | Log Setting         | **Log at Session End**                                        |
-|                                       | Profile type        | *None*                                                        |
-|                                       | Schedule            | *None*                                                        |
-|                                       | QoS Marking         | *None*                                                        |
-
-
+|                                       | Profile type        | _None_                                                        |
+|                                       | Schedule            | _None_                                                        |
+|                                       | QoS Marking         | _None_                                                        |
 
 ![Trust to Magic WAN - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
 ![Trust to Magic WAN - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
@@ -1350,23 +1317,19 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 
 ##### Magic WAN to Trust dashboard
 
-
-
 | Name                                  | Option              | Value                                                         |
 | ------------------------------------- | ------------------- | ------------------------------------------------------------- |
-| `Cloudflare_Magic_WAN_to_Trust_Allow` | Rule Type           | *universal (default)*                                         |
-|                                       | Group Rules by Tag  | *None*                                                        |
-| Source tab                            | Source Zone         | **Cloudflare\_L3\_Zone**                                      |
-|                                       | Source Address      | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** |
-| Destination tab                       | Destination Zone    | **Trust\_L3\_Zone**                                           |
-|                                       | Destination Address | **VLAN0100\_10-1-100-0--24**                                  |
-| Actions tab                           | Action              | *Allow*                                                       |
+| `Cloudflare_Magic_WAN_to_Trust_Allow` | Rule Type           | _universal (default)_                                         |
+|                                       | Group Rules by Tag  | _None_                                                        |
+| Source tab                            | Source Zone         | **Cloudflare_L3_Zone**                                      |
+|                                       | Source Address      | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** |
+| Destination tab                       | Destination Zone    | **Trust_L3_Zone**                                           |
+|                                       | Destination Address | **VLAN0100_10-1-100-0--24**                                  |
+| Actions tab                           | Action              | _Allow_                                                       |
 |                                       | Log Setting         | **Log at Session End**                                        |
-|                                       | Profile type        | *None*                                                        |
-|                                       | Schedule            | *None*                                                        |
-|                                       | QoS Marking         | *None*                                                        |
-
-
+|                                       | Profile type        | _None_                                                        |
+|                                       | Schedule            | _None_                                                        |
+|                                       | QoS Marking         | _None_                                                        |
 
 ![Magic WAN to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
 ![Magic WAN to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
@@ -1405,21 +1368,17 @@ Security rules match traffic flows based on source and destination zone. Policy-
 
 #### Dashboard policy-based forwarding - Magic WAN production traffic via tunnel.1
 
-
-
 | Name                                    | Option              | Value                                                         |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------- |
-| `PBF_Magic_WAN_Sites_01`                | Group Rules by Tag  | *None*                                                        |
-| **Source tab**                          | Type                | *Zone*                                                        |
-|                                         | Zone                | **Trust\_L3\_Zone**                                           |
-|                                         | Source Address      | **VLAN0100\_10-1-100-0--24**                                  |
-| **Destination/Application/Service tab** | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** |
-| **Forwarding tab**                      | Action              | *Forward*                                                     |
-|                                         | Egress Interface    | *tunnel.1*                                                    |
-|                                         | Next hop            | *IP Address*                                                  |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_01\_Remote*                            |
-
-
+| `PBF_Magic_WAN_Sites_01`                | Group Rules by Tag  | _None_                                                        |
+| **Source tab**                          | Type                | _Zone_                                                        |
+|                                         | Zone                | **Trust_L3_Zone**                                           |
+|                                         | Source Address      | **VLAN0100_10-1-100-0--24**                                  |
+| **Destination/Application/Service tab** | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** |
+| **Forwarding tab**                      | Action              | _Forward_                                                     |
+|                                         | Egress Interface    | _tunnel.1_                                                    |
+|                                         | Next hop            | _IP Address_                                                  |
+|                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                            |
 
 ![PBF: Trust to Magic WAN via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
@@ -1444,21 +1403,17 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 
 #### Dashboard policy-based forwarding - Magic WAN production traffic via tunnel.2
 
-
-
 | Name                                    | Option              | Value                                                         |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------- |
-| `PBF_Magic_WAN_sites_02`                | Group Rules by Tag  | *None*                                                        |
-| **Source tab**                          | Type                | *Zone*                                                        |
-|                                         | Zone                | **Trust\_L3\_Zone**                                           |
-|                                         | Source Address      | **VLAN0100\_10-1-100-0--24**                                  |
-| **Destination/Application/Service tab** | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** |
-| **Forwarding tab**                      | Action              | *Forward*                                                     |
-|                                         | Egress Interface    | *tunnel.2*                                                    |
-|                                         | Next hop            | *IP Address*                                                  |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_02\_Remote*                            |
-
-
+| `PBF_Magic_WAN_sites_02`                | Group Rules by Tag  | _None_                                                        |
+| **Source tab**                          | Type                | _Zone_                                                        |
+|                                         | Zone                | **Trust_L3_Zone**                                           |
+|                                         | Source Address      | **VLAN0100_10-1-100-0--24**                                  |
+| **Destination/Application/Service tab** | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** |
+| **Forwarding tab**                      | Action              | _Forward_                                                     |
+|                                         | Egress Interface    | _tunnel.2_                                                    |
+|                                         | Next hop            | _IP Address_                                                  |
+|                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                            |
 
 ![PBF: Trust to Magic WAN via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
 ![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
@@ -1487,13 +1442,13 @@ This section covers adding in support for the use of Cloudflare Gateway. Adding 
 
 This use case can be supported in one of two ways:
 
-* **Option 1**
-  * **Security Rule**: Extend the scope of the `Trust_to_Cloudflare_Magic_WAN_Allow` rule to allow any destination address.
-  * **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
+- **Option 1**
+  - **Security Rule**: Extend the scope of the `Trust_to_Cloudflare_Magic_WAN_Allow` rule to allow any destination address.
+  - **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
 
-* **Option 2**
-  * **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
-  * **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
+- **Option 2**
+  - **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
+  - **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
 
 The following examples are based on Option 2.
 
@@ -1501,29 +1456,25 @@ The following examples are based on Option 2.
 
 This example assumes the security rules and policy-based forwarding rules from the previous sections have been configured and are directly above the rules configured in this section.
 
-Also, traffic from Trust to the Internet would typically be defined as `Trust_L3_Zone` to `Untrust_L3_Zone`. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference `Trust_L3_Zone` to `Cloudflare_L3_Zone`. 
+Also, traffic from Trust to the Internet would typically be defined as `Trust_L3_Zone` to `Untrust_L3_Zone`. However, since egress Internet traffic will be routed through the Magic IPsec tunnels, the rule must reference `Trust_L3_Zone` to `Cloudflare_L3_Zone`.
 :::
 
 ### Security Rule: Trust to Gateway Egress
 
 #### Dashboard
 
-
-
 | Name                                 | Option              | Value                                                                          |
 | ------------------------------------ | ------------------- | ------------------------------------------------------------------------------ |
-| `Trust_to_MWAN_Gateway_Egress_Allow` | Rule Type           | *universal (default)*                                                          |
-|                                      | Group Rules By Tag  | *None*                                                                         |
-| **Source tab**                       | Source Zone         | **Trust\_L3\_Zone**                                                            |
-| **Destination tab**                  | Destination Zone    | **Cloudflare\_L3\_Zone**                                                       |
-|                                      | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** <br/> **Negate** |
-| **Actions tab**                      | Action              | *Allow*                                                                        |
+| `Trust_to_MWAN_Gateway_Egress_Allow` | Rule Type           | _universal (default)_                                                          |
+|                                      | Group Rules By Tag  | _None_                                                                         |
+| **Source tab**                       | Source Zone         | **Trust_L3_Zone**                                                            |
+| **Destination tab**                  | Destination Zone    | **Cloudflare_L3_Zone**                                                       |
+|                                      | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** <br/> **Negate** |
+| **Actions tab**                      | Action              | _Allow_                                                                        |
 |                                      | Log Setting         | **Log at Session End**                                                         |
-|                                      | Profile Type        | *None*                                                                         |
-|                                      | Schedule            | *None*                                                                         |
-|                                      | QoS Marking         | *None*                                                                         |
-
-
+|                                      | Profile Type        | _None_                                                                         |
+|                                      | Schedule            | _None_                                                                         |
+|                                      | QoS Marking         | _None_                                                                         |
 
 ![Trust to MWAN Egress - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/01_trust_mwan_egress_general.png)
 ![Trust to MWAN Egress - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
@@ -1553,19 +1504,15 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destinatio
 
 #### Dashboard
 
-
-
 | Name                                    | Option              | Value                                                                          |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------------------------ |
-| `PBF_MWAN_Egress01`                     | Group Rules By Tag  | *None*                                                                         |
-| **Source tab**                          | Source Zone         | **Trust\_L3\_Zone**                                                            |
-| **Destination/Application/Service tab** | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** <br/> **Negate** |
-| **Forwarding tab**                      | Action              | *Forward*                                                                      |
-|                                         | Egress Interface    | *tunnel.1*                                                                     |
-|                                         | Next Hop            | *IP Address*                                                                   |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_01\_Remote*                                             |
-
-
+| `PBF_MWAN_Egress01`                     | Group Rules By Tag  | _None_                                                                         |
+| **Source tab**                          | Source Zone         | **Trust_L3_Zone**                                                            |
+| **Destination/Application/Service tab** | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** <br/> **Negate** |
+| **Forwarding tab**                      | Action              | _Forward_                                                                      |
+|                                         | Egress Interface    | _tunnel.1_                                                                     |
+|                                         | Next Hop            | _IP Address_                                                                   |
+|                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                                             |
 
 ![PBF: Trust to Magic WAN Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
 ![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
@@ -1592,20 +1539,16 @@ set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 
 #### Dashboard
 
-
-
 | Name                                    | Option              | Value                                                                          |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------------------------ |
-| `PBF_MWAN_Egress02`                     | Group Rules By Tag  | *None*                                                                         |
-| **Source tab**                          | Source Zone         | **Trust\_L3\_Zone**                                                            |
-|                                         | Source Address      | **VLAN0100\_10-1-100-0--24**                                                   |
-| **Destination/Application/Service tab** | Destination Address | **VLAN0010\_10-1-10-0--24** <br/> **VLAN0020\_10-1-20-0--24** <br/> **Negate** |
-| **Forwarding tab**                      | Action              | *Forward*                                                                      |
-|                                         | Egress Interface    | *tunnel.2*                                                                     |
-|                                         | Next Hop            | *IP Address*                                                                   |
-|                                         |                     | *CF\_MWAN\_IPsec\_VTI\_02\_Remote*                                             |
-
-
+| `PBF_MWAN_Egress02`                     | Group Rules By Tag  | _None_                                                                         |
+| **Source tab**                          | Source Zone         | **Trust_L3_Zone**                                                            |
+|                                         | Source Address      | **VLAN0100_10-1-100-0--24**                                                   |
+| **Destination/Application/Service tab** | Destination Address | **VLAN0010_10-1-10-0--24** <br/> **VLAN0020_10-1-20-0--24** <br/> **Negate** |
+| **Forwarding tab**                      | Action              | _Forward_                                                                      |
+|                                         | Egress Interface    | _tunnel.2_                                                                     |
+|                                         | Next Hop            | _IP Address_                                                                   |
+|                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                                             |
 
 ![PBF: Trust to Magic WAN Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
 ![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)

@@ -126,16 +126,16 @@ When you set up a site in high availability, the WANs and LANs in your Connector
 
 Because Connectors in high availability configurations share a single site, you need to set up:
 
-* **Static address**: The IP for the primary node in your site.
-* **Secondary static address**: The IP for the secondary node in your site.
-* **Virtual static address**: The IP that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
+- **Static address**: The IP for the primary node in your site.
+- **Secondary static address**: The IP for the secondary node in your site.
+- **Virtual static address**: The IP that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
 
 Make sure all IPs are part of the same subnet.
 
 :::note
-* Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
-* High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
-* In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+- Failure conditions include Connector down or software restart, LAN or WAN link down, tunnel health down.
+- High availability (HA) is run in non-preempt mode, which means either the primary or the secondary node can come up as active through an election process which includes node health parameters.
+- In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
 :::
 
 ### ​​Create a high availability configuration
