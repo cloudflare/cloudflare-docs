@@ -699,7 +699,8 @@
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
 
 # magic-network-monitoring
-/magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/
+/magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
+/magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
