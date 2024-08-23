@@ -16,7 +16,8 @@ To pass a vector as a query to an index, use the `query()` method on the index i
 A query vector is either an array of JavaScript numbers, 32-bit floating point or 64-bit floating point numbers: `number[]`, `Float32Array`, or `Float64Array`. Unlike when [inserting vectors](/vectorize/best-practices/insert-vectors/), a query vector does not need an ID or metadata.
 
 ```ts
-let queryVector = [54.8, 5.5, 3.1, ...]; // query vector dimensions should match the Vectorize index dimension being queried
+// query vector dimensions should match the Vectorize index dimension being queried
+let queryVector = [54.8, 5.5, 3.1, ...]; 
 let matches = await env.YOUR_INDEX.query(queryVector);
 ```
 
