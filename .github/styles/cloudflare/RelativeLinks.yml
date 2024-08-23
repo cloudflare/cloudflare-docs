@@ -10,4 +10,5 @@ level: warning
 scope: raw
 raw:
   - '\[.+\]\(https?:\/\/developers\.cloudflare\.com\/.+\)'
+  - '\[.+\]\(https?:\/\/github\.cloudflare\.com\/.+\)'
   - '\[.*?\]\(http:\/\/localhost:1111\/.*?\)'
