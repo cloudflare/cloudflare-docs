@@ -9,17 +9,7 @@ description: Override caching settings on a per-request basis.
 
 import { TabItem, Tabs } from "~/components";
 
-And let's see whether it finds [the link](http://localhost:1111/rules/url-forwarding/single-redirects/settings/)
-
 Enable and customize your gateway cache to serve requests directly from Cloudflare’s cache, instead of the original model provider, for faster requests and cost savings.
-
-Or [this link](https://github.com/cloudflare-docs).
-
-Or [this one](https://developers.cloudflare.com/test/).
-
-Or [this one](https://developers.cloudflare.com/test2/).
-
-What about [this page](/test/).
 
 :::note
 
@@ -27,12 +17,9 @@ Currently caching is supported only for text and image responses, and it applies
 We plan on adding semantic search for caching in the future to improve cache hit rates.
 :::
 
-Okay, but you can catch this thing, i.e., the latin stuff.
-
 ## Default configuration
 
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To set the default caching configuration in the dashboard:
 
@@ -42,8 +29,7 @@ To set the default caching configuration in the dashboard:
 4. Enable **Cache Responses**.
 5. Change the default caching to whatever value you prefer.
 
-</TabItem>
-<TabItem label="API">
+</TabItem> <TabItem label="API">
 
 To set the default caching configuration using the API:
 
