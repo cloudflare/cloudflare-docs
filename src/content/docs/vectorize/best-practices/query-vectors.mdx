@@ -41,7 +41,8 @@ This would return a set of matches resembling the following, based on the distan
 You can optionally change the number of results returned and/or whether results should include metadata and values:
 
 ```ts
-let queryVector = [54.8, 5.5, 3.1, ...]; // query vector dimensions should match the Vectorize index dimension being queried
+// query vector dimensions should match the Vectorize index dimension being queried
+let queryVector = [54.8, 5.5, 3.1, ...]; 
 // topK defaults to 5; returnValues defaults to false; returnMetadata defaults to "none"
 let matches = await env.YOUR_INDEX.query(queryVector, {
 	topK: 1,
