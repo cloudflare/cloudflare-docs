@@ -5,8 +5,9 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "**Warning**: When referring to another page in our docs, use the full relative link (`/1.1.1.1/check/`) instead of the full URL (`https://developers.cloudflare.com/1.1.1.1/check/`)."
+message: "**Warning**: When referring to another page in our docs, use the full relative link (`/1.1.1.1/check/`) instead of the full URL (`https://developers.cloudflare.com/1.1.1.1/check/`) or a local development link (`http://localhost:1111`)."
 level: warning
 scope: raw
 raw:
   - '\[.+\]\(https?:\/\/developers\.cloudflare\.com\/.+\)'
+  - '\[.+\]\(https?:\/\/localhost:1111\/.+\)'
