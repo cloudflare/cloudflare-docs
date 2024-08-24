@@ -1084,6 +1084,8 @@ It is not possible to polyfill all Node APIs or behaviors, but it is possible to
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
+The `node_compat` option only works for Workers, not Pages. As such, the above option to use runtime APIs directly with `compatibility_flags = [ "nodejs_compat" ]` should be used when possible. 
+
 ## Source maps
 
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
