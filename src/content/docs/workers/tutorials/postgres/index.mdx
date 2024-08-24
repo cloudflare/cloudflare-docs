@@ -1,9 +1,11 @@
 ---
-updated: 2023-06-12
+updated: 2024-08-23
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to a PostgreSQL database with Cloudflare Workers
+products:
+  - Hyperdrive
 tags:
   - PostgreSQL
 languages:
@@ -13,7 +15,7 @@ languages:
 
 import { Render, PackageManagers } from "~/components";
 
-In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
+In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a PostgreSQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/) and [Hyperdrive](/hyperdrive/). The Workers application you create in this tutorial will interact with a product database inside of PostgreSQL.
 
 ## Prerequisites
 
@@ -56,21 +58,17 @@ cd postgres-tutorial
 
 ### Enable Node.js compatibility
 
-[Add polyfills](/workers/wrangler/configuration/#add-polyfills-using-wrangler) for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml`.
-
-```toml title="wrangler.toml"
-node_compat = true
-```
+When creating your Worker application, the `wrangler.toml` file will have automatically set `compatibility_flags = ["nodejs_compat"]`. This will be needed to use the library to connect to your PostgreSQL database.
 
 ## 2. Add the PostgreSQL connection library
 
-To connect to a PostgreSQL database, you will need the `pg` library. In your Worker application directory, run the following command to install the library:
+To connect to a PostgreSQL database, you will need the `postgres` library. In your Worker application directory, run the following command to install the library:
 
 ```sh
-npm install pg
+npm install postgres
 ```
 
-Make sure you are using `pg` (node-postgres) version `8.11.0` or higher, as earlier versions do not support the Cloudflare Workers [TCP Sockets API](/workers/runtime-apis/tcp-sockets/).
+Make sure you are using `postgres` (`Postgres.js`) version `3.4.4` or higher. `Postgres.js` is compatible with both Pages and Workers.
 
 ## 3. Configure the connection to the PostgreSQL database
 
@@ -100,6 +98,12 @@ npx wrangler secret put DB_URL
 -------------------------------------------------------
 ? Enter a secret value: › ********************
 ✨ Success! Uploaded secret DB_URL
+```
+
+Set your `DB_URL` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
+
+```toml 
+DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 ```
 
 ### Set explicit parameters
@@ -132,7 +136,7 @@ npx wrangler secret put DB_PASSWORD
 Open your Worker's main file (for example, `worker.ts`) and import the `Client` class from the `pg` library:
 
 ```typescript
-import { Client } from "pg";
+import postgres from 'postgres'
 ```
 
 In the `fetch` event handler, connect to the PostgreSQL database using your chosen method, either the connection string or the explicit parameters.
@@ -140,21 +144,19 @@ In the `fetch` event handler, connect to the PostgreSQL database using your chos
 ### Use a connection string
 
 ```typescript
-const client = new Client(env.DB_URL);
-await client.connect();
+const sql = postgres(env.DB_URL)
 ```
 
 ### Set explicit parameters
 
 ```typescript
-const client = new Client({
-	user: env.DB_USERNAME,
+const sql = postgres({
+	username: env.DB_USERNAME,
 	password: env.DB_PASSWORD,
 	host: env.DB_HOST,
 	port: env.DB_PORT,
 	database: env.DB_NAME,
 });
-await client.connect();
 ```
 
 ## 5. Interact with the products database
@@ -179,21 +181,20 @@ CREATE TABLE products (
 Replace the existing code in your `worker.ts` file with the following code:
 
 ```typescript
+import postgres from 'postgres'
+
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const client = new Client(env.DB_URL);
-		await client.connect();
+		const sql = postgres(connStr)
 
 		// Query the products table
-		const result = await client.query("SELECT * FROM products");
+		const result = await sql`SELECT * FROM products;`
 
 		// Return the result as JSON
-		const resp = new Response(JSON.stringify(result.rows), {
+		const resp = new Response(JSON.stringify(result), {
 			headers: { "Content-Type": "application/json" },
 		});
 
-		// Clean up the client
-		ctx.waitUntil(client.end());
 		return resp;
 	},
 } satisfies ExportedHandler<Env>;
@@ -221,30 +222,49 @@ Assume the `products` table has the following columns: `id`, `name`, `descriptio
 
 Add the following code snippet inside the `fetch` event handler in your `worker.ts` file, before the existing query code:
 
-```typescript
-const url = new URL(request.url);
-if (request.method === "POST" && url.pathname === "/products") {
-	// Parse the request's JSON payload
-	const productData = await request.json();
+```typescript {9-32}
+import postgres from 'postgres'
 
-	// Insert the new product into the database
-	const insertQuery = `
-    INSERT INTO products (name, description, price)
-    VALUES ($1, $2, $3)
-    RETURNING *
-  `;
-	const values = [productData.name, productData.description, productData.price];
-	const insertResult = await client.query(insertQuery, values);
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const sql = postgres(env.DB_URL)
 
-	// Return the inserted row as JSON
-	const insertResp = new Response(JSON.stringify(insertResult.rows[0]), {
-		headers: { "Content-Type": "application/json" },
-	});
+  	const url = new URL(request.url);
+		if (request.method === "POST" && url.pathname === "/products") {
+			// Parse the request's JSON payload
+			const productData = await request.json();
 
-	// Clean up the client
-	ctx.waitUntil(client.end());
-	return insertResp;
-}
+			// Insert the new product into the database
+			const values = {
+				name: productData.name, 
+				description: productData.description, 
+				price: productData.price
+			};
+			const insertResult = await sql`
+				INSERT INTO products ${ sql(values) }
+				RETURNING *
+			`;
+
+			// Return the inserted row as JSON
+			const insertResp = new Response(JSON.stringify(insertResult), {
+				headers: { "Content-Type": "application/json" },
+			});
+
+			// Clean up the client
+			return insertResp;
+		}
+
+		// Query the products table
+		const result = await sql`SELECT * FROM products;`
+
+		// Return the result as JSON
+		const resp = new Response(JSON.stringify(result), {
+			headers: { "Content-Type": "application/json" },
+		});
+
+		return resp;
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 This code snippet does the following:
@@ -255,17 +275,7 @@ This code snippet does the following:
 4. Executes the query, inserting the new row into the `products` table.
 5. Returns the inserted row as a JSON response.
 
-Now, when you send a `POST` request to your Worker's URL with the `/products` path and a JSON payload, the Worker will insert a new row into the `products` table with the provided data.
-
-Modify your existing Worker code to accommodate the new feature:
-
-```typescript
-if (request.method === "POST" && url.pathname === "/products") {
-	// (Insert a new row as detailed in the code snippet above)
-} else if (request.method === "GET" && url.pathname === "/products") {
-	// (Fetch data from the products table as detailed in Step 5)
-}
-```
+Now, when you send a `POST` request to your Worker's URL with the `/products` path and a JSON payload, the Worker will insert a new row into the `products` table with the provided data. When a request to `/` is made, the Worker will return all products in the database.
 
 After making these changes, deploy the Worker again by running:
 
@@ -284,6 +294,62 @@ You can now use your Cloudflare Worker to insert new rows into the `products` ta
 ```
 
 You have successfully created a Cloudflare Worker that connects to a PostgreSQL database and handles fetching data and inserting new rows into a products table.
+
+## 8. Use Hyperdrive to accelerate queries
+
+Create a Hyperdrive configuration using the connection string for your PostgreSQL database.
+
+```bash
+npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+```
+
+You can also use explicit parameters by following the [wrangler documentation for Hyperdrive](https://developers.cloudflare.com/workers/wrangler/commands/#create-1).
+
+This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the `wrangler.toml` file.
+
+```toml {7-9}
+name = "hyperdrive-example"
+main = "src/index.ts"
+compatibility_date = "2024-08-21"
+compatibility_flags = ["nodejs_compat"]
+
+# Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+```
+
+Create the types for your Hyperdrive binding using the following command:
+
+```bash
+npm run cf-typegen
+```
+
+Replace your existing connection string in your Worker code with the Hyperdrive connection string.
+
+```js {3-3}
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const sql = postgres(env.HYPERDRIVE.connectionString)
+
+		const url = new URL(request.url);
+		
+		//rest of the routes and database queries
+	},
+} satisfies ExportedHandler<Env>;
+
+```
+
+## 9. Redeploy your Worker
+
+Run the following command to deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Your Worker application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`, using Hyperdrive. Hyperdrive accelerates database queries by pooling your connections and caching your requests across the globe.
+
 
 ## Next steps
 
