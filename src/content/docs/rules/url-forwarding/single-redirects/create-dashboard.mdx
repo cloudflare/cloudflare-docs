@@ -15,8 +15,17 @@ import { Render } from "~/components"
 2. Go to **Rules** > **Redirect Rules**.
 3. To create a new empty redirect rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/).
-6. Under **Then**, define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the rule expression.
-7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+5. Under **When incoming requests match**, select one of the following options:
+    - 5.1. **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
+        - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/files/*`.
+        - **Then...**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
+            - **Target URL**: Enter the target URL, which can be static (e.g., `https://example.com`) or dynamic (e.g., `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) like `${1}`, `${2}`, etc., to define dynamic target URLs.
+            - **Status code**: Select the status code for the redirect (e.g., `301`).
+            - **Preserve query string**: Choose whether to keep the query string from the original request.
+    - 5.2. **All incoming requests**: The rule will apply to all traffic.
+        - **Then...**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for all incoming requests.
+    - 5.3. **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be redirected.
+        - **Then...**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the custom rule expression.
+6. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 <Render file="url-forwarding/requires-proxied-site" params={{ one: "Single Redirects" }} />

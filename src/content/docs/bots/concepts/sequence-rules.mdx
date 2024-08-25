@@ -12,15 +12,15 @@ Sequence rules is currently in private beta. If you would like to be included in
 
 ## Prerequisites
 
-* Your account must have the Fraud Detection subscription.
-* Each zone must have an API Shield subscription as it relies on [Endpoint Management](/api-shield/management-and-monitoring/).
-* Each zone must configure the endpoints to track via Endpoint Management.
+- Your account must have the Fraud Detection subscription.
+- Each zone must have an API Shield subscription as it relies on [Endpoint Management](/api-shield/management-and-monitoring/).
+- Each zone must configure the endpoints to track via Endpoint Management.
 
-***
+---
 
 ## Enable sequence rules via the API
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the *Zone* > *Fraud Detection* > *Edit* permission.
+1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID. 
   :::note
@@ -42,12 +42,11 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_detection/sequence_co
 :::note
 
 When you enable sequence rules, Cloudflare will start setting cookies for all requests that match your endpoints. 
-
 :::
 
 Once you have enabled sequence rules, the rules fields will be populated and you can now use the new fields in your rules.
 
-***
+---
 
 ## Rules fields
 
@@ -59,10 +58,10 @@ Cloudflare only stores up to the 10 most recent operations in a sequence for up 
 
 These sequence fields are available in:
 
-* [Custom rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
-* [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
-* [Bulk redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
-* [HTTP request header modification rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
+- [Custom rules](/waf/custom-rules/) (`http_request_firewall_custom` phase)
+- [Rate limiting rules](/waf/rate-limiting-rules/) (`http_request_ratelimit`)
+- [Bulk redirects](/workers/examples/bulk-redirects/) (`http_request_redirect`)
+- [HTTP request header modification rules](/rules/transform/response-header-modification/) (`http_request_late_transform`)
 
 <table>
   <thead>
@@ -123,7 +122,7 @@ cf.sequence.current_op eq "bbbbbbbb" and
 not cf.sequence.msec_since_op["aaaaaaaa"] ge 1000
 ```
 
-***
+---
 
 ## Disable sequence rules via the API
 
@@ -131,14 +130,13 @@ Disabling sequence rules will stop the rules fields from being populated. If you
 
 To disable sequence rules:
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the *Zone* > *Fraud Detection* > *Edit* permission.
+1. [Create an API token](/fundamentals/api/get-started/create-token/) if you do not already have one. The API token must include the _Zone_ > _Fraud Detection_ > _Edit_ permission.
 2. [Get the zone ID](/fundamentals/setup/find-account-and-zone-ids/) for the zone(s) where you want to enable sequence rules.
 3. [Add the endpoints](/api-shield/management-and-monitoring/) that you want to track in your sequence rules using API Shield's Endpoint Management and make note of the short ID.
 
   :::note
 
   The short ID will not be visible until our account team has enabled this feature for you. 
-
   :::
 
 4. Disable the sequence cookie using your API token, zone ID, and by setting `enabled` to `false` on the following API call.
@@ -149,7 +147,7 @@ curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/fraud_de
 --data '{"enabled": false}'
 ```
 
-***
+---
 
 ## Limitations
 
