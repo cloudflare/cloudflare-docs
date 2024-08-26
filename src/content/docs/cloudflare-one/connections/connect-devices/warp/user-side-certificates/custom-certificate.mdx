@@ -8,7 +8,7 @@ description: Configure WARP to use a custom root certificate instead of the
   Cloudflare certificate.
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 :::note
 
@@ -61,64 +61,82 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 ## Deploy a custom root certificate
 
-1. Verify that the certificate is installed on your devices.
+<Tabs>
 
-2. <Render file="upload-mtls-cert" params={{ one: " " }} />
+    <TabItem label="Dashboard">
+    		1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+    		2. In **Certificates**, select **Manage**.
+    		3. Select **Upload certificate**.
+    		4. Enter the private key and SSL certificate you generated or select **Paste certificate from file** to upload them from a file.
+    		5. Select **Generate certificate**.
+    	</TabItem>
 
-3. Enable the certificate in Gateway with its UUID.
+    <TabItem label="API">
+    	1. Verify that the certificate is installed on your devices.
 
-   ```bash null {10}
-   curl --request PATCH \
-   "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration" \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "settings": {
-       "custom_certificate": {
-         "enabled": true,
-         "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
-       }
-     }
-   }'
-   ```
+    	2. <Render file="upload-mtls-cert" params={{ one: " " }} />
 
-   The response will show the current status of the certificate:
+    	3. Enable the certificate in Gateway with its UUID.
 
-   ```json null {13}
-   {
-   "success": true,
-   "errors": [],
-   "messages": [],
-   "result": {
-         "settings": {
-               "antivirus": {...},
-               "block_page": {...},
-               "custom_certificate":
-               {
-                   "enabled": true,
-                   "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60",
-                   "binding_status": "pending_deployment",
-                   "qs_pack_id": "50a78g31-a5b5-4k58d-a6ed-b0ac17da9k05"
-               },
-               "tls_decrypt": {...},
-               "activity_log": {...},
-               "browser_isolation": {...},
-               "fips": {...},
-           },
-       },
-       "created_at": "2014-01-01T05:20:00.12345Z",
-       "updated_at": "2014-01-01T05:20:00.12345Z"
-   }
-   ```
+    		```bash null {10}
+    		curl --request PATCH \
+    		"https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration" \
+    		--header "X-Auth-Email: <EMAIL>" \
+    		--header "X-Auth-Key: <API_KEY>" \
+    		--header "Content-Type: application/json" \
+    		--data '{
+    			"settings": {
+    				"custom_certificate": {
+    					"enabled": true,
+    					"id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60"
+    				}
+    			}
+    		}'
+    		```
 
-Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate.
+    		The response will show the current status of the certificate:
+
+    		```json null {13}
+    		{
+    		"success": true,
+    		"errors": [],
+    		"messages": [],
+    		"result": {
+    					"settings": {
+    								"antivirus": {...},
+    								"block_page": {...},
+    								"custom_certificate":
+    								{
+    										"enabled": true,
+    										"id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60",
+    										"binding_status": "pending_deployment",
+    										"qs_pack_id": "50a78g31-a5b5-4k58d-a6ed-b0ac17da9k05"
+    								},
+    								"tls_decrypt": {...},
+    								"activity_log": {...},
+    								"browser_isolation": {...},
+    								"fips": {...},
+    						},
+    				},
+    				"created_at": "2014-01-01T05:20:00.12345Z",
+    				"updated_at": "2014-01-01T05:20:00.12345Z"
+    		}
+    		```
+
+    	Once `binding_status` changes to `active`, Gateway will sign your traffic using the custom root certificate and private key. If you disable the custom certificate, Gateway will revert to the default Cloudflare certificate generated for your Zero Trust account.
+    </TabItem>
+
+</Tabs>
 
 :::caution[Private key visibility]
 
 When you upload a private key to Zero Trust, Cloudflare encrypts the key and stores it at rest. Only your delegated apps have the necessary decryption keys to decrypt the private key. You will not be able to retrieve the private key after upload.
 
 :::
+
+## Use a custom root certificate
+
+To use a custom root certificate you generated and uploaded to Cloudflare, refer to [Activate a root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/#activate-a-root-certificate).
 
 ## Troubleshoot HTTP errors
 
