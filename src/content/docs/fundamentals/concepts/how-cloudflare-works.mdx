@@ -1,43 +1,43 @@
 ---
-pcx_content_type: concept
-title: How Cloudflare works
-sidebar:
-  order: 2
+内容类型：概念
+标题：云耀斑的工作原理
+侧边栏：
+订单数：2
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+从"~/零组件"中导入{术语工具提示}
 
-The [Cloudflare global network](https://www.cloudflare.com/network/) can improve the security, performance, reliability, and privacy of anything connected to the Internet, such as your website, SaaS application, or corporate network.
+云闪环球网络（https://www.cloudflare.com/network/)可以提高连接到互联网的任何东西（如您的网站、SaaS应用程序或企业网络）的安全、性能、可靠性和隐私性。
 
-## Application Services
+##应用服务
 
-To optimize your website or web application, Cloudflare acts as a [DNS provider](https://www.cloudflare.com/learning/dns/what-is-dns/) for your domain, and a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) for your web traffic.
+为了优化您的网站或网络应用程序，CloudFlare充当【域名服务器提供商】（https://www.cloudflare.com/learning/dns/what-is-dns/)用于您的域，以及一个[反向代理]（https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)为您的网络流量。
 
-### How Cloudflare works as a DNS provider
+###CloudFlare作为域名系统提供商的工作方式
 
-We support a few different [setups](/dns/zone-setups/) for using Cloudflare as a DNS provider. A [full DNS setup](/dns/zone-setups/full-setup/) is the most common, where Cloudflare becomes the primary authoritative DNS provider for your domain, after you [connect your domain to Cloudflare](/fundamentals/setup/manage-domains/connect-your-domain/). This means we respond to DNS queries for your domain, and you [manage its DNS records](/dns/manage-dns-records/how-to/create-dns-records/) via the Cloudflare dashboard or API.
+我们支持使用Cloudflare作为DNS提供商的几种不同的[设置]（/dns/zone-setups/）。[完整DNS设置]（/dns/zone-setups/full-setup/）是最常见的，在您[将您的域连接到Cloudflare](/fundamentals/setup/manage-domains/connect-your-domain/). 这意味着我们响应您的域的域名系统查询，而您【管理其域名系统记录】（/域名系统/管理—域名系统—记录/操作方法/创建—域名系统记录/）通过云端或应用程序接口。
 
-When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's [proxy eligibility](/dns/manage-dns-records/reference/proxied-dns-records/#proxy-eligibility), and its [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
+当Cloudflare收到您的域的DNS查询时，我们的响应由[在您的DNS表中设置的]（/dns）配置决定。/管理数据记录/How-to/create-dns-records/），包括记录的值、记录的[代理]eligibility](/dns/manage-dns-records/reference/proxied-dns-records/#proxy-eligibility),及其【代理status](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-If the [domain's status](/dns/zone-setups/reference/domain-status/) is active and the queried DNS record is set to `proxied`, then Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **instead of** the value defined in your DNS table. This effectively re-routes the `HTTP/HTTPS` requests to the Cloudflare network, instead of directly reaching the targeted the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
+如果【域的status](/dns/zone-setups/reference/domain-status/)是活动的，并且查询的域名系统记录被设置为"代理"，然后Cloudflare（Cloudflare）用一个【选播IP】响应。address](/fundamentals/concepts/cloudflare-ip-addresses/), **而不是**域名系统表中定义的值。这有效地重新路由“HTTP/HTTPS“请求到云火（Cloudflare）网络，而不是直接到达目标的【源服务器】（https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
-In contrast, if the queried DNS record is set to `DNS only`, meaning the proxy is off, then Cloudflare responds with the value defined in your DNS table (that is, an IP address or CNAME record). This means `HTTP/HTTPS` requests route directly to the origin server and are not processed or protected by Cloudflare.
+相反，如果查询的域名系统记录被设置为“仅限域名系统”，这意味着代理处于关闭状态，那么CloudFlare将使用域名系统表中定义的值（即IP地址或CNAME记录）进行响应。这意味着“HTTP/HTTPS”请求直接路由到原始服务器，不受云雾的处理或保护。
 
-### How Cloudflare works as a reverse proxy
+###cloudflare如何作为反向代理工作
 
-All DNS records in your DNS table have a [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/), indicating whether or not `HTTP/HTTPS` traffic for that record will route through Cloudflare on its way between the client and the origin server. If the [domain's status](/dns/zone-setups/reference/domain-status/) is active, all `HTTP/HTTPS` requests for [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) route through Cloudflare.
+DNS表中的所有DNS记录都有一个【代理status](/dns/manage-dns-records/reference/proxied-dns-records/),指示该记录的“HTTP/HTTPS"流量在客户端和源服务器之间是否会路由Cloudflare。如果【域的status](/dns/zone-setups/reference/domain-status/)处于活动状态，所有针对【附加域名】的“HTTP/HTTPS”请求均已启动records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records)穿过云焰
 
-As these requests pass through our network, they are processed according to your [configuration](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations). Subsequently, legitimate requests are forwarded to the origin server.
+当这些请求通过我们的网络时，它们会根据您的要求进行处理。[configuration](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations). 随后，合法请求被转发到原服务器。
 
-Refer to our [Load Balancing reference architecture](/reference-architecture/architectures/load-balancing/) to learn more about advanced ways to forward traffic to your origins (or other <GlossaryTooltip term="endpoint" link="/glossary/?term=endpoint">endpoints</GlossaryTooltip>), as well as our [CDN reference architecture](/reference-architecture/architectures/cdn/) to learn more about how Cloudflare processes and optimizes your web traffic.
+请参考我们的[负载平衡参考architecture](/reference-architecture/architectures/load-balancing/)了解更多关于将流量转发到您的源（或其他<GlossaryTooltip术语="端点"）>的高级方法link="/glossary/?term=endpoint">endpoints</GlossaryTooltip>),以及我们的【CDN参考资料】architecture](/reference-architecture/architectures/cdn/)详细了解Cloudflare如何处理和优化您的网络流量。
 
-:::note
+注意:
 
-Proxying is on by default for records that serve `HTTP/HTTPS` traffic (`A`, `AAAA`, and `CNAME` records). To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/). 
+默认情况下，对服务“HTTP/HTTPS”流量的记录（“A”、“AAAA”和”CNAME“记录）启用代理。若要在[非标准端口]（/fundamentals/reference/network-ports/）上代理”HTTP/HTTPS“流量，或代理基于"TCP协议“或"UDP协议“的应用程序，请使用[Cloudflare Spectrum]（/spectrum/）。
 :::
 
-In the Cloudflare dashboard, find out which DNS records are proxied by selecting your domain and navigating to the **DNS records** tab.
+在Cloudflare仪表板中，通过选择您的域并导航到"DNS记录"选项卡，查找哪些DNS记录被代理。
 
 #### Example DNS table
 
