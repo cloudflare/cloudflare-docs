@@ -6,15 +6,14 @@ sidebar:
 head: []
 description: Use Access audit logs to review authentication events and HTTP
   requests to protected URI paths.
-
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components"
+import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 Cloudflare Access generates two types of audit logs:
 
-* **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
-* **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
+- **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
+- **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
 
 ## Authentication audit logs
 
@@ -26,15 +25,13 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 
 :::note
 
-
 Authentication audit logs do not capture actions the user takes once they have authenticated.
-
 
 :::
 
 ### Identity-based authentication
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To view logs for identity-based authentication events:
 
@@ -54,22 +51,22 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/logs/acc
 
 ```json title="Response"
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": [
-    {
-      "user_email": "michelle@example.com",
-      "ip_address": "198.41.129.166",
-      "app_uid": "df7e2w5f-02b7-4d9d-af26-8d1988fca630",
-      "app_domain": "test.example.com/admin",
-      "action": "login",
-      "connection": "saml",
-      "allowed": false,
-      "created_at": "2014-01-01T05:20:00.12345Z",
-      "ray_id": "187d944c61940c77"
-    }
-  ]
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": [
+		{
+			"user_email": "michelle@example.com",
+			"ip_address": "198.41.129.166",
+			"app_uid": "df7e2w5f-02b7-4d9d-af26-8d1988fca630",
+			"app_domain": "test.example.com/admin",
+			"action": "login",
+			"connection": "saml",
+			"allowed": false,
+			"created_at": "2014-01-01T05:20:00.12345Z",
+			"ray_id": "187d944c61940c77"
+		}
+	]
 }
 ```
 
@@ -79,19 +76,19 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/logs/acc
 
 Identity-based authentication logs contain the following fields:
 
-| Field           | Description                                               |
-| --------------- | --------------------------------------------------------- |
-| **user\_email** | The email address of the authenticating user.             |
-| **ip\_address** | The IP address of the authenticating user.                |
-| **app\_uid**    | The unique identifier for the protected application.      |
-| **app\_domain** | The URL of the protected application.                     |
-| **action**      | The event that occurred, such as a login attempt.         |
-| **allowed**     | The result of the authentication event.                   |
-| **created\_at** | The event timestamp.                                      |
-| **connection**  | The IdP used to authenticate.                             |
-| **country**     | The country associated with the user’s IP address.        |
-| **ray\_id**     | A unique identifier for every request through Cloudflare. |
-| **app\_type**   | The type specifies if the app is self-hosted or SaaS.     |
+| Field          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| **user_email** | The email address of the authenticating user.             |
+| **ip_address** | The IP address of the authenticating user.                |
+| **app_uid**    | The unique identifier for the protected application.      |
+| **app_domain** | The URL of the protected application.                     |
+| **action**     | The event that occurred, such as a login attempt.         |
+| **allowed**    | The result of the authentication event.                   |
+| **created_at** | The event timestamp.                                      |
+| **connection** | The IdP used to authenticate.                             |
+| **country**    | The country associated with the user’s IP address.        |
+| **ray_id**     | A unique identifier for every request through Cloudflare. |
+| **app_type**   | The type specifies if the app is self-hosted or SaaS.     |
 
 ### Non-identity authentication
 

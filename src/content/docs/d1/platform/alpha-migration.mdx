@@ -3,14 +3,11 @@ pcx_content_type: concept
 title: Alpha database migration guide
 sidebar:
   order: 2
-
 ---
 
 :::caution
 
-
-D1 alpha databases will stop accepting live SQL queries on August 15, 2024.
-
+D1 alpha databases stopped accepting live SQL queries on August 22, 2024.
 
 :::
 
@@ -27,7 +24,7 @@ This guide will instruct you to recreate alpha D1 databases on our production-re
 ## 1. Verify that a database is alpha
 
 ```sh
-$ npx wrangler d1 info <database_name>
+npx wrangler d1 info <database_name>
 ```
 
 If the database is alpha, the output of the command will include `version` set to `alpha`:
@@ -41,7 +38,7 @@ If the database is alpha, the output of the command will include `version` set t
 ## 2. Create a manual backup
 
 ```sh
-$ npx wrangler d1 backup create <alpha_database_name>
+npx wrangler d1 backup create <alpha_database_name>
 ```
 
 ## 3. Download the manual backup
@@ -49,7 +46,7 @@ $ npx wrangler d1 backup create <alpha_database_name>
 The command below will download the manual backup of the alpha database as `.sqlite3` file:
 
 ```sh
-$ npx wrangler d1 backup download <alpha_database_name> <backup_id> # See available backups with wrangler d1 backup list <database_name>
+npx wrangler d1 backup download <alpha_database_name> <backup_id> # See available backups with wrangler d1 backup list <database_name>
 ```
 
 ## 4. Convert the manual backup into SQL statements
@@ -57,7 +54,7 @@ $ npx wrangler d1 backup download <alpha_database_name> <backup_id> # See availa
 The command below will convert the manual backup of the alpha database from the downloaded `.sqlite3` file into SQL statements which can then be imported into the new database:
 
 ```sh
-$ sqlite3 db_dump.sqlite3 .dump > db.sql
+sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
 
 Once you have run the above command, you will need to edit the output SQL file to be compatible with D1:
@@ -79,13 +76,13 @@ All new D1 databases use the updated architecture by default.
 Run the following command to create a new database:
 
 ```sh
-$ npx wrangler d1 create <new_database_name>
+npx wrangler d1 create <new_database_name>
 ```
 
 ## 6. Run SQL statements against the new D1 database
 
 ```sh
-$ npx wrangler d1 execute <new_database_name> --remote --file=./db.sql
+npx wrangler d1 execute <new_database_name> --remote --file=./db.sql
 ```
 
 ## 7. Delete your alpha database
@@ -93,5 +90,5 @@ $ npx wrangler d1 execute <new_database_name> --remote --file=./db.sql
 To delete your previous alpha database, run:
 
 ```sh
-$ npx wrangler d1 delete <alpha_database_name>
+npx wrangler d1 delete <alpha_database_name>
 ```

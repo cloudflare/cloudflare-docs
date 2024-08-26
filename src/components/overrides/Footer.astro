@@ -2,14 +2,27 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Footer.astro";
 import OneTrust from "../OneTrust.astro";
+import { getEntry } from "astro:content";
 
-const links = Object.entries({
+let links = {
   "Cloudflare Dashboard": "https://dash.cloudflare.com",
   Discord: "https://discord.cloudflare.com",
   Community: "https://community.cloudflare.com",
   "Learning Center": "https://www.cloudflare.com/learning/",
   "Support Portal": "/support/contacting-cloudflare-support/",
-});
+};
+
+const currentSection = Astro.params.slug?.split("/")[0];
+
+if (currentSection) {
+  const product = await getEntry("products", currentSection);
+
+  if (product) {
+    if (product.data.resources?.dashboard_link) {
+      links["Cloudflare Dashboard"] = product.data.resources.dashboard_link;
+    }
+  }
+}
 
 const homepageLinks = Object.entries({
   "Stay in touch": [
@@ -109,16 +122,16 @@ if (import.meta.env.CF_PAGES_BRANCH === "production" || import.meta.env.GITHUB_R
     <>
       <Default {...Astro.props} />
       <div class="items-center flex flex-wrap">
-        {links.map(([text, href]) => (
+        {Object.entries(links).map(([text, href]) => (
           <a
             href={href}
-            class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-200"
+            class="mx-2 my-2 text-xs text-black dark:text-white decoration-accent-600 dark:decoration-accent-200"
           >
             <span>{text}</span>
           </a>
         ))}
         {isProduction && 
-          <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-200">
+          <div class="mx-2 my-2 text-xs text-black dark:text-white underline decoration-accent-600 dark:decoration-accent-200">
             <OneTrust />
           </div>
         }

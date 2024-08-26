@@ -4,12 +4,10 @@ title: BGP anomalies
 sidebar:
   order: 3
   badge:
-    variant: caution
     text: Beta
-
 ---
 
-import { Render, PackageManagers } from "~/components"
+import { Render, PackageManagers } from "~/components";
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 
@@ -81,17 +79,17 @@ The result shows the most recent 10 BGP hijack events that affects `AS64512`.
 
 In the response we can learn about the following information about each event:
 
-* `hijack_msg_count`: the number of potential BGP hijack messages observed from all peers.
-* `peer_asns`: the AS numbers of the route collector peers who observed the hijack messages.
-* `prefixes`: the affected prefixes.
-* `hijacker_asn` and `victim_asns`: the potential hijacker ASN and victim ASNs.
-* `confidence_score`: a quantitative score describing how confident the system is for this event being a hijack:
-  * 1-3: low confidence.
-  * 4-7: medium confidence.
-  * 8-above: high confidence.
-* `tags`: the evidence collected for the events. Each `tag` is also associated with a score that affects the overall confidence score:
-  * a positive score indicates that the event is *more likely* to be a hijack.
-  * a negative score indicates that the event is *less likely* to be a hijack.
+- `hijack_msg_count`: the number of potential BGP hijack messages observed from all peers.
+- `peer_asns`: the AS numbers of the route collector peers who observed the hijack messages.
+- `prefixes`: the affected prefixes.
+- `hijacker_asn` and `victim_asns`: the potential hijacker ASN and victim ASNs.
+- `confidence_score`: a quantitative score describing how confident the system is for this event being a hijack:
+  - 1-3: low confidence.
+  - 4-7: medium confidence.
+  - 8-above: high confidence.
+- `tags`: the evidence collected for the events. Each `tag` is also associated with a score that affects the overall confidence score:
+  - a positive score indicates that the event is _more likely_ to be a hijack.
+  - a negative score indicates that the event is _less likely_ to be a hijack.
 
 Users can further filter out low-confidence events by attaching a `minConfidence=8` parameter, which will return only events with a `confidence_score` of `8` or higher.
 
@@ -157,12 +155,12 @@ The result shows the most recent 10 BGP route leak events that affects `AS64512`
 
 In the response we can learn about the following information about each event:
 
-* `leak_asn`: the AS who potentially caused the leak.
-* `leak_seg`: the AS path segment observed and believed to be a leak.
-* `min_ts` and `max_ts`: the earliest and latest timestamps of the leak announcements.
-* `leak_count`: the total number of BGP route leak announcements observed.
-* `peer_count`: the number of route collector peers observed the leak.
-* `prefix_count` and `origin_count`: the number of prefixes and origin ASes affected by the leak.
+- `leak_asn`: the AS who potentially caused the leak.
+- `leak_seg`: the AS path segment observed and believed to be a leak.
+- `min_ts` and `max_ts`: the earliest and latest timestamps of the leak announcements.
+- `leak_count`: the total number of BGP route leak announcements observed.
+- `peer_count`: the number of route collector peers observed the leak.
+- `prefix_count` and `origin_count`: the number of prefixes and origin ASes affected by the leak.
 
 ## Send alerts for BGP hijacks
 
@@ -172,9 +170,9 @@ We will use Cloudflare Workers as the platform and use its Cron Triggers to peri
 
 For the app, we would like it to do the following things:
 
-* Fetch from Cloudflare API with a given API token.
-* Check against Cloudflare KV to know what events are new.
-* Construct messages for new hijacks and send out alerts via webhook triggers.
+- Fetch from Cloudflare API with a given API token.
+- Check against Cloudflare KV to know what events are new.
+- Construct messages for new hijacks and send out alerts via webhook triggers.
 
 ### Worker app setup
 
@@ -182,14 +180,22 @@ We will start with setting up a Cloudflare Worker app.
 
 First, create a new Workers app in a local directory:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={'hijack-alerts'} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"hijack-alerts"} />
 
-<Render file="c3-post-run-steps" product="workers" params={{ one: "Demo application", two: "Scheduled Worker (Cron Trigger)", three: "JavaScript" }} />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		one: "Demo application",
+		two: "Scheduled Worker (Cron Trigger)",
+		three: "JavaScript",
+	}}
+/>
 
 To start developing your Worker, `cd` into your new project directory:
 
 ```sh
-$ cd hijack-alerts
+cd hijack-alerts
 ```
 
 In your `wrangler.toml` file, change the default checking frequency (once per hour) to what you like. Here is an example
@@ -221,19 +227,22 @@ The following `apiFetch(env, paramsStr)` handles taking in a request parameters 
 fetch from the Cloudflare API BGP hijacks endpoint.
 
 ```javascript
-async function apiFetch (env, paramsStr) {
-  const config = {
-    headers:{
-      "Authorization": `Bearer ${env.CF_API_TOKEN}`,
-    }
-  };
-  const res = await fetch(`https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?${paramsStr}`, config);
+async function apiFetch(env, paramsStr) {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${env.CF_API_TOKEN}`,
+		},
+	};
+	const res = await fetch(
+		`https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?${paramsStr}`,
+		config,
+	);
 
-  if(!res.ok){
-    console.log(JSON.stringify(res))
-    return null
-  }
-  return await (res).json()
+	if (!res.ok) {
+		console.log(JSON.stringify(res));
+		return null;
+	}
+	return await res.json();
 }
 ```
 
@@ -269,33 +278,33 @@ The main loop that checks for the most recent events looks like this (some of th
 ```javascript
 let new_events = [];
 let page = 1;
-while(true) {
-    // query for events
-    const query_params = `per_page=10&page=${page}&involvedAsn=${env.TARGET_ASN}&sortBy=ID&sortOrder=DESC`
-    const data = await apiFetch(env, query_params);
+while (true) {
+	// query for events
+	const query_params = `per_page=10&page=${page}&involvedAsn=${env.TARGET_ASN}&sortBy=ID&sortOrder=DESC`;
+	const data = await apiFetch(env, query_params);
 
-    // first batch, save KV value only
-    if(first_batch) {
-      await env.HIJACKS_KV.put("latest_id", (events[0].id).toString());
-      return
-    }
+	// first batch, save KV value only
+	if (first_batch) {
+		await env.HIJACKS_KV.put("latest_id", events[0].id.toString());
+		return;
+	}
 
-    // some validation skipped
-    // ...
+	// some validation skipped
+	// ...
 
-    let reached_last = false;
-    for(const event of data.result.events){
-      if(event.id <= kv_latest_id) {
-        // reached the latest events
-        reached_last = true;
-        break
-      }
-      new_events.push(event)
-    }
-    if(reached_last){
-      break
-    }
-    page += 1;
+	let reached_last = false;
+	for (const event of data.result.events) {
+		if (event.id <= kv_latest_id) {
+			// reached the latest events
+			reached_last = true;
+			break;
+		}
+		new_events.push(event);
+	}
+	if (reached_last) {
+		break;
+	}
+	page += 1;
 }
 ```
 
@@ -303,11 +312,11 @@ Now that we have all the newly detected events saved in `new_events` variable, w
 
 ```javascript
 // sort events by increasing ID order
-new_events.sort((a,b)=>a.id - b.id);
-const kv_latest_id = new_events[new_events.length-1].id
+new_events.sort((a, b) => a.id - b.id);
+const kv_latest_id = new_events[new_events.length - 1].id;
 // push new events
-for(const event of new_events) {
-  await send_alert(env, event);
+for (const event of new_events) {
+	await send_alert(env, event);
 }
 // update latest_id KV value
 await env.HIJACKS_KV.put("latest_id", kv_latest_id.toString());
@@ -324,20 +333,19 @@ async function send_hangout_alert(env, event) {
 	const webhook_url = `${env.WEBHOOK_URL}&threadKey=bgp-hijacks-event-${event.id}`;
 
 	const data = JSON.stringify({
-		'text':
-			`Detected BGP hijack event (${event.id}):
+		text: `Detected BGP hijack event (${event.id}):
 Detected time: *${event.min_hijack_ts} UTC*
 Detected ASN: *${event.hijacker_asn}*
 Expected ASN(s): *${event.victim_asns.join(" ")}*
 Prefixes: *${event.prefixes.join(" ")}*
-Tags: *${event.tags.map((tag)=>tag.name).join(" ")}*
+Tags: *${event.tags.map((tag) => tag.name).join(" ")}*
 Peer Count: *${event.peer_ip_count}*
 `,
 	});
 	await fetch(webhook_url, {
-		method: 'POST',
+		method: "POST",
 		headers: {
-			'Content-Type': 'application/json; charset=UTF-8',
+			"Content-Type": "application/json; charset=UTF-8",
 		},
 		body: data,
 	});
@@ -364,36 +372,37 @@ Then, you can create an email-sending function to send alert emails to your conf
 
 ```javascript
 async function send_email_alert(hijacker, prefixes, victims) {
-  const msg = createMimeMessage();
-  msg.setSender({ name: "BGP Hijack Alerter", addr: "<YOUR_APP>@<YOUR_APP_DOMAIN>" });
-  msg.setRecipient("<YOUR_EMAIL>@example.com");
-  msg.setSubject("BGP hijack alert");
-  msg.addMessage({
-    contentType: 'text/plain',
-    data: `BGP hijack detected:
+	const msg = createMimeMessage();
+	msg.setSender({
+		name: "BGP Hijack Alerter",
+		addr: "<YOUR_APP>@<YOUR_APP_DOMAIN>",
+	});
+	msg.setRecipient("<YOUR_EMAIL>@example.com");
+	msg.setSubject("BGP hijack alert");
+	msg.addMessage({
+		contentType: "text/plain",
+		data: `BGP hijack detected:
     Detected origin: ${hijacker}
     Expected origins: ${victims.join(" ")}
     Prefixes: ${prefixes.join(" ")}
-    `
-  })
+    `,
+	});
 
-  var message = new EmailMessage(
-    "<YOUR_APP>@<YOUR_APP_DOMAIN>",
-    "<YOUR_EMAIL>@example.com",
-    msg.asRaw()
-  );
-  try {
-    await env.SEND_EMAIL_BINDING.send(message);
-  } catch (e) {
-    return new Response(e.message);
-  }
+	var message = new EmailMessage(
+		"<YOUR_APP>@<YOUR_APP_DOMAIN>",
+		"<YOUR_EMAIL>@example.com",
+		msg.asRaw(),
+	);
+	try {
+		await env.SEND_EMAIL_BINDING.send(message);
+	} catch (e) {
+		return new Response(e.message);
+	}
 }
 ```
 
 [email-routing]: /email-routing/
-
 [email-workers-tutorial]: /email-routing/email-workers/send-email-workers/
-
 [wrangler-send-email]: /workers/wrangler/configuration/#email-bindings
 
 ## Next steps
@@ -401,5 +410,4 @@ async function send_email_alert(hijacker, prefixes, victims) {
 Refer to our API documentation for [BGP route leaks][route-leak-api-doc] and [BGP hijacks][hijack-api-doc] for more information on these topics.
 
 [route-leak-api-doc]: /api/operations/radar-get-bgp-route-leak-events
-
 [hijack-api-doc]: /api/operations/radar-get-bgp-hijacks-events

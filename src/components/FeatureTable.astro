@@ -19,16 +19,26 @@ const plan = await indexPlans(id);
 
 // @ts-ignore types not implemented for plans JSON
 const properties = plan.properties;
+
+const markdown = (content: any) => {
+	if (typeof content !== "string") return content;
+
+	return marked.parse(content);
+};
 ---
 
 <table>
 	<thead>
 		<tr>
-			<td></td>
-			<td>Free</td>
-			<td>Pro</td>
-			<td>Business</td>
-			<td>Enterprise</td>
+			<th></th>
+			<th>Free</th>
+			<th>Pro</th>
+			<th>Business</th>
+			<th>Enterprise</th>
+			{
+				plan.ent_plus &&
+				<th>{plan.ent_plus}</th>
+			}
 		</tr>
 	</thead>
 	<tbody>
@@ -50,21 +60,20 @@ const properties = plan.properties;
           );
         }
 
-        return title;
+        return markdown(title);
       };
-	  
-	  const markdown = (content) => {
-        if (typeof content !== "string") return content;
-        return marked.parse(content);
-      };
-	  
+
 				return (
 					<tr>
-						<td>{renderTitle(v.title)}</td>
+						<th set:html={renderTitle(v.title)} />
 						<td set:html={markdown(v.free)} />
 						<td set:html={markdown(v.pro)} />
 						<td set:html={markdown(v.biz)} />
 						<td set:html={markdown(v.ent)} />
+						{
+							plan.ent_plus &&
+							<td set:html={markdown(v.ent_plus)} />
+						}
 					</tr>
 				);
 			})

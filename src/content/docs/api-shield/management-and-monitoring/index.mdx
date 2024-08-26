@@ -72,6 +72,13 @@ When adding an endpoint manually, you can specify variable fields in the path or
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
+## Delete endpoints manually
+
+You can delete endpoints one at a time or in bulk.
+
+1. From Endpoint Management, select the checkboxes for the endpoints that you want to delete.
+2. Select **Delete endpoints**.
+
 ## Endpoint schema learning
 
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters.
@@ -94,24 +101,24 @@ The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 
 #### Learned schemas will always include:
 
-* The listed hostname in the servers section
-* All endpoints by host, method, and path
-* Detected path variables
+- The listed hostname in the servers section
+- All endpoints by host, method, and path
+- Detected path variables
 
 #### Learned schemas can optionally include:
 
-* Detected query parameters and its format
-* API Shield’s rate limit threshold recommendations
+- Detected query parameters and its format
+- API Shield’s rate limit threshold recommendations
 
 ## Endpoint Performance Analysis
 
 For each saved endpoint, customers can view:
 
-* **Request count**: The total number of requests to the endpoint over time.
-* **Rate limiting recommendation**: per 10 minutes. This is guided by the request count.
-* **Latency**: The average origin response time in milliseconds (ms). This metric shows how long it takes from the moment a visitor makes a request to the moment the visitor gets a response back from the origin.
-* **Error rate** vs. overall traffic: grouped by 4xx, 5xx, and their sum.
-* **Response size**: The average size of the response (in bytes) returned to the request.
+- **Request count**: The total number of requests to the endpoint over time.
+- **Rate limiting recommendation**: per 10 minutes. This is guided by the request count.
+- **Latency**: The average origin response time in milliseconds (ms). This metric shows how long it takes from the moment a visitor makes a request to the moment the visitor gets a response back from the origin.
+- **Error rate** vs. overall traffic: grouped by 4xx, 5xx, and their sum.
+- **Response size**: The average size of the response (in bytes) returned to the request.
 
 :::note
 

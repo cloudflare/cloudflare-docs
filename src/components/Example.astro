@@ -1,7 +1,25 @@
 ---
+import { z } from "astro:content";
 import { Card } from "~/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	title: z.string().default("")
+});
+
+const { title } = props.parse(Astro.props);
 ---
 
-<Card title="Example">
+<Card title={title}>
 	<slot />
 </Card>
+
+{
+	title === "" &&
+	<style>
+	.card {
+		gap: 0 !important;
+	}
+	</style>	
+}

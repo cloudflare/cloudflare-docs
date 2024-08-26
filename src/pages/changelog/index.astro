@@ -27,7 +27,7 @@ const { products, productAreas, changelogs } = await getChangelogs();
 	</select>
 	{
 		changelogs.map(([date, entries]) => (
-			<div data-date={date}>
+			<div style="overflow-anchor: none;" data-date={date}>
 				<h2>{date}</h2>
 				{entries?.map((entry) => (
 					<div data-product={entry.product.toLowerCase()} data-productArea={entry.productAreaName.toLowerCase()}>
@@ -50,6 +50,16 @@ const { products, productAreas, changelogs } = await getChangelogs();
 </StarlightPage>
 
 <script>
+	import StickyHeader from '@codingheads/sticky-header';
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const navHeightRem = getComputedStyle(document.body).getPropertyValue('--sl-nav-height');
+		const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
+
+		const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
+		headers.forEach((header) => new StickyHeader(header, { offset: 0 - navHeightPx }));
+	});
+
 	const productFilter = document.querySelector<HTMLSelectElement>("#products");
 	productFilter?.addEventListener("change", filterEntries);
 
@@ -63,10 +73,10 @@ const { products, productAreas, changelogs } = await getChangelogs();
 			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
 
 			if (productAreaFilter.value === "all" && productFilter.value === "all") {
-				dates.forEach((x) => () => {
+				dates.forEach((x) => {
 					x.style.display = "";
 				});
-				entries.forEach((x) => () => {
+				entries.forEach((x) => {
 					x.style.display = "";
 				});
 				continue;
@@ -94,3 +104,10 @@ const { products, productAreas, changelogs } = await getChangelogs();
 		}
 	}
 </script>
+
+<style>
+	h2.sticky-pinned {
+		top: var(--sl-nav-height);
+		background-color: var(--sl-color-bg);
+	}
+</style>

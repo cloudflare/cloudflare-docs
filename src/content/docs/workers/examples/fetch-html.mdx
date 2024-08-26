@@ -15,12 +15,11 @@ sidebar:
   order: 3
 description: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="fetch-html-example-js" />
 
@@ -28,14 +27,14 @@ import { Render, TabItem, Tabs } from "~/components"
 
 ```ts
 export default {
-  async fetch(request: Request): Promise<Response> {
-    /**
-     * Replace `remote` with the host you wish to send requests to
-     */
-    const remote = "https://example.com";
+	async fetch(request: Request): Promise<Response> {
+		/**
+		 * Replace `remote` with the host you wish to send requests to
+		 */
+		const remote = "https://example.com";
 
-    return await fetch(remote, request);
-  },
+		return await fetch(remote, request);
+	},
 };
 ```
 

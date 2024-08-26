@@ -1,6 +1,5 @@
 import starlightPlugin from "@astrojs/starlight-tailwind";
 
-const accent = { 200: "#F6821F", 600: "#F6821F", 900: "#F0F0F0" };
 const gray = {
 	100: "#f6f6f6",
 	200: "#eeeeee",
@@ -17,7 +16,14 @@ export default {
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 	theme: {
 		extend: {
-			colors: { accent, gray },
+			colors: { 
+				accent: {
+					200: "var(--tw-accent-200)",
+					600: "var(--tw-accent-600)",
+					900: "var(--tw-accent-900)",
+				},
+				gray
+			},
 		},
 	},
 	plugins: [starlightPlugin()],

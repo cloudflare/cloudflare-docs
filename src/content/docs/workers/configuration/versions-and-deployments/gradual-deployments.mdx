@@ -5,12 +5,10 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 sidebar:
   badge:
-    variant: caution
     text: Beta
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
 
@@ -18,17 +16,15 @@ Gradual Deployments give you the ability to incrementally deploy new [versions](
 
 Using gradual deployments, you can:
 
-* Gradually shift traffic to a newer version of your Worker.
-* Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) tooling.
-* [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a previously stable version if you notice issues when deploying a new version.
+- Gradually shift traffic to a newer version of your Worker.
+- Monitor error rates and exceptions across versions using [analytics and logging](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) tooling.
+- [Roll back](/workers/configuration/versions-and-deployments/rollbacks/) to a previously stable version if you notice issues when deploying a new version.
 
 :::caution
-
 
 Gradual deployments are in **beta and under active development**. Review [Limits](/workers/configuration/versions-and-deployments//gradual-deployments/#limits) associated with rollbacks before using this feature.
 
 Provide your feedback on the rollbacks feature through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
-
 
 :::
 
@@ -36,18 +32,16 @@ Provide your feedback on the rollbacks feature through the [feedback form](https
 
 The following section guides you through an example usage of gradual deployments. You will choose to use either [Wrangler](/workers/configuration/versions-and-deployments/gradual-deployments/#via-wrangler) or the [Cloudflare dashboard](/workers/configuration/versions-and-deployments/gradual-deployments/#via-the-cloudflare-dashboard) to:
 
-* Create a new Worker.
-* Publish a new version of that Worker without deploying it.
-* Create a gradual deployment between the two versions.
-* Progress the deployment of the new version to 100% of traffic.
+- Create a new Worker.
+- Publish a new version of that Worker without deploying it.
+- Create a gradual deployment between the two versions.
+- Progress the deployment of the new version to 100% of traffic.
 
 ### Via Wrangler
 
 :::note
 
-
 Minimum required wrangler version: 3.40.0.
-
 
 :::
 
@@ -56,7 +50,7 @@ Minimum required wrangler version: 3.40.0.
 Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
 
 ```sh
-$ npm create cloudflare@latest <NAME> -- --type=hello-world
+npm create cloudflare@latest <NAME> -- --type=hello-world
 ```
 
 Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.
@@ -66,7 +60,7 @@ Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your applica
 To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#upload) command.
 
 ```sh
-$ npx wrangler versions upload --experimental-versions
+npx wrangler versions upload --experimental-versions
 ```
 
 This will create a new version of the Worker that is not automatically deployed.
@@ -77,7 +71,7 @@ Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) comma
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
-$ npx wrangler versions deploy --experimental-versions
+npx wrangler versions deploy --experimental-versions
 ```
 
 #### 4. Test the split deployment
@@ -100,7 +94,7 @@ You can test also target a specific version using [version overrides](#version-o
 Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
 
 ```sh
-$ npx wrangler versions deploy --experimental-versions
+npx wrangler versions deploy --experimental-versions
 ```
 
 ### Via the Cloudflare dashboard
@@ -131,7 +125,7 @@ You may want requests associated with a particular identifier (such as user, ses
 You can do this by setting the `Cloudflare-Workers-Version-Key` header on the incoming request to your Worker. For example:
 
 ```sh
-$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
+curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Key: foo'
 ```
 
 For a given [deployment](/workers/configuration/versions-and-deployments/#deployments), all requests with a version key set to `foo` will be handled by the same version of your Worker. The specific version of your Worker that the version key `foo` corresponds to is determined by the percentages you have configured for each Worker version in your deployment.
@@ -152,7 +146,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/asset/")
 ```
 
-Selected operation under **Modify request header**: *Set dynamic*
+Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `Cloudflare-Workers-Version-Key`
 
@@ -167,7 +161,7 @@ You can use version overrides to send a request to a specific version of your Wo
 To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
 
 ```sh
-$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
 
 `Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
@@ -178,16 +172,14 @@ A version override will only be applied if the specified version is in the curre
 
 :::note[Verifying that the version override was applied]
 
-
 There are a number of reasons why a request's version override may not be applied. For example:
 
-* The deployment containing the specified version may not have propagated yet.
-* The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+- The deployment containing the specified version may not have propagated yet.
+- The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
 
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
 To make sure that the request's version override was applied correctly, you can [observe](#observability) the version of your Worker that was invoked. You could even automate this check by using the [runtime binding](#runtime-binding) to return the version in the Worker's response.
-
 
 :::
 
@@ -211,7 +203,7 @@ Create a new deployment using [`wrangler versions deploy --experimental-versions
 Now test the new version with a version override before gradually progressing the new version to 100%:
 
 ```sh
-$ curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+curl -s https://$SCRIPT_NAME.$SUBDOMAIN.workers.dev -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
 ```
 
 ## Gradual deployments for Durable Objects
@@ -239,17 +231,15 @@ Here is how the versions of your Durable Objects might change as you progress yo
 
 This is only an example, so the versions assigned to your Durable Objects may be different. However, the following is guaranteed:
 
-* For a given deployment, requests to each Durable Object will always use the same Worker version.
-* When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In this example, Durable Object "foo" would never revert from version "B" to version "A".
-* The Durable Object will only be [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
+- For a given deployment, requests to each Durable Object will always use the same Worker version.
+- When you specify each version in the same order as the previous deployment and increase the percentage of a version, Durable Objects which were previously assigned that version will not be assigned a different version. In this example, Durable Object "foo" would never revert from version "B" to version "A".
+- The Durable Object will only be [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
 
 :::note
-
 
 Typically, your Durable Object Worker will define both your Durable Object class and the Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
 
 You should ensure that API changes between your Durable Object and its Worker are [forwards and backwards compatible](/durable-objects/platform/known-issues/#code-updates) whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
-
 
 :::
 

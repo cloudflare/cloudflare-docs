@@ -13,6 +13,21 @@ import { Details, Render } from "~/components"
 
 The following sections describe the settings of redirect rules to configure static and dynamic URL redirects.
 
+## Wildcard URL Redirect
+
+Performs a URL redirect using [wildcard patterns](/ruleset-engine/rules-language/operators/#wildcard-matching) to match multiple requests. This method simplifies defining source and target URL patterns without needing complex expressions.
+
+A wildcard URL redirect has the following configuration parameters:
+
+* **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `https://*.example.com/files/*`.
+
+* **Target URL**: Enter the target URL, which can be static (e.g., `https://example.com`) or dynamic (e.g., `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) like `${1}`, `${2}`, etc., to define dynamic targets.
+
+* **Status code**: The HTTP status code of the redirect response (*301* by default). Must be one of the following: *301* (Moved permanently), *302* (Found, also known as Moved temporarily), *307* (Temporary redirect), or *308* (Permanent redirect).
+
+* **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
+
+
 ## Static URL redirect
 
 Performs a static URL redirect with a given HTTP status code and optionally preserves the query string.

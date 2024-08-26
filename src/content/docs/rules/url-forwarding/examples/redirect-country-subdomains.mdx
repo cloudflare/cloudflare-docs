@@ -4,17 +4,16 @@ summary: Create a redirect rule to redirect United Kingdom and France visitors
   from the `example.com` website's  root path (`/`) to their localized
   subdomains `https://gb.example.com` and `https://fr.example.com`,
   respectively.
-product:
+products:
   - Redirect Rules
 title: Redirect local visitors to specific subdomains
 description: Create a redirect rule to redirect United Kingdom and France
   visitors from the `example.com` website's  root path (`/`) to their localized
   subdomains `https://gb.example.com` and `https://fr.example.com`,
   respectively.
-
 ---
 
-import { Example } from "~/components"
+import { Example } from "~/components";
 
 This example dynamic redirect for zone `example.com` will redirect United Kingdom and France visitors requesting the website's root path (`/`) to their localized subdomains `https://gb.example.com` and `https://fr.example.com`, respectively.
 
@@ -27,9 +26,9 @@ Using the Expression Editor:<br/>
 
 **Then**
 
-* **Type:** *Dynamic*
-* **Expression:** `lower(concat("https://", ip.geoip.country, ".example.com"))`
-* **Status code:** *301*
+- **Type:** _Dynamic_
+- **Expression:** `lower(concat("https://", ip.geoip.country, ".example.com"))`
+- **Status code:** _301_
 
 </Example>
 

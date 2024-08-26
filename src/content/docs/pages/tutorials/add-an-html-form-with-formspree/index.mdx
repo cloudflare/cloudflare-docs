@@ -6,10 +6,7 @@ pcx_content_type: tutorial
 title: Add an HTML form with Formspree
 tags:
   - Forms
-
 ---
-
-
 
 Almost every website, whether it is a simple HTML portfolio page or a complex JavaScript application, will need a form to collect user data. [Formspree](https://formspree.io) is a back-end service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
 
@@ -21,15 +18,15 @@ To begin, create a [new GitHub repository](https://repo.new/). Then create a new
 
 ```sh
 # create new directory
-$ mkdir new-project
+mkdir new-project
 # enter new directory
-$ cd new-project
+cd new-project
 # initialize git
-$ git init
+git init
 # attach remote
-$ git remote add origin git@github.com:<username>/<repo>.git
+git remote add origin git@github.com:<username>/<repo>.git
 # change default branch name
-$ git branch -M main
+git branch -M main
 ```
 
 You may now begin working in the `new-project` directory you created.
@@ -40,9 +37,7 @@ You will only be using plain HTML for this example project. The home page will i
 
 :::note
 
-
 The form code is adapted from the HTML Forms tutorial. For a more in-depth explanation of how HTML forms work and additional learning resources, refer to the [HTML Forms tutorial](/pages/tutorials/forms/).
-
 
 :::
 
@@ -50,16 +45,16 @@ The form code:
 
 ```html
 <form method="POST" action="/">
-  <label for="name">Full Name</label>
-  <input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
+	<label for="name">Full Name</label>
+	<input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
 
-  <label for="email">Email Address</label>
-  <input id="email" type="email" name="email" required />
+	<label for="email">Email Address</label>
+	<input id="email" type="email" name="email" required />
 
-  <label for="message">Message</label>
-  <textarea id="message" name="message" required></textarea>
+	<label for="message">Message</label>
+	<textarea id="message" name="message" required></textarea>
 
-  <button type="submit">Submit</button>
+	<button type="submit">Submit</button>
 </form>
 ```
 
@@ -67,9 +62,7 @@ The `action` attribute determines where the form data is sent. You will update t
 
 :::note
 
-
 Refer to the [HTML Forms tutorial](/pages/tutorials/forms/) on how to build an HTML form.
-
 
 :::
 
@@ -79,27 +72,27 @@ Copy and paste the following content into your `public/index.html` file, which i
 
 ```html
 <html lang="en">
-  <head>
-    <meta charset="utf8" />
-    <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-  </head>
-  <body>
-    <!-- the form from above -->
+	<head>
+		<meta charset="utf8" />
+		<title>Form Demo</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	</head>
+	<body>
+		<!-- the form from above -->
 
-    <form method="POST" action="/">
-      <label for="name">Full Name</label>
-      <input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
+		<form method="POST" action="/">
+			<label for="name">Full Name</label>
+			<input id="name" type="text" name="name" pattern="[A-Za-z]+" required />
 
-      <label for="email">Email Address</label>
-      <input id="email" type="email" name="email" required />
+			<label for="email">Email Address</label>
+			<input id="email" type="email" name="email" required />
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required></textarea>
+			<label for="message">Message</label>
+			<textarea id="message" name="message" required></textarea>
 
-      <button type="submit">Submit</button>
-    </form>
-  </body>
+			<button type="submit">Submit</button>
+		</form>
+	</body>
 </html>
 ```
 
@@ -107,9 +100,7 @@ Now you have an HTML document containing a Contact Us form with several fields f
 
 :::note[GitHub Repository]
 
-
 The source code for this example is [available on GitHub](https://github.com/formspree/formspree-example-cloudflare-html). It is a live Pages application with a [live demo](https://formspree-example-cloudflare-html.pages.dev/) available, too.
-
 
 :::
 
@@ -131,7 +122,7 @@ Copy the `Form Endpoint` URL and paste it into the `action` attribute of the for
 
 ```html
 <form method="POST" action="https://formspree.io/f/mqldaqwx">
-  <!-- replace with your own formspree endpoint -->
+	<!-- replace with your own formspree endpoint -->
 </form>
 ```
 
@@ -141,9 +132,9 @@ You can now adjust your form processing logic to change the [redirect page](http
 
 For more help setting up Formspree, refer to the following resources:
 
-* For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
-* For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
-* For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
+- For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
+- For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
+- For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
 
 ## Deployment
 
@@ -153,22 +144,22 @@ If you have not already done so, save your progress within `git` and then push t
 
 ```sh
 # Add all files
-$ git add -A
+git add -A
 # Commit w/ message
-$ git commit -m "working example"
+git commit -m "working example"
 # Push commit(s) to remote
-$ git push -u origin main
+git push -u origin main
 ```
 
 Your work now resides within the GitHub repository, which means that Pages is able to access it too.
 
 If this is your first Cloudflare Pages project, refer to [Get started](/pages/get-started/) for a complete setup guide. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-* **Project name** – Your choice
-* **Production branch** – `main`
-* **Framework preset** – None
-* **Build command** – None / Empty
-* **Build output directory** – `public`
+- **Project name** – Your choice
+- **Production branch** – `main`
+- **Framework preset** – None
+- **Build command** – None / Empty
+- **Build output directory** – `public`
 
 After selecting **Save and Deploy**, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -178,5 +169,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-* [Add a React form with Formspree](/pages/tutorials/add-a-react-form-with-formspree/)
-* [HTML Forms](/pages/tutorials/forms/)
+- [Add a React form with Formspree](/pages/tutorials/add-a-react-form-with-formspree/)
+- [HTML Forms](/pages/tutorials/forms/)

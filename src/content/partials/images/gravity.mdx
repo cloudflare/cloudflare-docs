@@ -1,0 +1,57 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped. Available options are:
+
+* `auto`\
+  Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    gravity=auto
+    ```
+  </TabItem>
+  <TabItem label="URL format alias">
+    ```js 
+    g=auto
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {gravity: "auto"}}
+  ```
+  </TabItem>
+</Tabs>
+
+* `side`\
+  A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+
+  For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+
+:::note
+You must subtract the height of the image before you calculate the focal point.
+:::
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    gravity=left
+
+    or
+
+    gravity=0x1
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {gravity: "right"}}
+
+  or
+
+  cf: {image: {gravity: {x:0.5, y:0.2}}}  
+  ```
+  </TabItem>
+</Tabs>

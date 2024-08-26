@@ -6,20 +6,19 @@ sidebar:
 head:
   - tag: title
     content: TXT method — Domain Control Validation — SSL/TLS
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="txt-validation-definition" /> <br/>
+<Render file="txt-validation-definition" /> <br />
 
-***
+---
 
 ## When to use
 
 Generally, you need to perform TXT-based DCV when your certificate [requires DCV](/ssl/edge-certificates/changing-dcv-method/) and you cannot perform [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 
-***
+---
 
 ## Setup
 
@@ -31,7 +30,7 @@ Generally, you need to perform TXT-based DCV when your certificate [requires DCV
 
 <Render file="txt-validation-preamble" />
 
-<Tabs> <TabItem label="API">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="API">
 
 <Render file="txt-validation-api" />
 

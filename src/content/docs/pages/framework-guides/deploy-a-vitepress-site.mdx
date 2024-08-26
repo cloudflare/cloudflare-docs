@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: VitePress
-
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components"
+import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components";
 
 [VitePress](https://vitepress.dev/) is a [static site generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) designed for building fast, content-centric websites. VitePress takes your source content written in [Markdown](https://en.wikipedia.org/wiki/Markdown), applies a theme to it, and generates static HTML pages that can be easily deployed anywhere.
 
@@ -19,25 +18,25 @@ Run the following command in your terminal to create a new VitePress project:
 <Tabs> <TabItem label="npm">
 
 ```sh
-$ npx vitepress@latest init
+npx vitepress@latest init
 ```
 
 </TabItem> <TabItem label="pnpm">
 
 ```sh
-$ pnpm dlx vitepress@latest init
+pnpm dlx vitepress@latest init
 ```
 
 </TabItem> <TabItem label="yarn">
 
 ```sh
-$ yarn dlx vitepress@latest init
+yarn dlx vitepress@latest init
 ```
 
 </TabItem> <TabItem label="bun">
 
 ```sh
-$ bunx vitepress@latest init
+bunx vitepress@latest init
 ```
 
 </TabItem> </Tabs>
@@ -48,34 +47,32 @@ to be in the project's directory and then install the `vitepress` dependency wit
 <Tabs> <TabItem label="npm">
 
 ```sh
-$ npm add -D vitepress
+npm add -D vitepress
 ```
 
 </TabItem> <TabItem label="pnpm">
 
 ```sh
-$ pnpm add -D vitepress
+pnpm add -D vitepress
 ```
 
 </TabItem> <TabItem label="yarn">
 
 ```sh
-$ yarn add -D vitepress
+yarn add -D vitepress
 ```
 
 </TabItem> <TabItem label="bun">
 
 ```sh
-$ bun add -D vitepress
+bun add -D vitepress
 ```
 
 </TabItem> </Tabs>
 
 :::note
 
-
 If you encounter errors, make sure your local machine meets the [Prerequisites for VitePress](https://vitepress.dev/guide/getting-started#prerequisites).
-
 
 :::
 
@@ -106,9 +103,7 @@ After configuring your site, you can begin your first deploy. Cloudflare Pages w
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 

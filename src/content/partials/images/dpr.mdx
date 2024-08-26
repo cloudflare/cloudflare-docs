@@ -1,0 +1,19 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    dpr=1
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {dpr: 1}}
+  ```
+  </TabItem>
+</Tabs>

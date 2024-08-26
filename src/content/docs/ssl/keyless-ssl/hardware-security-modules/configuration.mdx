@@ -3,27 +3,24 @@ pcx_content_type: reference
 title: Configuration
 sidebar:
   order: 1
-
 ---
 
 :::caution[Important]
 
-
 Carefully review the manufacturer documentation for your HSM and properly restrict access to the key server.
-
 
 :::
 
 To get started with your PKCS#11 token you will need to initialize it with a private key, PIN, and token label. The instructions to do this will be specific to each hardware device, and you should follow the instructions provided by your vendor. You will also need to find the path to your `module`, a shared object file (`.so`). Having initialized your device, you can query it to check your token label with:
 
 ```sh
-$ pkcs11-tool --module <module path> --list-token-slots
+pkcs11-tool --module <module path> --list-token-slots
 ```
 
 You will also want to check the label of the private key you imported (or generated). Run the following command and look for a `Private Key Object`:
 
 ```bash
-$ pkcs11-tool --module <module path> --pin <pin> \
+pkcs11-tool --module <module path> --pin <pin> \
     --list-token-slots --login --list-objects
 ```
 
@@ -41,9 +38,9 @@ The URI path component contains attributes that identify a resource. The query c
 
 Keyless requires the following three attributes be specified:
 
-* **Module**: use `module-path` to locate the PKCS#11 module library.
-* **Token**: use `serial`, `slot-id`, or `token` to specify the PKCS#11 token.
-* **Slot**: use `id` or `object` to specify the PKCS#11 key pair.
+- **Module**: use `module-path` to locate the PKCS#11 module library.
+- **Token**: use `serial`, `slot-id`, or `token` to specify the PKCS#11 token.
+- **Slot**: use `id` or `object` to specify the PKCS#11 key pair.
 
 For certain modules, a query attribute `max-sessions` is required in order to prevent opening too many sessions to the module. Certain additional attributes, such as `pin-value`, may be necessary depending on the situation. Refer to the documentation for your PKCS#11 module for more details.
 

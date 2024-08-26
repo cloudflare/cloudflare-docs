@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Set up multi-signer DNSSEC
-
 ---
 
 This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/) with Cloudflare, using the [model 2](/dns/dnssec/multi-signer-dnssec/about/) as described in [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
@@ -15,15 +14,15 @@ This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-si
 
 Note that:
 
-* This process requires that your other DNS provider(s) also support multi-signer DNSSEC.
-* Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
-* Enabling **DNSSEC** and **Multi-signer DNSSEC** in [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) only replaces the first step in [1. Set up Cloudflare zone](#1-set-up-cloudflare-zone). You still have to follow the rest of this tutorial to complete the setup.
+- This process requires that your other DNS provider(s) also support multi-signer DNSSEC.
+- Although you can complete a few steps via the dashboard, currently the whole process can only be completed using the API.
+- Enabling **DNSSEC** and **Multi-signer DNSSEC** in [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) only replaces the first step in [1. Set up Cloudflare zone](#1-set-up-cloudflare-zone). You still have to follow the rest of this tutorial to complete the setup.
 
 ## 1. Set up Cloudflare zone
 
 :::note
 
-The following steps also apply if you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary. 
+The following steps also apply if you use [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), with the difference that, in such case, the records in steps 2 and 3 should be transferred from the primary, and step 4 is not necessary.
 :::
 
 1. Use the [Edit DNSSEC Status endpoint](/api/operations/dnssec-edit-dnssec-status) to enable DNSSEC and activate multi-signer DNSSEC for your zone. This is done by setting `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
@@ -83,7 +82,6 @@ This step is required if you are using Cloudflare as a primary DNS provider - wi
 
 If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), this step is not necessary.
 
-
 :::
 
 ```bash
@@ -112,7 +110,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec/zsk" \
 Command line query example:
 
 ```sh
-$ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
+dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 ```
 
 2. Add Cloudflare's ZSK that you fetched in the previous step to the DNSKEY record set of your external provider(s).

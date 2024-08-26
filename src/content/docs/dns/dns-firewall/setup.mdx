@@ -8,41 +8,38 @@ head:
     content: Set up DNS Firewall
 description: Set up DNS Firewall to protect upstream nameservers from DDoS
   attacks and reduce load by caching DNS responses.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 ## Prerequisites
 
 Prior to setting up DNS Firewall, you need:
 
-* Account access to DNS Firewall (provided by your Enterprise account team).
-* Access to **DNS Administrator** or **Super Administrator** privileges on your account.
-* Newly updated IP addresses for your nameservers (protects against previously compromised IP addresses).
+- Account access to DNS Firewall (provided by your Enterprise account team).
+- Access to **DNS Administrator** or **Super Administrator** privileges on your account.
+- Newly updated IP addresses for your nameservers (protects against previously compromised IP addresses).
 
 ## Configure DNS Firewall
 
 ### Create a DNS Firewall cluster
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
 2. On the account homepage, click **DNS Firewall**.
 3. Click **Add Firewall Cluster**.
 4. Fill out the required fields, including:
-   * **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
-   * **Minimum Cache TTL**: Recommended setting of **30 seconds**.
-   * **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
-   * **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
+   - **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
+   - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
+   - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
+   - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
 5. Click **Continue**.
 6. On the following screen, save the values for **Your new DNS Firewall IP Addresses**.
 
 :::note[Note:]
 
-
 If you forget to save your new IP addresses, find your cluster and click **IP Addresses**.
-
 
 :::
 

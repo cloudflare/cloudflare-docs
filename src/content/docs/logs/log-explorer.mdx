@@ -4,20 +4,16 @@ title: Log Explorer
 sidebar:
   order: 118
   badge:
-    variant: caution
     text: Beta
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your logs without the need to forward them to third parties. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the Dashboard or SQL API.
 
 :::note
 
-
 Log Explorer is currently in beta. To request access, complete the [sign-up form](https://cloudflare.com/lp/log-explorer/).
-
 
 :::
 
@@ -25,25 +21,25 @@ Log Explorer is currently in beta. To request access, complete the [sign-up form
 
 The following zone-level datasets are currently available with Log Explorer:
 
-* [HTTP requests](/logs/reference/log-fields/zone/http_requests/) (`FROM http_requests`)
-* [Firewall events](/logs/reference/log-fields/zone/firewall_events/) (`FROM firewall_events`)
+- [HTTP requests](/logs/reference/log-fields/zone/http_requests/) (`FROM http_requests`)
+- [Firewall events](/logs/reference/log-fields/zone/firewall_events/) (`FROM firewall_events`)
 
 ## Authentication
 
 In order to communicate with the API, you will need to configure the appropriate authentication headers.
 
-* `X-Auth-Email` - the Cloudflare account email address associated with the domain
-* `X-Auth-Key` - the Cloudflare API key
+- `X-Auth-Email` - the Cloudflare account email address associated with the domain
+- `X-Auth-Key` - the Cloudflare API key
 
 Alternatively, API tokens with Account and Zone level Logs Edit permissions can also be used for authentication:
 
-* `Authorization: Bearer <API_TOKEN>`
+- `Authorization: Bearer <API_TOKEN>`
 
 ## Enable Log Explorer
 
 You can use the dashboard or the API to enable the datasets you want to query with Log Explorer.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Analytics & Logs** > **Log Explorer**.
@@ -89,7 +85,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 
 Filtering and viewing your logs is available via the Cloudflare Dashboard or via query API.
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Analytics & Logs** > **Log Explorer**.
@@ -102,9 +98,7 @@ Filtering and viewing your logs is available via the Cloudflare Dashboard or via
 
 :::note
 
-
 You can also access the Log Explorer dashboard directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.
-
 
 :::
 
@@ -198,9 +192,7 @@ The `LIMIT` clause is used to constrain the number of rows returned by a query. 
 
 :::note
 
-
 Log Explorer does not support `JOINs`, `DDL`, `DML`, or `EXPLAIN` queries.
-
 
 :::
 
