@@ -119,11 +119,39 @@ Most projects will have existing build and development scripts scripts, as well 
 
 In CI, you may have a separate build and test commands. It is best practice to run `wrangler types --experimental-include-runtime` before other CI commands. For example:
 
+<Tabs> <TabItem label="npm">
+
 ```yaml
 - run: npm run generate-types
 - run: npm run build
 - run: npm test
 ```
+
+</TabItem> <TabItem label="yarn">
+
+```yaml
+- run: yarn generate-types
+- run: yarn build
+- run: yarn test
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```yaml
+- run: pnpm run generate-types
+- run: pnpm run build
+- run: pnpm test
+```
+
+</TabItem> <TabItem label="bun">
+
+```yaml
+- run: bun run generate-types
+- run: bun run build
+- run: bun test
+```
+
+</TabItem> </Tabs>
 
 By integrating the `wrangler types --experimental-include-runtime` command into your workflow this way, you ensure that your development environment, builds, and CI processes always use the most accurate and up-to-date types for your Cloudflare Worker, regardless of your specific framework or tooling choices.
 
