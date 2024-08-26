@@ -41,7 +41,7 @@ wrangler types --experimental-include-runtime="./runtime.d.ts"
 
 {{<Aside type="warning">}}
 
-To ensure that your types are always up-to-date, make sure to run `wrangler types --experimental-include-runtime` after any changes to your `wrangler.toml` file.
+To ensure that your types are always up-to-date, make sure to run `wrangler types --experimental-include-runtime` after any changes to your config file.
 
 {{</Aside>}}
 
@@ -49,17 +49,39 @@ See [the full list of available flags](/workers/wrangler/commands/#types) for mo
 
 #### Migrating from `@cloudflare/workers-types` to `wrangler types --experimental-include-runtime`
 
-The `@cloudflare/workers-types` package provides runtime types according to your compatibility date, and therefore it is superceeded by the `wrangler types --experimental-include-runtime` command.
+The `@cloudflare/workers-types` package provides runtime types according to your compatibility date, but is superceeded by the `wrangler types --experimental-include-runtime` command.
 
-Here are the steps to switch from `@cloudflare/workers-types` to using wrangler types with the experimental runtime inclusion:
+Here are the steps to switch from `@cloudflare/workers-types` to using `wrangler types` with the experimental runtime inclusion:
 
-##### 1. Uninstall `@cloudflare/workers-types`
+##### Uninstall `@cloudflare/workers-types`
 
-```bash
+<Tabs> <TabItem label="npm">
+
+```sh
 npm uninstall @cloudflare/workers-types
 ```
 
-##### 2. Generate runtime types using wrangler
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn remove @cloudflare/workers-types
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```sh
+pnpm uninstall @cloudflare/workers-types
+```
+
+</TabItem> <TabItem label="bun">
+
+```sh
+bun remove @cloudflare/workers-types
+```
+
+</TabItem> </Tabs>
+
+##### Generate runtime types using wrangler
 
 ```bash
 wrangler types --experimental-include-runtime
@@ -67,7 +89,7 @@ wrangler types --experimental-include-runtime
 
 This will generate a `.d.ts` file, saved to `.wrangler/types/runtime.d.ts` by default.
 
-##### 3. Update your `tsconfig.json` to include the generated types
+##### Update your `tsconfig.json` to include the generated types
 
 ```json
 {
@@ -79,7 +101,7 @@ This will generate a `.d.ts` file, saved to `.wrangler/types/runtime.d.ts` by de
 
 Note that if you have specified a custom path for the runtime types file, you should use that in your `compilerOptions.types` array instead of the default path.
 
-##### 4. Update your scripts and CI pipelines
+##### Update your scripts and CI pipelines
 
 When switching to `wrangler types --experimental-include-runtime`, you'll want to ensure that your development process always uses the most up-to-date types. The main thing to remember here is that - regardless of your specific framework or build tools - you should run the `wrangler types --experimental-include-runtime` command before any development tasks that rely on TypeScript. This ensures your editor and build tools always have access to the latest types.
 
@@ -88,8 +110,8 @@ Most projects will have existing build and development scripts scripts, as well 
 ```json
 {
   "scripts": {
-    "dev": "your-existing-dev-command",
-    "build": "your-existing-build-command",
+    "dev": "existing-dev-command",
+    "build": "-existing-build-command",
     "type-check": "wrangler types --experimental-include-runtime && tsc"
   }
 }
@@ -97,7 +119,7 @@ Most projects will have existing build and development scripts scripts, as well 
 
 In CI, you may have a separate build and test commands. It is best practice to run `wrangler types --experimental-include-runtime` before other CI commands. For example:
 
-```text
+```yaml
 - run: npm run generate-types
 - run: npm run build
 - run: npm test
