@@ -1,20 +1,11 @@
 ---
-title: Debugging tools
 pcx_content_type: concept
+title: Breakpoints
+description: Debug your local and deployed Workers using breakpoints.
 sidebar:
   order: 4
 head: []
-description: Debug your local and deployed Workers using a variety of tools.
-
 ---
-
-Being able to assess how your Workers are functioning at various points in the development cycle is vital to identifying the root causes of bugs or issues.
-
-Cloudflare provides a variety of tools to help you debug your Workers.
-
-## Chrome DevTools
-
-Wrangler supports using [Chrome DevTools](https://developer.chrome.com/docs/devtools/) to view logs/sources, set breakpoints, and profile CPU/memory usage. To open a DevTools session connected to your Worker from any Chromium-based browser, run [`wrangler dev`](/workers/wrangler/commands/#dev) and press the <kbd>d</kbd> key in your terminal.
 
 ## Debug via breakpoints
 
@@ -32,17 +23,17 @@ To setup VS Code for breakpoint debugging in your Worker project:
 ```json
 {
   "configurations": [
-      {
-          "name": "Wrangler",
-          "type": "node",
-          "request": "attach",
-          "port": 9229,
-          "cwd": "/",
-          "resolveSourceMapLocations": null,
-          "attachExistingChildren": false,
-          "autoAttachChildProcesses": false,
-          "sourceMaps": true // works with or without this line
-      }
+    {
+      "name": "Wrangler",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "cwd": "/",
+      "resolveSourceMapLocations": null,
+      "attachExistingChildren": false,
+      "autoAttachChildProcesses": false,
+      "sourceMaps": true // works with or without this line
+    }
   ]
 }
 ```
@@ -57,20 +48,16 @@ To setup VS Code for breakpoint debugging in your Worker project:
 
 :::caution
 
-
 Breakpoint debugging in `wrangler dev` using `--remote` could extend Worker CPU time and incur additional costs since you are testing against actual resources that count against usage limits. It is recommended to use `wrangler dev` without the `--remote` option. This ensures you are developing locally.
-
 
 :::
 
 :::note
 
-
 The `.vscode/launch.json` file only applies to a single workspace. If you prefer, you can add the above launch configuration to your User Settings (per the [official VS Code documentation](https://code.visualstudio.com/docs/editor/debugging#_global-launch-configuration)) to have it available for all your workspaces.
-
 
 :::
 
 ## Related resources
 
-* [Local Development](/workers/testing/local-development/) - Develop your Workers and connected resources locally via Wrangler and [`workerd`](https://github.com/cloudflare/workerd), for a fast, accurate feedback loop.
+- [Local Development](/workers/testing/local-development/) - Develop your Workers and connected resources locally via Wrangler and [`workerd`](https://github.com/cloudflare/workerd), for a fast, accurate feedback loop.

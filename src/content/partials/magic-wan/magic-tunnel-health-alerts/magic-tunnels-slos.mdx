@@ -35,7 +35,7 @@ To determine when to send Magic Tunnel health alerts, Cloudflare relies on a mul
 
 Cloudflare only alerts you when both the short and long SLOs are below the configured threshold, so the maximum of the two is the limiting factor. For example, if you defined a threshold of 99%:
 
-* 99.2% (small window) + 99% (large window) = 99%. An alert would not be triggered.
-* 98% (small window) + 98% (large window) = 98%. An alert would be triggered.
+- 99.2% (small window) + 99% (large window) = 99%. An alert would not be triggered.
+- 98% (small window) + 98% (large window) = 98%. An alert would be triggered.
 
 Cloudflare counts degraded health checks as failed health checks.

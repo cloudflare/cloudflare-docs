@@ -74,7 +74,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = indexPage.data;
 
-	group.label = frontmatter.sidebar.group?.label ?? frontmatter.sidebar.label ?? frontmatter.title;
+	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
 	if (frontmatter.hideChildren) {

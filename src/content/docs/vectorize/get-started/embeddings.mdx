@@ -77,11 +77,7 @@ To create your first Vectorize index, change into the directory you just created
 cd embeddings-tutorial
 ```
 
-:::note[Using Vectorize v1?]
-
-Please use the 'wrangler vectorize --deprecated-v1' flag to create, get, list, delete and insert vectors into legacy Vectorize v1 indexes.
-
-:::
+<Render file="vectorize-legacy" />
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
@@ -103,7 +99,7 @@ npx wrangler vectorize create embeddings-index --dimensions=768 --metric=cosine
 ✅ Successfully created index 'embeddings-index'
 
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 ```
 
@@ -117,13 +113,13 @@ To bind your index to your Worker, add the following to the end of your `wrangle
 
 ```toml
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 ```
 
 Specifically:
 
-- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE_INDEX`.
+- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `VECTORIZE`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_INDEX"` or `binding = "PROD_SEARCH_INDEX"` would both be valid names for the binding.
 - Your binding is available in your Worker at `env.<BINDING_NAME>` and the Vectorize [client API](/vectorize/reference/client-api/) is exposed on this binding for use within your Workers application.
 
@@ -135,7 +131,7 @@ From within the `embeddings-tutorial` directory, open your `wrangler.toml` file 
 
 ```toml
 [[vectorize]]
-binding = "VECTORIZE_INDEX" # available in your Worker on env.VECTORIZE_INDEX
+binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 
 [ai]
@@ -148,11 +144,11 @@ With Workers AI ready, you can write code in your Worker.
 
 To write code in your Worker, go to your `embeddings-tutorial` Worker and open the `src/index.ts` file. The `index.ts` file is where you configure your Worker's interactions with your Vectorize index.
 
-Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE_INDEX`:
+Clear the content of `index.ts`. Paste the following code snippet into your `index.ts` file. On the `env` parameter, replace `<BINDING_NAME>` with `VECTORIZE`:
 
 ```typescript
 export interface Env {
-	VECTORIZE_INDEX: VectorizeIndex;
+	VECTORIZE: Vectorize;
 	AI: Ai;
 }
 interface EmbeddingResponse {
@@ -195,7 +191,7 @@ export default {
 				id++;
 			});
 
-			let inserted = await env.VECTORIZE_INDEX.upsert(vectors);
+			let inserted = await env.VECTORIZE.upsert(vectors);
 			return Response.json(inserted);
 		}
 
@@ -208,12 +204,12 @@ export default {
 			},
 		);
 
-		let matches = await env.VECTORIZE_INDEX.query(queryVector.data[0], {
+		let matches = await env.VECTORIZE.query(queryVector.data[0], {
 			topK: 1,
 		});
 		return Response.json({
 			// Expect a vector ID. 1 to be your top match with a score of
-			// ~0.896888444
+			// ~0.89693683
 			// This tutorial uses a cosine distance metric, where the closer to one,
 			// the more similar.
 			matches: matches,
@@ -252,7 +248,17 @@ With the URL for your deployed Worker (for example,`https://embeddings-tutorial.
 This should return the following JSON:
 
 ```json
-{ "matches": { "count": 1, "matches": [{ "score": 0.896888444, "id": "1" }] } }
+{
+	"matches": {
+		"count": 1,
+		"matches": [
+			{
+				"id": "1",
+				"score": 0.89693683
+			}
+		]
+	}
+}
 ```
 
 Extend this example by:

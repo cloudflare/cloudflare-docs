@@ -194,8 +194,9 @@ By default, Turnstile tokens are obtained for a visitor upon the rendering of a 
 
 There are two options:
 
-* The challenge runs automatically after calling the `render()` function.
-* The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+- The challenge runs automatically after calling the `render()` function.
+- The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+  
   This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance modes

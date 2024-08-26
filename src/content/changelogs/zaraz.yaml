@@ -5,6 +5,12 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-08-23'
+  description: |
+    * **Automatic Actions**: Automatic Event Tracking is now fully available
+    * **Consent Management**: Fixed issues with rendering the Consent modal on iOS
+    * **Zaraz Debugger**: Remove redundant messages related to `__zarazEcommerce`
+    * **Zaraz Debugger**: Fixed bug that prevented the debugger to load when certain Custom HTML tools were used
 - publish_date: '2024-08-15'
   description: |
     * **Automatic Actions**: Automatic Pageview tracking is now fully available
