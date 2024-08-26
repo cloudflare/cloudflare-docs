@@ -12,9 +12,7 @@ entries:
 
       Requests to D1 alpha databases now respond with a HTTP 400 error, containing the following text:
 
-      ```txt
       You can no longer query a D1 alpha database. Please follow https://developers.cloudflare.com/d1/platform/alpha-migration/ to migrate your alpha database and resume querying.
-      ```
 
       You can upgrade to the new, generally available version of D1 by following the [alpha database migration guide](/d1/platform/alpha-migration/).
 
