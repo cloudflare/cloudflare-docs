@@ -1,0 +1,142 @@
+---
+title: Extending Cloudflare's Benefits to SaaS Providers' End-Customers
+pcx_content_type: design-guide
+weight: null
+head:
+  - tag: title
+    content: "Design guide: Extend Cloudflare's Benefits to SaaS Providers' End-Customers"
+
+---
+
+## Introduction
+
+A key aspect of developing a Software-as-a-service (SaaS) application is ensuring its security against the wide array of potential attacks it faces on the Internet. Cloudflare's network and security services can be used to protect your customers using your SaaS application, off-loading the risk to a vendor with experience in [protecting applications](https://radar.cloudflare.com/reports/ddos).
+
+This design guide illustrates how providers, building and hosting their own product/application offering, can leverage Cloudflare to extend the security, performance, and compliance benefits of Cloudflare's network to their end-customers.
+
+The following diagrams visualize the use of the following services:
+
+* Data Localization Suite (specifically, [Regional Services](/data-localization/regional-services/))
+* [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)
+* [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/) to securely expose web applications (via [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) and [private networks](/cloudflare-one/connections/connect-networks/private-net/))
+* Load Balancers to manage traffic and ensure reliability and performance, implementing Global Traffic Management (GTM) and [Local Traffic Management (LTM)](/load-balancing/local-traffic-management/).
+
+This setup is ideal for SaaS providers who need to ensure minimal downtime, auto-renewal of SSL/TLS certificates, efficiently distribute traffic to healthy endpoints, and regional traffic management for compliance and performance optimization.
+
+This document assumes that the provider's application DNS is registered and managed through Cloudflare as the primary and authoritative DNS provider. You can find details on how to set this up [here](/dns/zone-setups/full-setup/).
+
+This solution supports subdomains under your own zone while also allowing your customers to use their own domain names (vanity or custom domains) with your services. For example, for each customer you may create the custom hostname `mycustomer.myappexample.com` but also want to allow them to use their own domain, `app.mycustomerexample.com` to point to their tenant on your service. Each subdomain (`mycustomer.myappexample.com`) can be created on the main domain (`myappexample.com`) via the [Cloudflare API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records), allowing you to easily automate the creation of DNS records when your customers create an account on your service.
+
+## Benefits
+
+Before looking at how Cloudflare can be configured to protect your SaaS application via your custom hostnames, it's worth reviewing the benefits of taking this approach.
+
+| Benefit                  | Description    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Minimized Downtime       | Ensure [minimal downtime](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/#minimize-downtime) not only during custom hostname migrations to Cloudflare for SaaS but also throughout the entire lifecycle of the application.                                                                                                                                                        |
+| Security and Performance | Extends Cloudflare's [security](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/) and [performance](/cloudflare-for-platforms/cloudflare-for-saas/performance/) benefits to end-customers via their custom domains.                                                                                                                                                                                                             |
+| Auto-Renewal             | Automates the [renewal](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/) and management process for custom hostname certificates.                                                                                                                                                                                                                                |
+| Apex Proxying            | Supports end-customers using [domain apex](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/realtime-validation/#apex-proxying) (otherwise known as root domain) as custom hostnames. Used where your DNS service doesn't allow [CNAMEs for root domains](/dns/cname-flattening/), instead a [static IP](/byoip/address-maps/#static-ips-or-byoip) is used to allow an A record to be used.                                                                                |
+| Smart Load Balancing     | Use the load balancer as [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) to steer traffic with [session affinity](/load-balancing/understand-basics/session-affinity/). In the context of Cloudflare for SaaS, a custom origin lets you send traffic from one or more custom hostnames to somewhere besides your default proxy fallback origin.                                                       |
+| Orange-to-Orange (O2O)   | For end-customers who already proxy traffic through Cloudflare, [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) may be required. Generally, it's recommended for those end-customers to [not proxy](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) the hostnames used by the SaaS provider. If the Orange-to-Orange functionality is required, please review the [product compatibility](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility/). |
+| Regional Services        | Allows [regional traffic management](/data-localization/regional-services/) to comply with data localization requirements.                                                                                                                                                                                                                             |
+
+## Products included in the recipe
+
+The following products are used to deliver this solution.
+
+| Product                                                 | Function                                                                                                                                                                                                                           |
+|---------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)                                     | Extends the security and performance benefits of Cloudflare’s network to your customers via their own custom or vanity domains. This includes  [Certificate Management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/), [Early Hints for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/performance/early-hints-for-saas/) and [Cache for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/performance/cache-for-saas/).      |
+| [DDoS Protection](/ddos-protection/)                                         | Volumetric attack protection is automatically enabled for [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) hostnames.                                                                                                                                                       |
+| [Regional Services](/data-localization/regional-services/) (part of the Data Localization Suite) | Restrict inspection of data (processing) to only those data centers within jurisdictional boundaries.                                                                                                                              |
+| [Load Balancer](/load-balancing/)                                           | Distributes traffic across your endpoints, which reduces endpoint strain and latency and improves the experience for end users.                                                                                                    |
+| [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)                                       | Secure method to connect to customers' networks and servers without creating holes in  [firewalls](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/). cloudflared is the daemon (software) installed on origin servers to create a secure tunnel from applications back to Cloudflare. |
+
+## Cloudflare for SaaS Examples
+
+The primary objective of using Cloudflare is to ensure that all requests to your application's custom hostname are routed through Cloudflare first. This allows for the application of security controls and the implementation of routing and load balancing decisions. Since the origin server often needs to be publicly accessible, securing the connection between Cloudflare and the origin server is crucial. For comprehensive guidance on securing origin servers, please refer to Cloudflare's documentation: [Protect your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
+
+The diagrams below begin by illustrating the simplest approach to achieving this goal, followed by more complex configurations.
+
+### Standard Fallback Origin Setup
+
+This standard Cloudflare for SaaS setup is the most commonly used and easiest to implement for most providers. Typically, these providers are SaaS companies, which develop and deliver software as a service solutions. This setup requires only a single DNS record to direct requests to Cloudflare, which then proxies the traffic to your application using an A record.
+
+![Figure 1: Standard Fallback Origin Setup.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/standard-fallback-origin-setup.svg "Figure 1: Standard Fallback Origin Setup.")
+
+1. The Custom Hostname (`custom.example.com`) is configured as a CNAME record pointing to the Fallback Origin of the provider. The Fallback Origin is the server or servers that Cloudflare will route traffic to by default when a request is made to the Custom Hostname. This DNS record does not need to be managed within Cloudflare; it just needs to point to the Cloudflare-hosted record from the provider (`fallback.myappexample.com`).
+2. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the Custom Hostnames to this origin server by default.
+
+The origin server receives the details of the custom domain through either the [host header or SNI](/cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/). This enables the origin server to determine which application to direct the request to. This method is applicable for both custom hostnames (e.g., `app.mycustomerexample.com`) and vanity domains (e.g., `customer1.myappexample.com`). Since all requests for your application are now routed through the Cloudflare network, you can leverage a range of security and performance services for every request, including:
+
+* [Web Application Firewall](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/)
+* [Access control policies](/cloudflare-for-platforms/cloudflare-for-saas/security/secure-with-access/)
+* [Caching of application content](/cloudflare-for-platforms/cloudflare-for-saas/performance/cache-for-saas/)
+* [Support browser early hints](/cloudflare-for-platforms/cloudflare-for-saas/performance/early-hints-for-saas/)
+* [Image Transformations](/images/)
+* [Waiting Room](/waiting-room/)
+* [Workers for Platform](/cloudflare-for-platforms/workers-for-platforms/)
+
+For implementation details to get started, review the [developer documentation](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
+
+### Standard Fallback Origin Setup with Regional Services
+
+This approach also addresses compliance considerations. Specifically, the SaaS provider can use Cloudflare's [Regional Services](/data-localization/regional-services/) solution to regionalize TLS termination and HTTP request processing. This ensures that traffic destined for the origin server is handled exclusively within the chosen region.
+
+![Figure 2: Standard Fallback Origin Setup with Regional Services.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/standard-fallback-origin-setup-regional-services.svg "Figure 2: Standard Fallback Origin Setup with Regional Services.")
+
+1. The Custom Hostname (`custom.example.com`) is configured as a CNAME record that points to a regionalized SaaS hostname (`eu-customers.myappexample.com`). This configuration ensures that all processing, including TLS termination, occurs exclusively within the specified geographic region.
+2. The regionalized SaaS hostname is set up as a CNAME record that directs traffic to the standard [Fallback Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin) of the SaaS provider (`fallback.myappexample.com`).
+3. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the Custom Hostnames to this origin server by default.
+
+### Cloudflare Tunnel as Fallback Origin Setup with Regional Services
+
+For enhanced security, rather than exposing your application servers directly to the Internet via public IPs, SaaS providers can use [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/). These tunnels connect your network to Cloudflare's nearest data centers, allowing SaaS applications to be accessed through [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/). As a result, Cloudflare becomes the sole entry point for end-customers from the public Internet into your network.
+
+![Figure 3: Cloudflare Tunnel as Fallback Origin Setup with Regional Services.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/cloudflare-tunnel-fallback-origin-setup-regional-services.svg "Figure 3: Cloudflare Tunnel as Fallback Origin Setup with Regional Services.")
+
+1. The Custom Hostname (`custom.example.com`) is configured as a CNAME record that points to a regionalized SaaS hostname (`eu-customers.myappexample.com`). This configuration ensures that all processing, including TLS termination, occurs exclusively within the specified geographic region.
+2. The regionalized SaaS hostname is set up as a CNAME record that directs traffic to the standard [Fallback Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin) of the SaaS provider (`fallback.myappexample.com`).
+3. The Fallback Origin is a CNAME DNS record that points to a [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) exposed by Cloudflare Tunnel. This public hostname should be configured to route traffic to your application (e.g., `localhost:8080`).
+
+This setup is ideal for SaaS providers that do not need granular load balancing, such as [geo-based traffic steering](/load-balancing/understand-basics/traffic-steering/), across multiple origin servers. It's also well-suited for simple testing and development environments, where [protecting your origin server](/fundamentals/basic-tasks/protect-your-origin-server/) by only allowing requests through the Cloudflare Tunnel is sufficient. However, for distributed applications requiring load balancing at both global and local levels, we recommend using [Cloudflare's Load Balancer](/load-balancing/) with global and local traffic management capabilities.
+
+### Global Traffic Management (GTM) & Local Traffic Management (LTM) as Custom Origin Setup
+
+Cloudflare offers a powerful set of load balancing capabilities. These allow you to reliably steer traffic to different origin servers where your SaaS applications are hosted, whether via public hostnames (as described above) or private IPs. This setup helps prevent origin overload by distributing traffic across multiple servers and enhances security by only permitting requests through the Cloudflare Tunnel.
+
+![Figure 4: Global Traffic Management (GTM) & Local Traffic Management (LTM) as Custom Origin Setup.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/gtm-ltm-custom-origin-setup.svg "Figure 4: Global Traffic Management (GTM) & Local Traffic Management (LTM) as Custom Origin Setup.")
+
+1. The Custom Hostname (`custom.example.com`) is configured as a CNAME record pointing to a Cloudflare [regionalized Load Balancer](/data-localization/how-to/load-balancing/) (`eu-lb.myappexample.com`). This ensures that all processing, including TLS termination, takes place within a specified geographic region. Additionally, the SaaS provider needs to set up the load balancer as the [Custom Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) for the Custom Hostname.
+2. The regionalized Load Balancer is set up with [Origin Pools](/load-balancing/pools/) to distribute requests across multiple downstream servers. Each pool can be configured to use either [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) with Global Traffic Management (GTM) or [private network](/cloudflare-one/connections/connect-networks/private-net/) addresses with Local Traffic Management (LTM). In the diagram above, we utilize both options:
+   * Origin Pool 1 uses the [Cloudflare Tunnel hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) (`<UUID>.cfargotunnel.com`) as the endpoint or origin server for handling those requests.
+   When using public hostnames, it is necessary to set the [HTTP Host Header value](/load-balancing/additional-options/override-http-host-headers/) to match the public hostname configured and exposed by the [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). This ensures that the origin server can correctly route the incoming requests.
+   * Origin Pool 2 uses the private IP address or private network (i.e., `10.0.0.5`) within the SaaS provider's internal network, where the SaaS application resides. This pool must be configured to operate within the specified [Virtual Network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) (VNet) to ensure proper routing of requests.
+3. Cloudflare Tunnel exposes both [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) with GTM and [private networks](/cloudflare-one/connections/connect-networks/private-net/) (private IPs) with LTM.
+
+For enhanced granularity in application serving and scalability, it is generally recommended to use private networks rather than public hostnames. Private networks enable Cloudflare to preserve and accurately pass the host header to the origin server. In contrast, when using public hostnames, providers must configure the [header value](/load-balancing/additional-options/override-http-host-headers/) on the load balancer, which is restricted to one public hostname per load balancer endpoint, potentially limiting flexibility.
+
+Be aware of the Zero Trust [Tunnel limitations](/cloudflare-one/account-limits/#cloudflare-tunnel), Cloudflare for SaaS [connection request details](/cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/), and the Custom Origin [SNI specification](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites). For further information about the Cloudflare Load Balancer, review its [reference architecture](/reference-architecture/architectures/load-balancing/).
+
+## Automation
+
+As a SaaS provider, it is advisable to automate most, if not all, of these processes using [APIs](/fundamentals/api/), [SDKs](/fundamentals/api/reference/sdks/), scripts, [Terraform](/terraform/), or other automation tools.
+
+An example of a high-level migration plan can be [downloaded here](/reference-architecture/static/example-cloudflare-saas-migration-plan.pdf).
+
+It is highly recommended to migrate to Cloudflare for SaaS in phases and address any issues as they arise, particularly with [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/troubleshooting/). Be sure to review the [validation status](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/validation-status/) and relevant [documentation](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) during the process.
+
+## Summary
+
+By leveraging Cloudflare's infrastructure, SaaS providers can deliver secure, reliable, and performance services to their end-customers. This ensures a seamless and secure user experience while meeting compliance requirements, such as regionalization.
+
+Several Cloudflare customers are currently using the Cloudflare for SaaS solution (formerly known as SSL for SaaS). Notable public use cases include:
+
+* [Shopify](https://www.cloudflare.com/case-studies/shopify/)
+* [Porsche Informatik](https://www.cloudflare.com/case-studies/porsche-informatik/)
+* [Divio](https://www.cloudflare.com/case-studies/divio/)
+* [mogenius](https://www.cloudflare.com/case-studies/mogenius/)
+* [Quickbutik](https://www.cloudflare.com/case-studies/quickbutik/)
+
+Additionally, when migrating to Cloudflare for SaaS, it is crucial to have a runbook and clear public documentation to communicate relevant details to your end-customers. Excellent public examples of this are the [Salesforce CDN](https://help.salesforce.com/s/articleView?id=sf.community_builder_cdn.htm&type=5) and [Shopify](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains) documentation.
