@@ -6,6 +6,8 @@ Use when you need all the available information about a specific feature. For th
 
 If the feature information includes an `Availability` row and you would like to skip it, add `skipAvailability="true"` (the default is false, which means "show the availability row"). The availability row, if it exists, will still be displayed in the global Plans page.
 
+This component pulls information from the `index.json` file in `src/content/plans/`.
+
 ```mdx live
 import { FeatureTable } from "~/components"
 
