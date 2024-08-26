@@ -5,3 +5,4 @@ Internet
 JavaScript
 TypeScript
 Hono
+Vectorize
