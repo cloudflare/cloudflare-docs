@@ -3,11 +3,47 @@ pcx_content_type: navigation
 title: User-side certificates
 sidebar:
   order: 4
-
 ---
 
-import { DirectoryListing } from "~/components"
+Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device.
 
-Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
+Cloudflare assigns a unique root CA for each Zero Trust account. By default, you can [generate a certificate](#generate-a-cloudflare-root-certificate) and deploy it in Zero Trust. Alternatively, Enterprise users can upload their own [custom certificate](custom-certificate/). Once you deploy your certificate across Cloudflare and turn it on, you can install it on your user's devices either [via WARP](install-cert-with-warp/) or [manually](install-cloudflare-cert/).
 
-<DirectoryListing />
+| Deployment status | Description                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| Inactive          | The certificate has been uploaded to Cloudflare but is not deployed across the global network. |
+| Pending           | The certificate is being activated or deactivated for use.                                     |
+| Active            | The certificate is deployed across the Cloudflare global network and ready to be turned on.    |
+| In-Use            | The certificate is turned on. Gateway will use the certificate for inspection.                 |
+
+## Generate a Cloudflare root certificate
+
+To generate a Cloudflare root certificate:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+2. In **Certificates**, select **Manage**.
+3. Select **Generate certificate**.
+4. Choose a duration of time before the certificate expires. Cloudflare recommends expiration after five years. Alternatively, choose _Custom_ and enter a custom amount in days.
+5. Select **Generate certificate**.
+
+The certificate will appear in your list of certificates as **Inactive**. To deploy your certificate and turn it on for inspection, you need to [activate the certificate](#activate-a-root-certificate).
+
+## Activate a root certificate
+
+Once a certificate is generated in or uploaded to Zero Trust, you need to activate it. Activating a certificate deploys it across the Cloudflare network.
+
+To manage the status of your root certificates:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+2. In **Certificates**, select **Manage**.
+3. Select the certificate you want to activate.
+4. Select **Activate**.
+
+The status of the certificate will change to **Pending** while it deploys. Once your certificate is **Active**, you can turn it on for use in inspection:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+2. In **Certificates**, select **Manage**.
+3. Select the certificate you want to turn on.
+4. In **Basic information**, select **Confirm and turn on certificate**.
+
+Only one certificate can be turned on for inspection at a time. Setting a certificate as **In-Use** will set any other turned on certificates as **Active** and prevent them from being used for inspection until turned on again.
