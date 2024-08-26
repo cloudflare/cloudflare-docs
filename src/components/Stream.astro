@@ -25,8 +25,8 @@ url.searchParams.set("letterboxColor", "transparent");
 </div>
 <script is:inline src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
 ></script>
-<script is:inline define:vars={{ videoId }}>
-	const video = document.getElementById(videoId);
+<script is:inline define:vars={{ vidId: videoId }}>
+	const video = document.getElementById(vidId);
 	Stream(video).addEventListener("play", () => {
 		console.log("Played");
 	});

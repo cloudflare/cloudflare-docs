@@ -3,31 +3,40 @@ import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
 import { AstroIcon } from "~/components";
-import { getEntry } from "astro:content";
+import { getEntry, z } from "astro:content";
+import { Badge } from "@astrojs/starlight/components";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
+import type { AstroBuiltinAttributes } from "astro";
 
 const { sidebar, slug } = Astro.props;
+
+const linkHTMLAttributesSchema = z.record(
+	z.union([z.string(), z.number(), z.boolean(), z.undefined()]),
+) as z.Schema<
+	Omit<HTMLAttributes<"a">, keyof AstroBuiltinAttributes | "children">
+>;
+type LinkHTMLAttributes = z.infer<typeof linkHTMLAttributesSchema>;
 
 interface Link {
 	type: "link";
 	label: string;
 	href: string;
 	isCurrent: boolean;
-	badge: any | undefined;
-	attrs: any;
+	badge: ComponentProps<typeof Badge> | undefined;
+	attrs: LinkHTMLAttributes;
 	order: number;
 }
+type SidebarEntry = Link | Group;
 
 interface Group {
 	type: "group";
 	label: string;
-	entries: (Link | Group)[];
+	entries: SidebarEntry[];
 	collapsed: boolean;
-	badge: Badge | undefined;
+	badge: ComponentProps<typeof Badge> | undefined;
 	order: number;
 }
 ``;
-
-type SidebarEntry = Link | Group;
 
 const currentSection = slug?.split("/")[0];
 
@@ -133,9 +142,11 @@ async function handleLink(link: Link): Promise<Link> {
 			...link,
 			label: link.label.concat(" ↗"),
 			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api") && {
-				text: "API",
-			},
+			badge: frontmatter.external_link.startsWith("/api")
+				? {
+						text: "API",
+					}
+				: undefined,
 		};
 	}
 
@@ -163,14 +174,14 @@ const lookupProductTitle = async (slug: string) => {
 	if (product === "learning-paths") {
 		const path = segments[1];
 
-		const { data } = await getEntry("learning-paths", path);
+		const entryData = await getEntry("learning-paths", path);
 
-		return `${data.title} (Learning Paths)`;
+		return `${entryData?.data?.title} (Learning Paths)`;
 	}
 
-	const { data } = await getEntry("products", product);
+	const entryData = await getEntry("products", product);
 
-	return data.product.title;
+	return entryData?.data?.product?.title ?? "Unknown";
 };
 ---
 
@@ -178,31 +189,35 @@ const lookupProductTitle = async (slug: string) => {
 	href={"/" + currentSection + "/"}
 	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
 >
-	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
+	<AstroIcon
+		name={currentSection}
+		class="text-[color:var(--orange-accent-200)] text-4xl mr-2"
+	/>
 	<span class="text-black dark:text-white">
 		<strong>
 			{lookupProductTitle(slug)}
 		</strong>
 	</span>
 </a>
+<!-- @ts-expect-error sidebar props don't match as we add additional things -->
 <Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
 
 <style is:global>
-:root {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-blue-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--blue-accent-900) !important;
-		color: var(--sidebar-blue-text) !important;
+	:root {
+		a[aria-current="page"] {
+			background-color: var(--sidebar-blue-accent-600) !important;
+			border: 1px solid !important;
+			border-color: var(--blue-accent-900) !important;
+			color: var(--sidebar-blue-text) !important;
+		}
 	}
-}
 
-:root[data-theme="dark"] {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-orange-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--orange-accent-200) !important;
-		color: var(--sl-color-white) !important;
+	:root[data-theme="dark"] {
+		a[aria-current="page"] {
+			background-color: var(--sidebar-orange-accent-600) !important;
+			border: 1px solid !important;
+			border-color: var(--orange-accent-200) !important;
+			color: var(--sl-color-white) !important;
+		}
 	}
-}
 </style>

@@ -1,5 +1,5 @@
 ---
-import { getCollection, z } from "astro:content";
+import { z } from "astro:content";
 import { getGlossaryEntry } from "~/util/glossary";
 import "tippy.js/dist/tippy.css";
 import { marked } from "marked";
@@ -50,7 +50,7 @@ definition = definition.split(/\r?\n/)[0];
 			allowHTML: true,
 			interactive: true,
 			placement: "auto",
-			arrow: false
+			arrow: false,
 		});
 	}
 </script><style is:global>

@@ -1,21 +1,30 @@
 import { getCollection, z } from "astro:content";
 import { type CollectionEntry } from "astro:content";
 
-export async function getChangelogs(opts?: { filter?: Function, wranglerOnly?: boolean }) {
+export async function getChangelogs(opts?: {
+	filter?: Parameters<typeof getCollection<"changelogs">>[1];
+	wranglerOnly?: boolean;
+}) {
 	let changelogs;
 
 	if (opts?.wranglerOnly) {
 		changelogs = [await getWranglerChangelog()];
+	} else if (opts?.filter) {
+		changelogs = await getCollection("changelogs", opts.filter);
 	} else {
-		changelogs = await getCollection("changelogs", opts?.filter);
+		changelogs = await getCollection("changelogs");
 	}
 
 	if (!changelogs) {
-		throw new Error(`[getChangelogs] Unable to find any changelogs with ${JSON.stringify(opts)}`);
+		throw new Error(
+			`[getChangelogs] Unable to find any changelogs with ${JSON.stringify(opts)}`,
+		);
 	}
 
 	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];
-	const productAreas = [...new Set(changelogs.flatMap((x) => x.data.productArea))];
+	const productAreas = [
+		...new Set(changelogs.flatMap((x) => x.data.productArea)),
+	];
 
 	const mapped = changelogs.flatMap((product) => {
 		return product.data.entries.map((entry) => {
@@ -63,7 +72,7 @@ export async function getWranglerChangelog(): Promise<
 		.array()
 		.parse(json);
 
-	releases = releases.filter(x => x.name.startsWith("wrangler@"))
+	releases = releases.filter((x) => x.name.startsWith("wrangler@"));
 
 	return {
 		// @ts-expect-error id is a union of on-disk YAML files but we're adding this one dynamically

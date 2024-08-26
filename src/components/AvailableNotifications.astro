@@ -14,23 +14,23 @@ const props = z
 
 const { product, notificationFilter } = props.parse(Astro.props);
 
-let notifications = (await getEntry("notifications", "index"))["data"][
+let notificationsRaw = (await getEntry("notifications", "index"))["data"][
 	"entries"
 ];
 
 if (product) {
-	notifications = notifications.filter(
+	notificationsRaw = notificationsRaw.filter(
 		(x) => x.associatedProducts.toLowerCase() === product.toLowerCase(),
 	);
 }
 
 if (notificationFilter) {
-	notifications = notifications.filter(
+	notificationsRaw = notificationsRaw.filter(
 		(x) => x.name.toLowerCase() === notificationFilter.toLowerCase(),
 	);
 }
 
-notifications = Object.groupBy(notifications, (entry) => entry.associatedProducts);
+const notifications = Object.groupBy(notificationsRaw, (entry) => entry.associatedProducts);
 
 const showProductHeadings = !product && !notificationFilter;
 ---
@@ -40,7 +40,7 @@ const showProductHeadings = !product && !notificationFilter;
         <>
         { showProductHeadings && <AnchorHeading depth={2} title={product} /> }
         {
-            entries.map((notification) => (
+            (entries ?? []).map((notification) => (
                 <Details header={notification.name}>
                     <strong>Who is it for?</strong>
                     <p set:html={marked.parse(notification.audience)}/>
