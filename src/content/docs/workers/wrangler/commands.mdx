@@ -2592,7 +2592,7 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
-{{<Aside type="warning">}}
+:::note
 
 The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
 
@@ -2604,11 +2604,9 @@ You may use the shorthand `--x-include-runtime` flag in place of `--experimental
 
 The minimum required Wrangler version to use this command is 3.66.1.
 
-{{</Aside>}}
+:::
 
-{{<definitions>}}
-
-- `PATH` {{<type>}}string{{</type>}} {{<prop-meta>}}(default: `./worker-configuration.d.ts`){{</prop-meta>}}
+- `PATH` string (default: `./worker-configuration.d.ts`)
 
   - The path to where **the `Env` types** for your Worker will be written.
   - The path must have a `d.ts` extension.
@@ -2618,12 +2616,8 @@ The minimum required Wrangler version to use this command is 3.66.1.
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-- `--experimental-include-runtime` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: `./.wrangler/types/runtime.d.ts`){{</prop-meta>}}
+- `--experimental-include-runtime` string optional (default: `./.wrangler/types/runtime.d.ts`)
   - The path to where the **runtime types** file will be written.
   - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
   - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
   - A custom path must have a `d.ts` extension.
-
-{{</definitions>}}
-
-<!--TODO Add examples of DTS generated output -->
