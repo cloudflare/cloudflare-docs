@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Write Cloudflare Workers in TypeScript
-
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -41,11 +40,7 @@ If you would like to commit the file to git, you can provide a custom path. Here
 wrangler types --experimental-include-runtime="./runtime.d.ts"
 ```
 
-{{<Aside type="warning">}}
-
-To ensure that your types are always up-to-date, make sure to run `wrangler types --experimental-include-runtime` after any changes to your config file.
-
-{{</Aside>}}
+**Note: To ensure that your types are always up-to-date, make sure to run `wrangler types --experimental-include-runtime` after any changes to your config file.**
 
 See [the full list of available flags](/workers/wrangler/commands/#types) for more details.
 
@@ -95,9 +90,9 @@ This will generate a `.d.ts` file, saved to `.wrangler/types/runtime.d.ts` by de
 
 ```json
 {
-  "compilerOptions": {
-    "types": ["./.wrangler/types/runtime"]
-  }
+	"compilerOptions": {
+		"types": ["./.wrangler/types/runtime"]
+	}
 }
 ```
 
@@ -111,11 +106,11 @@ Most projects will have existing build and development scripts scripts, as well 
 
 ```json
 {
-  "scripts": {
-    "dev": "existing-dev-command",
-    "build": "-existing-build-command",
-    "type-check": "wrangler types --experimental-include-runtime && tsc"
-  }
+	"scripts": {
+		"dev": "existing-dev-command",
+		"build": "-existing-build-command",
+		"type-check": "wrangler types --experimental-include-runtime && tsc"
+	}
 }
 ```
 
@@ -177,7 +172,7 @@ For more information, refer to [this GitHub issue](https://github.com/cloudflare
 
 ### Resources
 
-* [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript)
-* [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
-* [Runtime APIs](/workers/runtime-apis/)
-* [TypeScript Examples](/workers/examples/?languages=TypeScript)
+- [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript)
+- [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
+- [Runtime APIs](/workers/runtime-apis/)
+- [TypeScript Examples](/workers/examples/?languages=TypeScript)
