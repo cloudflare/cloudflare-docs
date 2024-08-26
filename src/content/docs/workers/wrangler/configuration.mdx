@@ -1084,6 +1084,67 @@ It is not possible to polyfill all Node APIs or behaviors, but it is possible to
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
+## Module Aliasing
+
+You can configure Wrangler to replace all calls to import a particular package with a module of your choice, by configuring the `alias` field:
+
+```toml title="wrangler.toml"
+[alias]
+"foo" = "./replacement-module-filepath"
+```
+
+```js title="replacement-module-filepath.js"
+export default {
+  bar: "baz"
+};
+```
+
+With the configuration above, any calls to `import` or `require()` the module `foo` will be aliased to point to your replacement module:
+
+```
+import { bar } from "foo";
+
+console.log(bar); // returns "baz"
+```
+
+### Example: Aliasing dependencies from NPM
+
+You can use module aliasing to provide an implementation of an NPM package that does not work on Workers — even if you only rely on that NPM package indirectly, as a dependency of one of your Worker's dependencies.
+
+For example, some NPM packages depend on [`node-fetch`](https://www.npmjs.com/package/node-fetch), a package that provided a polyfill of the [`fetch()` API](/workers/runtime-apis/fetch/), before it was built into Node.js.
+
+`node-fetch` isn't needed in Workers, because the `fetch()` API is provided by the Workers runtime. And `node-fetch` doesn't work on Workers, because it relies on currently unsupported Node.js APIs from the `http`/`https` modules.
+
+You can alias all imports of `node-fetch` to instead point directly to the `fetch()` API that is built into the Workers runtime:
+
+```toml title="wrangler.toml"
+[alias]
+"node-fetch" = "./fetch-nolyfill"
+```
+
+```js title="./fetch-nolyfill"
+export default fetch;
+```
+
+### Example: Aliasing Node.js APIs
+
+You can use module aliasing to provide your own polyfill implementation of a Node.js API that is not yet available in the Workers runtime.
+
+For example, let’s say the NPM package you rely on calls [`fs.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback). You can alias the fs module by adding the following to your Worker’s wrangler.toml:
+
+```toml title="wrangler.toml"
+[alias]
+"fs" = "./fs-polyfill"
+```
+
+```js title="./fs-polyfill"
+export function readFile() {
+  // ...
+}
+```
+
+In many cases, this allows you to work provide just enough of an API to make a dependency work. You can learn more about Cloudflare Workers' support for Node.js APIs [here](/workers/runtime-apis/nodejs/).
+
 ## Source maps
 
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.

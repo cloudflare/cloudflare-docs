@@ -745,6 +745,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
   - Show the interactive dev session.
+- `--alias` `Array<string>`
+  - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 
 `wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
