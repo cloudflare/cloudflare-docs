@@ -93,9 +93,7 @@ To install WARP Connector on a host machine:
     Success
     ```
 
-    <details>
-    <summary>Troubleshoot connection</summary>
-    <div>
+    <Details header="Troubleshoot connection">
 
     If WARP is disconnected, try the following troubleshooting strategies:
 
@@ -105,11 +103,7 @@ To install WARP Connector on a host machine:
 
     - Review your [WARP daemon logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for information about why the connection is failing.
 
-        		```sh
-        		echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
-        		sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf
-        		```
-        </Details>
+    </Details>
 
 WARP Connector software is now installed but not yet routing traffic.
 
