@@ -28,8 +28,8 @@ The hostname of your S3 bucket URL must have one of the following formats (where
 
 Cloud Connector supports both subdomain and URI path-style URLs:
 
-- **Subdomain-style URLs**: Set the hostname to `{BUCKET_NAME}.s3.amazonaws.com`. In this case, your files are accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.s3.amazonaws.com/index.html`.
-- **URI path-style URLs**: Set the hostname to `s3.amazonaws.com`. Here, your bucket name must be part of the URI path in your requests. For example, if your bucket name is `BUCKET-NAME`, files will be available on paths like `https://example.com/BUCKET-NAME/index.html`, and your Cloud Connector rule should filter traffic based on the URI path starting with `/BUCKET-NAME`.
+- **Subdomain-style URLs**: Set the hostname to `<BUCKET_NAME>.s3.amazonaws.com`. In this case, your files are accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.s3.amazonaws.com/index.html`.
+- **URI path-style URLs**: Set the hostname to `s3.amazonaws.com`. Here, your bucket name must be part of the URI path in your requests. For example, if your bucket name is `<BUCKET_NAME>`, files will be available on paths like `https://example.com/<BUCKET_NAME>/index.html`, and your Cloud Connector rule should filter traffic based on the URI path starting with `/<BUCKET_NAME>`.
 
 ### Get the bucket URL
 
@@ -49,8 +49,8 @@ The hostname of your Cloud Storage bucket URL must be the following (where `*` i
 
 Cloud Connector supports both subdomain and URI path-style URLs:
 
-- **Subdomain-style URLs**: Set the hostname to `{BUCKET_NAME}.storage.googleapis.com`. In this case, your files are accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.storage.googleapis.com/index.html`.
-- **URI path-style URLs**: Set the hostname to `storage.googleapis.com`. Here, your bucket name must be part of the URI path in your requests. For example, if your bucket name is `BUCKET-NAME`, files will be available on paths like `https://example.com/BUCKET-NAME/index.html`, and your Cloud Connector rule should filter traffic based on the URI path starting with `/BUCKET-NAME`.
+- **Subdomain-style URLs**: Set the hostname to `<BUCKET_NAME>.storage.googleapis.com`. In this case, your files are accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.storage.googleapis.com/index.html`.
+- **URI path-style URLs**: Set the hostname to `storage.googleapis.com`. Here, your bucket name must be part of the URI path in your requests. For example, if your bucket name is `<BUCKET_NAME>`, files will be available on paths like `https://example.com/<BUCKET_NAME>/index.html`, and your Cloud Connector rule should filter traffic based on the URI path starting with `/<BUCKET_NAME>`.
 
 ### Get the bucket URL
 
@@ -72,7 +72,7 @@ The hostname of your Blob Storage bucket URL must have one of the following form
 - `<BUCKET_NAME>.blob.core.windows.net`
 - `<BUCKET_NAME>.web.core.windows.net`
 
-For Azure Blog Storage, Cloud Connector supports only subdomain URLs like `{BUCKET_NAME}.blob.core.windows.net`. This means that your files will be accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.blob.core.windows.net/index.html`.
+For Azure Blog Storage, Cloud Connector supports only subdomain URLs like `<BUCKET_NAME>.blob.core.windows.net`. This means that your files will be accessible directly under the root of the bucket. For example, `https://example.com/index.html` will map to `https://<BUCKET_NAME>.blob.core.windows.net/index.html`.
 
 ### Get the bucket URL
 
