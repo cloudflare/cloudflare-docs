@@ -3,16 +3,13 @@ pcx_content_type: configuration
 title: HTTP policies
 sidebar:
   order: 4
-
 ---
 
-import { Details, InlineBadge, Render } from "~/components"
+import { Details, InlineBadge, Render } from "~/components";
 
 :::note
 
-
 Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/">Cloudflare Root Certificate</a> before creating HTTP policies.
-
 
 :::
 
@@ -20,13 +17,16 @@ HTTP policies allow you to intercept all HTTP and HTTPS requests and either bloc
 
 An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
-* [Actions](#actions)
-* [Selectors](#selectors)
-* [Comparison operators](#comparison-operators)
-* [Value](#value)
-* [Logical operators](#logical-operators)
+- [Actions](#actions)
+- [Selectors](#selectors)
+- [Comparison operators](#comparison-operators)
+- [Value](#value)
+- [Logical operators](#logical-operators)
 
-<Render file="gateway/response" params={{ one: "query", two: "Source IP", three: "Resolved IP" }} />
+<Render
+	file="gateway/response"
+	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+/>
 
 ## Actions
 
@@ -36,50 +36,48 @@ Actions in HTTP policies allow you to choose what to do with a given set of elem
 
 API value: `allow`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [DLP Profile](#dlp-profile)
-* [Domain](#domain)
-* [Download File Types](#download-and-upload-file-types)
-* [Download Mime Type](#download-and-upload-mime-type)
-* [Host](#host)
-* [HTTP Method](#http-method)
-* [HTTP Response](#http-response)
-* [Proxy Endpoint](#proxy-endpoint)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Upload File Types](#download-and-upload-file-types)
-* [Upload Mime Type](#download-and-upload-mime-type)
-* [URL](#url)
-* [URL Path](#url-path)
-* [URL Path & Query](#url-path-and-query)
-* [URL Query](#url-query)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [DLP Profile](#dlp-profile)
+- [Domain](#domain)
+- [Download File Types](#download-and-upload-file-types)
+- [Download Mime Type](#download-and-upload-mime-type)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [HTTP Response](#http-response)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Upload File Types](#download-and-upload-file-types)
+- [Upload Mime Type](#download-and-upload-mime-type)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -93,9 +91,7 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 :::note
 
-
 To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
-
 
 :::
 
@@ -104,57 +100,55 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                           |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/configuring-block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                             |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                                         |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
 
 API value: `block`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [DLP Profile](#dlp-profile)
-* [Domain](#domain)
-* [Download File Types](#download-and-upload-file-types)
-* [Download Mime Type](#download-and-upload-mime-type)
-* [Host](#host)
-* [HTTP Method](#http-method)
-* [HTTP Response](#http-response)
-* [Proxy Endpoint](#proxy-endpoint)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Upload File Types](#download-and-upload-file-types)
-* [Upload Mime Type](#download-and-upload-mime-type)
-* [URL](#url)
-* [URL Path](#url-path)
-* [URL Path & Query](#url-path-and-query)
-* [URL Query](#url-query)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [DLP Profile](#dlp-profile)
+- [Domain](#domain)
+- [Download File Types](#download-and-upload-file-types)
+- [Download Mime Type](#download-and-upload-mime-type)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [HTTP Response](#http-response)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Upload File Types](#download-and-upload-file-types)
+- [Upload Mime Type](#download-and-upload-mime-type)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -173,37 +167,35 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 API value: `isolate`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Domain](#domain)
-* [Host](#host)
-* [HTTP Method](#http-method)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [URL](#url)
-* [URL Path](#url-path)
-* [URL Path & Query](#url-path-and-query)
-* [URL Query](#url-query)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -213,37 +205,35 @@ The Isolate action serves matched traffic to users via [Cloudflare Browser Isola
 
 API value: `noisolate`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Domain](#domain)
-* [Host](#host)
-* [HTTP Method](#http-method)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [URL](#url)
-* [URL Path](#url-path)
-* [URL Path & Query](#url-path-and-query)
-* [URL Query](#url-query)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -253,49 +243,45 @@ The Do Not Isolate action turns off browser isolation for matched traffic. For m
 
 API value: `off`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Domain](#domain)
-* [Host](#host)
-* [Proxy Endpoint](#proxy-endpoint)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
 :::caution[Visibility limitation]
 
-
 When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/policies/gateway/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
-
 
 :::
 
@@ -307,44 +293,42 @@ All Do Not Inspect rules are evaluated first, before any Allow or Block rules, t
 
 API value: `noscan`
 
-
 <Details header="Available selectors">
 
 **Traffic**
 
-* [Application](#application)
-* [Content Categories](#content-categories)
-* [Destination Continent IP Geolocation](#destination-continent)
-* [Destination Country IP Geolocation](#destination-country)
-* [Destination IP](#destination-ip)
-* [Domain](#domain)
-* [Host](#host)
-* [HTTP Method](#http-method)
-* [Proxy Endpoint](#proxy-endpoint)
-* [Security Risks](#security-risks)
-* [Source Continent IP Geolocation](#source-continent)
-* [Source Country IP Geolocation](#source-country)
-* [Source Internal IP](#source-internal-ip)
-* [Source IP](#source-ip)
-* [URL](#url)
-* [URL Path](#url-path)
-* [URL Path & Query](#url-path-and-query)
-* [URL Query](#url-query)
-* [Virtual Network](#virtual-network)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
 
 **Identity**
 
-* [SAML Attributes](#users)
-* [User Email](#users)
-* [User Group Emails](#users)
-* [User Group IDs](#users)
-* [User Group Names](#users)
-* [User Name](#users)
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
 
 **Device Posture**
 
-* [Passed Device Posture Checks](#device-posture)
-
+- [Passed Device Posture Checks](#device-posture)
 
 </Details>
 
@@ -360,9 +344,7 @@ When a Do Not Scan rule matches, nothing is scanned, regardless of file size or 
 
 :::note
 
-
 Policies created using the URL selector are case-sensitive.
-
 
 :::
 
@@ -374,9 +356,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 :::caution[Multiple API selectors required for Terraform]
 
-
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
-
 
 :::
 
@@ -392,25 +372,31 @@ For more information, refer to our list of [content categories](/cloudflare-one/
 
 :::note
 
-Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default). 
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-<Render file="gateway/selectors/destination-continent" params={{ one: "http.dst_ip" }} />
+<Render
+	file="gateway/selectors/destination-continent"
+	params={{ one: "http.dst_ip" }}
+/>
 
 ### Destination Country
 
 :::note
 
-Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default). 
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-<Render file="gateway/selectors/destination-country" params={{ one: "http.dst_ip" }} />
+<Render
+	file="gateway/selectors/destination-country"
+	params={{ one: "http.dst_ip" }}
+/>
 
 ### Destination IP
 
 :::note
 
-Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default). 
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
 | UI name        | API example                   |
@@ -433,9 +419,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 :::caution[Deprecated selectors]
 
-
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
-
 
 :::
 
@@ -475,9 +459,7 @@ Use this selector to match only the hostname specified — for example, if you 
 
 :::note
 
-
 Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
-
 
 :::
 
@@ -515,7 +497,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source Internal IP
 
-<Render file="gateway/selectors/source-internal-ip" params={{ one: "HTTP", two: "http" }} />
+<Render
+	file="gateway/selectors/source-internal-ip"
+	params={{ one: "HTTP", two: "http" }}
+/>
 
 ### Source IP
 
@@ -555,7 +540,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Virtual Network
 
-<Render file="gateway/selectors/virtual-network" params={{ one: "http.conn.vnet_id" }} />
+<Render
+	file="gateway/selectors/virtual-network"
+	params={{ one: "http.conn.vnet_id" }}
+/>
 
 ## Comparison operators
 
@@ -567,6 +555,12 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "**Identity** or **Device Posture**" }} />
+<Render
+	file="gateway/logical-operators"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>
 
-<Render file="gateway/response" params={{ one: "request", two: "Source IP", three: "a DLP Profile" }} />
+<Render
+	file="gateway/response"
+	params={{ one: "request", two: "Source IP", three: "a DLP Profile" }}
+/>

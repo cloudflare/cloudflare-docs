@@ -1597,6 +1597,7 @@
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
 /cloudflare-one/identity/users/validating-json/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
+/cloudflare-one/policies/gateway/configuring-block-page/ /cloudflare-one/policies/gateway/block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/policies/gateway/lists 301
 /cloudflare-one/policies/zero-trust/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/policies/zero-trust/app-paths/ /cloudflare-one/policies/access/app-paths/ 301
