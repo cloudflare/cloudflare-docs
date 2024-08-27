@@ -12,31 +12,34 @@ import { Render } from "~/components";
 
 <Render file="indicator-feeds-overview" />
 
-If your organization has interest in becoming a provider or a subscriber, contact your account team, who will help facilitate the required authorization.
+If your organization has interest in becoming a provider or a subscriber, contact your account team to facilitate the required authorization.
 
-## Get started
+## Create a Custom Indicator Feed
 
-Managing a Custom Indicator Feed is only available using the [Indicator API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds).
+Providers can create and manage a Custom Indicator Feed with the [Indicator API endpoints](/api/operations/custom-indicator-feeds-get-indicator-feeds):
 
-1. The first thing a provider needs to do is create a feed. Feeds are lists of indicators and can be created using the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds).
+1. Create a feed with the [Create new indicator feed endpoint](/api/operations/custom-indicator-feeds-create-indicator-feeds). Feeds are lists of indicators.
+2. Upload data to the feed with the [Update indicator feed data endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
 
-2. After a feed is created, you can upload data to it. Uploading data to a feed is done through the [`Snapshots` API endpoint](/api/operations/custom-indicator-feeds-update-indicator-feed-data). They are called snapshots because if a provider needs to update their feed with new data, they must upload a file containing all previous and new indicators.
+   :::note
+   Indicator feeds use a snapshot system. To update feeds with new data, providers must upload a file containing all previous and new indicators.
+   :::
 
-:::note
-
-Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
-:::
-
-3. Finally, in order to grant access to a subscriber, any administrator of the account that owns the feed must add the subscribers `account_tag` to the feeds allowed subscribers list. This can be done using the [`permissions` API endpoint](/api/operations/custom-indicator-feeds-add-permission).
+3. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/operations/custom-indicator-feeds-add-permission). Any administrator of the account that owns the feed must add subscribers' `account_tag`s to the feed's allowed subscribers list.
 
 ## Use a feed in Gateway
 
-Once an account is granted access to a feed, it will be available as a selectable item in Gateway.
+Once an account is granted access to a feed, it will be available to match traffic as a [selector in Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/#indicator-feeds).
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**. Select **DNS**.
 2. To create a new DNS policy, select **Add a policy**.
-3. Name your policy, add a **Traffic Condition**, and select _Indicator Feeds_ from the **Selector** dropdown.
+3. Name your policy.
+4. In **Traffic**, add a condition with the **Indicator Feeds** selector. If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in **Value**. For example, you can block sites that appear in a feed:
 
-If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in the **Value** dropdown.
+   | Selector        | Operator | Value               | Action |
+   | --------------- | -------- | ------------------- | ------ |
+   | Indicator Feeds | in       | _Threat Intel Feed_ | Block  |
 
-![Example of creating a Gateway DNS policy rule with Custom Indicator Feeds](~/assets/images/security-center/gateway-indicator-feed.png)
+5. Select **Create policy**.
+
+For more information on creating Gateway policies, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
