@@ -1169,6 +1169,8 @@
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
 /turnstile/troubleshooting/infinite-loops/ /turnstile/troubleshooting/challenge-solve-issues/ 301
+/turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
+/turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
