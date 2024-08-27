@@ -10,7 +10,7 @@ KV [bindings](/workers/runtime-apis/bindings/) allow for communication between a
 
 Configure KV bindings in the [wrangler.toml file](/workers/wrangler/configuration/#configure-wranglertoml).
 
-## Reference KV from Workers
+## Access KV from Workers
 
 A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated to Cloudflare's global network.
 
@@ -65,7 +65,7 @@ kv_namespaces = [
 ]
 ```
 
-## Reference KV from Durable Objects and Workers using ES modules format
+## Access KV from Durable Objects and Workers using ES modules format
 
 [Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
 
