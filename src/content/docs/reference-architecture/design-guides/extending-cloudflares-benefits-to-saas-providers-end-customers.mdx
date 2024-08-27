@@ -88,7 +88,7 @@ This approach also addresses compliance considerations. Specifically, the SaaS p
 
 1. The Custom Hostname (`custom.example.com`) is configured as a CNAME record that points to a regionalized SaaS hostname (`eu-customers.myappexample.com`). This configuration ensures that all processing, including TLS termination, occurs exclusively within the specified geographic region.
 2. The regionalized SaaS hostname is set up as a CNAME record that directs traffic to the standard [Fallback Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#step-1--create-fallback-origin) of the SaaS provider (`fallback.myappexample.com`).
-3. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the Custom Hostnames to this origin server by default.
+3. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the custom hostnames to this origin server by default.
 
 ### Cloudflare Tunnel as Fallback Origin Setup with Regional Services
 
