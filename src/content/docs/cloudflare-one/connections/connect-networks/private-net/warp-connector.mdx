@@ -4,16 +4,13 @@ title: Site-to-site connectivity
 sidebar:
   order: 5
   badge:
-    variant: caution
     text: Beta
 head:
   - tag: title
     content: Set up WARP Connector
-
 ---
 
-import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components"
-
+import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
 
 <Details header="Feature availability">
 
@@ -23,22 +20,21 @@ import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components"
 
 | System   | Availability |
 | -------- | ------------ |
-| Windows  | ❌            |
-| macOS    | ❌            |
-| Linux    | ✅            |
-| iOS      | ❌            |
-| Android  | ❌            |
-| ChromeOS | ❌            |
-
+| Windows  | ❌           |
+| macOS    | ❌           |
+| Linux    | ✅           |
+| iOS      | ❌           |
+| Android  | ❌           |
+| ChromeOS | ❌           |
 
 </Details>
 
 Cloudflare WARP Connector is a piece of software [^1] that enables site-to-site, bidirectional, and mesh networking connectivity without requiring changes to underlying network routing infrastructure. WARP Connector establishes a secure Layer 3 connection between a private network and Cloudflare, allowing you to:
 
-* Connect two or more private networks to each other.
-* Connect IoT devices that cannot run external software, such as printers and IP phones.
-* Filter and log server-initiated traffic, such as VoIP and SIP traffic.
-* Apply Zero Trust security policies based on the source IP of the request.
+- Connect two or more private networks to each other.
+- Connect IoT devices that cannot run external software, such as printers and IP phones.
+- Filter and log server-initiated traffic, such as VoIP and SIP traffic.
+- Apply Zero Trust security policies based on the source IP of the request.
 
 ![Two subnets connected with WARP Connector](~/assets/images/cloudflare-one/connections/connect-apps/warp-connector/overview.png)
 
@@ -48,8 +44,8 @@ This guide will cover how to connect two independent subnets, for example `10.0.
 
 ## Prerequisites
 
-* A Linux host [^2] on each subnet
-* Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+- A Linux host [^2] on each subnet
+- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 ## 1. Install a WARP Connector
 
@@ -109,8 +105,11 @@ To install WARP Connector on a host machine:
 
     - Review your [WARP daemon logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for information about why the connection is failing.
 
-    </div>
-    </details>
+        		```sh
+        		echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-warp-svc.conf
+        		sudo sysctl -p /etc/sysctl.d/99-warp-svc.conf
+        		```
+        </Details>
 
 WARP Connector software is now installed but not yet routing traffic.
 
@@ -216,7 +215,7 @@ You can configure all traffic on a device to egress through WARP Connector with 
 <Tabs> <TabItem label="Linux">
 
 ```sh
-$ sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
+sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
 ```
 
 Ensure that the `metric` value is lower than other default gateways. To verify that WARP Connector is now the preferred default gateway, run `ip route get <DESTINATION-IP>`.
@@ -224,7 +223,7 @@ Ensure that the `metric` value is lower than other default gateways. To verify t
 </TabItem> <TabItem label="macOS">
 
 ```sh
-$ sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
+sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
 ```
 
 </TabItem>
@@ -244,13 +243,13 @@ You can configure only certain routes to egress through WARP Connector. For exam
 <Tabs> <TabItem label="Linux">
 
 ```sh
-$ sudo ip route add <DESTINATION-IP> via <WARP-CONNECTOR-IP> dev eth0
+sudo ip route add <DESTINATION-IP> via <WARP-CONNECTOR-IP> dev eth0
 ```
 
 </TabItem> <TabItem label="macOS">
 
 ```sh
-$ sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
+sudo route -n add -net <DESTINATION-IP> <WARP-CONNECTOR-IP>
 ```
 
 </TabItem>

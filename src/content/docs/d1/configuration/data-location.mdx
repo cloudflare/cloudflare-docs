@@ -3,7 +3,6 @@ title: Data location
 pcx_content_type: concept
 sidebar:
   order: 5
-
 ---
 
 Learn how the location of data stored in D1 is determined, including where the leader is placed and how you optimize that location based on your needs.
@@ -16,29 +15,27 @@ By default, D1 will automatically create your database in a location close to wh
 
 You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you are creating the database from. Location hints can be useful when:
 
-* Working in a distributed team.
-* Creating databases specific to users in specific locations.
-* Using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
+- Working in a distributed team.
+- Creating databases specific to users in specific locations.
+- Using continuous deployment (CD) or Infrastructure as Code (IaC) systems to programmatically create your databases.
 
 Provide a Location Hint when creating a D1 database when:
 
-* Using [`wrangler d1`](/workers//wrangler/commands/#d1) to create a database.
-* Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1).
+- Using [`wrangler d1`](/workers//wrangler/commands/#d1) to create a database.
+- Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1).
 
 ### Use Wrangler
 
 :::note
 
-
 To install Wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
-
 
 :::
 
 To provide a location hint when creating a new database, pass the `--location` flag with a valid location hint:
 
 ```sh
-$ wrangler d1 create new-database --location=weur 
+wrangler d1 create new-database --location=weur
 ```
 
 ### Use the dashboard

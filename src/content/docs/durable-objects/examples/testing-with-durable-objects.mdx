@@ -3,7 +3,7 @@ type: example
 summary: Write tests for Durable Objects.
 tags:
   - Durable Objects
-pcx_content_type: configuration
+pcx_content_type: example
 title: Testing with Durable Objects
 sidebar:
   order: 3
@@ -122,7 +122,7 @@ describe("Worker", () => {
       expect(postResponse2.status).toBe(200)
       const postText2 = await postResponse2.text()
       expect(postText2).toBe("The text was consumed!")
-      
+
       // The get request should receive the new text, not the old text
       const getResponse2 = await getResponsePromise2
       expect(getResponse2.status).toBe(200)

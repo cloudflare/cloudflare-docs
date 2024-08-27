@@ -1,0 +1,78 @@
+---
+pcx_content_type: troubleshooting
+title: Disable Auto Minify
+---
+
+If your site is still using deprecated features for [Auto Minify](/fundamentals/api/reference/deprecations/#auto-minify), disable Auto Minify via the Cloudflare dashboard or API.
+
+## Dashboard
+
+To disable Auto Minify via the Cloudflare dashboard:
+
+1. Log into the [Cloudflare Dashboard](https://dash.cloudflare.com).
+2. Go to **Speed** > **Optimization**.
+3. Go to **Content Optimization**.
+4. For **Auto Minify**, deselect all options.
+
+## API
+
+### Before you begin
+
+You will need:
+
+- An [API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+  - `Zone - Zone Settings - Edit`
+  - `Zone - Zone Settings - Read`
+
+### (Optional) Check zone status
+
+To check your zone's Auto Minify status, send a `GET` request to the `/zones/<ZONE_ID>/settings/minify` endpoint.
+
+```sh title="cURL example"
+curl 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/minify' \
+  --header "Authorization: Bearer <CF_API_TOKEN>" \
+  --header "Content-Type: application/json"
+```
+
+You will get the following response. If any of the values in the highlighted line are `"on"`, then you need to disable them.
+
+```json title="Example response" {4}
+{
+  "result": {
+    "id": "minify",
+    "value": { "css": "off", "html": "off", "js": "off" },
+    "modified_on": null,
+    "editable": true
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Disable with the API
+
+To disable Auto Minify for your zone, send a `PATCH` request to the `/zones/<ZONE_ID>/settings/minify` endpoint.
+
+```sh title="cURL example"
+curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/minify' \
+  --header "Authorization: Bearer <CF_API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  -d '{"value":{"css":"off","html":"off","js":"off"}}'
+```
+
+If successful, you will get something similar to this response. The value for `success` should be `true`.
+
+```json title="Example disabled response" {8}
+{
+  "result": {
+    "id": "minify",
+    "value": { "js": "off", "css": "off", "html": "off" },
+    "modified_on": "2024-08-15T19:32:20.882640Z",
+    "editable": true
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```

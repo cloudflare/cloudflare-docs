@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: hCaptcha
 sidebar:
   order: 1
-
 ---
 
 The hCaptcha Pages Plugin validates hCaptcha tokens.
@@ -11,7 +10,7 @@ The hCaptcha Pages Plugin validates hCaptcha tokens.
 ## Installation
 
 ```sh
-$ npm install @cloudflare/pages-plugin-hcaptcha
+npm install @cloudflare/pages-plugin-hcaptcha
 ```
 
 ## Usage
@@ -20,19 +19,19 @@ $ npm install @cloudflare/pages-plugin-hcaptcha
 import hCaptchaPlugin from "@cloudflare/pages-plugin-hcaptcha";
 
 export const onRequestPost: PagesFunction[] = [
-  hCaptchaPlugin({
-    secret: "0x0000000000000000000000000000000000000000",
-    sitekey: "10000000-ffff-ffff-ffff-000000000001",
-  }),
-  (async (context) => {
-    // Request has been validated as coming from a human
+	hCaptchaPlugin({
+		secret: "0x0000000000000000000000000000000000000000",
+		sitekey: "10000000-ffff-ffff-ffff-000000000001",
+	}),
+	async (context) => {
+		// Request has been validated as coming from a human
 
-    const formData = await context.request.formData()
+		const formData = await context.request.formData();
 
-    // Store user credentials
+		// Store user credentials
 
-    return new Response("Successfully registered!")
-  })
+		return new Response("Successfully registered!");
+	},
 ];
 ```
 

@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Sentry
 sidebar:
   order: 1
-
 ---
 
 The Sentry Pages Plugin captures and logs all exceptions which occur below it in the execution chain of your Pages Functions. It is therefore recommended that you install this Plugin at the root of your application in `functions/_middleware.ts` as the very first Plugin.
@@ -11,7 +10,7 @@ The Sentry Pages Plugin captures and logs all exceptions which occur below it in
 ## Installation
 
 ```sh
-$ npm install @cloudflare/pages-plugin-sentry
+npm install @cloudflare/pages-plugin-sentry
 ```
 
 ## Usage
@@ -20,7 +19,7 @@ $ npm install @cloudflare/pages-plugin-sentry
 import sentryPlugin from "@cloudflare/pages-plugin-sentry";
 
 export const onRequest: PagesFunction = sentryPlugin({
-  dsn: "https://sentry.io/welcome/xyz",
+	dsn: "https://sentry.io/welcome/xyz",
 });
 ```
 
@@ -32,9 +31,9 @@ If your [DSN](https://docs.sentry.io/product/sentry-basics/dsn-explainer/) is he
 import sentryPlugin from "@cloudflare/pages-plugin-sentry";
 
 export const onRequest: PagesFunction<{
-  SENTRY_DSN: string;
+	SENTRY_DSN: string;
 }> = (context) => {
-  return sentryPlugin({ dsn: context.env.SENTRY_DSN })(context);
+	return sentryPlugin({ dsn: context.env.SENTRY_DSN })(context);
 };
 ```
 
@@ -42,9 +41,9 @@ export const onRequest: PagesFunction<{
 import sentryPlugin from "@cloudflare/pages-plugin-sentry";
 
 export const onRequest: PagesFunction<{
-  KV: KVNamespace;
+	KV: KVNamespace;
 }> = async (context) => {
-  return sentryPlugin({ dsn: await context.env.KV.get("SENTRY_DSN") })(context);
+	return sentryPlugin({ dsn: await context.env.KV.get("SENTRY_DSN") })(context);
 };
 ```
 
@@ -58,15 +57,15 @@ For example, you can access `data.sentry` and set user information like so:
 import type { PluginData } from "@cloudflare/pages-plugin-sentry";
 
 export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
-  data,
-  next,
+	data,
+	next,
 }) => {
-  // Authenticate the user from the request and extract user's email address
-  const email = await getEmailFromRequest(request);
+	// Authenticate the user from the request and extract user's email address
+	const email = await getEmailFromRequest(request);
 
-  data.sentry.setUser({ email });
+	data.sentry.setUser({ email });
 
-  return next();
+	return next();
 };
 ```
 

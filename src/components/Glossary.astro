@@ -1,7 +1,7 @@
 ---
 import { marked } from "marked";
 import { getGlossaryEntries } from "~/util/glossary";
-import LinkButton from "./LinkButton.astro";
+import { LinkButton } from "~/components";
 
 interface Props {
 	product?: string;
@@ -27,7 +27,7 @@ const INITIAL_VISIBLE_ROWS = 20;
 			terms.map((entry, idx) => (
 				<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
 					<td>{entry.term}</td>
-					<td set:html={marked.parse(entry.general_definition)} />
+					<td set:html={marked.parse(entry.general_definition.charAt(0).toUpperCase() + entry.general_definition.slice(1))} />
 					{!product && <td>{entry.product}</td>}
 				</tr>
 			))

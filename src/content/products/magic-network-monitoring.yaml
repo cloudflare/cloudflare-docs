@@ -10,18 +10,17 @@ product:
 meta:
   title: Cloudflare Magic Network Monitoring docs
   description: Magic Network Monitoring provides visibility into your network traffic by analyzing network flow data sent from a customer's routers.
-  author: '@cloudflare'
+  author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/network-monitoring
   learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
 
 externals:
-
   - title: Cloudflare homepage
     url: https://cloudflare.com
 
 algolia:
-  index: developers-cloudflare2
+  index: TEST - Re-dev docs
   apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
   product: magic-network-monitoring

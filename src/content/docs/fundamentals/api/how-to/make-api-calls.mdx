@@ -3,7 +3,6 @@ title: Make API calls
 pcx_content_type: how-to
 sidebar:
   order: 2
-
 ---
 
 Once you [create your API token](/fundamentals/api/get-started/create-token/), all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <API_TOKEN>` interface. An example request is shown below.
@@ -32,11 +31,23 @@ Every Cloudflare API element is fixed to a version number. The latest version is
 
 For specific guidance on making API calls, refer to the following resources:
 
-* The product's [Developer Docs section](/products/) for how-to guides.
-* [API schema docs](/api/) for request and response payloads for each endpoint.
-* The first-party libraries for [Go](https://github.com/cloudflare/cloudflare-go), [Typescript](https://github.com/cloudflare/cloudflare-typescript), [Python](https://github.com/cloudflare/cloudflare-python), or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare).
+- The product's [Developer Docs section](/products/) for how-to guides.
+- [API schema docs](/api/) for request and response payloads for each endpoint.
+- The first-party libraries for [Go](https://github.com/cloudflare/cloudflare-go), [Typescript](https://github.com/cloudflare/cloudflare-typescript), [Python](https://github.com/cloudflare/cloudflare-python), or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare).
 
-## Pagination
+## Query parameters
+
+Several Cloudflare endpoints have optional query parameters to filter incoming results, such as [List Zones](/api/operations/zones-get).
+
+When adding those query parameters, make sure you enclose the URL in quotes `'` (just like the header values), or the API call might error.
+
+```bash "'"
+ curl 'https://api.cloudflare.com/client/v4/zones?account.id=<ACCOUNT_ID>' \
+ --header 'Authorization: Bearer <CF_API_TOKEN>' \
+ --header 'Content-Type: application/json'
+```
+
+### Pagination
 
 Sometimes there will be too many results to display via the default page size, for example you might receive the following:
 
@@ -47,17 +58,17 @@ Sometimes there will be too many results to display via the default page size, f
 "total_count": 200,
 ```
 
-There are two options, which can be combined to paginate across the results.
+There are two query parameter options, which can be combined to paginate across the results.
 
-* `page=x` enables you to select a specific page.
-* `per_page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
+- `page=x` enables you to select a specific page.
+- `per_page=xx` enables you to adjust the number of results displayed on a page. If you select too many, you may get a timeout.
 
 An example might be `https://api.cloudflare.com/client/v4/zones/zone-identifier/dns_records?per_page=100&page=2`.
 
 Other options are:
 
-* `order`: Select the attribute to order by.
-* `direction`: Either `ASC` (ascending order) or `DESC` (descending order).
+- `order`: Select the attribute to order by.
+- `direction`: Either `ASC` (ascending order) or `DESC` (descending order).
 
 The available options will be listed at the end of the `result_info` of all endpoints in the [API documentation](/api/).
 
@@ -91,7 +102,7 @@ C:\>curl --request PATCH ^
 
 :::note
 
-Cloudflare recommends that you use the most recent stable or preview version of PowerShell. For more information, refer to [Installing PowerShell on Windows](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows). 
+Cloudflare recommends that you use the most recent stable or preview version of PowerShell. For more information, refer to [Installing PowerShell on Windows](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
 :::
 
 PowerShell has specific cmdlets (`Invoke-RestMethod` and `ConvertFrom-Json`) for making REST API calls and handling JSON responses. The syntax for these cmdlets is different from the curl examples provided in the developer documentation.
@@ -121,47 +132,41 @@ PS C:\> Invoke-RestMethod -URI 'https://api.cloudflare.com/client/v4/zones/{zone
 
 ```json title="Example output"
 {
-    "result":  [
-                   {
-                       "id":  "78411cfa-5727-4dc1-8d4a-773d01f17c7c",
-                       "type":  "universal",
-                       "hosts":  [
-                                     "*.example.com",
-                                     "example.com"
-                                 ],
-                       "primary_certificate":  "c173c8a1-9724-4e96-a748-2c4494186098",
-                       "status":  "active",
-                       "certificates":  [
-                                            {
-                                                "id":  "c173c8a1-9724-4e96-a748-2c4494186098",
-                                                "hosts":  [
-                                                              "*.example.com",
-                                                              "example.com"
-                                                          ],
-                                                "issuer":  "LetsEncrypt",
-                                                "signature":  "ECDSAWithSHA384",
-                                                "status":  "active",
-                                                "bundle_method":  "ubiquitous",
-                                                "zone_id":  "<ZONE_ID>",
-                                                "uploaded_on":  "2023-02-02T11:20:25.403338Z",
-                                                "modified_on":  "2022-12-08T00:26:15.577555Z",
-                                                "expires_on":  "2023-03-07T23:26:12.000000Z",
-                                                "priority":  null
-                                            }
-                                        ],
-                       "created_on":  "2022-12-09T23:11:06.010263Z",
-                       "validity_days":  90,
-                       "validation_method":  "txt",
-                       "certificate_authority":  "lets_encrypt"
-                   }
-               ],
-    // (...)
+	"result": [
+		{
+			"id": "78411cfa-5727-4dc1-8d4a-773d01f17c7c",
+			"type": "universal",
+			"hosts": ["*.example.com", "example.com"],
+			"primary_certificate": "c173c8a1-9724-4e96-a748-2c4494186098",
+			"status": "active",
+			"certificates": [
+				{
+					"id": "c173c8a1-9724-4e96-a748-2c4494186098",
+					"hosts": ["*.example.com", "example.com"],
+					"issuer": "LetsEncrypt",
+					"signature": "ECDSAWithSHA384",
+					"status": "active",
+					"bundle_method": "ubiquitous",
+					"zone_id": "<ZONE_ID>",
+					"uploaded_on": "2023-02-02T11:20:25.403338Z",
+					"modified_on": "2022-12-08T00:26:15.577555Z",
+					"expires_on": "2023-03-07T23:26:12.000000Z",
+					"priority": null
+				}
+			],
+			"created_on": "2022-12-09T23:11:06.010263Z",
+			"validity_days": 90,
+			"validation_method": "txt",
+			"certificate_authority": "lets_encrypt"
+		}
+	]
+	// (...)
 }
 ```
 
 :::caution[ConvertFrom-Json handling of DateTime values]
 
-The `ConvertTo-Json` cmdlet tries to convert strings formatted as timestamps to DateTime values, according to the exact format in the string. For details on this behavior, refer to the notes in the [ConvertFrom-Json](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json#notes) documentation. 
+The `ConvertTo-Json` cmdlet tries to convert strings formatted as timestamps to DateTime values, according to the exact format in the string. For details on this behavior, refer to the notes in the [ConvertFrom-Json](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json#notes) documentation.
 :::
 
 You can also use the curl tool in PowerShell. However, in PowerShell `curl` is an alias to the `Invoke-WebRequest` cmdlet, which supports a different syntax from the usual curl tool. To use curl, enter `curl.exe` instead.

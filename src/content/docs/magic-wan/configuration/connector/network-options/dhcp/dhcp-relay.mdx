@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: DHCP relay
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
@@ -23,11 +22,11 @@ accTitle: An example of Connector in DHCP Relay mode
     class a orange
 ```
 
-*The above graph shows Connector sending DHCP discover messages to a DHCP server offsite.*
+_The above graph shows Connector sending DHCP discover messages to a DHCP server offsite._
 
 To configure DHCP relay:
 
-<Tabs> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Magic WAN** > **Sites**.

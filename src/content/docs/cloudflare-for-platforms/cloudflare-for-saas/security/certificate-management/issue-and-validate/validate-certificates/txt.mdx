@@ -6,12 +6,11 @@ sidebar:
 head:
   - tag: title
     content: TXT domain control validation (DCV)
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Render file="txt-validation-definition" product="ssl" /> <br/>
+<Render file="txt-validation-definition" product="ssl" /> <br />
 
 ## When to use
 
@@ -29,7 +28,7 @@ This HTTP validation should succeed as long as your customer is pointing to your
 
 This means that - if you choose to use wildcard custom hostnames - you will need a way to share these DCV tokens with your customer.
 
-***
+---
 
 ### Step 1 - Get TXT tokens
 
@@ -37,7 +36,7 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 
 <Render file="txt-validation_preamble" />
 
-<Tabs> <TabItem label="API">
+<Tabs syncKey="dashPlusAPI"> <TabItem label="API">
 
 <Render file="txt-validation_api" />
 
@@ -65,7 +64,7 @@ Your DCV tokens expire after a [certain amount of time](/cloudflare-for-platform
 
 This means that, if your customers take too long to place their tokens at their authoritative DNS provider, you may need to [get new tokens](#step-1---get-txt-tokens) and re-share them with your customer.
 
-***
+---
 
 ### DigiCert
 

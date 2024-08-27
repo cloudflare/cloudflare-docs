@@ -19,12 +19,11 @@ sidebar:
   order: 2
 description: Return JSON directly from a Worker script, useful for building APIs
   and middleware.
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
 <Render file="return-json-example-js" />
 
@@ -32,13 +31,13 @@ import { Render, TabItem, Tabs } from "~/components"
 
 ```ts
 export default {
-  async fetch(request): Promise<Response> {
-    const data = {
-      hello: "world",
-    };
+	async fetch(request): Promise<Response> {
+		const data = {
+			hello: "world",
+		};
 
-    return Response.json(data);
-  },
+		return Response.json(data);
+	},
 } satisfies ExportedHandler;
 ```
 
