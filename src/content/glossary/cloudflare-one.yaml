@@ -23,7 +23,7 @@ entries:
 
 - term: CGNAT IP
   general_definition: |-
-    a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device on its **My Team** > **Devices** page.
+    a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **My Team** > **Devices** > **Virtual IPv4/IPv6**.
 
 - term: cloudflared
   general_definition: |-
