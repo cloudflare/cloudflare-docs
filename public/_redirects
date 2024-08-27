@@ -913,6 +913,9 @@
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
+# security center
+/security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/get-started/ 301
+
 # spectrum
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301

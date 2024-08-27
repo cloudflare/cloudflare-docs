@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Get started
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 <Render file="indicator-feeds-overview" />
 
@@ -25,7 +24,7 @@ Managing a Custom Indicator Feed is only available using the [Indicator API endp
 
 :::note
 
-Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file. 
+Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
 :::
 
 3. Finally, in order to grant access to a subscriber, any administrator of the account that owns the feed must add the subscribers `account_tag` to the feeds allowed subscribers list. This can be done using the [`permissions` API endpoint](/api/operations/custom-indicator-feeds-add-permission).
@@ -36,7 +35,7 @@ Once an account is granted access to a feed, it will be available as a selectabl
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies**. Select **DNS**.
 2. To create a new DNS policy, select **Add a policy**.
-3. Name your policy, add a **Traffic Condition**, and select *Indicator Feeds* from the **Selector** dropdown.
+3. Name your policy, add a **Traffic Condition**, and select _Indicator Feeds_ from the **Selector** dropdown.
 
 If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in the **Value** dropdown.
 
