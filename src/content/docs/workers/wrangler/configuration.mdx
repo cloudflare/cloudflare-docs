@@ -1094,9 +1094,7 @@ You can configure Wrangler to replace all calls to import a particular package w
 ```
 
 ```js title="replacement-module-filepath.js"
-export default {
-  bar: "baz"
-};
+export const bar = "baz";
 ```
 
 With the configuration above, any calls to `import` or `require()` the module `foo` will be aliased to point to your replacement module:
