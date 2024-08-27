@@ -66,7 +66,7 @@ This standard Cloudflare for SaaS setup is the most commonly used and easiest to
 ![Figure 1: Standard Fallback Origin Setup.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/standard-fallback-origin-setup.svg "Figure 1: Standard Fallback Origin Setup.")
 
 1. The custom hostname (`custom.example.com`) is configured as a CNAME record pointing to the fallback origin of the provider. The fallback origin is the server or servers that Cloudflare will route traffic to by default when a request is made to the custom hostname. This DNS record does not need to be managed within Cloudflare; it just needs to point to the Cloudflare-hosted record from the provider (`fallback.myappexample.com`).
-2. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the Custom Hostnames to this origin server by default.
+2. The Fallback Origin is set up as an A record that points to the public IP address of the origin server. Cloudflare will route traffic sent to the custom hostnames to this origin server by default.
 
 The origin server receives the details of the custom domain through either the [host header or SNI](/cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/). This enables the origin server to determine which application to direct the request to. This method is applicable for both custom hostnames (e.g., `app.mycustomerexample.com`) and vanity domains (e.g., `customer1.myappexample.com`). Since all requests for your application are now routed through the Cloudflare network, you can leverage a range of security and performance services for every request, including:
 
