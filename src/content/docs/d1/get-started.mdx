@@ -1,7 +1,7 @@
 ---
 title: Get started
 pcx_content_type: get-started
-updated: 2024-08-02
+updated: 2024-08-27
 sidebar:
   order: 2
 ---
@@ -101,7 +101,7 @@ This will create a new D1 database, and output the [binding](/workers/runtime-ap
 
 You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
-To bind your D1 database to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind your D1 database to your Worker, copy the following lines from your terminal obtained from step 2, then add the following to the end of your `wrangler.toml` file:
 
 ```toml
 [[d1_databases]]
@@ -112,9 +112,11 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-- The value (string) you set for `<BINDING_NAME>` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+- The value (string) you set for `binding` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
+- Your binding is available in your Worker at `env.binding` [^1] and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
+
+[^1]: Note that `binding` refers to your specific binding name. For example, `env.DB`.
 
 :::note
 
@@ -122,7 +124,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 :::
 
-You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#d1-databases).
+You can also bind your D1 database to a [Pages Function](/pages/functions/index). For more information, refer to [Functions Bindings for D1](/pages/functions/bindings/#d1-databases).
 
 ## 4. Run a query against your D1 database
 
@@ -224,7 +226,7 @@ To test that your database is running successfully, add `/api/beverages` to the 
 
 ## 6. Deploy your database
 
-To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps _without_ the `--local` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
+To deploy your Worker to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps after replacing the `--local` flag with the `--remote` flag to give your Worker data to read. This will create the database tables and import the data into the production version of your database, running on Cloudflare's global network.
 
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
@@ -272,6 +274,6 @@ By finishing this tutorial, you have created a D1 database, a Worker to access t
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
-- [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1).
+- See supported [Wrangler commands for D1](/workers/wrangler/commands/#d1).
 - Learn how to use the [D1 client API](/d1/build-with-d1/d1-client-api/) within your Worker.
 - Explore [community projects built on D1](/d1/reference/community-projects/).
