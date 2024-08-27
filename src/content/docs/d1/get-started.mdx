@@ -101,7 +101,7 @@ This will create a new D1 database, and output the [binding](/workers/runtime-ap
 
 You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
-To bind your D1 database to your Worker, copy the following lines from your terminal obtained from step 2, then add the following to the end of your `wrangler.toml` file:
+To bind your D1 database to your Worker, copy the following lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal, then add the following to the end of your `wrangler.toml` file:
 
 ```toml
 [[d1_databases]]
@@ -112,11 +112,9 @@ database_id = "<unique-ID-for-your-database>"
 
 Specifically:
 
-- The value (string) you set for `binding` will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
-- The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.binding` [^1] and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
-
-[^1]: Note that `binding` refers to your specific binding name. For example, `env.DB`.
+- The value (string) you set for `binding` is the **binding name**, and will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+- The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
 
 :::note
 
