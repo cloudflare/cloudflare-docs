@@ -25,7 +25,7 @@ This setup is ideal for SaaS providers who need to ensure minimal downtime, auto
 
 This document assumes that the provider's application DNS is registered and managed through Cloudflare as the primary and authoritative DNS provider. You can find details on how to set this up in the Cloudflare DNS Zone Setup Guide [here](/dns/zone-setups/full-setup/).
 
-This solution supports subdomains under your own zone while also allowing your customers to use their own domain names (vanity or custom domains) with your services. For example, for each customer you may create the custom hostname `mycustomer.myappexample.com` but also want to allow them to use their own domain, `app.mycustomerexample.com` to point to their tenant on your service. Each subdomain (`mycustomer.myappexample.com`) can be created on the main domain (`myappexample.com`) via the [Cloudflare API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records), allowing you to easily automate the creation of DNS records when your customers create an account on your service.
+This solution supports subdomains under your own zone while also allowing your customers to use their own domain names (vanity or custom domains) with your services. For example, for each customer you may create the custom hostname `mycustomer.myappexample.com` but also want to allow them to use their own domain, `app.mycustomerexample.com` to point to their tenant on your service. Each subdomain (`mycustomer.myappexample.com`) can be created on the main domain (`myappexample.com`) through the [Cloudflare API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records), allowing you to easily automate the creation of DNS records when your customers create an account on your service.
 
 ## Benefits
 
