@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Delete key-value pairs
 sidebar:
   order: 6
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 To delete a key-value pair, call the `delete()` method on any <GlossaryTooltip term="KV namespace">KV namespace</GlossaryTooltip> you have bound to your Worker code:
 
@@ -18,25 +17,24 @@ An example of deleting a key-value pair from within a Worker:
 
 ```js
 export default {
-    async fetch(request, env, ctx) {
-        try {
-            await env.NAMESPACE.delete("first-key");
+	async fetch(request, env, ctx) {
+		try {
+			await env.NAMESPACE.delete("first-key");
 
-            return new Response("Successful delete", {
-              status: 200
-            });
-        }
-        catch (e)
-        {
-            return new Response(e.message, {status: 500});
-        }
-    },
+			return new Response("Successful delete", {
+				status: 200,
+			});
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
 };
 ```
 
 ## Reference
 
 The following method is provided to delete from KV:
+
 - [delete()](#delete-method)
 
 ### `delete()` method
@@ -60,11 +58,6 @@ env.NAMESPACE.delete(key);
 
 This method returns a promise that you should `await` on to verify successful deletion. Calling `delete()` on a non-existing key is returned as a successful delete.
 
-
 Calling the `delete()` method will remove the key and value from your KV namespace. As with any operations, it may take some time for the key to be deleted from various points in the Cloudflare global network.
-
-
-
-
 
 You can also [delete key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#delete) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
