@@ -7,3 +7,7 @@ Test out Javascript.
 Bad link at [this page](/test/).
 
 Build a better internet.
+
+Hyperdrive is a cool product.
+
+Tell me about namespaces.
