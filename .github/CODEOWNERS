@@ -14,7 +14,7 @@
 _.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 _.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH
 /src/content/workers-ai-models/ @kodster28 @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/\_redirects @GregBrimble @cloudflare/pcx-technical-writing
+/public/_redirects @GregBrimble @cloudflare/pcx-technical-writing
 
 # AI
 
@@ -127,9 +127,9 @@ _.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @hal
 # DDoS Protection
 
 /src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/pcx-technical-writing
-/src/content/docs/ddos-protection/change-log/ @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
-/src/content/changelogs/ddos-http.yaml @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
-/src/content/changelogs/ddos-network.yaml @jdesgats @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/ddos-protection/change-log/ @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/changelogs/ddos-http.yaml @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/changelogs/ddos-network.yaml @antoinecordelle @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Docs team areas
 
