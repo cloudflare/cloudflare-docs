@@ -52,7 +52,7 @@ Since Cloudflare cannot be sure whether a signed exchange includes private infor
 * `Strict-Transport-Security`
 * `WWW-Authenticate`
 
-Signed exchanges will not be created if the response headers contain a `cache-control` header whose value is either:
+Signed exchanges will not be created if the response headers contain a `cache-control` header with one of the following values:
 
 * `private`
 * `no-store`

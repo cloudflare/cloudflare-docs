@@ -76,7 +76,9 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
 
-<Render file="isolate-cpu-flexibility" /> <br />
+<Render file="isolate-cpu-flexibility" />
+
+Using DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/) to learn more.
 
 You can also set a custom limit on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
 
@@ -155,6 +157,8 @@ If a Worker processes a request that pushes the Worker over the 128 MB limit, th
 3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
 Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
+
+Using DevTools locally can help identify memory leaks in your code. See the [memory profiling with DevTools documentation](/workers/observability/dev-tools/memory-usage/) to learn more.
 
 ---
 
@@ -263,6 +267,10 @@ Note that larger Worker bundles can impact the start-up time of the Worker, as t
 A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
 
 You can measure your Worker's startup time by deploying it to Cloudflare using [Wrangler](/workers/wrangler/). When you run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload --experimental-versions`, Wrangler will output the startup time of your Worker in the command-line output, using the `startup_time_ms` field in the [Workers Script API](/api/operations/worker-script-upload-worker-module) or [Workers Versions API](/api/operations/worker-versions-upload-version#request-body).
+
+If you are having trouble staying under this limit, consider [profiling using DevTools](/workers/observability/dev-tools/) locally to learn how to optimize your code.
+
+<Render file="limits_increase" />
 
 ---
 

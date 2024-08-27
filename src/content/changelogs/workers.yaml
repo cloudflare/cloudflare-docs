@@ -11,6 +11,7 @@ entries:
 - publish_date: '2024-08-15'
   description: |-
     - Updated v8 to version 12.8.
+    - You can now use [`Promise.try()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/try) in Cloudflare Workers. Refer to [`tc39/proposal-promise-try`](https://github.com/tc39/proposal-promise-try) for more context on this API that has recently been added to the JavaScript language.
 - publish_date: '2024-08-14'
   description: |-
     - When using the `nodejs_compat_v2` compatibility flag, the `setImmediate(fn)` API from Node.js is now available at the global scope.
