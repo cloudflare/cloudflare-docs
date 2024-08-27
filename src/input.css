@@ -1,0 +1,11 @@
+input,
+select {
+	background-color: var(--sl-color-bg-nav);
+	border-color: var(--sl-color-gray-5);
+	border-width: 2px;
+}
+
+input[readonly] {
+	background-color: var(--sl-color-backdrop-overlay);
+	cursor: not-allowed;
+}

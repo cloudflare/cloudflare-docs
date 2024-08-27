@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: Box
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+  file="casb/integration-description"
+  params={{ one: "Box", two: "Box account" }}
+/>
+
+## Integration prerequisites
+
+- A Box account on a Business plan (Business, Business Plus, Enterprise, Enterprise Plus)
+
+- Access to a Box Business account with Admin permission
+
+## Integration permissions
+
+For the Box integration to function, Cloudflare CASB requires the following Box permissions via an OAuth 2.0 app:
+
+- `Read all files and folders stored in Box`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about the permission, refer to the [Box Scopes documentation](https://developer.box.com/guides/api-calls/permissions-and-errors/scopes/#read-all-files-and-folders).
+
+## Security findings
+
+<Render file="casb/security-findings" params={{ one: "Box", two: "box" }} />
+
+### File sharing
+
+Identify files and folders that have been shared in a potentially insecure fashion.
+
+<Render file="casb/shared-links" />
+
+| Finding type                                             | FindingTypeID                          | Severity |
+| -------------------------------------------------------- | -------------------------------------- | -------- |
+| Box: File publicly accessible with edit access           | `fa0532dd-9d13-4c21-8227-62b8bd8be275` | Critical |
+| Box: File publicly accessible with high download count   | `97c0845a-754b-4269-b548-85026867da64` | High     |
+| Box: Folder publicly accessible with edit access         | `154eabed-19a7-4a07-9dfd-d08f5e839aed` | High     |
+| Box: File shared company-wide with edit access           | `8df801de-327b-4d71-9f36-fc6f3e2c18da` | High     |
+| Box: File publicly accessible with view access           | `ecca7eeb-3c04-46b2-a509-40393ada32ec` | High     |
+| Box: Folder shared company-wide with high download count | `21bed8a9-b587-4a8b-b38f-8c9492b1d132` | Medium   |
+| Box: File publicly accessible with high view count       | `540ab1db-5a9e-4968-b669-100e2b97fa85` | Medium   |
+| Box: Folder that can be shared by anyone                 | `c56757c6-72e4-456c-8cb9-a5b0fd6ceb4a` | Medium   |
+| Box: Folder shared company-wide with edit access         | `61082e41-3205-44a0-bb7e-34c02abd5137` | Medium   |
+| Box: File shared company-wide with view access           | `5afdbe74-0311-4da8-a64e-6f25c3d4a2b7` | Medium   |
+| Box: File shared company-wide with high download count   | `3cd0d8dd-d92b-4a46-b88f-076a17e11837` | Medium   |
+| Box: Folder publicly accessible with view access         | `2e9d5774-3a22-4d45-9307-bb24207af3d7` | Medium   |
+| Box: Folder shared company-wide with high view count     | `fd303606-a513-4bb5-9a87-b1c836f6e993` | Low      |
+| Box: File larger than 2 GB                               | `ef889ceb-4cad-4d25-8845-d350a599825e` | Low      |
+| Box: Folder with external email upload access            | `90f9b277-0846-4918-aac2-2e63fed576b5` | Low      |
+| Box: Folder shared company-wide with view access         | `1bb68e90-9c1d-44ef-91a9-2ed4eb2eb5b2` | Low      |
+| Box: File shared company-wide with high view count       | `22bf3a7b-1fd1-4eb6-b8f5-1b2e772b3484` | Low      |
+
+### Data Loss Prevention (optional)
+
+<Render file="casb/data-loss-prevention" />
+
+| Finding type                                                        | Severity | Description                                                                       |
+| ------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------- |
+| Box: File Publicly Accessible Read and Write with DLP Profile match | Critical | A Box file contains sensitive data that anyone on the Internet can read or write. |
+| Box: File Publicly Accessible Read Only with DLP Profile match      | Critical | A Box file contains sensitive data that anyone on the Internet can read.          |
+| Box: File Shared Company Wide Read and Write with DLP Profile match | Medium   | A Box file is shared with the entire company with read and write permissions.     |
+| Box: File Shared Company Wide Read Only with DLP Profile match      | Medium   | A Box file is shared with the entire company with read permissions.               |
+
+### User access
+
+Flag user access issues, including account misuse and users not following best practices.
+
+| Finding type                                             | FindingTypeID                          | Severity |
+| -------------------------------------------------------- | -------------------------------------- | -------- |
+| Box: Admin not required to use two-factor authentication | `40f33ef2-3eab-4855-b171-a71463f8fc96` | High     |
+| Box: User not required to use two-factor authentication  | `a8f9e55a-cb7c-4e35-8dc0-fdf569919a97` | Medium   |
+| Box: Inactive admin user                                 | `e6b82aa9-7d0d-4c85-a582-a377684ace47` | Medium   |
+| Box: User with unconfirmed notification email            | `15b70c97-68f6-4ef0-afd1-891971162114` | Low      |
+| Box: User with email alias configured                    | `085164ed-c555-40ed-9374-358a892e49ef` | Low      |
+| Box: User allowed to collaborate with external users     | `01ed4b90-c470-4ea1-961a-7e64c2fec525` | Low      |
+| Box: Inactive user                                       | `d709ccb3-9b9d-4a3c-a3af-a1def54c9a2e` | Low      |
+
+### Account misconfigurations
+
+Discover account and admin-level settings that have been configured in a potentially insecure way.
+
+| Finding type        | Severity |
+| ------------------- | -------- |
+| Box: Active Webhook | Low      |

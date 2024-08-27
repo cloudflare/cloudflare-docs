@@ -1,0 +1,71 @@
+---
+pcx_content_type: configuration
+title: Supabase
+---
+
+import { Render } from "~/components";
+
+[Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
+
+<Render file="database_integrations_definition" />
+
+## Set up an integration with Supabase
+
+To set up an integration with Supabase:
+
+1. You need to have an existing Supabase database to connect to. [Create a Supabase database](https://supabase.com/docs/guides/database/tables#creating-tables) or [have an existing database to connect to Supabase and load data from](https://supabase.com/docs/guides/database/tables#loading-data).
+
+2. Create a `countries` table with the following query. You can create a table in your Supabase dashboard in two ways:
+
+   - Use the table editor, which allows you to set up Postgres similar to a spreadsheet.
+   - Alternatively, use the [SQL editor](https://supabase.com/docs/guides/database/overview#the-sql-editor):
+
+   ```sql
+   CREATE TABLE countries (
+   id SERIAL PRIMARY KEY,
+   name VARCHAR(255) NOT NULL
+   );
+   ```
+
+3. Insert some data in your newly created table. Run the following commands to add countries to your table:
+
+   ```sql
+   INSERT INTO countries (name) VALUES ('United States');
+   INSERT INTO countries (name) VALUES ('Canada');
+   INSERT INTO countries (name) VALUES ('The Netherlands');
+   ```
+
+4. Add the Supabase database integration to your Worker:
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+   2. In **Account Home**, select **Workers & Pages**.
+   3. In **Overview**, select your Worker.
+   4. Select **Integrations** > **Supabase**.
+   5. Follow the setup flow, selecting the database created in step 1.
+
+5. In your Worker, install the `@supabase/supabase-js` driver to connect to your database and start manipulating data:
+
+   ```sh
+   npm install @supabase/supabase-js
+   ```
+
+6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
+
+   ```sql
+   import { createClient } from '@supabase/supabase-js';
+
+   export default {
+     async fetch(request, env) {
+       const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_KEY);
+       const { data, error } = await supabase.from("countries").select('*');
+       if (error) throw error;
+       return new Response(JSON.stringify(data), {
+         headers: {
+           "Content-Type": "application/json",
+         },
+       });
+     },
+   };
+   ```
+
+To learn more about Supabase, refer to [Supabase's official documentation](https://supabase.com/docs).

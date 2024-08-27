@@ -1,0 +1,98 @@
+---
+import { marked } from "marked";
+import { getGlossaryEntries } from "~/util/glossary";
+import { LinkButton } from "~/components";
+
+interface Props {
+	product?: string;
+}
+
+const { product } = Astro.props;
+
+let terms = await getGlossaryEntries(product);
+
+const INITIAL_VISIBLE_ROWS = 20;
+---
+
+<table id="glossary-table">
+	<thead>
+		<tr>
+			<td>Term</td>
+			<td>Definition</td>
+			{!product && <td>Product</td>}
+		</tr>
+	</thead>
+	<tbody>
+		{
+			terms.map((entry, idx) => (
+				<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
+					<td>{entry.term}</td>
+					<td set:html={marked.parse(entry.general_definition.charAt(0).toUpperCase() + entry.general_definition.slice(1))} />
+					{!product && <td>{entry.product}</td>}
+				</tr>
+			))
+		}
+	</tbody>
+</table>
+
+{ terms.length > INITIAL_VISIBLE_ROWS && 
+	<LinkButton id="glossary-button" href="" class="justify-center">
+		View more terms
+	</LinkButton>
+}
+
+<script>
+	// function filterRows(search: string) {
+	//     const table =
+	//         document.querySelector<HTMLTableElement>("#glossary-table");
+
+	//     if (!table) return;
+
+	//     const rows =
+	//         table.querySelectorAll<HTMLTableRowElement>("tbody > tr");
+
+	//     if (!rows) return;
+
+	//     for (const row of rows) {
+	//         if (!row.textContent?.includes(search)) {
+	//             row.classList.add("hidden")
+	//         } else {
+	//             row.classList.remove("hidden")
+	//         }
+	//     }
+	// }
+
+	// const search = document.querySelector<HTMLInputElement>("#glossary-search");
+
+	// if (search) {
+	//     search.addEventListener("input", () => {
+	//         filterRows(search.value)
+	//     })
+	// }
+
+	const button = document.querySelector<HTMLAnchorElement>("#glossary-button");
+
+	function showRows() {
+		const table = document.querySelector<HTMLTableElement>("#glossary-table");
+
+		if (!table) return;
+
+		const rows =
+			table.querySelectorAll<HTMLTableRowElement>("tbody > tr.hidden");
+
+		if (!rows) return;
+		if (rows.length === 0) {
+			button?.classList.add("hidden");
+		}
+		const extraRows = Array.from(rows).slice(0, 5);
+
+		extraRows.forEach((row) => row.classList.remove("hidden"));
+	}
+
+	if (button) {
+		button.addEventListener("click", (e) => {
+			e.preventDefault();
+			showRows();
+		});
+	}
+</script>

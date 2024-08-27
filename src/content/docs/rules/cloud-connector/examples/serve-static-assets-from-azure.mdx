@@ -1,0 +1,23 @@
+---
+title: Serve /static-assets from Azure Blob Storage
+pcx_content_type: example
+summary: Route requests with a URI path starting with `/static-assets` to an Azure Blob Storage container using Cloud Connector.
+description: Route requests with a URI path starting with `/static-assets` to an Azure Blob Storage container using Cloud Connector.
+products:
+  - Cloud Connector
+---
+
+To serve static assets from an Azure Blob Storage container:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Navigate to **Rules > Cloud Connector**.
+3. Select **Microsoft Azure - Blob Storage** as your [cloud provider](/rules/cloud-connector/providers/).
+4. Enter the bucket URL. Here’s how to structure it:
+   - **Subdomain-style URL**: Set the hostname to `<BUCKET_NAME>.blob.core.windows.net`. In this case, your bucket should include a folder named `static-assets`, and files should be placed inside this folder. For example, `https://<YOUR_HOSTNAME>/static-assets/style.css` will map to `https://<BUCKET_NAME>.blob.core.windows.net/static-assets/style.css`.
+5. _(Optional)_ Use the [Rewrite URL](/rules/transform/url-rewrite/) feature of [Transform Rules](/rules/transform/) to adjust the URL structure. For example, you can [create a URL rewrite](/rules/transform/url-rewrite/create-dashboard/) that changes `/static-assets` to `/my-pages-project/static-assets` to match the file structure of your object storage bucket.
+6. Click **Next** and enter a descriptive name like "Serve static assets from Azure" in Cloud Connector name.
+7. Under **If**, select **Custom filter expression** and enter the following expression:
+   `http.request.full_uri wildcard "https://<YOUR_HOSTNAME>/static-assets/*"`<br />
+8. Select **Deploy** to activate the rule.
+
+This setup ensures that all traffic to `https://<YOUR_HOSTNAME>/static-assets/*` is served from your Azure Blob Storage container. Make sure to replace `<YOUR_HOSTNAME>` with your actual hostname and adjust the example paths according to your setup.

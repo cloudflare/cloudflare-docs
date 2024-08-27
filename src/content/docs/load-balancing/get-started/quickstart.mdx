@@ -1,0 +1,118 @@
+---
+pcx_content_type: get-started
+title: Quickstart
+sidebar:
+  order: 2
+---
+
+import {
+	DirectoryListing,
+	GlossaryDefinition,
+	GlossaryTooltip,
+	Render,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Get up and running quickly with Load Balancing. For more in-depth explanations, refer to the [Learning path](/learning-paths/load-balancing/).
+
+<Render file="components-knowledge-callout" />
+<br />
+
+---
+
+## Before you begin
+
+Make sure you:
+
+- Have access to multiple <GlossaryTooltip term="endpoint">endpoints</GlossaryTooltip> (origin servers, private or public IP addresses, virtual IP addresses (VIPs), etc), either physical or cloud-based.
+- Have access to Load Balancing, available as an [add-on](/load-balancing/get-started/enable-load-balancing/) for any type of account.
+- Have test and production hostnames that are covered by [SSL/TLS certificates](/load-balancing/load-balancers/dns-records/#ssltls-coverage).
+
+## Create a monitor
+
+<GlossaryDefinition term="monitor" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<strong>Set up the monitor</strong>
+
+<Render file="monitor-create" />
+
+<strong>Prepare your servers</strong>
+
+<Render file="monitor-prepare-server" /> </TabItem> <TabItem label="API">
+
+<strong>Set up the monitor</strong>
+
+<Render file="monitor-create-api" />
+
+<strong>Prepare your servers</strong>
+
+<Render file="monitor-prepare-server" />
+
+</TabItem> </Tabs>
+
+<Render file="monitor-example" />
+
+## Create pools
+
+<GlossaryDefinition term="pool" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="pool-create" />
+
+</TabItem>
+
+<TabItem label="API">
+
+<Render file="pool-create-api" />
+
+</TabItem> </Tabs>
+
+## Confirm pool health
+
+<Render file="confirm-pool-health" />
+
+### Unexpected health status
+
+<Render file="unexpected-health-statuses" />
+
+## Create a load balancer on a test subdomain
+
+<Render file="test-domain-setup" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="load-balancer-create" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="load-balancer-create-api" />
+
+</TabItem> </Tabs>
+
+## Optional - Review load balancing analytics
+
+As you send sample requests to your test domain, review the [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) page to make sure your load balancer is distributing requests like you were expecting.
+
+## Route production traffic
+
+<Render file="route-production-traffic" />
+
+## Optional - Next steps
+
+Your load balancer should be receiving production traffic (and you can confirm this by reviewing the [analytics](/load-balancing/reference/load-balancing-analytics/)).
+
+Though your product is officially set up, you may want to consider the following suggestions.
+
+### Usage-based notifications
+
+<Render file="ubb-recommendation" product="fundamentals" />
+
+### Additional configuration options
+
+You may want to further customize how your load balancer routes traffic or integrate your load balancer with other Cloudflare products:
+
+<DirectoryListing folder="load-balancing/additional-options" />

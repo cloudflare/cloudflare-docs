@@ -1,0 +1,77 @@
+---
+pcx_content_type: configuration
+title: Neon
+---
+
+import { Render } from "~/components";
+
+[Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
+
+<Render file="database_integrations_definition" />
+
+## Set up an integration with Neon
+
+To set up an integration with Neon:
+
+1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/postgres/tutorial-createdb#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+
+2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
+
+   ```sql
+   CREATE TABLE elements (
+     id INTEGER NOT NULL,
+     elementName TEXT NOT NULL,
+     atomicNumber INTEGER NOT NULL,
+     symbol TEXT NOT NULL
+   );
+   ```
+
+3. Insert some data into your newly created table.
+
+   ```sql
+   INSERT INTO elements (id, elementName, atomicNumber, symbol)
+   VALUES
+     (1, 'Hydrogen', 1, 'H'),
+     (2, 'Helium', 2, 'He'),
+     (3, 'Lithium', 3, 'Li'),
+     (4, 'Beryllium', 4, 'Be'),
+     (5, 'Boron', 5, 'B'),
+     (6, 'Carbon', 6, 'C'),
+     (7, 'Nitrogen', 7, 'N'),
+     (8, 'Oxygen', 8, 'O'),
+     (9, 'Fluorine', 9, 'F'),
+     (10, 'Neon', 10, 'Ne');
+   ```
+
+4. Add the Neon database integration to your Worker:
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+   2. In **Account Home**, select **Workers & Pages**.
+   3. In **Overview**, select your Worker.
+   4. Select **Integrations** > **Neon**.
+   5. Follow the setup flow, selecting the database created in step 1.
+
+5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:
+
+   ```sh
+   npm install @neondatabase/serverless
+   ```
+
+6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration.
+
+   ```sql
+   import { Client } from '@neondatabase/serverless';
+
+   export default {
+     async fetch(request, env, ctx) {
+       const client = new Client(env.DATABASE_URL);
+       await client.connect();
+       const { rows } = await client.query('SELECT * FROM elements');
+       ctx.waitUntil(client.end());  // this doesn’t hold up the response
+
+       return new Response(JSON.stringify(rows));
+     }
+   }
+   ```
+
+To learn more about Neon, refer to [Neon's official documentation](https://neon.tech/docs/introduction).

@@ -1,0 +1,6 @@
+/*
+	Override the default `overflow-wrap: anywhere` when inside a table.
+*/
+table * {
+	overflow-wrap: normal;
+}

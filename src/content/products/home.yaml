@@ -1,0 +1,17 @@
+meta:
+  title: Cloudflare Docs
+  description: Browse the latest product docs including how-to guides, tutorials, API reference, and sample code.
+  author: "@cloudflare"
+
+product:
+  title: Home page
+  url: /
+  show: false
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b

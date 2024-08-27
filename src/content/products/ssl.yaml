@@ -1,0 +1,28 @@
+name: SSL/TLS
+
+product:
+  title: SSL/TLS
+  url: /ssl/
+  group: Application performance
+  additional_groups: [Application security]
+
+meta:
+  title: Cloudflare SSL/TLS docs
+  description: Cloudflare wants to encrypt as much web traffic as possible to
+    prevent data theft and other tampering. We are the first Internet
+    performance and security company to offer free SSL/TLS protection.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/c/security/6
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/
+  learning_center: https://www.cloudflare.com/learning/ssl/what-is-ssl/
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: ssl

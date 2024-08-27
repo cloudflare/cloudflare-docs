@@ -1,0 +1,62 @@
+---
+pcx_content_type: reference
+title: GitHub
+rss: file
+head:
+  - tag: title
+    content: GitHub - CASB
+---
+
+import { Render } from "~/components";
+
+<Render
+  file="casb/integration-description"
+  params={{ one: "GitHub", two: "GitHub Organization" }}
+/>
+
+## Integration prerequisites
+
+- A GitHub account with a Free, Pro, or Enterprise plan
+- Membership to a GitHub Organization with Owner or GitHub App manager permissions
+
+## Integration permissions
+
+For the GitHub integration to function, Cloudflare CASB requires the following GitHub API permissions:
+
+| Permission                  | Access      | Description                                                                                             |
+| --------------------------- | ----------- | ------------------------------------------------------------------------------------------------------- |
+| Administration              | `Read-only` | View basic administrative information from the account.                                                 |
+| Members                     | `Read-only` | View metadata on organization members                                                                   |
+| Metadata                    | `Read-only` | View metadata surrounding an organization's assets, excluding sensitive private repository information. |
+| Organization administration | `Read-only` | View information on organization settings                                                               |
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [GitHub App permissions reference](https://docs.github.com/en/rest/overview/permissions-required-for-github-apps).
+
+## Security findings
+
+<Render
+  file="casb/security-findings"
+  params={{ one: "GitHub", two: "github" }}
+/>
+
+### Branches and merges
+
+| Finding type                                                                           | FindingTypeID                          | Severity | Description                                                                                                              |
+| -------------------------------------------------------------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| GitHub: Repository has no Default Branch Protection                                    | `5a0428fa-5c13-44b8-a028-9351c1d10a91` | Medium   | A repository's default branch does not have any branch protection rules enabled.                                         |
+| GitHub: Repository Default Branch Protection does not have PR Review Required          | `edd3f193-af01-421d-9a50-cb1d147bf3a6` | Medium   | A repository's default branch does not have a **Require pull request reviews before merging** rule.                      |
+| GitHub: Repository Default Branch Protection does not have Force Pushes Disabled       | `efc3e582-ef39-4316-b1f3-d4717ef30867` | Medium   | A repository's default branch has enabled **Allow force pushes**.                                                        |
+| GitHub: Repository Default Branch Protection does not have Stale PR Approvals Disabled | `7dc170d7-b1ef-4138-95fb-403d16e7ed43` | Medium   | A repository's default branch does not have a **Dismiss stale pull request approvals when new commits are pushed** rule. |
+| GitHub: Repository Default Branch Protection does not have Admin Restrictions          | `4e4aec5b-e763-41ac-9099-af874606959b` | Medium   | A repository's default branch does not have a **Do not allow bypassing the above settings** rule for administrators.     |
+| GitHub: Repository Default Branch Protection does not have Status Checks               | `1eba1aeb-9827-4a03-9c47-8290bd3a83d5` | Medium   | A repository's default branch does not have a **Require status checks to pass before merging** rule.                     |
+| GitHub: Organization repository has default WRITE permission                           | `fc074da0-1e1c-4982-8673-0852d70bf80c` | Medium   | A repository's default write protection settings were not changed.                                                       |
+| GitHub: Repository not updated in 12+ months                                           | `68b6ef6d-7e00-4761-b3f1-fcf323dc9c26` | Medium   | No changes were made to a repository in at least a year.                                                                 |
+
+Learn more about [GitHub branch protection rules](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule).
+
+### User accounts
+
+| Finding type                                                 | FindingTypeID                          | Severity | Description                                                                                              |
+| ------------------------------------------------------------ | -------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------- |
+| GitHub: Organization two-factor authentication disabled      | `47d01030-0ed8-496d-9484-f77899b21d59` | High     | An organization does not have its organization-wide two-factor authentication (2FA) requirement enabled. |
+| GitHub: Organization user two-factor authentication disabled | `dfed92b2-a45e-46ed-a86b-8c7e3db01f3c` | High     | A member of the organization does not have two-factor authentication (2FA) enabled.                      |

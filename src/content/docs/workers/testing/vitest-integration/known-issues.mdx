@@ -1,0 +1,35 @@
+---
+title: Known issues
+pcx_content_type: concept
+sidebar:
+  order: 7
+head: []
+description: Explore the known issues associated with the Workers Vitest integration.
+
+---
+
+The Workers Vitest pool is currently in open beta. The following are issues Cloudflare is aware of and fixing:
+
+### Coverage
+
+Native code coverage via [V8](https://v8.dev/blog/javascript-code-coverage) is not supported. You must use instrumented code coverage via [Istanbul](https://istanbul.js.org/) instead. Refer to the [Vitest Coverage documentation](https://vitest.dev/guide/coverage) for setup instructions.
+
+### Fake timers
+
+Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and cache simulators. For example, you cannot expire a KV key by advancing fake time.
+
+### Dynamic `import()` statements with `SELF` and Durable Objects
+
+Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `SELF`, or inside Durable Object event handlers. You must import and call your handlers directly, or use static `import` statements in the global scope.
+
+### Durable Object alarms
+
+Durable Object alarms are not reset between test runs and do not respect isolated storage. Ensure you delete or run all alarms with [`runDurableObjectAlarm()`](/workers/testing/vitest-integration/test-apis/#durable-objects) scheduled in each test before finishing the test.
+
+### Durable Objects and `isolatedStorage`
+
+Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
+
+### Returning non-primitive values from RPC methods
+
+In order to return non-primitive values (objects or classes extending `RpcTarget`, for instance) from RPC methods, you must use the `using` keyword. Refer to [https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management](https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details. An [example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) is included in the `workers-sdk` repository.

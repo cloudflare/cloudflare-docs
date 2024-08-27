@@ -1,0 +1,14 @@
+---
+title: List examples
+---
+
+```mdx live
+import { ListExamples } from "~/components";
+
+<ListExamples directory="rules/snippets/examples" />
+```
+
+There are also two optional, additional properties:
+
+- `filters` `string[]`: A list of filters to render that helps someone filter the examples based on values in the frontmatter.
+- `additionalProducts` `string[]`: A list of additional product examples to look across our docs for. Looks for anything matching the `products` frontmatter in examples across other areas of the docs.

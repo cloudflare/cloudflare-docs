@@ -1,0 +1,14 @@
+---
+import { z } from "astro:content";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+  text: z.string(),
+});
+
+const { text } = props.parse(Astro.props);
+---
+
+<Fragment set:html={marked.parseInline(text)} />

@@ -1,0 +1,25 @@
+---
+title: Network Analytics
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Magic Transit Network Analytics
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare’s network through <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
+
+Source/destination tunnel data in Network Analytics includes:
+
+- A list of your top tunnels by traffic volume.
+- Source and destination <GlossaryTooltip term="IP address">IP addresses</GlossaryTooltip>, ports, and protocols of tunnel traffic.
+- Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare’s network.
+- Mitigations applied (such as DDoS and Magic Firewall) to traffic entering Cloudflare.
+
+## Access Magic Tunnel analytics
+
+<Render file="analytics/network-analytics" product="magic-wan" />

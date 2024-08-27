@@ -1,0 +1,557 @@
+---
+pcx_content_type: configuration
+title: Web Crypto
+head: []
+description: A set of low-level functions for common cryptographic tasks.
+
+---
+
+import { TabItem, Tabs } from "~/components"
+
+## Background
+
+The Web Crypto API provides a set of low-level functions for common cryptographic tasks. The Workers runtime implements the full surface of this API, but with some differences in the [supported algorithms](#supported-algorithms) compared to those implemented in most browsers.
+
+Performing cryptographic operations using the Web Crypto API is significantly faster than performing them purely in JavaScript. If you want to perform CPU-intensive cryptographic operations, you should consider using the Web Crypto API.
+
+The Web Crypto API is implemented through the `SubtleCrypto` interface, accessible via the global `crypto.subtle` binding. A simple example of calculating a digest (also known as a hash) is:
+
+```js
+const myText = new TextEncoder().encode('Hello world!');
+
+const myDigest = await crypto.subtle.digest(
+  {
+    name: 'SHA-256',
+  },
+  myText // The data you want to hash as an ArrayBuffer
+);
+
+console.log(new Uint8Array(myDigest));
+```
+
+Some common uses include [signing requests](/workers/examples/signing-requests/).
+
+:::caution
+
+The Web Crypto API differs significantly from the [Node.js Crypto API](/workers/runtime-apis/nodejs/crypto/). If you are working with code that relies on the Node.js Crypto API, you can use it by enabling the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/). 
+:::
+
+***
+
+## Constructors
+
+
+
+* <code>crypto.DigestStream(algorithm)</code> DigestStream
+
+  * A non-standard extension to the `crypto` API that supports generating a hash digest from streaming data. The `DigestStream` itself is a [`WritableStream`](/workers/runtime-apis/streams/writablestream/) that does not retain the data written into it. Instead, it generates a hash digest automatically when the flow of data has ended.
+
+
+
+### Parameters
+
+
+
+* <code>algorithm</code>string | object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
+
+
+
+### Usage
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+  async fetch(req) {
+    // Fetch from origin
+    const res = await fetch(req);
+
+    // We need to read the body twice so we `tee` it (get two instances)
+    const [bodyOne, bodyTwo] = res.body.tee();
+    // Make a new response so we can set the headers (responses from `fetch` are immutable)
+    const newRes = new Response(bodyOne, res);
+    // Create a SHA-256 digest stream and pipe the body into it
+    const digestStream = new crypto.DigestStream("SHA-256");
+    bodyTwo.pipeTo(digestStream);
+    // Get the final result
+    const digest = await digestStream.digest;
+    // Turn it into a hex string
+    const hexString = [...new Uint8Array(digest)]
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+    // Set a header with the SHA-256 hash and return the response
+    newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
+    return newRes;
+  }
+}
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+  async fetch(req): Promise<Response> {
+    // Fetch from origin
+    const res = await fetch(req);
+
+    // We need to read the body twice so we `tee` it (get two instances)
+    const [bodyOne, bodyTwo] = res.body.tee();
+    // Make a new response so we can set the headers (responses from `fetch` are immutable)
+    const newRes = new Response(bodyOne, res);
+    // Create a SHA-256 digest stream and pipe the body into it
+    const digestStream = new crypto.DigestStream("SHA-256");
+    bodyTwo.pipeTo(digestStream);
+    // Get the final result
+    const digest = await digestStream.digest;
+    // Turn it into a hex string
+    const hexString = [...new Uint8Array(digest)]
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
+    // Set a header with the SHA-256 hash and return the response
+    newRes.headers.set("x-content-digest", `SHA-256=${hexString}`);
+    return newRes;
+  }
+} satisfies ExportedHandler;
+```
+
+</TabItem> </Tabs>
+
+## Methods
+
+
+
+* <code>crypto.randomUUID()</code> : string
+
+  * Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
+
+* <code>crypto.getRandomValues(bufferArrayBufferView)</code> : ArrayBufferView
+
+  * Fills the passed <code>ArrayBufferView</code> with cryptographically sound random values and returns the <code>buffer</code>.
+
+
+
+### Parameters
+
+
+
+* <code>buffer</code>ArrayBufferView
+
+  * Must be an Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array.
+
+
+
+## SubtleCrypto Methods
+
+These methods are all accessed via [`crypto.subtle`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto#Methods), which is also documented in detail on MDN.
+
+### encrypt
+
+
+
+* <code>encrypt(algorithm, key, data)</code> : Promise\<ArrayBuffer>
+
+  * Returns a Promise that fulfills with the encrypted data corresponding to the clear text, algorithm, and key given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#Syntax).
+
+* <code>key</code>CryptoKey
+
+* <code>data</code>BufferSource
+
+
+
+### decrypt
+
+
+
+* <code>decrypt(algorithm, key, data)</code> : Promise\<ArrayBuffer>
+
+  * Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm, and key given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/decrypt#Syntax).
+
+* <code>key</code>CryptoKey
+
+* <code>data</code>BufferSource
+
+
+
+### sign
+
+
+
+* <code>sign(algorithm, key, data)</code> : Promise\<ArrayBuffer>
+
+  * Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>string | object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign#Syntax).
+
+* <code>key</code>CryptoKey
+
+* <code>data</code>ArrayBuffer
+
+
+
+### verify
+
+
+
+* <code>verify(algorithm, key, signature, data)</code> : Promise\<boolean>
+
+  * Returns a Promise that fulfills with a Boolean value indicating if the signature given as a parameter matches the text, algorithm, and key that are also given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>string | object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/verify#Syntax).
+
+* <code>key</code>CryptoKey
+
+* <code>signature</code>ArrayBuffer
+
+* <code>data</code>ArrayBuffer
+
+
+
+### digest
+
+
+
+* <code>digest(algorithm, data)</code> : Promise\<ArrayBuffer>
+
+  * Returns a Promise that fulfills with a digest generated from the algorithm and text given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>string | object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
+
+* <code>data</code>ArrayBuffer
+
+
+
+### generateKey
+
+
+
+* <code>generateKey(algorithm, extractable, keyUsages)</code> : Promise\<CryptoKey> | Promise\<CryptoKeyPair>
+
+  * Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms, or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For example, to generate a new AES-GCM key:
+
+  ```js
+  let keyPair = await crypto.subtle.generateKey(
+    {
+      name: 'AES-GCM',
+      length: 256,
+    },
+    true,
+    ['encrypt', 'decrypt']
+  );
+  ```
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+
+* <code>extractable</code>bool
+
+* <code>keyUsages</code>Array
+
+  * An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+
+
+
+### deriveKey
+
+
+
+* <code>deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</code> : Promise\<CryptoKey>
+
+  * Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key and specific algorithm given as parameters.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
+
+* <code>baseKeyCryptoKey</code>
+
+* <code>derivedKeyAlgorithmobject</code>
+
+  * Defines the algorithm the derived key will be used for in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
+
+* <code>extractablebool</code>
+
+* <code>keyUsagesArray</code>
+
+  * An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
+
+
+
+### deriveBits
+
+
+
+* <code>deriveBits(algorithm, baseKey, length)</code> : Promise\<ArrayBuffer>
+
+  * Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from the base key and specific algorithm given as parameters. It returns a Promise which will be fulfilled with an `ArrayBuffer` containing the derived bits. This method is very similar to `deriveKey()`, except that `deriveKey()` returns a `CryptoKey` object rather than an `ArrayBuffer`. Essentially, `deriveKey()` is composed of `deriveBits()` followed by `importKey()`.
+
+
+
+#### Parameters
+
+
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits#Syntax).
+
+* <code>baseKey</code>CryptoKey
+
+* <code>length</code>int
+
+  * Length of the bit string to derive.
+
+
+
+### importKey
+
+
+
+* <code>importKey(format, keyData, algorithm, extractable, keyUsages)</code> : Promise\<CryptoKey>
+
+  * Transform a key from some external, portable format into a `CryptoKey` for use with the Web Crypto API.
+
+
+
+#### Parameters
+
+
+
+* <code>format</code>string
+
+  * Describes [the format of the key to be imported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
+
+* <code>keyData</code>ArrayBuffer
+
+* <code>algorithm</code>object
+
+  * Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
+
+* <code>extractable</code>bool
+
+* <code>keyUsages</code>Array
+
+  * An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax)
+
+
+
+### exportKey
+
+
+
+* <code>exportKey(formatstring, keyCryptoKey)</code> : Promise\<ArrayBuffer>
+
+  * Transform a `CryptoKey` into a portable format, if the `CryptoKey` is `extractable`.
+
+
+
+#### Parameters
+
+
+
+* <code>format</code>string
+
+  * Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey#Syntax).
+
+* <code>key</code>CryptoKey
+
+
+
+### wrapKey
+
+
+
+* <code>wrapKey(format, key, wrappingKey, wrapAlgo)</code> : Promise\<ArrayBuffer>
+
+  * Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
+
+
+
+#### Parameters
+
+
+
+* <code>format</code>string
+
+  * Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax) before being encrypted.
+
+* <code>key</code>CryptoKey
+
+* <code>wrappingKey</code>CryptoKey
+
+* <code>wrapAlgo</code>object
+
+  * Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
+
+
+
+### unwrapKey
+
+
+
+* <code>unwrapKey(format, key, unwrappingKey, unwrapAlgo, <br/> unwrappedKeyAlgo, extractable, keyUsages)</code> : Promise\<CryptoKey>
+
+  * Transform a key that was wrapped by `wrapKey()` back into a `CryptoKey`.
+
+
+
+#### Parameters
+
+
+
+* <code>format</code>string
+
+  * Described the [data format of the key to be unwrapped](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+* <code>key</code>CryptoKey
+
+* <code>unwrappingKey</code>CryptoKey
+
+* <code>unwrapAlgo</code>object
+
+  * Describes the algorithm that was used to encrypt the wrapped key, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+* <code>unwrappedKeyAlgo</code>object
+
+  * Describes the key to be unwrapped, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+* <code>extractable</code>bool
+
+* <code>keyUsages</code>Array
+
+  * An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
+
+
+
+### timingSafeEqual
+
+
+
+* <code>timingSafeEqual(a, b)</code> : bool
+
+  * Compare two buffers in a way that is resistant to timing attacks. This is a non-standard extension to the Web Crypto API.
+
+
+
+#### Parameters
+
+
+
+* <code>a</code>ArrayBuffer | TypedArray
+
+* <code>b</code>ArrayBuffer | TypedArray
+
+
+
+### Supported algorithms
+
+Workers implements all operations of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI/), as shown in the following table.
+
+A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.<br/>
+An x (✘) indicates that this feature is part of the specification but not implemented.<br/>
+If a feature only implements the operation partially, details are listed.
+
+
+
+| Algorithm                                          | sign()<br/>verify() | encrypt()<br/>decrypt() | digest() | deriveBits()<br/>deriveKey() | generateKey() | wrapKey()<br/>unwrapKey() | exportKey() | importKey() |
+| :------------------------------------------------- | :------------------ | :---------------------- | :------- | :--------------------------- | :------------ | :------------------------ | :---------- | :---------- |
+| RSASSA PKCS1 v1.5                                  | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| RSA PSS                                            | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| RSA OAEP                                           |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
+| ECDSA                                              | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| ECDH                                               |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
+| Ed25519<sup><a href="#footnote-1">1</a></sup>      | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| X25519<sup><a href="#footnote-1">1</a></sup>       |                     |                         |          | ✓                            | ✓             |                           | ✓           | ✓           |
+| NODE ED25519<sup><a href="#footnote-2">2</a></sup> | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| AES CTR                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
+| AES CBC                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
+| AES GCM                                            |                     | ✓                       |          |                              | ✓             | ✓                         | ✓           | ✓           |
+| AES KW                                             |                     |                         |          |                              | ✓             | ✓                         | ✓           | ✓           |
+| HMAC                                               | ✓                   |                         |          |                              | ✓             |                           | ✓           | ✓           |
+| SHA 1                                              |                     |                         | ✓        |                              |               |                           |             |             |
+| SHA 256                                            |                     |                         | ✓        |                              |               |                           |             |             |
+| SHA 384                                            |                     |                         | ✓        |                              |               |                           |             |             |
+| SHA 512                                            |                     |                         | ✓        |                              |               |                           |             |             |
+| MD5<sup><a href="#footnote-3">3</a></sup>          |                     |                         | ✓        |                              |               |                           |             |             |
+| HKDF                                               |                     |                         |          | ✓                            |               |                           |             | ✓           |
+| PBKDF2                                             |                     |                         |          | ✓                            |               |                           |             | ✓           |
+
+
+
+**Footnotes:**
+
+1. <a name="footnote-1"></a> Algorithms as specified in the [Secure Curves API](https://wicg.github.io/webcrypto-secure-curves).
+
+2. <a name="footnote-2"></a> Legacy non-standard EdDSA is supported for the Ed25519 curve in addition to the Secure Curves version. Since this algorithm is non-standard, note the following while using it:
+
+   * Use <code>NODE-ED25519</code> as the algorithm and `namedCurve` parameters.
+   * Unlike NodeJS, Cloudflare will not support raw import of private keys.
+   * The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior. Any notable compatibility notes will be communicated in release notes and via this developer documentation.
+
+3. <a name="footnote-3"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
+
+***
+
+## Related resources
+
+* [SubtleCrypto documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
+* [SubtleCrypto documentation as part of the W3C Web Crypto API specification](https://www.w3.org/TR/WebCryptoAPI//#subtlecrypto-interface)
+* [Example: signing requests](/workers/examples/signing-requests/)

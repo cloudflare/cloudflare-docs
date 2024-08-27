@@ -1,0 +1,20 @@
+name: Learning Paths
+
+product:
+  title: Learning Paths
+  url: /learning-paths/
+  wrap: true
+
+meta:
+  title: Cloudflare Learning Paths
+  description: Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.
+  author: "@cloudflare"
+
+externals:
+  - title: All learning paths
+    url: /learning-paths/
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: learning-paths

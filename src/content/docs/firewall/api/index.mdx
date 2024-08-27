@@ -1,0 +1,22 @@
+---
+title: Manage rules via the APIs
+pcx_content_type: navigation
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Manage firewall rules via the APIs
+
+---
+
+import { Render } from "~/components"
+
+Cloudflare offers APIs that work together to achieve the same effect as the UI-based **Firewall rules** feature under **Security** > **WAF**.
+
+<Render file="deprecation-notice" />
+
+These APIs are the following:
+
+* [**Firewall Rules API**](/firewall/api/cf-firewall-rules/): Manage firewall rules and their actions, based on criteria separately defined through filters.
+* [**Filters API**](/firewall/api/cf-filters/): Manage the filters that enable rule matching.
+* [**Lists API**](/waf/tools/lists/lists-api/): Manage named lists of items (such as IP addresses) that you can use in the rules of different Cloudflare products.

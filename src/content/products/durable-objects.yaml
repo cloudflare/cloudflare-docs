@@ -1,0 +1,25 @@
+name: Durable Objects
+
+product:
+  title: Durable Objects
+  url: /durable-objects/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare Durable Objects docs
+  description: Cloudflare Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform.
+  author: "@cloudflare"
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
+  discord: https://discord.cloudflare.com
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
+
+algolia:
+  index: TEST - Re-dev docs
+  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
+  product: durable-objects

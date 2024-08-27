@@ -1,0 +1,66 @@
+---
+type: example
+summary: Respond to the Worker request with the response from another website
+  (example.com in this example).
+demo: https://respond-with-another-site.workers-sites-examples.workers.dev
+tags:
+  - Middleware
+languages:
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
+title: Respond with another site
+sidebar:
+  order: 12
+description: Respond to the Worker request with the response from another
+  website (example.com in this example).
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+<Render file="respond-another-site-example-js" />
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		async function MethodNotAllowed(request) {
+			return new Response(`Method ${request.method} not allowed.`, {
+				status: 405,
+				headers: {
+					Allow: "GET",
+				},
+			});
+		}
+		// Only GET requests work with this proxy.
+		if (request.method !== "GET") return MethodNotAllowed(request);
+		return fetch(`https://example.com`);
+	},
+} satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from js import Response, fetch, Headers
+
+def on_fetch(request):
+    def method_not_allowed(request):
+        msg = f'Method {request.method} not allowed.'
+        headers = Headers.new({"Allow": "GET"}.items)
+        return Response.new(msg, headers=headers, status=405)
+
+    # Only GET requests work with this proxy.
+    if request.method != "GET":
+        return method_not_allowed(request)
+
+    return fetch("https://example.com")
+```
+
+</TabItem> </Tabs>

@@ -1,0 +1,67 @@
+---
+title: Server and pool health
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+
+---
+
+import { Details, GlossaryDefinition, Render } from "~/components"
+
+As discussed before, a monitor issues health checks periodically to evaluate the health of a each server within a pool.
+
+<Render file="health-check-diagram" product="load-balancing" /> <br/>
+
+<GlossaryDefinition term="health check" />
+
+***
+
+## Customizations
+
+Based on the characteristics of your server pools, you have several customization options that affect how and whether a server is considered unhealthy.
+
+### Pool-level settings
+
+#### Health threshold
+
+<Render file="pool-health-threshold" product="load-balancing" /> <br/>
+
+#### Health monitor regions
+
+<Render file="health-check-regions" product="load-balancing" />
+
+##### Configurations
+
+<Render file="monitor-health-check-regions-options" product="load-balancing" />
+
+***
+
+### Monitor-level settings
+
+When you [create a monitor](/load-balancing/monitors/create-monitor/), there are several configuration settings you can adjust based on the characteristics of the attached pools:
+
+
+<Details header="Basic settings">
+
+<Render file="monitor-settings-basic" product="load-balancing" />
+
+
+</Details>
+
+
+<Details header="Advanced settings">
+
+<Render file="monitor-settings-advanced" product="load-balancing" />
+
+
+</Details>
+
+<Render file="monitor-settings-consecutive" product="load-balancing" />
+
+***
+
+### Fallback pool
+
+You also need to decide which of the associated pools in a load balancer should be the fallback pool.
+
+<Render file="fallback-pools" product="load-balancing" />

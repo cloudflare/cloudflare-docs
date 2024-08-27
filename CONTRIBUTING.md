@@ -14,6 +14,8 @@ A member of the Product Content Experience team will review the pull request. If
 
 If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.
 
+If we require more information to address your pull request, the `more-information-needed` label will be applied to the pull request. If more information has not been provided within fourteen days, the pull request will automatically close.
+
 ### Pull Request Guidelines
 
 - Commits and commit messages

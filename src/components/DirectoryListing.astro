@@ -1,0 +1,43 @@
+---
+import { getCollection, z } from "astro:content";
+import { sortBySidebarOrder } from "~/util/sidebar";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	descriptions: z.boolean().default(false),
+	folder: z.string().optional(),
+});
+
+let { descriptions, folder } = props.parse(Astro.props);
+
+if (!folder) folder = Astro.params.slug!;
+
+const depth = folder.split("/").length + 1;
+
+let pages = await getCollection("docs", (page) => {
+	return (
+		page.slug.startsWith(`${folder}/`) && page.slug.split("/").length === depth
+	);
+});
+
+pages.sort(sortBySidebarOrder);
+---
+
+<ul>
+    {
+        pages.map((page) => {
+            const description = descriptions && page.data.description;
+            const href = page.data.external_link ?? "/" + page.slug + "/";
+            return (
+                <li>
+                    <a href={href}>{page.data.title}</a>{description &&
+                        <span>: </span>
+                        <Fragment set:html={marked.parseInline(description)} />
+                    }
+                </li>
+            );
+        })
+    }
+</ul>

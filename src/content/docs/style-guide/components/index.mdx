@@ -1,0 +1,42 @@
+---
+title: Components
+sidebar:
+    order: 2
+---
+
+All of the components available to contributors writing content on Cloudflare's developer documentation
+are documented in this section.
+
+## What is a component?
+
+[Astro components](https://docs.astro.build/en/basics/astro-components/) are re-usable HTML templates which
+we use to reduce maintenance burden & duplicated code by returning frequently used layouts or snippets into
+a component that can be imported and used across various pages.
+
+## Using components
+
+Content is authored in [MDX](https://docs.astro.build/en/guides/markdown-content/), which allows JavaScript
+expressions and components to be used. They are like HTML elements, which can be self-closing.
+
+```mdx live
+import { Details, RuleID } from "~/components"
+
+{/* Self-closing component */}
+<RuleID id="abcdefghijklmnopqrstuvwxyz" />
+
+<br/> {/* Line break to separate rendered components */}
+
+{/* Component with inside content */}
+<Details header="Open me!">
+    Hello, world!
+</Details>
+```
+
+### Importing
+
+Components need to be imported to be made available inside a MDX file. All of our components are exported from
+`"~/components"`, so they would be imported like this:
+
+```mdx
+import { Card, Render } from "~/components"
+```

@@ -1,0 +1,25 @@
+---
+title: Proxy status
+pcx_content_type: overview
+sidebar:
+  order: 2
+
+---
+
+import { Render } from "~/components"
+
+The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudflare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
+
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](~/assets/images/dns/proxy-status-screenshot.png)
+
+***
+
+## Proxied records
+
+<Render file="mix-proxied-and-unproxied" product="dns" />
+
+<Render file="proxied-records-definition" product="dns" />
+
+## Limitations
+
+<Render file="limitations" product="dns" />

@@ -1,0 +1,64 @@
+---
+pcx_content_type: reference
+title: Full (strict)
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Full (strict) - SSL/TLS encryption modes
+description: Similar to Full Mode, but with added validation of the origin server’s certificate, which can be issued by a public CA like Let’s Encrypt or by Cloudflare Origin CA.
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+When you set your encryption mode to **Full (strict)**, Cloudflare does everything in [Full mode](/ssl/origin-configuration/ssl-modes/full/) but also enforces more stringent requirements for origin certificates.
+
+```mermaid
+flowchart LR
+    accTitle: Full - Strict SSL/TLS Encryption
+    accDescr: With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.
+    A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified) #9989;")]
+```
+
+## Use when
+
+For the best security, choose **Full (strict)** mode whenever possible (unless you are an [Enterprise customer](/ssl/origin-configuration/ssl-modes/ssl-only-origin-pull/)).
+
+Your origin needs to be able to support an SSL certificate that is:
+
+- Unexpired, meaning the certificate presents `notBeforeDate < now() < notAfterDate`.
+- Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/ssl/origin-configuration/origin-ca/).
+- Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
+
+:::note
+
+In addition to **Full (strict)** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
+
+:::
+
+## Required setup
+
+### Prerequisites
+
+Before enabling **Full (strict)** mode, make sure your origin:
+
+- Allows HTTPS connections on port `443`.
+- Presents a certificate matching the requirements above.
+
+Otherwise, your visitors may experience a [526 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
+
+### Process
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="change-encryption-mode-dash" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="change-encryption-mode-api" />
+
+</TabItem> </Tabs>
+
+## Limitations
+
+<Render file="ssl-mode-errors" />

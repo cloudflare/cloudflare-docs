@@ -1,0 +1,28 @@
+---
+pcx_content_type: configuration
+title: test
+
+---
+
+import { Render } from "~/components"
+
+<Render file="nodejs-compat-howto" />
+
+## `MockTracker`
+
+The `MockTracker` API in Node.js provides a means of tracking and managing mock objects in a test
+environment.
+
+```js
+import { mock } from 'node:test';
+
+const fn = mock.fn();
+fn(1,2,3);  // does nothing... but
+
+console.log(fn.mock.callCount());  // Records how many times it was called
+console.log(fn.mock.calls[0].arguments));  // Recoreds the arguments that were passed each call
+```
+
+The full `MockTracker` API is documented in the [Node.js documentation for `MockTracker`](https://nodejs.org/docs/latest/api/test.html#class-mocktracker).
+
+The Workers implementation of `MockTracker` currently does not include an implementation of the [Node.js mock timers API](https://nodejs.org/docs/latest/api/test.html#class-mocktimers).

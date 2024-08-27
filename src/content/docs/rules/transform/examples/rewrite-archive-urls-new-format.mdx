@@ -1,0 +1,36 @@
+---
+pcx_content_type: example
+summary: Create a transform rule to rewrite the URL format
+  `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format
+  `/posts/<YYYY>/<MM>/<DD>/<TITLE>`.
+products:
+  - Transform Rules
+operation:
+  - Rewrite URL
+title: Rewrite blog archive URLs
+description: Create a transform rule to rewrite the URL format
+  `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format
+  `/posts/<YYYY>/<MM>/<DD>/<TITLE>`.
+---
+
+import { Example } from "~/components";
+
+To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following rewrite URL rule:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.request.uri.path ~ "^/posts/[0-9]+-[0-9]+-[0-9]+-.*"
+```
+
+Text after **Path** > **Rewrite to...** > _Dynamic_:
+
+```txt
+regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")
+```
+
+</Example>
+
+The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<NUMBER>}` in the replacement string, where `<NUMBER>` is the number of the capture group.

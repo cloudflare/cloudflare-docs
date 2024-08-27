@@ -1,0 +1,63 @@
+---
+import { getCollection, z } from "astro:content";
+import { getGlossaryEntry } from "~/util/glossary";
+import "tippy.js/dist/tippy.css";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	term: z.string(),
+	prepend: z.string().optional(),
+	link: z.string().optional(),
+});
+
+const { term, prepend, link } = props.parse(Astro.props);
+
+const tooltip = await getGlossaryEntry(term);
+
+let definition = prepend
+	? prepend.concat(tooltip.general_definition)
+	: tooltip.general_definition;
+
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+
+definition = definition.split(/\r?\n/)[0];
+---
+
+<span
+	id={tooltip.term}
+	data-tooltip
+	data-content={marked.parse(definition)}
+	class="border-b-2 border-dashed border-accent-600"
+	>{
+		link ? (
+			<a href={link}>
+				<slot />
+			</a>
+		) : (
+			<slot />
+		)
+	}</span
+><script>
+	import tippy from "tippy.js";
+
+	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
+
+	for (const tooltip of tooltips) {
+		tippy(`#${CSS.escape(tooltip.id)}`, {
+			content: tooltip.dataset.content,
+			allowHTML: true,
+			interactive: true,
+			placement: "auto",
+			arrow: false
+		});
+	}
+</script><style is:global>
+	.tippy-box {
+		background-color: var(--sl-color-bg-nav);
+		border-color: var(--sl-color-text);
+		border: 0.1em solid;
+		color: var(--sl-color-white);
+	}
+</style>

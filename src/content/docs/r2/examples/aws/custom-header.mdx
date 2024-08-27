@@ -1,0 +1,161 @@
+---
+title: Configure custom headers
+pcx_content_type: example
+
+---
+
+Some of R2's [extensions](/r2/api/s3/extensions/) require setting a specific header when using them in the S3 compatible API. For some functionality you may want to set a request header on an entire category of requests. Other times you may want to configure a different header for each individual request. This page contains some examples on how to do so with `boto3` and with `aws-sdk-js-v3`.
+
+## Setting a custom header on all requests
+
+When using certain functionality, like the `cf-create-bucket-if-missing` header, you may want to set a constant header for all `PutObject` requests you're making.
+
+### Set a header for all requests with `boto3`
+
+`Boto3` has an event system which allows you to modify requests. Here we register a function into the event system which adds our header to every `PutObject` request being made.
+
+```python
+import boto3
+
+client = boto3.resource('s3',
+  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
+  aws_access_key_id = '<access_key_id>',
+  aws_secret_access_key = '<access_key_secret>'
+)
+
+event_system = client.meta.events
+
+# Define function responsible for adding the header
+def add_custom_header(params, **kwargs):
+    params["headers"]['cf-create-bucket-if-missing'] = 'true'
+
+event_system.register('before-call.s3.PutObject', add_custom_header)
+
+response = client.put_object(Bucket="my_bucket", Key="my_file", Body="file_contents")
+print(response)
+```
+
+### Set a header for all requests with `aws-sdk-js-v3`
+
+`aws-sdk-js-v3` allows the customization of request behavior through the use of its [middleware stack](https://aws.amazon.com/blogs/developer/middleware-stack-modular-aws-sdk-js/). This example adds a middleware to the client which adds a header to every `PutObject` request being made.
+
+```ts
+import {
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+
+const client = new S3Client({
+  region: "auto",
+  endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+  },
+});
+
+client.middlewareStack.add(
+  (next, context) => async (args) => {
+      const r = args.request as RequestInit
+      r.headers["cf-create-bucket-if-missing"] = "true";
+
+      return await next(args)
+    },
+  { step: 'build', name: 'customHeaders' },
+)
+
+const command = new PutObjectCommand({
+  Bucket: "my_bucket",
+  Key: "my_key",
+  Body: "my_data"
+});
+
+const response = await client.send(command);
+
+console.log(response);
+```
+
+## Set a different header on each request
+
+Certain extensions that R2 has provided in the S3 compatible api may require setting a different header on each request. For example, you may want to only want to overwrite an object if its etag matches a certain expected value. This value will likely be different for each object that is being overwritten, which requires the `If-Match` header to be different with each request you make. This section shows examples of how to accomplish that.
+
+### Set a header per request in `boto3`
+
+To enable us to pass custom headers as an extra argument into the call to `client.put_object()` we need to register 2 functions into `boto3`'s event system. This is necessary because `boto3` performs a parameter validation step which rejects extra method arguments. Since this parameter validation occurs before we can set headers on the request, we first need to move the custom argument into the request context before the parameter validation happens. In a subsequent step we can now actually set the headers based on the information we put in the request context.
+
+```python
+import boto3
+
+client = boto3.resource('s3',
+  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
+  aws_access_key_id = '<access_key_id>',
+  aws_secret_access_key = '<access_key_secret>'
+)
+
+event_system = client.meta.events
+
+# Moves the custom headers from the parameters to the request context
+def process_custom_arguments(params, context, **kwargs):
+    if (custom_headers := params.pop("custom_headers", None)):
+        context["custom_headers"] = custom_headers
+
+# Here we extract the headers from the request context and actually set them
+def add_custom_headers(params, context, **kwargs):
+    if (custom_headers := context.get("custom_headers")):
+        params["headers"].update(custom_headers)
+
+event_system.register('before-parameter-build.s3.PutObject', process_custom_arguments)
+event_system.register('before-call.s3.PutObject', add_custom_headers)
+
+custom_headers = {'If-Match' : '"29d911f495d1ba7cb3a4d7d15e63236a"'}
+
+# Note that boto3 will throw an exception if the precondition failed. Catch this exception if necessary
+response = client.put_object(Bucket="my_bucket", Key="my_key", Body="file_contents", custom_headers=custom_headers)
+print(response)
+```
+
+### Set a header per request in `aws-sdk-js-v3`
+
+Here we again configure the header we would like to set by creating a middleware, but this time we add the middleware to the request itself instead of to the whole client.
+
+```ts
+import {
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+
+const client = new S3Client({
+  region: "auto",
+  endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+  },
+});
+
+const command = new PutObjectCommand({
+  Bucket: "my_bucket",
+  Key: "my_key",
+  Body: "my_data"
+});
+
+const headers = { 'If-Match': '"29d911f495d1ba7cb3a4d7d15e63236a"' }
+command.middlewareStack.add(
+  (next) =>
+    (args) => {
+      const r = args.request as RequestInit
+
+      Object.entries(headers).forEach(
+        ([k, v]: [key: string, value: string]): void => {
+          r.headers[k] = v
+        },
+      )
+
+      return next(args)
+    },
+  { step: 'build', name: 'customHeaders' },
+)
+const response = await client.send(command);
+
+console.log(response);
+```

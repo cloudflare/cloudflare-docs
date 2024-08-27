@@ -1,0 +1,33 @@
+---
+title: Spotlight author details
+---
+
+## Component
+
+:::caution
+This component is automatically included on pages that have a `spotlight` frontmatter entry.
+
+Please do not use this component manually, this is just for demonstration.
+:::
+
+```mdx live
+import { SpotlightAuthorDetails } from "~/components"
+
+<SpotlightAuthorDetails
+    author="Cloudflare"
+    link="https://github.com/cloudflare"
+    platform="GitHub"
+/>
+```
+
+## Frontmatter
+
+```mdx
+---
+title: My Tutorial
+spotlight:
+    author: Cloudflare
+    author_bio_link: https://github.com/cloudflare
+    author_bio_source: GitHub
+---
+```

@@ -1,0 +1,32 @@
+---
+{}
+---
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
+2. Select **Add a policy**.
+3. Create an expression for your desired traffic. For example, you can resolve a hostname for an internal service:
+
+   | Selector | Operator | Value                  |
+   | -------- | -------- | ---------------------- |
+   | Host     | in       | `internal.example.com` |
+
+   Make sure your destination is not subject to [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#manage-local-domains).
+
+4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
+5. Enter the IP addresses of your custom DNS resolver.
+   :::tip[Search virtual networks]
+   As you enter an IP address, Gateway will search through your [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) configured in Zero Trust.
+   :::
+6. In **Network**, choose whether to route queries publicly (to the Internet) or privately (to a private network service).
+7. (Optional) Enter a custom port for each IP address.
+8. Select **Create policy**.
+
+Custom resolvers are saved to your account for future use. You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
+
+When a user's query matches a resolver policy, Gateway will send the query to your listed resolvers in the following order:
+
+1. Public resolvers
+2. Private resolvers behind the default virtual network for your account
+3. Private resolvers behind a custom virtual network
+
+Gateway will cache the fastest resolver for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.

@@ -1,0 +1,60 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect.
+
+:::note
+Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
+:::
+
+Options include:
+
+* `keep`\
+  Preserves most of EXIF metadata, including GPS location if present. 
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    metadata=keep
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {metadata: "keep"}}
+  ```
+  </TabItem>
+</Tabs>
+
+* `copyright`\
+  Discard all metadata except EXIF copyright tag. This is the default behavior for JPEG images.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    metadata=copyright
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {metadata: "copyright"}}
+  ```
+  </TabItem>
+</Tabs>
+
+* `none`\
+  Discard all invisible EXIF metadata. Currently, WebP and PNG output formats always discard metadata.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js 
+    metadata=none
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js 
+  cf: {image: {metadata: "none"}}
+  ```
+  </TabItem>
+</Tabs>

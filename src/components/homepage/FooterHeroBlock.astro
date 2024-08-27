@@ -1,0 +1,101 @@
+---
+import { Icon } from "~/components";
+
+const blocks = [
+	{
+		title: "Community",
+		text: "The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.",
+		links: [
+			{
+				text: "Discord",
+				icon: "discord",
+				href: "https://discord.cloudflare.com/",
+			},
+			{
+				text: "Twitter",
+				icon: "x.com",
+				href: "https://x.com/CloudflareDev",
+			},
+			{
+				text: "Community Forum",
+				icon: "discourse",
+				href: "https://community.cloudflare.com/",
+			},
+		],
+	},
+	{
+		title: "Open source",
+		text: "Cloudflare contributes to the open-source ecosystem in a variety of ways, including:",
+		links: [
+			{
+				text: "GitHub Projects",
+				icon: "github",
+				href: "https://github.com/cloudflare",
+			},
+			{
+				text: "Sponsorship Projects",
+				icon: "seti:shell",
+				href: "/sponsorships/",
+			},
+			{
+				text: "Style Guide",
+				icon: "open-book",
+				href: "/style-guide/",
+			},
+		],
+	},
+	{
+		title: "Blog",
+		text: "Get the latest news on Cloudflare products, technologies, and culture.",
+		links: [
+			{
+				text: "Read the blog",
+				icon: "seti:notebook",
+				href: "https://blog.cloudflare.com/",
+			},
+		],
+	},
+];
+---
+
+<div
+	class="flex bg-cyan-50 dark:bg-gray-800 bleed *:!mt-0 items-start justify-between py-10"
+>
+	{
+		blocks.map(({ title, text, links }) => (
+			<div>
+				<h2>{title}</h2>
+				<p class="w-80">{text}</p>
+				<ul class="list-none pl-0">
+					{links.map((link) => (
+						<li class="flex !mt-4">
+							<Icon name={link.icon} size="1.5rem" />
+							<a
+								href={link.href}
+								class="pl-2 no-underline !text-black !text-accent-600 dark:!text-accent-200"
+							>
+								{link.text}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	@tailwind utilities;
+
+	.bleed {
+		box-shadow: 0 0 0 100vmax theme(colors.gray.800);
+		clip-path: inset(0 -100vmax);
+	}
+
+	html[data-theme="light"] {
+		.bleed {
+			box-shadow: 0 0 0 100vmax theme(colors.cyan.50);
+			clip-path: inset(0 -100vmax);
+		}
+	}
+</style>
