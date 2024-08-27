@@ -52,4 +52,22 @@ To set up an integration with Fauna:
 	};
 	```
 
+6. You can manage the Cloudflare Fauna integration from the [Fauna Dashboard](https://dashboard.fauna.com/):
+
+	- To view Fauna keys for an integrated Cloudflare Worker, select your database and click the **Keys** tab.
+
+		Keys for a Cloudflare Worker integration are prepended with `_cloudflare_key_`.
+
+		![Key tab for a database in the Fauna Dashboard](~/assets/images/workers/databases/native-integrations/fauna_keys_tab.png)
+
+		You can delete the key to disable the integration.
+
+	- When you connect a Cloudflare Worker to your database, Fauna creates an OAuth client app in your Fauna account.
+
+		To view your account's OAuth apps, go to **Account Settings > OAuth Apps** in the Fauna Dashboard.
+
+		![OAuth apps in Fauna](~/assets/images/workers/databases/native-integrations/fauna_oauth.png)
+
+		You can delete the app to disable the integration.
+
 To learn more about Fauna, refer to [Fauna's official documentation](https://docs.fauna.com/).
