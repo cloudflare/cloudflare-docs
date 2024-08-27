@@ -382,10 +382,10 @@
         },
         "options": {
           "title": "Purge options",
-          "free": "URL",
-          "pro": "URL",
-          "biz": "URL",
-          "ent": "URL, Hostname, Tag, or Prefix"
+          "free": "Everything, URL",
+          "pro": "Everything, URL",
+          "biz": "Everything, URL",
+          "ent": "Everything, URL, Hostname, Tag, or Prefix"
         }
       }
     },
