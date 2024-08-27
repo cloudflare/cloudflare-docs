@@ -74,6 +74,7 @@ kv_namespaces = [
 ]
 ```
 
+To use Wrangler to edit the local data or the data in the preview namespace, use the `--local` or `--preview` of `wrangler kv ...` as specified in [Wrangler KV commands](/kv/reference/kv-commands/#kv-key).
 ## Reference KV from Durable Objects and Workers using ES modules format
 
 [Durable Objects](/durable-objects/) use ES modules format. Instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/durable-objects/get-started/#3-write-a-class-to-define-a-durable-object).
