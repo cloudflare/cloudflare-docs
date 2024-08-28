@@ -7,6 +7,7 @@ import liveCode from "astro-live-code";
 import rehypeSlug from "rehype-slug";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
 import { h } from "hastscript";
 import { readdir } from "fs/promises";
 import icon from "astro-icon";
@@ -62,6 +63,19 @@ export default defineConfig({
 				rehypeMermaid,
 				{
 					strategy: "pre-mermaid",
+				},
+			],
+			[
+				rehypeExternalLinks,
+				{
+					content: {
+						type: "text",
+						value: " ↗",
+					},
+					properties: {
+						target: "_blank",
+					},
+					rel: ["noopener"],
 				},
 			],
 			rehypeSlug,
