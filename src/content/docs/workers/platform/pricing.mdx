@@ -262,11 +262,16 @@ Vectorize is currently only available on the Workers paid plan.
 
 ## Service bindings
 
-Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet.
+Requests made from your Worker to another worker via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/) do not incur additional request fees. This allows you to split apart functionality into multiple Workers, without incurring additional costs.
 
-If your Worker is on the Unbound usage model, you will be charged a single billable duration across all Workers triggered by a single incoming request.
+For example, if Worker A makes a subrequest to Worker B via a Service Binding, or calls an RPC method provided by Worker B via a Service Binding, this is billed as:
 
-For more information on how service bindings work, refer to [About Service bindings](/workers/runtime-apis/bindings/service-bindings/).
+- One request (for the initial invocation of Worker A)
+- The total amount of CPU time used across both Worker A and Worker B
+
+:::note[Only available on Workers Standard pricing]
+If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+:::
 
 ## Fine Print
 
