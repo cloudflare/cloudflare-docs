@@ -8,28 +8,28 @@ sidebar:
 
 ## Basic Uploads
 
-For files smaller than 200MB, you can use simple form based uploads. 
+For files smaller than 200 MB, you can use simple form-based uploads. 
 
-## Upload via the Cloudflare dashboard
+## Upload through the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. From the navigation menu, select **Stream**.
 3. On the **Overview** page, drag and drop your video into the **Quick upload** area. You can also click to browse for the file on your machine.
 
-After the video finishes uploading, the video appears in the list below. 
+After the video finishes uploading, the video appears in the list. 
 
-## Upload via the Stream API
+## Upload with the Stream API
 
-Make an `POST` request with `content-type` header set to `multipart/form-data` and include the media as an input with the name set to `file`.
+Make a `POST` request with the `content-type` header set to `multipart/form-data` and include the media as an input with the name set to `file`.
 
 ```bash title="Upload video POST request"
 curl --request POST \
 --header "Authorization: Bearer <API_TOKEN>" \
 --form file=@/Users/user_name/Desktop/my-video.mp4 \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
 ```
 
 :::undefined
-Note that cURL `--form` flag automatically configures the content-type header and maps `my-video.mp4` to a form input called `file`.
+Note that cURL's `--form` flag automatically configures the `content-type` header and maps `my-video.mp4` to a form input called `file`.
 :::
 

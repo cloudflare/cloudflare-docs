@@ -5,13 +5,13 @@ sidebar:
   order: 3
 ---
 
-If you have a video over 200MB, we recommend using the [tus protocol](https://tus.io/) for resumable file uploads. A resumable upload ensures that the upload can be interrupted and resume without uploading the previous data again.
+If you have a video over 200 MB, we recommend using the [tus protocol](https://tus.io/) for resumable file uploads. A resumable upload ensures that the upload can be interrupted and resumed without uploading the previous data again.
 
 ## Requirements
 
 - Resumable uploads require a minimum chunk size of 5,242,880 bytes unless the entire file is less than this amount. For better performance when the client connection is expected to be reliable, increase the chunk size to 52,428,800 bytes.
 - Maximum chunk size is 209,715,200 bytes.
-- Chunk size must be divisible by 256KiB (256x1024 bytes). Round your chunk size to the nearest multiple of 256KiB. Note that the final chunk of an upload that fits within a single chunk is exempt from this requirement.
+- Chunk size must be divisible by 256 KiB (256x1024 bytes). Round your chunk size to the nearest multiple of 256 KiB. Note that the final chunk of an upload that fits within a single chunk is exempt from this requirement.
 
 
 ## Prerequisites
@@ -40,9 +40,9 @@ INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b61
 
 ### Golang example
 
-Before you begin, import a tus client such as [go-tus](https://github.com/eventials/go-tus) by [eventials](https://github.com/eventials) to upload from your Go applications. 
+Before you begin, import a tus client such as [go-tus](https://github.com/eventials/go-tus) to upload from your Go applications. 
 
-```go title="Upload with Goloang"
+```go title="Upload with Golang"
 package main
 
 import (
@@ -53,7 +53,7 @@ import (
 )
 
 func main() {
-	accountID := "ACCOUNT ID"
+	accountID := "<ACCOUNT_ID>"
 
 	f, err := os.Open("videofile.mp4")
 
@@ -67,7 +67,7 @@ func main() {
 	headers.Add("Authorization", "Bearer <API_TOKEN>")
 
 	config := &tus.Config{
-		ChunkSize:           50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
+		ChunkSize:           50 * 1024 * 1024, // Required a minimum chunk size of 5 MB, here we use 50 MB.
 		Resume:              false,
 		OverridePatchMethod: false,
 		Store:               nil,
@@ -105,7 +105,7 @@ Before you begin, install the tus-js-client.
 npm install tus-js-client
 ```
 
-Set up an `index.js` and configure:
+Create an `index.js` file and configure:
 
 - The API endpoint with your Cloudflare Account ID.
 - The request headers to include an API token.
@@ -125,7 +125,7 @@ var options = {
 	headers: {
 		Authorization: "Bearer <API_TOKEN>",
 	},
-	chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB. Here we use 50MB.
+	chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5 MB. Here we use 50 MB.
 	retryDelays: [0, 3000, 5000, 10000, 20000], // Indicates to tus-js-client the delays after which it will retry if the upload fails.
 	metadata: {
 		name: "test.mp4",
@@ -165,7 +165,7 @@ The tus protocol allows you to add optional parameters in the [`Upload-Metadata`
 
 ### Supported options in `Upload-Metadata`
 
-Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](/api/operations/stream-videos-list-videos).
+Setting arbitrary metadata values in the `Upload-Metadata` header sets values in the [meta key in Stream API](/api/operations/stream-videos-list-videos).
 
 - `name`
 
@@ -173,11 +173,11 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `requiresignedurls`
 
-  - If this key is present, the video playback for this video will be required to use signed urls after upload.
+  - If this key is present, the video playback for this video will be required to use signed URLs after upload.
 
 - `scheduleddeletion`
 
-  - Specifies a date and time when a video will be deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days or later than 1096 days from the video's created timestamp.
+  - Specifies a date and time when a video will be deleted. After a video is deleted, it is no longer viewable and no longer counts towards storage for billing. The specified date and time cannot be earlier than 30 days or later than 1,096 days from the video's created timestamp.
 
 - `allowedorigins`
 
@@ -199,11 +199,11 @@ For examples of how to set and modify the creator ID, refer to [Associate videos
 
 ## Get the video ID when using TUS
 
-When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
+When an initial TUS request is made, Stream responds with a URL in the `Location` header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
-Instead, the `stream-media-id` HTTP header in the response should be used to retrieve the video ID.
+Instead, you should use the `stream-media-id` HTTP header in the response to retrieve the video ID.
 
-For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream` with the TUS protocol will contain a HTTP header like this:
+For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream` with the TUS protocol will contain a HTTP header like the following:
 
 ```
 stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf

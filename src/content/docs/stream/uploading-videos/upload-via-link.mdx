@@ -16,15 +16,14 @@ Make a `POST` request to the Stream API using the link to your video.
 
 ```bash
 curl \
---request POST \
 --data '{"url":"https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4","meta":{"name":"My First Stream Video"}}' \
 --header "Authorization: Bearer <API_TOKEN>" \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/copy
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
 ```
 
 ## Check video status
 
-Stream must download and encode the video which can take a few seconds to a few minutes depending on the length of your video.
+Stream must download and encode the video, which can take a few seconds to a few minutes depending on the length of your video.
 
 When the `readyToStream` value returns `true`, your video is ready for streaming.
 

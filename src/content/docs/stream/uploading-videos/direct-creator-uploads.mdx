@@ -7,22 +7,21 @@ sidebar:
 
 Direct creator uploads let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
 
-- If your video is a [basic upload](/stream/uploading-videos/direct-creator-uploads/#basic-uploads) under 200MB and users do not need resumable uploads, generate a URL that accepts an HTTP post request.
+- If your video is a [basic upload](/stream/uploading-videos/direct-creator-uploads/#basic-uploads) under 200 MB and users do not need resumable uploads, generate a URL that accepts an HTTP post request.
 
-- If your video is over 200MB or if you need to allow users to [resume interrupted uploads](/stream/uploading-videos/direct-creator-uploads/#resumable-uploads), generate a URL using the tus protocol.
+- If your video is over 200 MB or if you need to allow users to [resume interrupted uploads](/stream/uploading-videos/direct-creator-uploads/#resumable-uploads), generate a URL using the tus protocol.
 
 In either case, you must specify a maximum duration to reserve for the user's upload to ensure it can be accommodated within your available storage.
 
 ## Basic uploads
 
-Use this option if your users upload videos under 200MB, and you do not need to allow resumable uploads.
+Use this option if your users upload videos under 200 MB, and you do not need to allow resumable uploads.
 
 1. Generate a unique, one-time upload URL using the [Direct upload API](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls). 
 
 ```sh title="Generate upload"
-curl --request POST \
- --header 'Authorization: Bearer <API_TOKEN>' \
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
+--header 'Authorization: Bearer <API_TOKEN>' \
  --data '{
     "maxDurationSeconds": 3600
  }'
@@ -42,7 +41,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload 
 }
 ```
 
-2. With the `uploadURL` from the previous step, users can upload video files that are limited to 200MB in size. Refer to the example request below.
+2. With the `uploadURL` from the previous step, users can upload video files that are limited to 200 MB in size. Refer to the example request below.
 
 {/* <!-- videodelivery.net is correct domain. See STREAM-4364 --> */}
 
@@ -59,7 +58,7 @@ the upload constraints defined at time of creation or is larger than 200 MB in s
 
 1. Create your own API endpoint that returns an upload URL.
 
-The example below shows how to build a Worker to get a URL you can use to upload your video. Note that the one-time upload URL is returned in the `Location` header of the response, not in the response body.
+The example below shows how to build a Worker to get a URL you can use to upload your video. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
 ```javascript {23} title="Example API endpoint"
 export async function onRequest(context) {
@@ -144,7 +143,7 @@ For more details on using tus and example client code, refer to [Resumable uploa
 
 You can apply the [same constraints](/api/operations/stream-videos-upload-videos-via-direct-upload-ur-ls) as Direct Creator Upload via basic upload when using tus. To do so, you must pass the `expiry` and `maxDurationSeconds` as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
-The `Upload-Metadata` header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
+The `Upload-Metadata` header should contain key-value pairs. The keys are text and the values should be encoded in base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes, uploaded prior to the expiry timestamp, and to make this video private:
 
@@ -159,8 +158,7 @@ After the creation of a unique one-time upload URL, you may wish to retain the u
 
 You can do that two ways:
 
-- [Search for a video](/stream/manage-video-library/searching/) with the UID
-   to check the status.
+- [Search for a video](/stream/manage-video-library/searching/) with the UID to check the status.
 
 - [Create a webhook subscription](/stream/manage-video-library/using-webhooks/) to receive notifications about the video status. These notifications include the video's UID.
 
