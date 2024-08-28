@@ -76,6 +76,40 @@ Deprecated API:
 
 Replacement: [Rate limiting rules](/waf/rate-limiting-rules/) (new version)
 
+## Zone information in individual DNS records
+
+**End of life date: November 30th, 2024**
+
+Currently, each individual DNS record returned by the API contains information about the zone it is on, specifically the zone ID and name.
+
+```json
+{
+  "result": [
+    {
+      // ...
+      "zone_id": "ab922473c42f4e50819d7c1c9b81b16b",
+      "zone_name": "example.com"
+    }
+  ],
+  // ...
+}
+```
+
+This information is redundant because both affected API routes are already within the zone scope.
+In particular, the zone ID will already be known to any user of these routes because it appears in the URL.
+The zone name can be retrieved by making a `GET` request to `/zones/:zone_id` if necessary.
+
+After November 30th, 2024, Cloudflare will stop including the `zone_id` and `zone_name` fields on individual DNS records in API responses.
+These fields are currently ignored when sent to the API as part of a request body, so no changes to request bodies are required.
+
+Modified API:
+
+* `GET /zones/:zone_id/dns_records`
+* `POST /zones/:zone_id/dns_records`
+* `GET /zones/:zone_id/dns_records/:dns_record_id`
+* `PATCH /zones/:zone_id/dns_records/:dns_record_id`
+* `PUT /zones/:zone_id/dns_records/:dns_record_id`
+
 ## DNS Records: Error chains for DNS validation errors
 
 **End of life date: October 1st, 2024**

@@ -11,3 +11,5 @@ Build a better internet.
 Hyperdrive is a cool product.
 
 Tell me about namespaces.
+
+We went via the canal.
