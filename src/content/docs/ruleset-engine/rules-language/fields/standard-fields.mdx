@@ -181,68 +181,15 @@ Example values:
 
 <Details header="Example values">
 
-<table>
-	<tr>
-		<th>URI path</th>
-		<th>Field value</th>
-	</tr>
-	<tr>
-		<td>
-			<code>/foo</code>
-		</td>
-		<td>
-			<code>""</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/foo.mp3</code>
-		</td>
-		<td>
-			<code>"mp3"</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/.mp3</code>
-		</td>
-		<td>
-			<code>""</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/.foo.mp3</code>
-		</td>
-		<td>
-			<code>"mp3"</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/foo.tar.bz2</code>
-		</td>
-		<td>
-			<code>"bz2"</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/foo.</code>
-		</td>
-		<td>
-			<code>""</code>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<code>/foo.MP3</code>
-		</td>
-		<td>
-			<code>"mp3"</code>
-		</td>
-	</tr>
-</table>
+| URI path       | Field value |
+| -------------- | ----------- |
+| `/foo`         | `""`        |
+| `/foo.mp3`     | `"mp3"`     |
+| `/.mp3`        | `""`        |
+| `/.foo.mp3`    | `"mp3"`     |
+| `/foo.tar.bz2` | `"bz2"`     |
+| `/foo.`        | `""`        |
+| `/foo.MP3`     | `"mp3"`     |
 
 </Details>
 
@@ -481,148 +428,43 @@ This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, wh
 Returns `true` when the request originates from a country in the European Union (EU).
 
 <Details header="Countries in the EU (from geolocation data)">
-<table>
-<tr>
-<th>Country code</th>
-<th>Country name</th>
-</tr>
-<tr>
-<td><code>AT</code></td>
-<td>Austria</td>
-</tr>
-<tr>
-<td><code>AX</code></td>
-<td>Åland Islands</td>
-</tr>
-<tr>
-<td><code>BE</code></td>
-<td>Belgium</td>
-</tr>
-<tr>
-<td><code>BG</code></td>
-<td>Bulgaria</td>
-</tr>
-<tr>
-<td><code>CY</code></td>
-<td>Cyprus</td>
-</tr>
-<tr>
-<td><code>CZ</code></td>
-<td>Czechia</td>
-</tr>
-<tr>
-<td><code>DE</code></td>
-<td>Germany</td>
-</tr>
-<tr>
-<td><code>DK</code></td>
-<td>Denmark</td>
-</tr>
-<tr>
-<td><code>EE</code></td>
-<td>Estonia</td>
-</tr>
-<tr>
-<td><code>ES</code></td>
-<td>Spain</td>
-</tr>
-<tr>
-<td><code>FI</code></td>
-<td>Finland</td>
-</tr>
-<tr>
-<td><code>FR</code></td>
-<td>France</td>
-</tr>
-<tr>
-<td><code>GF</code></td>
-<td>French Guiana</td>
-</tr>
-<tr>
-<td><code>GP</code></td>
-<td>Guadeloupe</td>
-</tr>
-<tr>
-<td><code>GR</code></td>
-<td>Greece</td>
-</tr>
-<tr>
-<td><code>HR</code></td>
-<td>Croatia</td>
-</tr>
-<tr>
-<td><code>HU</code></td>
-<td>Hungary</td>
-</tr>
-<tr>
-<td><code>IE</code></td>
-<td>Ireland</td>
-</tr>
-<tr>
-<td><code>IT</code></td>
-<td>Italy</td>
-</tr>
-<tr>
-<td><code>LT</code></td>
-<td>Lithuania</td>
-</tr>
-<tr>
-<td><code>LU</code></td>
-<td>Luxembourg</td>
-</tr>
-<tr>
-<td><code>LV</code></td>
-<td>Latvia</td>
-</tr>
-<tr>
-<td><code>MF</code></td>
-<td>Saint Martin</td>
-</tr>
-<tr>
-<td><code>MQ</code></td>
-<td>Martinique</td>
-</tr>
-<tr>
-<td><code>MT</code></td>
-<td>Malta</td>
-</tr>
-<tr>
-<td><code>NL</code></td>
-<td>The Netherlands</td>
-</tr>
-<tr>
-<td><code>PL</code></td>
-<td>Poland</td>
-</tr>
-<tr>
-<td><code>PT</code></td>
-<td>Portugal</td>
-</tr>
-<tr>
-<td><code>RE</code></td>
-<td>Réunion</td>
-</tr>
-<tr>
-<td><code>RO</code></td>
-<td>Romania</td>
-</tr>
-<tr>
-<td><code>SE</code></td>
-<td>Sweden</td>
-</tr>
-<tr>
-<td><code>SI</code></td>
-<td>Slovenia</td>
-</tr>
-<tr>
-<td><code>SK</code></td>
-<td>Slovakia</td>
-</tr>
-<tr>
-<td><code>YT</code></td>
-<td>Mayotte</td>
-</tr>
-</table>
+
+| Country code | Country name    |
+| ------------ | --------------- |
+| `AT`         | Austria         |
+| `AX`         | Åland Islands   |
+| `BE`         | Belgium         |
+| `BG`         | Bulgaria        |
+| `CY`         | Cyprus          |
+| `CZ`         | Czechia         |
+| `DE`         | Germany         |
+| `DK`         | Denmark         |
+| `EE`         | Estonia         |
+| `ES`         | Spain           |
+| `FI`         | Finland         |
+| `FR`         | France          |
+| `GF`         | French Guiana   |
+| `GP`         | Guadeloupe      |
+| `GR`         | Greece          |
+| `HR`         | Croatia         |
+| `HU`         | Hungary         |
+| `IE`         | Ireland         |
+| `IT`         | Italy           |
+| `LT`         | Lithuania       |
+| `LU`         | Luxembourg      |
+| `LV`         | Latvia          |
+| `MF`         | Saint Martin    |
+| `MQ`         | Martinique      |
+| `MT`         | Malta           |
+| `NL`         | The Netherlands |
+| `PL`         | Poland          |
+| `PT`         | Portugal        |
+| `RE`         | Réunion         |
+| `RO`         | Romania         |
+| `SE`         | Sweden          |
+| `SI`         | Slovenia        |
+| `SK`         | Slovakia        |
+| `YT`         | Mayotte         |
 
 The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
 
