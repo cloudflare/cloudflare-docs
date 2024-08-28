@@ -23,7 +23,7 @@ entries:
 
     Known issues:
       - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
-        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
         - Regional Services is enabled.
 
 - publish_date: '2024-08-26'
