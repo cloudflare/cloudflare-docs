@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Magic firewall fields | Fields reference
-
 ---
 
 :::note
@@ -19,7 +18,8 @@ Here is the formatted table:
 
 `cf.colo.name` `String`
 
-The data center that is handling this traffic.  
+The data center that is handling this traffic.
+
 Example value: `sfo06`
 
 ---
@@ -28,7 +28,8 @@ Example value: `sfo06`
 
 `cf.colo.region` `String`
 
-Region of the data center that is handling this traffic.  
+Region of the data center that is handling this traffic.
+
 Example value: `WNAM`
 
 ---
@@ -45,7 +46,8 @@ The raw ICMP packet as a list of bytes. It should be used in conjunction with th
 
 `icmp.type` `Number`
 
-The [ICMP type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type). Only applies to ICMP packets.  
+The [ICMP type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type). Only applies to ICMP packets.
+
 Example value: `8`
 
 ---
@@ -54,7 +56,8 @@ Example value: `8`
 
 `icmp.code` `Number`
 
-The [ICMP code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code). Only applies to ICMP packets.  
+The [ICMP code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code). Only applies to ICMP packets.
+
 Example value: `2`
 
 ---
@@ -71,7 +74,8 @@ The raw IP packet as a list of bytes. It should be used in conjunction with the 
 
 `ip.dst` `IP Address`
 
-The destination address as specified in the IP packet.  
+The destination address as specified in the IP packet.
+
 Example value: `192.0.2.2`
 
 ---
@@ -80,8 +84,10 @@ Example value: `192.0.2.2`
 
 `ip.dst.country` `String`
 
-Represents the 2-letter country code associated with the server IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.  
-Example value: `GB`  
+Represents the 2-letter country code associated with the server IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
 For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
 
 ---
@@ -90,9 +96,12 @@ For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alph
 
 `ip.src.country` `String`
 
-Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.  
-Example value: `GB`  
-For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.  
+Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
+For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
 For Magic Firewall, the `ip.geoip.country` field (which is deprecated) will match on either source or destination address. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` and/or `ip.dst.country` fields instead.
 
 ---
@@ -101,7 +110,8 @@ For Magic Firewall, the `ip.geoip.country` field (which is deprecated) will matc
 
 `ip.hdr_len` `Number`
 
-The length of the IPv4 header in bytes.  
+The length of the IPv4 header in bytes.
+
 Example value: `5`
 
 ---
@@ -110,7 +120,8 @@ Example value: `5`
 
 `ip.len` `Number`
 
-The length of the packet including the header.  
+The length of the packet including the header.
+
 Example value: `60`
 
 ---
@@ -119,7 +130,8 @@ Example value: `60`
 
 `ip.opt.type` `Number`
 
-The first byte of [IP options field](https://en.wikipedia.org/wiki/IPv4#Options), if the options field is set.  
+The first byte of [IP options field](https://en.wikipedia.org/wiki/IPv4#Options), if the options field is set.
+
 Example value: `25`
 
 ---
@@ -128,7 +140,8 @@ Example value: `25`
 
 `ip.proto` `String`
 
-The transport layer for the packet, if it can be determined.  
+The transport layer for the packet, if it can be determined.
+
 Example values: `icmp`, `tcp`
 
 ---
@@ -145,8 +158,10 @@ The source address of the IP Packet.
 
 `ip.src.country` `String`
 
-Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.  
-Example value: `GB`  
+Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
 For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
 
 ---
@@ -155,7 +170,8 @@ For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alph
 
 `ip.ttl` `Number`
 
-The time-to-live of the IP Packet.  
+The time-to-live of the IP Packet.
+
 Example values: `54`
 
 ---
@@ -164,8 +180,10 @@ Example values: `54`
 
 `sip` `Boolean`
 
-Determines if packets are valid L7 protocol [SIP](https://datatracker.ietf.org/doc/html/rfc2543). Requires UDP packets to operate.  
-Use a guard clause as shown below to ensure the packet is UDP (wirefilter):  
+Determines if packets are valid L7 protocol [SIP](https://datatracker.ietf.org/doc/html/rfc2543). Requires UDP packets to operate.
+
+Use a guard clause as shown below to ensure the packet is UDP (wirefilter):
+
 `ip.proto == "udp"`
 
 ---
@@ -288,6 +306,6 @@ Destination port number of the IP packet. Only applies to UDP packets.
 
 Source port number of the IP packet. Only applies to UDP packets.
 
-***
+---
 
-*GeoIP is the registered trademark of MaxMind, Inc.*
+_GeoIP is the registered trademark of MaxMind, Inc._

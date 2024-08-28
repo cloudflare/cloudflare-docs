@@ -745,6 +745,8 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` boolean (default: true if the terminal supports interactivity) optional
   - Show the interactive dev session.
+- `--alias` `Array<string>`
+  - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 
 `wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
@@ -1404,43 +1406,43 @@ Event notifications is currently in beta. To report bugs or request features, fi
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
 ```txt
-wrangler r2 bucket notification create <NAME> [OPTIONS]
+wrangler r2 bucket notification create <NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME> [OPTIONS]]
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` "object-create"|"object-delete" required
+- `EVENT_TYPE` "object-create"|"object-delete" required
   - The [type of event](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that will receive event notification messages.
 - `--prefix` string optional
-  - Specifies the key name prefix that an object must match to trigger event notifications.
+  - Specifies the key name prefix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 - `--suffix` string optional
-  - Specifies the key name suffix that an object must match to trigger event notifications.
+  - Specifies the key name suffix that an object must match to trigger event notifications. The value must be a string. Regular expressions are not supported.
 
 ### `notification delete`
 
 Remove a rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
 ```txt
-wrangler r2 bucket notification delete <NAME> [OPTIONS]
+wrangler r2 bucket notification delete <NAME> --queue <QUEUE_NAME>
 ```
 
 - `NAME` string required
   - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` string required
+- `QUEUE_NAME` string required
   - The name of the queue that corresponds to the event notification rule.
 
 ### `notification get`
 
-Get the [event notification](/r2/buckets/event-notifications/) configuration for a bucket.
+List the [event notification](/r2/buckets/event-notifications/) configurations for a bucket.
 
 ```txt
 wrangler r2 bucket notification get <NAME>
 ```
 
 - `NAME` string required
-  - The name of the R2 bucket to get event notification configuration for.
+  - The name of the R2 bucket to get event notification configurations for.
 
 ### `sippy enable`
 
@@ -2155,7 +2157,7 @@ wrangler whoami
 
 The `--experimental-versions` flag is required to use the `wrangler versions` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2272,7 +2274,7 @@ This command is currently in closed beta. Report bugs in [GitHub](https://github
 
 The `--experimental-versions` flag is required to use the `wrangler triggers` commands. You may use the shorthand `--x-versions` flag in place of `--experimental-versions` anywhere it is mentioned. For consistency in Wrangler's output, it is recommended that you use the `--experimental-versions` flag for all commands where it is an option.
 
-The minimum required wrangler version to use these commands is 3.40.0.
+The minimum required Wrangler version to use these commands is 3.40.0.
 
 :::
 
@@ -2592,13 +2594,32 @@ Generate types from bindings and module rules in configuration.
 wrangler types [<PATH>] [OPTIONS]
 ```
 
-- `PATH` string (default: `worker-configuration.d.ts`)
+:::note
 
-  - The path to where the declaration file for your Worker will be written.
-  - The path to the declaration file must have a `d.ts` extension.
+The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
+
+It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package, if installed, should be uninstalled to avoid any potential conflict.
+
+After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
+
+You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
+
+The minimum required Wrangler version to use this command is 3.66.1.
+
+:::
+
+- `PATH` string (default: `./worker-configuration.d.ts`)
+
+  - The path to where **the `Env` types** for your Worker will be written.
+  - The path must have a `d.ts` extension.
 
 - `--env-interface` string (default: `Env`)
+
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
 
-{/* <!--TODO Add examples of DTS generated output --> */}
+- `--experimental-include-runtime` string optional (default: `./.wrangler/types/runtime.d.ts`)
+  - The path to where the **runtime types** file will be written.
+  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
+  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
+  - A custom path must have a `d.ts` extension.

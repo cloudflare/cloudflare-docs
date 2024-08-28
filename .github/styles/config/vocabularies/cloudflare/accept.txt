@@ -1,7 +1,7 @@
 Wrangler
-wrangler
 Cloudflare
 cloudflared
 Internet
 JavaScript
 TypeScript
+Hono
