@@ -13,4 +13,4 @@ style_guide:
 openapi:
   enabled: true
   urls:
-    - https://github.com/cloudflare/api-schemas/blob/main/openapi.json
+    - https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.json
