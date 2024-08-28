@@ -6,27 +6,25 @@ sidebar:
 head:
   - tag: title
     content: Standard fields | Fields reference
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Most standard fields use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
 
-* Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
+- Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
   To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
 
-* In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
+- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
-* The Cloudflare Rules language does not support the `slice` operator.
+- The Cloudflare Rules language does not support the `slice` operator.
 
 :::note[Availability notes]
 
+- Geolocation information is provided and maintained by MaxMind. Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
-* Geolocation information is provided and maintained by MaxMind. Access to `ip.src.is_in_european_union`, `ip.src.subdivision_1_iso_code`, and `ip.src.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
-
-* Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
+- Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
 :::
 
@@ -38,7 +36,8 @@ The Cloudflare Rules language supports these standard fields.
 
 Represents the entire cookie as a string.
 
-**Example value:**
+Example value:
+
 ```txt
 session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
 ```
@@ -49,7 +48,8 @@ session=8521F670545D7865F79C3D7BEDC29CCE;-background=light
 
 Represents the hostname used in the full request URI.
 
-**Example value:**
+Example value:
+
 ```txt
 www.example.org
 ```
@@ -60,7 +60,8 @@ www.example.org
 
 Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
 
-**Example value:**
+Example value:
+
 ```txt
 Referer: htt­ps://developer.example.org/en-US/docs/Web/JavaScript
 ```
@@ -71,7 +72,8 @@ Referer: htt­ps://developer.example.org/en-US/docs/Web/JavaScript
 
 Represents the full URI as received by the web server (does not include `#fragment`, which is not sent to web servers).
 
-**Example value:**
+Example value:
+
 ```txt
 htt­ps://www.example.org/articles/index?section=539061&expand=comments
 ```
@@ -82,7 +84,8 @@ htt­ps://www.example.org/articles/index?section=539061&expand=comments
 
 Represents the HTTP method, returned as a string of uppercase characters.
 
-**Example value:**
+Example value:
+
 ```txt
 GET
 ```
@@ -95,14 +98,16 @@ Represents the `Cookie` HTTP header associated with a request as a Map (associat
 
 **Decoding:** The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
 
-**Example:**
+Example:
+
 ```txt
 any(http.request.cookies["app"][*] == "test")
 ```
 
-**Example value:**
+Example value:
+
 ```json
-{"app": ["test"]}
+{ "app": ["test"] }
 ```
 
 ## `http.request.timestamp.sec`
@@ -113,12 +118,13 @@ Represents the timestamp when Cloudflare received the request, expressed as Unix
 
 To obtain the timestamp milliseconds, use the `http.request.timestamp.msec` field.
 
-**Example value:**
+Example value:
+
 ```txt
 1484063137
 ```
 
-When validating HMAC tokens in an expression, pass this field as the *currentTimestamp* argument to the [is_timed_hmac_valid_v0()](https://www.cloudflare.com/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
+When validating HMAC tokens in an expression, pass this field as the _currentTimestamp_ argument to the [is_timed_hmac_valid_v0()](https://www.cloudflare.com/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
 
 ## `http.request.timestamp.msec`
 
@@ -128,7 +134,8 @@ Represents the millisecond when Cloudflare received the request, between 0 and 9
 
 To obtain the complete timestamp, use both `http.request.timestamp.sec` and `http.request.timestamp.msec` fields.
 
-**Example value:**
+Example value:
+
 ```txt
 857
 ```
@@ -141,7 +148,8 @@ Here is the formatted information for the provided rows:
 
 Represents the URI path and query string of the request.
 
-**Example value:**
+Example value:
+
 ```txt
 /articles/index?section=539061&expand=comments
 ```
@@ -152,7 +160,8 @@ Represents the URI path and query string of the request.
 
 Represents the URI path of the request.
 
-**Example value:**
+Example value:
+
 ```txt
 /articles/index
 ```
@@ -165,45 +174,74 @@ The lowercased file extension in the URI path without the dot (`.`) character. T
 
 If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (`""`). Having a dot as the first character does not represent a file extension and is commonly used in Unix-like systems to denote a hidden file or directory.
 
-**Example values:**
+Example values:
+
 - If the URI path is `/articles/index.html`, the field value will be `html`.
 - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
 
 <Details header="Example values">
 
 <table>
-<tr>
-<th>URI path</th>
-<th>Field value</th>
-</tr>
-<tr>
-<td><code>/foo</code></td>
-<td><code>""</code></td>
-</tr>
-<tr>
-<td><code>/foo.mp3</code></td>
-<td><code>"mp3"</code></td>
-</tr>
-<tr>
-<td><code>/.mp3</code></td>
-<td><code>""</code></td>
-</tr>
-<tr>
-<td><code>/.foo.mp3</code></td>
-<td><code>"mp3"</code></td>
-</tr>
-<tr>
-<td><code>/foo.tar.bz2</code></td>
-<td><code>"bz2"</code></td>
-</tr>
-<tr>
-<td><code>/foo.</code></td>
-<td><code>""</code></td>
-</tr>
-<tr>
-<td><code>/foo.MP3</code></td>
-<td><code>"mp3"</code></td>
-</tr>
+	<tr>
+		<th>URI path</th>
+		<th>Field value</th>
+	</tr>
+	<tr>
+		<td>
+			<code>/foo</code>
+		</td>
+		<td>
+			<code>""</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/foo.mp3</code>
+		</td>
+		<td>
+			<code>"mp3"</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/.mp3</code>
+		</td>
+		<td>
+			<code>""</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/.foo.mp3</code>
+		</td>
+		<td>
+			<code>"mp3"</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/foo.tar.bz2</code>
+		</td>
+		<td>
+			<code>"bz2"</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/foo.</code>
+		</td>
+		<td>
+			<code>""</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>/foo.MP3</code>
+		</td>
+		<td>
+			<code>"mp3"</code>
+		</td>
+	</tr>
 </table>
 
 </Details>
@@ -214,7 +252,8 @@ If the first character of the last path segment is a dot and the segment does no
 
 Represents the entire query string, without the `?` delimiter.
 
-**Example value:**
+Example value:
+
 ```txt
 section=539061&expand=comments
 ```
@@ -225,7 +264,8 @@ section=539061&expand=comments
 
 Represents the HTTP User-Agent request header, which contains a characteristic string to identify the client operating system and web browser.
 
-**Example value:**
+Example value:
+
 ```txt
 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
 ```
@@ -236,7 +276,8 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65
 
 Represents the version of the HTTP protocol used. Use this field when different checks are needed for different versions.
 
-**Example values:**
+Example values:
+
 - `HTTP/1.1`
 - `HTTP/3`
 
@@ -246,7 +287,8 @@ Represents the version of the HTTP protocol used. Use this field when different 
 
 Represents the full `X-Forwarded-For` HTTP header.
 
-**Example value:**
+Example value:
+
 ```txt
 203.0.113.195, 70.41.3.18
 ```
@@ -257,7 +299,8 @@ Represents the full `X-Forwarded-For` HTTP header.
 
 Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
 
-**Example value:**
+Example value:
+
 ```txt
 93.184.216.34
 ```
@@ -268,7 +311,8 @@ Represents the client TCP IP address, which may be adjusted to reflect the actua
 
 Represents the latitude associated with the client IP address.
 
-**Example value:**
+Example value:
+
 ```txt
 37.78044
 ```
@@ -279,7 +323,8 @@ Represents the latitude associated with the client IP address.
 
 Represents the longitude associated with the client IP address.
 
-**Example value:**
+Example value:
+
 ```txt
 -122.39055
 ```
@@ -290,7 +335,8 @@ Represents the longitude associated with the client IP address.
 
 Represents the city associated with the client IP address.
 
-**Example value:**
+Example value:
+
 ```txt
 San Francisco
 ```
@@ -301,7 +347,8 @@ San Francisco
 
 Represents the postal code associated with the incoming request.
 
-**Example value:**
+Example value:
+
 ```txt
 78701
 ```
@@ -312,7 +359,8 @@ Represents the postal code associated with the incoming request.
 
 Represents the metro code or Designated Market Area (DMA) code associated with the incoming request.
 
-**Example value:**
+Example value:
+
 ```txt
 635
 ```
@@ -323,7 +371,8 @@ Represents the metro code or Designated Market Area (DMA) code associated with t
 
 Represents the region name associated with the incoming request.
 
-**Example value:**
+Example value:
+
 ```txt
 Texas
 ```
@@ -334,7 +383,8 @@ Texas
 
 Represents the region code associated with the incoming request.
 
-**Example value:**
+Example value:
+
 ```txt
 TX
 ```
@@ -345,7 +395,8 @@ TX
 
 Represents the name of the timezone associated with the incoming request. This field is only available in rewrite expressions of [Transform Rules](https://www.cloudflare.com/rules/transform/).
 
-**Example value:**
+Example value:
+
 ```txt
 America/Chicago
 ```
@@ -356,23 +407,24 @@ America/Chicago
 
 Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
 
-**Note:** This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
+This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
 
 ## `ip.src.continent`
 
 `ip.src.continent` `String`
 
 Represents the continent code associated with the client IP address:
-- **AF** – Africa
-- **AN** – Antarctica
-- **AS** – Asia
-- **EU** – Europe
-- **NA** – North America
-- **OC** – Oceania
-- **SA** – South America
-- **T1** – Tor network
 
-**Note:** This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
+- **AF**: Africa
+- **AN**: Antarctica
+- **AS**: Asia
+- **EU**: Europe
+- **NA**: North America
+- **OC**: Oceania
+- **SA**: South America
+- **T1**: Tor network
+
+This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
 
 ## `ip.src.country`
 
@@ -380,14 +432,15 @@ Represents the continent code associated with the client IP address:
 
 Represents the 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
 
-**Example value:**
+Example value:
+
 ```txt
 GB
 ```
 
 For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
 
-**Note:** This field has the same value as the `ip.geoip.country` field, which is deprecated. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` field instead.
+This field has the same value as the `ip.geoip.country` field, which is deprecated. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` field instead.
 
 ## `ip.src.subdivision_1_iso_code`
 
@@ -395,14 +448,15 @@ For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alph
 
 Represents the ISO 3166-2 code for the first-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
-**Example value:**
+Example value:
+
 ```txt
 GB-ENG
 ```
 
 For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
 
-**Note:** This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, which is deprecated. The `ip.geoip.subdivision_1_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_1_iso_code` field instead.
+This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, which is deprecated. The `ip.geoip.subdivision_1_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_1_iso_code` field instead.
 
 ## `ip.src.subdivision_2_iso_code`
 
@@ -410,14 +464,15 @@ For more information on the ISO 3166-2 standard and the available regions, refer
 
 Represents the ISO 3166-2 code for the second-level region associated with the IP address. When the actual value is not available, this field contains an empty string.
 
-**Example value:**
+Example value:
+
 ```txt
 GB-SWK
 ```
 
 For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
 
-**Note:** This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, which is deprecated. The `ip.geoip.subdivision_2_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_2_iso_code` field instead.
+This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, which is deprecated. The `ip.geoip.subdivision_2_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_2_iso_code` field instead.
 
 ## `ip.src.is_in_european_union`
 
@@ -573,15 +628,13 @@ The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. F
 
 </Details>
 
-:::note
 This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
-:::
 
 ## `raw.http.request.full_uri`
 
 `raw.http.request.full_uri` `String`
 
-Similar to the [`http.request.full_uri`](#field-http-request-full-uri) non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+Similar to the [`http.request.full_uri`](#httprequestfull_uri) non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -589,7 +642,7 @@ Similar to the [`http.request.full_uri`](#field-http-request-full-uri) non-raw f
 
 `raw.http.request.uri` `String`
 
-Similar to the [`http.request.uri`](#field-http-request-uri) non-raw field. Represents the URI path and query string of the request without any transformation.
+Similar to the [`http.request.uri`](#httprequesturi) non-raw field. Represents the URI path and query string of the request without any transformation.
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -597,7 +650,7 @@ Similar to the [`http.request.uri`](#field-http-request-uri) non-raw field. Repr
 
 `raw.http.request.uri.path` `String`
 
-Similar to the [`http.request.uri.path`](#field-http-request-uri-path) non-raw field. Represents the URI path of the request without any transformation.
+Similar to the [`http.request.uri.path`](#httprequesturipath) non-raw field. Represents the URI path of the request without any transformation.
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -605,13 +658,13 @@ Similar to the [`http.request.uri.path`](#field-http-request-uri-path) non-raw f
 
 `raw.http.request.uri.path.extension` `String`
 
-Similar to the [`http.request.uri.path.extension`](#field-http-request-uri-path-extension) non-raw field. Represents the file extension in the request URI path without any transformation.
+Similar to the [`http.request.uri.path.extension`](#httprequesturipathextension) non-raw field. Represents the file extension in the request URI path without any transformation.
 
 ## `raw.http.request.uri.query`
 
 `raw.http.request.uri.query` `String`
 
-Similar to the [`http.request.uri.query`](#field-http-request-uri-query) non-raw field. Represents the entire query string without the `?` delimiter and without any transformation.
+Similar to the [`http.request.uri.query`](#httprequesturiquery) non-raw field. Represents the entire query string without the `?` delimiter and without any transformation.
 
 **Note:** This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
@@ -621,6 +674,6 @@ Similar to the [`http.request.uri.query`](#field-http-request-uri-query) non-raw
 
 Returns `true` when the HTTP connection to the client is encrypted.
 
-***
+---
 
-*GeoIP is the registered trademark of MaxMind, Inc.*
+_GeoIP is the registered trademark of MaxMind, Inc._

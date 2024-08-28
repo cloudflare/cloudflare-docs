@@ -6,13 +6,12 @@ sidebar:
 head:
   - tag: title
     content: Functions reference
-
 ---
 
 The Cloudflare Rules language provides functions for manipulating and validating values in an expression:
 
-* [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
-* The [HMAC validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
+- [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
+- The [HMAC validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
 
 ## Transformation functions
 
@@ -20,7 +19,7 @@ The Rules language supports several functions that transform values extracted fr
 
 For example, the `lower()` function converts all uppercase characters in a string to lowercase.
 
-In the expression below, the`lower()` function transforms `http.host` values to lowercase so that they match the target value `"www.cloudflare.com"`:
+In the expression below, the `lower()` function transforms `http.host` values to lowercase so that they match the target value `"www.cloudflare.com"`:
 
 ```sql
 lower(http.host) == "www.cloudflare.com"
@@ -32,9 +31,9 @@ The Rules language supports these transformation functions:
 
 ### `any`
 
-`any` `Array<Boolean>` `Boolean`
+`any(Array<Boolean>)` → `Boolean`
 
-Returns `true` when the comparison operator in the argument returns `true` for *any* of the values in the argument array. Returns `false` otherwise.
+Returns `true` when the comparison operator in the argument returns `true` for _any_ of the values in the argument array. Returns `false` otherwise.
 
 Example:
 
@@ -44,9 +43,9 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 
 ### `all`
 
-`all` `Array<Boolean>` `Boolean`
+`all(Array<Boolean>)` → `Boolean`
 
-Returns `true` when the comparison operator in the argument returns `true` for *all* values in the argument array. Returns `false` otherwise.
+Returns `true` when the comparison operator in the argument returns `true` for _all_ values in the argument array. Returns `false` otherwise.
 
 Example:
 
@@ -56,7 +55,7 @@ all(http.request.headers["content-type"][*] == "application/json")
 
 ### `cidr`
 
-`cidr` `(address (IP address), ipv4_network_bits (Integer), ipv6_network_bits (Integer))` `IP address`
+`cidr(address (IP address), ipv4_network_bits (Integer), ipv6_network_bits (Integer))` → `IP address`
 
 Returns the network address corresponding to an IP address (IPv4 or IPv6), given the provided IPv4 and IPv6 network bits (which determine the corresponding netmasks).
 
@@ -65,17 +64,18 @@ The `address` parameter must be a field, that is, it cannot be a literal String.
 The `ipv4_network_bits` value must be between 1 and 32, and the `ipv6_network_bits` value must be between 1 and 128.
 
 Examples:
+
 - If `ip.src` is `113.10.0.2`, `cidr(ip.src, 24, 24)` will return `113.10.0.0`.
 - If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`, `cidr(ip.src, 24, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.
 
 :::caution
 
-You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/). 
+You can only use the `cidr()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `cidr6`
 
-`cidr6` `(address (IP address), ipv6_network_bits (Integer))` `IP address`
+`cidr6(address (IP address), ipv6_network_bits (Integer))` → `IP address`
 
 Returns the IPv6 network address corresponding to an IPv6 address, given the provided network bits (which determine the netmask). If you provide an IPv4 address in the first parameter, it will be returned unchanged.
 
@@ -86,17 +86,18 @@ The `ipv6_network_bits` value must be between 1 and 128.
 This function is equivalent to: `cidr(<address>, 32, <ipv6_network_bits>)`.
 
 Examples:
+
 - If `ip.src` is `2001:0000:130F:0000:0000:09C0:876A:130B`, `cidr6(ip.src, 24)` will return `2001:0000:0000:0000:0000:0000:0000:0000`.
 - If `ip.src` is `113.10.0.2`, `cidr6(ip.src, 24)` will return `113.10.0.2` (unchanged).
 
 :::caution
 
-You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/). 
+You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `concat`
 
-`concat` `(String | Integer | bytes | Array elements)` `String`
+`concat(String | Integer | Bytes | Array elements)` → `String`
 
 Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
@@ -104,24 +105,22 @@ For example, `concat("String1", " ", "String", 2)` will return `"String1 String2
 
 ### `decode_base64`
 
-`decode_base64` `(source (String))` `String`
+`decode_base64(source (String))` → `String`
 
 Decodes a Base64-encoded String specified in `source`.
 
 `source` must be a field, that is, it cannot be a literal String.
 
-Example:
-
-With the following HTTP request header: `client_id: MTIzYWJj`,  `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
+For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
 :::caution
 
-You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/). 
+You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `ends_with`
 
-`ends_with` `(source (String) substring (String))` `Boolean`
+`ends_with(source (String), substring (String))` → `Boolean`
 
 Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
@@ -129,7 +128,7 @@ For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(ht
 
 ### `len`
 
-`len` `(String | bytes)` `Integer`
+`len(String | Bytes)` → `Integer`
 
 Returns the byte length of a String or Bytes field.
 
@@ -137,7 +136,7 @@ For example, if `http.host` is `"example.com"`, then `len(http.host)` will retur
 
 ### `lookup_json_integer`
 
-`lookup_json_integer` `(field (String), key (String | Integer) [, key (String | Integer), ...])` `Integer`
+`lookup_json_integer(field (String), key (String | Integer) [, key (String | Integer), ...])` → `Integer`
 
 Returns the integer value associated with the supplied `key` in `field`.
 
@@ -147,30 +146,31 @@ The `key` can be an attribute name, a zero-based position number in a JSON array
 
 Note: This function only works for plain integers. For example, it will not work for floating numbers with a zero decimal part such as `42.0`.
 
-*Examples:*
-- Given the following JSON object contained in the `http.request.body.raw` field:
-  `{ "record_id": "aed53a", "version": 2 }`
+Examples:
+
+- Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+  `{ "record_id": "aed53a", "version": 2 }`<br/>
   Then `lookup_json_integer(http.request.body.raw, "version")` will return `2`.
 
-- Given the following nested object:
-  `{ "product": { "id": 356 } }`
+- Given the following nested object:<br/>
+  `{ "product": { "id": 356 } }`<br/>
   Then `lookup_json_integer(http.request.body.raw, "product", "id")` will return `356`.
 
-- Given the following JSON array at the root level:
-  `["first_item", -234]`
+- Given the following JSON array at the root level:<br/>
+  `["first_item", -234]`<br/>
   Then `lookup_json_integer(http.request.body.raw, 1)` will return `-234`.
 
-- Given the following array in a JSON object attribute:
-  `{ "network_ids": [123, 456] }`
+- Given the following array in a JSON object attribute:<br/>
+  `{ "network_ids": [123, 456] }`<br/>
   Then `lookup_json_integer(http.request.body.raw, "network_ids", 0)` will return `123`.
 
-- Given the following root-level array of JSON objects:
-  `[{ "product_id": 123 }, { "product_id": 456 }]`
+- Given the following root-level array of JSON objects:<br/>
+  `[{ "product_id": 123 }, { "product_id": 456 }]`<br/>
   Then `lookup_json_integer(http.request.body.raw, 1, "product_id")` will return `456`.
 
 ### `lookup_json_string`
 
-`lookup_json_string` `(field (String) key (String | Integer) [, key (String | Integer), ...]) `String`
+`lookup_json_string(field (String) key (String | Integer) [, key (String | Integer), ...])` → `String`
 
 Returns the string value associated with the supplied `key` in `field`.
 
@@ -178,31 +178,31 @@ The `field` must be a string representation of a valid JSON document.
 
 The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON document to obtain a specific value.
 
-*Examples:*
+Examples:
 
-- Given the following JSON object contained in the `http.request.body.raw` field:
-`{ "company": "cloudflare", "product": "rulesets" }`
-Then `lookup_json_string(http.request.body.raw, "company") == "cloudflare"` will return `true`.
+- Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+  `{ "company": "cloudflare", "product": "rulesets" }`<br/>
+  Then `lookup_json_string(http.request.body.raw, "company") == "cloudflare"` will return `true`.
 
-- Given the following nested object:
-`{ "network": { "name": "cloudflare" } }`
-Then `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"` will return `true`.
+- Given the following nested object:<br/>
+  `{ "network": { "name": "cloudflare" } }`<br/>
+  Then `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"` will return `true`.
 
-- Given the following JSON array at the root level:
-`["other_company", "cloudflare"]`
-Then `lookup_json_string(http.request.body.raw, 1) == "cloudflare"` will return `true`.
+- Given the following JSON array at the root level:<br/>
+  `["other_company", "cloudflare"]`<br/>
+  Then `lookup_json_string(http.request.body.raw, 1) == "cloudflare"` will return `true`.
 
-- Given the following array in a JSON object attribute:
-`{ "networks": ["other_company", "cloudflare"] }`
-Then `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"` will return `true`.
+- Given the following array in a JSON object attribute:<br/>
+  `{ "networks": ["other_company", "cloudflare"] }`<br/>
+  Then `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"` will return `true`.
 
-- Given the following root-level array of JSON objects:
-`[{ "network": "other_company" }, { "network": "cloudflare" }]`
-Then `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"` will return `true`.
+- Given the following root-level array of JSON objects:<br/>
+  `[{ "network": "other_company" }, { "network": "cloudflare" }]`<br/>
+  Then `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"` will return `true`.
 
 ### `lower`
 
-`lower (String)` `String`
+`lower(String)` → `String`
 
 Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -210,40 +210,39 @@ For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) ==
 
 ### `regex_replace`
 
-`regex_replace (source (String), regular_expression (String), replacement (String))` `String`
+`regex_replace(source (String), regular_expression (String), replacement (String))` → `String`
 
 Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-*Examples:*
+Examples:
 
-Literal match replace:
-`regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
+- Literal match replace:<br/>
+  `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
 
-If there is no match, the input string does not change:
-`regex_replace("/x", "^/y$", "/mumble") == "/x"`
+- If there is no match, the input string does not change:<br/>
+  `regex_replace("/x", "^/y$", "/mumble") == "/x"`
 
-Match is case sensitive by default:
-`regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
+- Match is case sensitive by default:<br/>
+  `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
 
-When there are multiple matches, only one replacement occurs (the first one):
-`regex_replace("/a/a", "/a", "/b") == "/b/a"`
+- When there are multiple matches, only one replacement occurs (the first one):<br/>
+  `regex_replace("/a/a", "/a", "/b") == "/b/a"`
 
-Escape a `$` in the replacement string by prefixing it with another `$`:
-`regex_replace("/b", "^/b$", "/b$$") == "/b$"`
+- Escape a `$` in the replacement string by prefixing it with another `$`:<br/>
+  `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
 
-Replace with capture groups:
-`regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
+- Replace with capture groups:<br/>
+  `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
-Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
+Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<NUMBER>}` in the replacement string, where `<NUMBER>` is the number of the capture group.
 
 :::caution
-
-You can only use the `regex_replace()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/). 
+You can only use the `regex_replace()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
 
 ### `remove_bytes`
 
-`remove_bytes (bytes)`
+`remove_bytes(Bytes)` → `Bytes`
 
 Returns a new byte array with all the occurrences of the given bytes removed.
 
@@ -251,7 +250,7 @@ For example, if `http.host` is `"www.cloudflare.com"`, then `remove_bytes(http.h
 
 ### `starts_with`
 
-`starts_with(source (String), substring (String))` `Boolean`
+`starts_with(source (String), substring (String))` → `Boolean`
 
 Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (like `"foo"`).
 
@@ -259,13 +258,13 @@ For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_wi
 
 ### `substring`
 
-`substring(field (String | Bytes), start (Integer) [, end (Integer)])` `String`
+`substring(field (String | Bytes), start (Integer) [, end (Integer)])` → `String`
 
 Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
 The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
-*Examples:*
+Examples:
 
 ```txt
 // If http.request.body.raw is "asdfghjk":
@@ -278,11 +277,11 @@ substring(http.request.body.raw, 0, -2)  will return "asdfgh"
 
 ### `to_string`
 
-`to_string (Integer | Boolean | IP address)` `String`
+`to_string(Integer | Boolean | IP address)` → `String`
 
 Returns the string representation of an Integer, Boolean, or IP address value.
 
-*Examples:*
+Examples:
 
 ```txt
 // If cf.bot_management.score is 5:
@@ -294,12 +293,12 @@ to_string(ssl)                       will return "true"
 
 :::caution
 
-You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/). 
+You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
 
 ### `upper`
 
-`upper(String)` `String`
+`upper(String)` → `String`
 
 Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -307,20 +306,20 @@ For example, if `http.host` is`"www.cloudflare.com"`, then `upper(http.host)` wi
 
 ### `url_decode`
 
-`url_decode(source (String)[, options (String)])` `String`
+`url_decode(source (String)[, options (String)])` → `String`
 
 Decodes a URL-formatted string defined in `source`, as in the following:
 
-* `%20` and `+` decode to a space character (` `).
+- `%20` and `+` decode to a space character (` `).
 
-* `%E4%BD` decodes to `ä½`.
+- `%E4%BD` decodes to `ä½`.
 
 The `source` must be a field, that is, it cannot be a literal string.
 
 The `options` parameter is optional. You must provide any options as a single string wrapped in quotes, such as `"r"` or `"ur"`. The available options are the following:
 
-* `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
-* `u`: Enables Unicode percent decoding. The result will be encoded in UTF-8. For example, `"%u2601"` would be decoded to a cloud emoji (`☁️`) encoded in UTF-8 (`"\xe2\x98\x81"`, with a size of 3 bytes).
+- `r`: Applies recursive decoding. For example, `%2520` will be decoded twice (recursively) to a space character (` `).
+- `u`: Enables Unicode percent decoding. The result will be encoded in UTF-8. For example, `"%u2601"` would be decoded to a cloud emoji (`☁️`) encoded in UTF-8 (`"\xe2\x98\x81"`, with a size of 3 bytes).
 
 Examples:
 
@@ -336,22 +335,21 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 
 ### `uuidv4`
 
-`uuidv4(Bytes)` `String`
+`uuidv4(Bytes)` → `String`
 
 Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/#cf-random_seed) field.
 
 For example, `uuidv4(cf.random_seed)` will return a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`.
 
 :::caution
-
-You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/). 
+You can only use the `uuidv4()` function in [rewrite expressions of Transform Rules](/rules/transform/).
 :::
 
 ### `wildcard_replace`
 
-`wildcard_replace(source (Bytes), wildcard_pattern (Bytes), replacement (Bytes) [, flags (Bytes)])` `String`
+`wildcard_replace(source (Bytes), wildcard_pattern (Bytes), replacement (Bytes) [, flags (Bytes)])` → `String`
 
- Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
+Replaces a `source` string, matched by a literal with zero or more `*` wildcard metacharacters, with a replacement string, returning the result. The replacement string can contain references to wildcard capture groups (for example, `${1}` and `${2}`).
 
 If there is no match, the function will return `source` unchanged.
 
@@ -365,40 +363,38 @@ To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
 
 This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
 
-*Examples:*
+Examples:
 
-If the full URI is `https://apps.example.com/calendar/admin?expand=true`,
-`wildcard_replace(http.request.full_uri, "https://*.example.com/*/*", "https://example.com/${1}/${2}/${3}")` will return `https://example.com/apps/calendar/admin?expand=true`
+- If the full URI is `https://apps.example.com/calendar/admin?expand=true`,<br/>
+  `wildcard_replace(http.request.full_uri, "https://*.example.com/*/*", "https://example.com/${1}/${2}/${3}")` will return `https://example.com/apps/calendar/admin?expand=true`
 
-If the full URI is `https://example.com/applications/app1`,
-`wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged value, since there is no match for the full URI value; you should use the `http.request.uri.path` field for URI path matching).
+- If the full URI is `https://example.com/applications/app1`,<br/>
+  `wildcard_replace(http.request.full_uri, "/applications/*", "/apps/${1}")` will return `https://example.com/applications/app1` (unchanged value, since there is no match for the full URI value; you should use the `http.request.uri.path` field for URI path matching).
 
-If the URI path is `/calendar`,
-`wildcard_replace(http.request.uri.path, "/*", "/apps/${1}")` will return `/apps/calendar`.
+- If the URI path is `/calendar`,<br/>
+  `wildcard_replace(http.request.uri.path, "/*", "/apps/${1}")` will return `/apps/calendar`.
 
-If the URI path is `/Apps/calendar`,
-`wildcard_replace(http.request.uri.path, "/apps/*", "/${1}")` will return `/calendar` (case-insensitive match by default).
+- If the URI path is `/Apps/calendar`,<br/>
+  `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}")` will return `/calendar` (case-insensitive match by default).
 
-If the URI path is `/Apps/calendar`,
-`wildcard_replace(http.request.uri.path, "/apps/*", "/${1}", "s")` will return `/Apps/calendar` (unchanged value) because there is no case-sensitive match.
+- If the URI path is `/Apps/calendar`,<br/>
+  `wildcard_replace(http.request.uri.path, "/apps/*", "/${1}", "s")` will return `/Apps/calendar` (unchanged value) because there is no case-sensitive match.
 
-If the URI path is `/apps/calendar/login`,
-`wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login`.
+- If the URI path is `/apps/calendar/login`,<br/>
+  `wildcard_replace(http.request.uri.path, "/apps/*/login", "/${1}/login")` will return `/calendar/login`.
 
 For more examples of wildcard matching, refer to [Wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching).
 
 :::caution
 
-Currently, you can only use the `wildcard_replace()` function in target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/). 
+Currently, you can only use the `wildcard_replace()` function in target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
-
-
 
 ## Magic Firewall Functions
 
 ### `bit_slice`
 
-`bit_slice(protocol (String), offset_start (Number), offset_end (Number))` `Number`
+`bit_slice(protocol (String), offset_start (Number), offset_end (Number))` → `Number`
 
 This function looks for matches on a given slice of bits.
 
@@ -406,19 +402,15 @@ The offset starts on the given protocol header. For example, to match on the fir
 
 This is primarily intended for use with `ip`, `udp`, and `tcp`.
 
-The slice (`offset_end` — `offset_start`) cannot be longer than 32 bits, but multiple calls can be joined together via logical expressions.
+The slice (`offset_end` – `offset_start`) cannot be longer than 32 bits, but multiple calls can be joined together via logical expressions.
 
 The `bit_slice` offset cannot exceed 2,040 bits.
-
-
 
 ## HMAC validation
 
 :::caution[Important]
 
-
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
-
 
 :::
 
@@ -439,39 +431,35 @@ is_timed_hmac_valid_v0(
 
 The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
+- `Key` (String literal)
 
+  - Specifies the secret cryptographic key for validating the HMAC.
 
-* `Key<` String literal
+- `MessageMAC` (String)
 
-  * Specifies the secret cryptographic key for validating the HMAC.
+  - Contains a concatenation of these HMAC elements: `message`, `separator`, `timestamp`, `mac`. For a definition and an example, refer to [MessageMAC](#messagemac).
 
-* `MessageMAC` String
+- `ttl` (Integer literal)
 
-  * Contains a concatenation of these HMAC elements: `message`, `separator`, `timestamp`, `mac`. For a definition and an example, refer to [MessageMAC](#messagemac).
+  - Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
 
-* `ttl` Integer literal
+- `currentTimeStamp` (Integer)
 
-  * Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
+  - Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
-* `currentTimeStamp` Integer
+- `lengthOfSeparator` (Integer literal, optional)
 
-  * Represents the UNIX timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+  - Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of `0`.
 
-* `lengthOfSeparator` Integer literal optional
+- `flags` (String literal, optional)
 
-  * Specifies the length of the `separator` between the `timestamp` and the `message` in the `MessageMAC`. Expressed in bytes, with a default value of `0`.
+  - When you set this optional argument to `'s'`, the function expects the value of the Base64-encoded `mac` in the `MessageMAC` argument to use the URL-safe character set with no padding.
 
-* `flags` String literal optional
-
-  * When you set this optional argument to `'s'`, the function expects the value of the Base64-encoded `mac` in the `MessageMAC` argument to use the URL-safe character set with no padding.
-
-  * When you do **not** set the value of `flags` to `'s'`, you must URL encode the Base64 value for `mac` in the `MessageMAC` argument.
-
-
+  - When you do **not** set the value of `flags` to `'s'`, you must URL encode the Base64 value for `mac` in the `MessageMAC` argument.
 
 ### Usage
 
-The `is_timed_hmac_valid_v0()` function uses the supplied *Key* to generate a message authentication code (MAC) from the `message` and the `timestamp` regions of the MessageMAC. When the generated MAC matches the `mac` region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
+The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the `message` and the `timestamp` regions of the MessageMAC. When the generated MAC matches the `mac` region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
 For example, the following expression matches requests to `downloads.example.com` that do not include valid HMAC tokens:
 
@@ -492,13 +480,12 @@ A valid MessageMAC satisfies the following regular expression:
 
 and is composed of these parentheses-delimited expressions:
 
-| Expression | Description | Example |
-| --- | --- | --- |
-| `(.+)` | The `message` to validate. | `/download/cat.jpg` |
-| `(.*)` | The `separator` between message and timestamp, commonly a parameter name. | `&verify=` |
-| `(\d{10})` | The 10-digit UNIX `timestamp` when the MAC was issued, expressed in seconds. | `1484063137`
-| `(.{43,})` | A Base64-encoded version of the `mac`. When you do not set the value of the `urlSafe` argument in the HMAC validation function to `'s'`, you must URL-encode the Base64 value for `mac`. When the Base64 MAC encoding is URL-safe, the `mac` value contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding. | `IaLGSmELTvlhfd0ItdN6PhhHTFhzx
-73EX8uy%2FcSDiIU%3D` |
+| Expression | Description                                                                                                                                                                                                                                                                                                                                   | Example                                            |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `(.+)`     | The `message` to validate.                                                                                                                                                                                                                                                                                                                    | `/download/cat.jpg`                                |
+| `(.*)`     | The `separator` between message and timestamp, commonly a parameter name.                                                                                                                                                                                                                                                                     | `&verify=`                                         |
+| `(\d{10})` | The 10-digit UNIX `timestamp` when the MAC was issued, expressed in seconds.                                                                                                                                                                                                                                                                  | `1484063137`                                       |
+| `(.{43,})` | A Base64-encoded version of the `mac`. When you do not set the value of the `urlSafe` argument in the HMAC validation function to `'s'`, you must URL-encode the Base64 value for `mac`. When the Base64 MAC encoding is URL-safe, the `mac` value contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding. | `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D` |
 
 For details on generating a MessageMAC, refer to [HMAC token generation](/waf/custom-rules/use-cases/configure-token-authentication/#hmac-token-generation).
 
@@ -506,11 +493,9 @@ For details on generating a MessageMAC, refer to [HMAC token generation](/waf/cu
 
 :::caution[Important]
 
-
 When you do not use the optional `flags` argument for `is_timed_hmac_valid_v0()`, you must URL-encode the Base64 value for `mac` in the `MessageMAC` argument.
 
 For more information, refer to [HMAC Validation: Overview](#overview).
-
 
 :::
 
@@ -545,7 +530,7 @@ is_timed_hmac_valid_v0(
 
 ### Concatenated MessageMAC argument
 
-To compose a MessageMAC from more than one field, use the [`concat()`](#function-concat) function.
+To compose a MessageMAC from more than one field, use the [`concat()`](#concat) function.
 
 This example constructs the value of the `MessageMAC` argument by concatenating the request URI and two header fields:
 
