@@ -2,18 +2,49 @@
 title: Upload videos
 pcx_content_type: navigation
 sidebar:
-  order: 3
-
+  order: 1
 ---
 
-Stream provides four ways to upload videos to cover a diverse set of use cases.
+Before you upload your video, review the options for uploading a video, supported formats, and recommendations.
+
+## Upload options
+
+| Upload method	| When to use |
+|---------------|-------------|
+|[Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream)| Upload videos from the Stream Dashboard without writing any code.
+|[Upload from a URL](/stream/uploading-videos/upload-via-link/)| Upload videos from a URL, such as an S3 bucket or content management system.
+|[Upload video file](/stream/uploading-videos/upload-video-file/)| Upload videos stored on a computer.
+|[Direct creator uploads](/stream/uploading-videos/direct-creator-uploads/)| Allows end users of your website or app to upload videos directly to Cloudflare Stream.
 
 
+## Supported video formats
 
-| Upload method                                                              | When to use                                                                            |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| [Stream Dashboard](https://dash.cloudflare.com?to=/:account/stream)        | Upload videos from the Stream Dashboard, without writing any code.                     |
-| [Copy via link](/stream/uploading-videos/upload-via-link/)                 | Upload videos from a URL, such as an S3 bucket or content management system.           |
-| [Direct creator uploads](/stream/uploading-videos/direct-creator-uploads/) | Allow end users of your website or app to upload videos directly to Cloudflare Stream. |
-| [Upload video file](/stream/uploading-videos/upload-video-file/)           | Upload videos when the video file is stored on a computer.                             |
 
+:::note
+Files must be less than 30 GB, and content should be encoded and uploaded in the same frame rate it was recorded.
+:::
+
+- MP4
+- MKV
+- MOV
+- AVI
+- FLV
+- MPEG-2 TS
+- MPEG-2 PS
+- MXF
+- LXF
+- GXF
+- 3GP
+- WebM
+- MPG
+- Quicktime
+
+## Recommendations for on-demand videos
+
+- Optional but ideal settings:
+  - MP4 containers
+  - AAC audio codec
+  - H264 video codec
+  - 60 or fewer frames per second
+- Closed GOP (_Only required for live streaming._)
+- Mono or Stereo audio. Stream will mix audio tracks with more than two channels down to stereo.
