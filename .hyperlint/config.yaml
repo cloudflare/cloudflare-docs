@@ -10,3 +10,7 @@ authorized_users:
   - RebeccaTamachiro
 style_guide:
   enabled: true
+openapi:
+  enabled: true
+  urls:
+    - https://github.com/cloudflare/api-schemas/blob/main/openapi.json
