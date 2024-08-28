@@ -93,6 +93,8 @@ database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
 ```
 
+This creates a new D1 database, and outputs the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
+
 :::note
 
 For reference, a good database name is:
@@ -102,8 +104,6 @@ For reference, a good database name is:
 - Only describes the database, and is not directly referenced in code.
 
 :::
-
-This creates a new D1 database, and outputs the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 ## 3. Bind your Worker to your D1 database
 
@@ -308,6 +308,8 @@ If you want to delete your Worker, run:
 ```sh
 npx wrangler delete d1-tutorial
 ```
+
+## Summary
 
 In this tutorial, you have:
 
