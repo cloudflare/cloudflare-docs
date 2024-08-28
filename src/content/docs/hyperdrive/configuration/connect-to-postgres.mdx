@@ -29,7 +29,8 @@ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres
 The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
 
 ```toml
-node_compat = true # required for database drivers to function
+# required for database drivers to function
+compatibility_flags = [ "nodejs_compat_v2" ]
 
 [[hyperdrive]]
 binding = "HYPERDRIVE"
@@ -44,12 +45,12 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                                                    |
-| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Postgres.js (**recommended**) | [https://github.com/porsager/postgres](https://github.com/porsager/postgres) | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                                                       |
-| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [legacy `node_compat = true`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) to be set, which is not supported in Pages. |
-| Drizzle                       | [https://orm.drizzle.team/](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                                                          |
-| Kysely                        | [https://kysely.dev/](https://kysely.dev/)                                   | `0.26.3`^                |                                                                                                                                                                                                                                          |
+| Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                        |
+| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Postgres.js (**recommended**) | [https://github.com/porsager/postgres](https://github.com/porsager/postgres) | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                           |
+| node-postgres - `pg`          | [https://node-postgres.com/](https://node-postgres.com/)                     | `pg@8.11.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires the [`nodejs_compat_v2`](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers) compatability flag to be set. |
+| Drizzle                       | [https://orm.drizzle.team/](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                              |
+| Kysely                        | [https://kysely.dev/](https://kysely.dev/)                                   | `0.26.3`^                |                                                                                                                                                                                                              |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
@@ -138,11 +139,12 @@ Install the `node-postgres` driver:
 npm install pg
 ```
 
-Ensure you have `node_compat = true` set in your `wrangler.toml` configuration file:
+Ensure you have "nodejs_compat_v2" in compatability flags in your `wrangler.toml` configuration file:
 
 ```toml
 # other fields elided
-node_compat = true # required for node-postgres to work
+# require for node-postgres to work
+compatibility_flags = [ "nodejs_compat_v2"]
 ```
 
 Create a new `Client` instance and pass the Hyperdrive parameters:

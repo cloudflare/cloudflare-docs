@@ -3,7 +3,6 @@ pcx_content_type: configuration
 title: Wrangler
 sidebar:
   order: 20
-
 ---
 
 [Wrangler](/workers/wrangler/) is a command-line tool for building with Cloudflare developer products.
@@ -22,15 +21,16 @@ To deploy a Browser Rendering Worker, you must declare a [browser binding](/work
 
 :::note[Wrangler configuration]
 
-If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add `node_compat = true` to your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions). 
+If you are using [Puppeteer](/browser-rendering/platform/puppeteer/) in your Worker code, then you also need to add "nodejs_compat_v2" to the compatibility_flags in your Worker's `wrangler.toml` configuration. More information [here](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers), including for [pages functions](/workers/runtime-apis/nodejs/#enable-nodejs-with-pages-functions).
 :::
 
 ```toml
 # Top-level configuration
 name = "browser-rendering"
 main = "src/index.ts"
-node_compat = true
 workers_dev = true
+compatibility_date = "2023-09-04"
+compatibility_flags = ["nodejs_compat_v2"]
 
 browser = { binding = "MYBROWSER" }
 ```

@@ -61,7 +61,7 @@ Unless otherwise specified, implementations of Node.js APIs in Workers are inten
 Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
 ```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = [ "nodejs_compat_v2" ]
 ```
 
 ## Enable Node.js with Pages Functions
@@ -83,7 +83,7 @@ To enable Node.js for your Pages Function from the Cloudflare dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+4. Add the `nodejs_compat_v2` compatibility flag to your Preview and Production deployments.
 
 ### Enable only AsyncLocalStorage
 

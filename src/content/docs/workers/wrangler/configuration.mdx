@@ -145,7 +145,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 * `node_compat` boolean optional
 
-  * Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility).
+  * Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility). As of 2024-08-28, this has been replaced by the "node_compat_v2" compatibility flag.
 
 * `preserve_file_names` boolean optional
 
@@ -619,7 +619,9 @@ Example:
 Example:
 
 ```toml title="wrangler.toml"
-node_compat = true # required for database drivers to function
+# required for database drivers to function
+compatibility_date = "2024-08-28"
+compatibility_flags = ["nodejs_compat_v2"]
 
 [[hyperdrive]]
 binding = "<BINDING_NAME>"
@@ -1072,11 +1074,16 @@ A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available 
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-### Add polyfills using Wrangler
+### Add polyfills using Wrangler (Legacy)
 
 Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
 
+:::note
+The preferred method of adding polyfills is now [setting the "node_compat_v2" compatability flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
+:::
+
 ```toml title="wrangler.toml"
+# sets legacy node compatability
 node_compat = true
 ```
 
