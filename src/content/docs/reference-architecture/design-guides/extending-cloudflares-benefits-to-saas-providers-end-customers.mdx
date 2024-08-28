@@ -41,7 +41,7 @@ Before looking at how Cloudflare can be configured to protect your SaaS applicat
 | Orange-to-Orange (O2O)   | For end-customers who already proxy traffic through Cloudflare, [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) may be required. Generally, it's recommended for those end-customers to [not proxy](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) the hostnames used by the SaaS provider. If the Orange-to-Orange functionality is required, please review the [product compatibility](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility/). |
 | Regional Services        | Allows [regional traffic management](/data-localization/regional-services/) to comply with data localization requirements.                                                                                                                                                                                                                             |
 
-## Products included in the recipe
+## Products included in this guide
 
 The following products are used to deliver this solution.
 
@@ -55,7 +55,7 @@ The following products are used to deliver this solution.
 
 ## Cloudflare for SaaS Examples
 
-The primary objective of using Cloudflare is to ensure that all requests to your application's custom hostname are routed through Cloudflare first. This allows for the application of security controls and the implementation of routing and load balancing decisions. Since the origin server often needs to be publicly accessible, securing the connection between Cloudflare and the origin server is crucial. For comprehensive guidance on securing origin servers, please refer to Cloudflare's documentation: [Protect your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
+The primary objective of using Cloudflare is to ensure that all requests to your application's custom hostname are routed through Cloudflare's security and performance services first to apply security controls and routing or load balancing of traffic. Since the origin server often needs to be publicly accessible, securing the connection between Cloudflare and the origin server is crucial. For comprehensive guidance on securing origin servers, please refer to Cloudflare's documentation: [Protect your origin server](/fundamentals/basic-tasks/protect-your-origin-server/).
 
 The diagrams below begin by illustrating the simplest approach to achieving this goal, followed by more complex configurations.
 
@@ -82,7 +82,7 @@ For implementation details to get started, review the [developer documentation](
 
 ### Standard Fallback Origin Setup with Regional Services
 
-This approach also addresses compliance considerations. Specifically, the SaaS provider can use Cloudflare's [Regional Services](/data-localization/regional-services/) solution to regionalize TLS termination and HTTP request processing. This ensures that traffic destined for the origin server is handled exclusively within the chosen region.
+This approach introduces using Cloudflare's [Regional Services](/data-localization/regional-services/) solution to regionalize TLS termination and HTTP processing to confirm with any compliance regulations that dictate your service process data in specific geographic locations. This ensures that traffic destined for the origin server is handled exclusively within the chosen region.
 
 ![Figure 2: Standard Fallback Origin Setup with Regional Services.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/standard-fallback-origin-setup-regional-services.svg "Figure 2: Standard Fallback Origin Setup with Regional Services.")
 
@@ -92,7 +92,7 @@ This approach also addresses compliance considerations. Specifically, the SaaS p
 
 ### Cloudflare Tunnel as Fallback Origin Setup with Regional Services
 
-For enhanced security, rather than exposing your application servers directly to the Internet via public IPs, SaaS providers can use [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/). These tunnels connect your network to Cloudflare's nearest data centers, allowing SaaS applications to be accessed through [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/). As a result, Cloudflare becomes the sole entry point for end-customers from the public Internet into your network.
+For enhanced security, rather than exposing your application servers directly to the Internet via public IPs, SaaS providers can use [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/). These tunnels connect your network to Cloudflare's nearest data centers, allowing SaaS applications to be accessed through [public hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/). As a result, Cloudflare becomes the sole entry point for end-customers from the public Internet into your application network.
 
 ![Figure 3: Cloudflare Tunnel as Fallback Origin Setup with Regional Services.](~/assets/images/reference-architecture/extending-cloudflares-benefits-to-saas-providers-end-customers/cloudflare-tunnel-fallback-origin-setup-regional-services.svg "Figure 3: Cloudflare Tunnel as Fallback Origin Setup with Regional Services.")
 
