@@ -13,7 +13,7 @@ Depending on the cache status you receive, you can make modifications to improve
 * **Expired**: Consider [extending Edge Cache TTLs](/cache/how-to/cache-rules/settings/#edge-ttl)) for these resources via a Page Rule or enable revalidation at your origin.
 * **Miss**: Although tricky to optimize, there are a few potential remedies:
   * [Enable Argo Tiered Caching](/cache/how-to/tiered-cache/#enable-tiered-cache) to check cache in another Cloudflare data center before checking the origin web server.
-  * [Create a custom cache key](/cache/how-to/cache-keys/) for multiple URLs to match the same cached resource, for example by ignoring query string.
+  * [Create a custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/) for multiple URLs to match the same cached resource, for example by ignoring query string.
 
 ## Example reports for troubleshooting cache performance
 
@@ -22,14 +22,19 @@ Several examples of helpful insights into your site performance via Cache Analyt
 * Not caching HTML.
 
   * Identify the issue: Select **Add filter** and select **Cache status equals Dynamic**.
-  * Resolution: Set a Cloudflare Page Rule to [cache dynamic content](/cache/concepts/customize-cache/).
+  * Resolution: Set a Cloudflare Page Rule to [cache dynamic content](https://developers.cloudflare.com/cache/how-to/cache-rules/examples/cache-everything/).
+
+:::caution
+
+This option caches all HTML regardless of the presence of dynamic content. If you use this approach to cache pages containing dynamic content, visitors may receive information not intended for them. To avoid caching dynamic content, you can add a condition to check for the presence of a cookie. For more information, refer to [Bypass Cache on Cookie](/cache/how-to/cache-rules/examples/bypass-cache-on-cookie/).
+:::
 
 * Short cache expiration TTL.
 
   * Identify the issue: Select **Add filter** and select **Cache status equals Revalidated**.
-  * Resolution: [Increase Cloudflare's Edge Cache TTL via a Page Rule](/cache/how-to/edge-browser-cache-ttl/).
+  * Resolution: [Increase Cloudflare's Edge Cache TTL via a Cache Rule](/cache/how-to/cache-rules/examples/edge-ttl//).
 
 * Need to enable Tiered Cache or Custom Cache Key
 
   * Identify the issue: Select **Add filter** and select **Cache status equals Miss**.
-  * Resolution: Enable Argo Tiered Caching or [create a custom cache key](/cache/how-to/cache-keys/).
+  * Resolution: [Enable Argo Tiered Caching](/cache/how-to/tiered-cache/#enable-tiered-cache) or [create a custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/).
