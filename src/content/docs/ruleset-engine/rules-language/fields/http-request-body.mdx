@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: HTTP request body fields | Fields reference
-
 ---
 
 :::note
@@ -70,6 +69,7 @@ The return value may be truncated if `http.request.body.truncated` is true.
 - **Non-ASCII:** preserved
 
 Example:
+
 ```txt
 any(http.request.body.form["username"][*] == "admin")
 ```
@@ -94,11 +94,13 @@ The return value may be truncated if `http.request.body.truncated` is true.
 - **Non-ASCII:** preserved
 
 Example:
+
 ```txt
 any(http.request.body.form.names[*] == "username")
 ```
 
 Example value:
+
 `["username"]`
 
 ## `http.request.body.form.values`
@@ -118,14 +120,16 @@ The return value may be truncated if `http.request.body.truncated` is true.
 - **Non-ASCII:** preserved
 
 Example:
+
 ```txt
 any(http.request.body.form.values[*] == "admin")
 ```
 
 Example value:
+
 `["admin"]`
 
-## `http.request.body.mime` 
+## `http.request.body.mime`
 
 `http.request.body.mime` `String`
 
@@ -133,11 +137,8 @@ The MIME type of the request detected from the request body.
 
 Supports the most common MIME types of the following general categories: video, audio, image, application, text.
 
-Example: `image/jpeg`
+Example:
+
+`image/jpeg`
 
 This field is available on all Cloudflare plans.
-
-
-***
-
-*GeoIP is the registered trademark of MaxMind, Inc.*
