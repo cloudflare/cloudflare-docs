@@ -70,12 +70,12 @@ export default defineConfig({
 				{
 					content: {
 						type: "text",
-						rel: "noopener",
 						value: " ↗",
 					},
 					properties: {
 						target: "_blank",
 					},
+					rel: ["noopener"],
 				},
 			],
 			rehypeSlug,
