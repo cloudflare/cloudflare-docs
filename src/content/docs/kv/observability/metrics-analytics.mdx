@@ -58,7 +58,7 @@ The following are common GraphQL queries that you can use to retrieve informatio
 
 #### Operations
 
-To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`date_geq` and `date_leq`), grouped by `date` and `action`:
+To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`date_geq` and `date_leq`), grouped by `date` and `actionType`:
 
 ```graphql
 query {
@@ -74,7 +74,7 @@ query {
                 }
                 dimensions {
                     date
-                    action
+                    actionType
                 }
             }
         }
@@ -90,14 +90,14 @@ query {
     viewer {
         accounts(filter: { accountTag: $accountTag }) {
             kvOperationsAdaptiveGroups(
-                filter: { namespaceId: $namespaceId, date_geq: $date_geq, date_leq: $date_leq, action: "GET" }
+                filter: { namespaceId: $namespaceId, date_geq: $date_geq, date_leq: $date_leq, actionType: "read" }
                 limit: 10000
             ) {
                 sum {
                     requests
                 }
                 dimensions {
-                    action
+                    actionType
                 }
                 quantiles {
                     latencyMsP25
@@ -124,7 +124,7 @@ query {
                     requests
                 }
                 dimensions {
-                    action
+                    actionType
                 }
             }
         }
