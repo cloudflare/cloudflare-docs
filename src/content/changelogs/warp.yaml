@@ -19,7 +19,7 @@ entries:
       - Fixed an issue where the DNS logs were not being cleared when the user switched configurations.
       - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
       - Fixed an issue which prevented the use of private IP ranges that overlapped with end users' home networks.
-      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, please update to the new commands where necessary.
+      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
     Known issues:
       - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
@@ -39,11 +39,11 @@ entries:
       - Reduced the time it takes for a WARP client update to complete.
       - Fixed issues where incorrect DNS server addresses were being applied following reboots and network changes. Any incorrect static entries set by previous WARP versions must be manually reverted.
       - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
-      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, please update to the new commands where necessary.
+      - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
 
     Known issues:
       - Using MASQUE as the tunnel protocol may be incompatible if your organization has either of the following conditions:
-        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+        - Magic WAN is enabled but does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
         - Regional Services is enabled.
       - DNS resolution may be broken when all of the following conditions are true:
         - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
@@ -69,7 +69,7 @@ entries:
 
     Known issues:
       - There are certain known limitations preventing the use of the MASQUE tunnel protocol in certain scenarios. Do not use the MASQUE tunnel protocol if:
-        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. Please check migration status with your account team.
+        - A Magic WAN integration is on the account and does not have the latest packet flow path for WARP traffic. To check the migration status, contact your account team.
         - Your account has Regional Services enabled.
       - The Linux client GUI does not yet support all GUI features found in the Windows and macOS clients. Future releases of the Linux client will be adding these GUI features.
       - The Zero Trust team name is not visible in the GUI if you upgraded from the previous GA release using an MDM tool.
