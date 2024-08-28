@@ -28,24 +28,26 @@ To continue:
 
 You will create a new Worker as the means to query your database.
 
-Create a new project named `d1-tutorial` by running:
+<Steps>
+	1. Create a new project named `d1-tutorial` by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-tutorial"} />
+	<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-tutorial"} />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
-	}}
-/>
+	<Render
+		file="c3-post-run-steps"
+		product="workers"
+		params={{
+			one: "Hello World example",
+			two: "Hello World Worker",
+			three: "TypeScript",
+		}}
+	/>
 
-This creates a new `d1-tutorial` directory. Your new `d1-tutorial` directory contains:
+	This creates a new `d1-tutorial` directory. Your new `d1-tutorial` directory contains:
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+	- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
+	- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+</Steps>
 
 :::note
 
