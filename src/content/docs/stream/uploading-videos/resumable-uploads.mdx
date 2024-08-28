@@ -197,13 +197,13 @@ Setting a creator value in the `Upload-Creator` header can be used to identify t
 
 For examples of how to set and modify the creator ID, refer to [Associate videos with creators](/stream/manage-video-library/creator-id/).
 
-## Get the video ID when using TUS
+## Get the video ID when using tus
 
-When an initial TUS request is made, Stream responds with a URL in the `Location` header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
+When an initial tus request is made, Stream responds with a URL in the `Location` header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
 Instead, you should use the `stream-media-id` HTTP header in the response to retrieve the video ID.
 
-For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream` with the TUS protocol will contain a HTTP header like the following:
+For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream` with the tus protocol will contain a HTTP header like the following:
 
 ```
 stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
