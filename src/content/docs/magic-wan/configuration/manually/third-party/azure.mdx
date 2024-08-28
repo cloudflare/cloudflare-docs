@@ -46,14 +46,12 @@ It can take anywhere from 30 to 45 minutes for Azure to fully provision the Virt
 
 The Local Network Gateway typically refers to your on-premises location. In this case, the Local Network Gateway represents the Cloudflare side of the connection.
 
-We recommend creating two Local Network Gateways - one for each of the two Cloudflare anycast IPs associated with your Magic WAN account.
+We recommend creating one Local Network Gateways for your Cloudflare IPsec tunnel.
 
 1. Create a new local network gateway.
 2. In **Anycast**, select **IP address** and enter the Cloudflare anycast address.
 3. In **Address space**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
-
-Repeat this process to create a Local Network Gateway to represent the redundant Cloudflare anycast IP address.
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
@@ -176,7 +174,7 @@ ICMP (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded
 ## Configure Magic WAN
 
 1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
-2. For each tunnel, make sure that you have the following settings:
+2. Make sure you have the following settings:
    1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
    2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
