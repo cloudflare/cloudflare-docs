@@ -115,15 +115,6 @@ Choose the following settings when creating your VPN Connection:
 
 Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
-### 5. Define remote Magic WAN Sites
-
-Use the Address Space settings within the Local Network Gateway objects to define the remote subnets within your Magic WAN environment.
-
-1. Navigate to **Local network gateways** and select the desired object.
-2. Navigate to **Configuration** then **Address Space(s)** and specify the remote subnets (in CIDR notation) corresponding to the remote subnets within your Magic WAN environment. For example, `192.168.1.0/24`.
-3. Do not remove the subnet configured to support the Tunnel Health Checks.
-4. Select **Save**
-
 ### 6. Route all Internet traffic through Magic WAN and Cloudflare Gateway
 
 Cloudflare Zero Trust customers can route Internet-bound traffic through Magic WAN to the Internet through Cloudflare Gateway.
