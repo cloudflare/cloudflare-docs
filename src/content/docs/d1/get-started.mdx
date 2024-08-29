@@ -6,9 +6,9 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps } from "~/components";
+import { Render, PackageManagers, Steps, FileTree } from "~/components";
 
-This guide will instruct you through:
+This guide instructs you through:
 
 - Creating your first database using D1, Cloudflare’s native serverless SQL database.
 - Creating a schema and querying your database via the command-line.
@@ -26,26 +26,43 @@ To continue:
 
 ## 1. Create a Worker
 
-You will create a new Worker as the means to query your database.
+Create a new Worker as the means to query your database.
 
-Create a new project named `d1-tutorial` by running:
+<Steps>
+1. Create a new project named `d1-tutorial` by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-tutorial"} />
+	<PackageManagers type="create" pkg="cloudflare@latest" args={"d1-tutorial"} />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
-	}}
-/>
+	<Render
+		file="c3-post-run-steps"
+		product="workers"
+		params={{
+			one: "Hello World example",
+			two: "Hello World Worker",
+			three: "TypeScript",
+		}}
+	/>
 
-This creates a new `d1-tutorial` directory. Your new `d1-tutorial` directory contains:
+	This creates a new `d1-tutorial` directory as illustrated below.
 
-- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker will access your D1 database.
+	<FileTree>
+	- node_modules/
+	- test/
+	- src
+		- **index.ts**
+	- package-lock.json
+	- package.json
+	- testconfig.json
+	- vitest.config.mts
+	- worker-configuration.d.ts
+	- **wrangler.toml**
+	</FileTree>
+
+	Your new `d1-tutorial` directory includes:
+
+	- A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) in `index.ts`.
+	- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `d1-tutorial` Worker accesses your D1 database.
+</Steps>
 
 :::note
 
@@ -63,37 +80,36 @@ To create your first D1 database:
 
 <Steps>
 1. Change into the directory you just created for your Workers project:
+
+	```sh
+	cd d1-tutorial
+	```
+
+2. Run the following `wrangler d1` command and give your database a name. In this tutorial, the database is named `prod-d1-tutorial`:
+
+	```sh
+	npx wrangler d1 create prod-d1-tutorial
+	```
+
+	```sh output
+
+	✅ Successfully created DB 'prod-d1-tutorial'
+
+	[[d1_databases]]
+	binding = "DB" # available in your Worker on env.DB
+	database_name = "prod-d1-tutorial"
+	database_id = "<unique-ID-for-your-database>"
+	```
+
 </Steps>
 
-```sh
-cd d1-tutorial
-```
-
-<Steps>
-2. Run the following `wrangler d1` command and give your database a name. In this tutorial, the database will be named `prod-d1-tutorial`:
-</Steps>
+This creates a new D1 database and outputs the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 :::note
 
 The `wrangler` command-line interface is Cloudflare's tool for managing and deploying Workers applications and D1 databases in your terminal. It was installed when you used `npm create cloudflare@latest` to initialize your new project.
 
 :::
-
-```sh
-npx wrangler d1 create prod-d1-tutorial
-```
-
-```sh output
-
-✅ Successfully created DB 'prod-d1-tutorial'
-
-[[d1_databases]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "prod-d1-tutorial"
-database_id = "<unique-ID-for-your-database>"
-```
-
-This creates a new D1 database, and outputs the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
 :::note
 
@@ -114,20 +130,21 @@ To bind your D1 database to your Worker:
 <Steps>
 1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
 2. Add them to the end of your `wrangler.toml` file.
+
+	```toml
+	[[d1_databases]]
+	binding = "DB" # available in your Worker on env.DB
+	database_name = "prod-d1-tutorial"
+	database_id = "<unique-ID-for-your-database>"
+	```
+
+	Specifically:
+
+	- The value (string) you set for `binding` is the **binding name**, and is used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+	- The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+	- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
+
 </Steps>
-
-```toml
-[[d1_databases]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "prod-d1-tutorial"
-database_id = "<unique-ID-for-your-database>"
-```
-
-Specifically:
-
-- The value (string) you set for `binding` is the **binding name**, and will be used to reference this database in your Worker. In this tutorial, name your binding `DB`.
-- The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-- Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/build-with-d1/d1-client-api/) is exposed on this binding.
 
 :::note
 
@@ -145,45 +162,42 @@ With `wrangler.toml` configured properly, set up your database. Use the example 
 
 <Steps>
 1. Copy the following code and save it as a `schema.sql` file in the `d1-tutorial` Worker directory you created in step 1:
-</Steps>
 
-```sql
-DROP TABLE IF EXISTS Customers;
-CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyName TEXT, ContactName TEXT);
-INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
-```
+	```sql
+	DROP TABLE IF EXISTS Customers;
+	CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyName TEXT, ContactName TEXT);
+	INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
+	```
 
-<Steps>
 2. Initialize your database to run and test locally first. Bootstrap your new D1 database by running:
-</Steps>
 
-```sh
-npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
-```
+	```sh
+	npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
+	```
 
-<Steps>
 3. Validate your data is in your database by running:
+
+	```sh
+	npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
+	```
+
+	```sh output
+	🌀 Mapping SQL input into an array of statements
+	🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
+	┌────────────┬─────────────────────┬───────────────────┐
+	│ CustomerId │ CompanyName         │ ContactName       │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 1          │ Alfreds Futterkiste │ Maria Anders      │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 4          │ Around the Horn     │ Thomas Hardy      │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 11         │ Bs Beverages        │ Victoria Ashworth │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 13         │ Bs Beverages        │ Random Name       │
+	└────────────┴─────────────────────┴───────────────────┘
+	```
+
 </Steps>
-
-```sh
-npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
-```
-
-```sh output
-🌀 Mapping SQL input into an array of statements
-🌀 Executing on local database production-db-backend (5f092302-3fbd-4247-a873-bf1afc5150b) from .wrangler/state/v3/d1:
-┌────────────┬─────────────────────┬───────────────────┐
-│ CustomerId │ CompanyName         │ ContactName       │
-├────────────┼─────────────────────┼───────────────────┤
-│ 1          │ Alfreds Futterkiste │ Maria Anders      │
-├────────────┼─────────────────────┼───────────────────┤
-│ 4          │ Around the Horn     │ Thomas Hardy      │
-├────────────┼─────────────────────┼───────────────────┤
-│ 11         │ Bs Beverages        │ Victoria Ashworth │
-├────────────┼─────────────────────┼───────────────────┤
-│ 13         │ Bs Beverages        │ Random Name       │
-└────────────┴─────────────────────┴───────────────────┘
-```
 
 ### Write queries within your Worker
 
@@ -193,43 +207,44 @@ After you have set up your database, run an SQL query from within your Worker.
 1. Navigate to your `d1-tutorial` Worker and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1.
 2. Clear the content of `index.ts`.
 3. Paste the following code snippet into your `index.ts` file:
+
+	```typescript
+	export interface Env {
+		// If you set another name in wrangler.toml as the value for 'binding',
+		// replace "DB" with the variable name you defined.
+		DB: D1Database;
+	}
+
+	export default {
+		async fetch(request, env): Promise<Response> {
+			const { pathname } = new URL(request.url);
+
+			if (pathname === "/api/beverages") {
+				// If you did not use `DB` as your binding name, change it here
+				const { results } = await env.DB.prepare(
+					"SELECT * FROM Customers WHERE CompanyName = ?",
+				)
+					.bind("Bs Beverages")
+					.all();
+				return Response.json(results);
+			}
+
+			return new Response(
+				"Call /api/beverages to see everyone who works at Bs Beverages",
+			);
+		},
+	} satisfies ExportedHandler<Env>;
+	```
+
+	In the code above, you:
+
+	1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
+	2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/d1-client-api/) with a placeholder (the `?` in the query).
+	3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
+	4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
+	5. Return your query results, if any, in JSON format with `Response.json(results)`.
+
 </Steps>
-
-```typescript
-export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
-	// replace "DB" with the variable name you defined.
-	DB: D1Database;
-}
-
-export default {
-	async fetch(request, env): Promise<Response> {
-		const { pathname } = new URL(request.url);
-
-		if (pathname === "/api/beverages") {
-			// If you did not use `DB` as your binding name, change it here
-			const { results } = await env.DB.prepare(
-				"SELECT * FROM Customers WHERE CompanyName = ?",
-			)
-				.bind("Bs Beverages")
-				.all();
-			return Response.json(results);
-		}
-
-		return new Response(
-			"Call /api/beverages to see everyone who works at Bs Beverages",
-		);
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-In the code above, you:
-
-1. Define a binding to your D1 database in your TypeScript code. This binding matches the `binding` value you set in `wrangler.toml` under `[[d1_databases]]`.
-2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/build-with-d1/d1-client-api/) with a placeholder (the `?` in the query).
-3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to define the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
-4. Execute the query by calling `all()` to return all rows (or none, if the query returns none).
-5. Return your query results, if any, in JSON format with `Response.json(results)`.
 
 After configuring your Worker, you can test your project locally before you deploy globally.
 
@@ -239,21 +254,17 @@ While in your project directory, test your database locally.
 
 <Steps>
 1. Run `wrangler dev`:
-</Steps>
 
-```sh
-npx wrangler dev
-```
+	```sh
+	npx wrangler dev
+	```
 
-When you run `wrangler dev`, Wrangler provides a URL (most likely `localhost:8787`) to review your Worker.
+	When you run `wrangler dev`, Wrangler provides a URL (most likely `localhost:8787`) to review your Worker.
 
-<Steps>
 2. Navigate to the URL.
-</Steps>
 
-The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
+	The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
 
-<Steps>
 3. Test your database is running successfully. Add `/api/beverages` to the provided Wrangler URL. For example, `localhost:8787/api/beverages`.
 </Steps>
 
@@ -265,31 +276,27 @@ To deploy your Worker to production, you must first repeat the [database bootstr
 
 <Steps>
 1. Bootstrap your database with the `schema.sql` file you created in step 4:
-</Steps>
 
-```sh
-npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
-```
+	```sh
+	npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
+	```
 
-<Steps>
 2. Validate the data is in production by running:
-</Steps>
 
-```sh
-npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
-```
+	```sh
+	npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
+	```
 
-<Steps>
 3. Deploy your Worker to make your project accessible on the Internet. Run:
+
+	```sh
+	npx wrangler deploy
+	```
+
+	```sh output
+	Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
+	```
 </Steps>
-
-```sh
-npx wrangler deploy
-```
-
-```sh output
-Outputs: https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
-```
 
 You can now visit the URL for your newly created project to query your live database.
 
