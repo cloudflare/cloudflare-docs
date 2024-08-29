@@ -6,7 +6,7 @@ entries:
   products: [Workers AI, Workers]
   languages: [JavaScript]
   cloudflare: true
-  author: craig
+  author: test
   updated: 2024-03-01
 - link: https://github.com/craigsdennis/image-model-streamlit-workers-ai
   name: Image Model Streamlit starters
