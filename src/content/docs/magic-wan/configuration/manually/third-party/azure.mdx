@@ -17,7 +17,7 @@ You will need to have an existing Resource group, Virtual Network, and Virtual M
 
 ### 1. Create a Gateway subnet
 
-You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway. If you already have a gateway subnet, Azure will prevent you from creating a second one. If that is your case, then just update your gateway subnet settings.
+You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway. If you already have a gateway subnet, Azure will prevent you from creating a second one. If that is your case, update your gateway subnet settings.
 
 1. Go to your **Virtual Network** > **Subnets**.
 2. Select the option to add a **Gateway subnet**.
@@ -39,7 +39,7 @@ This configuration guide applies to Azure Virtual Network Gateway which includes
 5. Select **Create**.
 
 :::note
-The time it takes for Azure to fully provision the Virtual Network Gateway depends on the region the deployment is in.
+The time it takes for Azure to fully provision the Virtual Network Gateway depends on the deployment region.
 :::
 
 ### 3. Create a Local Network Gateway
