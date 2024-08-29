@@ -4,6 +4,6 @@ Bad link at [this page](/test/).
 
 Build a better internet.
 
-We went to https://developers.cloudflare.com.
+Testing [this page](https://developers.cloudflare.com/test/).
 
-testing support@cloudflare.com by then also cloudflare.
+Going to [the marketing site](https://www.cloudflare.com)
