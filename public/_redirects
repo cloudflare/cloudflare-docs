@@ -693,7 +693,7 @@
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
 # magic-firewall
-/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
+/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/magic-firewall/ 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
