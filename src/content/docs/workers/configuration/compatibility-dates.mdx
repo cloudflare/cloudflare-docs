@@ -32,6 +32,12 @@ The compatibility date can be set in a Worker's [`wrangler.toml`](/workers/wrang
 compatibility_date = "2022-04-05"
 ```
 
+:::note
+
+When `compatibility_date` is not specified in `wrangler.toml`, it defaults to the most recent compatibility date.
+It is highly recommended to set a compatibility date for reproducible deployments.
+:::
+
 #### Via the Cloudflare Dashboard
 
 When a Worker is created through the Cloudflare Dashboard, the compatibility date is automatically set to the current date.
