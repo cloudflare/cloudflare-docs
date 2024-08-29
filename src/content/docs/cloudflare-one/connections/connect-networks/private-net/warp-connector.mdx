@@ -265,9 +265,19 @@ If you are setting up WARP Connector on a [virtual private cloud (VPC)](https://
           "-A FORWARD -o CloudflareWARP -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu"
         )
 
+        NAT=(
+          "-A POSTROUTING -o ens18 -j MASQUERADE"
+        )
+
+
         # Apply the rules
         for rule in "${RULES[@]}"; do
           iptables -t mangle $rule
+        done
+
+        # Apply the rules
+        for rule in "${NAT[@]}"; do
+          iptables -t nat $NAT
         done
 
         # Save the rules
