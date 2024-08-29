@@ -50,7 +50,7 @@ We recommend creating a Local Network Gateway for your Cloudflare IPsec tunnel.
 
 1. Create a new local network gateway.
 2. In **Instance details** > **Endpoint**, select **IP address** and enter the Cloudflare anycast address in the IP address field.
-3. In **Address space(s)**, specify the address range of any subnets you wish to access remotely via the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
+3. In **Address space(s)**, specify the address range of any subnets you wish to access remotely through the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
 
 ### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
