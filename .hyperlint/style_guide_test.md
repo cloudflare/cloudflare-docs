@@ -1,15 +1,9 @@
 # This is a test
 
-clouDflare is spellt wrong
-
-Test out Javascript.
-
 Bad link at [this page](/test/).
 
 Build a better internet.
 
-Hyperdrive is a cool product.
+We went to https://developers.cloudflare.com.
 
-Tell me about namespaces.
-
-We went via the canal.
+testing support@cloudflare.com by then also cloudflare.
