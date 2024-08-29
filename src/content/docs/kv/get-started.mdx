@@ -248,7 +248,7 @@ You can access the binding from within your Worker.
 
 :::note
 
-When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, wrangler defaults to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally returns null.
+When using [`wrangler dev`](/workers/wrangler/commands/#dev) to develop locally, Wrangler defaults to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally returns null.
 
 To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, call `wrangler dev --remote` instead. This uses the `preview_id` of the KV binding configuration in the `wrangler.toml` file. See the [KV binding docs](/kv/concepts/kv-bindings/#using-the-kv-binding-when-developing-locally) for more information.
 
@@ -345,4 +345,4 @@ If you have any feature requests or notice any bugs, share your feedback directl
 
 - Learn more about the [KV API](/kv/api/).
 - Understand how to use [Environments](/kv/reference/environments/) with Workers KV.
-- Read the wrangler [`kv` command documentation](/kv/reference/kv-commands/).
+- Read the Wrangler [`kv` command documentation](/kv/reference/kv-commands/).
