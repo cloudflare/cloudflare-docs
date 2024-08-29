@@ -9,7 +9,7 @@ import { Render, PackageManagers, Steps, FileTree, Details } from "~/components"
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
-This guide will instruct you through:
+This guide instructs you through:
 
 - Creating a KV namespace.
 - Writing key-value pairs to your KV namespace from a Cloudflare Worker.
@@ -82,7 +82,7 @@ Create a new Worker to read and write to your KV namespace.
 
 If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
 
-For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
+For example: `CI=true npm create cloudflare@latest kv-tutorial --type=simple --git --ts --deploy=false` creates a basic "Hello World" project ready to build on.
 
 :::
 
@@ -110,7 +110,7 @@ To create a KV namespace via Wrangler:
 	npx wrangler kv namespace create <YOUR_NAMESPACE>
 	```
 
-	The `npx wrangler kv namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` will be randomly generated for you.
+	The `npx wrangler kv namespace create <YOUR_NAMESPACE>` subcommand takes a new binding name as its argument. A KV namespace is created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide. The `id` is randomly generated for you.
 
 	```sh
 	npx wrangler kv namespace create <YOUR_NAMESPACE>
@@ -142,7 +142,7 @@ To create a KV namespace via Wrangler:
 
 :::note[Bindings]
 
-A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
+A binding is how your Worker interacts with external resources such as [KV namespaces](/kv/concepts/kv-namespaces/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that binds to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker.
 
 Refer to [Environment](/kv/reference/environments/) for more information.
 
@@ -171,15 +171,17 @@ You can interact with your KV namespace via [Wrangler](/workers/wrangler/install
 
 To write a value to your empty KV namespace using Wrangler:
 
-Run the `wrangler kv key put` subcommand in your terminal, and input your key and value respectively. `<KEY>` and `<VALUE>` are values of your choice.
+<Steps>
+1. Run the `wrangler kv key put` subcommand in your terminal, and input your key and value respectively. `<KEY>` and `<VALUE>` are values of your choice.
 
-```sh
-npx wrangler kv key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
-```
+	```sh
+	npx wrangler kv key put --binding=<YOUR_BINDING> "<KEY>" "<VALUE>"
+	```
 
-```sh output
-Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
-```
+	```sh output
+	Writing the value "<VALUE>" to key "<KEY>" on namespace e29b263ab50e42ce9b637fa8370175e8.
+	```
+</Steps>
 
 Instead of using `--binding`, you can also use `--namespace-id` to specify which KV namespace should receive the operation:
 
@@ -201,34 +203,41 @@ npx wrangler kv key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --loca
 
 To access the value using Wrangler:
 
-Run the `wrangler kv key get` subcommand in your terminal, and input your key value:
+<Steps>
+1. Run the `wrangler kv key get` subcommand in your terminal, and input your key value:
 
-```sh
-# Replace [OPTIONS] with --binding or --namespace-id
-npx wrangler kv key get <KEY> [OPTIONS]
-```
+	```sh
+	# Replace [OPTIONS] with --binding or --namespace-id
+	npx wrangler kv key get [OPTIONS] "<KEY>"
+	```
 
-A KV namespace can be specified in two ways:
+	A KV namespace can be specified in two ways:
 
-<Details header="With a `--binding`">
+	<Details header="With a `--binding`">
 
-```sh
-npx wrangler kv key get --binding=<YOUR_BINDING> "<KEY>"
-```
+	```sh
+	npx wrangler kv key get --binding=<YOUR_BINDING> "<KEY>"
+	```
 
-This can be combined with `--preview` flag to interact with a preview namespace instead of a production namespace.
-</Details>
+	</Details>
 
-<Details header ="With a `--namespace-id`">
+	<Details header ="With a `--namespace-id`">
 
-```sh
-npx wrangler kv key get --namespace-id=<YOUR_ID> "<KEY>"
-```
-</Details>
+	```sh
+	npx wrangler kv key get --namespace-id=<YOUR_ID> "<KEY>"
+	```
+	</Details>
+</Steps>
+
+You can add a `--preview` flag to interact with a preview namespace instead of a production namespace.
 
 :::caution
 
 Exactly **one** of `--binding` or `--namespace-id` is required.
+:::
+
+:::note
+To view the value directly within the terminal, add `--text`
 :::
 
 Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to write a file of multiple key-value pairs to a given KV namespace.
@@ -245,26 +254,28 @@ To have `wrangler dev` connect to your Workers KV namespace running on Cloudflar
 
 :::
 
-In your Worker script, add your KV namespace in the `Env` interface:
+<Steps>
+1. In your Worker script, add your KV namespace in the `Env` interface:
 
-```ts
-interface Env {
-	YOUR_KV_NAMESPACE: KVNamespace;
-	// ... other binding types
-}
-```
+	```ts
+	interface Env {
+		YOUR_KV_NAMESPACE: KVNamespace;
+		// ... other binding types
+	}
+	```
 
-Use the `put()` method on `YOUR_KV_NAMESPACE` to create a new key-value pair, or to update the value for a particular key:
+2. Use the `put()` method on `YOUR_KV_NAMESPACE` to create a new key-value pair, or to update the value for a particular key:
 
-```ts
-let value = await env.YOUR_KV_NAMESPACE.put(key, value);
-```
+	```ts
+	let value = await env.YOUR_KV_NAMESPACE.put(key, value);
+	```
 
-Use the KV `get()` method to fetch the data you stored in your KV database:
+3. Use the KV `get()` method to fetch the data you stored in your KV database:
 
-```ts
-let value = await env.YOUR_KV_NAMESPACE.get("KEY");
-```
+	```ts
+	let value = await env.YOUR_KV_NAMESPACE.get("KEY");
+	```
+</Steps>
 
 Your Worker code should look like this:
 
@@ -304,21 +315,29 @@ To run your project locally, enter the following command within your project dir
 npx wrangler dev
 ```
 
-When you run `wrangler dev`, Wrangler will give you a URL (usually a `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see your value printed on the browser.
+When you run `wrangler dev`, Wrangler provides a URL (usually a `localhost:8787`) to review your Worker. The browser prints your value when you visit the URL provided by the Wrangler.
 
 ## 5. Deploy your KV
 
-Run the following command to deploy KV to Cloudflare's global network:
+<Steps>
+1. Run the following command to deploy KV to Cloudflare's global network:
 
-```sh
-npx wrangler deploy
-```
+	```sh
+	npx wrangler deploy
+	```
 
-You can now visit the URL for your newly created Workers KV application.
+2. Visit the URL for your newly created Workers KV application.
 
-For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` will send a request to your Worker that writes (and reads) from Workers KV.
+	For example, if the URL of your new Worker is `kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev`, accessing `https://kv-tutorial.<YOUR_SUBDOMAIN>.workers.dev/` sends a request to your Worker that writes (and reads) from Workers KV.
+</Steps>
 
-By finishing this tutorial, you have created a KV namespace, a Worker that writes and reads from that namespace, and deployed your project globally.
+## Summary
+
+By finishing this tutorial, you have:
+
+1. Created a KV namespace
+2. Created a Worker that writes and reads from that namespace
+3. Deployed your project globally.
 
 ## Next steps
 
