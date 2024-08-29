@@ -19,18 +19,19 @@ function slugify(path) {
 	const originalParts = path.split("/");
 	let slugifiedParts: string[] = [];
 
-	originalParts.forEach((p, i) => {
+	originalParts.forEach((p: string, i) => {
 		let newPart = "";
-		// handle /1.1.1.1/* docs as an exception
-		if (p === "1.1.1.1" && i === 1) {
-			slugifiedParts.push(p);
-			return;
-		}
 		// Handle possible URL fragment
 		if (i === originalParts.length - 1 && p.startsWith("#")) {
 			newPart += "#";
 		}
 		newPart += slug(p);
+		// Handle path parts containing "1.1.1.1" as an exception.
+		// Also handles paths like /1.1.1.1/other-ways-to-use-1.1.1.1/
+		// (doesn't affect fragments)
+		if (p.indexOf("1.1.1.1") >= 0 && newPart[0] !== "#") {
+			newPart = newPart.replace("1111", "1.1.1.1");
+		}
 		slugifiedParts.push(newPart);
 	});
 	return slugifiedParts.join("/");
