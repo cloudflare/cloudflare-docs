@@ -3,10 +3,10 @@ pcx_content_type: navigation
 title: Architectures
 sidebar:
   order: 5
-
+hideIndex: true
 ---
 
-import { GlossaryTooltip, ResourcesBySelector } from "~/components"
+import { GlossaryTooltip, ResourcesBySelector } from "~/components";
 
 Learn how you can use AI Gateway within your existing architecture.
 
@@ -14,4 +14,11 @@ Learn how you can use AI Gateway within your existing architecture.
 
 Explore the following <GlossaryTooltip term="reference architecture">reference architectures</GlossaryTooltip> that use AI Gateway:
 
-<ResourcesBySelector types={["reference-architecture","design-guide","reference-architecture-diagram"]} products={["AI Gateway"]} />
+<ResourcesBySelector
+	types={[
+		"reference-architecture",
+		"design-guide",
+		"reference-architecture-diagram",
+	]}
+	products={["AI Gateway"]}
+/>
