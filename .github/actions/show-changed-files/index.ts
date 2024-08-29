@@ -21,6 +21,11 @@ function slugify(path) {
 
 	originalParts.forEach((p, i) => {
 		let newPart = "";
+		// handle /1.1.1.1/* docs as an exception
+		if (p === "1.1.1.1" && i === 1) {
+			slugifiedParts.push(p);
+			return;
+		}
 		// Handle possible URL fragment
 		if (i === originalParts.length - 1 && p.startsWith("#")) {
 			newPart += "#";
