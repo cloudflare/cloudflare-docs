@@ -245,7 +245,7 @@ interface Message<Body = unknown> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
-	readonly attempts: Number;
+	readonly attempts: number;
   ack(): void;
   retry(options?: QueueRetryOptions): void;
 }
@@ -266,9 +266,9 @@ interface Message<Body = unknown> {
   * The body of the message.
   * The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
-* <code>attemmpts</code> number
+* <code>attempts</code> number
 
-	* The number of times the consumer has attempted to process this message.
+	* The number of times the consumer has attempted to process this message
 
 * <code>ack()</code> void
 
