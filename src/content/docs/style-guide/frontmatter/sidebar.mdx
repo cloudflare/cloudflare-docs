@@ -13,7 +13,10 @@ Labels are controlled by frontmatter properties on a given page, which vary depe
 
 In order of precedence:
 
-<Steps>1. `sidebar.label` 2. `title`</Steps>
+<Steps>
+1. `sidebar.label`
+2. `title`
+</Steps>
 
 #### On an index page
 
@@ -25,7 +28,10 @@ Index page labels default to `Overview` if `sidebar.label` is not defined.
 
 In order of precedence:
 
-<Steps>1. `sidebar.group.label` 2. `title`</Steps>
+<Steps>
+1. `sidebar.group.label`
+2. `title`
+</Steps>
 
 ### Example
 
@@ -51,11 +57,18 @@ sidebar:
 
 The sidebar structure will look like:
 
-<FileTree>- GroupTitle - IndexTitle - PageTitle</FileTree>
+<FileTree>
+- GroupTitle
+- IndexTitle
+- PageTitle</FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
-<FileTree>- Bar - Overview - Baz</FileTree>
+<FileTree>
+- Bar
+- Overview
+- Baz
+</FileTree>
 
 ## Ordering
 
@@ -83,11 +96,21 @@ sidebar:
 
 The sidebar structure will look like:
 
-<FileTree>- Beta - ... - Alpha - ...</FileTree>
+<FileTree>
+- Beta
+- ...
+- Alpha
+- ...
+</FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
-<FileTree>- Alpha - ... - Beta - ...</FileTree>
+<FileTree>
+- Alpha
+- ...
+- Beta
+- ...
+</FileTree>
 
 ## Hiding pages
 
