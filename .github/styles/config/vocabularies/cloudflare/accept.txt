@@ -1,3 +1,4 @@
+anycast
 Bitbucket
 cdnjs
 CLI
@@ -11,6 +12,7 @@ HTTP
 HTTPS
 Internet
 IoT
+IPsec
 JavaScript
 Jira
 jsDelivr
