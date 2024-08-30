@@ -75,15 +75,13 @@ Cloudflare supports hostname variables in the following formats:
 
 ```txt
 
-Unknown macro: {hostVar1}
-
-.example.com
+Unknown macro: {hostVar1}.example.com
 
 .foo.example.com
-foo.{hostVar1}.example.com
-Unknown macro: {hostVar2}
 
-.{hostVar1}.example.com
+foo.{hostVar1}.example.com
+
+Unknown macro: {hostVar2}.{hostVar1}.example.com
 ```
 
 Hostname variables must comprise the entire domain field and must not be used with other text in the field. 
