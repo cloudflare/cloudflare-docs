@@ -9,23 +9,31 @@ head:
 
 ---
 
+import { Details } from "~/components"
+
 Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. Magic WAN Site Analytics is a great place to start if you receive a Magic WAN alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
 
 Magic WAN Site Analytics has the following data types available:
 
-- Geographic Map Summary
-  - Aggregate Magic WAN Site Health
-  - MWAN Site Geographic Location
-- Magic WAN Site Data Table
-  - Site Name
-  - Site Health
-  - Site Tunnel Names
-  - Site Tunnel Statuses
-  - Site Traffic Sent
-  - Site Traffic Received
-- Magic WAN Site Data
-  - Traffic Sent by Tunnel
-  - Traffic Received by Tunnel
+<Details header="Geographic Map Summary">
+- Aggregate Magic WAN Site Health: Sites can be healthy or unhealthy. Refer to [Tunnel health checks](/magic-wan/reference/tunnel-health-checks/) to learn more about this topic.
+- Magic WAN Site Geographic Location: The dashboard shows you the location of your sites on a map, as well as how many sites have no location set. Select **no location set** to edit the site's location settings or refer to [Set geographic coordinates](#set-geographic-coordinates) for more information.
+- Magic WAN availability status for sites: If your sites show a no status available message, this means you did not configure your [Tunnel health check alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/).
+</Details>
+
+<Details header="Magic WAN Site Data Table">
+- Site Name
+- Site Health
+- Site Tunnel Names
+- Site Tunnel Statuses
+- Site Traffic Sent
+- Site Traffic Received
+</Details>
+
+<Details header="Magic WAN Site Data">
+- Traffic Sent by Tunnel
+- Traffic Received by Tunnel
+</Details>
 
 To start using Magic WAN Site Analytics:
 
