@@ -54,7 +54,7 @@ This field may have a value larger than the one returned by `len(http.request.bo
 
 ## `http.request.body.form`
 
-`http.request.body.form` `Map<Array>String>>`
+`http.request.body.form` `Map<Array<String>>`
 
 Represents the HTTP request body of a form as a Map (or associative array). Populated when the Content-Type header is `application/x-www-form-urlencoded`.
 
@@ -142,3 +142,73 @@ Example:
 `image/jpeg`
 
 This field is available on all Cloudflare plans.
+
+## `http.request.body.multipart`
+
+`http.request.body.multipart` `Map<Array<String>>`
+
+A Map (or associative array) of multipart names to multipart values in the request body.
+
+Example value:
+
+`{"field1": ["Alice"], "field2": ["Bob"]}`
+
+## `http.request.body.multipart.names`
+
+`http.request.body.multipart.names` `Array<Array<String>>`
+
+List of multipart names for every part in the multipart body.
+
+Example value:
+
+`[["field1"], ["field2"]]`
+
+## `http.request.body.multipart.values`
+
+`http.request.body.multipart.values` `Array<String>`
+
+List of multipart values for every part in the multipart body.
+
+Example value:
+
+`["Alice", "Bob"]`
+
+## `http.request.body.multipart.content_types`
+
+`http.request.body.multipart.content_types` `Array<Array<String>>`
+
+List of `Content-Type` headers for each part in the multipart body.
+
+Example value:
+
+`[["text/plain"], ["image/jpeg"]]`
+
+## `http.request.body.multipart.content_dispositions`
+
+`http.request.body.multipart.content_dispositions` `Array<Array<String>>`
+
+List of `Content-Disposition` headers for each part in the multipart body.
+
+Example value:
+
+`[["form-data; name=\"field1\"], ["form-data;name=\"field2\"]]`
+
+## `http.request.body.multipart.content_transfer_encodings`
+
+`http.request.body.multipart.content_transfer_encodings` `Array<Array<String>>`
+
+List of `Content-Transfer-Encoding` headers for each part in the multipart body.
+
+Example value:
+
+`[["quoted-printable"], ["quoted-printable"]]`
+
+## `http.request.body.multipart.filenames`
+
+`http.request.body.multipart.filenames` `Array<Array<String>>`
+
+List of filenames for each part in the multipart body.
+
+Example value:
+
+`[["file1.txt"], ["file2.jpg"]]`
