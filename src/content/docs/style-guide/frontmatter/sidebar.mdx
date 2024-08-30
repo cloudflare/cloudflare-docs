@@ -13,14 +13,11 @@ Labels are controlled by frontmatter properties on a given page, which vary depe
 
 In order of precedence:
 
-<Steps>
-1. `sidebar.label`
-2. `title`
-</Steps>
+<Steps>1. `sidebar.label` 2. `title`</Steps>
 
 #### On an index page
 
-Index page labels default to `Overview` if `sidebar.label` is not defined. 
+Index page labels default to `Overview` if `sidebar.label` is not defined.
 
 `title` is not taken into consideration due to `title` being used in group labelling.
 
@@ -28,10 +25,7 @@ Index page labels default to `Overview` if `sidebar.label` is not defined.
 
 In order of precedence:
 
-<Steps>
-1. `sidebar.group.label`
-2. `title`
-</Steps>
+<Steps>1. `sidebar.group.label` 2. `title`</Steps>
 
 ### Example
 
@@ -41,9 +35,9 @@ For example, given the following pages:
 ---
 title: Bar
 sidebar:
-    label: IndexTitle
-    group:
-        label: GroupTitle
+  label: IndexTitle
+  group:
+    label: GroupTitle
 ---
 ```
 
@@ -57,19 +51,11 @@ sidebar:
 
 The sidebar structure will look like:
 
-<FileTree>
-- GroupTitle
-  - IndexTitle
-  - PageTitle
-</FileTree>
+<FileTree>- GroupTitle - IndexTitle - PageTitle</FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
-<FileTree>
-- Bar
-  - Overview
-  - Baz
-</FileTree>
+<FileTree>- Bar - Overview - Baz</FileTree>
 
 ## Ordering
 
@@ -97,21 +83,11 @@ sidebar:
 
 The sidebar structure will look like:
 
-<FileTree>
-- Beta
-  - ...
-- Alpha
-  - ...
-</FileTree>
+<FileTree>- Beta - ... - Alpha - ...</FileTree>
 
 If we remove the `sidebar` property from both, it will now look like this:
 
-<FileTree>
-- Alpha
-  - ...
-- Beta
-  - ...
-</FileTree>
+<FileTree>- Alpha - ... - Beta - ...</FileTree>
 
 ## Hiding pages
 
@@ -142,7 +118,17 @@ sidebar:
   group:
     hideIndex: true
 ---
+
+import { DirectoryListing } from "~/components";
+
+<DirectoryListing />
 ```
+
+:::note
+
+Since these pages are still accessible via other links and directly navigating to the URL, always include a `DirectoryListing` component within the page content.
+
+:::
 
 ### Hiding child pages of a group
 
