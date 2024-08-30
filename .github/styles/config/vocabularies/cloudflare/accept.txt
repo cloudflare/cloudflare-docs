@@ -10,7 +10,9 @@ Hono
 HTTP
 HTTPS
 Internet
+IoT
 JavaScript
+Jira
 jsDelivr
 JSON
 JWT
@@ -29,6 +31,8 @@ WebRTC
 WebSocket
 Wi-Fi
 WordPress
+Worker
+Workers
 Wrangler
 VMware
 VPN
