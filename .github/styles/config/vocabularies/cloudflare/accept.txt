@@ -5,3 +5,9 @@ Internet
 JavaScript
 TypeScript
 Hono
+GitHub
+GitLab
+cdnjs
+Next.js
+unpkg
+jsDelivr
