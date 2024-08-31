@@ -29,6 +29,7 @@ unpkg
 UNIX
 URI
 URL
+Vectorize
 WebRTC
 WebSocket
 Wi-Fi
