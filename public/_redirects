@@ -693,7 +693,7 @@
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
 # magic-firewall
-/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
+/magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/magic-firewall/ 301
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/pcaps-bucket-setup/ /magic-firewall/packet-captures/pcaps-bucket-setup/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
@@ -1168,6 +1168,10 @@
 /turnstile/reference/testing/ /turnstile/troubleshooting/testing/ 301
 /turnstile/reference/use-cases/ /turnstile/tutorials/ 301
 /turnstile/reference/use-cases/login-pages/ /turnstile/tutorials/login-pages/ 301
+/turnstile/troubleshooting/infinite-loops/ /turnstile/troubleshooting/challenge-solve-issues/ 301
+/turnstile/migration/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
+/turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
+/turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301

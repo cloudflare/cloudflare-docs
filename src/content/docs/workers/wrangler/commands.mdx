@@ -592,63 +592,190 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
 
-```txt
-wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>]
+```sh
+npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the new index to create. Cannot be changed.
-- `--dimensions` number optional
+  - The name of the new index to create. Must be unique for an account and cannot be changed after creation or reused after the deletion of an index.
+- `--dimensions` number required
   - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` string optional
+- `--metric` string required
   - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-
-### `get`
-
-Get details about an individual index, including its configuration.
-
-```txt
-wrangler vectorize get <INDEX_NAME>
-```
-
-- `INDEX_NAME` string required
-  - The name of the index to fetch details for.
+- `--description` string optional
+  - A description for your index.
+- `--deprecated-v1` boolean optional
+  - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `list`
 
 List all Vectorize indexes in your account, including the configured dimensions and distance metric.
 
-```txt
-wrangler vectorize list
+```sh
+npx wrangler vectorize list
 ```
+
+- `--deprecated-v1` boolean optional
+  - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `get`
+
+Get details about an individual index, including its configuration.
+
+```sh
+npx wrangler vectorize get <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
+- `--deprecated-v1` boolean optional
+  - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `info`
+
+Get some additional information about an individual index, including the vector count and details about the last processed mutation.
+
+```sh
+npx wrangler vectorize info <INDEX_NAME>
+```
+
+- `INDEX_NAME` string required
+  - The name of the index to fetch details for.
 
 ### `delete`
 
 Delete a Vectorize index.
 
-```txt
-wrangler vectorize delete <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
   - The name of the Vectorize index to delete.
 - `--force` boolean optional
   - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
+- `--deprecated-v1` boolean optional
+  - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
 
 ### `insert`
 
 Insert vectors into an index.
 
-```txt
-wrangler vectorize insert <INDEX_NAME> [OPTIONS]
+```sh
+npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
 ```
 
 - `INDEX_NAME` string required
-  - The name of the Vectorize index to delete.
+  - The name of the Vectorize index to upsert vectors in.
+- `--file` string required
+  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
+- `--batch-size` number optional
+  - The number of vectors to insert at a time (default: `1000`).
+- `--deprecated-v1` boolean optional
+  - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
+
+### `upsert`
+
+Upsert vectors into an index. Existing vectors in the index would be overwritten.
+
+```sh
+npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to upsert vectors in.
 - `--file` string required
   - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
 - `--batch-size` number optional
   - The number of vectors to insert at a time (default: `5000`).
+
+### `query`
+
+Query a Vectorize index for similar vectors.
+
+```sh
+npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index to query.
+- `--vector` array required
+  - Vector against which the Vectorize index is queried.
+- `--top-k` number optional
+  - The number of vectors to query (default: `5`).
+- `--return-values` boolean optional
+  - Enable to return vector values in the response (default: `false`).
+- `--return-metadata` string optional
+  - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
+- `--namespace` string optional
+  - Query response to only include vectors from this namespace.
+- `--filter` string optional
+  - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
+
+### `get-vectors`
+
+Fetch vectors from a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be fetched.
+- `--ids` array required
+  - List of ids for which vectors must be fetched.
+
+### `delete-vectors`
+
+Delete vectors in a Vectorize index using the provided ids.
+
+```sh
+npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index from which vectors need to be deleted.
+- `--ids` array required
+  - List of ids corresponding to the vectors that must be deleted.
+
+### `create-metadata-index`
+
+Enable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be created.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be enabled.
+- `--type` string required
+  - Data type of the property. Must be one of `string`, `number`, or `boolean`.
+
+### `list-metadata-index`
+
+List metadata properties on which metadata filtering is enabled.
+
+```sh
+npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata indexes needs to be fetched.
+
+### `delete-metadata-index`
+
+Disable metadata filtering on the specified property.
+
+```sh
+npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` string required
+  - The name of the Vectorize index for which metadata index needs to be disabled.
+- `--property-name` string required
+  - Metadata property for which metadata filtering should be disabled.
 
 ---
 
@@ -2604,7 +2731,7 @@ After running the command, you must add the path of the generated runtime types 
 
 You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
 
-The minimum required Wrangler version to use this command is 3.66.1.
+The minimum required Wrangler version to use this command is 3.66.0.
 
 :::
 

@@ -140,10 +140,17 @@ query {
 
 ## Query insights
 
-D1 exposes metrics that let you understand and debug query performance. These metrics can be accessed via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights`command.
+D1 provides metrics that let you understand and debug query performance. You can access these via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights` command.
 
-- Query strings are captured to make it easier to analyze metrics across query executions. Bound [parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
-- Experimental wrangler command options and output can change. Run `wrangler d1 insights --help` to view the current command.
+D1 captures your query strings to make it easier to analyze metrics across query executions. [Bound parameters](/d1/build-with-d1/d1-client-api/#parameter-binding) are not captured to remove any sensitive information.
+
+:::note
+
+`wrangler d1 insights` is an experimental Wrangler command. Its options and output may change.
+
+Run `wrangler d1 insights --help` to view current options.
+
+:::
 
 ### Examples
 

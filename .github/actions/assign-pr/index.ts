@@ -51,7 +51,6 @@ async function list(
 		const payload = github.context.payload;
 
 		const { repository, pull_request } = payload;
-		if (!repository) throw new Error('Missing "repository" object!');
 		if (!pull_request) throw new Error('Missing "pull_request" object!');
 
 		// establish variables
@@ -71,38 +70,34 @@ async function list(
 		});
 
 		for (const file of files) {
-			if (!codeowners) {
-				continue;
-			}
 			const match = codeOwnersUtils.matchFile(file, codeowners);
-			if (!match) {
-				continue;
-			}
-			for (const owner of match.owners) {
-				if (!owner.includes("/")) {
-					assignees.add(owner.replace(/^@/, ""));
+			if (match.owners) {
+				for (const owner of match.owners) {
+					if (!owner.includes("/")) {
+						assignees.add(owner.replace(/^@/, ""));
+					}
 				}
 			}
-		}
 
-		if (assignees.size === 0) {
-			assignees.add("kodster28");
-		}
+			if (assignees.size === 0) {
+				assignees.add("kodster28");
+			}
 
-		// don't self-assign
-		assignees.delete(author);
+			// don't self-assign
+			assignees.delete(author);
 
-		try {
-			await client.rest.issues.addAssignees({
-				repo: repository.name,
-				owner: repository.owner.login,
-				issue_number: prnumber,
-				assignees: [...assignees],
-			});
-		} catch (error) {
-			core.setFailed(error.message);
+			try {
+				await client.rest.issues.addAssignees({
+					repo: repository.name,
+					owner: repository.owner.login,
+					issue_number: prnumber,
+					assignees: [...assignees],
+				});
+			} catch (error) {
+				core.setFailed(error.message);
+			}
+			console.log("DONE~!");
 		}
-		console.log("DONE~!");
 	} catch (error) {
 		core.setFailed(error.message);
 	}
