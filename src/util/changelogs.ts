@@ -33,7 +33,7 @@ export async function getChangelogs(opts?: { filter?: Function, wranglerOnly?: b
 		});
 	});
 
-	const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
+	const grouped = Object.entries(Object?.groupBy(mapped, (entry) => entry.date));
 	const entries = grouped.sort().reverse();
 
 	return { products, productAreas, changelogs: entries };

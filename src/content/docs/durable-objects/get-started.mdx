@@ -69,7 +69,7 @@ Your `MyDurableObject` class will have a constructor with two parameters. The fi
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject {
 	constructor(state, env) {}
 }
 ```
@@ -77,7 +77,7 @@ export class MyDurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
 }
 ```
@@ -91,7 +91,7 @@ Your file should now look like:
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject {
 	constructor(state, env) {}
 
 	async fetch(request) {
@@ -103,7 +103,7 @@ export class MyDurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject {
+export class MyDurableObject extends DurableObject {
 	constructor(state: DurableObjectState, env: Env) {}
 
 	async fetch(request: Request) {
