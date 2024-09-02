@@ -251,13 +251,13 @@ Cloudflare will still enforce the plan-based [cacheable file limits](/cache/conc
 
 API configuration object name: `"cache_reserve"`.
 
-API property name for enabling Cache Reserve: `"enabled"` (boolean).
+API property name for enabling Cache Reserve: `"eligible"` (boolean).
 
 ```json title="API configuration example"
 "action_parameters": {
   "cache": true
   "cache_reserve": {
-    "enabled": true,
+    "eligible": true,
     "minimum_file_size": 100000
   }
 }
