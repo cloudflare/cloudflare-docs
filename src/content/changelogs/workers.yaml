@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+- publish_date: '2024-09-07'
+  description: |-
+    -  Introduced a new overloaded error message for Durable Objects: "Durable Object is overloaded. Too many requests for the same object within a 10 second window." This error message does not replace other types of overload messages that you may encounter for your Durable Object, and is only returned at more extreme levels of overload.
 - publish_date: '2024-08-19'
   description: |-
     -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-dates/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
