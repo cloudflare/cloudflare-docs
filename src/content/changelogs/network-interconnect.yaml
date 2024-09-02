@@ -1,7 +1,7 @@
 ---
-link: "/magic-wan/changelog/"
-productName: Magic WAN
-productLink: "/magic-wan/"
+link: "/network-interconnect/changelog/"
+productName: Cloudflare Network Interconnect
+productLink: "/network-interconnect/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
