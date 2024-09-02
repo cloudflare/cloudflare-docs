@@ -28,12 +28,12 @@ You can create overrides at the zone level and at the account level. Account-lev
 - <Render file="managed-rulesets/read-only-rules-note" />
 - If you configure both account-level and zone-level overrides, only the zone-level overrides (the most specific ones) will be evaluated.
 - Currently, account-level overrides for the HTTP DDoS Attack Protection managed ruleset are only available via API.
-  :::
+
+:::
 
 ### Creating multiple rules
 
 :::note
-
 Only available to Enterprise customers with the Advanced DDoS Protection subscription, which can create up to 10 rules.
 :::
 
@@ -146,7 +146,6 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 - The rule with ID `<MANAGED_RULESET_RULE_ID>`, belonging to the HTTP DDoS Attack Protection managed ruleset (with ID `<MANAGED_RULESET_ID>`), will have an `eoff` (_Essentially Off_) sensitivity level and it will perform a `log` action.
 
 :::note
-
 Custom rule expressions (different from `"true"`) and the `log` action require an Enterprise plan with the Advanced DDoS Protection subscription.
 :::
 
