@@ -3,10 +3,9 @@ title: Page Rules migration guide
 pcx_content_type: how-to
 sidebar:
   order: 3
-
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs } from "~/components";
 
 Cloudflare recommends that you consider using modern Rules features for your new implementations instead of Page Rules. Follow the recommendations in this migration guide to learn about the [new Rules products](/rules/) and how you can start adopting them today.
 
@@ -24,19 +23,19 @@ In 2022, we announced in our blog post [The future of Page Rules](https://blog.c
 
 Improvements in modern Rules features include:
 
-* **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
-* **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
-* **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
-* **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
+- **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
+- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
+- **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) helps understand rule interactions.
+- **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
 
 ## Important differences
 
 The evaluation and execution order of Rules features is different from Page Rules:
 
-* Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
-* The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
-* A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
-* Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
+- Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
+- The first Page Rule to match is applied (also called first match). In contrast, other rules like Cache Rules are stackable. This means that multiple matching rules can be combined and applied to the same request (last match). For example, if multiple cache rules match the same URL, then the features set in those cache rules will all be applied in order. For more information, refer to [Order and priority](/cache/how-to/cache-rules/order/) in the Cache documentation and the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
+- A Page Rule may include multiple configurations for different products that are applied in a sequence selected by the customer. In contrast, modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with a customer being able to define the rule order within a product [phase](/ruleset-engine/reference/phases-list/). Refer to the [Ruleset Engine documentation](/ruleset-engine/about/) for more information.
+- Modern Rules features will take precedence over Page Rules. For example, if you have Page Rules and Cache Rules defining caching settings for the same path, Cache Rules will take precedence.
 
 ### Behavior change in Cache Rules
 
@@ -68,19 +67,19 @@ The following table lists the most common Page Rule URLs and their equivalent fi
 
 | Target and components                                                                                   | <div style="width:130px">Page Rule URL example</div>                                                    | Filter expression using Rules language                                                                                                                                               |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Index page of root domain only<br/>*(Domain + Path)*                                                    | `example.com/`                                                                                          | `http.host eq "example.com" and http.request.uri.path eq "/"`                                                                                                                        |
-| Everything on a specific domain<br/>*(Domain)*                                                          | `example.com/*`                                                                                         | `http.host eq "example.com"`                                                                                                                                                         |
-| All subdomains and URLs on a specific domain<br/>*(Domain)*                                             | `*example.com/*`                                                                                        | `http.host contains "example.com"`                                                                                                                                                   |
-| Only subdomains and their URLs<br/>*(Domain)*                                                           | `*.example.com/*`                                                                                       | `http.host contains ".example.com"`                                                                                                                                                  |
-| Specific file on subdomains of a specific domain<br/>*(Domain + Path)*                                  | `*.example.com/*wp-login.php`                                                                           | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`                                                                                          |
-| Specific file extension in a directory or its subdirectories of a domain<br/>*(Domain + Path)*          | `example.com/archives/*.zip`                                                                            | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`                                                       |
-| Specific file extension in any subdirectory of a domain<br/>*(Domain + Path)*                           | `example.com/*/downloads/*.txt`                                                                         | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"` |
-| Specific directory and all its contents on all subdomains of a specific subdomain<br/>*(Domain + Path)* | `*cdn.example.com/file/*`                                                                               | `http.request.full_uri contains "cdn.example.com/file/"`                                                                                                                             |
-| Specific URL on all domains<br/>*(Path)*                                                                | `*/images`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))         | `http.request.uri.path eq "/images"`                                                                                                                                                 |
-| Specific directory and its subdirectories on all domains<br/>*(Path)*                                   | `*/images/*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))       | `starts_with(http.request.uri.path, "/images/")`                                                                                                                                     |
-| Specific file in any directory<br/>*(Path)*                                                             | `*/wp-login.php`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `ends_with(http.request.uri.path, "/wp-login.php")`                                                                                                                                  |
-| Specific query string on all domains<br/>*(Path)*                                                       | `*/*?country=GB`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `http.request.uri.query eq "country=GB"`                                                                                                                                             |
-| Part of a query string on all domains<br/>*(Path)*                                                      | `*/*?*country=GB*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.query contains "country=GB"`                                                                                                                                       |
+| Index page of root domain only<br/>_(Domain + Path)_                                                    | `example.com/`                                                                                          | `http.host eq "example.com" and http.request.uri.path eq "/"`                                                                                                                        |
+| Everything on a specific domain<br/>_(Domain)_                                                          | `example.com/*`                                                                                         | `http.host eq "example.com"`                                                                                                                                                         |
+| All subdomains and URLs on a specific domain<br/>_(Domain)_                                             | `*example.com/*`                                                                                        | `http.host contains "example.com"`                                                                                                                                                   |
+| Only subdomains and their URLs<br/>_(Domain)_                                                           | `*.example.com/*`                                                                                       | `http.host contains ".example.com"`                                                                                                                                                  |
+| Specific file on subdomains of a specific domain<br/>_(Domain + Path)_                                  | `*.example.com/*wp-login.php`                                                                           | `ends_with(http.host, ".example.com") and ends_with(http.request.uri.path, "wp-login.php")`                                                                                          |
+| Specific file extension in a directory or its subdirectories of a domain<br/>_(Domain + Path)_          | `example.com/archives/*.zip`                                                                            | `http.host eq "example.com" and starts_with(http.request.uri.path, "/archives/") and http.request.uri.path.extension eq "zip"`                                                       |
+| Specific file extension in any subdirectory of a domain<br/>_(Domain + Path)_                           | `example.com/*/downloads/*.txt`                                                                         | `http.host eq "example.com" and not starts_with(http.request.uri.path, "/downloads/") and http.request.uri.path contains "/downloads/" and http.request.uri.path.extension eq "txt"` |
+| Specific directory and all its contents on all subdomains of a specific subdomain<br/>_(Domain + Path)_ | `*cdn.example.com/file/*`                                                                               | `http.request.full_uri contains "cdn.example.com/file/"`                                                                                                                             |
+| Specific URL on all domains<br/>_(Path)_                                                                | `*/images`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))         | `http.request.uri.path eq "/images"`                                                                                                                                                 |
+| Specific directory and its subdirectories on all domains<br/>_(Path)_                                   | `*/images/*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))       | `starts_with(http.request.uri.path, "/images/")`                                                                                                                                     |
+| Specific file in any directory<br/>_(Path)_                                                             | `*/wp-login.php`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `ends_with(http.request.uri.path, "/wp-login.php")`                                                                                                                                  |
+| Specific query string on all domains<br/>_(Path)_                                                       | `*/*?country=GB`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/))   | `http.request.uri.query eq "country=GB"`                                                                                                                                             |
+| Part of a query string on all domains<br/>_(Path)_                                                      | `*/*?*country=GB*`<br/>(required [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) | `http.request.uri.query contains "country=GB"`                                                                                                                                       |
 
 </table-wrap>
 
@@ -96,7 +95,7 @@ The following table summarizes how different Page Rules settings will be migrate
 | Bypass Cache on Cookie      | Cache Rules                          | [Migrate Bypass Cache on Cookie](#migrate-bypass-cache-on-cookie)           |
 | Cache By Device Type        | Cache Rules                          | [Migrate Cache By Device Type](#migrate-cache-by-device-type)               |
 | Cache Deception Armor       | Cache Rules                          | [Migrate Cache Deception Armor](#migrate-cache-deception-armor)             |
-| Cache Level                 | Cache Rules                          | [Migrate Cache Level](#migrate-cache-level)                                 |
+| Cache Level                 | Cache Rules                          | [Migrate Cache Level](#migrate-cache-level-cache-everything)                |
 | Cache on Cookie             | Cache Rules                          | [Migrate Cache on Cookie](#migrate-cache-on-cookie)                         |
 | Cache TTL by status code    | Cache Rules                          | [Migrate Cache TTL by status code](#migrate-cache-ttl-by-status-code)       |
 | Custom Cache Key            | Cache Rules                          | [Migrate Custom Cache Key](#migrate-custom-cache-key)                       |
@@ -133,8 +132,8 @@ The following table summarizes how different Page Rules settings will be migrate
 
 You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL** `*example.com/*`
-* **Setting**: *Always Use HTTPS*
+- **URL** `*example.com/*`
+- **Setting**: _Always Use HTTPS_
 
 **How to migrate**:
 
@@ -142,16 +141,17 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com" AND SSL/HTTPS is off`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com" and not ssl)`
 
-   * **Then**:
-     * **Type**: *Dynamic*
-     * **Expression**: `concat("https://", http.host, http.request.uri.path)`
-     * **Status code**: *301*
+   - **Then**:
+     - **Type**: _Dynamic_
+     - **Expression**: `concat("https://", http.host, http.request.uri.path)`
+     - **Status code**: _301_
 
     </div>
 
@@ -175,9 +175,9 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 
 You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Automatic HTTPS Rewrites*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Automatic HTTPS Rewrites_
+- **Value**: On
 
 **How to migrate**:
 
@@ -185,15 +185,16 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Automatic HTTPS Rewrites
-     * **Value**: On
+   - **Then the settings are**:
+     - **Setting**: Automatic HTTPS Rewrites
+     - **Value**: On
 
     </div>
 
@@ -217,9 +218,9 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
 
 You configured a Page Rule adjusting browser cache TTL to one day for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Browser Cache TTL*
-* **Enter Browser Cache TTL**: *a day*
+- **URL**: `*example.com/*`
+- **Setting**: _Browser Cache TTL_
+- **Enter Browser Cache TTL**: _a day_
 
 **How to migrate**:
 
@@ -227,16 +228,17 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Browser TTL**: Override origin and use this TTL
-     * **Input time-to-live (TTL)**: *1 day*
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Browser TTL**: Override origin and use this TTL
+     - **Input time-to-live (TTL)**: _1 day_
 
     </div>
 
@@ -262,9 +264,9 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
 You configured a Page Rule turning on Browser Integrity Check for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Browser Integrity Check*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Browser Integrity Check_
+- **Value**: On
 
 **How to migrate**:
 
@@ -272,15 +274,16 @@ You configured a Page Rule turning on Browser Integrity Check for all subdomains
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Browser Integrity Check
-     * **Value**: On
+   - **Then the settings are**:
+     - **Setting**: Browser Integrity Check
+     - **Value**: On
 
     </div>
 
@@ -304,9 +307,9 @@ You configured a Page Rule turning on Browser Integrity Check for all subdomains
 
 You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Bypass Cache on Cookie*
-* **Enter value**: `test_cookie`
+- **URL**: `*example.com/*`
+- **Setting**: _Bypass Cache on Cookie_
+- **Enter value**: `test_cookie`
 
 **How to migrate**:
 
@@ -314,14 +317,15 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com" AND Cookie contains "test-cookie"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com" and http.cookie contains "test-cookie")`
 
-   * **Then**:
-     * **Cache eligibility**: Bypass cache
+   - **Then**:
+     - **Cache eligibility**: Bypass cache
 
     </div>
 
@@ -347,9 +351,9 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
 You configured a Page Rule turning on Cache By Device Type for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Cache By Device Type*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Cache By Device Type_
+- **Value**: On
 
 **How to migrate**:
 
@@ -357,16 +361,17 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Cache key
-       * **Cache by device type**: On
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Cache by device type**: On
 
     </div>
 
@@ -392,8 +397,8 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
 You configured a Page Rule turning on Cache Deception Armor for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Cache Deception Armor
+- **URL**: `*example.com/*`
+- **Setting**: Cache Deception Armor
 
 **How to migrate**:
 
@@ -401,16 +406,17 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Cache key
-       * **Cache deception armor**: On
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Cache deception armor**: On
 
     </div>
 
@@ -436,9 +442,9 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
 You configured a Page Rule turning on caching of all assets for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Cache Level*
-* **Select Cache Level**: *Cache Everything*
+- **URL**: `*example.com/*`
+- **Setting**: _Cache Level_
+- **Select Cache Level**: _Cache Everything_
 
 **How to migrate**:
 
@@ -446,14 +452,15 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
 
     </div>
 
@@ -479,9 +486,9 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
 You configured a Page Rule turning on caching for responses that contained cookie `test-cookie` for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Cache on Cookie*
-* **Enter value**: `test-cookie`
+- **URL**: `*example.com/*`
+- **Setting**: _Cache on Cookie_
+- **Enter value**: `test-cookie`
 
 **How to migrate**:
 
@@ -489,14 +496,15 @@ You configured a Page Rule turning on caching for responses that contained cooki
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com" AND Cookie contains "test-cookie"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com" and http.cookie contains "test-cookie")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
 
     </div>
 
@@ -522,10 +530,10 @@ You configured a Page Rule turning on caching for responses that contained cooki
 
 You configured a Page Rule turning on caching of every response with status code between `200` and `599` for one day, for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Cache TTL by status code*
-* **Status code or enter range**: `200-599`
-* **Select option**: *a day*
+- **URL**: `*example.com/*`
+- **Setting**: _Cache TTL by status code_
+- **Status code or enter range**: `200-599`
+- **Select option**: _a day_
 
 **How to migrate**:
 
@@ -533,21 +541,22 @@ You configured a Page Rule turning on caching of every response with status code
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Edge TTL
-       * Use cache-control header if present, use default Cloudflare caching behavior if not
-       * **Status code TTL**:
-         * **Scope**: *Range*
-         * **From**: *200*
-         * **To**: *599*
-         * **Duration**: *1 day*
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Edge TTL
+       - Use cache-control header if present, use default Cloudflare caching behavior if not
+       - **Status code TTL**:
+         - **Scope**: _Range_
+         - **From**: _200_
+         - **To**: _599_
+         - **Duration**: _1 day_
 
     </div>
 
@@ -573,9 +582,9 @@ You configured a Page Rule turning on caching of every response with status code
 
 You configured a Page Rule setting a custom cache key for all query string parameters, for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Custom Cache Key*
-  * **Query String**: All query string parameters
+- **URL**: `*example.com/*`
+- **Setting**: _Custom Cache Key_
+  - **Query String**: All query string parameters
 
 **How to migrate**:
 
@@ -583,16 +592,17 @@ You configured a Page Rule setting a custom cache key for all query string param
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Cache key
-       * **Query string**: All query string parameters
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Query string**: All query string parameters
 
     </div>
 
@@ -618,23 +628,24 @@ You configured a Page Rule setting a custom cache key for all query string param
 
 You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Disable Apps*
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Apps_
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Cloudflare Apps (deprecated)  for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Cloudflare Apps (deprecated) for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Disable Apps
+   - **Then the settings are**:
+     - **Setting**: Disable Apps
 
     </div>
 
@@ -654,7 +665,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 
 :::caution
 
-The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated. 
+The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
 This Page Rules setting turned off Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
@@ -665,8 +676,8 @@ This Page Rules setting turned off Mirage, Polish, and Rocket Loader. You can st
 
 You configured a Page Rule with **Disable Performance** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Disable Performance*
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Performance_
 
 **How to replace**:
 
@@ -674,16 +685,17 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Mirage**: Off
-     * **Polish**: *Off*
-     * **Rocket Loader**: Off
+   - **Then the settings are**:
+     - **Mirage**: Off
+     - **Polish**: _Off_
+     - **Rocket Loader**: Off
 
     </div>
 
@@ -703,7 +715,7 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 
 :::caution
 
-The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated. 
+The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
 This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
@@ -714,8 +726,8 @@ This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous ver
 
 You configured a Page Rule with **Disable Security** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Disable Security*
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Security_
 
 This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
 
@@ -723,8 +735,8 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
 
-   * Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
-   * Hotlink Protection (part of Cloudflare Scrape Shield)
+   - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
+   - Hotlink Protection (part of Cloudflare Scrape Shield)
 
 2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
 
@@ -734,7 +746,7 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 
 :::caution
 
-If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features. Refer to the [WAF's migration guides](/waf/reference/migration-guides/) for more information. 
+If you are still using WAF managed rules (previous version) or Rate Limiting (previous version), consider migrating to the new versions of these products. It is not possible to turn off these older products using modern Rules features. Refer to the [WAF's migration guides](/waf/reference/migration-guides/) for more information.
 :::
 
 </TabItem> </Tabs>
@@ -747,8 +759,8 @@ If you are still using WAF managed rules (previous version) or Rate Limiting (pr
 
 You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Disable Zaraz*
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Zaraz_
 
 **How to migrate**:
 
@@ -756,14 +768,15 @@ You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `e
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Disable Zaraz
+   - **Then the settings are**:
+     - **Setting**: Disable Zaraz
 
     </div>
 
@@ -787,9 +800,9 @@ You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `e
 
 You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Edge Cache TTL*
-* **Enter Edge Cache TTL**: *a day*
+- **URL**: `*example.com/*`
+- **Setting**: _Edge Cache TTL_
+- **Enter Edge Cache TTL**: _a day_
 
 **How to migrate**:
 
@@ -797,17 +810,18 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Edge TTL
-       * Ignore cache-control header and use this TTL
-       * **Input time-to-live (TTL)**: *1 day*
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Edge TTL
+       - Ignore cache-control header and use this TTL
+       - **Input time-to-live (TTL)**: _1 day_
 
     </div>
 
@@ -833,9 +847,9 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 
 You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Email Obfuscation*
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: _Email Obfuscation_
+- **Value**: Off
 
 **How to migrate**:
 
@@ -843,15 +857,16 @@ You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shi
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Email Obfuscation
-       * **Value**: Off
+   - **Then the settings are**:
+     - **Setting**: Email Obfuscation
+       - **Value**: Off
 
     </div>
 
@@ -877,10 +892,10 @@ You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shi
 
 You configured a Page Rule permanently redirecting `www.example.com` to `example.com` on all URI paths:
 
-* **URL**: `www.example.com/*`
-* **Setting**: *Forwarding URL*
-* **Select Status code**: *301 - Permanent Redirect*
-* **Destination URL**: `https://example.com/$1`
+- **URL**: `www.example.com/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/$1`
 
 **How to migrate**:
 
@@ -888,16 +903,17 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname equals "www.example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host eq "www.example.com")`
 
-   * **Then**:
-     * **Type**: *Dynamic*
-     * **Expression**: `concat("https://example.com", http.request.uri.path)`
-     * **Status code**: *301*
+   - **Then**:
+     - **Type**: _Dynamic_
+     - **Expression**: `concat("https://example.com", http.request.uri.path)`
+     - **Status code**: _301_
 
     </div>
 
@@ -921,10 +937,10 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 You configured a Page Rule permanently redirecting `example.com/old-path` to `example.com/new-path`:
 
-* **URL**: `example.com/old-path/*`
-* **Setting**: *Forwarding URL*
-* **Select Status code**: *301 - Permanent Redirect*
-* **Destination URL**: `https://example.com/new-path/$1`
+- **URL**: `example.com/old-path/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/new-path/$1`
 
 **How to migrate**:
 
@@ -932,17 +948,18 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname equals "example.com" AND URI Path starts with "/old-path/"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host eq "example.com" and starts_with(http.request.uri.path, "/old-path/"))`
 
-   * **Then**:
-     * **Type**: *Dynamic*
-     * **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br/>
+   - **Then**:
+     - **Type**: _Dynamic_
+     - **Expression**: `concat("/new-path/", substring(http.request.uri.path, 10))`<br/>
        (where `10` (start byte value) is the length of `/old-path/`)
-     * **Status code**: *301*
+     - **Status code**: _301_
 
     </div>
 
@@ -966,9 +983,9 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
 You configured a Page Rule changing the `Host` HTTP header to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Host Header Override*
-* **Enter value**: `example.saas-provider.com`
+- **URL**: `*example.com/*`
+- **Setting**: _Host Header Override_
+- **Enter value**: `example.saas-provider.com`
 
 **How to migrate**:
 
@@ -976,15 +993,16 @@ You configured a Page Rule changing the `Host` HTTP header to `example.saas-prov
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Set origin parameters**:
-       * **Host Header** > **Rewrite to**: `example.saas-provider.com`
+   - **Then**:
+     - **Set origin parameters**:
+       - **Host Header** > **Rewrite to**: `example.saas-provider.com`
 
     </div>
 
@@ -1008,9 +1026,9 @@ You configured a Page Rule changing the `Host` HTTP header to `example.saas-prov
 
 You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *IP Geolocation Header*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _IP Geolocation Header_
+- **Value**: On
 
 **How to migrate**:
 
@@ -1034,9 +1052,9 @@ You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests
 
 You configured a Page Rule turning off Mirage for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Mirage*
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: _Mirage_
+- **Value**: Off
 
 **How to migrate**:
 
@@ -1044,15 +1062,16 @@ You configured a Page Rule turning off Mirage for all subdomains of `example.com
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Mirage
-       * **Value**: Off
+   - **Then the settings are**:
+     - **Setting**: Mirage
+       - **Value**: Off
 
     </div>
 
@@ -1076,9 +1095,9 @@ You configured a Page Rule turning off Mirage for all subdomains of `example.com
 
 You configured a Page Rule turning off Opportunistic Encryption for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Opportunistic Encryption*
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: _Opportunistic Encryption_
+- **Value**: Off
 
 **How to migrate**:
 
@@ -1086,15 +1105,16 @@ You configured a Page Rule turning off Opportunistic Encryption for all subdomai
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Opportunistic Encryption
-       * **Value**: Off
+   - **Then the settings are**:
+     - **Setting**: Opportunistic Encryption
+       - **Value**: Off
 
     </div>
 
@@ -1118,9 +1138,9 @@ You configured a Page Rule turning off Opportunistic Encryption for all subdomai
 
 You configured a Page Rule turning off Origin Cache Control for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Origin Cache Control
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: Origin Cache Control
+- **Value**: Off
 
 **How to migrate**:
 
@@ -1128,16 +1148,17 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Origin Cache Control
-       * **Enable Origin Cache Control**: Off
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Origin Cache Control
+       - **Enable Origin Cache Control**: Off
 
     </div>
 
@@ -1163,9 +1184,9 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
 You configured a Page Rule turning on Origin Error Page Pass-thru for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Origin Error Page Pass-thru*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Origin Error Page Pass-thru_
+- **Value**: On
 
 **How to migrate**:
 
@@ -1173,16 +1194,17 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Origin error page pass-thru
-       * **Use Origin error page pass-thru**: On
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Origin error page pass-thru
+       - **Use Origin error page pass-thru**: On
 
     </div>
 
@@ -1208,9 +1230,9 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 
 You configured a Page Rule turning off [Polish](/images/polish/) for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: Polish
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: Polish
+- **Value**: Off
 
 **How to migrate**:
 
@@ -1218,15 +1240,16 @@ You configured a Page Rule turning off [Polish](/images/polish/) for all subdoma
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Polish
-       * **Select value**: *Off*
+   - **Then the settings are**:
+     - **Setting**: Polish
+       - **Select value**: _Off_
 
     </div>
 
@@ -1250,9 +1273,9 @@ You configured a Page Rule turning off [Polish](/images/polish/) for all subdoma
 
 You configured a Page Rule turning on Query String Sort for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Query String Sort*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Query String Sort_
+- **Value**: On
 
 **How to migrate**:
 
@@ -1260,16 +1283,17 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Cache key
-       * **Sort query string**: On
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Sort query string**: On
 
     </div>
 
@@ -1295,9 +1319,9 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
 You configured a Page Rule changing the origin to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Resolve Override*
-* **Enter value**: `example.saas-provider.com`
+- **URL**: `*example.com/*`
+- **Setting**: _Resolve Override_
+- **Enter value**: `example.saas-provider.com`
 
 **How to migrate**:
 
@@ -1305,14 +1329,15 @@ You configured a Page Rule changing the origin to `example.saas-provider.com`, f
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **DNS Record** > **Override to**: `example.saas-provider.com`
+   - **Then**:
+     - **DNS Record** > **Override to**: `example.saas-provider.com`
 
     </div>
 
@@ -1336,9 +1361,9 @@ You configured a Page Rule changing the origin to `example.saas-provider.com`, f
 
 You configured a Page Rule turning on byte-for-byte equivalency checks for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Respect Strong ETags*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _Respect Strong ETags_
+- **Value**: On
 
 **How to migrate**:
 
@@ -1346,16 +1371,17 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then**:
-     * **Cache eligibility**: Eligible for cache
-     * **Setting**: Respect strong ETags
-       * **Use strong ETag headers**: On
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Respect strong ETags
+       - **Use strong ETag headers**: On
 
     </div>
 
@@ -1381,9 +1407,9 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 
 You configured a Page Rule turning off Rocket Loader for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Rocket Loader*
-* **Value**: Off
+- **URL**: `*example.com/*`
+- **Setting**: _Rocket Loader_
+- **Value**: Off
 
 **How to migrate**:
 
@@ -1391,15 +1417,16 @@ You configured a Page Rule turning off Rocket Loader for all subdomains of `exam
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Rocket Loader
-       * **Value**: Off
+   - **Then the settings are**:
+     - **Setting**: Rocket Loader
+       - **Value**: Off
 
     </div>
 
@@ -1421,27 +1448,28 @@ You configured a Page Rule turning off Rocket Loader for all subdomains of `exam
 
 **Context:**
 
-You configured a Page Rule setting Security Level to *I'm Under Attack* for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *Security Level*
-* **Select Security Level**: *I'm Under Attack*
+- **URL**: `*example.com/*`
+- **Setting**: _Security Level_
+- **Select Security Level**: _I'm Under Attack_
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to *I'm Under Attack*, for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: Security Level
-       * **Select Security Level**: *I'm Under Attack*
+   - **Then the settings are**:
+     - **Setting**: Security Level
+       - **Select Security Level**: _I'm Under Attack_
 
     </div>
 
@@ -1465,9 +1493,9 @@ You configured a Page Rule setting Security Level to *I'm Under Attack* for all 
 
 You configured a Page Rule adding a `True-Client-IP` HTTP header for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *True Client IP Header*
-* **Value**: On
+- **URL**: `*example.com/*`
+- **Setting**: _True Client IP Header_
+- **Value**: On
 
 **How to migrate**:
 
@@ -1489,27 +1517,28 @@ You configured a Page Rule adding a `True-Client-IP` HTTP header for all request
 
 **Context:**
 
-You configured a Page Rule setting SSL to *Strict* for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule setting SSL to _Strict_ for all subdomains of `example.com` and the `example.com` domain itself:
 
-* **URL**: `*example.com/*`
-* **Setting**: *SSL*
-* **Select SSL/TLS encryption mode**: *Strict*
+- **URL**: `*example.com/*`
+- **Setting**: _SSL_
+- **Select SSL/TLS encryption mode**: _Strict_
 
 **How to migrate**:
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set SSL to *Strict*, for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set SSL to _Strict_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
 
-   * **When incoming requests match**: Custom filter expression
-     * Using the Expression Builder:<br/>
+   - **When incoming requests match**: Custom filter expression
+
+     - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
-     * Using the Expression Editor:<br/>
+     - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
 
-   * **Then the settings are**:
-     * **Setting**: SSL
-       * **Select SSL/TLS encryption mode**: *Strict*
+   - **Then the settings are**:
+     - **Setting**: SSL
+       - **Select SSL/TLS encryption mode**: _Strict_
 
     </div>
 
@@ -1529,11 +1558,11 @@ You configured a Page Rule setting SSL to *Strict* for all subdomains of `exampl
 
 The following Page Rules settings will not be migrated to other types of rules:
 
-* **Disable Performance** (this setting is deprecated)
-* **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
-* **Disable Security** (this setting is deprecated)
-* **Response Buffering** (this setting is deprecated)
-* **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
+- **Disable Performance** (this setting is deprecated)
+- **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
+- **Disable Security** (this setting is deprecated)
+- **Response Buffering** (this setting is deprecated)
+- **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
 
 All other Page Rules settings will be migrated during 2025.
 
