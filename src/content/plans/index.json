@@ -2165,6 +2165,20 @@
         }
       }
     },
+    "speculation": {
+      "title": "Speculation",
+      "link": "/speed/optimization/content/speculation/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Enabled by default",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }  
+    },
     "tcp_turbo": {
       "title": "TCP Turbo",
       "properties": {
