@@ -1,0 +1,83 @@
+---
+pcx_content_type: how-to
+title: Edit or delete multiple records in one action
+sidebar:
+  order: 3
+  label: Batch update or delete
+
+---
+
+Intro
+
+## Requirements
+
+In case it's API only. Token permissions etc
+
+## Aspects to consider
+
+- Patch vs Put
+- Execution order
+- Propagation is not atomic
+
+## Example request
+
+```bash
+{
+    "deletes": [
+        {
+            "id": "143004ef463b464a504bde5a5be9f94a"
+        },
+        {
+            "id": "243004ef463b464a504bde5a5be9f94a"
+        }
+    ],
+    "patches": [
+        {
+            "id": "343004ef463b464a504bde5a5be9f94a",
+            "content": "192.0.2.45"
+        },
+        {
+            "id": "443004ef463b464a504bde5a5be9f94a",
+            "name": "update.example.com",
+            "proxied": true
+        }
+    ],
+    "puts": [
+        {
+            "id": "543004ef463b464a504bde5a5be9f94a",
+            "content": "192.0.2.50",
+            "name": "no-change.example.com",
+            "proxied": false,
+            "ttl:": 1
+        },
+        {
+            "id": "643004ef463b464a504bde5a5be9f94a",
+            "content": "192.0.2.45",
+            "name": "no-change.example.com",
+            "proxied": false,
+            "ttl:": 3000
+        }
+    ],
+    "posts": [
+        {
+            "name": "@",
+            "type": "A",
+            "content": "192.0.2.45",
+            "proxied": false,
+            "ttl": 3000
+        },
+        {
+            "name": "a.example.com",
+            "type": "A",
+            "content": "192.0.2.45",
+            "proxied": true
+        }
+    ]
+}
+```
+
+## Use cases
+
+- Subdomain setup when subdomain records already existin
+- Clean slate after DNS records quick scan
+- SaaS providers
