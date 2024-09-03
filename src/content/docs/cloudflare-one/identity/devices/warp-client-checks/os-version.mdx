@@ -24,33 +24,28 @@ The OS Version device posture attribute checks whether the version of a device's
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **WARP client checks** and select **Add new**.
 3. Select **OS version**.
-4. Configure the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
-
+4. Configure the **Operating system**, **Operator**, and **Version** fields to specify the [OS version](#determine-the-os-version) you want devices to match.
 :::note
 
 The OS version must be specified as a valid [Semver](https://semver.org/). For example, if your device is running OS version `1.2`, you must enter `1.2.0`.
 :::
-5\. (Optional) Configure additional OS-specific fields:
+5. (Optional) Configure additional OS-specific fields:
 
 <Tabs> <TabItem label="macOS">
 
-In **Version extra**, enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match. Be sure to include the parenthesis around the letter.
+- **Version extra**: Enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
 
-Example: `(a)`
+</TabItem> <TabItem label="iOS">
 
-</TabItem> <TabItem label="ios">
-
-In **Version extra**, enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match. Be sure to include the parenthesis around the letter.
-
-Example: `(a)`
+- **Version extra**: Enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
 
 </TabItem>
 
 <TabItem label="Linux">
 
-In **Distro name** and **Distro revision**, enter the Linux distribution you want devices to match. The distro version always matches with an equal-to operator (`==`), regardless of the **Operator** setting.
+- **Distro name** and **Distro revision**: Enter the Linux distribution you want devices to match (for example, `ubuntu 22.04`). The distro version always matches with an equal-to operator (==) regardless of the **Operator** setting.
 
-Example: `ubuntu 22.04`
+- **Version extra**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
 
 </TabItem> </Tabs>
 
@@ -84,17 +79,20 @@ Operating systems display version numbers in different ways. This section covers
 
 #### OS version
 
-The Linux OS version check returns the system kernel version. For the OS version check to work, the kernel version must be converted to a valid SemVer.
+The Linux OS version check reads the system kernel version.
 
 1. Open a Terminal window.
 
-2. Run the `uname -r` command to get the complete version.
+2. Run the `uname -r` command to get the complete kernel version. For example,
 
    ```sh
-   uname -r
+   $ uname -r
+   5.14.0-25.el9.x86_64
    ```
 
-3. The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
+3. **Version** is the first three numbers of the output in SemVer format (`5.14.0`).
+
+4. **Version extra** is the first number after the SemVer (`25`).
 
 #### Distro version
 
