@@ -185,7 +185,7 @@ import postgres from 'postgres'
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const sql = postgres(connStr)
+		const sql = postgres(env.DB_URL)
 
 		// Query the products table
 		const result = await sql`SELECT * FROM products;`
