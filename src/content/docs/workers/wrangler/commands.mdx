@@ -2151,7 +2151,6 @@ wrangler whoami
 
 ## `versions`
 
-[Versions](/workers/configuration/versions-and-deployments/#versions) are currently in beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
@@ -2252,7 +2251,6 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 
 ## `triggers`
 
-This command is currently in closed beta. Report bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
@@ -2301,11 +2299,11 @@ wrangler deployments status
 - `--name` string optional
   - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
 
-## `rollback
+## `rollback`
 
 :::caution
 A rollback will immediately create a new deployment with the specified version of your Worker and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
-:::`
+:::
 
 ```txt
 wrangler rollback [<VERSION_ID>] [OPTIONS]
