@@ -205,15 +205,11 @@ if (response.ok || response.redirected) {
 Assuming you [set up a Worker](/workers/get-started/guide/) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
-
 /**
  * Fetch and log a request
  * @param {Request} request
  */
-async function handleRequest(request) {
+async function fetch(request) {
   // Parse request URL to get access to query string
   let url = new URL(request.url)
 
