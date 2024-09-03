@@ -145,7 +145,9 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 * `node_compat` boolean optional
 
-  * Add polyfills for Node.js built-in modules and globals. Refer to [Node compatibility](#node-compatibility). As of 2024-08-28, this has been replaced by the "node_compat_v2" compatibility flag.
+  * Deprecated — Instead, [enable the `nodejs_compat_v2` compatibility flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
+	Setting `node_compat = true` will add polyfills for Node.js built-in modules and globals to your Worker's code, when bundled with Wrangler.
+	This is powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
 * `preserve_file_names` boolean optional
 
@@ -1060,35 +1062,6 @@ local_protocol = "http"
 [Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
 
 <Render file="secrets-in-dev" />
-
-## Node compatibility
-
-If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of Node.js APIs to your own code.
-
-### Use runtime APIs directly
-
-A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
-
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
-```
-
-### Add polyfills using Wrangler (Legacy)
-
-Add polyfills for a subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
-
-:::note
-The preferred method of adding polyfills is now [setting the "node_compat_v2" compatability flag](/workers/runtime-apis/nodejs/#enable-nodejs-with-workers).
-:::
-
-```toml title="wrangler.toml"
-# sets legacy node compatability
-node_compat = true
-```
-
-It is not possible to polyfill all Node APIs or behaviors, but it is possible to polyfill some of them.
-
-This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 
 ## Module Aliasing
 
