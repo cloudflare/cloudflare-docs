@@ -88,7 +88,7 @@ entries:
     }
     ```
 
-    This information is redundant because both affected API routes are already within the zone scope. In particular, the zone ID will already be known to any user of these routes because it appears in the URL. The zone name can be retrieved by making a `GET` request to `/zones/:zone_id` if necessary.
+    This information is redundant because both affected API routes are already within the zone scope. In particular, the zone ID will already be known to any user of these routes because it appears in the URL. The zone name can be retrieved by making a `GET` request to `/zones/:zone_id` if it is necessary.
 
     After November 30th, 2024, Cloudflare will stop including the `zone_id` and `zone_name` fields on individual DNS records in API responses. These fields are currently ignored when sent to the API as part of a request body, so no changes to request bodies are required.
 
@@ -174,7 +174,7 @@ entries:
 - publish_date: '2024-08-05'
   title: "Auto Minify"
   description: |-
-    The Auto Minify API endpoints are deprecated, since the Auto Minify feature was deprecated.
+    The Auto Minify API endpoints are deprecated since the Auto Minify feature was deprecated.
 
     Deprecated APIs:
 
@@ -260,9 +260,9 @@ entries:
 - publish_date: '2024-03-31'
   title: "Privacy Pass API Removal"
   description: |-
-    In 2017 Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
+    In 2017, Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
     
-    In September 2023 support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
+    In September 2023, support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
 
     Deprecated API:
 
