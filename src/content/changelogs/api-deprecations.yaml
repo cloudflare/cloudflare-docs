@@ -8,6 +8,8 @@ entries:
 - publish_date: '2025-01-15'
   title: "Firewall Rules API and Filters API"
   description: |-
+    Deprecation date: January 15, 2025
+
     The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
 
     Deprecated APIs:
@@ -34,6 +36,8 @@ entries:
 - publish_date: '2025-01-15'
   title: "WAF managed rules APIs (previous version)"
   description: |-
+    Deprecation date: January 15, 2025
+
     The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
     
     Deprecated APIs:
@@ -58,6 +62,8 @@ entries:
 - publish_date: '2025-01-15'
   title: "Rate Limiting API (previous version)"
   description: |-
+    Deprecation date: January 15, 2025
+
     The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
 
     Deprecated API:
@@ -73,6 +79,8 @@ entries:
 - publish_date: '2024-11-30'
   title: "Zone information in individual DNS records"
   description: |-
+    Deprecation date: November 30, 2024
+
     Currently, each individual DNS record returned by the API contains information about the zone it is on, specifically the zone ID and name.
 
     ```json
@@ -103,6 +111,8 @@ entries:
 - publish_date: '2024-10-01'
   title: "DNS Records: Error chains for DNS validation errors"
   description: |-
+    Deprecation date: October 1, 2024
+
     Cloudflare is making a minor change to the representation of certain errors when creating DNS records. Currently, when the DNS record to be created is invalid, an error similar to the following may be returned:
 
     ```txt
@@ -144,6 +154,7 @@ entries:
 - publish_date: '2024-09-13'
   title: "Legacy DNS Settings Endpoints"
   description: |-
+    Deprecation date: September 13, 2024
 
     The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
 
@@ -162,6 +173,8 @@ entries:
 - publish_date: '2024-08-15'
   title: "Brotli"
   description: |-
+    Deprecation date: August 15, 2024
+
     The Brotli setting and its API endpoints are deprecated. After the end of life date, Brotli compression will be enabled by default for all zones.
 
     Deprecated APIs:
@@ -174,6 +187,8 @@ entries:
 - publish_date: '2024-08-05'
   title: "Auto Minify"
   description: |-
+    Deprecation date: August 5, 2024
+
     The Auto Minify API endpoints are deprecated since the Auto Minify feature was deprecated.
 
     Deprecated APIs:
@@ -184,6 +199,8 @@ entries:
 - publish_date: '2024-07-14'
   title: "DNS Records: 'locked' Field"
   description: |-
+    Deprecation date: July 14, 2024
+
     The `"locked"` field of DNS records in API responses is unused and has been guaranteed to always be `false` for more than a year. This deprecation means that the field will be omitted from API responses entirely. If received from a client, the field will continue to be ignored, just as it is today.
 
     Modified API:
@@ -197,6 +214,8 @@ entries:
 - publish_date: '2024-06-30'
   title: "Mobile redirect"
   description: |-
+    Deprecation date: June 30, 2024
+
     This endpoint and its related APIs are deprecated in favor of [Single Redirects](/rules/url-forwarding/single-redirects/). Refer to [Perform mobile redirects](/rules/url-forwarding/examples/perform-mobile-redirects/) to migrate Mobile Redirect to Redirect Rules.
 
     Deprecated API:
@@ -209,6 +228,8 @@ entries:
 - publish_date: '2024-06-14'
   title: "Server-side Excludes"
   description: |-
+    Deprecation date: June 14, 2024
+
     The Server-side Excludes feature and its API endpoints are deprecated.
 
     Deprecated APIs:
@@ -219,6 +240,8 @@ entries:
 - publish_date: '2024-05-31'
   title: "Name-Related Data Fields on SRV (DNS) Records"
   description: |-
+    Deprecation date: May 31, 2024
+
     The name of an SRV record normally consists of three parts: the service (e.g., `_xmpp`), the protocol (e.g., `_tcp`), and the base name (`example.com`).
     
     The complete name would then be, e.g., `_xmpp._tcp.example.com`.
@@ -260,6 +283,8 @@ entries:
 - publish_date: '2024-03-31'
   title: "Privacy Pass API Removal"
   description: |-
+    Deprecation date: March 31, 2024
+
     In 2017, Cloudflare [announced support](https://blog.cloudflare.com/cloudflare-supports-privacy-pass/) for Privacy Pass, a recent protocol to let users prove their identity across multiple sites anonymously without enabling tracking. The initial use case was to provide untraceable tokens to sites to vouch for users who might otherwise have been presented with a CAPTCHA challenge. In the time since this release, Privacy Pass has evolved both at the [IETF](https://datatracker.ietf.org/wg/privacypass/documents/) and within Cloudflare. The version announced in 2017 is now considered legacy, and these legacy Privacy Pass tokens are no longer supported as an alternative to Cloudflare challenges. As has been discussed on our blog [The end road for CAPTCHA](https://blog.cloudflare.com/end-cloudflare-captcha/), Cloudflare uses a variety of signals to infer if incoming traffic is likely automated. The (legacy) Privacy Pass zone setting is no longer meaningful to Cloudflare customers as Cloudflare now operates [CAPTCHA free](https://blog.cloudflare.com/turnstile-ga/), and supports the latest [Privacy Pass draft](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/).
     
     In September 2023, support for legacy Privacy Pass tokens as an alternative to Cloudflare Managed Challenge was removed. By the end of March 2024, the current public-facing API will be removed as well.
@@ -272,6 +297,8 @@ entries:
 - publish_date: '2024-02-04'
   title: "Argo Tunnel"
   description: |-
+    Deprecation date: February 4, 2024
+
     This endpoint and its related APIs are deprecated in favor of the Cloudflare Tunnels equivalent APIs.
 
     Deprecated API:
@@ -287,6 +314,8 @@ entries:
 - publish_date: '2023-07-01'
   title: "ChaCha20 TLS Cipher Removal"
   description: |-
+    Deprecation date: July 1, 2023
+
     Back in 2016, Cloudflare [introduced support](https://blog.cloudflare.com/it-takes-two-to-chacha-poly/) for `ChaCha20-Poly1305` cipher suites for TLS 1.2. At the time, we introduced two variants of these new suites, the "standard" suites as defined by the IETF RFC 7905, and "draft" suites that followed an earlier draft of said specification. The draft suites were added for compatibility with some older Android devices that at the time did not yet support the proper `ChaCha20-Poly1305` standard versions. This was in 2016, and in the meantime the standard `ChaCha20-Poly1305` cipher suites have gained much wider adoption, to the point were traffic using the old suites has dropped significantly. Due to the current low usage and the non-standard nature of these cipher suites, we are now deprecating their support on the Cloudflare network.
 
     This should not affect customer zones in any way, as clients that might currently use these cipher suites will be able to fallback to different ones. In addition, unlike the standard variants, these legacy cipher suites are not exposed directly through our API (e.g. through the TLS cipher suites preferences endpoint), and their deprecation will not affect customer configurations in any way.
@@ -296,6 +325,8 @@ entries:
 - publish_date: '2023-07-01'
   title: "Transfer-Encoding and Content-Length headers"
   description: |-
+    Deprecation date: July 1, 2023
+
     Previously, RFC 2616 allowed the use of `Transfer-Encoding` and `Content-Length` HTTP headers in the same request. RFC 7230 supersedes RFC 2616 and prohibits the use of `Transfer-Encoding` and `Content-Length` headers in the same request because they can cause HTTP request smuggling vulnerabilities.
 
     Starting on July 1st, 2023, Cloudflare will decline requests with both `Transfer-Encoding` and `Content-Length` HTTP headers.
@@ -303,6 +334,8 @@ entries:
 - publish_date: '2023-06-06'
   title: "Account Billing Profile, User Billing Profile, and User Billing History"
   description: |-
+    Deprecation date: June 6, 2023
+
     There is no API replacement for these endpoints. As an alternative, please log in to your Cloudflare account to view your:
 
     - [Invoices & Billing Email](https://dash.cloudflare.com/?to=/:account/billing)
@@ -318,6 +351,8 @@ entries:
 - publish_date: '2023-04-03'
   title: "Load Balancing - notification_email"
   description: |-
+    Deprecation date: April 3, 2023
+
     This field is deprecated and has been moved to [Cloudflare centralized notification service](/notifications/).
 
     `notification_email` is the email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
@@ -325,6 +360,8 @@ entries:
 - publish_date: '2023-03-19'
   title: "Access Bookmark applications"
   description: |-
+    Deprecation date: March 19, 2023
+
     This endpoint is deprecated in favor of using a specialized Access Application App Type API.
 
     Deprecated API:
@@ -340,11 +377,16 @@ entries:
 
 - publish_date: '2022-10-11'
   title: "Page Shield"
-  description: Replace `script_monitor` in Page Shield API routes with `page_shield`.
+  description: |-
+    Deprecation date: October 11, 2022
+
+    Replace `script_monitor` in Page Shield API routes with `page_shield`.
 
 - publish_date: '2022-07-01'
   title: "Cloudflare Images - Create authenticated direct upload URL v1"
   description: |-
+    Deprecation date: July 1, 2022
+
     This endpoint is deprecated in favor of using v2, which allows you to control metadata, define an access policy, and get the image ID.
 
     Deprecated API:
@@ -356,6 +398,8 @@ entries:
 - publish_date: '2021-03-01'
   title: "Zone Analytics API"
   description: |-
+    Deprecation date: March 1, 2021
+
     This API is deprecated in favor of the [GraphQL Analytics API](/analytics/graphql-api/), which provides equivalent data and more features, including the ability to select only the metrics that you need. For more information, refer to the [Zone analytics to GraphQL analytics migration guide](/analytics/graphql-api/migration-guides/zone-analytics/).
 
     Deprecated API:
@@ -369,6 +413,8 @@ entries:
 - publish_date: '2020-04-02'
   title: "Organizations"
   description: |-
+    Deprecation date: April 2, 2020
+
     This endpoint and its related APIs are deprecated in favor of the `/accounts` equivalent API, which has a broader range of features and is backwards compatible with the `/organizations` API.
   
     Deprecated API:
