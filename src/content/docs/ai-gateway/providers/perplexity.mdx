@@ -37,8 +37,6 @@ const accountId = "{account_id}";
 const gatewayId = "{gateway_id}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/perplexity-ai`;
 
-import OpenAI from "openai";
-
 const perplexity = new OpenAI({
 	apiKey,
 	baseURL,
