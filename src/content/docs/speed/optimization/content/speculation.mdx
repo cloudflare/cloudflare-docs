@@ -21,7 +21,7 @@ Speculation is a tool for improving web page performance by prefetching the most
 
 Speculation works under the following conditions:
 - The Speculation feature is enabled in Cloudflare.
-- The browser of the web page visitor is using a Chromium-based browser v121 or later.
+- The browser of the web page visitor is using a Chromium-based browser version 121 or later.
 - The web page requested by the prefetch is eligible for cache.
 - The page requested by the prefetch does not invoke a Worker.
 
@@ -60,13 +60,13 @@ This configuration instructs the browser to initiate prefetch requests for futur
 
 ## Test Speculation
 
-To test that Speculation is enabled, you can check that your HTTP response headers for your web pages include the `Speculation-Rules` header. However, note that during the Beta phase of Speculation, this behavior might not be 100% consistent.
+To test that Speculation is enabled, you can check that your HTTP response headers for your web pages include the `Speculation-Rules` header. However, note that during the beta phase of Speculation, this behavior might not be 100% consistent.
 
 To test whether your browser is making prefetch requests, open the **Network** tab in Chrome DevTools. Then, mouse-down on a link on a webpage with Speculation enabled. This action should initiate a prefetch request, which will be  visible in the **Network** tab. However, note that there are several reasons why the browser might choose not to initiate a prefetch. Refer to the [Chrome Limits guide](https://developer.chrome.com/docs/web-platform/prerender-pages#chrome-limits) for more details. For more general information about debugging Speculation, refer to the [Chrome Speculation Debugging guide](https://developer.chrome.com/docs/devtools/application/debugging-speculation-rules).
 
 ## RUM integration
 
-Speculation is designed to integrate with Web Analytics & Real User Measurements (RUM). This integration allows you to understand the web performance implications of Speculation within the Web Analytics UI in Cloudflare’s Dashboard.
+Speculation is designed to integrate with Web Analytics & Real User Measurements (RUM). This integration allows you to understand the web performance implications of Speculation within the Web Analytics interface in Cloudflare’s Dashboard.
 
 While you can use Speculation without RUM enabled, you will not have visibility into how the feature is affecting the performance of your web pages. For further details on how to set up RUM, refer to the [Web Analytics & RUM](/web-analytics/) documentation.
 
@@ -80,7 +80,7 @@ To enable **Prefetch URLs** in the dashboard:
 
 1. Log in to your [Cloudflare account](https://dash.cloudflare.com), select your account and go to a specific domain.
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
-3. For **Speculation**, switch the toggle to **On**.
+3. Enable **Speculation**.
 
 </TabItem> <TabItem label="API">
 
@@ -96,7 +96,7 @@ curl --request PATCH \
   }
 ```
 
-To disable Speculation, set value to "off".
+To disable Speculation, set `value:` to `"off"`.
 
 </TabItem> </Tabs>
 
